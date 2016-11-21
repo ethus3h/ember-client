@@ -1,4 +1,4 @@
-# Ember Information Technology Environment — Client
+# Ember Information Technology Environment
 
 This is part of the Ember project.
 
