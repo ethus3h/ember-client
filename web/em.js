@@ -7,3 +7,7 @@ resources.add("system.browserJavaScriptAlerts","string",null)
 resources.defaultStringOut="system.browserConsole"
 resources.defaultRasterOut="system.browserWindow"
 resources.defaultStringIn="system.KeyEvents"
+
+function em_execute(file) {
+    //do stuff
+}
