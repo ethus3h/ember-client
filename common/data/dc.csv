@@ -11,7 +11,7 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 9,Gregorian calendar identifier,!Sy,Semantic,,,,,,,,Internal DCE calendar identifier for the Gregorian calendar.
 10,Positive,!Sy,Semantic,,,,,,,,Positive value (syntactical representation — This is not the + character)
 11,Negative,!Sy,Semantic,,,,,,,,Negative (syntactical representation — This is not the − character)
-12,Decimal point,Sm,Mathematics,,,,,,,,
+12,Decimal point,Sm,Mathematics,,<semantic>32,,,,,,
 13,Full drop back,!Mi,DCE,,,,,,,,Drop back to the core sheet (no meaning in EDF)
 14,Drop back,!Mi,DCE,,,,,,,,Drop back to the enclosing sheet (no meaning in EDF)
 15,Begin DCE content,!Mi,DCE,,,,,,E:113,,Begins a DCE region (no meaning in EDF)
@@ -118,7 +118,7 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 116,Backspace,Cc,Controls,,,,,,,,
 117,Horizontal tabulation,Cc,Punctuation,,,,,,,"character tabulation, tab",
 118,Vertical tabulation,Cc,Punctuation,,,,,,,line tabulation,Also used as a line separator by Microsoft Word and Powerpoint which use it to contrast with the character used as a paragraph separator (sources: http://stackoverflow.com/questions/3380538/what-is-a-vertical-tab http://unicode.org/reports/tr13/tr13-9.html )
-119,!New line,Cc,Punctuation,,<variant>120</variant>,,,,,"line feed, end of line",A variant of Dc120
+119,!New line,Cc,Punctuation,,<variant>120,,,,,"line feed, end of line",A variant of Dc120
 120,Line feed,Cc,Punctuation,,,,,,,"new line, end of line",
 121,Carriage return,Cc,Punctuation,,,,,,,,
 122,Variant Selector 1,Mn,Variant selectors,,,,,,,,
