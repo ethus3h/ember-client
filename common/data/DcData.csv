@@ -1,4 +1,4 @@
-Dc ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,⌥,Aliases,Description
+ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,⌥,Aliases,Description
 0,Null,0,BN,,Cc,Controls,,,
 1,At,0,ON,,Po,Symbols,,,@. Needed in CDCE prior to main DCE specification for syntactical purposes.
 2,Begin separator,0,BN,,!Sy,Semantic,,,Begin a DCE separator string.
