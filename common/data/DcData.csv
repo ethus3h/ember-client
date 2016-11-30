@@ -1,6 +1,6 @@
 ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,⌥,Aliases,Description
 0,Null,0,BN,,Cc,Controls,,,
-1,At,0,ON,,Po,Symbols,,,@. Needed in CDCE prior to main DCE specification for syntactical purposes.
+1,At,0,ON,,Po,Symbols,,,
 2,Begin separator,0,BN,,!Sy,Semantic,,,Begin a DCE separator string.
 3,End separator,0,BN,,!Sy,Semantic,,,End a DCE separator string.
 4,Range,0,BN,,!Sy,Semantic,,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
@@ -11,12 +11,12 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,⌥,Aliases,Description
 9,Gregorian calendar identifier,0,BN,,!Sy,Semantic,,,Internal DCE calendar identifier for the Gregorian calendar.
 10,Positive,0,BN,,!Sy,Semantic,,,Positive value (syntactical representation — This is not the + character)
 11,Negative,0,BN,,!Sy,Semantic,,,Negative (syntactical representation — This is not the − character)
-12,Decimal point,0,ON,,Sm,Mathematics,<semantic>32,,
+12,Decimal point,0,ON,,Sm,Mathematics,<semantic>32,"dot, point, >32",
 13,Full drop back,0,BN,,!Mi,DCE,,,Drop back to the core sheet (no meaning in EDF)
 14,Drop back,0,BN,,!Mi,DCE,,,Drop back to the enclosing sheet (no meaning in EDF)
 15,Begin DCE content,0,BN,,!Mi,DCE,,,Begins a DCE region (no meaning in EDF)
 16,DCE Version Selectors,0,BN,,!Mi,DCE sheets,,,
-17,No mapping,0,BN,,!Mi,Noncharacters,,,Processing use only (not for interchange)
+17,No mapping,0,BN,,Cn,Noncharacters,,,Processing use only (not for interchange)
 18,Space,0,WS,,Zs,Punctuation,,word separator,"Sometimes used as a visible word separator, e.g. in Anoej"
 19,Exclamation,0,ON,,Po,Punctuation,,,
 20,Double quotation mark,0,ON,,Po,Punctuation,,,
