@@ -9,7 +9,7 @@ id,htmlEquiv,unicode,name,type,script,sortFollowing,decomposition,deprecated,des
 7,"<font color=""red"">(end number)</font>",,End number,Syntax,Semantic,,,,End a DCE number.,,
 8,"<font color=""red"">#</font>",,Unknown value,Syntax,Semantic,,,,Substitution character for an unknown value.,,
 9,"<font color=""red"">Gregorian calendar </font>",,Gregorian calendar identifier,Syntax,Semantic,,,,Internal DCE calendar identifier for the Gregorian calendar.,,
-10,"<font color=""red"">+</font>",,Positive,Syntax,Semantic,,,,Positive value (syntactical representation — This is not the   character),,
+10,"<font color=""red"">+</font>",,Positive,Syntax,Semantic,,,,Positive value (syntactical representation — This is not the + character),,
 11,"<font color=""red"">-</font>",,Negative,Syntax,Semantic,,,,Negative (syntactical representation — This is not the − character),,
 12,",",2E,Decimal point,Character,Mathematics,,,,,,
 13,"<font color=""red"">(full drop back)</font>",,Full drop back,Miscellaneous,DCE,,,,Drop back to the core sheet (no meaning in EDF),,
@@ -31,7 +31,7 @@ id,htmlEquiv,unicode,name,type,script,sortFollowing,decomposition,deprecated,des
 29,+ ,2B,Plus,Character,Mathematics,,,,,,
 30,",",2C,Comma,Character,Punctuation,,,,,,
 31,‐,2010,Hyphen,Character,Punctuation,,,,,,
-32,.,2E,Full stop,Character,Punctuation,,,,,,period
+32,0,2E,Full stop,Character,Punctuation,,,,,,period
 33,/,2F,Solidus,Character,Symbols,,,,,,"virgule, stroke, slash"
 34,0,30,Zero,Character,Mathematics,,,,,,
 35,1,31,One,Character,Mathematics,,,,,,
