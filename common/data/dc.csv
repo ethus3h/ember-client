@@ -1,22 +1,22 @@
 Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Description
 0,Null,Cc,Controls,,,,BN,,,,
 1,At,Po,Symbols,,,,ON,,,,@. Needed in CDCE prior to main DCE specification for syntactical purposes.
-2,Begin separator,!Sy,Semantic,,,,,,,,Begin a DCE separator string.
-3,End separator,!Sy,Semantic,,,,,,,,End a DCE separator string.
-4,Range,!Sy,Semantic,,,,,,,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
-5,Record summation,!Sy,Semantic,,,,,,,,Used to denote the union of two records. See the wiki for more information.
-6,Begin number,!Sy,Semantic,,,,,,,,Begin a DCE number.
-7,End number,!Sy,Semantic,,,,,,,,End a DCE number.
-8,Unknown value,!Sy,Semantic,,,,,,,,Substitution character for an unknown value.
-9,Gregorian calendar identifier,!Sy,Semantic,,,,,,,,Internal DCE calendar identifier for the Gregorian calendar.
-10,Positive,!Sy,Semantic,,,,,,,,Positive value (syntactical representation — This is not the + character)
-11,Negative,!Sy,Semantic,,,,,,,,Negative (syntactical representation — This is not the − character)
+2,Begin separator,!Sy,Semantic,,,,BN,,,,Begin a DCE separator string.
+3,End separator,!Sy,Semantic,,,,BN,,,,End a DCE separator string.
+4,Range,!Sy,Semantic,,,,BN,,,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
+5,Record summation,!Sy,Semantic,,,,BN,,,,Used to denote the union of two records. See the wiki for more information.
+6,Begin number,!Sy,Semantic,,,,BN,,,,Begin a DCE number.
+7,End number,!Sy,Semantic,,,,BN,,,,End a DCE number.
+8,Unknown value,!Sy,Semantic,,,,BN,,,,Substitution character for an unknown value.
+9,Gregorian calendar identifier,!Sy,Semantic,,,,BN,,,,Internal DCE calendar identifier for the Gregorian calendar.
+10,Positive,!Sy,Semantic,,,,BN,,,,Positive value (syntactical representation — This is not the + character)
+11,Negative,!Sy,Semantic,,,,BN,,,,Negative (syntactical representation — This is not the − character)
 12,Decimal point,Sm,Mathematics,,<semantic>32,,ON,,,,
-13,Full drop back,!Mi,DCE,,,,,,,,Drop back to the core sheet (no meaning in EDF)
-14,Drop back,!Mi,DCE,,,,,,,,Drop back to the enclosing sheet (no meaning in EDF)
-15,Begin DCE content,!Mi,DCE,,,,,,E:113,,Begins a DCE region (no meaning in EDF)
-16,DCE Version Selectors,!Mi,DCE sheets,,,,,,,,
-17,No mapping,!Mi,Noncharacters,,,,,,,,Processing use only (not for interchange)
+13,Full drop back,!Mi,DCE,,,,BN,,,,Drop back to the core sheet (no meaning in EDF)
+14,Drop back,!Mi,DCE,,,,BN,,,,Drop back to the enclosing sheet (no meaning in EDF)
+15,Begin DCE content,!Mi,DCE,,,,BN,,E:113,,Begins a DCE region (no meaning in EDF)
+16,DCE Version Selectors,!Mi,DCE sheets,,,,BN,,,,
+17,No mapping,!Mi,Noncharacters,,,,BN,,,,Processing use only (not for interchange)
 18,Space,Zs,Punctuation,,,,WS,,,word separator,"Sometimes used as a visible word separator, e.g. in Anoej"
 19,Exclamation,Po,Punctuation,,,,ON,,,,
 20,Double quotation mark,Po,Punctuation,,,,ON,,,,
@@ -111,10 +111,10 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 109,Vertical line,Sm,Symbols,,,,ON,,,"vertical bar, pipe",
 110,Right brace,Pe,Punctuation,,,,ON,,,right curly bracket,
 111,Tilde punctuation,Sm,Symbols,,,,ON,,,,
-112,DCE Version Selector 3.0a,!Mi,DCE versions,,,,,,,,
-113,End DCE content,!Mi,DCE,,,,,,E:15,,
-114,Begin unbounded content,!Mi,Semantic,,,,,,E:115,,"This denotes content that is not ""bound"" (given a context of a page, etc.) to be within &mdash; in other words it is what a plain text file is to a word processing file with page formatting &mdash; content with no context given for presenting it"
-115,End unbounded content,!Mi,Semantic,,,,,,B:114,,
+112,DCE Version Selector 3.0a,!Mi,DCE versions,,,,BN,,,,
+113,End DCE content,!Mi,DCE,,,,BN,,E:15,,
+114,Begin unbounded content,!Mi,Semantic,,,,BN,,E:115,,"This denotes content that is not ""bound"" (given a context of a page, etc.) to be within &mdash; in other words it is what a plain text file is to a word processing file with page formatting &mdash; content with no context given for presenting it"
+115,End unbounded content,!Mi,Semantic,,,,BN,,B:114,,
 116,Backspace,Cc,Controls,,,,BN,,,,
 117,Horizontal tabulation,Cc,Punctuation,,,,BN,,,"character tabulation, tab",
 118,Vertical tabulation,Cc,Punctuation,,,,BN,,,line tabulation,Also used as a line separator by Microsoft Word and Powerpoint which use it to contrast with the character used as a paragraph separator (sources: http://stackoverflow.com/questions/3380538/what-is-a-vertical-tab http://unicode.org/reports/tr13/tr13-9.html )
@@ -126,85 +126,85 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 124,Variant Selector 3,Mn,Variant selectors,,,,NSM,,,,
 125,Variant Selector 4,Mn,Variant selectors,,,,NSM,,,,
 126,Variant Selector 5,Mn,Variant selectors,,,,NSM,,,,
-127,Base 64 encapsulation digit 0,!Mi,Encapsulation,,,,,,,,
-128,Base 64 encapsulation digit 1,!Mi,Encapsulation,,,,,,,,
-129,Base 64 encapsulation digit 2,!Mi,Encapsulation,,,,,,,,
-130,Base 64 encapsulation digit 3,!Mi,Encapsulation,,,,,,,,
-131,Base 64 encapsulation digit 4,!Mi,Encapsulation,,,,,,,,
-132,Base 64 encapsulation digit 5,!Mi,Encapsulation,,,,,,,,
-133,Base 64 encapsulation digit 6,!Mi,Encapsulation,,,,,,,,
-134,Base 64 encapsulation digit 7,!Mi,Encapsulation,,,,,,,,
-135,Base 64 encapsulation digit 8,!Mi,Encapsulation,,,,,,,,
-136,Base 64 encapsulation digit 9,!Mi,Encapsulation,,,,,,,,
-137,Base 64 encapsulation digit 10,!Mi,Encapsulation,,,,,,,,
-138,Base 64 encapsulation digit 11,!Mi,Encapsulation,,,,,,,,
-139,Base 64 encapsulation digit 12,!Mi,Encapsulation,,,,,,,,
-140,Base 64 encapsulation digit 13,!Mi,Encapsulation,,,,,,,,
-141,Base 64 encapsulation digit 14,!Mi,Encapsulation,,,,,,,,
-142,Base 64 encapsulation digit 15,!Mi,Encapsulation,,,,,,,,
-143,Base 64 encapsulation digit 16,!Mi,Encapsulation,,,,,,,,
-144,Base 64 encapsulation digit 17,!Mi,Encapsulation,,,,,,,,
-145,Base 64 encapsulation digit 18,!Mi,Encapsulation,,,,,,,,
-146,Base 64 encapsulation digit 19,!Mi,Encapsulation,,,,,,,,
-147,Base 64 encapsulation digit 20,!Mi,Encapsulation,,,,,,,,
-148,Base 64 encapsulation digit 21,!Mi,Encapsulation,,,,,,,,
-149,Base 64 encapsulation digit 22,!Mi,Encapsulation,,,,,,,,
-150,Base 64 encapsulation digit 23,!Mi,Encapsulation,,,,,,,,
-151,Base 64 encapsulation digit 24,!Mi,Encapsulation,,,,,,,,
-152,Base 64 encapsulation digit 25,!Mi,Encapsulation,,,,,,,,
-153,Base 64 encapsulation digit 26,!Mi,Encapsulation,,,,,,,,
-154,Base 64 encapsulation digit 27,!Mi,Encapsulation,,,,,,,,
-155,Base 64 encapsulation digit 28,!Mi,Encapsulation,,,,,,,,
-156,Base 64 encapsulation digit 29,!Mi,Encapsulation,,,,,,,,
-157,Base 64 encapsulation digit 30,!Mi,Encapsulation,,,,,,,,
-158,Base 64 encapsulation digit 31,!Mi,Encapsulation,,,,,,,,
-159,Base 64 encapsulation digit 32,!Mi,Encapsulation,,,,,,,,
-160,Base 64 encapsulation digit 33,!Mi,Encapsulation,,,,,,,,
-161,Base 64 encapsulation digit 34,!Mi,Encapsulation,,,,,,,,
-162,Base 64 encapsulation digit 35,!Mi,Encapsulation,,,,,,,,
-163,Base 64 encapsulation digit 36,!Mi,Encapsulation,,,,,,,,
-164,Base 64 encapsulation digit 37,!Mi,Encapsulation,,,,,,,,
-165,Base 64 encapsulation digit 38,!Mi,Encapsulation,,,,,,,,
-166,Base 64 encapsulation digit 39,!Mi,Encapsulation,,,,,,,,
-167,Base 64 encapsulation digit 40,!Mi,Encapsulation,,,,,,,,
-168,Base 64 encapsulation digit 41,!Mi,Encapsulation,,,,,,,,
-169,Base 64 encapsulation digit 42,!Mi,Encapsulation,,,,,,,,
-170,Base 64 encapsulation digit 43,!Mi,Encapsulation,,,,,,,,
-171,Base 64 encapsulation digit 44,!Mi,Encapsulation,,,,,,,,
-172,Base 64 encapsulation digit 45,!Mi,Encapsulation,,,,,,,,
-173,Base 64 encapsulation digit 46,!Mi,Encapsulation,,,,,,,,
-174,Base 64 encapsulation digit 47,!Mi,Encapsulation,,,,,,,,
-175,Base 64 encapsulation digit 48,!Mi,Encapsulation,,,,,,,,
-176,Base 64 encapsulation digit 49,!Mi,Encapsulation,,,,,,,,
-177,Base 64 encapsulation digit 50,!Mi,Encapsulation,,,,,,,,
-178,Base 64 encapsulation digit 51,!Mi,Encapsulation,,,,,,,,
-179,Base 64 encapsulation digit 52,!Mi,Encapsulation,,,,,,,,
-180,Base 64 encapsulation digit 53,!Mi,Encapsulation,,,,,,,,
-181,Base 64 encapsulation digit 54,!Mi,Encapsulation,,,,,,,,
-182,Base 64 encapsulation digit 55,!Mi,Encapsulation,,,,,,,,
-183,Base 64 encapsulation digit 56,!Mi,Encapsulation,,,,,,,,
-184,Base 64 encapsulation digit 57,!Mi,Encapsulation,,,,,,,,
-185,Base 64 encapsulation digit 58,!Mi,Encapsulation,,,,,,,,
-186,Base 64 encapsulation digit 59,!Mi,Encapsulation,,,,,,,,
-187,Base 64 encapsulation digit 60,!Mi,Encapsulation,,,,,,,,
-188,Base 64 encapsulation digit 61,!Mi,Encapsulation,,,,,,,,
-189,Base 64 encapsulation digit 62,!Mi,Encapsulation,,,,,,,,
-190,Base 64 encapsulation digit 63,!Mi,Encapsulation,,,,,,,,
-191,Begin encapsulated UTF-8,!Mi,Encapsulation,,,,,,E:192,,Begin Base 64 encapsulated UTF-8
-192,End encapsulated UTF-8,!Mi,Encapsulation,,,,,,B:191,,End Base 64 encapsulated UTF-8
+127,Base 64 encapsulation digit 0,!Mi,Encapsulation,,,,BN,,,,
+128,Base 64 encapsulation digit 1,!Mi,Encapsulation,,,,BN,,,,
+129,Base 64 encapsulation digit 2,!Mi,Encapsulation,,,,BN,,,,
+130,Base 64 encapsulation digit 3,!Mi,Encapsulation,,,,BN,,,,
+131,Base 64 encapsulation digit 4,!Mi,Encapsulation,,,,BN,,,,
+132,Base 64 encapsulation digit 5,!Mi,Encapsulation,,,,BN,,,,
+133,Base 64 encapsulation digit 6,!Mi,Encapsulation,,,,BN,,,,
+134,Base 64 encapsulation digit 7,!Mi,Encapsulation,,,,BN,,,,
+135,Base 64 encapsulation digit 8,!Mi,Encapsulation,,,,BN,,,,
+136,Base 64 encapsulation digit 9,!Mi,Encapsulation,,,,BN,,,,
+137,Base 64 encapsulation digit 10,!Mi,Encapsulation,,,,BN,,,,
+138,Base 64 encapsulation digit 11,!Mi,Encapsulation,,,,BN,,,,
+139,Base 64 encapsulation digit 12,!Mi,Encapsulation,,,,BN,,,,
+140,Base 64 encapsulation digit 13,!Mi,Encapsulation,,,,BN,,,,
+141,Base 64 encapsulation digit 14,!Mi,Encapsulation,,,,BN,,,,
+142,Base 64 encapsulation digit 15,!Mi,Encapsulation,,,,BN,,,,
+143,Base 64 encapsulation digit 16,!Mi,Encapsulation,,,,BN,,,,
+144,Base 64 encapsulation digit 17,!Mi,Encapsulation,,,,BN,,,,
+145,Base 64 encapsulation digit 18,!Mi,Encapsulation,,,,BN,,,,
+146,Base 64 encapsulation digit 19,!Mi,Encapsulation,,,,BN,,,,
+147,Base 64 encapsulation digit 20,!Mi,Encapsulation,,,,BN,,,,
+148,Base 64 encapsulation digit 21,!Mi,Encapsulation,,,,BN,,,,
+149,Base 64 encapsulation digit 22,!Mi,Encapsulation,,,,BN,,,,
+150,Base 64 encapsulation digit 23,!Mi,Encapsulation,,,,BN,,,,
+151,Base 64 encapsulation digit 24,!Mi,Encapsulation,,,,BN,,,,
+152,Base 64 encapsulation digit 25,!Mi,Encapsulation,,,,BN,,,,
+153,Base 64 encapsulation digit 26,!Mi,Encapsulation,,,,BN,,,,
+154,Base 64 encapsulation digit 27,!Mi,Encapsulation,,,,BN,,,,
+155,Base 64 encapsulation digit 28,!Mi,Encapsulation,,,,BN,,,,
+156,Base 64 encapsulation digit 29,!Mi,Encapsulation,,,,BN,,,,
+157,Base 64 encapsulation digit 30,!Mi,Encapsulation,,,,BN,,,,
+158,Base 64 encapsulation digit 31,!Mi,Encapsulation,,,,BN,,,,
+159,Base 64 encapsulation digit 32,!Mi,Encapsulation,,,,BN,,,,
+160,Base 64 encapsulation digit 33,!Mi,Encapsulation,,,,BN,,,,
+161,Base 64 encapsulation digit 34,!Mi,Encapsulation,,,,BN,,,,
+162,Base 64 encapsulation digit 35,!Mi,Encapsulation,,,,BN,,,,
+163,Base 64 encapsulation digit 36,!Mi,Encapsulation,,,,BN,,,,
+164,Base 64 encapsulation digit 37,!Mi,Encapsulation,,,,BN,,,,
+165,Base 64 encapsulation digit 38,!Mi,Encapsulation,,,,BN,,,,
+166,Base 64 encapsulation digit 39,!Mi,Encapsulation,,,,BN,,,,
+167,Base 64 encapsulation digit 40,!Mi,Encapsulation,,,,BN,,,,
+168,Base 64 encapsulation digit 41,!Mi,Encapsulation,,,,BN,,,,
+169,Base 64 encapsulation digit 42,!Mi,Encapsulation,,,,BN,,,,
+170,Base 64 encapsulation digit 43,!Mi,Encapsulation,,,,BN,,,,
+171,Base 64 encapsulation digit 44,!Mi,Encapsulation,,,,BN,,,,
+172,Base 64 encapsulation digit 45,!Mi,Encapsulation,,,,BN,,,,
+173,Base 64 encapsulation digit 46,!Mi,Encapsulation,,,,BN,,,,
+174,Base 64 encapsulation digit 47,!Mi,Encapsulation,,,,BN,,,,
+175,Base 64 encapsulation digit 48,!Mi,Encapsulation,,,,BN,,,,
+176,Base 64 encapsulation digit 49,!Mi,Encapsulation,,,,BN,,,,
+177,Base 64 encapsulation digit 50,!Mi,Encapsulation,,,,BN,,,,
+178,Base 64 encapsulation digit 51,!Mi,Encapsulation,,,,BN,,,,
+179,Base 64 encapsulation digit 52,!Mi,Encapsulation,,,,BN,,,,
+180,Base 64 encapsulation digit 53,!Mi,Encapsulation,,,,BN,,,,
+181,Base 64 encapsulation digit 54,!Mi,Encapsulation,,,,BN,,,,
+182,Base 64 encapsulation digit 55,!Mi,Encapsulation,,,,BN,,,,
+183,Base 64 encapsulation digit 56,!Mi,Encapsulation,,,,BN,,,,
+184,Base 64 encapsulation digit 57,!Mi,Encapsulation,,,,BN,,,,
+185,Base 64 encapsulation digit 58,!Mi,Encapsulation,,,,BN,,,,
+186,Base 64 encapsulation digit 59,!Mi,Encapsulation,,,,BN,,,,
+187,Base 64 encapsulation digit 60,!Mi,Encapsulation,,,,BN,,,,
+188,Base 64 encapsulation digit 61,!Mi,Encapsulation,,,,BN,,,,
+189,Base 64 encapsulation digit 62,!Mi,Encapsulation,,,,BN,,,,
+190,Base 64 encapsulation digit 63,!Mi,Encapsulation,,,,BN,,,,
+191,Begin encapsulated UTF-8,!Mi,Encapsulation,,,,BN,,E:192,,Begin Base 64 encapsulated UTF-8
+192,End encapsulated UTF-8,!Mi,Encapsulation,,,,BN,,B:191,,End Base 64 encapsulated UTF-8
 193,Form feed,Cc,Controls,,,,WS,,,,
-194,DCE Version Selector 3.01a,!Mi,DCE versions,,,,,,,,
-195,Base 64 encapsulation padding character,!Mi,Encapsulation,,,,,,,,
-196,Variant Selectors,!Mi,DCE sheets,,,,,,,,
-197,Semantic Records,!Mi,DCE sheets,,,,,,,,
-198,Mathematics,!Mi,DCE sheets,,,,,,,,
-199,Punctuation and Whitespace,!Mi,DCE sheets,,,,,,,,
-200,Begin keyed embed fragment,!Mi,Encapsulation,,,,,,Complex,,"This Dc is used for embedding arbitrary keyed ID/data pairs in a document. Standard structure: Followed by base64-encoded data identifying a fragment, then Dc 202 (End keyed embed ID sequence), then by the base64-encoded fragment itself, then by Dc 201 (End keyed embed fragment)."
-201,End keyed embed fragment,!Mi,Encapsulation,,,,,,Complex,,See description for 200
-202,End keyed embed ID sequence,!Mi,Encapsulation,,,,,,Complex,,See description for 200
-203,Begin encapsulated binary data,!Mi,Encapsulation,,,,,,Complex,,"Arbitrary binary data (base64 encoded, no semantic significance assigned to it)"
-204,End encapsulated binary data,!Mi,Encapsulation,,,,,,Complex,,See description for 203
-205,DCE Version Selector 3.03a,!Mi,DCE versions,,,,,,,,
+194,DCE Version Selector 3.01a,!Mi,DCE versions,,,,BN,,,,
+195,Base 64 encapsulation padding character,!Mi,Encapsulation,,,,BN,,,,
+196,Variant Selectors,!Mi,DCE sheets,,,,BN,,,,
+197,Semantic Records,!Mi,DCE sheets,,,,BN,,,,
+198,Mathematics,!Mi,DCE sheets,,,,BN,,,,
+199,Punctuation and Whitespace,!Mi,DCE sheets,,,,BN,,,,
+200,Begin keyed embed fragment,!Mi,Encapsulation,,,,BN,,Complex,,"This Dc is used for embedding arbitrary keyed ID/data pairs in a document. Standard structure: Followed by base64-encoded data identifying a fragment, then Dc 202 (End keyed embed ID sequence), then by the base64-encoded fragment itself, then by Dc 201 (End keyed embed fragment)."
+201,End keyed embed fragment,!Mi,Encapsulation,,,,BN,,Complex,,See description for 200
+202,End keyed embed ID sequence,!Mi,Encapsulation,,,,BN,,Complex,,See description for 200
+203,Begin encapsulated binary data,!Mi,Encapsulation,,,,BN,,Complex,,"Arbitrary binary data (base64 encoded, no semantic significance assigned to it)"
+204,End encapsulated binary data,!Mi,Encapsulation,,,,BN,,Complex,,See description for 203
+205,DCE Version Selector 3.03a,!Mi,DCE versions,,,,BN,,,,
 206,Unicode replacement character,So,Miscellaneous,,,,ON,,,,Used to replace an incoming character whose value is unknown or unrepresentable in Unicode
 207,Replacement character for unavailable Dc,So,Miscellaneous,,,,ON,,,,Used to replace an incoming character whose value is not mapped to a Dc (document component)
 208,Start of heading,Cc,Controls,,,,BN,,,,
@@ -234,8 +234,8 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 232,Information separator one,Cc,Controls,,,,S,,,,
 233,Hyphen-minus,Pd,Punctuation,,,,ES,,,,
 234,Delete,Cc,Controls,,,,BN,,,,
-235,Begin document,!Sy,Semantic,,,,,,E:236,,Beginning of a document
-236,End document,!Sy,Semantic,,,,,,B:235,,
+235,Begin document,!Sy,Semantic,,,,BN,,E:236,,Beginning of a document
+236,End document,!Sy,Semantic,,,,BN,,B:235,,
 237,,,,,,,,,,,
 238,,,,,,,,,,,
 239,,,,,,,,,,,
