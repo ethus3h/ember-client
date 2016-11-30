@@ -1,6 +1,6 @@
 Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Description
 0,Null,Cc,Controls,,,,,,,,
-1,At,So,Symbols,,,,,,,,@. Needed in CDCE prior to main DCE specification for syntactical purposes.
+1,At,Po,Symbols,,,,,,,,@. Needed in CDCE prior to main DCE specification for syntactical purposes.
 2,Begin separator,!Sy,Semantic,,,,,,,,Begin a DCE separator string.
 3,End separator,!Sy,Semantic,,,,,,,,End a DCE separator string.
 4,Range,!Sy,Semantic,,,,,,,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
@@ -18,21 +18,21 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 16,DCE Version Selectors,!Mi,DCE sheets,,,,,,,,
 17,No mapping,!Mi,Noncharacters,,,,,,,,Processing use only (not for interchange)
 18,Space,Zs,Punctuation,,,,,,,word separator,"Sometimes used as a visible word separator, e.g. in Anoej"
-19,Exclamation,Pf,Punctuation,,,,,,,,
+19,Exclamation,Po,Punctuation,,,,,,,,
 20,Double quotation mark,Po,Punctuation,,,,,,,,
-21,Number sign,So,Symbols,,,,,,,"octothorpe, hash, crosshatch",
+21,Number sign,Po,Symbols,,,,,,,"octothorpe, hash, crosshatch",
 22,Dollar,Sc,Financial,,,,,,,,
-23,Percent,So,Symbols,,,,,,,,
-24,And,So,Punctuation,,,,,,,,
+23,Percent,Po,Symbols,,,,,,,,
+24,And,Po,Punctuation,,,,,,,,
 25,Apostrophe,Po,Punctuation,,,,,,,,
 26,Left parenthesis,Ps,Punctuation,,,,,,,left bracket,
 27,Right parenthesis,Pe,Punctuation,,,,,,,right bracket,
-28,Asterisk,So,Symbols,,,,,,,star,
+28,Asterisk,Po,Symbols,,,,,,,star,
 29,Plus,Sm,Mathematics,,,,,,,,
 30,Comma,Po,Punctuation,,,,,,,,
 31,Hyphen,Pd,Punctuation,,,,,,,,
-32,Full stop,Pf,Punctuation,,,,,,,period,
-33,Solidus,So,Symbols,,,,,,,"virgule, stroke, slash",
+32,Full stop,Po,Punctuation,,,,,,,period,
+33,Solidus,Po,Symbols,,,,,,,"virgule, stroke, slash",
 34,Zero,Nd,Mathematics,,,,,,,,
 35,One,Nd,Mathematics,,,,,,,,
 36,Two,Nd,Mathematics,,,,,,,,
@@ -48,7 +48,7 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 46,Less than,Sm,Mathematics,,,,,,,,
 47,Equals,Sm,Mathematics,,,,,,,,
 48,Greater than,Sm,Mathematics,,,,,,,,
-49,Question,Pf,Punctuation,,,,,,,,
+49,Question,Po,Punctuation,,,,,,,,
 50,Latin Capital Letter A,Lu,Latin,,,,,,S:82,,
 51,Latin Capital Letter B,Lu,Latin,,,,,,S:83,,
 52,Latin Capital Letter C,Lu,Latin,,,,,,S:84,,
@@ -75,12 +75,12 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 73,Latin Capital Letter X,Lu,Latin,,,,,,S:105,,
 74,Latin Capital Letter Y,Lu,Latin,,,,,,S:106,,
 75,Latin Capital Letter Z,Lu,Latin,,,,,,S:107,,
-76,Left bracket,Character,Punctuation,,,,,,,left square bracket,
-77,Reversed solidus,Character,Symbols,,,,,,,backslash,
-78,Right bracket,Character,Punctuation,,,,,,,right square bracket,
-79,Spacing circumflex,Character,Symbols,,,,,,,,
-80,Underscore,Character,Symbols,,,,,,,low line,
-81,Spacing grave,Character,Symbols,,,,,,,,
+76,Left bracket,Ps,Punctuation,,,,,,,left square bracket,
+77,Reversed solidus,Po,Symbols,,,,,,,backslash,
+78,Right bracket,Pe,Punctuation,,,,,,,right square bracket,
+79,Spacing circumflex,Sk,Symbols,,,,,,,,
+80,Underscore,Pc,Symbols,,,,,,,low line,
+81,Spacing grave,Sk,Symbols,,,,,,,,
 82,Latin Small Letter A,Ll,Latin,,,,,,C:50,,
 83,Latin Small Letter B,Ll,Latin,,,,,,C:51,,
 84,Latin Small Letter C,Ll,Latin,,,,,,C:52,,
@@ -108,24 +108,24 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 106,Latin Small Letter Y,Ll,Latin,,,,,,C:74,,
 107,Latin Small Letter Z,Ll,Latin,,,,,,C:75,,
 108,Left brace,Ps,Punctuation,,,,,,,left curly bracket,
-109,Vertical line,So,Symbols,,,,,,,"vertical bar, pipe",
+109,Vertical line,Sm,Symbols,,,,,,,"vertical bar, pipe",
 110,Right brace,Pe,Punctuation,,,,,,,right curly bracket,
-111,Tilde punctuation,So,Symbols,,,,,,,,
+111,Tilde punctuation,Sm,Symbols,,,,,,,,
 112,DCE Version Selector 3.0a,!Mi,DCE versions,,,,,,,,
 113,End DCE content,!Mi,DCE,,,,,,E:15,,
 114,Begin unbounded content,!Mi,Semantic,,,,,,E:115,,"This denotes content that is not ""bound"" (given a context of a page, etc.) to be within &mdash; in other words it is what a plain text file is to a word processing file with page formatting &mdash; content with no context given for presenting it"
 115,End unbounded content,!Mi,Semantic,,,,,,B:114,,
 116,Backspace,Cc,Controls,,,,,,,,
-117,Horizontal tabulation,Character,Punctuation,,,,,,,"character tabulation, tab",
-118,Vertical tabulation,Character,Punctuation,,,,,,,line tabulation,Also used as a line separator by Microsoft Word and Powerpoint which use it to contrast with the character used as a paragraph separator (sources: http://stackoverflow.com/questions/3380538/what-is-a-vertical-tab http://unicode.org/reports/tr13/tr13-9.html )
-119,!New line,Character,Punctuation,,<variant>120</variant>,,,,,"line feed, end of line",A variant of Dc120
-120,Line feed,Character,Punctuation,,,,,,,"new line, end of line",
-121,Carriage return,Character,Punctuation,,,,,,,,
-122,Variant Selector 1,Miscellaneous,Variant selectors,,,,,,,,
-123,Variant Selector 2,Miscellaneous,Variant selectors,,,,,,,,
-124,Variant Selector 3,Miscellaneous,Variant selectors,,,,,,,,
-125,Variant Selector 4,Miscellaneous,Variant selectors,,,,,,,,
-126,Variant Selector 5,Miscellaneous,Variant selectors,,,,,,,,
+117,Horizontal tabulation,Cc,Punctuation,,,,,,,"character tabulation, tab",
+118,Vertical tabulation,Cc,Punctuation,,,,,,,line tabulation,Also used as a line separator by Microsoft Word and Powerpoint which use it to contrast with the character used as a paragraph separator (sources: http://stackoverflow.com/questions/3380538/what-is-a-vertical-tab http://unicode.org/reports/tr13/tr13-9.html )
+119,!New line,Cc,Punctuation,,<variant>120</variant>,,,,,"line feed, end of line",A variant of Dc120
+120,Line feed,Cc,Punctuation,,,,,,,"new line, end of line",
+121,Carriage return,Cc,Punctuation,,,,,,,,
+122,Variant Selector 1,Mn,Variant selectors,,,,,,,,
+123,Variant Selector 2,Mn,Variant selectors,,,,,,,,
+124,Variant Selector 3,Mn,Variant selectors,,,,,,,,
+125,Variant Selector 4,Mn,Variant selectors,,,,,,,,
+126,Variant Selector 5,Mn,Variant selectors,,,,,,,,
 127,Base 64 encapsulation digit 0,!Mi,Encapsulation,,,,,,,,
 128,Base 64 encapsulation digit 1,!Mi,Encapsulation,,,,,,,,
 129,Base 64 encapsulation digit 2,!Mi,Encapsulation,,,,,,,,
@@ -192,7 +192,7 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 190,Base 64 encapsulation digit 63,!Mi,Encapsulation,,,,,,,,
 191,Begin encapsulated UTF-8,!Mi,Encapsulation,,,,,,E:192,,Begin Base 64 encapsulated UTF-8
 192,End encapsulated UTF-8,!Mi,Encapsulation,,,,,,B:191,,End Base 64 encapsulated UTF-8
-193,Form feed,Control,Controls,,,,,,,,
+193,Form feed,Cc,Controls,,,,,,,,
 194,DCE Version Selector 3.01a,!Mi,DCE versions,,,,,,,,
 195,Base 64 encapsulation padding character,!Mi,Encapsulation,,,,,,,,
 196,Variant Selectors,!Mi,DCE sheets,,,,,,,,
@@ -234,8 +234,8 @@ Dc ID,Name (!=deprecated),Type,Script,⇵,⌥,◌,⇆,Aa,Syntax,Aliases,Descript
 232,Information separator one,Cc,Controls,,,,,,,,
 233,Hyphen-minus,Pd,Punctuation,,,,,,,,
 234,Delete,Cc,Controls,,,,,,,,
-235,Begin document,!Mi,Semantic,,,,,,E:236,,Beginning of a document
-236,End document,!Mi,Semantic,,,,,,B:235,,
+235,Begin document,!Sy,Semantic,,,,,,E:236,,Beginning of a document
+236,End document,!Sy,Semantic,,,,,,B:235,,
 237,,,,,,,,,,,
 238,,,,,,,,,,,
 239,,,,,,,,,,,
