@@ -32,6 +32,6 @@
                     Resource:system.resources.default('output', Sstring)
                     (FuzzyList[Resource]) List[Resource]:system.resources.list
                 ]
-    @Returns
+    @Returns:
         @Void:
             This routine does not have a return value.

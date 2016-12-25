@@ -15,7 +15,7 @@
         @FuzzyList[ResourceCapability]:
             requiredCapabilities
             The ResourceCapabilities that a resource must provide to match the query.
-    @Returns
+    @Returns:
         @Resource:
             The default Resource with the required capabilities.
 
