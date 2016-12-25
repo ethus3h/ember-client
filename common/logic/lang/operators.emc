@@ -18,10 +18,15 @@
         @Void:
             This routine does not have a return value.
     @Implementation:
-        foreach FuzzyList[1 List [1 LanguageProfile, 1 Type, 1 String] & Type]$operator in
-            List[1 List [1 LanguageProfile, 1 Type, 1 String] & Type] =
-                [Core, Boolean, 'print'], String
-                Number, [Core, Boolean, '='], Number
-                Boolean, [Core, Boolean, '|'], Boolean
-                Boolean, [Core, Boolean, '||'], Boolean
+        foreach FuzzyList[1 List [1 LanguageProfile, 1 String, 1 Routine] & Type]$operator in
+            List[1 List [1 LanguageProfile, 1 Type, 1 String, 1 Routine] & Type] =
+                [ Core, 'print', lang.print() ], String
+                Any, [ Core, '=', lang.compare() ], Any
+                Boolean, [ Core, '|', lang.xor() ], Boolean
+                Boolean, [ Core, '||', lang.ior() ], Boolean
+                Trait, [ Core, '<-', lang.set() ], Any
+                Routine, [ Core, 'otherwise', lang.otherwise() ], Routine
+                [ Core, 'foreach', lang.foreach() ], Trait
+                Trait, [ Core, 'at', lang.listFromTraitPair() ], Trait
+                Trait, [ Core, 'at', lang.listFromTraitPair() ], Trait
             lang.defineOperator($operator)
