@@ -1,0 +1,21 @@
+@Overview:
+    This file describes system.resources.default().
+
+@Interface:
+    @Routine:
+        nd!default
+        Gets the implementation's default Resource of the specified type.
+        @Throws:
+            @Exception:
+                !noSuchDefaultResource
+                Shows that there is no default resource of the specified type.
+            @Exception:
+                !noSuchResourceAvailable
+                Shows that there is no resource of the specified type.
+        @Parameters:
+            @FuzzyList[FuzzyList[1 String, 1 Resource]]:
+                requiredCapabilities
+                The ResourceCapabilities that a resource must provide to match the query.
+        @Returns
+            @Resource:
+                The default Resource with the required capabilities.
