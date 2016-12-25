@@ -4,18 +4,31 @@
 @Interface:
     @Routine:
         nd!default
-        Gets the implementation's default Resource of the specified type.
+        Gets the implementation's default Resource with the required capabilities.
         @Throws:
             @Exception:
                 !noSuchDefaultResource
-                Shows that there is no default resource of the specified type.
+                Shows that there is no default resource with the required capabilities.
             @Exception:
                 !noSuchResourceAvailable
-                Shows that there is no resource of the specified type.
+                Shows that there is no resource with the required capabilities.
         @Parameters:
-            @FuzzyList[FuzzyList[1 String, 1 Resource]]:
+            @FuzzyList[ResourceCapability]:
                 requiredCapabilities
                 The ResourceCapabilities that a resource must provide to match the query.
         @Returns
             @Resource:
                 The default Resource with the required capabilities.
+    @Routine:
+        nd!default inherits system.resources.default(FuzzyList[ResourceCapability])
+        #FIXME: To be decided: Should the exception signature be required for a routine that inherits another routine?
+        @Parameters:
+            @FuzzyList[FuzzyList[1 String, 1 Resource]]:
+                requiredCapabilities
+                The ResourceCapabilities that a resource must provide to match the query.
+
+@Implementation:
+    @Routine:
+        nd!default(FuzzyList[FuzzyList[1 String, 1 Resource]] $requiredCapabilities) inherits system.resources.default(FuzzyList[ResourceCapability]) {
+        
+        }
