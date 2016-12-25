@@ -26,6 +26,6 @@
                 Boolean, [ Core, '||', lang.ior() ], Boolean
                 Trait, [ Core, '<-', lang.set() ], Any
                 Routine, [ Core, 'otherwise', lang.otherwise() ], Routine
-                [ Core, 'foreach', lang.foreach() ], Trait, Token['in'], List
-                [ Core, 'foreach', lang.foreach() ], Trait, Token['at'], Trait[Natural], Token['in'], List
+                [ Core, 'foreach', lang.foreach() ], FuzzyList[Trait], Token['in'], List
+                [ Core, 'foreach', lang.foreach() ], FuzzyList[Trait], Token['at'], FuzzyList[Trait[Natural]], Token['in'], List
             lang.defineOperator($operator)
