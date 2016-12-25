@@ -17,7 +17,7 @@
             outputResources =
                 [
                     Resource:system.resources.default('output', Sstring)
-                    (FuzzyList[Resource]) List[Resource]:system.resources.list
+                    (FuzzyList[Resource]) List[Resource]:system.resources.list()
                 ]
     @Returns
         @Void:
