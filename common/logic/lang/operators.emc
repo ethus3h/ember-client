@@ -26,7 +26,6 @@
                 Boolean, [ Core, '||', lang.ior() ], Boolean
                 Trait, [ Core, '<-', lang.set() ], Any
                 Routine, [ Core, 'otherwise', lang.otherwise() ], Routine
-                [ Core, 'foreach', lang.foreach() ], Trait
-                Trait, [ Core, 'at', lang.listFromTraitPair() ], Trait
-                Trait, [ Core, 'at', lang.listFromTraitPair() ], Trait
+                [ Core, 'foreach', lang.foreach() ], Trait, Token['in'], List
+                [ Core, 'foreach', lang.foreach() ], Trait, Token['at'], Trait[Natural], Token['in'], List
             lang.defineOperator($operator)
