@@ -18,12 +18,10 @@
         @Void:
             This routine does not have a return value.
     @Implementation:
-        foreach FuzzyList[1 String & Type]$operator in
-            {
-                List[1 List [1 LanguageProfile, 1 Type, 1 String] & Type] =
-                    [Core, Boolean, 'print'], String
-                    Number, [Core, Boolean, '='], Number
-            }
-            
-        lang.defineOperator('print', String)
-        
+        foreach FuzzyList[1 List [1 LanguageProfile, 1 Type, 1 String] & Type]$operator in
+            List[1 List [1 LanguageProfile, 1 Type, 1 String] & Type] =
+                [Core, Boolean, 'print'], String
+                Number, [Core, Boolean, '='], Number
+                Boolean, [Core, Boolean, '|'], Boolean
+                Boolean, [Core, Boolean, '||'], Boolean
+            lang.defineOperator($operator)
