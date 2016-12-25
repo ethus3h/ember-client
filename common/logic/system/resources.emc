@@ -1,9 +1,5 @@
 @Overview:
-    This file describes system.resources().
+    This file describes system.resources.
 
-@Routine:
-    nd!resources
-    Returns a list of available Resources.
-    @Returns
-        @List[Resources]:
-            A list of available Resources.
+@List[Resources]:
+    A list of available Resources.
