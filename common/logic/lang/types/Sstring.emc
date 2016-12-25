@@ -1,0 +1,6 @@
+@Overview:
+    This file describes lang.types.Sstring.
+
+@Type:
+    C Sstring inherits List[Scharacter]
+    This (simple string) is a simple String that only contains Scharacters.
