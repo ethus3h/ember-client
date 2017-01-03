@@ -11,7 +11,7 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos.",Des
 9,Gregorian calendar identifier,0,BN,,!Sy,Semantic,,Internal DCE calendar identifier for the Gregorian calendar.
 10,Positive,0,BN,,!Sy,Semantic,,Positive value (syntactical representation — This is not the + character)
 11,Negative,0,BN,,!Sy,Semantic,,Negative (syntactical representation — This is not the − character)
-12,Decimal point,0,ON,,Sm,Mathematics,"dot, point, >32, <semantic>32",
+12,Decimal point,0,ON,,Sm,Mathematics,"dot, point, >32",
 13,Full drop back,0,BN,,!Mi,DCE,,Drop back to the core sheet (no meaning in EDF)
 14,Drop back,0,BN,,!Mi,DCE,,Drop back to the enclosing sheet (no meaning in EDF)
 15,Begin DCE content,0,BN,,!Mi,DCE,,Begins a DCE region (no meaning in EDF)
