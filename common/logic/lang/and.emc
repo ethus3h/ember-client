@@ -2,15 +2,15 @@
     This file describes lang.and().
 
 @Routine:
-    and
+    ior
     Boolean and of the parameters.
     @Parameters:
-        @Boolean:
+        @Boolean | List[Boolean]:
             value1
             One of the two parameters to and
-        @Boolean:
+        @Boolean | List[Boolean]:
             value2
             One of the two parameters to and
     @Returns:
-        @Boolean:
+        @Boolean | List[Boolean]:
             This routine returns the Boolean and of the two parameters.

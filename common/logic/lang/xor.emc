@@ -1,0 +1,21 @@
+@Overview:
+    This file describes lang.xor().
+
+@Routine:
+    xor
+    Boolean exclusive or of the parameters.
+    @Parameters:
+        @Boolean | List[Boolean]:
+            value1
+            One of the two parameters to xor
+        @Boolean | List[Boolean]:
+            value2
+            One of the two parameters to xor
+    @Returns:
+        @Boolean | List[Boolean] <-
+            if Integer maximum <- max($value1.Type.length, $value2.Type.length) > 1:
+                List[Boolean]
+            else
+                Integer 1
+        :
+            This routine returns the Boolean exclusive or of the two parameters.
