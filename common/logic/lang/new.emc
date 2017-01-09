@@ -2,8 +2,8 @@
     This file describes lang.new().
 
 @Routine:
-    new
-    Creates a new instance of the Type passed to it.
+    C new
+    Creates a new instance of the Type passed to it. FIXME: Determinism depends on the type's constructor, if any.
     @Parameters:
         @Type:
             type

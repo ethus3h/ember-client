@@ -13,7 +13,7 @@
             There was no suitable output resource, so the string was altered to be shown to the user.
     @Visibility:
         Project
-        #Only other code in the Ember Language implementation can see/use this routine.
+        Only other code in the Ember Language implementation can see/use this routine. By default, routines in the Ember Language are public.
     @Returns:
         @Void:
             This routine does not have a return value.

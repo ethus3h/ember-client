@@ -2,7 +2,7 @@
     This file describes lang.xor().
 
 @Routine:
-    xor
+    C xor
     Boolean exclusive or of the parameters.
     @Parameters:
         @Boolean | List[Boolean]:
@@ -13,9 +13,9 @@
             One of the two parameters to xor
     @Returns:
         @Boolean | List[Boolean] <-
-            if $value1.Type = List[Boolean] | $value2.Type = List[Boolean]:
-                List[Boolean]
-            else
+            if $value1.Type = Boolean & $value2.Type = Boolean:
                 Boolean
+            else:
+                List[Boolean]
         :
             This routine returns the Boolean exclusive or of the two parameters.
