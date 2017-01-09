@@ -1,0 +1,16 @@
+@Overview:
+    This file describes lang.and().
+
+@Routine:
+    and
+    Boolean and of the parameters.
+    @Parameters:
+        @Boolean:
+            value1
+            One of the two parameters to and
+        @Boolean:
+            value2
+            One of the two parameters to and
+    @Returns:
+        @Boolean:
+            This routine returns the Boolean and of the two parameters.

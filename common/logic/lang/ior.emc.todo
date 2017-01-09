@@ -1,0 +1,24 @@
+@Overview:
+    This file describes lang.ior().
+
+@Routine:
+    ior
+    Boolean inclusive or of the parameters.
+    @Parameters:
+        This routine has two possible type signatures, one with booleans and one with List[Boolean]s
+        @Boolean:
+            value1
+            One of the two parameters to and
+        @Boolean:
+            value2
+            One of the two parameters to and
+    @Parameters:
+        @List[Boolean]:
+            value1
+            One of the two parameters to and
+        @List[Boolean]:
+            value2
+            One of the two parameters to and
+    @Returns:
+        @Boolean:
+            This routine returns the Boolean and of the two parameters.
