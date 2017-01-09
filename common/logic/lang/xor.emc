@@ -13,9 +13,9 @@
             One of the two parameters to xor
     @Returns:
         @Boolean | List[Boolean] <-
-            if Integer maximum <- max($value1.Type.length, $value2.Type.length) > 1:
+            if $value1.Type = List[Boolean]:
                 List[Boolean]
             else
-                Integer 1
+                Boolean
         :
             This routine returns the Boolean exclusive or of the two parameters.
