@@ -3,4 +3,4 @@
 
 @Type:
     C Sstring inherits List[Scharacter]
-    This (simple string) is a simple String that only contains Scharacters.
+    An Sstring is a simple String that only contains Scharacters.
