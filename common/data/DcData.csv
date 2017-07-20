@@ -1,4 +1,4 @@
-ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=routine syntax",Description
+ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=routine syntax, :=Dc syntax",Description
 0,Null,0,BN,,Cc,Controls,,
 1,At,0,ON,,Po,Symbols,,
 2,Begin separator,0,BN,,!Sy,Semantic,,Begin a DCE separator string.
@@ -245,15 +245,22 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=r
 243,Switch to Structured mode,0,BN,,!Mi,Semantic,,Indicates that the following contents represent structured data.
 244,Switch to Terminal mode,0,BN,,!Mi,Semantic,,Indicates that the following contents expect a character-based terminal display output.
 245,Switch to Web mode,0,BN,,!Mi,Semantic,,Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script).
-246,Begin single-line source comment on current line,0,BN,,!Mi,Miscellaneous,,"Begins a comment that, when represented in EM (Ember Language source) format, should be displayed as a “#”-style comment. All characters except 248 and 255 will be ignored. Use 255 248 to represent 248 within the comment, and 255 255 to represent 255 within the comment."
-247,Begin single-line source comment on new line,0,BN,,!Mi,Miscellaneous,,"As with 247, but starting on a new line in the source form."
-248,End single-line source comment,0,BN,,!Mi,Miscellaneous,,Terminates a comment region begun by 246 or 247.
-249,Begin block source comment on current line,0,BN,,!Mi,Miscellaneous,,"As with 248, but creating a “/*  */”-style block comment."
-250,Begin block source comment on new line,0,BN,,!Mi,Miscellaneous,,"As with 250, but starting on a new line in the source form."
-251,End block source comment,0,BN,,!Mi,Miscellaneous,,Terminates a comment region begun by 249 or 250.
+246,Begin single-line source comment on current line,0,BN,,!Mi,Miscellaneous,:~ [^248 255]+ 248,"Begins a comment that, when represented in EM (Ember Language source) format, should be displayed as a “#”-style comment. All characters except 248 and 255 will be ignored. Use 255 248 to represent 248 within the comment, and 255 255 to represent 255 within the comment."
+247,Begin single-line source comment on new line,0,BN,,!Mi,Miscellaneous,:~ [^248 255]+ 248,"As with 247, but starting on a new line in the source form."
+248,End single-line source comment,0,BN,,!Mi,Miscellaneous,:[246 247] [^248 255]+ ~,Terminates a comment region begun by 246 or 247.
+249,Begin block source comment on current line,0,BN,,!Mi,Miscellaneous,:~ [^251 255]+ 251,"As with 248, but creating a “/*  */”-style block comment."
+250,Begin block source comment on new line,0,BN,,!Mi,Miscellaneous,:~ [^251 255]+ 251,"As with 250, but starting on a new line in the source form."
+251,End block source comment,0,BN,,!Mi,Miscellaneous,:[249 250] [^251 255]+ ~,Terminates a comment region begun by 249 or 250.
 252,Join to next source line,0,BN,,!Mi,Miscellaneous,,Indicates that a line break that would normally be present at this point in the source should be instead represented by a ;.
 253,Split source line here,0,BN,,!Mi,Miscellaneous,,"Indicates that the current logical line should be split into two physical lines in source form, joined using \."
 254,Braced block in source,0,BN,,!Mi,Miscellaneous,,"Indicates that the following logical block of statements should be bundled onto a single line of the source, joined using ; and bundled using { and }."
 255,Ignore following Dc,0,BN,,!Mi,Miscellaneous,,Indicates that the next character should be ignored.
-256,lang.print,0,BN,,!Mi,Programming,(String str),Send the specified string to the current output context
+256,lang.print,0,BN,,!Mi,Programming,(String),Send the specified string to the current output context
 257,Vertical tabulation,0,BN,,Cc,Punctuation,line tabulation,
+258,Begin anonymous parameter,0,BN,,!Mi,Programming,:~ [260:] 259,
+259,End anonymous parameter,0,BN,,!Mi,Programming,:258 [260:] ~,
+260,Begin literal value,0,BN,,!Mi,Programming,:~ [262:] 261,
+261,End literal value,0,BN,,!Mi,Programming,:260 [262:] ~,
+262,Begin type definition,0,BN,,!Mi,Programming,:~ [264] 263,
+263,End type definition,0,BN,,!Mi,Programming,:262 [264] ~,
+264,Built-in type identifier: String,0,BN,,!Mi,Programming,,
