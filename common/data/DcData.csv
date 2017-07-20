@@ -113,7 +113,7 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos.",Des
 111,Tilde punctuation,0,ON,,Sm,Symbols,,
 112,DCE Version Selector 3.0a,0,BN,,!Mi,DCE versions,,
 113,End DCE content,0,BN,,!Mi,DCE,,
-114,Begin unbounded content,0,BN,,!Mi,Semantic,,"This denotes content that is not ""bound"" (given a context of a page, etc.) to be within &mdash; in other words it is what a plain text file is to a word processing file with page formatting &mdash; content with no context given for presenting it"
+114,Begin unbounded content,0,BN,,!Mi,Semantic,,"This denotes content that is not ""bound"" (given a context of a page, etc. to be within) — in other words it is what a plain text file is to a word processing file with page formatting — content with no context given for presenting it"
 115,End unbounded content,0,BN,,!Mi,Semantic,,
 116,Backspace,0,BN,,Cc,Controls,,
 117,Horizontal tabulation,0,BN,,Cc,Punctuation,"character tabulation, tab",
@@ -240,8 +240,8 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos.",Des
 238,Full stop/decimal point,0,CS,,Po,Punctuation,"<ambiguous>12,32",
 239,Line feed,0,B,,Cc,Punctuation,,"This character instructs a terminal to move the cursor to the beginning of the line horizontally without advancing to the next line vertically. This character is not directly equivalent to ASCII line feed, because that is sometimes used for a combined new line and carriage return. For representing the ASCII line feed, use Dc 120."
 240,Carriage return,0,B,,Cc,Punctuation,,"This character instructs a terminal to advance to the next line vertically without moving the cursor to the beginning of the line horizontally. This character is not directly equivalent to ASCII carriage return, because that is sometimes used for a combined new line and carriage return. For representing the ASCII carriage return, use Dc 121."
-241,Switch to Document mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents expect a graphical raster display output."
+241,Switch to Document mode,0,BN,,!Mi,Semantic,,Indicates that the following contents expect a graphical raster display output.
 242,Switch to Library mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents provide resources (such as routine, class, or other definitions) for consumption by other documents."
-243,Switch to Structured mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents represent structured data."
-244,Switch to Terminal mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents expect a character-based terminal display output."
-245,Switch to Web mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script)."
+243,Switch to Structured mode,0,BN,,!Mi,Semantic,,Indicates that the following contents represent structured data.
+244,Switch to Terminal mode,0,BN,,!Mi,Semantic,,Indicates that the following contents expect a character-based terminal display output.
+245,Switch to Web mode,0,BN,,!Mi,Semantic,,Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script).
