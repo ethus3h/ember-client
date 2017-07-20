@@ -255,7 +255,7 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=r
 253,Split source line here,0,BN,,!Mi,Miscellaneous,,"Indicates that the current logical line should be split into two physical lines in source form, joined using \."
 254,Braced block in source,0,BN,,!Mi,Miscellaneous,,"Indicates that the following logical block of statements should be bundled onto a single line of the source, joined using ; and bundled using { and }."
 255,Ignore following Dc,0,BN,,!Mi,Miscellaneous,,Indicates that the next character should be ignored.
-256,lang.print,0,BN,,!Mi,Programming,(String),Send the specified string to the current output context
+256,lang.print,0,BN,,!Mi,Routines,(String),Send the specified string to the current output context
 257,Vertical tabulation,0,BN,,Cc,Punctuation,line tabulation,
 258,Begin anonymous parameter,0,BN,,!Mi,Programming,:~ [260:] 259,
 259,End anonymous parameter,0,BN,,!Mi,Programming,:258 [260:] ~,
