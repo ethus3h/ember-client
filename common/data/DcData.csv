@@ -240,3 +240,8 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos.",Des
 238,Full stop/decimal point,0,CS,,Po,Punctuation,"<ambiguous>12,32",
 239,Line feed,0,B,,Cc,Punctuation,,"This character instructs a terminal to move the cursor to the beginning of the line horizontally without advancing to the next line vertically. This character is not directly equivalent to ASCII line feed, because that is sometimes used for a combined new line and carriage return. For representing the ASCII line feed, use Dc 120."
 240,Carriage return,0,B,,Cc,Punctuation,,"This character instructs a terminal to advance to the next line vertically without moving the cursor to the beginning of the line horizontally. This character is not directly equivalent to ASCII carriage return, because that is sometimes used for a combined new line and carriage return. For representing the ASCII carriage return, use Dc 121."
+241,Switch to Document mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents expect a graphical raster display output."
+242,Switch to Library mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents provide resources (such as routine, class, or other definitions) for consumption by other documents."
+243,Switch to Structured mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents represent structured data."
+244,Switch to Terminal mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents expect a character-based terminal display output."
+245,Switch to Web mode,0,BN,,!Mi,Semantic,,"Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script)."
