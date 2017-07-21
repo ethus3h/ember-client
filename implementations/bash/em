@@ -37,5 +37,9 @@ ereplace ' ' $'\n' "/tmp/$tempFileId"
 while read dc; do
     # Handle individual Dc
     if grep ",$dc," "$asciiMapping"; then
-        grep ",$dc," "$asciiMapping" | awk -F "\"*,\"*" '{print $2}'
+        csvtool format '%(2)\n' "$asciiMapping"
+    else
+        # This is a complex Dc, so need to do more than print it.
+        true
+    fi
 done <"/tmp/$tempFileId"
