@@ -1,5 +1,0 @@
-﻿-OpenType Tables
-  +'GPOS' Glyph Positioning Table
-  +'GSUB' Glyph Substitution Table
--Apple Advanced Typography
-  +'kern' Horizontal Kerning Table
