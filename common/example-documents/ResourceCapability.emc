@@ -1,7 +1,0 @@
-@Overview:
-    This is an example of a ResourceCapability object.
-
-@ResourceCapability:
-    @String:
-        name =
-            'blah blah blah'
