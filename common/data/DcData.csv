@@ -1,21 +1,21 @@
 ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=routine syntax, :=Dc syntax",Description
 0,Null,0,BN,,Cc,Controls,,
 1,At,0,ON,,Po,Symbols,,
-2,Begin separator,0,BN,,!Ex,Semantic,,Begin a DCE separator string.
-3,End separator,0,BN,,!Ex,Semantic,,End a DCE separator string.
-4,Range,0,BN,,!Ex,Semantic,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
-5,Record summation,0,BN,,!Ex,Semantic,,Used to denote the union of two records. See the wiki for more information.
-6,Begin number,0,BN,,!Ex,Semantic,,Begin a DCE number.
-7,End number,0,BN,,!Ex,Semantic,,End a DCE number.
-8,Unknown value,0,BN,,!Ex,Semantic,,Substitution character for an unknown value.
-9,Gregorian calendar identifier,0,BN,,!Ex,Semantic,,Internal DCE calendar identifier for the Gregorian calendar.
-10,Positive,0,BN,,!Ex,Semantic,,Positive value (syntactical representation — This is not the + character)
-11,Negative,0,BN,,!Ex,Semantic,,Negative (syntactical representation — This is not the − character)
+2,Begin separator,0,BN,,!Cx,Semantic,,Begin a DCE separator string.
+3,End separator,0,BN,,!Cx,Semantic,,End a DCE separator string.
+4,Range,0,BN,,!Cx,Semantic,,The DCE range character. Used to represent ranges in DCE. See the wiki for more information.
+5,Record summation,0,BN,,!Cx,Semantic,,Used to denote the union of two records. See the wiki for more information.
+6,Begin number,0,BN,,!Cx,Semantic,,Begin a DCE number.
+7,End number,0,BN,,!Cx,Semantic,,End a DCE number.
+8,Unknown value,0,BN,,!Cx,Semantic,,Substitution character for an unknown value.
+9,Gregorian calendar identifier,0,BN,,!Cx,Semantic,,Internal DCE calendar identifier for the Gregorian calendar.
+10,Positive,0,BN,,!Cx,Semantic,,Positive value (syntactical representation — This is not the + character)
+11,Negative,0,BN,,!Cx,Semantic,,Negative (syntactical representation — This is not the − character)
 12,Decimal point,0,ON,,Sm,Mathematics,"dot, point, >32",
-13,Full drop back,0,BN,,!Ex,DCE,,Drop back to the core sheet (no meaning in EDF)
-14,Drop back,0,BN,,!Ex,DCE,,Drop back to the enclosing sheet (no meaning in EDF)
-15,Begin DCE content,0,BN,,!Ex,DCE,,Begins a DCE region (no meaning in EDF)
-16,DCE Version Selectors,0,BN,,!Ex,DCE sheets,,
+13,Full drop back,0,BN,,!Cx,DCE,,Drop back to the core sheet (no meaning in EDF)
+14,Drop back,0,BN,,!Cx,DCE,,Drop back to the enclosing sheet (no meaning in EDF)
+15,Begin DCE content,0,BN,,!Cx,DCE,,Begins a DCE region (no meaning in EDF)
+16,DCE Version Selectors,0,BN,,!Cx,DCE sheets,,
 17,No mapping,0,BN,,Cn,Noncharacters,,Processing use only (not for interchange)
 18,Space,0,WS,,Zs,Punctuation,word separator,"Sometimes used as a visible word separator, e.g. in Anoej"
 19,Exclamation,0,ON,,Po,Punctuation,,
@@ -111,10 +111,10 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=r
 109,Vertical line,0,ON,,Sm,Symbols,"vertical bar, pipe",
 110,Right brace,0,ON,,Pe,Punctuation,right curly bracket,
 111,Tilde punctuation,0,ON,,Sm,Symbols,,
-112,DCE Version Selector 3.0a,0,BN,,!Ex,DCE versions,,
-113,End DCE content,0,BN,,!Ex,DCE,,
-114,Begin unbounded content,0,BN,,!Ex,Semantic,,"This denotes content that is not ""bound"" (given a context of a page, etc. to be within) — in other words it is what a plain text file is to a word processing file with page formatting — content with no context given for presenting it"
-115,End unbounded content,0,BN,,!Ex,Semantic,,
+112,DCE Version Selector 3.0a,0,BN,,!Cx,DCE versions,,
+113,End DCE content,0,BN,,!Cx,DCE,,
+114,Begin unbounded content,0,BN,,!Cx,Semantic,,"This denotes content that is not ""bound"" (given a context of a page, etc. to be within) — in other words it is what a plain text file is to a word processing file with page formatting — content with no context given for presenting it"
+115,End unbounded content,0,BN,,!Cx,Semantic,,
 116,Backspace,0,BN,,Cc,Controls,,
 117,Horizontal tabulation,0,BN,,Cc,Punctuation,"character tabulation, tab",
 118,Ambiguous vertical tabulation,0,BN,,Cc,Punctuation,<ambiguous>257 119,Also used as a line separator by Microsoft Word and Powerpoint which use it to contrast with the character used as a paragraph separator (sources: http://stackoverflow.com/questions/3380538/what-is-a-vertical-tab http://unicode.org/reports/tr13/tr13-9.html )
@@ -126,85 +126,85 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=r
 124,Variant Selector 3,0,NSM,,Mn,Variant selectors,,
 125,Variant Selector 4,0,NSM,,Mn,Variant selectors,,
 126,Variant Selector 5,0,NSM,,Mn,Variant selectors,,
-127,Base 64 encapsulation digit 0,0,BN,,!Ex,Encapsulation,,
-128,Base 64 encapsulation digit 1,0,BN,,!Ex,Encapsulation,,
-129,Base 64 encapsulation digit 2,0,BN,,!Ex,Encapsulation,,
-130,Base 64 encapsulation digit 3,0,BN,,!Ex,Encapsulation,,
-131,Base 64 encapsulation digit 4,0,BN,,!Ex,Encapsulation,,
-132,Base 64 encapsulation digit 5,0,BN,,!Ex,Encapsulation,,
-133,Base 64 encapsulation digit 6,0,BN,,!Ex,Encapsulation,,
-134,Base 64 encapsulation digit 7,0,BN,,!Ex,Encapsulation,,
-135,Base 64 encapsulation digit 8,0,BN,,!Ex,Encapsulation,,
-136,Base 64 encapsulation digit 9,0,BN,,!Ex,Encapsulation,,
-137,Base 64 encapsulation digit 10,0,BN,,!Ex,Encapsulation,,
-138,Base 64 encapsulation digit 11,0,BN,,!Ex,Encapsulation,,
-139,Base 64 encapsulation digit 12,0,BN,,!Ex,Encapsulation,,
-140,Base 64 encapsulation digit 13,0,BN,,!Ex,Encapsulation,,
-141,Base 64 encapsulation digit 14,0,BN,,!Ex,Encapsulation,,
-142,Base 64 encapsulation digit 15,0,BN,,!Ex,Encapsulation,,
-143,Base 64 encapsulation digit 16,0,BN,,!Ex,Encapsulation,,
-144,Base 64 encapsulation digit 17,0,BN,,!Ex,Encapsulation,,
-145,Base 64 encapsulation digit 18,0,BN,,!Ex,Encapsulation,,
-146,Base 64 encapsulation digit 19,0,BN,,!Ex,Encapsulation,,
-147,Base 64 encapsulation digit 20,0,BN,,!Ex,Encapsulation,,
-148,Base 64 encapsulation digit 21,0,BN,,!Ex,Encapsulation,,
-149,Base 64 encapsulation digit 22,0,BN,,!Ex,Encapsulation,,
-150,Base 64 encapsulation digit 23,0,BN,,!Ex,Encapsulation,,
-151,Base 64 encapsulation digit 24,0,BN,,!Ex,Encapsulation,,
-152,Base 64 encapsulation digit 25,0,BN,,!Ex,Encapsulation,,
-153,Base 64 encapsulation digit 26,0,BN,,!Ex,Encapsulation,,
-154,Base 64 encapsulation digit 27,0,BN,,!Ex,Encapsulation,,
-155,Base 64 encapsulation digit 28,0,BN,,!Ex,Encapsulation,,
-156,Base 64 encapsulation digit 29,0,BN,,!Ex,Encapsulation,,
-157,Base 64 encapsulation digit 30,0,BN,,!Ex,Encapsulation,,
-158,Base 64 encapsulation digit 31,0,BN,,!Ex,Encapsulation,,
-159,Base 64 encapsulation digit 32,0,BN,,!Ex,Encapsulation,,
-160,Base 64 encapsulation digit 33,0,BN,,!Ex,Encapsulation,,
-161,Base 64 encapsulation digit 34,0,BN,,!Ex,Encapsulation,,
-162,Base 64 encapsulation digit 35,0,BN,,!Ex,Encapsulation,,
-163,Base 64 encapsulation digit 36,0,BN,,!Ex,Encapsulation,,
-164,Base 64 encapsulation digit 37,0,BN,,!Ex,Encapsulation,,
-165,Base 64 encapsulation digit 38,0,BN,,!Ex,Encapsulation,,
-166,Base 64 encapsulation digit 39,0,BN,,!Ex,Encapsulation,,
-167,Base 64 encapsulation digit 40,0,BN,,!Ex,Encapsulation,,
-168,Base 64 encapsulation digit 41,0,BN,,!Ex,Encapsulation,,
-169,Base 64 encapsulation digit 42,0,BN,,!Ex,Encapsulation,,
-170,Base 64 encapsulation digit 43,0,BN,,!Ex,Encapsulation,,
-171,Base 64 encapsulation digit 44,0,BN,,!Ex,Encapsulation,,
-172,Base 64 encapsulation digit 45,0,BN,,!Ex,Encapsulation,,
-173,Base 64 encapsulation digit 46,0,BN,,!Ex,Encapsulation,,
-174,Base 64 encapsulation digit 47,0,BN,,!Ex,Encapsulation,,
-175,Base 64 encapsulation digit 48,0,BN,,!Ex,Encapsulation,,
-176,Base 64 encapsulation digit 49,0,BN,,!Ex,Encapsulation,,
-177,Base 64 encapsulation digit 50,0,BN,,!Ex,Encapsulation,,
-178,Base 64 encapsulation digit 51,0,BN,,!Ex,Encapsulation,,
-179,Base 64 encapsulation digit 52,0,BN,,!Ex,Encapsulation,,
-180,Base 64 encapsulation digit 53,0,BN,,!Ex,Encapsulation,,
-181,Base 64 encapsulation digit 54,0,BN,,!Ex,Encapsulation,,
-182,Base 64 encapsulation digit 55,0,BN,,!Ex,Encapsulation,,
-183,Base 64 encapsulation digit 56,0,BN,,!Ex,Encapsulation,,
-184,Base 64 encapsulation digit 57,0,BN,,!Ex,Encapsulation,,
-185,Base 64 encapsulation digit 58,0,BN,,!Ex,Encapsulation,,
-186,Base 64 encapsulation digit 59,0,BN,,!Ex,Encapsulation,,
-187,Base 64 encapsulation digit 60,0,BN,,!Ex,Encapsulation,,
-188,Base 64 encapsulation digit 61,0,BN,,!Ex,Encapsulation,,
-189,Base 64 encapsulation digit 62,0,BN,,!Ex,Encapsulation,,
-190,Base 64 encapsulation digit 63,0,BN,,!Ex,Encapsulation,,
-191,Begin encapsulated UTF-8,0,BN,,!Ex,Encapsulation,,Begin Base 64 encapsulated UTF-8
-192,End encapsulated UTF-8,0,BN,,!Ex,Encapsulation,,End Base 64 encapsulated UTF-8
+127,Base 64 encapsulation digit 0,0,BN,,!Cx,Encapsulation,,
+128,Base 64 encapsulation digit 1,0,BN,,!Cx,Encapsulation,,
+129,Base 64 encapsulation digit 2,0,BN,,!Cx,Encapsulation,,
+130,Base 64 encapsulation digit 3,0,BN,,!Cx,Encapsulation,,
+131,Base 64 encapsulation digit 4,0,BN,,!Cx,Encapsulation,,
+132,Base 64 encapsulation digit 5,0,BN,,!Cx,Encapsulation,,
+133,Base 64 encapsulation digit 6,0,BN,,!Cx,Encapsulation,,
+134,Base 64 encapsulation digit 7,0,BN,,!Cx,Encapsulation,,
+135,Base 64 encapsulation digit 8,0,BN,,!Cx,Encapsulation,,
+136,Base 64 encapsulation digit 9,0,BN,,!Cx,Encapsulation,,
+137,Base 64 encapsulation digit 10,0,BN,,!Cx,Encapsulation,,
+138,Base 64 encapsulation digit 11,0,BN,,!Cx,Encapsulation,,
+139,Base 64 encapsulation digit 12,0,BN,,!Cx,Encapsulation,,
+140,Base 64 encapsulation digit 13,0,BN,,!Cx,Encapsulation,,
+141,Base 64 encapsulation digit 14,0,BN,,!Cx,Encapsulation,,
+142,Base 64 encapsulation digit 15,0,BN,,!Cx,Encapsulation,,
+143,Base 64 encapsulation digit 16,0,BN,,!Cx,Encapsulation,,
+144,Base 64 encapsulation digit 17,0,BN,,!Cx,Encapsulation,,
+145,Base 64 encapsulation digit 18,0,BN,,!Cx,Encapsulation,,
+146,Base 64 encapsulation digit 19,0,BN,,!Cx,Encapsulation,,
+147,Base 64 encapsulation digit 20,0,BN,,!Cx,Encapsulation,,
+148,Base 64 encapsulation digit 21,0,BN,,!Cx,Encapsulation,,
+149,Base 64 encapsulation digit 22,0,BN,,!Cx,Encapsulation,,
+150,Base 64 encapsulation digit 23,0,BN,,!Cx,Encapsulation,,
+151,Base 64 encapsulation digit 24,0,BN,,!Cx,Encapsulation,,
+152,Base 64 encapsulation digit 25,0,BN,,!Cx,Encapsulation,,
+153,Base 64 encapsulation digit 26,0,BN,,!Cx,Encapsulation,,
+154,Base 64 encapsulation digit 27,0,BN,,!Cx,Encapsulation,,
+155,Base 64 encapsulation digit 28,0,BN,,!Cx,Encapsulation,,
+156,Base 64 encapsulation digit 29,0,BN,,!Cx,Encapsulation,,
+157,Base 64 encapsulation digit 30,0,BN,,!Cx,Encapsulation,,
+158,Base 64 encapsulation digit 31,0,BN,,!Cx,Encapsulation,,
+159,Base 64 encapsulation digit 32,0,BN,,!Cx,Encapsulation,,
+160,Base 64 encapsulation digit 33,0,BN,,!Cx,Encapsulation,,
+161,Base 64 encapsulation digit 34,0,BN,,!Cx,Encapsulation,,
+162,Base 64 encapsulation digit 35,0,BN,,!Cx,Encapsulation,,
+163,Base 64 encapsulation digit 36,0,BN,,!Cx,Encapsulation,,
+164,Base 64 encapsulation digit 37,0,BN,,!Cx,Encapsulation,,
+165,Base 64 encapsulation digit 38,0,BN,,!Cx,Encapsulation,,
+166,Base 64 encapsulation digit 39,0,BN,,!Cx,Encapsulation,,
+167,Base 64 encapsulation digit 40,0,BN,,!Cx,Encapsulation,,
+168,Base 64 encapsulation digit 41,0,BN,,!Cx,Encapsulation,,
+169,Base 64 encapsulation digit 42,0,BN,,!Cx,Encapsulation,,
+170,Base 64 encapsulation digit 43,0,BN,,!Cx,Encapsulation,,
+171,Base 64 encapsulation digit 44,0,BN,,!Cx,Encapsulation,,
+172,Base 64 encapsulation digit 45,0,BN,,!Cx,Encapsulation,,
+173,Base 64 encapsulation digit 46,0,BN,,!Cx,Encapsulation,,
+174,Base 64 encapsulation digit 47,0,BN,,!Cx,Encapsulation,,
+175,Base 64 encapsulation digit 48,0,BN,,!Cx,Encapsulation,,
+176,Base 64 encapsulation digit 49,0,BN,,!Cx,Encapsulation,,
+177,Base 64 encapsulation digit 50,0,BN,,!Cx,Encapsulation,,
+178,Base 64 encapsulation digit 51,0,BN,,!Cx,Encapsulation,,
+179,Base 64 encapsulation digit 52,0,BN,,!Cx,Encapsulation,,
+180,Base 64 encapsulation digit 53,0,BN,,!Cx,Encapsulation,,
+181,Base 64 encapsulation digit 54,0,BN,,!Cx,Encapsulation,,
+182,Base 64 encapsulation digit 55,0,BN,,!Cx,Encapsulation,,
+183,Base 64 encapsulation digit 56,0,BN,,!Cx,Encapsulation,,
+184,Base 64 encapsulation digit 57,0,BN,,!Cx,Encapsulation,,
+185,Base 64 encapsulation digit 58,0,BN,,!Cx,Encapsulation,,
+186,Base 64 encapsulation digit 59,0,BN,,!Cx,Encapsulation,,
+187,Base 64 encapsulation digit 60,0,BN,,!Cx,Encapsulation,,
+188,Base 64 encapsulation digit 61,0,BN,,!Cx,Encapsulation,,
+189,Base 64 encapsulation digit 62,0,BN,,!Cx,Encapsulation,,
+190,Base 64 encapsulation digit 63,0,BN,,!Cx,Encapsulation,,
+191,Begin encapsulated UTF-8,0,BN,,!Cx,Encapsulation,,Begin Base 64 encapsulated UTF-8
+192,End encapsulated UTF-8,0,BN,,!Cx,Encapsulation,,End Base 64 encapsulated UTF-8
 193,Form feed,0,WS,,Cc,Controls,,
-194,DCE Version Selector 3.01a,0,BN,,!Ex,DCE versions,,
-195,Base 64 encapsulation padding character,0,BN,,!Ex,Encapsulation,,
-196,Variant Selectors,0,BN,,!Ex,DCE sheets,,
-197,Semantic Records,0,BN,,!Ex,DCE sheets,,
-198,Mathematics,0,BN,,!Ex,DCE sheets,,
-199,Punctuation and Whitespace,0,BN,,!Ex,DCE sheets,,
-200,Begin keyed embed fragment,0,BN,,!Ex,Encapsulation,,"This Dc is used for embedding arbitrary keyed ID/data pairs in a document. Standard structure: Followed by base64-encoded data identifying a fragment, then Dc 202 (End keyed embed ID sequence), then by the base64-encoded fragment itself, then by Dc 201 (End keyed embed fragment)."
-201,End keyed embed fragment,0,BN,,!Ex,Encapsulation,,See description for 200
-202,End keyed embed ID sequence,0,BN,,!Ex,Encapsulation,,See description for 200
-203,Begin encapsulated binary data,0,BN,,!Ex,Encapsulation,,"Arbitrary binary data (base64 encoded, no semantic significance assigned to it)"
-204,End encapsulated binary data,0,BN,,!Ex,Encapsulation,,See description for 203
-205,DCE Version Selector 3.03a,0,BN,,!Ex,DCE versions,,
+194,DCE Version Selector 3.01a,0,BN,,!Cx,DCE versions,,
+195,Base 64 encapsulation padding character,0,BN,,!Cx,Encapsulation,,
+196,Variant Selectors,0,BN,,!Cx,DCE sheets,,
+197,Semantic Records,0,BN,,!Cx,DCE sheets,,
+198,Mathematics,0,BN,,!Cx,DCE sheets,,
+199,Punctuation and Whitespace,0,BN,,!Cx,DCE sheets,,
+200,Begin keyed embed fragment,0,BN,,!Cx,Encapsulation,,"This Dc is used for embedding arbitrary keyed ID/data pairs in a document. Standard structure: Followed by base64-encoded data identifying a fragment, then Dc 202 (End keyed embed ID sequence), then by the base64-encoded fragment itself, then by Dc 201 (End keyed embed fragment)."
+201,End keyed embed fragment,0,BN,,!Cx,Encapsulation,,See description for 200
+202,End keyed embed ID sequence,0,BN,,!Cx,Encapsulation,,See description for 200
+203,Begin encapsulated binary data,0,BN,,!Cx,Encapsulation,,"Arbitrary binary data (base64 encoded, no semantic significance assigned to it)"
+204,End encapsulated binary data,0,BN,,!Cx,Encapsulation,,See description for 203
+205,DCE Version Selector 3.03a,0,BN,,!Cx,DCE versions,,
 206,Unicode replacement character,0,ON,,So,Miscellaneous,,Used to replace an incoming character whose value is unknown or unrepresentable in Unicode
 207,Replacement character for unavailable Dc,0,ON,,So,Miscellaneous,,Used to replace an incoming character whose value is not mapped to a Dc (document component)
 208,Start of heading,0,BN,,Cc,Controls,,
@@ -234,33 +234,33 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., (=r
 232,Information separator one,0,S,,Cc,Controls,,
 233,Hyphen-minus,0,ES,,Pd,Punctuation,<ambiguous>31 237,
 234,Delete,0,BN,,Cc,Controls,,
-235,Begin document,0,BN,,!Ex,Semantic,,Beginning of a document
-236,End document,0,BN,,!Ex,Semantic,,
+235,Begin document,0,BN,,!Cx,Semantic,,Beginning of a document
+236,End document,0,BN,,!Cx,Semantic,,
 237,Minus,0,ES,,Sm,Mathematics,,
 238,Full stop/decimal point,0,CS,,Po,Punctuation,<ambiguous>12 32,
 239,Line feed,0,B,,Cc,Punctuation,,"This character instructs a terminal to move the cursor to the beginning of the line horizontally without advancing to the next line vertically. This character is not directly equivalent to ASCII line feed, because that is sometimes used for a combined new line and carriage return. For representing the ASCII line feed, use Dc 120."
 240,Carriage return,0,B,,Cc,Punctuation,,"This character instructs a terminal to advance to the next line vertically without moving the cursor to the beginning of the line horizontally. This character is not directly equivalent to ASCII carriage return, because that is sometimes used for a combined new line and carriage return. For representing the ASCII carriage return, use Dc 121."
-241,Switch to Document mode,0,BN,,!Ex,Semantic,,Indicates that the following contents expect a graphical raster display output.
-242,Switch to Library mode,0,BN,,!Ex,Semantic,,"Indicates that the following contents provide resources (such as routine, class, or other definitions) for consumption by other documents."
-243,Switch to Structured mode,0,BN,,!Ex,Semantic,,Indicates that the following contents represent structured data.
-244,Switch to Terminal mode,0,BN,,!Ex,Semantic,,Indicates that the following contents expect a character-based terminal display output.
-245,Switch to Web mode,0,BN,,!Ex,Semantic,,Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script).
-246,Begin single-line source comment on current line,0,BN,,!Ex,Miscellaneous,:~ [^248 255]+ 248,"Begins a comment that, when represented in EM (Ember Language source) format, should be displayed as a “#”-style comment. All characters except 248 and 255 will be ignored. Use 255 248 to represent 248 within the comment, and 255 255 to represent 255 within the comment."
-247,Begin single-line source comment on new line,0,BN,,!Ex,Miscellaneous,:~ [^248 255]+ 248,"As with 247, but starting on a new line in the source form."
-248,End single-line source comment,0,BN,,!Ex,Miscellaneous,:[246 247] [^248 255]+ ~,Terminates a comment region begun by 246 or 247.
-249,Begin block source comment on current line,0,BN,,!Ex,Miscellaneous,:~ [^251 255]+ 251,"As with 248, but creating a “/*  */”-style block comment."
-250,Begin block source comment on new line,0,BN,,!Ex,Miscellaneous,:~ [^251 255]+ 251,"As with 250, but starting on a new line in the source form."
-251,End block source comment,0,BN,,!Ex,Miscellaneous,:[249 250] [^251 255]+ ~,Terminates a comment region begun by 249 or 250.
-252,Join to next source line,0,BN,,!Ex,Miscellaneous,,Indicates that a line break that would normally be present at this point in the source should be instead represented by a ;.
-253,Split source line here,0,BN,,!Ex,Miscellaneous,,"Indicates that the current logical line should be split into two physical lines in source form, joined using \."
-254,Braced block in source,0,BN,,!Ex,Miscellaneous,,"Indicates that the following logical block of statements should be bundled onto a single line of the source, joined using ; and bundled using { and }."
-255,Ignore following Dc,0,BN,,!Ex,Miscellaneous,,Indicates that the next character should be ignored.
-256,lang.print,0,BN,,!Ex,EL Routines,(String),Send the specified string to the current output context
+241,Switch to Document mode,0,BN,,!Cx,EL Syntax,,Indicates that the following contents expect a graphical raster display output.
+242,Switch to Library mode,0,BN,,!Cx,EL Syntax,,"Indicates that the following contents provide resources (such as routine, class, or other definitions) for consumption by other documents."
+243,Switch to Structured mode,0,BN,,!Cx,EL Syntax,,Indicates that the following contents represent structured data.
+244,Switch to Terminal mode,0,BN,,!Cx,EL Syntax,,Indicates that the following contents expect a character-based terminal display output.
+245,Switch to Web mode,0,BN,,!Cx,EL Syntax,,Indicates that the following contents are designed to respond to a Web request (in a manner similar to a PHP or CGI script).
+246,Begin single-line source comment on current line,0,BN,,!Cx,Miscellaneous,:~ [^248 255]+ 248,"Begins a comment that, when represented in EM (Ember Language source) format, should be displayed as a “#”-style comment. All characters except 248 and 255 will be ignored. Use 255 248 to represent 248 within the comment, and 255 255 to represent 255 within the comment."
+247,Begin single-line source comment on new line,0,BN,,!Cx,Miscellaneous,:~ [^248 255]+ 248,"As with 247, but starting on a new line in the source form."
+248,End single-line source comment,0,BN,,!Cx,Miscellaneous,:[246 247] [^248 255]+ ~,Terminates a comment region begun by 246 or 247.
+249,Begin block source comment on current line,0,BN,,!Cx,Miscellaneous,:~ [^251 255]+ 251,"As with 248, but creating a “/*  */”-style block comment."
+250,Begin block source comment on new line,0,BN,,!Cx,Miscellaneous,:~ [^251 255]+ 251,"As with 250, but starting on a new line in the source form."
+251,End block source comment,0,BN,,!Cx,Miscellaneous,:[249 250] [^251 255]+ ~,Terminates a comment region begun by 249 or 250.
+252,Join to next source line,0,BN,,!Cx,Miscellaneous,,Indicates that a line break that would normally be present at this point in the source should be instead represented by a ;.
+253,Split source line here,0,BN,,!Cx,Miscellaneous,,"Indicates that the current logical line should be split into two physical lines in source form, joined using \."
+254,Braced block in source,0,BN,,!Cx,Miscellaneous,,"Indicates that the following logical block of statements should be bundled onto a single line of the source, joined using ; and bundled using { and }."
+255,Ignore following Dc,0,BN,,!Cx,Miscellaneous,,Indicates that the next character should be ignored.
+256,lang.print,0,BN,,!Cx,EL Routines,(String),Send the specified string to the current output context
 257,Vertical tabulation,0,BN,,Cc,Punctuation,line tabulation,
-258,Begin anonymous parameter,0,BN,,!Ex,Programming,:~ [260:] 259,
-259,End anonymous parameter,0,BN,,!Ex,Programming,:258 [260:] ~,
-260,Begin literal value,0,BN,,!Ex,Programming,:~ [262:] [^261 255]+ 261,
-261,End literal value,0,BN,,!Ex,Programming,:260 [262:] [^261 255]+ ~,
-262,Begin type definition,0,BN,,!Ex,Programming,:~ [264] 263,
-263,End type definition,0,BN,,!Ex,Programming,:262 [264] ~,
-264,Built-in type identifier: String,0,BN,,!Ex,EL Types,,
+258,Begin anonymous parameter,0,BN,,!Cx,EL Syntax,:~ [260:] 259,
+259,End anonymous parameter,0,BN,,!Cx,EL Syntax,:258 [260:] ~,
+260,Begin literal value,0,BN,,!Cx,EL Syntax,:~ [262:] [^261 255]+ 261,
+261,End literal value,0,BN,,!Cx,EL Syntax,:260 [262:] [^261 255]+ ~,
+262,Begin type definition,0,BN,,!Cx,EL Syntax,:~ [264] 263,
+263,End type definition,0,BN,,!Cx,EL Syntax,:262 [264] ~,
+264,Built-in type identifier: String,0,BN,,!Cx,EL Types,,
