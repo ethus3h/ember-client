@@ -1,6 +1,6 @@
-grammar REST {
-    token TOP     { <slash><subject><slash><command>[<slash><data>]? }
-    token subject { \w+ }
+grammar EM {
+    token TOP { <line>+ }
+    token line { .+ }
     token command { \w+ }
     token data    { .* }
  
@@ -9,4 +9,3 @@ grammar REST {
  
 my $m = REST.parse('/ product / update /7 /notify');
 say $m;
-    
