@@ -266,3 +266,4 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 264,Built-in type identifier: String,0,BN,,!Cx,EL Types,,
 265,void lang.invoke(String),0,BN,,!Cx,EL Routines,,"Invoke the routine with the given name"
 266,void lang.block,0,BN,,!Cx,EL Routines,,Indicates a division between blocks of statements
+267,Whitespace in source,0,BN,,!Cx,Miscellaneous,:([statement] ~) | (~ ~) | (~ [statement]),Indicates that in source form, a blank line should be present here
