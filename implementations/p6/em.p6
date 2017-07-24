@@ -5,6 +5,8 @@ grammar EM {
     token bareFinalLine { <lineContents> }
     token lineContents { <declaration>|\N* }
     token declaration { (<identifier>\=<literal>)|(<identifier>:) }
+    token identifier { (<type>\x20)?<identifierBody> }
+    
 }
  
 my $m = EM.parse(Q[String foo(String, String qux?, *):
