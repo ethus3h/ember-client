@@ -264,3 +264,5 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 262,Begin type definition,0,BN,,!Cx,EL Syntax,:~ [264] 263,
 263,End type definition,0,BN,,!Cx,EL Syntax,:262 [264] ~,
 264,Built-in type identifier: String,0,BN,,!Cx,EL Types,,
+265,void lang.invoke(String),0,BN,,!Cx,EL Routines,,"Invoke the routine with the given name"
+266,void lang.block,0,BN,,!Cx,EL Routines,,Indicates a division between blocks of statements
