@@ -1,45 +1,12 @@
-#!/usr/bin/env bash
-# shellcheck disable=SC1091
-source ember_bash_setup &> /dev/null
-#set -x
-
-fileName="$1"
-
-match="\.em$"
-if [[ "$fileName" ~= $match ]]; then
-    format="EM"
-fi
-match="\.emd$"
-if [[ "$fileName" ~= $match ]]; then
-    format="EMD"
-fi
-match="\.ems$"
-if [[ "$fileName" ~= $match ]]; then
-    format="EMS"
-fi
-match="\.dems$"
-if [[ "$fileName" ~= $match ]]; then
-    format="DEMS"
-fi
-[[ -z "$format" ]] && die "Unknown format."
-tempFileId="em-tmp-$(date +%Y-%m-%d-%H-%M-%S-%N)-$(xxd -pu <<< "$(date +%z)")"
-cp "$fileName" "/tmp/$tempFileId"
-
-dcData="/Ember Library/Ember/ember-information-technology-environment/common/data/DcData.csv"
-asciiMapping="/Ember Library/Ember/ember-information-technology-environment/common/data/mappings/from/ascii.csv"
-
-# Convert file to .ems file for working
-
-# Replace all spaces with newlines
-ereplace ' ' $'\n' "/tmp/$tempFileId"
-
-# Parse file
-while read dc; do
-    # Handle individual Dc
-    if grep ",$dc," "$asciiMapping"; then
-        csvtool format '%(2)\n' "$asciiMapping"
-    else
-        # This is a complex Dc, so need to do more than print it.
-        true
-    fi
-done <"/tmp/$tempFileId"
+grammar REST {
+    token TOP     { <slash><subject><slash><command>[<slash><data>]? }
+    token subject { \w+ }
+    token command { \w+ }
+    token data    { .* }
+ 
+    token slash   { \s* '/' \s* }
+}
+ 
+my $m = REST.parse('/ product / update /7 /notify');
+say $m;
+ 
