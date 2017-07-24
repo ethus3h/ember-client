@@ -1,4 +1,4 @@
-String foo(String, String qux?, *)
+String foo(String, String qux?, *):
     say $!par[1]$!par[2]$qux
 
 # Test simple invocation

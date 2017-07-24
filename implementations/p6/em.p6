@@ -3,10 +3,11 @@ grammar EM {
     token line { <lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
-    token lineContents { \N* }
+    token lineContents { <declaration>|\N* }
+    token declaration { (<identifier>\=<literal>)|(<identifier>:) }
 }
  
-my $m = EM.parse(Q[String foo(String, String qux?, *)
+my $m = EM.parse(Q[String foo(String, String qux?, *):
     say $!par[1]$!par[2]$qux
 
 # Test simple invocation
