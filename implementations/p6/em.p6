@@ -3,7 +3,7 @@ grammar EM {
     token line { <lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
-    token lineContents { <declaration>|[""] }
+    token lineContents { <declaration>|[''] }
     token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
     token identifier { [[<type>\x20]?<identifierBody>]|\N* }
     token type { 'String'|\* }
