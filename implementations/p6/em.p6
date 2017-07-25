@@ -3,11 +3,11 @@ grammar EM {
     token line { <lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
-    token lineContents { <declaration> }
-    token declaration { [<identifier>\=<literal>]|[<identifier>] }
-    token identifier { [<type>\x20]?<identifierBody> }
+    token lineContents { <declaration>|[""] }
+    token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
+    token identifier { [[<type>\x20]?<identifierBody>]|\N* }
     token type { 'String'|\* }
-    token identifierBody { <routineIdentifier>?\N* }
+    token identifierBody { <routineIdentifier> }
     token routineIdentifier { <identifierString>\([[<parameter>\,\x20]*<parameter>]?\) }
     token identifierString { <escapedString> }
     token escapedString { \w+ }
