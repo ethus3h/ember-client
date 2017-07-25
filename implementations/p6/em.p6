@@ -4,9 +4,14 @@ grammar EM {
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
     token lineContents { <declaration>|\N* }
-    token declaration { (<identifier>\=<literal>)|(<identifier>:) }
-    token identifier { (<type>\x20)?<identifierBody> }
-    
+    token declaration { [<identifier>\=<literal>]|[<identifier>:] }
+    token identifier { [<type>\x20]?<identifierBody> }
+    token type { 'String'|\* }
+    token identifierBody { <routineIdentifier> }
+    token routineIdentifier { <identifierString>\([[<parameter>\,\x20]*<parameter>]?\) }
+    token identifierString { <escapedString> }
+    token escapedString { \w+ }
+    token parameter { <type>[\x20<identifierString>]?\?? }
 }
  
 my $m = EM.parse(Q[String foo(String, String qux?, *):
