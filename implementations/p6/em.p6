@@ -7,18 +7,20 @@ grammar EM {
     token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
     token identifier { [[<type>\x20]?<identifierBody>] }
     token type { 'String'|\* }
-    token identifierBody { <routineIdentifier> }
+    token identifierBody { <routineIdentifier>|<identifierString> }
     token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
     token identifierString { <escapedString> }
     token escapedString { \w+ }
     token parameterSignature { <type>[\x20<identifierString>]?\?? }
     token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
-    token parameter { <identifierString>|<namedParameter> }
-    token namedParameter {}
+    token parameter { <identifierString>|<declaration> }
+    token literal { <number> }
+    token number { \d+ }
 }
  
-#my $m = EM.parse(Q[String foo(String, String qux?, *):]);
-my $m = EM.parse(Q[foo(bar baz)]);
+my $m = EM.parse(Q[String foo(String, String qux?, *):
+foo(bar baz)
+foo(qux=6 bar)]);
 my $n = Q[    say $!par[1]$!par[2]$qux
 
 # Test simple invocation
