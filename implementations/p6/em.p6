@@ -3,7 +3,8 @@ grammar EM {
     token line { <lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
-    token lineContents { <declaration>|\N* }
+    token lineContents { <declaration>|<invalidLine> }
+    token invalidLine { \N* }
     token declaration { [<identifier>\=<literal>]|[<identifier>:] }
     token identifier { [<type>\x20]?<identifierBody> }
     token type { 'String'|\* }
@@ -14,8 +15,8 @@ grammar EM {
     token parameter { <type>[\x20<identifierString>]?\?? }
 }
  
-my $m = EM.parse(Q[String foo(String, String qux?, *):
-    say $!par[1]$!par[2]$qux
+my $m = EM.parse(Q[String foo(String, String qux?, *):]);
+my $n = Q[    say $!par[1]$!par[2]$qux
 
 # Test simple invocation
 foo(bar baz)
@@ -30,5 +31,5 @@ foo qux=6 bar # qux is still 6, but now parameter 0 is 6 and 1 is bar
 # Test invocation with "invoke"
 routineName="foo"
 invoke $routineName bar baz
-]);
+];
 say $m;
