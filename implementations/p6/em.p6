@@ -3,19 +3,22 @@ grammar EM {
     token line { <lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
     token bareFinalLine { <lineContents> }
-    token lineContents { <declaration>|[''] }
+    token lineContents { <declaration>|<invocation>|[''] }
     token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
     token identifier { [[<type>\x20]?<identifierBody>] }
     token type { 'String'|\* }
     token identifierBody { <routineIdentifier> }
-    token routineIdentifier { <identifierString>\([[<parameter>\,\x20]*<parameter>]?\) }
+    token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
     token identifierString { <escapedString> }
     token escapedString { \w+ }
-    token parameter { <type>[\x20<identifierString>]?\?? }
+    token parameterSignature { <type>[\x20<identifierString>]?\?? }
+    token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
+    token parameter { <identifierString>|<namedParameter> }
+    token namedParameter {}
 }
  
-my $m = EM.parse(Q[String foo(String, String qux?, *):
-]);
+#my $m = EM.parse(Q[String foo(String, String qux?, *):]);
+my $m = EM.parse(Q[foo(bar baz)]);
 my $n = Q[    say $!par[1]$!par[2]$qux
 
 # Test simple invocation
