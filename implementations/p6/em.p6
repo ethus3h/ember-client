@@ -11,7 +11,7 @@ grammar EM {
     token identifierBody { <routineIdentifier>|<identifierString> }
     token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
     token identifierString { <escapedString> }
-    token escapedString { \w+ }
+    token escapedString { [\w|[\\\N]]+ }
     token parameterSignature { <type>[\x20<identifierString>]?\?? }
     token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
     token parameter { <identifierString>|<declaration> }
