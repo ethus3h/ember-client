@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 grammar EM {
-    token TOP { <block>* }
+    token TOP { <block> }
     token block { [<simpleBlock>\nblock]|<simpleBlock> }
     token simpleBlock { <line>*<finalLine>? }
     token line { " "*<lineContents>\n }
