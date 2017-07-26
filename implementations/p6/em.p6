@@ -1,3 +1,4 @@
+#!/usr/bin/env perl6
 grammar EM {
     token TOP { <line>*<finalLine> }
     token line { <lineContents>\n }
