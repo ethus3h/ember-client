@@ -1,9 +1,11 @@
 #!/usr/bin/env perl6
 grammar EM {
-    token TOP { <line>*<finalLine> }
-    token line { <lineContents>\n }
+    token TOP { <block>* }
+    token block { [<simpleBlock>\nblock]|<simpleBlock> }
+    token simpleBlock { <line>*<finalLine> }
+    token line { " "*<lineContents>\n }
     token finalLine { <line>|<bareFinalLine> }
-    token bareFinalLine { <lineContents> }
+    token bareFinalLine { " "*<lineContents> }
     token lineContents { <declaration>|<invocation>|[''] }
     token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
     token identifier { [[<type>\x20]?<identifierBody>] }
