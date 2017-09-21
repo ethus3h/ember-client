@@ -98,7 +98,7 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
     }
 }
 
-token parameterListItem { <parameter> <parameterListSeparator> }; ok runParserTest('String qux?', 'parameter'); ok runParserTest(', ', 'parameterListSeparator'); ok runParserTest('String qux?, ', 'parameterListItem');
+# token parameterListItem { <parameter> <parameterListSeparator> }; ok runParserTest('String qux?', 'parameter'); ok runParserTest(', ', 'parameterListSeparator'); ok runParserTest('String qux?, ', 'parameterListItem');
 
 
 say 'Testing identifier';
@@ -114,6 +114,7 @@ say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
+ok runParserTest('String qux?,', 'parameter');
 
 say 'Testing parameterListSeparator';
 
