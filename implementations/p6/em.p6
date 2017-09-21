@@ -38,15 +38,12 @@ grammar EM {
         <routineIdentifier>
     }
 
-    token parameterSignature {
-        <type> [ ' ' <identifierString> ]? \??
-    }
-
     token invocation {
         <routineIdentifier> ' '? <parameterList>
     }
 
     token parameter {
+        [ <declaration> \? ] |
         <declaration> |
         <value>
     }
@@ -95,6 +92,7 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
     }
 }
 
+ok runParserTest("foo", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
 ok runParserTest("foo(bar baz)", "invocation");
