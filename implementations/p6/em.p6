@@ -44,6 +44,7 @@ grammar EM {
 
     token parameter {
         <type> |
+        [ <declaration> \? ] |
         [ <declaration> \?? ] |
         <value>
     }
@@ -114,7 +115,7 @@ say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
-ok runParserTest('String qux?,', 'parameter');
+nok runParserTest('String qux?,', 'parameter');
 
 say 'Testing parameterListSeparator';
 
