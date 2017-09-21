@@ -23,7 +23,10 @@ grammar EM {
         [ <identifier> ' ' \= ' ' <value> ]
     }
 
-    token type { 'String'|\* }
+    token type {
+        'String' |
+        \*
+    }
     token normalIdentifier {
         [[<type>\x20]?<escapedString>]
     }
@@ -35,7 +38,9 @@ grammar EM {
         <routineIdentifier>
     }
 
-    token parameterSignature { <type>[\x20<identifierString>]?\?? }
+    token parameterSignature {
+        <type> [ ' ' <identifierString> ]? \??
+    }
 
     token invocation {
         <routineIdentifier> ' '? <parameterList>
