@@ -78,7 +78,7 @@ sub run-silenced (&code) {
 }
 
 sub runParserTest(Str $code, Str $rule, Str $fail?) {
-    if ( $fail === "f" ) {
+    if ( $fail eq "f" ) {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
             fail "Parsing failed.";
