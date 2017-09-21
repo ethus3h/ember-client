@@ -105,6 +105,7 @@ ok runParserTest("*", "parameter");
 
 say "Testing parameterListBody";
 
+ok runParserTest("", "parameterListBody");
 ok runParserTest("*", "parameterListBody");
 ok runParserTest("String qux, *", "parameterListBody");
 ok runParserTest("String qux?, *", "parameterListBody"); #
@@ -118,6 +119,7 @@ ok runParserTest("String?, *", "parameterListBody");
 
 say "Testing parameterList";
 
+ok runParserTest("()", "parameterList");
 ok runParserTest("(String, String qux)", "parameterList");
 ok runParserTest("(String, String qux?)", "parameterList");
 ok runParserTest("(*)", "parameterList");
