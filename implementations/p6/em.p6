@@ -8,21 +8,27 @@ grammar EM {
     token TOP { <block> }
     token block { [<simpleBlock>\nblock]|<simpleBlock> }
     token simpleBlock { <line>*<finalLine>? }
+
     token line { " "*<lineContents>\n }
     token finalLine { " "*<lineContents> }
     token lineContents { <declaration>|<invocation>|[''] }
-    token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
-    token identifier { [[<type>\x20]?<identifierBody>] }
-    token type { 'String'|\* }
-    token identifierBody { <routineIdentifier>|<identifierString> }
-    token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
-    token identifierString { <escapedString> }
+
     token escapedString { [\w|[\\\N]]+ }
-    token parameterSignature { <type>[\x20<identifierString>]?\?? }
-    token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
-    token parameter { <identifierString>|<declaration> }
     token literal { <number> }
     token number { \d+ }
+
+    token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
+
+    token type { 'String'|\* }
+    token identifier { [[<type>\x20]?<identifierBody>] }
+    token identifierBody { <routineIdentifier>|<identifierString> }
+    token identifierString { <escapedString> }
+
+    token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
+    token parameterSignature { <type>[\x20<identifierString>]?\?? }
+
+    token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
+    token parameter { <identifierString>|<declaration> }
 }
 
 ok EM.parse("foo(String, String qux?, *)", :rule<identifier>);
