@@ -34,7 +34,7 @@ grammar EM {
 
 sub runParserTest(Str $code, Str :$rule) {
     if ( {
-            ! capture_stdout { {
+            ! capture_stdout {
                 if ! ( EM.parse($code, :$rule) )
                 {
                     return False;
@@ -42,7 +42,7 @@ sub runParserTest(Str $code, Str :$rule) {
                 else {
                     return True;
                 }
-            }; };
+            };
         } )
     {
         say "Hi!";
