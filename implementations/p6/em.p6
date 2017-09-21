@@ -95,57 +95,57 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
     }
 }
 
-say "Testing identifier";
+say 'Testing identifier';
 
-ok runParserTest("foo", "identifier");
-ok runParserTest("foo(String, String qux?, *)", "identifier");
+ok runParserTest('foo', 'identifier');
+ok runParserTest('foo(String, String qux?, *)', 'identifier');
 
-say "Testing routineIdentifier";
+say 'Testing routineIdentifier';
 
-ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
+ok runParserTest('foo(String, String qux?, *)', 'routineIdentifier');
 
-say "Testing parameter";
+say 'Testing parameter';
 
-ok runParserTest("*", "parameter");
-ok runParserTest("String qux?", "parameter");
+ok runParserTest('*', 'parameter');
+ok runParserTest('String qux?', 'parameter');
 
-say "Testing parameterListBody";
+say 'Testing parameterListBody';
 
-ok runParserTest("", "parameterListBody");
-ok runParserTest("*", "parameterListBody");
-ok runParserTest("String qux, *", "parameterListBody");
-ok runParserTest("String qux?, *", "parameterListBody"); #
-ok runParserTest("String qux?", "parameterListBody");
-ok runParserTest("String, *", "parameterListBody");
-ok runParserTest("String, String qux, String", "parameterListBody");
-ok runParserTest("String, String qux?, *", "parameterListBody"); #
-ok runParserTest("String, String qux?", "parameterListBody");
-ok runParserTest("String, String qux", "parameterListBody");
-ok runParserTest("String?, *", "parameterListBody");
+ok runParserTest('', 'parameterListBody');
+ok runParserTest('*', 'parameterListBody');
+ok runParserTest('String qux, *', 'parameterListBody');
+ok runParserTest('String qux?, *', 'parameterListBody'); #
+ok runParserTest('String qux?', 'parameterListBody');
+ok runParserTest('String, *', 'parameterListBody');
+ok runParserTest('String, String qux, String', 'parameterListBody');
+ok runParserTest('String, String qux?, *', 'parameterListBody'); #
+ok runParserTest('String, String qux?', 'parameterListBody');
+ok runParserTest('String, String qux', 'parameterListBody');
+ok runParserTest('String?, *', 'parameterListBody');
 
-say "Testing parameterList";
+say 'Testing parameterList';
 
-ok runParserTest("()", "parameterList");
-ok runParserTest("(*)", "parameterList");
-ok runParserTest("(String, *)", "parameterList");
-ok runParserTest("(String, String qux?, *)", "parameterList");
-ok runParserTest("(String, String qux?)", "parameterList");
-ok runParserTest("(String, String qux)", "parameterList");
+ok runParserTest('()', 'parameterList');
+ok runParserTest('(*)', 'parameterList');
+ok runParserTest('(String, *)', 'parameterList');
+ok runParserTest('(String, String qux?, *)', 'parameterList');
+ok runParserTest('(String, String qux?)', 'parameterList');
+ok runParserTest('(String, String qux)', 'parameterList');
 
-say "Testing invocation";
+say 'Testing invocation';
 
-ok runParserTest("foo (bar, baz)", "invocation");
-ok runParserTest("foo bar 6 qux", "invocation");
-ok runParserTest("foo bar baz", "invocation");
-ok runParserTest("foo bar", "invocation");
-ok runParserTest("foo qux=6 bar", "invocation");
-ok runParserTest("foo(bar 6 qux)", "invocation");
-ok runParserTest("foo(bar baz)", "invocation");
-ok runParserTest("foo(bar, baz", "invocation");
-ok runParserTest("foo(bar, baz)", "invocation");
-ok runParserTest("foo(bar,baz)", "invocation");
-ok runParserTest("foo(bar)", "invocation");
-ok runParserTest("foo(qux=6 bar)", "invocation");
+ok runParserTest('foo (bar, baz)', 'invocation');
+ok runParserTest('foo bar 6 qux', 'invocation');
+ok runParserTest('foo bar baz', 'invocation');
+ok runParserTest('foo bar', 'invocation');
+ok runParserTest('foo qux=6 bar', 'invocation');
+ok runParserTest('foo(bar 6 qux)', 'invocation');
+ok runParserTest('foo(bar baz)', 'invocation');
+ok runParserTest('foo(bar, baz', 'invocation');
+ok runParserTest('foo(bar, baz)', 'invocation');
+ok runParserTest('foo(bar,baz)', 'invocation');
+ok runParserTest('foo(bar)', 'invocation');
+ok runParserTest('foo(qux=6 bar)', 'invocation');
 
 say "Done running tests. Report:";
 done-testing;
