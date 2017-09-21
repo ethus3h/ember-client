@@ -109,6 +109,11 @@ say 'Testing parameter';
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
 
+say 'Testing parameterListItem';
+
+ok runParserTest('String qux?, ', 'parameterListItem');
+ok runParserTest('*, ', 'parameterListItem');
+
 say 'Testing parameterListBody';
 
 ok runParserTest('', 'parameterListBody');
