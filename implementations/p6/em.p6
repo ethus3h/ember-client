@@ -34,21 +34,24 @@ grammar EM {
 
 sub runParserTest(Str $code, Str :$rule) {
     if  (
-            ! capture_stdout {
+            say "Testing.";
+            ! my $result = capture_stdout {
                             if ! ( EM.parse($code, :$rule) )
-                            {
-                                return False;
-                            }
-                            else {
-                                return True;
-                            }
-            }
+                                {
+                                    return False;
+                                }
+                                else {
+                                    return True;
+                                }
+                            };
         )
     {
         say EM.parse($code, :$rule);
+        say "Parsing failed.";
         fail "Parsing failed.";
     }
     else {
+        say "Parsing succeded.";
         return True;
     }
 }
