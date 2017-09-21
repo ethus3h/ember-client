@@ -35,6 +35,7 @@ grammar EM {
         \)?
     }
     token parameter { <identifierString>|<declaration> }
+    token parameterList { ( [<parameter>\,?\x20]* <parameter> ) | '' }
 }
 
 sub silence (&code) {
