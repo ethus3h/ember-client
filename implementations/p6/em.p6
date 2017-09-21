@@ -29,10 +29,10 @@ grammar EM {
 
     token invocation {
         <identifierString>
-        ( \( | ' ')
-            [<parameter>\,?\x20]*
-            <parameter>?
-        \)?
+        (
+            \( <parameterList> \) |
+            ' ' <parameterList>
+        )
     }
     token parameter { <identifierString>|<declaration> }
     token parameterList { ( [<parameter>\,?\x20]* <parameter> ) | '' }
