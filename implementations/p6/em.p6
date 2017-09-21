@@ -43,8 +43,8 @@ grammar EM {
     }
 
     token parameter {
-        [ <declaration> \? ] |
-        <declaration> |
+        [ <declaration> \?? ] |
+        <type> |
         <value>
     }
     token parameterList {
@@ -93,6 +93,8 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
 }
 
 ok runParserTest("foo", "identifier");
+ok runParserTest("String qux?", "parameter");
+ok runParserTest("*", "parameter");
 ok runParserTest("foo(String, String qux?, *)", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
 ok runParserTest("foo(bar baz)", "invocation");
