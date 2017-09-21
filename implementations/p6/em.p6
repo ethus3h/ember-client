@@ -1,7 +1,6 @@
 #!/usr/bin/env perl6
 
 use v6.c;
-use Grammar::Tracer;
 use Test;
 
 grammar EM {
@@ -31,15 +30,23 @@ grammar EM {
     token parameter { <identifierString>|<declaration> }
 }
 
-ok EM.parse("foo(String, String qux?, *)", :rule<identifier>);
-ok EM.parse("foo(String, String qux?, *)", :rule<routineIdentifier>);
-ok EM.parse("foo(bar baz)", :rule<invocation>);
-ok EM.parse("foo(bar 6 qux)", :rule<invocation>);
-ok EM.parse("foo(qux=6 bar)", :rule<invocation>);
-ok EM.parse("foo bar baz", :rule<invocation>);
-ok EM.parse("foo bar 6 qux", :rule<invocation>);
-ok EM.parse("foo qux=6 bar", :rule<invocation>);
+runParserTest(Str $code, rule $rule) {
+    if ! EM.parse($code, $rule) {
+        use Grammar::Tracer;
+        say EM.parse($code, $rule);
+        fail "Parsing failed."
+    }
+}
 
+ok runParserTest("foo(String, String qux?, *)", :rule<identifier>);
+ok runParserTest("foo(String, String qux?, *)", :rule<routineIdentifier>);
+ok runParserTest("foo(bar baz)", :rule<invocation>);
+ok runParserTest("foo(bar 6 qux)", :rule<invocation>);
+ok runParserTest("foo(qux=6 bar)", :rule<invocation>);
+ok runParserTest("foo bar baz", :rule<invocation>);
+ok runParserTest("foo bar 6 qux", :rule<invocation>);
+ok runParserTest("foo qux=6 bar", :rule<invocation>);
+done-testing
 # my $m = EM.parse(Q[String foo(String, String qux?, *):
 # foo(bar baz)
 # foo(qux=6 bar)]);
