@@ -38,15 +38,17 @@ grammar EM {
     token parameterList { ( [<parameter>\,?\x20]* <parameter> ) | '' }
 }
 
-sub silence (&code) {
-    temp $*OUT = class {
-        method print ($) { }
-    }
-    code
+sub run-silenced (&code) {
+    temp $*OUT = temp $*ERR = class {
+        BEGIN {
+            ::?CLASS.^add_method: $_, my method (*@) {} for qw/say put print print-nl/
+        }
+    }.new;
+    code;
 }
 
 sub runParserTest(Str $code, Str :$rule) {
-    if ! silence { EM.parse($code, :$rule) } {
+    if ! run-silenced { EM.parse($code, :$rule) } {
         say EM.parse($code, :$rule);
         fail "Parsing failed.";
     }
