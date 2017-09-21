@@ -3,7 +3,6 @@
 use v6.c;
 use Test;
 use Grammar::Tracer;
-use IO::Capture::Simple;
 
 grammar EM {
     token TOP { <block> }
@@ -32,19 +31,15 @@ grammar EM {
     token parameter { <identifierString>|<declaration> }
 }
 
+sub silenced (&code) {
+    temp $*OUT = class {
+        method print ($) { }
+    }
+    code
+}
+
 sub runParserTest(Str $code, Str :$rule) {
-    if sub {
-            capture_stdout {
-                if ( EM.parse($code, :$rule) )
-                {
-                    return False;
-                }
-                else {
-                    return True;
-                }
-            };
-        }()
-    {
+    if ! silenced { EM.parse($code, :$rule) } {
         say EM.parse($code, :$rule);
         fail "Parsing failed.";
     }
