@@ -92,21 +92,31 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
     }
 }
 
-say "Testing identifiers";
+say "Testing identifier";
 
 ok runParserTest("foo", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
 
-say "Testing parameters";
+say "Testing parameter";
 
 ok runParserTest("String qux?", "parameter");
 ok runParserTest("*", "parameter");
 
-say "Testing parameterListBody"
-ok runParserTest("(String, String qux?, *)", "parameterListBody");
+say "Testing parameterListBody";
 
-say "Testing parameterLists";
+ok runParserTest("String, String qux?, *", "parameterListBody");
+ok runParserTest("String, String qux", "parameterListBody");
+ok runParserTest("String, String qux, String", "parameterListBody");
+ok runParserTest("String, String qux?", "parameterListBody");
+ok runParserTest("String, *", "parameterListBody");
+ok runParserTest("String?, *", "parameterListBody");
+ok runParserTest("String qux?, *", "parameterListBody");
+ok runParserTest("String qux, *", "parameterListBody");
+ok runParserTest("String qux?", "parameterListBody");
+ok runParserTest("*", "parameterListBody");
+
+say "Testing parameterList";
 
 ok runParserTest("(String, String qux)", "parameterList");
 ok runParserTest("(String, String qux?)", "parameterList");
@@ -114,7 +124,7 @@ ok runParserTest("(*)", "parameterList");
 ok runParserTest("(String, *)", "parameterList");
 ok runParserTest("(String, String qux?, *)", "parameterList");
 
-say "Testing invocations";
+say "Testing invocation";
 
 ok runParserTest("foo(bar baz)", "invocation");
 ok runParserTest("foo(bar 6 qux)", "invocation");
