@@ -31,7 +31,7 @@ grammar EM {
     token parameter { <identifierString>|<declaration> }
 }
 
-sub silenced (&code) {
+sub silence (&code) {
     temp $*OUT = class {
         method print ($) { }
     }
@@ -39,12 +39,11 @@ sub silenced (&code) {
 }
 
 sub runParserTest(Str $code, Str :$rule) {
-    if ! silenced { EM.parse($code, :$rule) } {
+    if ! silence { EM.parse($code, :$rule) } {
         say EM.parse($code, :$rule);
         fail "Parsing failed.";
     }
     else {
-        say "Parsing succeded.";
         return True;
     }
 }
