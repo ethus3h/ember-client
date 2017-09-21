@@ -31,7 +31,7 @@ grammar EM {
         [[<type>\x20]?<escapedString>]
     }
     token routineIdentifier {
-        <normalIdentifier><parameterList>?
+        <normalIdentifier><parameterList>
     }
     token identifier {
         <normalIdentifier> |
