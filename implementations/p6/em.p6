@@ -32,10 +32,16 @@ grammar EM {
 
 sub runParserTest(Str $code, Str :$rule) {
     my $rulePair = Pair.new("rule", $rule);
+    say $rule.WHAT;
+    say :$rule.WHAT;
+    say $rulePair.WHAT;
     if ! EM.parse($code, :$rule) {
         use Grammar::Tracer;
-        say EM.parse($code, $rule);
-        fail "Parsing failed."
+        say EM.parse($code, :$rule);
+        fail "Parsing failed.";
+    }
+    else {
+        return True;
     }
 }
 
