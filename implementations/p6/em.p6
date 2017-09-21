@@ -53,11 +53,14 @@ grammar EM {
             ' ' <parameterListBody>
         ]
     }
+    token parameterListItem {
+        <parameter> \,? ' '
+    }
+    token parameterListFilledBody {
+        <parameterListItem>* <parameter>
+    }
     token parameterListBody {
-        [
-            [ <parameter> \,? ' ' ]*
-            <parameter>
-        ] |
+        <parameterListFilledBody> |
         ''
     }
 }
