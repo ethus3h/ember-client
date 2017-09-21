@@ -97,7 +97,7 @@ say "Testing identifier";
 ok runParserTest("foo", "identifier");
 ok runParserTest("foo(String, String qux?, *)", "identifier");
 
-say "Testing routineIdentifier"
+say "Testing routineIdentifier";
 
 ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
 
