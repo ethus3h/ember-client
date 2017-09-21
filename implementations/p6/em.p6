@@ -45,8 +45,7 @@ sub runParserTest(Str $code, Str :$rule) {
             };
         }()
     {
-        say "Hi!";
-        # say EM.parse($code, :$rule);
+        say EM.parse($code, :$rule);
         fail "Parsing failed.";
     }
     else {
