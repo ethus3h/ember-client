@@ -53,8 +53,11 @@ grammar EM {
             ' ' <parameterListBody>
         ]
     }
+    token parameterListSeparator {
+        \,? ' '
+    }
     token parameterListItem {
-        <parameter> \,? ' '
+        <parameter> <parameterListSeparator>
     }
     token parameterListFilledBody {
         <parameterListItem>* <parameter>
@@ -108,6 +111,10 @@ say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
+
+say 'Testing parameterListSeparator';
+
+ok runParserTest(', ', 'parameterListSeparator');
 
 say 'Testing parameterListItem';
 
