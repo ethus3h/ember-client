@@ -34,8 +34,8 @@ grammar EM {
 
 sub runParserTest(Str $code, Str :$rule) {
     if sub {
-            ! capture_stdout {
-                if ! ( EM.parse($code, :$rule) )
+            capture_stdout {
+                if ( EM.parse($code, :$rule) )
                 {
                     return False;
                 }
