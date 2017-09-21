@@ -30,22 +30,27 @@ grammar EM {
     token parameter { <identifierString>|<declaration> }
 }
 
-runParserTest(Str $code, rule $rule) {
+sub runParserTest(Str $code, Str :$rule) {
+    my $rulePair = Pair.new("rule", $rule);
     if ! EM.parse($code, $rule) {
         use Grammar::Tracer;
         say EM.parse($code, $rule);
         fail "Parsing failed."
     }
 }
+#sub runParserTest(Str $code, Str :$rule) { 
+#    say $code; say $rule.WHAT; 
+#};
 
-ok runParserTest("foo(String, String qux?, *)", :rule<identifier>);
-ok runParserTest("foo(String, String qux?, *)", :rule<routineIdentifier>);
-ok runParserTest("foo(bar baz)", :rule<invocation>);
-ok runParserTest("foo(bar 6 qux)", :rule<invocation>);
-ok runParserTest("foo(qux=6 bar)", :rule<invocation>);
-ok runParserTest("foo bar baz", :rule<invocation>);
-ok runParserTest("foo bar 6 qux", :rule<invocation>);
-ok runParserTest("foo qux=6 bar", :rule<invocation>);
+runParserTest("foo(String, String qux?, *)", :rule<identifier>);
+#ok runParserTest("foo(String, String qux?, *)", :rule<identifier>);
+#ok runParserTest("foo(String, String qux?, *)", :rule<routineIdentifier>);
+#ok runParserTest("foo(bar baz)", :rule<invocation>);
+#ok runParserTest("foo(bar 6 qux)", :rule<invocation>);
+#ok runParserTest("foo(qux=6 bar)", :rule<invocation>);
+#ok runParserTest("foo bar baz", :rule<invocation>);
+#ok runParserTest("foo bar 6 qux", :rule<invocation>);
+#ok runParserTest("foo qux=6 bar", :rule<invocation>);
 done-testing
 # my $m = EM.parse(Q[String foo(String, String qux?, *):
 # foo(bar baz)
