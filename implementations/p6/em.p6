@@ -47,28 +47,43 @@ sub run-silenced (&code) {
     code;
 }
 
-sub runParserTest(Str $code, Str :$rule) {
-    if ! run-silenced { EM.parse($code, :$rule) } {
-        say EM.parse($code, :$rule);
-        fail "Parsing failed.";
+sub runParserTest(Str $code, Str $rule, Str $fail?) {
+    if ( $fail === "f" ) {
+        if run-silenced { EM.parse($code, :$rule) } {
+            say EM.parse($code, :$rule);
+            fail "Parsing failed.";
+        }
+        else {
+            return True;
+        }
     }
     else {
-        return True;
+        if ! run-silenced { EM.parse($code, :$rule) } {
+            say EM.parse($code, :$rule);
+            fail "Parsing failed.";
+        }
+        else {
+            return True;
+        }
     }
 }
 
-ok runParserTest("foo(String, String qux?, *)", :rule<identifier>);
-ok runParserTest("foo(String, String qux?, *)", :rule<routineIdentifier>);
-ok runParserTest("foo(bar baz)", :rule<invocation>);
-ok runParserTest("foo(bar 6 qux)", :rule<invocation>);
-ok runParserTest("foo(qux=6 bar)", :rule<invocation>);
-ok runParserTest("foo bar baz", :rule<invocation>);
-ok runParserTest("foo bar 6 qux", :rule<invocation>);
-ok runParserTest("foo qux=6 bar", :rule<invocation>);
-ok runParserTest("foo bar", :rule<invocation>);
-ok runParserTest("foo(bar)", :rule<invocation>);
-ok runParserTest("foo(bar, baz)", :rule<invocation>);
-done-testing
+ok runParserTest("foo(String, String qux?, *)", "identifier");
+ok runParserTest("foo(String, String qux?, *)", "routineIdentifier");
+ok runParserTest("foo(bar baz)", "invocation");
+ok runParserTest("foo(bar 6 qux)", "invocation");
+ok runParserTest("foo(qux=6 bar)", "invocation");
+ok runParserTest("foo bar baz", "invocation");
+ok runParserTest("foo bar 6 qux", "invocation");
+ok runParserTest("foo qux=6 bar", "invocation");
+ok runParserTest("foo bar", "invocation");
+ok runParserTest("foo(bar)", "invocation");
+ok runParserTest("foo(bar, baz)", "invocation");
+ok runParserTest("foo(bar, baz", "invocation");
+ok runParserTest("foo (bar, baz)", "invocation");
+ok runParserTest("foo(bar,baz)", "invocation");
+say "Done running tests. Report:";
+done-testing;
 # my $m = EM.parse(Q[String foo(String, String qux?, *):
 # foo(bar baz)
 # foo(qux=6 bar)]);
