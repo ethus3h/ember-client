@@ -17,25 +17,43 @@ grammar EM {
     token literal { <number> }
     token number { \d+ }
 
-    token declaration { [<identifier>\=<literal>]|[<identifier>\:] }
+    token value { <literal> | <identifier> | <invocation> }
+    token declaration {
+        [ <identifier>[\=<value>]? ] |
+        [ <identifier> ' ' \= ' ' <value> ]
+    }
 
     token type { 'String'|\* }
-    token identifier { [[<type>\x20]?<identifierBody>] }
+    token normalIdentifier { [[<type>\x20]?<escapedString>] }
+    token routineIdentifier { <normalIdentifier> }
+    token identifier { [[<type>\x20]?<escapedString>] }
     token identifierBody { <routineIdentifier>|<identifierString> }
     token identifierString { <escapedString> }
 
-    token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
     token parameterSignature { <type>[\x20<identifierString>]?\?? }
 
     token invocation {
         <identifierString>
-        (
+        [
             \( <parameterList> \) |
             ' ' <parameterList>
-        )
+        ]
     }
-    token parameter { <identifierString>|<declaration> }
-    token parameterList { ( [<parameter>\,?\x20]* <parameter> ) | '' }
+
+    token parameter { <declaration> | <value> }
+    token parameterList {
+        [
+            \( <innerParameterList> \) |
+            ' ' <innerParameterList>
+        ]
+    }
+    token innerParameterList {
+        [
+            [<parameter>\,?\x20]*
+            <parameter>
+        ] |
+        ''
+    }
 }
 
 sub run-silenced (&code) {
