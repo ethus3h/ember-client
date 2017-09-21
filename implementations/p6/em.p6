@@ -24,30 +24,34 @@ grammar EM {
     }
 
     token type { 'String'|\* }
-    token normalIdentifier { [[<type>\x20]?<escapedString>] }
-    token routineIdentifier { <normalIdentifier> }
-    token identifier { [[<type>\x20]?<escapedString>] }
-    token identifierBody { <routineIdentifier>|<identifierString> }
-    token identifierString { <escapedString> }
+    token normalIdentifier {
+        [[<type>\x20]?<escapedString>]
+    }
+    token routineIdentifier {
+        <normalIdentifier><parameterList>?
+    }
+    token identifier {
+        <normalIdentifier> |
+        <routineIdentifier>
+    }
 
     token parameterSignature { <type>[\x20<identifierString>]?\?? }
 
     token invocation {
-        <identifierString>
-        [
-            \( <parameterList> \) |
-            ' ' <parameterList>
-        ]
+        <routineIdentifier> ' '? <parameterList>
     }
 
-    token parameter { <declaration> | <value> }
+    token parameter {
+        <declaration> |
+        <value>
+    }
     token parameterList {
         [
-            \( <innerParameterList> \) |
-            ' ' <innerParameterList>
+            ' '? \( <parameterListBody> \) |
+            ' ' <parameterListBody>
         ]
     }
-    token innerParameterList {
+    token parameterListBody {
         [
             [<parameter>\,?\x20]*
             <parameter>
