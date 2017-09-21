@@ -27,7 +27,13 @@ grammar EM {
     token routineIdentifier { <identifierString>\([[<parameterSignature>\,\x20]*<parameterSignature>]?\) }
     token parameterSignature { <type>[\x20<identifierString>]?\?? }
 
-    token invocation { <identifierString>\([<parameter>\x20]*<parameter>\) }
+    token invocation {
+        <identifierString>
+        ( \( | ' ')
+            [<parameter>\,?\x20]*
+            <parameter>?
+        \)?
+    }
     token parameter { <identifierString>|<declaration> }
 }
 
@@ -56,6 +62,9 @@ ok runParserTest("foo(qux=6 bar)", :rule<invocation>);
 ok runParserTest("foo bar baz", :rule<invocation>);
 ok runParserTest("foo bar 6 qux", :rule<invocation>);
 ok runParserTest("foo qux=6 bar", :rule<invocation>);
+ok runParserTest("foo bar", :rule<invocation>);
+ok runParserTest("foo(bar)", :rule<invocation>);
+ok runParserTest("foo(bar, baz)", :rule<invocation>);
 done-testing
 # my $m = EM.parse(Q[String foo(String, String qux?, *):
 # foo(bar baz)
