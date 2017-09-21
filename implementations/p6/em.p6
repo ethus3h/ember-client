@@ -98,9 +98,7 @@ sub runParserTest(Str $code, Str $rule, Str $fail?) {
     }
 }
 
-ok runParserTest('String qux?', 'parameter');
-ok runParserTest(', ', 'parameterListSeparator');
-ok runParserTest('String qux?, ', 'parameterListItem');
+token parameterListItem { <parameter> <parameterListSeparator> }; ok runParserTest('String qux?', 'parameter'); ok runParserTest(', ', 'parameterListSeparator'); ok runParserTest('String qux?, ', 'parameterListItem');
 
 
 say 'Testing identifier';
