@@ -33,6 +33,12 @@ grammar EM {
 
 ok EM.parse("foo(String, String qux?, *)", :rule<identifier>);
 ok EM.parse("foo(String, String qux?, *)", :rule<routineIdentifier>);
+ok EM.parse("foo(bar baz)", :rule<invocation>);
+ok EM.parse("foo(bar 6 qux)", :rule<invocation>);
+ok EM.parse("foo(qux=6 bar)", :rule<invocation>);
+ok EM.parse("foo bar baz", :rule<invocation>);
+ok EM.parse("foo bar 6 qux", :rule<invocation>);
+ok EM.parse("foo qux=6 bar", :rule<invocation>);
 
 # my $m = EM.parse(Q[String foo(String, String qux?, *):
 # foo(bar baz)
