@@ -144,7 +144,7 @@ ok runParserTest('foo(String, String, String)', 'lineContents');
 #say EM.parse('foo(String, String qux?)', :rule<identifier>);
 #say EM.parse('foo(String, String qux?)', :rule<invocation>);
 #say EM.parse('foo(String, String qux?)', :rule<lineContents>);
-say EM.parse('foo(String, String, String)', :rule<lineContents>);
+say EM.parse('foo(String, String qux?, String)', :rule<lineContents>);
 
 say 'Testing TOP';
 
