@@ -87,12 +87,22 @@ grammar EM {
     }
 
     token parameter {
-        <type> |
         <optionalTypeParameter> |
-        <identifier> |
-        <optionalIdentifierParameter> |
+        <optionalIdentifierParameter>
+    }
+
+    token parameter {
+        <optionalParameter> |
+        [ <requiredParameter> ]
+    }
+
+    token optionalParameter {
+        <optionalTypeParameter> |
+        <optionalIdentifierParameter>
+    }
+    token requiredParameter {
         <declaration> |
-        <value>
+        [ <type> | <identifier> | <value> ]
     }
 
     token optionalTypeParameter {
