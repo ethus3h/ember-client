@@ -139,11 +139,13 @@ ok runParserTest('foo(String, String qux?)', 'identifier');
 ok runParserTest('foo(String, String qux?)', 'invocation');
 ok runParserTest('foo(String, String qux?)', 'lineContents');
 ok runParserTest('foo(String, String, String)', 'lineContents');
+ok runParserTest('foo(String, String qux?, String)', 'lineContents');
 # say EM.parse('String, String qux?', :rule<parameterListBody>);
 #say EM.parse('(String, String qux?)', :rule<parameterList>);
 #say EM.parse('foo(String, String qux?)', :rule<identifier>);
 #say EM.parse('foo(String, String qux?)', :rule<invocation>);
 #say EM.parse('foo(String, String qux?)', :rule<lineContents>);
+#say EM.parse('foo(String, String, String)', :rule<lineContents>);
 say EM.parse('foo(String, String qux?, String)', :rule<lineContents>);
 
 say 'Testing TOP';
