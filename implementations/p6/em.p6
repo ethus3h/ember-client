@@ -53,7 +53,9 @@ grammar EM {
         [
             \( <parameterListBody> \)
         ] |
-        <parameterListBody>
+        [
+            <parameterListBody>
+        ]
     }
 
     token type {
