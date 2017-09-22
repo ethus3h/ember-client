@@ -35,7 +35,7 @@ grammar EM {
             <identifier> ' = ' <value>
         ] ||
         [
-            <identifier> ': ' <value>
+            <identifier> ':' [ ' ' || \n ] <value>
         ] ||
         <identifier>
     }
