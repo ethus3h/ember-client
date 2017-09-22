@@ -132,8 +132,10 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
     }
 }
 
-say EM.parse('String, String qux?', :rule<parameterListBody>);
-say EM.parse('(String, String qux?)', :rule<parameterList>);
+ok runParserTest('String, String qux?', 'parameterListBody');
+ok runParserTest('(String, String qux?)', 'parameterList');
+# say EM.parse('String, String qux?', :rule<parameterListBody>);
+# say EM.parse('(String, String qux?)', :rule<parameterList>);
 
 say 'Testing TOP';
 
