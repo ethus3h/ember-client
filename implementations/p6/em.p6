@@ -69,7 +69,8 @@ grammar EM {
     token parameterListBody {
         [
             [ <parameter> \,? ' ' ]* <parameter>
-        ]?
+        ] |
+        ''
     }
 
     token number {
