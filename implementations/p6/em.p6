@@ -5,21 +5,38 @@ use Test;
 use Grammar::Tracer;
 
 grammar EM {
-    token TOP { <block> }
-    token block {
-        <simpleBlock> [ \n <block> ]
+    token TOP {
+        <block>
     }
-    token simpleBlock { <line>*<finalLine>? }
+    token block {
+        <line>* |
+        <block>*
+    }
 
-    token line { " "*<lineContents>\n }
-    token finalLine { " "*<lineContents> }
-    token lineContents { <declaration>|<invocation>|[''] }
+    token line {
+        " "* <lineContents> \n
+    }
+    token lineContents {
+        <declaration> |
+        <invocation> |
+        ''
+    }
 
-    token escapedString { [\w|[\\\N]]+ }
-    token literal { <number> }
-    token number { \d+ }
+    token escapedString {
+        [\w|[\\\N]]+
+    }
+    token literal {
+        <number>
+    }
+    token number {
+        \d+
+    }
 
-    token value { <literal> | <identifier> | <invocation> }
+    token value {
+        <literal> |
+        <identifier> |
+        <invocation>
+    }
     token declaration {
         [ <identifier>[\=<value>]? ] |
         [ <identifier> ' ' \= ' ' <value> ]
