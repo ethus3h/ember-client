@@ -83,7 +83,7 @@ grammar EM {
         \d+
     }
     token parameterListBody {
-        [ <parameter> \,? ' ' ]* <parameter>
+        <parameter>* % ', '
     }
 
     token parameter {
