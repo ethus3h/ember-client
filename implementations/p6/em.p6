@@ -114,6 +114,8 @@ grammar t {
     }
 }
 t.parse("a?");
+t.parse("a");
+t.parse("a?");
 
 
 sub run-silenced (&code) {
