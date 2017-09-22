@@ -89,7 +89,7 @@ grammar EM {
     token parameter {
         <type> |
         <optionalTypeParameter> |
-        <identifier>
+        <identifier> |
         <optionalIdentifierParameter> |
         <declaration> |
         <value>
