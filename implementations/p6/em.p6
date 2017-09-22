@@ -140,7 +140,7 @@ say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
-nok runParserTest('String qux?,', 'parameter', False);
+nok runParserTest('String qux?,', 'parameter', True);
 
 say 'Testing parameterListBody';
 
