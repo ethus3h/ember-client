@@ -27,6 +27,25 @@ grammar EM {
         ''
     }
 
+    token declaration {
+        [ <identifier>[\=<value>]? ] |
+        [ <identifier> ' ' \= ' ' <value> ]
+    }
+    token invocation {
+        <identifier> ' '? <parameterList>
+    }
+
+    token identifier {
+        [ <type> ' ' ]?
+        <escapedString>
+        [ ' ' <parameterList> ]?
+    }
+    token value {
+        <literal> |
+        <identifier> |
+        <invocation>
+    }
+
     token escapedString {
         [\w|[\\\N]]+
     }
@@ -37,34 +56,17 @@ grammar EM {
         \d+
     }
 
-    token value {
-        <literal> |
-        <identifier> |
-        <invocation>
-    }
-    token declaration {
-        [ <identifier>[\=<value>]? ] |
-        [ <identifier> ' ' \= ' ' <value> ]
-    }
-
     token type {
         'String' |
         \*
     }
     token normalIdentifier {
-        [[<type>\x20]?<escapedString>]
+        
     }
     token routineIdentifier {
         <normalIdentifier><parameterList>
     }
-    token identifier {
-        <normalIdentifier> |
-        <routineIdentifier>
-    }
 
-    token invocation {
-        <routineIdentifier> ' '? <parameterList>
-    }
 
     token parameter {
         [ <declaration> \?? ] ||
