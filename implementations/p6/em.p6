@@ -6,7 +6,9 @@ use Grammar::Tracer;
 
 grammar EM {
     token TOP { <block> }
-    token block { [<simpleBlock>\nblock]|<simpleBlock> }
+    token block {
+        <simpleBlock> [ \n <block> ]
+    }
     token simpleBlock { <line>*<finalLine>? }
 
     token line { " "*<lineContents>\n }
@@ -43,10 +45,11 @@ grammar EM {
     }
 
     token parameter {
-        <type> |
-        [ <declaration> \? ] |
-        [ <declaration> \?? ] |
-        <value>
+        [ <declaration> \?? ] ||
+        [
+            <type> |
+            <value>
+        ]
     }
     token parameterList {
         [
