@@ -50,7 +50,8 @@ grammar EM {
     token value {
         <literal> |
         <identifier> |
-        <invocation>
+        <invocation> |
+        <block>
     }
     token parameterList {
         <parenthesizedParameterList> ||
