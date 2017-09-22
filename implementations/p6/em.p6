@@ -111,11 +111,11 @@ sub run-silenced (&code) {
     code;
 }
 
-sub runParserTest(Str $code, Str $rule, Bool $fail = True) {
+sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
-            fail "Parsing failed.";
+            fail "Parsing unexpectedly succeeded.";
         }
         else {
             return True;
@@ -124,7 +124,7 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = True) {
     else {
         if ! run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
-            fail "Parsing unexpectedly succeeded.";
+            fail "Parsing unexpectedly failed.";
         }
         else {
             return True;
