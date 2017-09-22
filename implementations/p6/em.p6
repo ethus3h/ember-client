@@ -136,9 +136,11 @@ ok runParserTest('String, String qux?', 'parameterListBody');
 ok runParserTest('(String, String qux?)', 'parameterList');
 ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
 ok runParserTest('foo(String, String qux?)', 'identifier');
+ok runParserTest('foo(String, String qux?)', 'invocation');
 # say EM.parse('String, String qux?', :rule<parameterListBody>);
 #say EM.parse('(String, String qux?)', :rule<parameterList>);
-say EM.parse('foo(String, String qux?)', :rule<identifier>);
+#say EM.parse('foo(String, String qux?)', :rule<identifier>);
+say EM.parse('foo(String, String qux?)', :rule<invocation>);
 
 say 'Testing TOP';
 
