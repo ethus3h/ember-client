@@ -74,6 +74,7 @@ grammar EM {
         \d+
     }
     token parameter {
+        <type> \?? ||
         <identifier> \?? ||
         <declaration> ||
         <value>
@@ -127,7 +128,7 @@ ok runParserTest('foo', 'lineContents');
 ok runParserTest('foo=5', 'lineContents');
 ok runParserTest('foo(bar)', 'lineContents');
 ok runParserTest('foo()', 'lineContents');
-ok runParserTest('*', 'lineContents');
+ok runParserTest('* foo', 'lineContents');
 ok runParserTest('String qux?', 'lineContents');
 ok runParserTest('foo(String, String qux?, *)', 'lineContents');
 
