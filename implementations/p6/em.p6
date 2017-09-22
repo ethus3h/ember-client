@@ -21,8 +21,11 @@ grammar EM {
     token line {
         <unterminatedLine> \n
     }
-    token lineContents {
-        <declaration> ||
+    method lineContents {
+        if self.declaration {
+            self.declaration
+            return
+        }
         <invocation> ||
         ''
     }
