@@ -50,10 +50,10 @@ grammar EM {
         <invocation>
     }
     token parameterList {
-        '' |
-        [ \( \) ] |
-        <parameterListBody> |
-        [ \( <parameterListBody> \) ]
+        <nullParameterList> |
+        <emptyParameterList> |
+        <regularParameterList> |
+        <parenthesizedParameterList>
     }
 
     token type {
@@ -66,13 +66,26 @@ grammar EM {
     token literal {
         <number>
     }
-    token parameterListBody {
-        [ <parameter> \,? ' ' ]* <parameter>
+    token nullParameterList {
+        ''
+    }
+    token emptyParameterList {
+        \( \)
+    }
+    token regularParameterList {
+        <parameterListBody>
+    }
+    token parenthesizedParameterList {
+        \( <parameterListBody> \)
     }
 
     token number {
         \d+
     }
+    token parameterListBody {
+        [ <parameter> \,? ' ' ]* <parameter>
+    }
+
     token parameter {
         <type> \?? ||
         <identifier> \?? ||
