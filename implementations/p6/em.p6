@@ -21,7 +21,7 @@ grammar EM {
     token line {
         <unterminatedLine> \n
     }
-    regex lineContents {
+    token lineContents {
         <declaration> ||
         <invocation> ||
         ''
@@ -187,12 +187,12 @@ ok runParserTest('foo bar', 'invocation');
 ok runParserTest('foo qux=6 bar', 'invocation');
 ok runParserTest('foo(bar 6 qux)', 'invocation');
 ok runParserTest('foo(bar baz)', 'invocation');
-nok runParserTest('foo(bar, baz', 'invocation', True);
 ok runParserTest('foo(bar, baz)', 'invocation');
-nok runParserTest('foo(bar,baz)', 'invocation', True);
 ok runParserTest('foo(bar)', 'invocation');
 ok runParserTest('foo(qux=6 bar)', 'invocation');
 ok runParserTest('foo(String, String qux?)', 'invocation');
+nok runParserTest('foo(bar, baz', 'invocation', True);
+nok runParserTest('foo(bar,baz)', 'invocation', True);
 
 say 'Testing lineContents';
 
@@ -208,7 +208,7 @@ ok runParserTest('foo(String, String qux?, String)', 'lineContents');
 ok runParserTest('foo(String, String qux?)', 'lineContents');
 ok runParserTest('foo(String, String, String)', 'lineContents');
 ok runParserTest('foo=5', 'lineContents');
-ok runParserTest('String qux?', 'lineContents');
+nok runParserTest('String qux?', 'lineContents', True);
 
 say 'Testing TOP';
 
