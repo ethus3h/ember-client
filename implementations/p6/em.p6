@@ -102,22 +102,6 @@ grammar EM {
     }
 }
 
-grammar t {
-    token TOP {
-        <statement> | <question>
-    }
-    token statement {
-        \w+
-    }
-    token question {
-        \w+\?
-    }
-}
-t.parse("a?");
-t.parse("a");
-t.parse("a?");
-
-
 sub run-silenced (&code) {
     temp $*OUT = temp $*ERR = class {
         BEGIN {
@@ -147,8 +131,6 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
         }
     }
 }
-
-# token parameterListItem { <parameter> <parameterListSeparator> }; ok runParserTest('String qux?', 'parameter'); ok runParserTest(', ', 'parameterListSeparator'); ok runParserTest('String qux?, ', 'parameterListItem');
 
 ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
 
