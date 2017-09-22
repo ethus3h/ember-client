@@ -51,10 +51,10 @@ grammar EM {
     }
     token parameterList {
         [
-            \( <parameterListBody> \)
+            <parameterListBody>
         ] |
         [
-            <parameterListBody>
+            \( <parameterListBody> \)
         ]
     }
 
