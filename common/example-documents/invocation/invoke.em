@@ -1,15 +1,15 @@
 String foo(String, String qux?, *):
-    say $!par[1]$!par[2]$qux
+    say $1$2$qux
 
 # Test simple invocation
-foo(bar baz)
-foo(bar 6 qux) # qux is 6, param 0 is bar, param 1 is 6, and param 2 is qux
-foo(qux=6 bar) # qux is still 6, but now parameter 0 is 6 and 1 is bar
+foo(bar baz) # $1 = bar, $2 = baz, $qux = baz
+foo(bar 6 qux) # $1 = bar, $2 = 6, $3 = qux, $qux is unset
+foo(qux=6 bar) # $1 = bar, $qux = 6
 
 # Test simple invocation, parenthesis-less style
-foo bar baz
-foo bar 6 qux # qux is 6, param 0 is bar, param 1 is 6, and param 2 is qux
-foo qux=6 bar # qux is still 6, but now parameter 0 is 6 and 1 is bar
+foo bar baz # $1 = bar, $2 = baz, $qux = baz
+foo bar 6 qux # $1 = bar, $2 = 6, $3 = qux, $qux is unset
+foo qux=6 bar # $1 = bar, $qux = 6
 
 # Test invocation with "invoke"
 routineName="foo"
