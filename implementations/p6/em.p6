@@ -132,36 +132,6 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
     }
 }
 
-say 'Testing TOP';
-
-ok runParserTest('', 'TOP');
-ok runParserTest('foo', 'TOP');
-ok runParserTest('foo()', 'TOP');
-ok runParserTest('foo(bar)', 'TOP');
-ok runParserTest('foo=5', 'TOP');
-
-say 'Testing lineContents';
-
-ok runParserTest('', 'lineContents');
-ok runParserTest('* foo', 'lineContents');
-ok runParserTest('foo', 'lineContents');
-ok runParserTest('foo()', 'lineContents');
-ok runParserTest('foo(bar)', 'lineContents');
-ok runParserTest('foo(String, String qux, String baz)', 'lineContents');
-ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
-ok runParserTest('foo(String, String qux?, *)', 'lineContents');
-ok runParserTest('foo=5', 'lineContents');
-ok runParserTest('String qux?', 'lineContents');
-ok runParserTest('foo(String, String qux?)', 'lineContents');
-ok runParserTest('foo(String, String, String)', 'lineContents');
-ok runParserTest('foo(String, String qux?, String)', 'lineContents');
-
-say 'Testing identifier';
-
-ok runParserTest('foo(String, String qux?)', 'identifier');
-ok runParserTest('foo', 'identifier');
-ok runParserTest('foo(String, String qux?, *)', 'identifier');
-
 say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
@@ -198,6 +168,12 @@ ok runParserTest('(String, String qux?, *)', 'parameterList');
 ok runParserTest('(String, String qux?)', 'parameterList');
 ok runParserTest('(String, String qux)', 'parameterList');
 
+say 'Testing identifier';
+
+ok runParserTest('foo(String, String qux?)', 'identifier');
+ok runParserTest('foo', 'identifier');
+ok runParserTest('foo(String, String qux?, *)', 'identifier');
+
 say 'Testing invocation';
 
 ok runParserTest('foo(String, String qux?)', 'invocation');
@@ -213,6 +189,30 @@ ok runParserTest('foo(bar, baz)', 'invocation');
 ok runParserTest('foo(bar,baz)', 'invocation');
 ok runParserTest('foo(bar)', 'invocation');
 ok runParserTest('foo(qux=6 bar)', 'invocation');
+
+say 'Testing lineContents';
+
+ok runParserTest('', 'lineContents');
+ok runParserTest('* foo', 'lineContents');
+ok runParserTest('foo', 'lineContents');
+ok runParserTest('foo()', 'lineContents');
+ok runParserTest('foo(bar)', 'lineContents');
+ok runParserTest('foo(String, String qux, String baz)', 'lineContents');
+ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
+ok runParserTest('foo(String, String qux?, *)', 'lineContents');
+ok runParserTest('foo=5', 'lineContents');
+ok runParserTest('String qux?', 'lineContents');
+ok runParserTest('foo(String, String qux?)', 'lineContents');
+ok runParserTest('foo(String, String, String)', 'lineContents');
+ok runParserTest('foo(String, String qux?, String)', 'lineContents');
+
+say 'Testing TOP';
+
+ok runParserTest('', 'TOP');
+ok runParserTest('foo', 'TOP');
+ok runParserTest('foo()', 'TOP');
+ok runParserTest('foo(bar)', 'TOP');
+ok runParserTest('foo=5', 'TOP');
 
 say "Done running tests. Report:";
 done-testing;
