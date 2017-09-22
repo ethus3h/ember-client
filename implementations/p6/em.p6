@@ -38,12 +38,16 @@ grammar EM {
     token identifier {
         [ <type> ' ' ]?
         <escapedString>
-        [ ' ' <parameterList> ]?
+        [ ' '? <parameterList> ]?
     }
     token value {
         <literal> |
         <identifier> |
         <invocation>
+    }
+    token parameterList {
+        \( <parameterListBody> \) |
+        <parameterListBody>
     }
 
     token escapedString {
@@ -52,8 +56,16 @@ grammar EM {
     token literal {
         <number>
     }
+    token parameterListBody {
+        <parameterListFilledBody> |
+        ''
+    }
+
     token number {
         \d+
+    }
+    token parameterListFilledBody {
+        <parameterListItem>* <parameter>
     }
 
     token type {
@@ -75,24 +87,11 @@ grammar EM {
             <value>
         ]
     }
-    token parameterList {
-        [
-            ' '? \( <parameterListBody> \) |
-            ' ' <parameterListBody>
-        ]
-    }
     token parameterListSeparator {
         \,? ' '
     }
     token parameterListItem {
         <parameter> <parameterListSeparator>
-    }
-    token parameterListFilledBody {
-        <parameterListItem>* <parameter>
-    }
-    token parameterListBody {
-        <parameterListFilledBody> |
-        ''
     }
 }
 
