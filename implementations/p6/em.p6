@@ -8,9 +8,11 @@ grammar EM {
     token TOP {
         <block>
     }
+    token finalLine {
+        
+    }
     token block {
-        <line>* |
-        <block>*
+        [<block> | <line>]* <finalLine>? |
     }
 
     token line {
