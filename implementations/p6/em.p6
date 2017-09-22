@@ -32,7 +32,10 @@ grammar EM {
             <identifier> [ \= <value> ]?
         ] |
         [
-            <identifier> ' ' \= ' ' <value>
+            <identifier> ' = ' <value>
+        ] |
+        [
+            <identifier> ': ' <value>
         ]
     }
     token invocation {
