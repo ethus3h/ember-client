@@ -22,8 +22,8 @@ grammar EM {
         <unterminatedLine> \n
     }
     token lineContents {
-        <invocation> ||
         <declaration> ||
+        <invocation> ||
         ''
     }
 
