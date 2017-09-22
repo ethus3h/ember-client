@@ -24,6 +24,7 @@ grammar EM {
     token lineContents {
         <declaration> ||
         <invocation> ||
+        <bareDeclaration> ||
         ''
     }
 
@@ -36,11 +37,13 @@ grammar EM {
         ] ||
         [
             <identifier> ':' [ ' ' || \n ] <value>
-        ] ||
-        <identifier>
+        ]
     }
     token invocation {
         <identifier> ' '? <parameterList>
+    }
+    token bareDeclaration {
+        <identifier>
     }
 
     token identifier {
