@@ -150,6 +150,8 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
 
 # token parameterListItem { <parameter> <parameterListSeparator> }; ok runParserTest('String qux?', 'parameter'); ok runParserTest(', ', 'parameterListSeparator'); ok runParserTest('String qux?, ', 'parameterListItem');
 
+ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
+
 say 'Testing TOP';
 
 ok runParserTest('', 'TOP');
