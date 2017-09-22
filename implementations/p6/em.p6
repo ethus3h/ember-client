@@ -50,12 +50,10 @@ grammar EM {
         <invocation>
     }
     token parameterList {
-        [
-            <parameterListBody>
-        ] |
-        [
-            \( <parameterListBody> \)
-        ]
+        '' |
+        [ \( \) ] |
+        <parameterListBody> |
+        [ \( <parameterListBody> \) ]
     }
 
     token type {
@@ -69,10 +67,7 @@ grammar EM {
         <number>
     }
     token parameterListBody {
-        [
-            [ <parameter> \,? ' ' ]* <parameter>
-        ] |
-        ''
+        [ <parameter> \,? ' ' ]* <parameter>
     }
 
     token number {
