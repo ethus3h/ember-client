@@ -111,7 +111,7 @@ sub run-silenced (&code) {
     code;
 }
 
-sub runParserTest(Str $code, Str $rule, Bool $fail?) {
+sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
