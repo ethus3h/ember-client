@@ -11,8 +11,11 @@ grammar EM {
     token unterminatedLine {
         " "* <lineContents>
     }
+    token terminatedBlock {
+        <block> \n
+    }
     token block {
-        [<block> | <line>]* <unterminatedLine>? |
+        [<line>]* <unterminatedLine>?
     }
 
     token line {
