@@ -23,8 +23,8 @@ grammar EM {
     }
     method lineContents {
         if self.declaration {
-            self.declaration
-            return
+            self.declaration;
+            return;
         }
         <invocation> ||
         ''
