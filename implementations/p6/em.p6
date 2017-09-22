@@ -8,15 +8,15 @@ grammar EM {
     token TOP {
         <block>
     }
-    token finalLine {
-        
+    token unterminatedLine {
+        " "* <lineContents>
     }
     token block {
-        [<block> | <line>]* <finalLine>? |
+        [<block> | <line>]* <unterminatedLine>? |
     }
 
     token line {
-        " "* <lineContents> \n
+        <unterminatedLine> \n
     }
     token lineContents {
         <declaration> |
