@@ -132,6 +132,10 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
     }
 }
 
+say 'Testing optionalParameter';
+
+ok runParserTest('String qux?', 'optionalParameter');
+
 say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
