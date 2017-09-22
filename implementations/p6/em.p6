@@ -132,16 +132,6 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
     }
 }
 
-ok runParserTest('String, String qux?', 'parameterListBody');
-ok runParserTest('(String, String qux?)', 'parameterList');
-ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
-ok runParserTest('foo(String, String qux?)', 'identifier');
-ok runParserTest('foo(String, String qux?)', 'invocation');
-ok runParserTest('foo(String, String qux?)', 'lineContents');
-ok runParserTest('foo(String, String, String)', 'lineContents');
-ok runParserTest('foo(String, String qux?, String)', 'lineContents');
-ok runParserTest('String, String qux?, String', 'parameterListBody');
-
 say 'Testing TOP';
 
 ok runParserTest('', 'TOP');
@@ -162,9 +152,13 @@ ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
 ok runParserTest('foo(String, String qux?, *)', 'lineContents');
 ok runParserTest('foo=5', 'lineContents');
 ok runParserTest('String qux?', 'lineContents');
+ok runParserTest('foo(String, String qux?)', 'lineContents');
+ok runParserTest('foo(String, String, String)', 'lineContents');
+ok runParserTest('foo(String, String qux?, String)', 'lineContents');
 
 say 'Testing identifier';
 
+ok runParserTest('foo(String, String qux?)', 'identifier');
 ok runParserTest('foo', 'identifier');
 ok runParserTest('foo(String, String qux?, *)', 'identifier');
 
@@ -174,8 +168,14 @@ ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
 nok runParserTest('String qux?,', 'parameter', False);
 
+say 'Testing parenthesizedParameterList';
+
+ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
+
 say 'Testing parameterListBody';
 
+ok runParserTest('String, String qux?, String', 'parameterListBody');
+ok runParserTest('String, String qux?', 'parameterListBody');
 ok runParserTest('', 'parameterListBody');
 ok runParserTest('*', 'parameterListBody');
 ok runParserTest('String qux, *', 'parameterListBody');
@@ -190,6 +190,7 @@ ok runParserTest('String?, *', 'parameterListBody');
 
 say 'Testing parameterList';
 
+ok runParserTest('(String, String qux?)', 'parameterList');
 ok runParserTest('()', 'parameterList');
 ok runParserTest('(*)', 'parameterList');
 ok runParserTest('(String, *)', 'parameterList');
@@ -199,6 +200,7 @@ ok runParserTest('(String, String qux)', 'parameterList');
 
 say 'Testing invocation';
 
+ok runParserTest('foo(String, String qux?)', 'invocation');
 ok runParserTest('foo (bar, baz)', 'invocation');
 ok runParserTest('foo bar 6 qux', 'invocation');
 ok runParserTest('foo bar baz', 'invocation');
