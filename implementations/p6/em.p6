@@ -132,7 +132,7 @@ sub runParserTest(Str $code, Str $rule, Bool $fail?) {
     }
 }
 
-ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
+ok runParserTest('String qux?', 'parameter');
 
 say 'Testing TOP';
 
