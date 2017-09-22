@@ -22,8 +22,8 @@ grammar EM {
         <unterminatedLine> \n
     }
     token lineContents {
-        <declaration> |
-        <invocation> |
+        <invocation> ||
+        <declaration> ||
         ''
     }
 
@@ -189,7 +189,7 @@ ok runParserTest('foo(bar 6 qux)', 'invocation');
 ok runParserTest('foo(bar baz)', 'invocation');
 nok runParserTest('foo(bar, baz', 'invocation', True);
 ok runParserTest('foo(bar, baz)', 'invocation');
-ok runParserTest('foo(bar,baz)', 'invocation');
+nok runParserTest('foo(bar,baz)', 'invocation', True);
 ok runParserTest('foo(bar)', 'invocation');
 ok runParserTest('foo(qux=6 bar)', 'invocation');
 ok runParserTest('foo(String, String qux?)', 'invocation');
