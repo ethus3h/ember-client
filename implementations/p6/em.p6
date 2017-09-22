@@ -29,14 +29,15 @@ grammar EM {
 
     token declaration {
         [
-            <identifier> [ \= <value> ]?
-        ] |
+            <identifier> '=' <value>
+        ] ||
         [
             <identifier> ' = ' <value>
-        ] |
+        ] ||
         [
             <identifier> ': ' <value>
-        ]
+        ] ||
+        <identifier>
     }
     token invocation {
         <identifier> ' '? <parameterList>
