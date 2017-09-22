@@ -50,7 +50,9 @@ grammar EM {
         <invocation>
     }
     token parameterList {
-        \( <parameterListBody> \) |
+        [
+            \( <parameterListBody> \)
+        ] |
         <parameterListBody>
     }
 
