@@ -136,24 +136,11 @@ say 'Testing identifier';
 ok runParserTest('foo', 'identifier');
 ok runParserTest('foo(String, String qux?, *)', 'identifier');
 
-say 'Testing routineIdentifier';
-
-ok runParserTest('foo(String, String qux?, *)', 'routineIdentifier');
-
 say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
 nok runParserTest('String qux?,', 'parameter', False);
-
-say 'Testing parameterListSeparator';
-
-ok runParserTest(', ', 'parameterListSeparator');
-
-say 'Testing parameterListItem';
-
-ok runParserTest('String qux?, ', 'parameterListItem');
-ok runParserTest('*, ', 'parameterListItem');
 
 say 'Testing parameterListBody';
 
