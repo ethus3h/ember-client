@@ -81,8 +81,8 @@ sub run-silenced (&code) {
     code;
 }
 
-sub runParserTest(Str $code, Str $rule, Str $fail?) {
-    if ( $fail eq "f" ) {
+sub runParserTest(Str $code, Str $rule, Bool $fail?) {
+    if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
             fail "Parsing failed.";
@@ -118,7 +118,7 @@ say 'Testing parameter';
 
 ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
-nok runParserTest('String qux?,', 'parameter');
+nok runParserTest('String qux?,', 'parameter', False);
 
 say 'Testing parameterListSeparator';
 
