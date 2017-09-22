@@ -118,6 +118,7 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
             fail "Parsing unexpectedly succeeded.";
         }
         else {
+            say "Parsing failed as expected."
             return True;
         }
     }
