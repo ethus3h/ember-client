@@ -115,11 +115,12 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
-            fail "Parsing unexpectedly succeeded.";
+            say "Parsing unexpectedly succeeded.";
+            # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
+            return True;
         }
         else {
-            say "Parsing failed as expected.";
-            return True;
+            fail "Parsing failed as expected.";
         }
     }
     else {
