@@ -87,9 +87,9 @@ grammar EM {
     }
 
     token parameter {
-        <type> \?? ||
-        <identifier> \?? ||
-        <declaration> ||
+        [ <type> \?? ] |
+        [ <identifier> \?? ] |
+        <declaration> |
         <value>
     }
 }
