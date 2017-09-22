@@ -138,10 +138,6 @@ ok runParserTest('*', 'parameter');
 ok runParserTest('String qux?', 'parameter');
 nok runParserTest('String qux?,', 'parameter', False);
 
-say 'Testing parenthesizedParameterList';
-
-ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
-
 say 'Testing parameterListBody';
 
 ok runParserTest('String, String qux?, String', 'parameterListBody');
@@ -157,6 +153,10 @@ ok runParserTest('String, String qux?, *', 'parameterListBody'); #
 ok runParserTest('String, String qux?', 'parameterListBody');
 ok runParserTest('String, String qux', 'parameterListBody');
 ok runParserTest('String?, *', 'parameterListBody');
+
+say 'Testing parenthesizedParameterList';
+
+ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
 
 say 'Testing parameterList';
 
