@@ -28,8 +28,12 @@ grammar EM {
     }
 
     token declaration {
-        [ <identifier>[\=<value>]? ] |
-        [ <identifier> ' ' \= ' ' <value> ]
+        [
+            <identifier> [ \= <value> ]?
+        ] |
+        [
+            <identifier> ' ' \= ' ' <value>
+        ]
     }
     token invocation {
         <identifier> ' '? <parameterList>
@@ -50,6 +54,10 @@ grammar EM {
         <parameterListBody>
     }
 
+    token type {
+        'String' |
+        \*
+    }
     token escapedString {
         [\w|[\\\N]]+
     }
@@ -57,41 +65,18 @@ grammar EM {
         <number>
     }
     token parameterListBody {
-        <parameterListFilledBody> |
-        ''
+        [
+            [ <parameter> \,? ' ' ]* <parameter>
+        ]?
     }
 
     token number {
         \d+
     }
-    token parameterListFilledBody {
-        <parameterListItem>* <parameter>
-    }
-
-    token type {
-        'String' |
-        \*
-    }
-    token normalIdentifier {
-        
-    }
-    token routineIdentifier {
-        <normalIdentifier><parameterList>
-    }
-
-
     token parameter {
-        [ <declaration> \?? ] ||
-        [
-            <type> |
-            <value>
-        ]
-    }
-    token parameterListSeparator {
-        \,? ' '
-    }
-    token parameterListItem {
-        <parameter> <parameterListSeparator>
+        <identifier> \?? ||
+        <declaration> ||
+        <value>
     }
 }
 
