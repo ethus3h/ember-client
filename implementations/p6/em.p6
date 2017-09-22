@@ -102,6 +102,20 @@ grammar EM {
     }
 }
 
+grammar t {
+    token TOP {
+        <statement> | <question>
+    }
+    token statement {
+        \w+
+    }
+    token question {
+        \w+\?
+    }
+}
+t.parse("a?");
+
+
 sub run-silenced (&code) {
     temp $*OUT = temp $*ERR = class {
         BEGIN {
