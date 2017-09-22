@@ -141,6 +141,7 @@ ok runParserTest('* foo', 'lineContents');
 ok runParserTest('foo', 'lineContents');
 ok runParserTest('foo()', 'lineContents');
 ok runParserTest('foo(bar)', 'lineContents');
+ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
 ok runParserTest('foo(String, String qux?, *)', 'lineContents');
 ok runParserTest('foo=5', 'lineContents');
 ok runParserTest('String qux?', 'lineContents');
