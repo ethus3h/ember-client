@@ -50,10 +50,10 @@ grammar EM {
         <invocation>
     }
     token parameterList {
-        <nullParameterList> |
-        <emptyParameterList> |
-        <regularParameterList> |
-        <parenthesizedParameterList>
+        <parenthesizedParameterList> ||
+        <regularParameterList> ||
+        <emptyParameterList> ||
+        <nullParameterList>
     }
 
     token type {
