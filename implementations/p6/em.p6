@@ -52,7 +52,7 @@ grammar EM does Grammar::ErrorReporting {
                 { $<spaces> }
                 eq
                 {
-                    
+                    $
                 }
             }>
         ]*
