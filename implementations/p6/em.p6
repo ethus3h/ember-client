@@ -142,19 +142,17 @@ grammar EM does Grammar::ErrorReporting {
         \( \)
     }
     token regularParameterList {
-        <parameterListBody>
+        ' ' <parameterListBody>
     }
     token parenthesizedParameterList {
-        \( <parameterListBody> \)
+        '(' <parameterListBody> ')'
     }
 
     token number {
         \d+
     }
     token parameterListBody {
-        ' ' [
-            <parameter>* % ', '
-        ] ' '
+        <parameter>* % ', '
     }
 
     token parameter {
