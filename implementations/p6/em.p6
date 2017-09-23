@@ -66,8 +66,8 @@ grammar EM does Grammar::ErrorReporting {
             token scopingSpaces {
                 '    '*
             }
-        )
-    )
+        );
+    );
     token unterminatedLine {
         <lineContents>
     }
