@@ -132,7 +132,13 @@ grammar EM does Grammar::ErrorReporting {
         [\w|[\\\N]]+
     }
     token literal {
-        <block> ||
+        [
+            ': '
+            <blockContents>
+        ] ||
+        [
+            '{ ' ~ ' }' <blockContents>
+        ] ||
         <number>
     }
     token nullParameterList {
