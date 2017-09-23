@@ -152,7 +152,9 @@ grammar EM does Grammar::ErrorReporting {
         \d+
     }
     token parameterListBody {
-        <parameter>* % ', '
+        ' ' [
+            <parameter>* % ', '
+        ] ' '
     }
 
     token parameter {
