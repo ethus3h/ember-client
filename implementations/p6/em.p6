@@ -190,7 +190,7 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     $*ST = SymbolTable.new;
     if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
-#            if EM.parse($code, :$rule) {
+#        if EM.parse($code, :$rule) {
             say EM.parse($code, :$rule);
             say "Parsing unexpectedly succeeded.";
             # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
@@ -202,7 +202,7 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     }
     else {
         if ! run-silenced { EM.parse($code, :$rule) } {
-#            if ! EM.parse($code, :$rule) {
+#        if ! EM.parse($code, :$rule) {
             say EM.parse($code, :$rule);
             fail "Parsing unexpectedly failed.";
         }
