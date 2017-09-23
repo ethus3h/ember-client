@@ -35,10 +35,21 @@ grammar EM does Grammar::ErrorReporting {
         LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
-    rule block_wrapped {
-        [ '    '{} <terminatedLine>]* <unterminatedLine>?
+    token block_wrapped {
+        [
+            '{'
+            [
+                '    '{}
+                <terminatedLine>]*
+                <unterminatedLine>?
+            ]
+            '}'
+        ]
     }
 
+    token blockContents {
+        <lineContents>
+    }
     token unterminatedLine {
         <lineContents>
     }
