@@ -28,6 +28,7 @@ class SymbolTable {
 grammar EM does Grammar::ErrorReporting {
     token TOP {
         :my $*ST = SymbolTable.new();
+        say $*ST.WHAT;
         <block>
     }
     method block {
