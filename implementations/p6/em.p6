@@ -58,10 +58,10 @@ grammar EM {
     }
     token value {
         <block> ||
-        [ <invocation> ||
+        [ [ <invocation> ||
         <reference> ||
         <identifier> ||
-        <literal> ] <value>?
+        <literal> ] <value>? ]
     }
     token parameterList {
         <parenthesizedParameterList> ||
@@ -209,9 +209,9 @@ ok runParserTest('foo(String, String qux?)', 'invocation');
 nok runParserTest('foo(bar, baz', 'invocation', True);
 nok runParserTest('foo(bar,baz)', 'invocation', True);
 
-say 'Testing reference';
+say 'Testing value';
 
-ok runParserTest('$1$2$qux', 'reference');
+ok runParserTest('$1$2$qux', 'value');
 
 say 'Testing lineContents';
 
