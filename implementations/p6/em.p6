@@ -70,13 +70,13 @@ grammar EM does Grammar::ErrorReporting {
         <unterminatedLine> \n
     }
     token lineContents {
-        <declaration> ||
+        <assignment> ||
         <invocation> ||
-        <bareDeclaration> ||
+        <declaration> ||
         ''
     }
 
-    token declaration {
+    token assignment {
         [
             <identifier> '=' <value>
         ] ||
@@ -90,7 +90,7 @@ grammar EM does Grammar::ErrorReporting {
     token invocation {
         <identifier> ' '? <parameterList>
     }
-    token bareDeclaration {
+    token declaration {
         <identifier>
     }
 
@@ -163,7 +163,7 @@ grammar EM does Grammar::ErrorReporting {
         ] \?
     }
     token requiredParameter {
-        <declaration> |
+        <assignment> |
         [ <type> | <identifier> | <value> ]
     }
 }
