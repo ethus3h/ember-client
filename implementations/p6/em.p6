@@ -3,6 +3,7 @@
 use v6.c;
 use Test;
 use Grammar::Tracer;
+use Grammar::ErrorReporting;
 
 # This class is by Moritz Lenz. I hope they don't mind me using it
 class SymbolTable {
