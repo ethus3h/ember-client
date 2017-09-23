@@ -32,37 +32,42 @@ class SymbolTable {
 my $*ST = SymbolTable.new;
 grammar EM does Grammar::ErrorReporting {
     # High-level chunking of the code
-    token TOP {
-        <block>
-    }
-    method block {
-        $*ST.enter-scope();
-        LEAVE $*ST.leave-scope();
-        self.block_wrapped();
-    }
+    (
+        token TOP {
+            <block>
+        }
+        method block {
+            $*ST.enter-scope();
+            LEAVE $*ST.leave-scope();
+            self.block_wrapped();
+        }
 
-    token block_wrapped {
-        [
-            '{ ' ~ ' }' <blockContents>
-        ] ||
-        <blockContents>
-    }
-    method blockTerminatedLines {
-        my Str $*scopingSpaces = $*ST.getScopingSpaces();
-        self.blockTerminatedLines_wrapped();
-    }
-    token blockTerminatedLines_wrapped {
-        <scopingSpaces>
-        <terminatedLine>
-        <?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
-    }
-    token blockContents {
-        <blockTerminatedLines>*
-        <unterminatedLine>?
-    }
-    token scopingSpaces {
-        '    '*
-    }
+        # Support rules for high-level chunking
+        (
+            token block_wrapped {
+                [
+                    '{ ' ~ ' }' <blockContents>
+                ] ||
+                <blockContents>
+            }
+            method blockTerminatedLines {
+                my Str $*scopingSpaces = $*ST.getScopingSpaces();
+                self.blockTerminatedLines_wrapped();
+            }
+            token blockTerminatedLines_wrapped {
+                <scopingSpaces>
+                <terminatedLine>
+                <?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
+            }
+            token blockContents {
+                <blockTerminatedLines>*
+                <unterminatedLine>?
+            }
+            token scopingSpaces {
+                '    '*
+            }
+        )
+    )
     token unterminatedLine {
         <lineContents>
     }
