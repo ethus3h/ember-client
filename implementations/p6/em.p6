@@ -47,9 +47,11 @@ grammar EM {
     }
 
     token identifier {
-        [ <type> ' ' ]?
-        <escapedString>
-        [ ' '? <parameterList> ]?
+        [
+            [ <type> ' ' ]?
+            <escapedString>
+            [ ' '? <parameterList> ]?
+        ] [ '.' <identifier> ]?
     }
     token reference {
         [ <type> ' ' ]?
