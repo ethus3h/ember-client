@@ -6,6 +6,7 @@ use Grammar::Tracer;
 
 grammar EM {
     token TOP {
+        :my %*SYMBOLS;
         <block>
     }
     token unterminatedLine {
@@ -81,6 +82,7 @@ grammar EM {
         [\w|[\\\N]]+
     }
     token literal {
+        <block> ||
         <number>
     }
     token nullParameterList {
