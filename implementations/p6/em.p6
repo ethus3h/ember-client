@@ -37,7 +37,7 @@ grammar EM does Grammar::ErrorReporting {
     }
     token block_wrapped {
         [
-            '{' ~ '}' % <blockContents>
+            '{' ~ '}' <blockContents>
         ] ||
         <blockContents>
     }
