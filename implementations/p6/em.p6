@@ -37,18 +37,15 @@ grammar EM does Grammar::ErrorReporting {
     }
     token block_wrapped {
         [
-            '{'
-            [
-                '    '{}
-                <terminatedLine>]*
-                <unterminatedLine>?
-            ]
-            '}'
-        ]
+            '{' ~ '}' % <blockContents>
+        ] ||
+        <blockContents>
     }
 
     token blockContents {
-        <lineContents>
+        '    '{}
+        <terminatedLine>]*
+        <unterminatedLine>?
     }
     token unterminatedLine {
         <lineContents>
