@@ -48,13 +48,7 @@ grammar EM does Grammar::ErrorReporting {
         [
             <spaces>
             <terminatedLine>
-            <?{
-                { $<spaces> }
-                eq
-                {
-                    $
-                }
-            }>
+            <?{ { $<spaces> } eq $spaceCount }>
         ]*
         <unterminatedLine>?
     }
