@@ -118,9 +118,9 @@ grammar EM does Grammar::ErrorReporting {
         ] <value>?
     }
     token parameterList {
+        <emptyParameterList> ||
         <parenthesizedParameterList> ||
         <regularParameterList> ||
-        <emptyParameterList> ||
         <nullParameterList>
     }
 
