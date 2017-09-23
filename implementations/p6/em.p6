@@ -30,9 +30,6 @@ grammar EM does Grammar::ErrorReporting {
         :my $*ST = SymbolTable.new();
         <block>
     }
-    token terminatedBlock {
-        <block> \n
-    }
     method block {
         $*ST.enter-scope();
         LEAVE $*ST.leave-scope();
