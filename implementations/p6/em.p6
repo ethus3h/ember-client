@@ -4,6 +4,26 @@ use v6.c;
 use Test;
 use Grammar::Tracer;
 
+# This class is by Moritz Lenz. I hope they don't mind me using it
+class SymbolTable {
+    has @!scopes = {}, ;
+    method enter-scope() {
+        @!scopes.push({})
+    }
+    method leave-scope() {
+        @!scopes.pop();
+    }
+    method declare($variable) {
+        @!scopes[*-1]{$variable} = True
+    }
+    method check-declared($variable) {
+        for @!scopes.reverse -> %scope {
+            return True if %scope{$variable};
+        }
+        return False;
+    }
+}
+
 grammar EM {
     token TOP {
         :my %*SYMBOLS;
