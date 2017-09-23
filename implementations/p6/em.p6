@@ -29,9 +29,6 @@ grammar EM {
         :my $*ST = SymbolTable.new();
         <block>
     }
-    token unterminatedLine {
-        " "* <lineContents>
-    }
     token terminatedBlock {
         <block> \n
     }
@@ -41,9 +38,12 @@ grammar EM {
         self.block_wrapped();
     }
     token block_wrapped {
-        [<terminatedLine>]* <unterminatedLine>?
+        [ '    '{} <terminatedLine>]* <unterminatedLine>?
     }
 
+    token unterminatedLine {
+        <lineContents>
+    }
     token terminatedLine {
         <unterminatedLine> \n
     }
