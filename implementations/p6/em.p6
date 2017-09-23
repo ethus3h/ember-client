@@ -24,7 +24,7 @@ class SymbolTable {
         return False;
     }
     method getScopingSpaces() returns Str {
-        :my Int $scopeCount = $*ST.@!scopes.elems;
+        my Int $scopeCount = $*ST.@!scopes.elems;
         return '    ' x $scopeCount;
     }
 }
