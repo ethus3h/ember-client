@@ -31,6 +31,7 @@ class SymbolTable {
 
 my $*ST = SymbolTable.new;
 grammar EM does Grammar::ErrorReporting {
+    # High-level chunking of the code
     token TOP {
         <block>
     }
@@ -39,28 +40,27 @@ grammar EM does Grammar::ErrorReporting {
         LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
+
     token block_wrapped {
         [
             '{ ' ~ ' }' <blockContents>
         ] ||
         <blockContents>
     }
-
     method blockTerminatedLines {
-        my Str $*spaces = $*ST.getScopingSpaces();
+        my Str $*scopingSpaces = $*ST.getScopingSpaces();
         self.blockTerminatedLines_wrapped();
     }
     token blockTerminatedLines_wrapped {
-        <spaces>
+        <scopingSpaces>
         <terminatedLine>
-        <?{ if $<spaces> eq $*spaces { fail } }>
+        <?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
     }
-
     token blockContents {
         <blockTerminatedLines>*
         <unterminatedLine>?
     }
-    token spaces {
+    token scopingSpaces {
         '    '*
     }
     token unterminatedLine {
