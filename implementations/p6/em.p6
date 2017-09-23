@@ -106,7 +106,7 @@ grammar EM does Grammar::ErrorReporting {
         [\w|[\\\N]]+
     }
     token literal {
-        # <block> ||
+        <block> ||
         <number>
     }
     token nullParameterList {
