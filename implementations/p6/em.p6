@@ -26,14 +26,14 @@ class SymbolTable {
 }
 
 grammar EM does Grammar::ErrorReporting {
-    has SymbolTable $.ST = new SymbolTable;
 
     token TOP {
+        :my $*ST = SymbolTable.new();
         <block>
     }
     method block {
-        $.ST.enter-scope();
-        LEAVE $.ST.leave-scope();
+        $*ST.enter-scope();
+        LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
     rule block_wrapped {
