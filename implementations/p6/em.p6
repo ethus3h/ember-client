@@ -100,13 +100,13 @@ grammar EM does Grammar::ErrorReporting {
     token identifier {
         [
             [ <type> ' ' ]?
-            <escapedString>
+            <escapedName>
             [ <parameterList> ]?
         ] [ '.' <identifier> ]?
     }
     token reference {
         [ <type> ' ' ]?
-        '$'<escapedString>
+        '$'<escapedName>
         [ ' '? <parameterList> ]?
     }
     token value {
@@ -128,7 +128,7 @@ grammar EM does Grammar::ErrorReporting {
         'String' |
         \*
     }
-    token escapedString {
+    token escapedName {
         [\w|[\\\N]]+
     }
     token literal {
@@ -139,13 +139,13 @@ grammar EM does Grammar::ErrorReporting {
         ''
     }
     token emptyParameterList {
-        \( \)
+        '()'
     }
     token regularParameterList {
         ' ' <parameterListBody>
     }
     token parenthesizedParameterList {
-        '(' <parameterListBody> ')'
+        '(' ~ ')' <parameterListBody>
     }
 
     token number {
