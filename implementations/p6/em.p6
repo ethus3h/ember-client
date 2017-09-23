@@ -191,17 +191,11 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
         CATCH {
             default {
                 if $fail {
-                    say "(Parsing threw an exception.)";
-                    try {
-                        say EM.parse($code, :$rule);
-                    }
+                    say "Parsing threw an exception!";
                     return True;
                 }
                 else {
-                    say "(Parsing threw an exception.)";
-                    try {
-                        say EM.parse($code, :$rule);
-                    }
+                    say "Parsing threw an exception!";
                     return False;
                 }
             }
