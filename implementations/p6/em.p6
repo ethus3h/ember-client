@@ -43,9 +43,15 @@ grammar EM does Grammar::ErrorReporting {
     }
 
     token blockContents {
-        '    '{}
-        <terminatedLine>]*
+        [
+            <spaces>
+            <terminatedLine>
+            <?{ { $<spaces> } eq { '    ' x $*ST.@!scopes.elems; } }>
+        ]*
         <unterminatedLine>?
+    }
+    token spaces {
+        '    '*
     }
     token unterminatedLine {
         <lineContents>
