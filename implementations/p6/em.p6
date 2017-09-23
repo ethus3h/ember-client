@@ -190,7 +190,14 @@ sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
     try {
         CATCH {
             default {
-                fail "(Parsing threw an exception.)"
+                if $fail {
+                    say "(Parsing threw an exception.)";
+                    return True;
+                }
+                else {
+                    say "(Parsing threw an exception.)";
+                    return False;
+                }
             }
         }
         $*ST = SymbolTable.new;
