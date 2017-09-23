@@ -46,7 +46,13 @@ grammar EM does Grammar::ErrorReporting {
         [
             <spaces>
             <terminatedLine>
-            <?{ { $<spaces> } eq { '    ' x $*ST.@!scopes.elems; } }>
+            <?{
+                { $<spaces> }
+                eq
+                {
+                    '    ' x $*ST.@!scopes.elems;
+                }
+            }>
         ]*
         <unterminatedLine>?
     }
