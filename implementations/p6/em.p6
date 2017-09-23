@@ -35,6 +35,10 @@ grammar EM {
     token terminatedBlock {
         <block> \n
     }
+    token line {
+        <terminatedLine> ||
+        <unterminatedLine>
+    }
     method block {
         $*ST.enter-scope();
         LEAVE $*ST.leave-scope();
@@ -44,7 +48,7 @@ grammar EM {
         [<line>]* <unterminatedLine>?
     }
 
-    token line {
+    token terminatedLine {
         <unterminatedLine> \n
     }
     token lineContents {
