@@ -53,7 +53,7 @@ grammar EM does Grammar::ErrorReporting {
     token blockTerminatedLines_wrapped {
         <spaces>
         <terminatedLine>
-        <?{ $<spaces> eq $*spaces }>
+        <?{ if $<spaces> eq $*spaces { fail } }>
     }
 
     token blockContents {
