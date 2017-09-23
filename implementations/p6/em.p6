@@ -26,7 +26,7 @@ class SymbolTable {
 
 grammar EM {
     token TOP {
-        :my %*SYMBOLS;
+        :my $*ST = SymbolTable.new();
         <block>
     }
     token unterminatedLine {
