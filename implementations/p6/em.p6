@@ -179,6 +179,7 @@ ok runParserTest('(String, *)', 'parameterList');
 ok runParserTest('(String, String qux?, *)', 'parameterList');
 ok runParserTest('(String, String qux?)', 'parameterList');
 ok runParserTest('(String, String qux)', 'parameterList');
+#ok runParserTest('$1$2$qux', 'parameterList');
 
 say 'Testing identifier';
 
@@ -201,6 +202,7 @@ ok runParserTest('foo(qux=6 bar)', 'invocation');
 ok runParserTest('foo(String, String qux?)', 'invocation');
 nok runParserTest('foo(bar, baz', 'invocation', True);
 nok runParserTest('foo(bar,baz)', 'invocation', True);
+ok runParserTest('$1$2$qux', 'invocation');
 
 say 'Testing lineContents';
 
