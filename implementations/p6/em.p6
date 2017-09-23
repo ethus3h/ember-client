@@ -57,11 +57,12 @@ grammar EM {
         [ ' '? <parameterList> ]?
     }
     token value {
-        <block> ||
-        [ [ <invocation> ||
-        <reference> ||
-        <identifier> ||
-        <literal> ] <value>? ]
+        [
+            <invocation> ||
+            <reference> ||
+            <identifier> ||
+            <literal>
+        ] <value>?
     }
     token parameterList {
         <parenthesizedParameterList> ||
