@@ -38,7 +38,7 @@ grammar EM does Grammar::ErrorReporting {
         LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
-    token block_wrapped {
+    rule block_wrapped {
         [ '    '{} <terminatedLine>]* <unterminatedLine>?
     }
 
