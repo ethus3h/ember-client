@@ -101,7 +101,7 @@ grammar EM does Grammar::ErrorReporting {
         [
             [ <type> ' ' ]?
             <escapedString>
-            [ ' '? <parameterList> ]?
+            [ <parameterList> ]?
         ] [ '.' <identifier> ]?
     }
     token reference {
