@@ -33,7 +33,7 @@ grammar EM does Grammar::ErrorReporting {
     }
     method block {
         $*ST.enter-scope();
-        # LEAVE $*ST.leave-scope();
+        LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
     rule block_wrapped {
