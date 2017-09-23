@@ -52,7 +52,7 @@ grammar EM does Grammar::ErrorReporting {
     token blockTerminatedLines_wrapped {
         <spaces>
         <terminatedLine>
-        <?{ { $<spaces> } eq $*ST.getScopingSpaces() }>
+        #<?{ { $<spaces> } eq $*ST.getScopingSpaces() }>
     }
 
     token blockContents {
