@@ -43,8 +43,8 @@ grammar EM does Grammar::ErrorReporting {
     }
 
     token blockContents {
-        my Int $scopeCount = $*ST.@!scopes.elems;
-        my Str $spaceCount = '    ' x $scopeCount;
+        :my Int $scopeCount = $*ST.@!scopes.elems;
+        :my Str $spaceCount = '    ' x $scopeCount;
         [
             <spaces>
             <terminatedLine>
