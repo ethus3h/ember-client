@@ -48,11 +48,11 @@ grammar EM does Grammar::ErrorReporting {
 
     method blockTerminatedLines {
         my Str $spaces = $*ST.getScopingSpaces();
+        say { $<spaces> } eq $*ST.getScopingSpaces();
     }
     token blockTerminatedLines_wrapped {
         <spaces>
         <terminatedLine>
-        #<?{ { $<spaces> } eq $*ST.getScopingSpaces() }>
     }
 
     token blockContents {
