@@ -41,7 +41,7 @@ grammar EM does Grammar::ErrorReporting {
     }
     token block_wrapped {
         [
-            '{' ~ '}' <blockContents>
+            '{ ' ~ ' }' <blockContents>
         ] ||
         <blockContents>
     }
@@ -65,6 +65,9 @@ grammar EM does Grammar::ErrorReporting {
     }
     token unterminatedLine {
         <lineContents>
+    }
+    token lineSeparator {
+        \n || '; '
     }
     token terminatedLine {
         <unterminatedLine> \n
