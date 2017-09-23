@@ -47,13 +47,13 @@ grammar EM does Grammar::ErrorReporting {
     }
 
     method blockTerminatedLines {
-        my Str $spaces = $*ST.getScopingSpaces();
-        say "foo";
-        #say so $<spaces> eq $spaces;
+        my Str $*spaces = $*ST.getScopingSpaces();
+        self.blockTerminatedLines_wrapped();
     }
     token blockTerminatedLines_wrapped {
         <spaces>
         <terminatedLine>
+        <?{ $<spaces> eq $*spaces }>
     }
 
     token blockContents {
