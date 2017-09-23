@@ -51,9 +51,15 @@ grammar EM {
         <escapedString>
         [ ' '? <parameterList> ]?
     }
+    token reference {
+        [ <type> ' ' ]?
+        '$'<escapedString>
+        [ ' '? <parameterList> ]?
+    }
     token value {
         <block> ||
         <invocation> ||
+        <reference> ||
         <identifier> ||
         <literal>
     }
@@ -179,7 +185,7 @@ ok runParserTest('(String, *)', 'parameterList');
 ok runParserTest('(String, String qux?, *)', 'parameterList');
 ok runParserTest('(String, String qux?)', 'parameterList');
 ok runParserTest('(String, String qux)', 'parameterList');
-#ok runParserTest('$1$2$qux', 'parameterList');
+ok runParserTest('$1$2$qux', 'parameterList');
 
 say 'Testing identifier';
 
