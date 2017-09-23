@@ -25,15 +25,14 @@ class SymbolTable {
     }
 }
 
-my $*ST = St.new;
+my $*ST = SymbolTable.new;
 grammar EM does Grammar::ErrorReporting {
     token TOP {
-        :my $*ST = SymbolTable.new();
         <block>
     }
     method block {
         $*ST.enter-scope();
-        # LEAVE $*ST.leave-scope();
+        LEAVE $*ST.leave-scope();
         self.block_wrapped();
     }
     rule block_wrapped {
@@ -155,7 +154,7 @@ sub run-silenced (&code) {
 }
 
 sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-    $*ST = St.new;
+    $*ST = SymbolTable.new;
     if $fail {
         if run-silenced { EM.parse($code, :$rule) } {
             say EM.parse($code, :$rule);
