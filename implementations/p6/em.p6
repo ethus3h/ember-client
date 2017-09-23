@@ -208,7 +208,10 @@ ok runParserTest('foo(qux=6 bar)', 'invocation');
 ok runParserTest('foo(String, String qux?)', 'invocation');
 nok runParserTest('foo(bar, baz', 'invocation', True);
 nok runParserTest('foo(bar,baz)', 'invocation', True);
-ok runParserTest('$1$2$qux', 'invocation');
+
+say 'Testing reference';
+
+ok runParserTest('$1$2$qux', 'reference');
 
 say 'Testing lineContents';
 
