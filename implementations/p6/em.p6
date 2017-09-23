@@ -35,7 +35,12 @@ grammar EM {
     token terminatedBlock {
         <block> \n
     }
-    token block {
+    method block {
+        $*ST.enter-scope();
+        LEAVE $*ST.leave-scope();
+        self.block_wrapped();
+    }
+    token block_wrapped {
         [<line>]* <unterminatedLine>?
     }
 
