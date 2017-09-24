@@ -114,7 +114,8 @@ use Grammar::ErrorReporting;
                 ] ||
                 [
                     <identifier> ':' [ ' ' || \n ] <value>
-                ]
+                ] ||
+                <identifier> ':' [ ' ' || \n ] <literalBlock>
             }
             token reference {
                 [ <type> ' ' ]?
@@ -204,6 +205,7 @@ use Grammar::ErrorReporting;
         (
             token literalBlock {
                 [
+                    ': '
                     <blockContents>
                 ] ||
                 [
