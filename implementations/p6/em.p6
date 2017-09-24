@@ -269,6 +269,7 @@ use Grammar::ErrorReporting;
         ok runParserTest('foo', 'identifier');
         ok runParserTest('foo(String, String qux?, *)', 'identifier');
         ok runParserTest('foo(String, String qux?)', 'identifier');
+        ok runParserTest('String foo(String, String qux?, *)', 'identifier');
     );
 
     say 'Testing invocation';
