@@ -360,7 +360,7 @@ use Grammar::ErrorReporting;
         nok runParserTest('String qux?', 'lineContents', True);
     );
 
-    say 'Testing TOP: Small programs;
+    say 'Testing TOP: Small programs';
     (
         ok runParserTest('', 'TOP');
         ok runParserTest('foo', 'TOP');
