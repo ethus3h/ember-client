@@ -5,81 +5,31 @@ use Test;
 use Grammar::Tracer;
 use Grammar::ErrorReporting;
 
-# Support code
+# General support code
 (
-    # General support code
-    (
-        # This class is by Moritz Lenz. I hope they don't mind me using it
-        class SymbolTable {
-            has @!scopes = {}, ;
-            method enter-scope() {
-                @!scopes.push({})
-            }
-            method leave-scope() {
-                @!scopes.pop();
-            }
-            method declare($variable) {
-                @!scopes[*-1]{$variable} = True
-            }
-            method check-declared($variable) {
-                for @!scopes.reverse -> %scope {
-                    return True if %scope{$variable};
-                }
-                return False;
-            }
-            method getScopingSpaces() returns Str {
-                my Int $scopeCount = @!scopes.elems;
-                return '    ' x $scopeCount;
-            }
+    # This class is by Moritz Lenz. I hope they don't mind me using it
+    class SymbolTable {
+        has @!scopes = {}, ;
+        method enter-scope() {
+            @!scopes.push({})
         }
-    );
-
-    # Testing support code
-    (
-        sub run-silenced (&code) {
-            temp $*OUT = temp $*ERR = class {
-                BEGIN {
-                    ::?CLASS.^add_method: $_, my method (*@) {} for qw/say put print print-nl/
-                }
-            }.new;
-            code;
+        method leave-scope() {
+            @!scopes.pop();
         }
-
-        sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-            try {
-                CATCH {
-                    default {
-                        if $fail {
-                            say "Parsing threw an exception as expected."
-                        }
-                    }
-                }
-                $*ST = SymbolTable.new;
-                if $fail {
-                    if run-silenced { EM.parse($code, :$rule) } {
-                    #if EM.parse($code, :$rule) {
-                        say EM.parse($code, :$rule);
-                        say "Parsing unexpectedly succeeded.";
-                        # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
-                        return True;
-                    }
-                    else {
-                        fail "Parsing failed as expected.";
-                    }
-                }
-                else {
-                    if ! run-silenced { EM.parse($code, :$rule) } {
-                    #if ! EM.parse($code, :$rule) {
-                        say EM.parse($code, :$rule);
-                        fail "Parsing unexpectedly failed.";
-                    }
-                    else {
-                        return True;
-                    }
-                }
+        method declare($variable) {
+            @!scopes[*-1]{$variable} = True
+        }
+        method check-declared($variable) {
+            for @!scopes.reverse -> %scope {
+                return True if %scope{$variable};
             }
+            return False;
         }
-    );
+        method getScopingSpaces() returns Str {
+            my Int $scopeCount = @!scopes.elems;
+            return '    ' x $scopeCount;
+        }
+    }
 );
 
 # Main grammar
@@ -396,4 +346,51 @@ use Grammar::ErrorReporting;
 
     say "Done running tests. Report:";
     done-testing;
+);
+
+# Testing support code
+(
+    sub run-silenced (&code) {
+        temp $*OUT = temp $*ERR = class {
+            BEGIN {
+                ::?CLASS.^add_method: $_, my method (*@) {} for qw/say put print print-nl/
+            }
+        }.new;
+        code;
+    }
+
+    sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
+        try {
+            CATCH {
+                default {
+                    if $fail {
+                        say "Parsing threw an exception as expected."
+                    }
+                }
+            }
+            $*ST = SymbolTable.new;
+            if $fail {
+                if run-silenced { EM.parse($code, :$rule) } {
+                #if EM.parse($code, :$rule) {
+                    say EM.parse($code, :$rule);
+                    say "Parsing unexpectedly succeeded.";
+                    # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
+                    return True;
+                }
+                else {
+                    fail "Parsing failed as expected.";
+                }
+            }
+            else {
+                if ! run-silenced { EM.parse($code, :$rule) } {
+                #if ! EM.parse($code, :$rule) {
+                    say EM.parse($code, :$rule);
+                    fail "Parsing unexpectedly failed.";
+                }
+                else {
+                    return True;
+                }
+            }
+        }
+    }
 );
