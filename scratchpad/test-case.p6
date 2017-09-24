@@ -34,7 +34,6 @@ use Grammar::ErrorReporting;
 
 # Main grammar
 (
-    my $*ST = SymbolTable.new;
     grammar EM does Grammar::ErrorReporting {
         # High-level chunking of the code
         (
@@ -42,8 +41,6 @@ use Grammar::ErrorReporting;
                 <block>
             }
             method block {
-                $*ST.enter-scope();
-                LEAVE $*ST.leave-scope();
                 self.block_wrapped();
             }
 
@@ -56,13 +53,11 @@ use Grammar::ErrorReporting;
                     <blockContents>
                 }
                 method blockTerminatedLines {
-                    my Str $*scopingSpaces = $*ST.getScopingSpaces();
                     self.blockTerminatedLines_wrapped();
                 }
                 token blockTerminatedLines_wrapped {
                     <scopingSpaces>
                     <terminatedLine>
-                    <?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
                 }
                 token blockContents {
                     <blockTerminatedLines>*
@@ -221,43 +216,8 @@ use Grammar::ErrorReporting;
 
 # Test suite
 (
-    say 'Testing invocation';
-    (
-        ok runParserTest('foo (bar, baz)', 'invocation');
-        ok runParserTest('foo bar 6 qux', 'invocation');
-        ok runParserTest('foo bar baz', 'invocation');
-        ok runParserTest('foo bar', 'invocation');
-        ok runParserTest('foo qux=6 bar', 'invocation');
-        ok runParserTest('foo(bar 6 qux)', 'invocation');
-        ok runParserTest('foo(bar baz)', 'invocation');
-        ok runParserTest('foo(bar, baz)', 'invocation');
-        ok runParserTest('foo(bar)', 'invocation');
-        ok runParserTest('foo(qux=6 bar)', 'invocation');
-        ok runParserTest('foo(String, String qux?)', 'invocation');
-        nok runParserTest('foo(bar, baz', 'invocation', True);
-        nok runParserTest('foo(bar,baz)', 'invocation', True);
-    );
-
-    say 'Testing TOP: Larger programs';
-    (
-        ok runParserTest(Q[String foo(String, String qux?, *):
-            say $1$2$qux
-
-        # Test simple invocation
-        foo(bar baz) # $1 = bar, $2 is unset, $qux = baz
-        foo(bar 6 qux) # $1 = bar, $2 = 6, $3 = qux, $qux is unset
-        foo(qux=baz bar) # $1 = bar, $qux = baz
-
-        # Test simple invocation, parenthesis-less style
-        foo bar baz # $1 = bar, $2 is unset, $qux = baz
-        foo bar 6 qux # $1 = bar, $2 = 6, $3 = qux, $qux is unset
-        foo qux=baz bar # $1 = bar, $qux = baz
-
-        # Test invocation with "invoke"
-        routineName="foo"
-        invoke $routineName bar baz
-        ], 'TOP');
-    );
+    nok runParserTest('foo(bar, baz', 'invocation', True);
+    ok runParserTest(Q[@makeParseFail], 'TOP');
 
     say "Done running tests. Report:";
     done-testing;
