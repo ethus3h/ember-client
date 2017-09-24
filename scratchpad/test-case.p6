@@ -8,16 +8,15 @@ use Grammar::ErrorReporting;
 # Main grammar
 (
     grammar EM does Grammar::ErrorReporting {
-        (
-            token TOP {
-                <block>
-            }
-            token block {
-                [
-                    '( ' ~ ' )' "bar"
-                ] ||
-                "foo"
-            }
+        token TOP {
+            <block>
+        }
+        token block {
+            [
+                '( ' ~ ' )' "bar"
+            ] ||
+            "foo"
+        }
     }
 );
 
