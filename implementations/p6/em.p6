@@ -115,7 +115,7 @@ use Grammar::ErrorReporting;
                 [
                     <identifier> ':' [ ' ' || \n ] <value>
                 ] ||
-                <identifier> ':' [ ' ' || \n ] <literalBlock>
+                <identifier> ':' [ ' ' || \n ] <blockContents>
             }
             token reference {
                 [ <type> ' ' ]?
