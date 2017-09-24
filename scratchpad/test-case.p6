@@ -222,7 +222,7 @@ use Grammar::ErrorReporting;
 # Test suite
 (
     nok runParserTest('String qux?', 'lineContents', True);
-    ok runParserTest('foo', 'TOP');
+    ok runParserTest('foo@makeparsefail', 'TOP');
 
     say "Done running tests. Report:";
     done-testing;
