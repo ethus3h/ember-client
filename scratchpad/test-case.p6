@@ -7,7 +7,6 @@ use Grammar::ErrorReporting;
 
 # Main grammar
 (
-    #my $*ST = SymbolTable.new;
     grammar EM does Grammar::ErrorReporting {
         # High-level chunking of the code
         (
@@ -211,10 +210,9 @@ use Grammar::ErrorReporting;
                     }
                 }
             }
-            $*ST = SymbolTable.new;
             if $fail {
-                #if run-silenced { EM.parse($code, :$rule) } {
-                if EM.parse($code, :$rule) {
+                if run-silenced { EM.parse($code, :$rule) } {
+                #if EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
                     say "Parsing unexpectedly succeeded.";
                     # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
