@@ -204,7 +204,6 @@ use Grammar::ErrorReporting;
         (
             token literalBlock {
                 [
-                    ': '
                     <blockContents>
                 ] ||
                 [
