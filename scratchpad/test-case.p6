@@ -34,6 +34,7 @@ use Grammar::ErrorReporting;
 
 # Main grammar
 (
+    #my $*ST = SymbolTable.new;
     grammar EM does Grammar::ErrorReporting {
         # High-level chunking of the code
         (
@@ -41,6 +42,8 @@ use Grammar::ErrorReporting;
                 <block>
             }
             method block {
+                #$*ST.enter-scope();
+                #LEAVE $*ST.leave-scope();
                 self.block_wrapped();
             }
 
@@ -53,11 +56,13 @@ use Grammar::ErrorReporting;
                     <blockContents>
                 }
                 method blockTerminatedLines {
+                    #my Str $*scopingSpaces = $*ST.getScopingSpaces();
                     self.blockTerminatedLines_wrapped();
                 }
                 token blockTerminatedLines_wrapped {
                     <scopingSpaces>
                     <terminatedLine>
+                    #<?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
                 }
                 token blockContents {
                     <blockTerminatedLines>*
@@ -245,8 +250,8 @@ use Grammar::ErrorReporting;
             }
             $*ST = SymbolTable.new;
             if $fail {
-                if run-silenced { EM.parse($code, :$rule) } {
-                #if EM.parse($code, :$rule) {
+                #if run-silenced { EM.parse($code, :$rule) } {
+                if EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
                     say "Parsing unexpectedly succeeded.";
                     # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
@@ -257,8 +262,8 @@ use Grammar::ErrorReporting;
                 }
             }
             else {
-                if ! run-silenced { EM.parse($code, :$rule) } {
-                #if ! EM.parse($code, :$rule) {
+                #if ! run-silenced { EM.parse($code, :$rule) } {
+                if ! EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
                     fail "Parsing unexpectedly failed.";
                 }
