@@ -68,84 +68,102 @@ grammar EM does Grammar::ErrorReporting {
             }
         );
     );
-    token unterminatedLine {
-        <lineContents>
-    }
-    token lineSeparator {
-        \n || '; '
-    }
-    token terminatedLine {
-        <unterminatedLine> \n
-    }
-    token lineContents {
-        <assignment> ||
-        <invocation> ||
-        <declaration> ||
-        ''
-    }
 
-    token assignment {
-        [
-            <identifier> '=' <value>
-        ] ||
-        [
-            <identifier> ' = ' <value>
-        ] ||
-        [
-            <identifier> ':' [ ' ' || \n ] <value>
-        ]
-    }
-    token invocation {
-        <identifier> ' '? <parameterList>
-    }
-    token declaration {
-        <identifier>
-    }
-
-    token identifier {
-        [
-            [ <type> ' ' ]?
-            <escapedName>
-            [ <parameterList> ]?
-        ] [ '.' <identifier> ]?
-    }
-    token reference {
-        [ <type> ' ' ]?
-        '$'<escapedName>
-        [ ' '? <parameterList> ]?
-    }
-    token value {
-        [
+    # Lines and their contents
+    (
+        token unterminatedLine {
+            <lineContents>
+        }
+        token lineSeparator {
+            \n || '; '
+        }
+        token terminatedLine {
+            <unterminatedLine> \n
+        }
+        token lineContents {
+            <assignment> ||
             <invocation> ||
-            <reference> ||
-            <identifier> ||
-            <literal>
-        ] <value>?
-    }
-    token parameterList {
-        <emptyParameterList> ||
-        <parenthesizedParameterList> ||
-        <regularParameterList> ||
-        <nullParameterList>
-    }
+            <declaration> ||
+            ''
+        }
+    );
 
-    token type {
-        'String' |
-        \*
-    }
-    token escapedName {
-        [\w|[\\\N]]+
-    }
-    token literal {
-        [
-            ': '
-            <blockContents>
-        ] ||
-        [
-            '{ ' ~ ' }' <blockContents>
-        ] ||
-        <number>
-    }
+    # Identifiers, declarations, assignments, references, and invocations
+    (
+        token identifier {
+            [
+                [ <type> ' ' ]?
+                <escapedName>
+                [ <parameterList> ]?
+            ] [ '.' <identifier> ]?
+        }
+        token declaration {
+            <identifier>
+        }
+        token assignment {
+            [
+                <identifier> '=' <value>
+            ] ||
+            [
+                <identifier> ' = ' <value>
+            ] ||
+            [
+                <identifier> ':' [ ' ' || \n ] <value>
+            ]
+        }
+        token reference {
+            [ <type> ' ' ]?
+            '$'<escapedName>
+            [ ' '? <parameterList> ]?
+        }
+        token invocation {
+            <identifier> ' '? <parameterList>
+        }
+    );
+
+    # Types and values
+    (
+        token type {
+            'String' |
+            \*
+        }
+        token value {
+            [
+                <invocation> ||
+                <reference> ||
+                <identifier> ||
+                <literal>
+            ] <value>?
+        }
+    );
+
+    # Parameters and lists of parameters
+    (
+        token parameterList {
+            <emptyParameterList> ||
+            <parenthesizedParameterList> ||
+            <regularParameterList> ||
+            <nullParameterList>
+        }
+    );
+
+    # Names vs literals
+    (
+        token escapedName {
+            [\w|[\\\N]]+
+        }
+        token literal {
+            [
+                ': '
+                <blockContents>
+            ] ||
+            [
+                '{ ' ~ ' }' <blockContents>
+            ] ||
+            <number>
+        }
+    );
+
     token nullParameterList {
         ''
     }
