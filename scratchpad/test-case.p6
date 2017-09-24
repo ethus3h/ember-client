@@ -5,33 +5,6 @@ use Test;
 use Grammar::Tracer;
 use Grammar::ErrorReporting;
 
-# General support code
-(
-    # This class is by Moritz Lenz. I hope they don't mind me using it
-    class SymbolTable {
-        has @!scopes = {}, ;
-        method enter-scope() {
-            @!scopes.push({})
-        }
-        method leave-scope() {
-            @!scopes.pop();
-        }
-        method declare($variable) {
-            @!scopes[*-1]{$variable} = True
-        }
-        method check-declared($variable) {
-            for @!scopes.reverse -> %scope {
-                return True if %scope{$variable};
-            }
-            return False;
-        }
-        method getScopingSpaces() returns Str {
-            my Int $scopeCount = @!scopes.elems;
-            return '    ' x $scopeCount;
-        }
-    }
-);
-
 # Main grammar
 (
     #my $*ST = SymbolTable.new;
@@ -41,28 +14,18 @@ use Grammar::ErrorReporting;
             token TOP {
                 <block>
             }
-            method block {
-                #$*ST.enter-scope();
-                #LEAVE $*ST.leave-scope();
-                self.block_wrapped();
-            }
 
             # Support rules for high-level chunking
             (
-                token block_wrapped {
+                token block {
                     [
                         '{ ' ~ ' }' <blockContents>
                     ] ||
                     <blockContents>
                 }
-                method blockTerminatedLines {
-                    #my Str $*scopingSpaces = $*ST.getScopingSpaces();
-                    self.blockTerminatedLines_wrapped();
-                }
-                token blockTerminatedLines_wrapped {
+                token blockTerminatedLines {
                     <scopingSpaces>
                     <terminatedLine>
-                    #<?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
                 }
                 token blockContents {
                     <blockTerminatedLines>*
