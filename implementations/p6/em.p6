@@ -190,23 +190,26 @@ grammar EM does Grammar::ErrorReporting {
             [\w|[\\\N]]+
         }
         token literal {
+            <literalBlock> ||
+            <number>
+        }
+    );
+
+    # Literal types
+    (
+        token literalBlock {
             [
                 ': '
                 <blockContents>
             ] ||
             [
                 '{ ' ~ ' }' <blockContents>
-            ] ||
-            <number>
+            ]
+        }
+        token number {
+            \d+
         }
     );
-
-
-    token number {
-        \d+
-    }
-
-
 }
 
 sub run-silenced (&code) {
