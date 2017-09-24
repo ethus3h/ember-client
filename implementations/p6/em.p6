@@ -139,12 +139,49 @@ grammar EM does Grammar::ErrorReporting {
 
     # Parameters and lists of parameters
     (
+        token parameter {
+            <optionalParameter> || <requiredParameter>
+        }
         token parameterList {
             <emptyParameterList> ||
             <parenthesizedParameterList> ||
             <regularParameterList> ||
             <nullParameterList>
         }
+
+        # Support rules for parameters
+        (
+            token optionalParameter {
+                [
+                    <type> |
+                    <identifier>
+                ] \?
+            }
+            token requiredParameter {
+                <assignment> |
+                [ <type> | <identifier> | <value> ]
+            }
+        );
+
+        # Support rules for parameter lists
+        (
+            token parameterListBody {
+                <parameter>* % ', '
+            }
+
+            token nullParameterList {
+                ''
+            }
+            token emptyParameterList {
+                '()'
+            }
+            token regularParameterList {
+                ' ' <parameterListBody>
+            }
+            token parenthesizedParameterList {
+                '(' ~ ')' <parameterListBody>
+            }
+        );
     );
 
     # Names vs literals
@@ -164,40 +201,12 @@ grammar EM does Grammar::ErrorReporting {
         }
     );
 
-    token nullParameterList {
-        ''
-    }
-    token emptyParameterList {
-        '()'
-    }
-    token regularParameterList {
-        ' ' <parameterListBody>
-    }
-    token parenthesizedParameterList {
-        '(' ~ ')' <parameterListBody>
-    }
 
     token number {
         \d+
     }
-    token parameterListBody {
-        <parameter>* % ', '
-    }
 
-    token parameter {
-        <optionalParameter> || <requiredParameter>
-    }
 
-    token optionalParameter {
-        [
-            <type> |
-            <identifier>
-        ] \?
-    }
-    token requiredParameter {
-        <assignment> |
-        [ <type> | <identifier> | <value> ]
-    }
 }
 
 sub run-silenced (&code) {
