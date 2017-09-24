@@ -221,58 +221,6 @@ use Grammar::ErrorReporting;
 
 # Test suite
 (
-    say 'Testing optionalParameter';
-    (
-        ok runParserTest('String qux?', 'optionalParameter');
-    );
-
-    say 'Testing parameter';
-    (
-        ok runParserTest('*', 'parameter');
-        ok runParserTest('String qux?', 'parameter');
-        nok runParserTest('String qux?,', 'parameter', True);
-    );
-
-    say 'Testing parameterListBody';
-    (
-        ok runParserTest('', 'parameterListBody');
-        ok runParserTest('*', 'parameterListBody');
-        ok runParserTest('String qux, *', 'parameterListBody');
-        ok runParserTest('String qux?, *', 'parameterListBody');
-        ok runParserTest('String qux?', 'parameterListBody');
-        ok runParserTest('String, *', 'parameterListBody');
-        ok runParserTest('String, String qux, String', 'parameterListBody');
-        ok runParserTest('String, String qux?, *', 'parameterListBody');
-        ok runParserTest('String, String qux?, String', 'parameterListBody');
-        ok runParserTest('String, String qux?', 'parameterListBody');
-        ok runParserTest('String, String qux', 'parameterListBody');
-        ok runParserTest('String?, *', 'parameterListBody');
-    );
-
-    say 'Testing parenthesizedParameterList';
-    (
-        ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
-    );
-
-    say 'Testing parameterList';
-    (
-        ok runParserTest('()', 'parameterList');
-        ok runParserTest('(*)', 'parameterList');
-        ok runParserTest('(String, *)', 'parameterList');
-        ok runParserTest('(String, String qux?, *)', 'parameterList');
-        ok runParserTest('(String, String qux?)', 'parameterList');
-        ok runParserTest('(String, String qux)', 'parameterList');
-        #FIXME #ok runParserTest('$1$2$qux', 'parameterList');
-    );
-
-    say 'Testing identifier';
-    (
-        ok runParserTest('foo', 'identifier');
-        ok runParserTest('foo(String, String qux?, *)', 'identifier');
-        ok runParserTest('foo(String, String qux?)', 'identifier');
-        ok runParserTest('String foo(String, String qux?, *)', 'identifier');
-    );
-
     say 'Testing invocation';
     (
         ok runParserTest('foo (bar, baz)', 'invocation');
@@ -288,37 +236,6 @@ use Grammar::ErrorReporting;
         ok runParserTest('foo(String, String qux?)', 'invocation');
         nok runParserTest('foo(bar, baz', 'invocation', True);
         nok runParserTest('foo(bar,baz)', 'invocation', True);
-    );
-
-    say 'Testing value';
-    (
-        ok runParserTest('$1$2$qux', 'value');
-    );
-
-    say 'Testing lineContents';
-    (
-        ok runParserTest('', 'lineContents');
-        ok runParserTest('* foo', 'lineContents');
-        ok runParserTest('foo', 'lineContents');
-        ok runParserTest('foo()', 'lineContents');
-        ok runParserTest('foo(bar)', 'lineContents');
-        ok runParserTest('foo(String, String qux, String baz)', 'lineContents');
-        ok runParserTest('foo(String, String qux?, *)', 'lineContents');
-        ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
-        ok runParserTest('foo(String, String qux?, String)', 'lineContents');
-        ok runParserTest('foo(String, String qux?)', 'lineContents');
-        ok runParserTest('foo(String, String, String)', 'lineContents');
-        ok runParserTest('foo=5', 'lineContents');
-        nok runParserTest('String qux?', 'lineContents', True);
-    );
-
-    say 'Testing TOP: Small programs';
-    (
-        ok runParserTest('', 'TOP');
-        ok runParserTest('foo', 'TOP');
-        ok runParserTest('foo()', 'TOP');
-        ok runParserTest('foo(bar)', 'TOP');
-        ok runParserTest('foo=5', 'TOP');
     );
 
     say 'Testing TOP: Larger programs';
