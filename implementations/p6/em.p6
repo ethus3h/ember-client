@@ -384,11 +384,14 @@ use Grammar::ErrorReporting;
                 }
             }
             else {
-                if ! run-silenced { try { EM.parse($code, :$rule); CATCH { default { say "(Caught exception: " ~ $_.perl ~ "."}; }; }; } {
+                if ! run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
                     say "BOECHIENTOHUCRBEIRCOUMSEICHEOU";
                     say EM.parse($code, :$rule);
-                    fail "Parsing unexpectedly failed, with the exception: " ~ $_.perl ~ ".";
+                    CATCH {
+                        say EM.parse($code, :$rule);
+                        fail "Parsing unexpectedly failed, with the exception: " ~ $_.perl ~ ".";
+                    }
                 }
                 else {
                     return True;
