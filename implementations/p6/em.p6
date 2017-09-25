@@ -352,7 +352,7 @@ use Grammar::ErrorReporting;
         # routineName="foo"
         # invoke $routineName bar baz
         # ♥
-        , 'TOP');
+        # , 'TOP');
     );
 
     say "Done running tests. Report:";
