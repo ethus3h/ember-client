@@ -384,7 +384,7 @@ use Grammar::ErrorReporting;
             else {
                 if ! runParserTestInner($code, $rule, $fail) {
                     say "Test failed.";
-                    #say EM.parse($code, :$rule);
+                    say EM.parse($code, :$rule);
                     return False;
                 }
                 return True;
@@ -400,7 +400,7 @@ use Grammar::ErrorReporting;
                         say "Parsing threw an exception as expected."
                     }
                     else {
-                        say EM.parse($code, :$rule);
+                        #say EM.parse($code, :$rule);
                     }
                 }
             }
@@ -408,7 +408,7 @@ use Grammar::ErrorReporting;
             if $fail {
                 if run-silenced { EM.parse($code, :$rule) } {
                 #if EM.parse($code, :$rule) {
-                    say EM.parse($code, :$rule);
+                    #say EM.parse($code, :$rule);
                     say "Parsing unexpectedly succeeded.";
                     # Return success status because this is being called by the test runner, which if $fail is True should be set to expect this to fail.
                     return True;
@@ -421,7 +421,7 @@ use Grammar::ErrorReporting;
                 #say "Part 1";
                 if ! run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
-                    say EM.parse($code, :$rule);
+                    #say EM.parse($code, :$rule);
                     fail "Parsing unexpectedly failed.";
                 }
                 else {
