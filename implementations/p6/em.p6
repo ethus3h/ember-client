@@ -380,14 +380,14 @@ use Grammar::ErrorReporting;
                     return True;
                 }
                 else {
-                    fail "Parsing failed as expected.";
+                    fail "Parsing failed as expected, with the exception: $_.";
                 }
             }
             else {
                 if ! run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
-                    fail "Parsing unexpectedly failed.";
+                    fail "Parsing unexpectedly failed, with the exception: $_.";
                 }
                 else {
                     return True;
