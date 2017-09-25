@@ -56,15 +56,15 @@ use Grammar::ErrorReporting;
                     <blockContents>
                 }
                 method blockTerminatedLines {
-                    my Str $*scopingSpaces = $*ST.getScopingSpaces();
+                    my Str $*wantScopingSpaces = $*ST.getScopingSpaces();
                     self.blockTerminatedLines_wrapped();
                 }
                 token blockTerminatedLines_wrapped {
                     <scopingSpaces>
                     <?{
                         say "Found scopingSpaces: '" ~ $<scopingSpaces> ~ "'";
-                        say "Want scopingSpaces: '" ~ $*scopingSpaces ~ "'";
-                        if $<scopingSpaces> ne $*scopingSpaces {
+                        say "Want scopingSpaces: '" ~ $*wantScopingSpaces ~ "'";
+                        if $<scopingSpaces> ne $*wantScopingSpaces {
                             say "SCOPING SPCAES MISHMATCH";
                             return False;
                         }
