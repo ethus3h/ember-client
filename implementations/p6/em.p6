@@ -62,7 +62,7 @@ use Grammar::ErrorReporting;
                 token blockTerminatedLines_wrapped {
                     <scopingSpaces>
                     <terminatedLine>
-                    <?{ if $<scopingSpaces> eq $*scopingSpaces { fail } }>
+                    <?{ if $<scopingSpaces> ne $*scopingSpaces { fail } }>
                 }
                 token blockContents {
                     <blockTerminatedLines>*
