@@ -380,7 +380,7 @@ use Grammar::ErrorReporting;
                     return True;
                 }
                 else {
-                    fail "Parsing failed as expected, with the exception: $_.";
+                    fail "Parsing failed as expected, with the exception: " ~ $_.perl ~ ".";
                 }
             }
             else {
