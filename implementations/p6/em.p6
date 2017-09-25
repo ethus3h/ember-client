@@ -312,7 +312,7 @@ use Grammar::ErrorReporting;
         nok runParserTest('String qux?', 'lineContents', True);
     );
 
-    say 'Testing TOP: Small programs';
+    say 'Testing TOP: Small documents';
     (
         ok runParserTest('', 'TOP');
         ok runParserTest('foo', 'TOP');
@@ -321,7 +321,7 @@ use Grammar::ErrorReporting;
         ok runParserTest('foo=5', 'TOP');
     );
 
-    say 'Testing TOP: Larger programs';
+    say 'Testing TOP: Larger documents';
     (
         ok runParserTest(Q[String foo(String, String qux?, *):
         foo(bar baz)
