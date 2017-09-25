@@ -61,12 +61,12 @@ use Grammar::ErrorReporting;
                 }
                 token blockTerminatedLines_wrapped {
                     <scopingSpaces>
-                    <terminatedLine>
                     <?{
                         say "Found scopingSpaces: '" ~ $<scopingSpaces> ~ "'";
                         say "Want scopingSpaces: '" ~ $*scopingSpaces ~ "'";
                         if $<scopingSpaces> ne $*scopingSpaces { fail };
                     }>
+                    <terminatedLine>
                 }
                 token blockContents {
                     <blockTerminatedLines>*
