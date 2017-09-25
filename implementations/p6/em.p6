@@ -366,7 +366,7 @@ use Grammar::ErrorReporting;
             CATCH {
                 default {
                     if $fail {
-                        say "Parsing threw an exception as expected. It threw the exception: " ~ $_.say ~ "."
+                        say "Parsing threw an exception as expected. It threw the exception: " ~ $_.perl ~ "."
                     }
                 }
             }
@@ -380,14 +380,14 @@ use Grammar::ErrorReporting;
                     return True;
                 }
                 else {
-                    fail "Parsing failed as expected, with the exception: " ~ $_.say ~ ".";
+                    fail "Parsing failed as expected, with the exception: " ~ $_.perl ~ ".";
                 }
             }
             else {
                 if ! run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
-                    fail "Parsing unexpectedly failed, with the exception: " ~ $_.say ~ ".";
+                    fail "Parsing unexpectedly failed, with the exception: " ~ $_.perl ~ ".";
                 }
                 else {
                     return True;
