@@ -330,11 +330,12 @@ use Grammar::ErrorReporting;
 
     say 'Testing TOP: Larger documents';
     (
-        ok runParserTest(Q[String foo(String, String qux?, *):
+        ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
         foo(bar baz)
-        foo(qux=6 bar)], 'TOP');
+        foo(qux=6 bar)
+        ♥, 'TOP');
 
-        # ok runParserTest(Q[String foo(String, String qux?, *):
+        # ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
         #     say $1$2$qux
         # 
         # # Test simple invocation
@@ -350,7 +351,8 @@ use Grammar::ErrorReporting;
         # # Test invocation with "invoke"
         # routineName="foo"
         # invoke $routineName bar baz
-        # ], 'TOP');
+        # ♥
+        , 'TOP');
     );
 
     say "Done running tests. Report:";
