@@ -327,23 +327,23 @@ use Grammar::ErrorReporting;
         foo(bar baz)
         foo(qux=6 bar)], 'TOP');
 
-        # ok runParserTest(Q[String foo(String, String qux?, *):
-        #     say $1$2$qux
-        # 
-        # # Test simple invocation
-        # foo(bar baz) # $1 = bar, $2 is unset, $qux = baz
-        # foo(bar 6 qux) # $1 = bar, $2 = 6, $3 = qux, $qux is unset
-        # foo(qux=baz bar) # $1 = bar, $qux = baz
-        # 
-        # # Test simple invocation, parenthesis-less style
-        # foo bar baz # $1 = bar, $2 is unset, $qux = baz
-        # foo bar 6 qux # $1 = bar, $2 = 6, $3 = qux, $qux is unset
-        # foo qux=baz bar # $1 = bar, $qux = baz
-        # 
-        # # Test invocation with "invoke"
-        # routineName="foo"
-        # invoke $routineName bar baz
-        # ], 'TOP');
+        ok runParserTest(Q[String foo(String, String qux?, *):
+            say $1$2$qux
+
+        # Test simple invocation
+        foo(bar baz) # $1 = bar, $2 is unset, $qux = baz
+        foo(bar 6 qux) # $1 = bar, $2 = 6, $3 = qux, $qux is unset
+        foo(qux=baz bar) # $1 = bar, $qux = baz
+
+        # Test simple invocation, parenthesis-less style
+        foo bar baz # $1 = bar, $2 is unset, $qux = baz
+        foo bar 6 qux # $1 = bar, $2 = 6, $3 = qux, $qux is unset
+        foo qux=baz bar # $1 = bar, $qux = baz
+
+        # Test invocation with "invoke"
+        routineName="foo"
+        invoke $routineName bar baz
+        ], 'TOP');
     );
 
     say "Done running tests. Report:";
@@ -366,7 +366,7 @@ use Grammar::ErrorReporting;
             CATCH {
                 default {
                     if $fail {
-                        say "Parsing threw an exception as expected. It threw the exception: " ~ $_.perl ~ "."
+                        say "Parsing threw an exception as expected."
                     }
                 }
             }
@@ -380,18 +380,14 @@ use Grammar::ErrorReporting;
                     return True;
                 }
                 else {
-                    fail "Parsing failed as expected, with the exception: " ~ $_.perl ~ ".";
+                    fail "Parsing failed as expected.";
                 }
             }
             else {
                 if ! run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
-                    say "BOECHIENTOHUCRBEIRCOUMSEICHEOU";
                     say EM.parse($code, :$rule);
-                    CATCH {
-                        say EM.parse($code, :$rule);
-                        fail "Parsing unexpectedly failed, with the exception: " ~ $_.perl ~ ".";
-                    }
+                    fail "Parsing unexpectedly failed.";
                 }
                 else {
                     return True;
