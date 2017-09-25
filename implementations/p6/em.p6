@@ -68,9 +68,6 @@ use Grammar::ErrorReporting;
                             say "SCOPING SPCAES MISHMATCH";
                             fail;
                         }
-                        else {
-                            return True;
-                        }
                     }>
                     <terminatedLine>
                 }
