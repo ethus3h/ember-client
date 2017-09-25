@@ -26,7 +26,7 @@ use Grammar::ErrorReporting;
             return False;
         }
         method getScopingSpaces() returns Str {
-            my Int $scopeCount = @!scopes.elems;
+            my Int $scopeCount = @!scopes.elems - 1;
             return '    ' x $scopeCount;
         }
     }
