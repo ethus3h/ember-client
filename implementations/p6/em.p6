@@ -66,7 +66,7 @@ use Grammar::ErrorReporting;
                         say "Want scopingSpaces: '" ~ $*scopingSpaces ~ "'";
                         if $<scopingSpaces> ne $*scopingSpaces {
                             say "SCOPING SPCAES MISHMATCH";
-                            fail;
+                            return False;
                         }
                     }>
                     <terminatedLine>
