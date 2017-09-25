@@ -366,13 +366,17 @@ use Grammar::ErrorReporting;
             if runParserTestInner($code, $rule, $fail) {
                 say "Test failed.";
                 say EM.parse($code, :$rule);
+                return True;
             }
+            return False;
         }
         else {
             if ! runParserTestInner($code, $rule, $fail) {
                 say "Test failed.";
                 say EM.parse($code, :$rule);
+                return False;
             }
+            return True;
         }
     }
 
