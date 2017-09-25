@@ -384,7 +384,7 @@ use Grammar::ErrorReporting;
                 }
             }
             else {
-                if ! run-silenced { EM.parse($code, :$rule) } {
+                if { ! run-silenced { EM.parse($code, :$rule) } } {
                 #if ! EM.parse($code, :$rule) {
                     say "BOECHIENTOHUCRBEIRCOUMSEICHEOU";
                     say EM.parse($code, :$rule);
