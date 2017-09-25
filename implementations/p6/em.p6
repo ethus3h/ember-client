@@ -393,7 +393,7 @@ use Grammar::ErrorReporting;
     }
 
     sub runParserTestInner(Str $code, Str $rule, Bool $fail = False) {
-#    sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
+    #sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
         try {
             CATCH {
                 default {
