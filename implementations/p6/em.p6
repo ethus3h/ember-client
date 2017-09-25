@@ -366,7 +366,7 @@ use Grammar::ErrorReporting;
             CATCH {
                 default {
                     if $fail {
-                        say "Parsing threw an exception as expected."
+                        say "Parsing threw an exception as expected. It was: $_"
                     }
                 }
             }
