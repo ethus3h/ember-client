@@ -362,21 +362,34 @@ use Grammar::ErrorReporting;
     }
 
     sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-        if $fail {
-            if runParserTestInner($code, $rule, $fail) {
-                say "Test failed.";
-                say EM.parse($code, :$rule);
-                return True;
+        try {
+            CATCH {
+                default {
+                    say "Hi";
+                    if $fail {
+                        say "Parsing threw an exception as expected."
+                    }
+                    else {
+                        say EM.parse($code, :$rule);
+                    }
+                }
             }
-            return False;
-        }
-        else {
-            if ! runParserTestInner($code, $rule, $fail) {
-                say "Test failed.";
-                say EM.parse($code, :$rule);
+            if $fail {
+                if runParserTestInner($code, $rule, $fail) {
+                    say "Test failed.";
+                    say EM.parse($code, :$rule);
+                    return True;
+                }
                 return False;
             }
-            return True;
+            else {
+                if ! runParserTestInner($code, $rule, $fail) {
+                    say "Test failed.";
+                    say EM.parse($code, :$rule);
+                    return False;
+                }
+                return True;
+            }
         }
     }
 
@@ -385,7 +398,6 @@ use Grammar::ErrorReporting;
         try {
             CATCH {
                 default {
-                    say "Hi";
                     if $fail {
                         say "Parsing threw an exception as expected."
                     }
