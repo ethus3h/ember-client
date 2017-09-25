@@ -64,7 +64,13 @@ use Grammar::ErrorReporting;
                     <?{
                         say "Found scopingSpaces: '" ~ $<scopingSpaces> ~ "'";
                         say "Want scopingSpaces: '" ~ $*scopingSpaces ~ "'";
-                        if $<scopingSpaces> ne $*scopingSpaces { say "SCOPING SPCAES MISHMATCH"; fail };
+                        if $<scopingSpaces> ne $*scopingSpaces {
+                            say "SCOPING SPCAES MISHMATCH";
+                            fail;
+                        }
+                        else {
+                            return True;
+                        }
                     }>
                     <terminatedLine>
                 }
