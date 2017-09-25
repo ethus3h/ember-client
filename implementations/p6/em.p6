@@ -362,10 +362,11 @@ use Grammar::ErrorReporting;
     }
 
     sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-        if ! runParserTestInner($code, $rule, $fail) {
-            say "Test failed.";
-            say EM.parse($code, :$rule);
-        }
+        # if ! runParserTestInner($code, $rule, $fail) {
+        #     say "Test failed.";
+        #     say EM.parse($code, :$rule);
+        # }
+        say runParserTestInner($code, $rule, $fail);
     }
 
     sub runParserTestInner(Str $code, Str $rule, Bool $fail = False) {
