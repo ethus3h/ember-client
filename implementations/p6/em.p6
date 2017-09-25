@@ -384,12 +384,15 @@ use Grammar::ErrorReporting;
                 }
             }
             else {
+                say "Part 1";
                 if ! run-silenced { EM.parse($code, :$rule) } {
+                    say "Part 2";
                 #if ! EM.parse($code, :$rule) {
                     say EM.parse($code, :$rule);
                     fail "Parsing unexpectedly failed.";
                 }
                 else {
+                    say "Part 3";
                     return True;
                 }
             }
