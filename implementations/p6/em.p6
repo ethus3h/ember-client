@@ -386,12 +386,14 @@ use Grammar::ErrorReporting;
                 return False;
             }
             else {
-                if ! runParserTestInner($code, $rule, $fail) {
-                    say "Test failed.";
-                    say EM.parse($code, :$rule);
-                    return False;
+                try {
+                    if ! runParserTestInner($code, $rule, $fail) {
+                        say "Test failed.";
+                        say EM.parse($code, :$rule);
+                        return False;
+                    }
+                    return True;
                 }
-                return True;
             }
         }
     }
