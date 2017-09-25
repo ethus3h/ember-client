@@ -384,7 +384,7 @@ use Grammar::ErrorReporting;
                 }
             }
             else {
-                if ! run-silenced { EM.parse($code, :$rule) } {
+                if ! run-silenced { try { EM.parse($code, :$rule); CATCH { default { say "(Caught exception: " ~ $_.perl ~ "."}; }; }; } {
                 #if ! EM.parse($code, :$rule) {
                     say "BOECHIENTOHUCRBEIRCOUMSEICHEOU";
                     say EM.parse($code, :$rule);
