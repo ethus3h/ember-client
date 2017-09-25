@@ -361,16 +361,23 @@ use Grammar::ErrorReporting;
         code;
     }
 
-#    sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-        # if ! runParserTestInner($code, $rule, $fail) {
-        #     say "Test failed.";
-        #     say EM.parse($code, :$rule);
-        # }
-#        say runParserTestInner($code, $rule, $fail);
-#    }
-
-#    sub runParserTestInner(Str $code, Str $rule, Bool $fail = False) {
     sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
+        if $fail {
+            if runParserTestInner($code, $rule, $fail) {
+                say "Test failed.";
+                say EM.parse($code, :$rule);
+            }
+        }
+        else {
+            if ! runParserTestInner($code, $rule, $fail) {
+                say "Test failed.";
+                say EM.parse($code, :$rule);
+            }
+        }
+    }
+
+    sub runParserTestInner(Str $code, Str $rule, Bool $fail = False) {
+#    sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
         try {
             CATCH {
                 default {
