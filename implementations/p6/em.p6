@@ -362,17 +362,13 @@ use Grammar::ErrorReporting;
     }
 
     sub runParserTest(Str $code, Str $rule, Bool $fail = False) {
-        CATCH {
-            default {
-                say "Hi";
-                if $fail {
-                    say "Parsing threw an exception as expected."
-                }
-                else {
-                    say EM.parse($code, :$rule);
-                }
-            }
+        if ! runParserTestInner($code, $rule, $fail) {
+            say "Test failed.";
+            say EM.parse($code, :$rule);
         }
+    }
+
+    sub runParserTestInner(Str $code, Str $rule, Bool $fail = False) {
         try {
             CATCH {
                 default {
