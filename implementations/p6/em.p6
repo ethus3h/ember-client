@@ -7,7 +7,7 @@ use Grammar::ErrorReporting;
 
 # General support code
 (
-    # This class is by Moritz Lenz. I hope they don't mind me using it
+    # This class is originally by Moritz Lenz
     class SymbolTable {
         has @!scopes = {}, ;
         method enter-scope() {
