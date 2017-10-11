@@ -362,6 +362,7 @@ use Grammar::ErrorReporting;
 # Testing support code
 (
     sub run-silenced (&code) {
+        # run-silenced not by me
         temp $*OUT = temp $*ERR = class {
             BEGIN {
                 ::?CLASS.^add_method: $_, my method (*@) {} for qw/say put print print-nl/
