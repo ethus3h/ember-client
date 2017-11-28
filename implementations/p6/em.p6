@@ -333,7 +333,8 @@ use Grammar::ErrorReporting;
         ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
         foo(bar baz)
         foo(qux=6 bar)
-        ♥, 'TOP');
+        ♥
+        , 'TOP');
 
         # ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
         #     say $1$2$qux
