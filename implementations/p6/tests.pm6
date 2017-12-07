@@ -2,8 +2,8 @@
 
 use v6.c;
 use Test;
-use parser;
-use testSupport;
+use EmParser;
+use EmTestSupport;
 
 say 'Testing optionalParameter';
 (
