@@ -1,8 +1,8 @@
-use parser;
 #!/usr/bin/env perl6
 
 use v6.c;
 use Test;
+use parser;
 use testSupport;
 
 say 'Testing optionalParameter';
