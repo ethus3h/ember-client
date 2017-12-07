@@ -191,8 +191,9 @@ grammar EM does Grammar::ErrorReporting {
     );
 }
 
-class Actions {
-    method top( $/ ) {
-        self.$*ST = SymbolTable.new;
+class EmParser {
+    method parse( $/ ) {
+        my $*ST = SymbolTable.new;
+        return EM.parse( $/ , :actions($*ST) );
     }
 }
