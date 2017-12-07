@@ -10,115 +10,117 @@ use EM;
 use SymbolTable;
 use TestHelper;
 
+my TestHelper $th = new TestHelper();
+
 say 'Testing optionalParameter';
 (
-    ok runParserTest('String qux?', 'optionalParameter');
+    ok $th.runParserTest('String qux?', 'optionalParameter');
 );
 
 say 'Testing parameter';
 (
-    ok runParserTest('*', 'parameter');
-    ok runParserTest('String qux?', 'parameter');
-    nok runParserTest('String qux?,', 'parameter', True);
+    ok $th.runParserTest('*', 'parameter');
+    ok $th.runParserTest('String qux?', 'parameter');
+    nok $th.runParserTest('String qux?,', 'parameter', True);
 );
 
 say 'Testing parameterListBody';
 (
-    ok runParserTest('', 'parameterListBody');
-    ok runParserTest('*', 'parameterListBody');
-    ok runParserTest('String qux, *', 'parameterListBody');
-    ok runParserTest('String qux?, *', 'parameterListBody');
-    ok runParserTest('String qux?', 'parameterListBody');
-    ok runParserTest('String, *', 'parameterListBody');
-    ok runParserTest('String, String qux, String', 'parameterListBody');
-    ok runParserTest('String, String qux?, *', 'parameterListBody');
-    ok runParserTest('String, String qux?, String', 'parameterListBody');
-    ok runParserTest('String, String qux?', 'parameterListBody');
-    ok runParserTest('String, String qux', 'parameterListBody');
-    ok runParserTest('String?, *', 'parameterListBody');
+    ok $th.runParserTest('', 'parameterListBody');
+    ok $th.runParserTest('*', 'parameterListBody');
+    ok $th.runParserTest('String qux, *', 'parameterListBody');
+    ok $th.runParserTest('String qux?, *', 'parameterListBody');
+    ok $th.runParserTest('String qux?', 'parameterListBody');
+    ok $th.runParserTest('String, *', 'parameterListBody');
+    ok $th.runParserTest('String, String qux, String', 'parameterListBody');
+    ok $th.runParserTest('String, String qux?, *', 'parameterListBody');
+    ok $th.runParserTest('String, String qux?, String', 'parameterListBody');
+    ok $th.runParserTest('String, String qux?', 'parameterListBody');
+    ok $th.runParserTest('String, String qux', 'parameterListBody');
+    ok $th.runParserTest('String?, *', 'parameterListBody');
 );
 
 say 'Testing parenthesizedParameterList';
 (
-    ok runParserTest('(String, String qux?)', 'parenthesizedParameterList');
+    ok $th.runParserTest('(String, String qux?)', 'parenthesizedParameterList');
 );
 
 say 'Testing parameterList';
 (
-    ok runParserTest('()', 'parameterList');
-    ok runParserTest('(*)', 'parameterList');
-    ok runParserTest('(String, *)', 'parameterList');
-    ok runParserTest('(String, String qux?, *)', 'parameterList');
-    ok runParserTest('(String, String qux?)', 'parameterList');
-    ok runParserTest('(String, String qux)', 'parameterList');
-    #FIXME #ok runParserTest('$1$2$qux', 'parameterList');
+    ok $th.runParserTest('()', 'parameterList');
+    ok $th.runParserTest('(*)', 'parameterList');
+    ok $th.runParserTest('(String, *)', 'parameterList');
+    ok $th.runParserTest('(String, String qux?, *)', 'parameterList');
+    ok $th.runParserTest('(String, String qux?)', 'parameterList');
+    ok $th.runParserTest('(String, String qux)', 'parameterList');
+    #FIXME #ok $th.runParserTest('$1$2$qux', 'parameterList');
 );
 
 say 'Testing identifier';
 (
-    ok runParserTest('foo', 'identifier');
-    ok runParserTest('foo(String, String qux?, *)', 'identifier');
-    ok runParserTest('foo(String, String qux?)', 'identifier');
-    ok runParserTest('String foo(String, String qux?, *)', 'identifier');
+    ok $th.runParserTest('foo', 'identifier');
+    ok $th.runParserTest('foo(String, String qux?, *)', 'identifier');
+    ok $th.runParserTest('foo(String, String qux?)', 'identifier');
+    ok $th.runParserTest('String foo(String, String qux?, *)', 'identifier');
 );
 
 say 'Testing invocation';
 (
-    ok runParserTest('foo (bar, baz)', 'invocation');
-    ok runParserTest('foo bar 6 qux', 'invocation');
-    ok runParserTest('foo bar baz', 'invocation');
-    ok runParserTest('foo bar', 'invocation');
-    ok runParserTest('foo qux=6 bar', 'invocation');
-    ok runParserTest('foo(bar 6 qux)', 'invocation');
-    ok runParserTest('foo(bar baz)', 'invocation');
-    ok runParserTest('foo(bar, baz)', 'invocation');
-    ok runParserTest('foo(bar)', 'invocation');
-    ok runParserTest('foo(qux=6 bar)', 'invocation');
-    ok runParserTest('foo(String, String qux?)', 'invocation');
-    nok runParserTest('foo(bar, baz', 'invocation', True);
-    nok runParserTest('foo(bar,baz)', 'invocation', True);
+    ok $th.runParserTest('foo (bar, baz)', 'invocation');
+    ok $th.runParserTest('foo bar 6 qux', 'invocation');
+    ok $th.runParserTest('foo bar baz', 'invocation');
+    ok $th.runParserTest('foo bar', 'invocation');
+    ok $th.runParserTest('foo qux=6 bar', 'invocation');
+    ok $th.runParserTest('foo(bar 6 qux)', 'invocation');
+    ok $th.runParserTest('foo(bar baz)', 'invocation');
+    ok $th.runParserTest('foo(bar, baz)', 'invocation');
+    ok $th.runParserTest('foo(bar)', 'invocation');
+    ok $th.runParserTest('foo(qux=6 bar)', 'invocation');
+    ok $th.runParserTest('foo(String, String qux?)', 'invocation');
+    nok $th.runParserTest('foo(bar, baz', 'invocation', True);
+    nok $th.runParserTest('foo(bar,baz)', 'invocation', True);
 );
 
 say 'Testing value';
 (
-    ok runParserTest('$1$2$qux', 'value');
+    ok $th.runParserTest('$1$2$qux', 'value');
 );
 
 say 'Testing lineContents';
 (
-    ok runParserTest('', 'lineContents');
-    ok runParserTest('* foo', 'lineContents');
-    ok runParserTest('foo', 'lineContents');
-    ok runParserTest('foo()', 'lineContents');
-    ok runParserTest('foo(bar)', 'lineContents');
-    ok runParserTest('foo(String, String qux, String baz)', 'lineContents');
-    ok runParserTest('foo(String, String qux?, *)', 'lineContents');
-    ok runParserTest('foo(String, String qux?, String baz)', 'lineContents');
-    ok runParserTest('foo(String, String qux?, String)', 'lineContents');
-    ok runParserTest('foo(String, String qux?)', 'lineContents');
-    ok runParserTest('foo(String, String, String)', 'lineContents');
-    ok runParserTest('foo=5', 'lineContents');
-    nok runParserTest('String qux?', 'lineContents', True);
+    ok $th.runParserTest('', 'lineContents');
+    ok $th.runParserTest('* foo', 'lineContents');
+    ok $th.runParserTest('foo', 'lineContents');
+    ok $th.runParserTest('foo()', 'lineContents');
+    ok $th.runParserTest('foo(bar)', 'lineContents');
+    ok $th.runParserTest('foo(String, String qux, String baz)', 'lineContents');
+    ok $th.runParserTest('foo(String, String qux?, *)', 'lineContents');
+    ok $th.runParserTest('foo(String, String qux?, String baz)', 'lineContents');
+    ok $th.runParserTest('foo(String, String qux?, String)', 'lineContents');
+    ok $th.runParserTest('foo(String, String qux?)', 'lineContents');
+    ok $th.runParserTest('foo(String, String, String)', 'lineContents');
+    ok $th.runParserTest('foo=5', 'lineContents');
+    nok $th.runParserTest('String qux?', 'lineContents', True);
 );
 
 say 'Testing TOP: Small documents';
 (
-    ok runParserTest('', 'TOP');
-    ok runParserTest('foo', 'TOP');
-    ok runParserTest('foo()', 'TOP');
-    ok runParserTest('foo(bar)', 'TOP');
-    ok runParserTest('foo=5', 'TOP');
+    ok $th.runParserTest('', 'TOP');
+    ok $th.runParserTest('foo', 'TOP');
+    ok $th.runParserTest('foo()', 'TOP');
+    ok $th.runParserTest('foo(bar)', 'TOP');
+    ok $th.runParserTest('foo=5', 'TOP');
 );
 
 say 'Testing TOP: Larger documents';
 (
-    ok runParserTest(q:to/♥/, 'TOP');
+    ok $th.runParserTest(q:to/♥/, 'TOP');
     String foo(String, String qux?, *):
     foo(bar baz)
     foo(qux=6 bar)
     ♥
 
-    # ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
+    # ok $th.runParserTest(q:to/♥/;String foo(String, String qux?, *):
     #     say $1$2$qux
     # 
     # # Test simple invocation
