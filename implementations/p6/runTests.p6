@@ -4,6 +4,7 @@ use v6.c;
 use Test;
 use lib '.';
 use EM;
+use SymbolTable;
 use testSupport;
 
 say 'Testing optionalParameter';

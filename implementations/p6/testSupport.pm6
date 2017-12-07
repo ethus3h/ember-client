@@ -2,7 +2,6 @@
 
 use v6.c;
 use Test;
-use lib '.';
 
 sub run-silenced (&code) {
     # run-silenced not by me
