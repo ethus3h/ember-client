@@ -2,7 +2,7 @@
 
 class EM {
     method parse( $/ ) {
-        my $*ST = SymbolTable.new;
-        return EmGrammar.parse( $/ , :actions($*ST) );
+        my $ST = SymbolTable.new;
+        return EmGrammar.parse( $/ , :actions($ST) );
     }
 }
