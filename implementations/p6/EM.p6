@@ -190,3 +190,9 @@ grammar EM does Grammar::ErrorReporting {
         }
     );
 }
+
+class Actions {
+    method top( $/ ) {
+        self.$*ST = SymbolTable.new;
+    }
+}
