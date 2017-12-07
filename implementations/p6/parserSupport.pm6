@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
-unit module EmParserSupport
+unit module EmParserSupport;
 
 use v6.c;
 use Test;
