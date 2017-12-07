@@ -6,7 +6,7 @@ use Grammar::Tracer;
 use Grammar::ErrorReporting;
 
 use lib '.';
-use EmParser;
+use EM;
 use SymbolTable;
 use testSupport;
 
