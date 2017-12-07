@@ -5,7 +5,7 @@ use Test;
 use Grammar::Tracer;
 use Grammar::ErrorReporting;
 use lib '.';
-use parserSupport;
+use SymbolTable;
 
 my $*ST = SymbolTable.new;
 grammar EM does Grammar::ErrorReporting {
