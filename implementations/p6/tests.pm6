@@ -4,8 +4,6 @@ unit module EmParser;
 
 use v6.c;
 use Test;
-use EmParser;
-use EmTestSupport;
 
 say 'Testing optionalParameter';
 (
