@@ -330,7 +330,8 @@ use Grammar::ErrorReporting;
 
     say 'Testing TOP: Larger documents';
     (
-        ok runParserTest(q:to/♥/;String foo(String, String qux?, *):
+        ok runParserTest(q:to/♥/);
+        String foo(String, String qux?, *):
         foo(bar baz)
         foo(qux=6 bar)
         ♥
