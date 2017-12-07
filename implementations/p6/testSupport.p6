@@ -1,8 +1,5 @@
 #!/usr/bin/env perl6
 
-use v6.c;
-use Test;
-
 sub run-silenced (&code) {
     # run-silenced not by me
     temp $*OUT = temp $*ERR = class {

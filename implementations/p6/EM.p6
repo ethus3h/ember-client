@@ -1,10 +1,5 @@
 #!/usr/bin/env perl6
 
-use v6.c;
-use Test;
-use Grammar::Tracer;
-use Grammar::ErrorReporting;
-
 my $*ST = SymbolTable.new;
 grammar EM does Grammar::ErrorReporting {
     # High-level chunking of the code

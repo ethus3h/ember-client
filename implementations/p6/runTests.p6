@@ -2,6 +2,9 @@
 
 use v6.c;
 use Test;
+use Grammar::Tracer;
+use Grammar::ErrorReporting;
+
 use lib '.';
 use EM;
 use SymbolTable;
