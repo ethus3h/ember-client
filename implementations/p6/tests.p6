@@ -3,7 +3,7 @@
 use v6.c;
 use Test;
 use lib '.';
-use parser;
+use EM;
 use testSupport;
 
 say 'Testing optionalParameter';
