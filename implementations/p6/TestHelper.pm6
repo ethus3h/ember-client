@@ -27,7 +27,7 @@ class TestHelper {
                 }
             }
             if $fail {
-                if runParserTestInner($code, $rule, $fail) {
+                if self.runParserTestInner($code, $rule, $fail) {
                     say "Test failed.";
                     say EM.parse($code, :$rule);
                     return True;
@@ -36,7 +36,7 @@ class TestHelper {
             }
             else {
                 try {
-                    if ! runParserTestInner($code, $rule, $fail) {
+                    if ! self.runParserTestInner($code, $rule, $fail) {
                         say "Test failed.";
                         say EM.parse($code, :$rule);
                         return False;
@@ -61,7 +61,7 @@ class TestHelper {
             }
             $*ST = SymbolTable.new;
             if $fail {
-                if run-silenced { EM.parse($code, :$rule) } {
+                if self.run-silenced { EM.parse($code, :$rule) } {
                 #if EM.parse($code, :$rule) {
                     #say EM.parse($code, :$rule);
                     say "Parsing unexpectedly succeeded.";
@@ -74,7 +74,7 @@ class TestHelper {
             }
             else {
                 #say "Part 1";
-                if ! run-silenced { EM.parse($code, :$rule) } {
+                if ! self.run-silenced { EM.parse($code, :$rule) } {
                 #if ! EM.parse($code, :$rule) {
                     #say EM.parse($code, :$rule);
                     fail "Parsing unexpectedly failed.";
