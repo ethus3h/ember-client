@@ -1,7 +1,5 @@
 #!/usr/bin/env perl6
 
-unit module EmParser;
-
 use v6.c;
 use Test;
 use lib '.';
