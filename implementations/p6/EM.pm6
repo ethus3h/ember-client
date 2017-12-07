@@ -6,6 +6,7 @@ use SymbolTable;
 
 class EM {
     method parse(|args) {
+        my $*ST = SymbolTable.new;
         grammar EmGrammar does Grammar::ErrorReporting {
             # High-level chunking of the code
             (
@@ -196,7 +197,6 @@ class EM {
             );
         }
 
-        my $*ST = SymbolTable.new;
         return EmGrammar.parse(args);
     }
 }
