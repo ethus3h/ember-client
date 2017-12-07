@@ -10,7 +10,7 @@ use EM;
 use SymbolTable;
 use TestHelper;
 
-my TestHelper $th = TestHelper.new();
+my TestHelper $th = TestHelper.new;
 
 say 'Testing optionalParameter';
 (
