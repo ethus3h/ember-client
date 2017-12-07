@@ -3,6 +3,8 @@
 use v6.c;
 use Test;
 use lib '.';
+use parser;
+use testSupport;
 
 say 'Testing optionalParameter';
 (
