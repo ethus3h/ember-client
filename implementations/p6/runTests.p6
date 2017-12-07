@@ -8,7 +8,7 @@ use Grammar::ErrorReporting;
 use lib '.';
 use EM;
 use SymbolTable;
-use testSupport;
+use TestHelper;
 
 say 'Testing optionalParameter';
 (

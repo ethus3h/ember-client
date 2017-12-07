@@ -1,5 +1,9 @@
 #!/usr/bin/env perl6
 
+use Grammar::Tracer;
+use Grammar::ErrorReporting;
+use SymbolTable;
+
 class EM {
     method parse(|args) {
         grammar EmGrammar does Grammar::ErrorReporting {
