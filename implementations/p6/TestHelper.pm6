@@ -61,7 +61,7 @@ class TestHelper {
             }
             $*ST = SymbolTable.new;
             if $fail {
-                if self.run-silenced { EM.parse($code, :$rule) } {
+                if self.run-silenced ({ EM.parse($code, :$rule) }) {
                 #if EM.parse($code, :$rule) {
                     #say EM.parse($code, :$rule);
                     say "Parsing unexpectedly succeeded.";
@@ -74,7 +74,7 @@ class TestHelper {
             }
             else {
                 #say "Part 1";
-                if ! self.run-silenced { EM.parse($code, :$rule) } {
+                if ! self.run-silenced ({ EM.parse($code, :$rule) }) {
                 #if ! EM.parse($code, :$rule) {
                     #say EM.parse($code, :$rule);
                     fail "Parsing unexpectedly failed.";
