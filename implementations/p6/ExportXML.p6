@@ -1,1 +1,1 @@
-say XML::Writer.serialize(slurp());
+say XML::Writer.serialize(EM.parse(slurp()));

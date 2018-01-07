@@ -222,4 +222,4 @@ grammar EM does Grammar::ErrorReporting {
         }
     );
 }
-say XML::Writer.serialize(slurp());
+say XML::Writer.serialize(EM.parse(slurp()));
