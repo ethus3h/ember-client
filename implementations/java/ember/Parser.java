@@ -15,8 +15,8 @@ import java.nio.file.Paths;
 public class Parser {
     /**
      * Given a path (stored as a string) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
-     * @param path
-     * @return
+     * @param path a path (stored as a string) to a file accessible to the Java VM
+     * @return a Document object representing the input file's contents parsed as Ember language document
      * @throws IOException
      */
     public Document parseFileFromStringPath(String path) throws IOException {
@@ -44,8 +44,8 @@ public class Parser {
 
     /**
      * Given a path (java.nio.file.Path) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
-     * @param path
-     * @return
+     * @param path a path (java.nio.file.Path) to a file accessible to the Java VM
+     * @return a Document object representing the input file's contents parsed as Ember language document
      * @throws IOException
      */
     public Document parseFile(Path path) throws IOException {
@@ -54,8 +54,8 @@ public class Parser {
 
     /**
      * Given a string stored by Java (Java strings are UTF-16), return a Document object representing that string parsed as Ember language document
-     * @param input
-     * @return
+     * @param input a string stored by Java (Java strings are UTF-16)
+     * @return a Document object representing the input string parsed as Ember language document
      * @throws IOException
      */
     public Document parseString(String input) throws IOException {
@@ -64,8 +64,8 @@ public class Parser {
 
     /**
      * Given a byte array of UTF-8 text, return a Document object representing that string parsed as Ember language document
-     * @param input
-     * @return
+     * @param input is a byte array of UTF-8 text
+     * @return a Document object representing the input string parsed as Ember language document
      * @throws IOException
      */
     public Document parseBytes(byte[] input) throws IOException {
