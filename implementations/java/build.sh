@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Trying to build Ember..."
 echo "Cleaning any existing files..."
-rm -rf *.class
+find . -name "*.class" -delete
 echo "Done cleaning"
 echo "Compiling..."
 #from https://community.oracle.com/message/6361719
@@ -17,6 +17,6 @@ emcompile() {
 
 emcompile "Client";
 
-rm -rf *.class
+find . -name "*.class" -delete
 
 echo "Done!"
