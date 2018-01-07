@@ -17,5 +17,6 @@ emcompile() {
 
 emcompile "Client";
 
+rm -rf *.class
 
 echo "Done!"
