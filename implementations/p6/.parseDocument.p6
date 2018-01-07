@@ -222,3 +222,4 @@ grammar EM does Grammar::ErrorReporting {
         }
     );
 }
+say XML::Writer.serialize(slurp());
