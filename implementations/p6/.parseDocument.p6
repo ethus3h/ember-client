@@ -228,7 +228,12 @@ say $input;
 my $parsed;
 run-silenced { $parsed = EM.parse($input); }
 
-$parsed = root => $parsed;
+$parsed = root => [
+    :width(200), :height(200),
+    circle => [
+        :cx(100), :cy(100), :r(50)
+    ],
+];
 
 say $parsed;
 
