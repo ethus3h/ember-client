@@ -51,7 +51,7 @@ public class EmberProcessInstance implements Runnable {
     @Override
     public void run() {
         try {
-            this.execute(Class.forName("ember.ember."+this.target),this.target,this.session,this.args);
+            this.execute(Class.forName("ember."+this.target),this.target,this.session,this.args);
         } catch (Exception e) {
             this.e=e;
         }

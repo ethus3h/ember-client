@@ -30,7 +30,7 @@ public class ProcessManager {
     }
 
     public EmberProcessInstance start(String cmd, Session s, String... args) throws Exception {
-        this.checkRunnable(Class.forName("ember.ember."+cmd));
+        this.checkRunnable(Class.forName("ember."+cmd));
         EmberProcessInstance p = new EmberProcessInstance(s,cmd,args);
         this.processes.add(p);
         p.pid = this.processes.indexOf(p);
