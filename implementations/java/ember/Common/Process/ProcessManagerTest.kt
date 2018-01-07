@@ -7,8 +7,8 @@ import org.junit.Test
  * Created by elliot on 14.11.01.
  */
 class ProcessManagerTest {
-    @Throws(Exception::class)
     @Test
+    @Throws(Exception::class)
     fun testCreateProcessManager() {
         val p = ProcessManager()
 
