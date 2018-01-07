@@ -224,7 +224,7 @@ grammar EM does Grammar::ErrorReporting {
 }
 my $input = slurp();
 my $parsed = "blah";
-say EM.parse($input).WHAT;
+say EM.parse("say").WHAT;
 do { say $parsed; }
 run-silenced { $parsed = EM.parse($input); }
 say $parsed.WHAT;
