@@ -4,7 +4,7 @@ use v6.c;
 use Test;
 use Grammar::Tracer;
 use Grammar::ErrorReporting;
-use XML::Writer;
+use JSON::Tiny;
 
 # General support code
 (
@@ -232,7 +232,7 @@ say $parsed.perl;
 
 say $parsed.tree.WHAT;
 
-say XML::Writer.serialize($parsed.tree);
+say to-json $parsed;
 sub run-silenced (&code) {
     # run-silenced not by me
     temp $*OUT = temp $*ERR = class {
