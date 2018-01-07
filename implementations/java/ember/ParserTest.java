@@ -8,7 +8,7 @@ import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 /**
  * Created by elliot on 14.11.27.
  */
-public class Parser {
+public class ParserTest {
 
     @Test
     public void testCreateCommandProcessor() throws Exception {
