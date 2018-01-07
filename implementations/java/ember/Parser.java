@@ -20,7 +20,8 @@ public class Parser {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
     public Document parseBytes(byte[] input) {
-        getoutRuntime rt = Runtime.getRuntime();
+        // based on https://stackoverflow.com/questions/5711084/java-runtime-getruntime-getting-output-from-executing-a-command-line-program
+        Runtime rt = Runtime.getRuntime();
         String[] commands = {"system.exe","-get t"};
         Process proc = rt.exec(commands);
 
