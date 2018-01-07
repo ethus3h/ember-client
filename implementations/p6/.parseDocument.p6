@@ -229,10 +229,13 @@ my $parsed;
 run-silenced { $parsed = EM.parse($input); }
 
 $parsed = root => [
-    $parsed,
+    :width(200), :height(200),
+    circle => [
+        :cx(100), :cy(100), :r(50)
+    ],
 ];
 
-say $parsed;
+say $parsed.WHAT;
 
 say XML::Writer.serialize($parsed);
 sub run-silenced (&code) {
