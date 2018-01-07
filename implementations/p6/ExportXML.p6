@@ -8,4 +8,4 @@ say $parsed.perl;
 
 say $parsed.tree.WHAT;
 
-say XML::Writer.serialize($parsed.tree);
+say to-json $parsed;
