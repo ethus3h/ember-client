@@ -2,9 +2,75 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataType.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/Greeter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/SafeData.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/ember/Common/SafeDataTest.kt" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataType.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.kt" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/SafeData.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,103 +82,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
+      <file leaf-file-name="DataProcessor.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FrontEndServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="3" lean-forward="false" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommandProcessorTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/CommandProcessorTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommandProcessor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/CommandProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EmberProcessInstanceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="60" lean-forward="false" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessManagerTest.kt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/ClientTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/Client.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="34" column="1" lean-forward="false" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EmberProcessInstance.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -157,6 +131,7 @@
         <option value="$PROJECT_DIR$/ember/Client/CommandProcessor.java" />
         <option value="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" />
         <option value="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" />
+        <option value="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt" />
       </list>
     </option>
   </component>
@@ -422,18 +397,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="135" y="23" width="1400" height="983" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -462,7 +436,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ember/Common/Process/Greeter.java">
+    <entry file="file://$PROJECT_DIR$/ember/Common/Process/Greeter.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
@@ -470,7 +444,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.java">
+    <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
@@ -496,30 +470,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="3" lean-forward="false" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Client/CommandProcessorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/jdk/internal/loader/BuiltinClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
@@ -528,7 +478,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java">
+    <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
           <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
@@ -536,7 +486,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManager.java">
+    <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManager.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="373">
           <caret line="32" column="42" lean-forward="false" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
@@ -552,6 +502,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/ClientTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ember/Client/CommandProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -560,28 +536,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Client/ClientTest.java">
+    <entry file="file://$PROJECT_DIR$/ember/Client/CommandProcessorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="60" lean-forward="false" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
+        <state relative-caret-position="457">
+          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.kt">
+    <entry file="file://$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        <state relative-caret-position="90">
+          <caret line="6" column="3" lean-forward="false" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
           <folding />
         </state>
       </provider>
