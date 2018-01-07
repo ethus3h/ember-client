@@ -18,7 +18,7 @@ import java.nio.file.Paths;
  */
 public class Parser {
     /**
-     * Given a path to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
+     * Given a path (stored as a string) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
      * @param path
      * @return
      * @throws IOException
@@ -27,11 +27,23 @@ public class Parser {
         return parseFile(Paths.get(path));
     }
 
+    /**
+     * Given a path (stored as a byte array) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public Document parseFileFromBinaryPath(byte[] path) throws IOException {
         // TODO: Test this on a variety of filenames to make sure the Path object points to the right thing.
         return parseBytes(Files.readAllBytes(Paths.get(new String(path, StandardCharsets.ISO_8859_1))));
     }
 
+    /**
+     * Given a path (java.nio.file.Path) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public Document parseFile(Path path) throws IOException {
         return parseBytes(Files.readAllBytes(path));
     }
