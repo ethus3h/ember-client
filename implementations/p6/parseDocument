@@ -5,7 +5,7 @@ source ember_bash_setup &> /dev/null
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-cat GeneralSupport.p6 Grammar.p6 ExportXML.p6 > .parseDocument.p6
+cat GeneralSupport.p6 Grammar.p6 ExportXML.p6 TestSupport.p6 > .parseDocument.p6
 
 chmod +x .parseDocument.p6
 
