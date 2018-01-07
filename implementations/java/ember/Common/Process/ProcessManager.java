@@ -1,8 +1,8 @@
-package com.futuramerlin.ember.Common.Process;
+package ember.Common.Process;
 
-import com.futuramerlin.ember.Client.CommandProcessor;
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Exception.classNotRunnableException;
+import ember.ember.Client.CommandProcessor;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Exception.classNotRunnableException;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class ProcessManager {
     }
 
     public EmberProcessInstance start(String cmd, Session s, String... args) throws Exception {
-        this.checkRunnable(Class.forName("com.futuramerlin.ember."+cmd));
+        this.checkRunnable(Class.forName("ember.ember."+cmd));
         EmberProcessInstance p = new EmberProcessInstance(s,cmd,args);
         this.processes.add(p);
         p.pid = this.processes.indexOf(p);

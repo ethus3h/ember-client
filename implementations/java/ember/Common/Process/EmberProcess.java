@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Common.Process;
+package ember.Common.Process;
 
-import com.futuramerlin.ember.Client.Session.Session;
+import ember.ember.Client.Session.Session;
 
 /**
  * Created by elliot on 14.11.01.

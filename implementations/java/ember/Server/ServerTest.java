@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Server;
+package ember.Server;
 
 import org.junit.Test;
 

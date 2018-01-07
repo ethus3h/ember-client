@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
-import com.futuramerlin.ember.Client.Session.TerminalSession;
+import ember.ember.Client.Session.TerminalSession;
 import org.junit.Test;
 
 /**

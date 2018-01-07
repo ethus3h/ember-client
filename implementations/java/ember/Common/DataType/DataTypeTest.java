@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Common.DataType;
+package ember.Common.DataType;
 
 import org.junit.Test;
 

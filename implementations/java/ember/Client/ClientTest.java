@@ -1,9 +1,9 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
-import com.futuramerlin.ember.Client.ApiClient.ApiClient;
-import com.futuramerlin.ember.Common.Exception.NoTerminalFoundException;
-import com.futuramerlin.ember.Common.Exception.ZeroLengthInputException;
-import com.futuramerlin.ember.Common.Process.ProcessManager;
+import ember.ember.Client.ApiClient.ApiClient;
+import ember.ember.Common.Exception.NoTerminalFoundException;
+import ember.ember.Common.Exception.ZeroLengthInputException;
+import ember.ember.Common.Process.ProcessManager;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

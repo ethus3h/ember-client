@@ -1,7 +1,7 @@
-package com.futuramerlin.ember.Client.Session;
+package ember.Client.Session;
 
-import com.futuramerlin.ember.Common.Exception.NoContextsFoundException;
-import com.futuramerlin.ember.Common.Exception.NullContextOnlyException;
+import ember.ember.Common.Exception.NoContextsFoundException;
+import ember.ember.Common.Exception.NullContextOnlyException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

@@ -1,7 +1,7 @@
 package ember.Client.Commands;
 
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Process.EmberProcess;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Process.EmberProcess;
 
 /**
  * Created by elliot on 14.11.28.

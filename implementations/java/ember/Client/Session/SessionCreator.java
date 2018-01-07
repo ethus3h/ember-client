@@ -1,12 +1,12 @@
 package ember.Client.Session;
 
-import com.futuramerlin.ember.Client.Context;
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Exception.NoContextsFoundException;
-import com.futuramerlin.ember.Common.Exception.NullContextOnlyException;
-import com.futuramerlin.ember.Common.Exception.NullSessionArrayListException;
-import com.futuramerlin.ember.Common.Exception.UnknownSessionTypeException;
-import com.futuramerlin.ember.Common.Process.EmberProcess;
+import ember.ember.Client.Context;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Exception.NoContextsFoundException;
+import ember.ember.Common.Exception.NullContextOnlyException;
+import ember.ember.Common.Exception.NullSessionArrayListException;
+import ember.ember.Common.Exception.UnknownSessionTypeException;
+import ember.ember.Common.Process.EmberProcess;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
-import com.futuramerlin.ember.Client.Session.Session;
+import ember.ember.Client.Session.Session;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

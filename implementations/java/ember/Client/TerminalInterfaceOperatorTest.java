@@ -1,8 +1,8 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Exception.NoTerminalFoundException;
-import com.futuramerlin.ember.Common.Exception.ZeroLengthInputException;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Exception.NoTerminalFoundException;
+import ember.ember.Common.Exception.ZeroLengthInputException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

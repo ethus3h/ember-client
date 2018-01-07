@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Client.ApiClient;
+package ember.Client.ApiClient;
 
 import org.junit.Test;
 

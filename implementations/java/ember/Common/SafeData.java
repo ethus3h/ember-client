@@ -1,8 +1,8 @@
-package com.futuramerlin.ember.Common;
+package ember.Common;
 
 
-import com.futuramerlin.ember.Common.DataProcessor.HashGenerator;
-import com.futuramerlin.ember.Common.Exception.CorruptedSafeDataException;
+import ember.ember.Common.DataProcessor.HashGenerator;
+import ember.ember.Common.Exception.CorruptedSafeDataException;
 
 import java.security.NoSuchAlgorithmException;
 

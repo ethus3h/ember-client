@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Common.Process;
+package ember.Common.Process;
 
 import org.junit.Test;
 

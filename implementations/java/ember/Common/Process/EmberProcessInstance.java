@@ -1,7 +1,7 @@
-package com.futuramerlin.ember.Common.Process;
+package ember.Common.Process;
 
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Exception.*;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Exception.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Thread;
@@ -51,7 +51,7 @@ public class EmberProcessInstance implements Runnable {
     @Override
     public void run() {
         try {
-            this.execute(Class.forName("com.futuramerlin.ember."+this.target),this.target,this.session,this.args);
+            this.execute(Class.forName("ember.ember."+this.target),this.target,this.session,this.args);
         } catch (Exception e) {
             this.e=e;
         }

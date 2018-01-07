@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Server.RecordServer;
+package ember.Server.RecordServer;
 
 import org.junit.Test;
 

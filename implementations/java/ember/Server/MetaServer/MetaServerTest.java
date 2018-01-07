@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Server.MetaServer;
+package ember.Server.MetaServer;
 
 import org.junit.Test;
 

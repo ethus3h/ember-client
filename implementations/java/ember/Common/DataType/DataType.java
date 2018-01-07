@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Common.DataType;
+package ember.Common.DataType;
 
 /**
  * Created by elliot on 14 September 14.

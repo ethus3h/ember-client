@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
 /**
  * Created by elliot on 14.10.29.

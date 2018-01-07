@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Server.RecordServer;
+package ember.Server.RecordServer;
 
-import com.futuramerlin.ember.Server.Server;
+import ember.ember.Server.Server;
 
 /**
  * Created by PermissionGiver on 8/16/14.

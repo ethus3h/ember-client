@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Client.Session;
+package ember.Client.Session;
 
-import com.futuramerlin.ember.Client.Context;
+import ember.ember.Client.Context;
 
 /**
  * Created by elliot on 14.11.28.

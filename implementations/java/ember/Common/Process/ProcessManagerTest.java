@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Common.Process;
+package ember.Common.Process;
 
-import com.futuramerlin.ember.Common.Exception.classNotRunnableException;
+import ember.ember.Common.Exception.classNotRunnableException;
 import org.junit.Test;
 
 /**

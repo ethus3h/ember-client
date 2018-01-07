@@ -1,9 +1,9 @@
-package com.futuramerlin.ember.Client.Session;
+package ember.Client.Session;
 
-import com.futuramerlin.ember.Client.CommandProcessor;
-import com.futuramerlin.ember.Client.Context;
-import com.futuramerlin.ember.Common.Exception.UnknownSessionTypeException;
-import com.futuramerlin.ember.Common.Process.ProcessManager;
+import ember.ember.Client.CommandProcessor;
+import ember.ember.Client.Context;
+import ember.ember.Common.Exception.UnknownSessionTypeException;
+import ember.ember.Common.Process.ProcessManager;
 
 /**
  * Created by elliot on 14.11.27.

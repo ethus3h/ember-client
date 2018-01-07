@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Common.Exception;
+package ember.Common.Exception;
 
 /**
  * Created by PermissionGiver on 8/18/14.

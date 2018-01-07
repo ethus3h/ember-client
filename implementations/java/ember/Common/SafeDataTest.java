@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Common;
+package ember.Common;
 
-import com.futuramerlin.ember.Common.Exception.CorruptedSafeDataException;
+import ember.ember.Common.Exception.CorruptedSafeDataException;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
-import com.futuramerlin.ember.Client.Session.Session;
-import com.futuramerlin.ember.Common.Exception.CommandExecutionError;
-import com.futuramerlin.ember.Common.Exception.ZeroLengthInputException;
+import ember.ember.Client.Session.Session;
+import ember.ember.Common.Exception.CommandExecutionError;
+import ember.ember.Common.Exception.ZeroLengthInputException;
 
 /**
  * Created by elliot on 14.11.27.

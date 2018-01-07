@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Common.DataProcessor;
+package ember.Common.DataProcessor;
 
 import org.apache.commons.codec.binary.Hex;
 

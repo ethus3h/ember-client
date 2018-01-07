@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Client.Session;
+package ember.Client.Session;
 
 import org.junit.Test;
 

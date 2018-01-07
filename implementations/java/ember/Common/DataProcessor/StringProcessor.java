@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Common.DataProcessor;
+package ember.Common.DataProcessor;
 
-import com.futuramerlin.ember.Common.Exception.ZeroLengthInputException;
+import ember.ember.Common.Exception.ZeroLengthInputException;
 
 /**
  * Created by elliot on 14.11.01.

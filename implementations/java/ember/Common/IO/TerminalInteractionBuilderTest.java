@@ -1,6 +1,6 @@
-package com.futuramerlin.ember.Common.IO;
+package ember.Common.IO;
 
-import com.futuramerlin.ember.Common.Exception.NoTerminalFoundException;
+import ember.ember.Common.Exception.NoTerminalFoundException;
 import org.junit.Test;
 
 import java.io.Console;

@@ -2,8 +2,71 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Client.java" afterPath="$PROJECT_DIR$/ember/Client/Client.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/ClientCommon.java" afterPath="$PROJECT_DIR$/ember/Client/ClientCommon.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/ClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/ClientTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/CommandProcessor.java" afterPath="$PROJECT_DIR$/ember/Client/CommandProcessor.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/CommandProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Client/CommandProcessorTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" afterPath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Context.java" afterPath="$PROJECT_DIR$/ember/Client/Context.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/ContextTest.java" afterPath="$PROJECT_DIR$/ember/Client/ContextTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/NullSession.java" afterPath="$PROJECT_DIR$/ember/Client/Session/NullSession.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/Session.java" afterPath="$PROJECT_DIR$/ember/Client/Session/Session.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionTest.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/TerminalSession.java" afterPath="$PROJECT_DIR$/ember/Client/Session/TerminalSession.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperator.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperator.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperatorTest.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperatorTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/TerminalSessionTest.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalSessionTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/WebClient/WebClient.java" afterPath="$PROJECT_DIR$/ember/Client/WebClient/WebClient.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/WebClient/WebClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/WebClient/WebClientTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataType.java" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataType.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.java" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.java" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" afterPath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/SafeData.java" afterPath="$PROJECT_DIR$/ember/Common/SafeData.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" afterPath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java" afterPath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServerTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/JettyServer.java" afterPath="$PROJECT_DIR$/ember/Server/JettyServer.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServer.java" afterPath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServer.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServerTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServer.java" afterPath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServer.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/Server.java" afterPath="$PROJECT_DIR$/ember/Server/Server.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Server/ServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/ServerTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,19 +98,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionCreator.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SessionCreator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+            <state relative-caret-position="502">
+              <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
               <folding>
-                <element signature="e#670#679#0" expanded="true" />
+                <element signature="e#593#602#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="SessionCreatorTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>com.futuramerlin.</find>
+      <find>package ember.ember.</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>ember.</replace>
+      <replace>package ember.</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/ember</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -63,6 +149,8 @@
         <option value="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
         <option value="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
         <option value="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
+        <option value="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" />
+        <option value="$PROJECT_DIR$/ember/Common/SafeData.java" />
       </list>
     </option>
   </component>
@@ -97,6 +185,17 @@
             <path>
               <item name="java" type="b2602c69:ProjectViewProjectNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+              <item name="Common" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -266,6 +365,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -276,7 +376,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -308,11 +407,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state relative-caret-position="502">
+          <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
           <folding>
-            <element signature="e#670#679#0" expanded="true" />
+            <element signature="e#593#602#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

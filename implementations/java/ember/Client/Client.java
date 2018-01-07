@@ -1,8 +1,8 @@
-package com.futuramerlin.ember.Client;
+package ember.Client;
 
 
-import com.futuramerlin.ember.Common.Exception.NoContextsFoundException;
-import com.futuramerlin.ember.Common.Process.ProcessManager;
+import ember.ember.Common.Exception.NoContextsFoundException;
+import ember.ember.Common.Process.ProcessManager;
 
 /**
  * Created by elliot on 14.10.29.

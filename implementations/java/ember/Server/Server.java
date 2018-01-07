@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Server;
+package ember.Server;
 
 /**
  * Created by PermissionGiver on 8/16/14.
