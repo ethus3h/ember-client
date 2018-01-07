@@ -27,14 +27,13 @@ public class Parser {
         String[] commands = {"../../p6/parseDocument","-get t"};
         Process process = rt.exec(commands);
 
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(process.getInputStream()));
+        // Read stdout of command
+        new InputStreamReader(process.getInputStream())
+        BufferedReader stdInput = new BufferedReader();
 
-        BufferedReader stdError = new BufferedReader(new
-                InputStreamReader(process.getErrorStream()));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
         // read the output from the command
-        System.out.println("Here is the standard output of the command:\n");
         String s = null;
         while ((s = stdInput.readLine()) != null) {
             System.out.println(s);
