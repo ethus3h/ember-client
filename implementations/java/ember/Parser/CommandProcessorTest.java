@@ -1,4 +1,4 @@
-package ember.Client;
+package ember.Parser;
 
 import ember.Client.Session.Session;
 import org.junit.Rule;

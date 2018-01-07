@@ -1,8 +1,7 @@
-package ember.Client;
+package ember.Parser;
 
 import ember.Client.Session.Session;
 import ember.Common.Exception.CommandExecutionError;
-import ember.Common.Exception.ZeroLengthInputException;
 
 /**
  * Created by elliot on 14.11.27.
