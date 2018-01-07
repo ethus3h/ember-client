@@ -59,7 +59,7 @@ public class Parser {
     }
 
     /**
-     * Given a bite array of UTF-8 text, return a Document object representing that string parsed as Ember language document
+     * Given a byte array of UTF-8 text, return a Document object representing that string parsed as Ember language document
      * @param input
      * @return
      * @throws IOException
