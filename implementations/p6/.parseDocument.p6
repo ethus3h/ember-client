@@ -241,7 +241,7 @@ my $svg = svg => [
 
 say $svg.perl;
 
-say XML::Writer.serialize(root => $parsed);
+say XML::Writer.serialize($parsed.tree);
 sub run-silenced (&code) {
     # run-silenced not by me
     temp $*OUT = temp $*ERR = class {

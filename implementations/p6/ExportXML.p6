@@ -17,4 +17,4 @@ my $svg = svg => [
 
 say $svg.perl;
 
-say XML::Writer.serialize(root => $parsed);
+say XML::Writer.serialize($parsed.tree);
