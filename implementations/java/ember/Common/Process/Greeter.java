@@ -13,9 +13,8 @@ public class Greeter implements EmberProcess {
     }
 
     @Override
-    public void start(String cmd, Session s, String... args) {
+    public void start(String cmd, Session s, Object... args) throws Exception {
         System.out.println("Hello, World!");
-
     }
 
     @Override
