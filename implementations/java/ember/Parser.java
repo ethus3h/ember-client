@@ -6,7 +6,7 @@ import ember.Common.Exception.CommandExecutionError;
 /**
  * Created by elliot on 14.11.27.
  */
-public class CommandProcessor {
+public class Parser {
     private Session session;
 
     public CommandProcessor(Session s) {
