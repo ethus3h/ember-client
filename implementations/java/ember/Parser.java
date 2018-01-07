@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * Return a Document for working with in java from a ember larnguage document
+ * Return a Document for working with in Java from an Ember language document
  */
 public class Parser {
     /**
@@ -26,10 +26,22 @@ public class Parser {
         return parseBytes(Files.readAllBytes(Paths.get(path)));
     }
 
+    /**
+     * Given a string stored by Java (Java strings are UTF-16), get a Document object representing that string parsed as Ember language document
+     * @param input
+     * @return
+     * @throws IOException
+     */
     public Document parseString(String input) throws IOException {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Given a bitye arrey of UTF-8 text, , get a Document object representing that string parsed as Ember language document
+     * @param input
+     * @return
+     * @throws IOException
+     */
     public Document parseBytes(byte[] input) throws IOException {
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument","-get t"};
