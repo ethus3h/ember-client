@@ -1,2 +1,3 @@
-say EM.parse(slurp()).WHAT;
+my $parsed = run-silenced { EM.parse(slurp()); }
+say $parsed.WHAT;
 say XML::Writer.serialize();
