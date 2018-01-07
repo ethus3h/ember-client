@@ -222,8 +222,9 @@ grammar EM does Grammar::ErrorReporting {
         }
     );
 }
+my $input = slurp();
 my $parsed;
-run-silenced { $parsed = EM.parse(slurp()); }
+run-silenced { $parsed = EM.parse($input); }
 say $parsed.WHAT;
 say XML::Writer.serialize("blah");
 sub run-silenced (&code) {
