@@ -224,10 +224,11 @@ grammar EM does Grammar::ErrorReporting {
 }
 my $input = slurp();
 say $input;
-say EM.parse($input).WHAT;
+
 my $parsed;
 run-silenced { $parsed = EM.parse($input); }
-say $parsed.WHAT;
+say $parsed;
+
 say XML::Writer.serialize($parsed);
 sub run-silenced (&code) {
     # run-silenced not by me
