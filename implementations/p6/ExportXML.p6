@@ -1,5 +1,6 @@
 my $input = slurp();
 say $input;
+say $input.WHAT;
 say EM.parse($input).WHAT;
 my $parsed;
 run-silenced { $parsed = EM.parse($input); }
