@@ -1,4 +1,4 @@
-package com.futuramerlin.ember.Client.Commands;
+package ember.Client.Commands;
 
 import com.futuramerlin.ember.Client.Session.Session;
 import com.futuramerlin.ember.Common.Process.EmberProcess;
@@ -22,12 +22,11 @@ public class Quit implements EmberProcess {
     }
 
     @Override
-    public void start(String cmd, Session s, String... args) {
+    public void start(String cmd, Session s, Object... args) throws Exception {
         this.command = cmd;
         this.session = s;
         this.args = args;
     }
-
 
     @Override
     public void pause() {

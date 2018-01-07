@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" afterPath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" afterPath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +14,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Greeter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Greeter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ember/Common/Process/Greeter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
+            <state relative-caret-position="240">
               <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -39,6 +48,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
+        <option value="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
       </list>
     </option>
   </component>
@@ -266,8 +276,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ember/Common/Process/Greeter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="240">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
