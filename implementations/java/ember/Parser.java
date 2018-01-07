@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -23,16 +24,17 @@ public class Parser {
      * @throws IOException
      */
     public Document parseFileFromStringPath(String path) throws IOException {
+        return parseFile(Paths.get(path));
+    }
+
+    public Document parseFileFromBinaryPath(byte[] path) throws IOException {
         return parseBytes(Files.readAllBytes(Paths.get(path)));
     }
 
-    public Document parseFileFromBinaryPath(String path) throws IOException {
-        return parseBytes(Files.readAllBytes(Paths.get(path)));
+    public Document parseFile(Path path) throws IOException {
+        return parseBytes(Files.readAllBytes(path));
     }
 
-    public Document parseFile(String path) throws IOException {
-        return parseBytes(Files.readAllBytes(Paths.get(path)));
-    }
     /**
      * Given a string stored by Java (Java strings are UTF-16), return a Document object representing that string parsed as Ember language document
      * @param input
