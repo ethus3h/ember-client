@@ -1,4 +1,4 @@
-package ember.Parser;
+package ember;
 
 import ember.Client.Session.Session;
 import ember.Common.Exception.CommandExecutionError;

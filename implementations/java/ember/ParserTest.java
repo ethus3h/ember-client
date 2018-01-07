@@ -1,4 +1,4 @@
-package ember.Parser;
+package ember;
 
 import ember.Client.Session.Session;
 import org.junit.Rule;
@@ -8,7 +8,7 @@ import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 /**
  * Created by elliot on 14.11.27.
  */
-public class CommandProcessorTest {
+public class Parser {
 
     @Test
     public void testCreateCommandProcessor() throws Exception {
