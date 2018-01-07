@@ -25,7 +25,7 @@ public class Quit implements EmberProcess {
     public void start(String cmd, Session s, Object... args) throws Exception {
         this.command = cmd;
         this.session = s;
-        this.args = args;
+        this.args = (String[]) args;
     }
 
     @Override

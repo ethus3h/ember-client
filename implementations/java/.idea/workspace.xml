@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" afterPath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,12 +25,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="465">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SessionCreator.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+              <folding>
+                <element signature="e#670#679#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,12 +62,13 @@
       <list>
         <option value="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
         <option value="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
+        <option value="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="140" />
-    <option name="y" value="43" />
+    <option name="y" value="34" />
     <option name="width" value="1400" />
     <option name="height" value="983" />
   </component>
@@ -235,7 +249,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="140" y="43" width="1400" height="983" extended-state="0" />
+    <frame x="140" y="34" width="1400" height="983" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -270,7 +284,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -284,9 +300,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state relative-caret-position="465">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding>
+            <element signature="e#670#679#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

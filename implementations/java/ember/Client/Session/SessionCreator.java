@@ -1,6 +1,7 @@
-package com.futuramerlin.ember.Client.Session;
+package ember.Client.Session;
 
 import com.futuramerlin.ember.Client.Context;
+import com.futuramerlin.ember.Client.Session.Session;
 import com.futuramerlin.ember.Common.Exception.NoContextsFoundException;
 import com.futuramerlin.ember.Common.Exception.NullContextOnlyException;
 import com.futuramerlin.ember.Common.Exception.NullSessionArrayListException;
@@ -56,7 +57,7 @@ public class SessionCreator implements EmberProcess {
     }
 
     @Override
-    public void start(String cmd, Session s, String... args) throws NoContextsFoundException, UnknownSessionTypeException, NullSessionArrayListException {
+    public void start(String cmd, Session s, Object... args) throws NoContextsFoundException, UnknownSessionTypeException, NullSessionArrayListException {
         try {
             this.getContexts();
         } catch (NullContextOnlyException e) {
