@@ -1,6 +1,6 @@
 my $input = slurp();
-say EM.parse("say").WHAT;
-do { say $parsed; }
+say EM.parse($input).WHAT;
+my $parsed;
 run-silenced { $parsed = EM.parse($input); }
 say $parsed.WHAT;
 say XML::Writer.serialize("blah");
