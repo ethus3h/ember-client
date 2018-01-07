@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Client.java" afterPath="$PROJECT_DIR$/ember/Client/Client.java" />
@@ -67,6 +68,35 @@
       <change beforePath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Server/Server.java" afterPath="$PROJECT_DIR$/ember/Server/Server.java" />
       <change beforePath="$PROJECT_DIR$/ember/Server/ServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/ServerTest.java" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ApiClient/ApiClient.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Client.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ClientTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/CommandProcessorTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ContextTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/SessionCreatorTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/SessionTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/TerminalSession.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/DataProcessorTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/HashGenerator.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/HashGeneratorTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/StringProcessorTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/ApiClientAlreadyExistsException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/CorruptedSafeDataException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/classNotExistsException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/hashSetItemNotFoundException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/hashSetNullArgumentException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/IO/TerminalInteractionBuilderTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/EmberProcessInstanceTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/GreeterTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/ProcessManagerTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/SafeData.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/SafeDataTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/FrontEndServer/FrontEndServerTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/JettyServer.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/MetaServer/MetaServer.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/RecordServer/RecordServer.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/RecordServer/RecordServerTest.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/ember/Client/Commands/Quit.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -88,33 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="465">
-              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionCreator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
-              <folding>
-                <element signature="e#593#602#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionCreatorTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -397,24 +405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
-          <folding>
-            <element signature="e#593#602#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -425,8 +415,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+        <state relative-caret-position="75">
+          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Session/SessionCreator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="71" column="5" lean-forward="false" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+          <folding>
+            <element signature="e#593#602#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
