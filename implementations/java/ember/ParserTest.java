@@ -9,8 +9,14 @@ import org.junit.Test;
 public class ParserTest {
 
     @Test
-    public void testCreateParser() throws Exception {
+    public void testCreateParser() {
         Parser p = new Parser();
+    }
+
+    @Test
+    public void testParseSimpleFile() {
+        Parser p = new Parser();
+
     }
 
 }
