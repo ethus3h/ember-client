@@ -6,6 +6,7 @@ run-silenced { $parsed = EM.parse($input); }
 
 say $parsed.perl;
 
+say $parsed.tree;
 
 my $svg = svg => [
     :width(200), :height(200),

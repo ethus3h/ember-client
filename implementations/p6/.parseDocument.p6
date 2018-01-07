@@ -230,6 +230,17 @@ run-silenced { $parsed = EM.parse($input); }
 
 say $parsed.perl;
 
+say $parsed.tree;
+
+my $svg = svg => [
+    :width(200), :height(200),
+    circle => [
+        :cx(100), :cy(100), :r(50)
+    ],
+];
+
+say $svg.perl;
+
 say XML::Writer.serialize(root => $parsed);
 sub run-silenced (&code) {
     # run-silenced not by me
