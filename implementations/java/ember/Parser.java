@@ -31,8 +31,6 @@ public class Parser {
         // Read stdout of command
         byte[] stdout = IOUtils.toByteArray(process.getInputStream());
 
-
-
         return null;
     }
 }
