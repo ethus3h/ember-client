@@ -1,9 +1,9 @@
 package ember.Client.Session;
 
-import ember.ember.Client.CommandProcessor;
-import ember.ember.Client.Context;
-import ember.ember.Common.Exception.UnknownSessionTypeException;
-import ember.ember.Common.Process.ProcessManager;
+import ember.Client.CommandProcessor;
+import ember.Client.Context;
+import ember.Common.Exception.UnknownSessionTypeException;
+import ember.Common.Process.ProcessManager;
 
 /**
  * Created by elliot on 14.11.27.

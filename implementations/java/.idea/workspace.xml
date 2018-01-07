@@ -2,101 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClient.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/ApiClient/ApiClientTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Client.java" afterPath="$PROJECT_DIR$/ember/Client/Client.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/ClientCommon.java" afterPath="$PROJECT_DIR$/ember/Client/ClientCommon.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/ClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/ClientTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/CommandProcessor.java" afterPath="$PROJECT_DIR$/ember/Client/CommandProcessor.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/CommandProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Client/CommandProcessorTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" afterPath="$PROJECT_DIR$/ember/Client/Commands/Quit.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/Context.java" afterPath="$PROJECT_DIR$/ember/Client/Context.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/ContextTest.java" afterPath="$PROJECT_DIR$/ember/Client/ContextTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/NullSession.java" afterPath="$PROJECT_DIR$/ember/Client/Session/NullSession.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/Session.java" afterPath="$PROJECT_DIR$/ember/Client/Session/Session.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/Session/SessionTest.java" afterPath="$PROJECT_DIR$/ember/Client/Session/SessionTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/Session/TerminalSession.java" afterPath="$PROJECT_DIR$/ember/Client/Session/TerminalSession.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperator.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperator.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperatorTest.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalInterfaceOperatorTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Client/TerminalSessionTest.java" afterPath="$PROJECT_DIR$/ember/Client/TerminalSessionTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/WebClient/WebClient.java" afterPath="$PROJECT_DIR$/ember/Client/WebClient/WebClient.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Client/WebClient/WebClientTest.java" afterPath="$PROJECT_DIR$/ember/Client/WebClient/WebClientTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessor.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/DataProcessorTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGenerator.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/HashGeneratorTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessor.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataProcessor/StringProcessorTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataType.java" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataType.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.java" afterPath="$PROJECT_DIR$/ember/Common/DataType/DataTypeTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/ApiClientAlreadyExistsException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/CommandExecutionError.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/CorruptedSafeDataException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoContextsFoundException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NoTerminalFoundException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullContextOnlyException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/NullSessionArrayListException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/UnknownSessionTypeException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/ZeroLengthInputException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classIllegalAccessException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classInvocationTargetException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotExistsException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classNotRunnableException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/classRunMethodMissingException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetItemNotFoundException.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.java" afterPath="$PROJECT_DIR$/ember/Common/Exception/hashSetNullArgumentException.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.java" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilder.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.java" afterPath="$PROJECT_DIR$/ember/Common/IO/TerminalInteractionBuilderTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcess.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstanceTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" afterPath="$PROJECT_DIR$/ember/Common/Process/Greeter.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/GreeterTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.java" afterPath="$PROJECT_DIR$/ember/Common/Process/ProcessManagerTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/SafeData.java" afterPath="$PROJECT_DIR$/ember/Common/SafeData.java" />
       <change beforePath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" afterPath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java" afterPath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServerTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/JettyServer.java" afterPath="$PROJECT_DIR$/ember/Server/JettyServer.java" />
       <change beforePath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServer.java" afterPath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServer.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/MetaServer/MetaServerTest.java" />
       <change beforePath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServer.java" afterPath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServer.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/RecordServer/RecordServerTest.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/Server.java" afterPath="$PROJECT_DIR$/ember/Server/Server.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Server/ServerTest.java" afterPath="$PROJECT_DIR$/ember/Server/ServerTest.java" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ApiClient/ApiClient.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Client.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ClientTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/CommandProcessorTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/ContextTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/SessionCreatorTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/SessionTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Client/Session/TerminalSession.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/DataProcessorTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/HashGenerator.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/HashGeneratorTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/DataProcessor/StringProcessorTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/ApiClientAlreadyExistsException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/CorruptedSafeDataException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/classNotExistsException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/hashSetItemNotFoundException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Exception/hashSetNullArgumentException.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/IO/TerminalInteractionBuilderTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/EmberProcessInstanceTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/GreeterTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/Process/ProcessManagerTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/SafeData.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Common/SafeDataTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/FrontEndServer/FrontEndServerTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/JettyServer.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/MetaServer/MetaServer.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/RecordServer/RecordServer.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/com/futuramerlin/ember/Server/RecordServer/RecordServerTest.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/eite/ember/Client/Commands/Quit.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -118,11 +50,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Quit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <state relative-caret-position="45">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FrontEndServer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -134,10 +76,12 @@
     <findStrings>
       <find>com.futuramerlin.</find>
       <find>package ember.ember.</find>
+      <find>ember.ember.</find>
     </findStrings>
     <replaceStrings>
       <replace>ember.</replace>
       <replace>package ember.</replace>
+      <replace>ember.</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/ember</dir>
@@ -159,6 +103,7 @@
         <option value="$PROJECT_DIR$/ember/Client/Session/SessionCreator.java" />
         <option value="$PROJECT_DIR$/ember/Client/Session/SessionCreatorTest.java" />
         <option value="$PROJECT_DIR$/ember/Common/SafeData.java" />
+        <option value="$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java" />
       </list>
     </option>
   </component>
@@ -198,12 +143,6 @@
               <item name="java" type="b2602c69:ProjectViewProjectNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ember" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="java" type="b2602c69:ProjectViewProjectNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ember" type="462c0819:PsiDirectoryNode" />
-              <item name="Common" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -426,15 +365,23 @@
         <state relative-caret-position="502">
           <caret line="71" column="5" lean-forward="false" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
           <folding>
-            <element signature="e#593#602#0" expanded="true" />
+            <element signature="e#551#560#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ember/Client/Commands/Quit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state relative-caret-position="45">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Server/FrontEndServer/FrontEndServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding />
         </state>
       </provider>

@@ -1,8 +1,8 @@
 package ember.Client;
 
 
-import ember.ember.Common.Exception.NoContextsFoundException;
-import ember.ember.Common.Process.ProcessManager;
+import ember.Common.Exception.NoContextsFoundException;
+import ember.Common.Process.ProcessManager;
 
 /**
  * Created by elliot on 14.10.29.

@@ -1,9 +1,9 @@
 package ember.Client;
 
-import ember.ember.Client.ApiClient.ApiClient;
-import ember.ember.Common.Exception.NoTerminalFoundException;
-import ember.ember.Common.Exception.ZeroLengthInputException;
-import ember.ember.Common.Process.ProcessManager;
+import ember.Client.ApiClient.ApiClient;
+import ember.Common.Exception.NoTerminalFoundException;
+import ember.Common.Exception.ZeroLengthInputException;
+import ember.Common.Process.ProcessManager;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

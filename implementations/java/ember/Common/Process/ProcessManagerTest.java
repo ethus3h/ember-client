@@ -1,6 +1,6 @@
 package ember.Common.Process;
 
-import ember.ember.Common.Exception.classNotRunnableException;
+import ember.Common.Exception.classNotRunnableException;
 import org.junit.Test;
 
 /**

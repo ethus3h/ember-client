@@ -1,10 +1,10 @@
 package ember.Client;
 
-import ember.ember.Client.Session.Session;
-import ember.ember.Common.DataProcessor.StringProcessor;
-import ember.ember.Common.Exception.CommandExecutionError;
-import ember.ember.Common.Exception.NoTerminalFoundException;
-import ember.ember.Common.Exception.ZeroLengthInputException;
+import ember.Client.Session.Session;
+import ember.Common.DataProcessor.StringProcessor;
+import ember.Common.Exception.CommandExecutionError;
+import ember.Common.Exception.NoTerminalFoundException;
+import ember.Common.Exception.ZeroLengthInputException;
 
 import java.io.Console;
 

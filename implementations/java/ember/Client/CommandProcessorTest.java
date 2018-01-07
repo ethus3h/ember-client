@@ -1,6 +1,6 @@
 package ember.Client;
 
-import ember.ember.Client.Session.Session;
+import ember.Client.Session.Session;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

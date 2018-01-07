@@ -1,7 +1,7 @@
 package ember.Client.Session;
 
-import ember.ember.Common.Exception.NoContextsFoundException;
-import ember.ember.Common.Exception.NullContextOnlyException;
+import ember.Common.Exception.NoContextsFoundException;
+import ember.Common.Exception.NullContextOnlyException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;

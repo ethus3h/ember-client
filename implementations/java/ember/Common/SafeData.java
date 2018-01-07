@@ -1,8 +1,8 @@
 package ember.Common;
 
 
-import ember.ember.Common.DataProcessor.HashGenerator;
-import ember.ember.Common.Exception.CorruptedSafeDataException;
+import ember.Common.DataProcessor.HashGenerator;
+import ember.Common.Exception.CorruptedSafeDataException;
 
 import java.security.NoSuchAlgorithmException;
 

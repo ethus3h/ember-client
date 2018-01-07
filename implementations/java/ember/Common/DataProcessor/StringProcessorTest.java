@@ -1,6 +1,6 @@
 package ember.Common.DataProcessor;
 
-import ember.ember.Common.Exception.ZeroLengthInputException;
+import ember.Common.Exception.ZeroLengthInputException;
 import org.junit.Test;
 
 /**

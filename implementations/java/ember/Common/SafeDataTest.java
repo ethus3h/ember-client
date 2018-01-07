@@ -1,6 +1,6 @@
 package ember.Common;
 
-import ember.ember.Common.Exception.CorruptedSafeDataException;
+import ember.Common.Exception.CorruptedSafeDataException;
 import org.junit.Assert;
 import org.junit.Test;
 

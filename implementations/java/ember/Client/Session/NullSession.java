@@ -1,6 +1,6 @@
 package ember.Client.Session;
 
-import ember.ember.Client.Context;
+import ember.Client.Context;
 
 /**
  * Created by elliot on 14.11.28.

@@ -1,8 +1,8 @@
 package ember.Common.Process;
 
-import ember.ember.Client.CommandProcessor;
-import ember.ember.Client.Session.Session;
-import ember.ember.Common.Exception.classNotRunnableException;
+import ember.Client.CommandProcessor;
+import ember.Client.Session.Session;
+import ember.Common.Exception.classNotRunnableException;
 
 import java.util.ArrayList;
 

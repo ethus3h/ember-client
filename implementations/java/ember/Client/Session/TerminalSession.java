@@ -1,7 +1,7 @@
 package ember.Client.Session;
 
-import ember.ember.Client.Context;
-import ember.ember.Client.TerminalInterfaceOperator;
+import ember.Client.Context;
+import ember.Client.TerminalInterfaceOperator;
 
 /**
  * Created by elliot on 14.11.27.

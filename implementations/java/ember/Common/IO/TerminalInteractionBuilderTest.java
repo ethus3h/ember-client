@@ -1,6 +1,6 @@
 package ember.Common.IO;
 
-import ember.ember.Common.Exception.NoTerminalFoundException;
+import ember.Common.Exception.NoTerminalFoundException;
 import org.junit.Test;
 
 import java.io.Console;

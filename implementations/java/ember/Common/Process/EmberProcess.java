@@ -1,6 +1,6 @@
 package ember.Common.Process;
 
-import ember.ember.Client.Session.Session;
+import ember.Client.Session.Session;
 
 /**
  * Created by elliot on 14.11.01.

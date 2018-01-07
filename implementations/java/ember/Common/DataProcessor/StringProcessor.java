@@ -1,6 +1,6 @@
 package ember.Common.DataProcessor;
 
-import ember.ember.Common.Exception.ZeroLengthInputException;
+import ember.Common.Exception.ZeroLengthInputException;
 
 /**
  * Created by elliot on 14.11.01.

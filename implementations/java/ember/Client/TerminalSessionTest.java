@@ -1,6 +1,6 @@
 package ember.Client;
 
-import ember.ember.Client.Session.TerminalSession;
+import ember.Client.Session.TerminalSession;
 import org.junit.Test;
 
 /**

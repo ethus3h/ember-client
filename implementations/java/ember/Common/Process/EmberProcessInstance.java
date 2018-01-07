@@ -1,7 +1,7 @@
 package ember.Common.Process;
 
-import ember.ember.Client.Session.Session;
-import ember.ember.Common.Exception.*;
+import ember.Client.Session.Session;
+import ember.Common.Exception.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Thread;

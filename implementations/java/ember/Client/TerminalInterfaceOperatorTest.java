@@ -1,8 +1,8 @@
 package ember.Client;
 
-import ember.ember.Client.Session.Session;
-import ember.ember.Common.Exception.NoTerminalFoundException;
-import ember.ember.Common.Exception.ZeroLengthInputException;
+import ember.Client.Session.Session;
+import ember.Common.Exception.NoTerminalFoundException;
+import ember.Common.Exception.ZeroLengthInputException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
