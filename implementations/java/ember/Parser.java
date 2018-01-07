@@ -16,12 +16,20 @@ import java.nio.file.Paths;
  * Return a Document for working with in java from a ember larnguage document
  */
 public class Parser {
+    /**
+     * Given a path to a file accessible to the Java VM, return a Document object representing that document parsed as Ember language document
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public Document parseFile(String path) throws IOException {
         return parseBytes(Files.readAllBytes(Paths.get(path)));
     }
+
     public Document parseString(String input) throws IOException {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
+
     public Document parseBytes(byte[] input) throws IOException {
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument","-get t"};
