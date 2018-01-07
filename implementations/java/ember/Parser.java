@@ -65,16 +65,16 @@ public class Parser {
      * @throws IOException
      */
     public Document parseBytes(byte[] input) throws IOException {
+        // We use an external tool to handle actually parsing the file
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument","-get t"};
         Process process = rt.exec(commands);
 
-        // Write the input of  data to process
+        // Send the input data to the external process
         process.getOutputStream().write(input);
 
         // Read stdout of command
         byte[] stdout = IOUtils.toByteArray(process.getInputStream());
-
 
         return null;
     }
