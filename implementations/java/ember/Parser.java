@@ -13,10 +13,12 @@ import java.nio.file.Paths;
  */
 public class Parser {
     public Document parseFile(String path) throws IOException {
-        Files.readAllBytes(Paths.get(path));
-        return null;
+        return parseBytes(Files.readAllBytes(Paths.get(path)));
     }
     public Document parseString(String input) {
+        return null;
+    }
+    public Document parseBytes(byte[] input) {
         return null;
     }
 }
