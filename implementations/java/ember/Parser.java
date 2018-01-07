@@ -35,6 +35,14 @@ public class Parser {
      */
     public Document parseFileFromBinaryPath(byte[] path) throws IOException {
         // TODO: Test this on a variety of filenames to make sure the Path object points to the right thing.
+        /* https://stackoverflow.com/q/17574916 seems to say that UTF-8 isn't lossless for handling arbitrary
+           binary data, and implies (though I'm not certain of my reading of it, or that they
+           know what they're talking about) that ISO_8859_1 might be. In other words, the answer implies that
+           interpreting as ISO_8859_1 will work with *all* filenames, whether UTF-8, ISO-8859-1, EBCDIC, or
+           non-encoded binary garbage correctly.... with the big caveat that I'm reading it correctly.
+           I don't know if this would work this way, but I don't know any other option to open a file
+           given a pathname than to assume an encoding for it.
+         */
         return parseBytes(Files.readAllBytes(Paths.get(new String(path, StandardCharsets.ISO_8859_1))));
     }
 
