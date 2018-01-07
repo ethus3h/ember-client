@@ -232,7 +232,7 @@ say $parsed.perl;
 
 say $parsed.tree.WHAT;
 
-say to-json $parsed;
+say to-json $parsed.tree;
 sub run-silenced (&code) {
     # run-silenced not by me
     temp $*OUT = temp $*ERR = class {

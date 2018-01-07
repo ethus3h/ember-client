@@ -8,4 +8,4 @@ say $parsed.perl;
 
 say $parsed.tree.WHAT;
 
-say to-json $parsed;
+say to-json $parsed.tree;
