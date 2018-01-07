@@ -1,13 +1,9 @@
 package ember;
 
-import ember.Client.Session.Session;
-import ember.Common.Exception.CommandExecutionError;
 import org.apache.commons.io.IOUtils;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
