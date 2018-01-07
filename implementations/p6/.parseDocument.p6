@@ -228,8 +228,7 @@ say $input;
 my $parsed;
 run-silenced { $parsed = EM.parse($input); }
 
-say $parsed.WHAT;
-say $parsed;
+say $parsed.perl;
 
 say XML::Writer.serialize(root => $parsed);
 sub run-silenced (&code) {
