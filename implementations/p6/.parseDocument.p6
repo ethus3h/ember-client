@@ -228,16 +228,11 @@ say $input;
 my $parsed;
 run-silenced { $parsed = EM.parse($input); }
 
-$parsed = root => [
-    :width(200), :height(200),
-    circle => [
-        :cx(100), :cy(100), :r(50)
-    ],
-];
+$parsed = root => $parsed;
 
 say $parsed.WHAT;
 
-say XML::Writer.serialize($parsed);
+say XML::Writer.serialize(root => $parsed);
 sub run-silenced (&code) {
     # run-silenced not by me
     temp $*OUT = temp $*ERR = class {

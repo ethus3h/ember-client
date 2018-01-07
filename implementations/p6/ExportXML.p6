@@ -8,4 +8,4 @@ $parsed = root => $parsed;
 
 say $parsed.WHAT;
 
-say XML::Writer.serialize($parsed);
+say XML::Writer.serialize(root => $parsed);
