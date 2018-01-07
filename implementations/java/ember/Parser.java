@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * Created by elliot on 14.11.27.
+ * Return a Document for working with in java from a ember larnguage document
  */
 public class Parser {
     public Document parseFile(String path) throws IOException {
@@ -23,7 +23,6 @@ public class Parser {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
     public Document parseBytes(byte[] input) throws IOException {
-        // based on https://stackoverflow.com/questions/5711084/java-runtime-getruntime-getting-output-from-executing-a-command-line-program
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument","-get t"};
         Process process = rt.exec(commands);
