@@ -17,7 +17,7 @@ import java.nio.file.Paths;
  */
 public class Parser {
     /**
-     * Given a path to a file accessible to the Java VM, return a Document object representing that document parsed as Ember language document
+     * Given a path to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
      * @param path
      * @return
      * @throws IOException
@@ -27,7 +27,7 @@ public class Parser {
     }
 
     /**
-     * Given a string stored by Java (Java strings are UTF-16), get a Document object representing that string parsed as Ember language document
+     * Given a string stored by Java (Java strings are UTF-16), return a Document object representing that string parsed as Ember language document
      * @param input
      * @return
      * @throws IOException
@@ -37,7 +37,7 @@ public class Parser {
     }
 
     /**
-     * Given a bitye arrey of UTF-8 text, , get a Document object representing that string parsed as Ember language document
+     * Given a bite array of UTF-8 text, return a Document object representing that string parsed as Ember language document
      * @param input
      * @return
      * @throws IOException
