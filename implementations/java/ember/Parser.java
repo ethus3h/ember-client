@@ -20,6 +20,7 @@ public class Parser {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
     public Document parseBytes(byte[] input) {
+        getout
         return null;
     }
 }
