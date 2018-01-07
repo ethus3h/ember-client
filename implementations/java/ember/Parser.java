@@ -22,7 +22,7 @@ public class Parser {
     public Document parseBytes(byte[] input) {
         // based on https://stackoverflow.com/questions/5711084/java-runtime-getruntime-getting-output-from-executing-a-command-line-program
         Runtime rt = Runtime.getRuntime();
-        String[] commands = {"system.exe","-get t"};
+        String[] commands = {"../../p6/parseDocument","-get t"};
         Process proc = rt.exec(commands);
 
         BufferedReader stdInput = new BufferedReader(new
