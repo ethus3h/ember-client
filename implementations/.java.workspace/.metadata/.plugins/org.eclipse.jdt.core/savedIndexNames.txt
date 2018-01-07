@@ -1,3 +1,0 @@
-INDEX VERSION 1.130+/Users/ECW/_______GIT2017dec23/ember-information-technology-environment/implementations/.java.workspace/.metadata/.plugins/org.eclipse.jdt.core
-3665656385.index
-511982093.index
