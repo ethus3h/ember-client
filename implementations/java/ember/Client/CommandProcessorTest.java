@@ -64,7 +64,5 @@ public class CommandProcessorTest {
         CommandProcessor p = new CommandProcessor(s);
         p.command("");
         org.junit.Assert.assertFalse(log.getLog().contains("That is not a known command. To see a list of available commands, run the command: \"l /bin\".\n"));
-
-
     }
 }

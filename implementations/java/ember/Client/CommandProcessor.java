@@ -29,6 +29,12 @@ public class CommandProcessor {
                     " see the prompt, you can type a command. Type the return key to run a command. To see a list of available " +
                     "commands, run the command: \"l /bin\". To change directories, use the \"cd\" command.\n");
         }
+        if(c.trim().length() == 0) {
+            cmd = "Help";
+            System.out.println("The / $ at the beginning of some lines is the \"prompt\". When you" +
+                    " see the prompt, you can type a command. Type the return key to run a command. To see a list of available " +
+                    "commands, run the command: \"l /bin\". To change directories, use the \"cd\" command.\n");
+        }
         else {
             System.out.println("That is not a known command. To see a list of available commands, run the command: \"l /bin\".");
         }
