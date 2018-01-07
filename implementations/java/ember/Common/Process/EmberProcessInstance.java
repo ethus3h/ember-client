@@ -67,7 +67,7 @@ public class EmberProcessInstance implements Runnable {
         if (args != null) {
             argsLength=args.length;
         }
-        Class[] argTypes = new Class[args.length];
+        Class[] argTypes = new Class[argsLength];
         if (args != null) {
             //Need to make sure that argTypes matches the arguments to pass to start
             argTypes[0] = Session.class;
