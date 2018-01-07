@@ -14,9 +14,9 @@ import java.nio.file.Paths;
 public class Parser {
     public Document parseFile(String path) throws IOException {
         Files.readAllBytes(Paths.get(path));
-        return new Document();
+        return null;
     }
     public Document parseString(String input) {
-        return new Document;
+        return null;
     }
 }
