@@ -2,6 +2,7 @@ package ember;
 
 import ember.Client.Session.Session;
 import ember.Common.Exception.CommandExecutionError;
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.*;
 
 import java.io.BufferedReader;
@@ -28,7 +29,9 @@ public class Parser {
         Process process = rt.exec(commands);
 
         // Read stdout of command
-        InputStreamReader stdInput = new InputStreamReader(process.getInputStream());
+        byte[] stdout = IOUtils.toByteArray(process.getInputStream());
+
+
 
         return null;
     }
