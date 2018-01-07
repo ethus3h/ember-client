@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+source ember_bash_setup &> /dev/null
+#set -x
+
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+
+cat GeneralSupport.p6 Grammar.p6 Tests.p6 TestSupport.p6 > .runTests.p6
+
+chmod +x .runTests.p6
+
+./.runTests.p6
