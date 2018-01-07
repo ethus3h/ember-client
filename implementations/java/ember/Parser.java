@@ -69,8 +69,12 @@ public class Parser {
         String[] commands = {"../../p6/parseDocument","-get t"};
         Process process = rt.exec(commands);
 
+        // Write the input of  data to process
+        process.getOutputStream().write(input);
+
         // Read stdout of command
         byte[] stdout = IOUtils.toByteArray(process.getInputStream());
+
 
         return null;
     }
