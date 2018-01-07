@@ -18,10 +18,10 @@ public class Parser {
     public Document parseFile(String path) throws IOException {
         return parseBytes(Files.readAllBytes(Paths.get(path)));
     }
-    public Document parseString(String input) {
+    public Document parseString(String input) throws IOException {
         return parseBytes(input.getBytes(StandardCharsets.UTF_8));
     }
-    public Document parseBytes(byte[] input) {
+    public Document parseBytes(byte[] input) throws IOException {
         // based on https://stackoverflow.com/questions/5711084/java-runtime-getruntime-getting-output-from-executing-a-command-line-program
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument","-get t"};
