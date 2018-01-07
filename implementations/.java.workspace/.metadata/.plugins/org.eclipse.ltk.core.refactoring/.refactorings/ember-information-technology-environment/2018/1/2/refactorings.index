@@ -1,2 +1,8 @@
 1515290036917	Delete element
 1515290309845	Rename package 'main.com.futuramerlin.ember.Common.Exception'
+1515290322134	Rename package 'main.com.futuramerlin.ember.Common.IO'
+1515290330684	Rename package 'main.com.futuramerlin.ember.Server.RecordServer'
+1515290373848	Rename package 'main.com.futuramerlin.ember.Server'
+1515290379095	Rename package 'main.com.futuramerlin.ember.Server.FrontEndServer'
+1515290386478	Rename package 'main.com.futuramerlin.ember.Server.MetaServer'
+1515290399302	Move compilation units
