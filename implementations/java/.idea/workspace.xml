@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ember/ParserTest.java" afterPath="$PROJECT_DIR$/ember/ParserTest.java" />
+      <change beforePath="$PROJECT_DIR$/ember/Parser.java" afterPath="$PROJECT_DIR$/ember/Parser.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +17,8 @@
       <file leaf-file-name="Parser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ember/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+            <state relative-caret-position="165">
+              <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -63,9 +63,9 @@
         <option value="$PROJECT_DIR$/ember/Common/Process/ProcessManager.java" />
         <option value="$PROJECT_DIR$/ember/Common/Process/EmberProcessInstance.java" />
         <option value="$PROJECT_DIR$/ember/Parser/CommandProcessorTest.java" />
-        <option value="$PROJECT_DIR$/ember/Parser.java" />
         <option value="$PROJECT_DIR$/ember/CommandProcessorTest.java" />
         <option value="$PROJECT_DIR$/ember/ParserTest.java" />
+        <option value="$PROJECT_DIR$/ember/Parser.java" />
       </list>
     </option>
   </component>
@@ -621,18 +621,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ember/ParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
           <folding />
         </state>
       </provider>

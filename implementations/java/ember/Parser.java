@@ -3,13 +3,14 @@ package ember;
 import ember.Client.Session.Session;
 import ember.Common.Exception.CommandExecutionError;
 
+
 /**
  * Created by elliot on 14.11.27.
  */
 public class Parser {
     private Session session;
 
-    public CommandProcessor(Session s) {
+    public Parser(Session s) {
         this.session = s;
     }
 
