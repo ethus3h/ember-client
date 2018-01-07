@@ -28,7 +28,7 @@ public class Parser {
     }
 
     public Document parseFileFromBinaryPath(byte[] path) throws IOException {
-        return parseBytes(Files.readAllBytes(Paths.get(path)));
+        return parseBytes(Files.readAllBytes(Paths.get(new String(path, StandardCharsets.ISO_8859_1))));
     }
 
     public Document parseFile(Path path) throws IOException {
