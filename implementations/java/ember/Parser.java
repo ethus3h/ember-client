@@ -29,8 +29,8 @@ public class Parser {
 
     /**
      * Given a path (stored as a byte array) to a file accessible to the Java VM, return a Document object representing that file's contents parsed as Ember language document
-     * @param path
-     * @return
+     * @param path Path (stored as a byte array) to a file accessible to the Java VM
+     * @return Document object representing the input file's contents parsed as Ember language document
      * @throws IOException
      */
     public Document parseFileFromBinaryPath(byte[] path) throws IOException {
