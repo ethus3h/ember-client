@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2411ada8-37f3-4efe-b4d7-fe441022e428" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ember/Common/SafeData.java" afterPath="$PROJECT_DIR$/ember/Common/SafeData.java" />
-      <change beforePath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" afterPath="$PROJECT_DIR$/ember/Common/SafeDataTest.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ember/Parser.java" afterPath="$PROJECT_DIR$/ember/Parser.java" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/ember/Common/SafeData.class" afterPath="$PROJECT_DIR$/out/production/eite/ember/Common/SafeData.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/ember/Common/SafeDataTest.class" afterPath="$PROJECT_DIR$/out/production/eite/ember/Common/SafeDataTest.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/eite/ember/Parser.class" afterPath="$PROJECT_DIR$/out/production/eite/ember/Parser.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ember/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="83" column="36" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
+            <state relative-caret-position="283">
+              <caret line="86" column="8" lean-forward="false" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SafeData.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SafeData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+            <state relative-caret-position="60">
+              <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,8 +96,8 @@
         <option value="$PROJECT_DIR$/ember/Parser/CommandProcessorTest.java" />
         <option value="$PROJECT_DIR$/ember/CommandProcessorTest.java" />
         <option value="$PROJECT_DIR$/ember/ParserTest.java" />
-        <option value="$PROJECT_DIR$/ember/Parser.java" />
         <option value="$PROJECT_DIR$/ember/Common/SafeData.java" />
+        <option value="$PROJECT_DIR$/ember/Parser.java" />
       </list>
     </option>
   </component>
@@ -331,9 +333,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CommandProcessorTest_testEmptyCommand - 2018.01.07 at 15h 01m 03s.xml">
-      <configuration name="CommandProcessorTest.testEmptyCommand" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CommandProcessorTest_testEmptyCommand - 2018.01.07 at 15h 03m 34s.xml">
       <configuration name="CommandProcessorTest.testEmptyCommand" configurationId="JUnit" />
     </history-entry>
@@ -359,6 +358,9 @@
       <configuration name="Tests" configurationId="JUnit" />
     </history-entry>
     <history-entry file="Tests - 2018.01.07 at 19h 26m 46s.xml">
+      <configuration name="Tests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Tests - 2018.01.07 at 19h 28m 42s.xml">
       <configuration name="Tests" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -670,16 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ember/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="83" column="36" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ember/Common/SafeDataTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1470">
@@ -698,8 +690,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ember/Common/SafeData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+        <state relative-caret-position="60">
+          <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="86" column="8" lean-forward="false" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

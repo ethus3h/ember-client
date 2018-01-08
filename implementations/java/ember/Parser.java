@@ -81,6 +81,10 @@ public class Parser {
     byte[] getTreeDiagram(byte[] input) throws IOException {
         // We use the external Perl 6 grammar to handle the heavy lifting of parsing the file
         Runtime rt = Runtime.getRuntime();
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+        
         String[] commands = {"../../../p6/parseDocument"};
         Process process = rt.exec(commands);
 
