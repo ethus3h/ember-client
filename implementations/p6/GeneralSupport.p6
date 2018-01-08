@@ -4,7 +4,6 @@ use v6.c;
 use Test;
 use Grammar::Tracer;
 use Grammar::ErrorReporting;
-use JSON::Tiny;
 
 # General support code
 (
