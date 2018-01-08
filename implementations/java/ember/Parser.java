@@ -73,11 +73,12 @@ public class Parser {
      * @throws IOException
      */
     public Document parseBytes(byte[] input) throws IOException {
+        byte[] treeDiagram = getTreeDiagram(input);
 
         return null;
     }
 
-    private getTreeDiagram(byte[] input) {
+    private byte[] getTreeDiagram(byte[] input) throws IOException {
         // We use the external Perl 6 grammar to handle the heavy lifting of parsing the file
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument"};
