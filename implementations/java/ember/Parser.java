@@ -39,7 +39,9 @@ public class Parser {
            I don't know if this would work this way, but I don't know any other option to open a file
            given a pathname than to assume an encoding for it. I'm specifically interested in getting a
            java.nio.file.Path object (only takes a String as its constructor) to be able to open the file
-           that I know the path to (as an array of bytes, but don't know the encoding)
+           that I know the path to (as an array of bytes, but don't know the encoding). Another option to
+           deal with this would be to make a hexdump/base64 of the byte array, pass that to a shell script,
+           and have the shell script return the file contents, but that's really ugly.
          */
         return parseBytes(Files.readAllBytes(Paths.get(new String(path, StandardCharsets.ISO_8859_1))));
     }
