@@ -37,7 +37,9 @@ public class Parser {
            interpreting as ISO_8859_1 will work with *all* filenames, whether UTF-8, ISO-8859-1, EBCDIC, or
            non-encoded binary garbage correctly.... with the big caveat that I'm reading it correctly.
            I don't know if this would work this way, but I don't know any other option to open a file
-           given a pathname than to assume an encoding for it.
+           given a pathname than to assume an encoding for it. I'm specifically interested in getting a
+           java.nio.file.Path object (only takes a String as its constructor) to be able to open the file
+           that I know the path to (as an array of bytes, but don't know the encoding)
          */
         return parseBytes(Files.readAllBytes(Paths.get(new String(path, StandardCharsets.ISO_8859_1))));
     }
