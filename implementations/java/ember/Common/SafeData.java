@@ -29,51 +29,51 @@ public class SafeData {
 
     }
 
-    public void nukemd5() {
+    public void clearMd5() {
         md5 = "";
     }
 
-    public void nukesha() {
+    public void clearSha() {
         sha = "";
     }
 
-    public void nukes29() {
+    public void clearS29() {
         s29 = "";
     }
 
-    public void nukecrc() {
+    public void clearCrc() {
         crc = "";
     }
 
     public void check() throws NoSuchAlgorithmException, CorruptedSafeDataException {
-        checkmd5();
-        checksha();
-        checks29();
-        checkcrc();
+        checkMd5();
+        checkSha();
+        checkS29();
+        checkCrc();
     }
 
-    public void checkmd5() throws NoSuchAlgorithmException, CorruptedSafeDataException {
+    public void checkMd5() throws NoSuchAlgorithmException, CorruptedSafeDataException {
         HashGenerator h = new HashGenerator();
         if(! this.md5.equals(h.md5(data))){
             throw new CorruptedSafeDataException();
         }
     }
 
-    public void checksha() throws NoSuchAlgorithmException, CorruptedSafeDataException {
+    public void checkSha() throws NoSuchAlgorithmException, CorruptedSafeDataException {
         HashGenerator h = new HashGenerator();
         if(! this.sha.equals(h.sha(data))){
             throw new CorruptedSafeDataException();
         }
     }
 
-    public void checks29() throws NoSuchAlgorithmException, CorruptedSafeDataException {
+    public void checkS29() throws NoSuchAlgorithmException, CorruptedSafeDataException {
         HashGenerator h = new HashGenerator();
         if(! this.s29.equals(h.s29(data))){
             throw new CorruptedSafeDataException();
         }
     }
 
-    public void checkcrc() throws NoSuchAlgorithmException, CorruptedSafeDataException {
+    public void checkCrc() throws NoSuchAlgorithmException, CorruptedSafeDataException {
         HashGenerator h = new HashGenerator();
         if(! this.crc.equals(h.crc(data))){
             throw new CorruptedSafeDataException();

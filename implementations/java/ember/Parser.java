@@ -81,7 +81,7 @@ public class Parser {
     byte[] getTreeDiagram(byte[] input) throws IOException {
         // We use the external Perl 6 grammar to handle the heavy lifting of parsing the file
         Runtime rt = Runtime.getRuntime();
-        String[] commands = {"../../p6/parseDocument"};
+        String[] commands = {"../../../p6/parseDocument"};
         Process process = rt.exec(commands);
 
         // Send the input data to the external process

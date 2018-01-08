@@ -56,69 +56,69 @@ public class SafeDataTest {
     @Test
     public void testSDNukeMD5() throws Exception {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukemd5();
+        d.clearMd5();
     }
     @Test
     public void testSDNukeSHA() throws Exception {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukesha();
+        d.clearSha();
     }
     @Test
     public void testSDNukeS29() throws Exception {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukes29();
+        d.clearS29();
     }
     @Test
     public void testSDNukeCRC() throws Exception {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukecrc();
+        d.clearCrc();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkMD5() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukemd5();
+        d.clearMd5();
         d.check();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkMD5i() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukemd5();
-        d.checkmd5();
+        d.clearMd5();
+        d.checkMd5();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkSHA() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukesha();
+        d.clearSha();
         d.check();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkSHAi() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukesha();
-        d.checksha();
+        d.clearSha();
+        d.checkSha();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkS29() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukes29();
+        d.clearS29();
         d.check();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkS29i() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukes29();
-        d.checks29();
+        d.clearS29();
+        d.checkS29();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkCRC() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukecrc();
+        d.clearCrc();
         d.check();
     }
     @Test(expected=CorruptedSafeDataException.class)
     public void testSDCkCRCi() throws Exception, CorruptedSafeDataException {
         SafeData d = new SafeData("Hello, World!".getBytes("UTF-8"));
-        d.nukecrc();
-        d.checkcrc();
+        d.clearCrc();
+        d.checkCrc();
     }
 }
