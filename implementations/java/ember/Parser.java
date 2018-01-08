@@ -84,8 +84,8 @@ public class Parser {
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current relative path is: " + s);
-        
-        String[] commands = {"../../../p6/parseDocument"};
+
+        String[] commands = {"../p6/parseDocument"};
         Process process = rt.exec(commands);
 
         // Send the input data to the external process
