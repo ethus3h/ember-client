@@ -73,6 +73,11 @@ public class Parser {
      * @throws IOException
      */
     public Document parseBytes(byte[] input) throws IOException {
+
+        return null;
+    }
+
+    private getTreeDiagram(byte[] input) {
         // We use the external Perl 6 grammar to handle the heavy lifting of parsing the file
         Runtime rt = Runtime.getRuntime();
         String[] commands = {"../../p6/parseDocument"};
@@ -81,9 +86,7 @@ public class Parser {
         // Send the input data to the external process
         process.getOutputStream().write(input);
 
-        // Read stdout of command. This isn't a Document yet, but a Perl 6 specific tree diagram of the document, which will need to be converted
-        byte[] stdout = IOUtils.toByteArray(process.getInputStream());
-
-        return null;
+        // Return stdout of command. This isn't a Document yet, but a Perl 6 specific tree diagram of the document, which will need to be converted
+        return IOUtils.toByteArray(process.getInputStream());
     }
 }

@@ -9,4 +9,4 @@ cat GeneralSupport.p6 Grammar.p6 ExportXML.p6 TestSupport.p6 > .parseDocument.p6
 
 chmod +x .parseDocument.p6
 
-./.parseDocument.p6
+cat | ./.parseDocument.p6
