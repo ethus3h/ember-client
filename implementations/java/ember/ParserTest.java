@@ -20,7 +20,7 @@ public class ParserTest {
     @Test
     public void testParseSimpleDoc() throws IOException {
         Parser p = new Parser();
-        Assert.assertEquals("｢say｣\n block => ｢say｣\n  blockContents => ｢say｣\n   unterminatedLine => ｢say｣\n    lineContents => ｢say｣\n     invocation => ｢say｣\n      identifier => ｢say｣\n       escapedName => ｢say｣\n       parameterList => ｢｣\n        nullParameterList => ｢｣\n      parameterList => ｢｣\n       nullParameterList => ｢｣\n", p.getTreeDiagram("say".getBytes(StandardCharsets.UTF_8)).toString());
+        Assert.assertEquals("｢say｣\n block => ｢say｣\n  blockContents => ｢say｣\n   unterminatedLine => ｢say｣\n    lineContents => ｢say｣\n     invocation => ｢say｣\n      identifier => ｢say｣\n       escapedName => ｢say｣\n       parameterList => ｢｣\n        nullParameterList => ｢｣\n      parameterList => ｢｣\n       nullParameterList => ｢｣\n", new String(p.getTreeDiagram("say".getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
     };
 
 }
