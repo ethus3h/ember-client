@@ -3,5 +3,4 @@ in:
 
     say 'Hello, World!'
 
-out:
-    Hello, World!
+invalid
