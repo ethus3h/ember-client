@@ -21,7 +21,7 @@ eite-single-test() {
         die "TODO: not implemented"
     fi
     eite run "$runInput" > "$runOutput"
-    assert fileEquals "$runOutput" "$testPath/out"
+    assert fileEquals "$testPath/out" "$runOutput"
 }
 
 find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/eite/tests" -exec runTest eite-single-test {} \;
