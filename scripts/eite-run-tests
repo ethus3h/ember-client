@@ -9,13 +9,20 @@ eite-single-test() {
     testPath="$1"
     runInput="$(tempFile)"
     runOutput="$(tempFile)"
+    runShouldFail="$(tempFile)"
     if [[ -d "$testPath" ]]; then
         cp "$testPath/in.eite" "$runInput"
         cp "$testPath/out" "$runOutput"
+        if [[ -e "$testPath/invalid" ]]; then
+            say "true" > "$runShouldFail"
+        else
+            say "false" > "$runShouldFail"
+        fi
     else
         die "TODO: not implemented"
     fi
-    assert fileEquals 
+    eite run "$runInput" > "$runOutput"
+    assert fileEquals "$runOutput"
 }
 
 find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/eite/tests" -exec runTest eite-single-test {} \;
