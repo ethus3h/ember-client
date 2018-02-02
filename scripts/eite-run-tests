@@ -5,4 +5,8 @@ source ember_bash_setup &> /dev/null
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/eite/tests" -exec eite-single-test {} \;
+eite-single-test() {
+    runTest "$(basename "$1")"
+}
+
+find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/eite/tests" -exec runTest "$(basename "$1")" eite-single-test {} \;
