@@ -10,7 +10,11 @@ eite-single-test() {
     runInput="$(tempFile)"
     runOutput="$(tempFile)"
     if [[ -d "$testPath" ]]; then
-        testInputFile=""
+        cp "$testPath/in.eite" "$runInput"
+        cp "$testPath/out" "$runOutput"
+    else
+        die "TODO: not implemented"
+    fi
     assert fileEquals 
 }
 
