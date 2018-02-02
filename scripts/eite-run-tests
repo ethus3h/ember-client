@@ -6,9 +6,11 @@ source ember_bash_setup &> /dev/null
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 eite-single-test() {
-    testFile="$1"
-    testInputFile=""
+    testPath="$1"
+    runInput="$(tempFile)"
     runOutput="$(tempFile)"
+    if [[ -d "$testPath" ]]; then
+        testInputFile=""
     assert fileEquals 
 }
 
