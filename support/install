@@ -93,11 +93,7 @@ if ! [[ -n "$eiteSharedstatedir" ]]; then
 fi
 echo "eiteSharedstatedir: $eiteSharedstatedir"
 
-eiteEmberdir="$eitePrefix"/Ember\ Library
-
-ereplace "/usr/local/etc" "$eiteSysconfdir" scripts/eite-logsession
-
-mkdir -p "$eiteEmberdir"
+mkdir -p "$eiteDatadir"
 mkdir -p "$eiteBindir"
 chmod +x scripts/*
 cp scripts/* "$eiteBindir/"
