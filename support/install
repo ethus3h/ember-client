@@ -4,9 +4,9 @@ source ember_bash_setup &> /dev/null
 set -x
 
 #NOTE: MAINTENANCE: Manual error printing
-if [[ -z "$(ember-getconf emberSharedVersion)" ]]; then
+if [[ -z "$(ember-getconf crystallizeVersion)" ]]; then
     printf '%b' '\033[1;31m' >&2
-    echo "ERROR: ember-shared is not properly installed! It must be installed before installing Crystallize." >&2
+    echo "ERROR: ember-shared is not properly installed! It must be installed before installing eite." >&2
     printf '%b' '\033[0m' >&2
     exit 1
 fi
@@ -21,7 +21,7 @@ fi
 
 echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
 if [[ -n "$1" ]]; then
-    crystallizeDestdir="$1"
+    eiteDestdir="$1"
     shift
 fi
 if [[ "$1" == "--skip-config-file" ]]; then
@@ -29,87 +29,87 @@ if [[ "$1" == "--skip-config-file" ]]; then
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizePrefix="$1"
+    eitePrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeCapPrefix="$1"
+    eiteCapPrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeExecPrefix="$1"
+    eiteExecPrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeBindir="$1"
+    eiteBindir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeDatarootdir="$1"
+    eiteDatarootdir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeDatadir="$1"
+    eiteDatadir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeSysconfdir="$1"
+    eiteSysconfdir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    crystallizeSharedstatedir="$1"
+    eiteSharedstatedir="$1"
     shift
 fi
-if ! [[ -n "$crystallizePrefix" ]]; then
-    if ! [[ -n "$crystallizeCapPrefix" ]]; then
-        crystallizePrefix="$crystallizeDestdir"/usr/local
+if ! [[ -n "$eitePrefix" ]]; then
+    if ! [[ -n "$eiteCapPrefix" ]]; then
+        eitePrefix="$eiteDestdir"/usr/local
     else
-        crystallizePrefix="$crystallizeCapPrefix"
+        eitePrefix="$eiteCapPrefix"
     fi
 fi
-echo "crystallizePrefix: $crystallizePrefix"
-if ! [[ -n "$crystallizeExecPrefix" ]]; then
-    crystallizeExecPrefix="$crystallizePrefix"
+echo "eitePrefix: $eitePrefix"
+if ! [[ -n "$eiteExecPrefix" ]]; then
+    eiteExecPrefix="$eitePrefix"
 fi
-echo "crystallizeExecPrefix: $crystallizeExecPrefix"
-if ! [[ -n "$crystallizeBindir" ]]; then
-    crystallizeBindir="$crystallizeExecPrefix"/bin
+echo "eiteExecPrefix: $eiteExecPrefix"
+if ! [[ -n "$eiteBindir" ]]; then
+    eiteBindir="$eiteExecPrefix"/bin
 fi
-echo "crystallizeBindir: $crystallizeBindir"
-if ! [[ -n "$crystallizeDatarootdir" ]]; then
-    crystallizeDatarootdir="$crystallizePrefix"/share
+echo "eiteBindir: $eiteBindir"
+if ! [[ -n "$eiteDatarootdir" ]]; then
+    eiteDatarootdir="$eitePrefix"/share
 fi
-echo "crystallizeDatarootdir: $crystallizeDatarootdir"
-if ! [[ -n "$crystallizeDatadir" ]]; then
-    crystallizeDatadir="$crystallizeDatarootdir"
+echo "eiteDatarootdir: $eiteDatarootdir"
+if ! [[ -n "$eiteDatadir" ]]; then
+    eiteDatadir="$eiteDatarootdir"
 fi
-echo "crystallizeDatadir: $crystallizeDatadir"
-if ! [[ -n "$crystallizeSysconfdir" ]]; then
-    crystallizeSysconfdir="$crystallizePrefix"/etc
+echo "eiteDatadir: $eiteDatadir"
+if ! [[ -n "$eiteSysconfdir" ]]; then
+    eiteSysconfdir="$eitePrefix"/etc
 fi
-echo "crystallizeSysconfdir: $crystallizeSysconfdir"
-if ! [[ -n "$crystallizeSharedstatedir" ]]; then
-    crystallizeSharedstatedir="$crystallizePrefix"/var
+echo "eiteSysconfdir: $eiteSysconfdir"
+if ! [[ -n "$eiteSharedstatedir" ]]; then
+    eiteSharedstatedir="$eitePrefix"/var
 fi
-echo "crystallizeSharedstatedir: $crystallizeSharedstatedir"
+echo "eiteSharedstatedir: $eiteSharedstatedir"
 
-crystallizeEmberdir="$crystallizePrefix"/Ember\ Library
+eiteEmberdir="$eitePrefix"/Ember\ Library
 
-ereplace "/usr/local/etc" "$crystallizeSysconfdir" scripts/crystallize-logsession
+ereplace "/usr/local/etc" "$eiteSysconfdir" scripts/eite-logsession
 
-mkdir -p "$crystallizeEmberdir"
-mkdir -p "$crystallizeBindir"
+mkdir -p "$eiteEmberdir"
+mkdir -p "$eiteBindir"
 chmod +x scripts/*
-cp scripts/* "$crystallizeBindir/"
-mkdir -p "$crystallizeSysconfdir"
-mkdir -p "$crystallizeSharedstatedir"
+cp scripts/* "$eiteBindir/"
+mkdir -p "$eiteSysconfdir"
+mkdir -p "$eiteSharedstatedir"
 
-if [[ ! -h "$crystallizeSharedstatedir/crystallize" ]] && [[ -d "$crystallizeSharedstatedir/crystallize" ]]; then
-    mv "$crystallizeSharedstatedir/crystallize" "$crystallizeSharedstatedir/ember"
+if [[ ! -h "$eiteSharedstatedir/eite" ]] && [[ -d "$eiteSharedstatedir/eite" ]]; then
+    mv "$eiteSharedstatedir/eite" "$eiteSharedstatedir/ember"
 fi
-[[ -h "$crystallizeSharedstatedir/crystallize" ]] || ln -s "$crystallizeSharedstatedir/ember" "$crystallizeSharedstatedir/crystallize"
+[[ -h "$eiteSharedstatedir/eite" ]] || ln -s "$eiteSharedstatedir/ember" "$eiteSharedstatedir/eite"
 
-if [[ ! -h "$crystallizeSysconfdir/crystallize.conf" ]] && [[ -f "$crystallizeSysconfdir/crystallize.conf" ]]; then
-    mv "$crystallizeSysconfdir/crystallize.conf" "$crystallizeSysconfdir/ember.conf"
+if [[ ! -h "$eiteSysconfdir/eite.conf" ]] && [[ -f "$eiteSysconfdir/eite.conf" ]]; then
+    mv "$eiteSysconfdir/eite.conf" "$eiteSysconfdir/ember.conf"
 fi
-[[ -h "$crystallizeSysconfdir/crystallize.conf" ]] || ln -s "$crystallizeSysconfdir/ember.conf" "$crystallizeSysconfdir/crystallize.conf"
+[[ -h "$eiteSysconfdir/eite.conf" ]] || ln -s "$eiteSysconfdir/ember.conf" "$eiteSysconfdir/eite.conf"
