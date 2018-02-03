@@ -98,14 +98,3 @@ mkdir -p "$eiteBindir"
 chmod +x scripts/*
 cp scripts/* "$eiteBindir/"
 mkdir -p "$eiteSysconfdir"
-mkdir -p "$eiteSharedstatedir"
-
-if [[ ! -h "$eiteSharedstatedir/eite" ]] && [[ -d "$eiteSharedstatedir/eite" ]]; then
-    mv "$eiteSharedstatedir/eite" "$eiteSharedstatedir/ember"
-fi
-[[ -h "$eiteSharedstatedir/eite" ]] || ln -s "$eiteSharedstatedir/ember" "$eiteSharedstatedir/eite"
-
-if [[ ! -h "$eiteSysconfdir/eite.conf" ]] && [[ -f "$eiteSysconfdir/eite.conf" ]]; then
-    mv "$eiteSysconfdir/eite.conf" "$eiteSysconfdir/ember.conf"
-fi
-[[ -h "$eiteSysconfdir/eite.conf" ]] || ln -s "$eiteSysconfdir/ember.conf" "$eiteSysconfdir/eite.conf"
