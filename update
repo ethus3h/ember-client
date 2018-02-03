@@ -4,3 +4,12 @@ source ember_bash_setup &> /dev/null
 #set -x
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+
+sudo mkdir -p "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/share/eite/"
+sudo mkdir -p "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/doc/eite/"
+sudo cp -r data "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/share/eite/"
+sudo cp -r examples "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/doc/eite/"
+sudo cp -r logic "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/share/eite/"
+sudo cp -r tests "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/share/eite/"
+sudo cp -r scripts/* /usr/bin
+eite run-tests
