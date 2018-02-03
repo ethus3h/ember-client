@@ -93,15 +93,14 @@ if ! [[ -n "$eiteSharedstatedir" ]]; then
 fi
 echo "eiteSharedstatedir: $eiteSharedstatedir"
 
-mkdir -p "$eiteDatadir"
+mkdir -p "$eiteDatadir/eite"
+mkdir -p "$eiteDatadir/doc/eite"
 mkdir -p "$eiteBindir"
 chmod +x scripts/*
 cp scripts/* "$eiteBindir/"
 mkdir -p "$eiteSysconfdir"
 
-mkdir -p "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
-mkdir -p "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/doc/eite/"
-cp -r data "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
+cp -r data "$eiteDatadir/eite/"
 cp -r logic "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
 cp -r tests "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
 cp -r docs/* "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/doc/eite/"
