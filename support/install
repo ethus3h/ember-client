@@ -101,9 +101,6 @@ cp scripts/* "$eiteBindir/"
 mkdir -p "$eiteSysconfdir"
 
 cp -r data "$eiteDatadir/eite/"
-cp -r logic "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
-cp -r tests "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
-cp -r docs/* "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/doc/eite/"
-chmod +x scripts/*
-cp -r scripts/* /usr/bin
-eite run-tests
+cp -r logic "$eiteDatadir/eite/"
+cp -r tests "$eiteDatadir/eite/"
+cp -r docs/* "$eiteDatadir/doc/eite/"
