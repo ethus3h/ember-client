@@ -24,4 +24,4 @@ eite-single-test() {
     assert fileEquals "$testPath/out" "$runOutput"
 }
 
-find "$(readlink -f "$(dirname "$(ember-getconf ConfigLocation)")/../share/eite/tests")" -name '.eite-test' -exec runTest eite-single-test {} \;
+find "$(readlink -f "$(dirname "$(ember-getconf ConfigLocation)")"/../share/eite/tests)" -name '.eite-test' -exec runTest eite-single-test {} \;
