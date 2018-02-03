@@ -6,11 +6,11 @@ source ember_bash_setup &> /dev/null
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 sudo mkdir -p "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
-sudo mkdir -p "$(dirname "$(ember-getconf ConfigLocation)")/usr/doc/eite/"
+sudo mkdir -p "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/doc/eite/"
 sudo cp -r data "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
 sudo cp -r logic "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
 sudo cp -r tests "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/eite/"
-sudo cp -r docs/* "$(dirname "$(ember-getconf ConfigLocation)")/usr/doc/eite/"
+sudo cp -r docs/* "$(dirname "$(ember-getconf ConfigLocation)")/usr/share/doc/eite/"
 chmod +x scripts/*
 sudo cp -r scripts/* /usr/bin
 eite run-tests
