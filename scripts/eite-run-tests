@@ -24,4 +24,4 @@ eite-single-test() {
     assert fileEquals "$testPath/out" "$runOutput"
 }
 
-find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/eite/tests" -exec runTest eite-single-test {} \;
+find -name '.eite-test' "$(dirname "$(crystallize-getconf ConfigLocation)")/usr/share/eite/tests" -exec runTest eite-single-test {} \;
