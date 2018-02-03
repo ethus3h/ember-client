@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+source ember_bash_setup &> /dev/null
+set -x
+
+#NOTE: MAINTENANCE: Manual error printing
+if [[ -z "$(ember-getconf emberSharedVersion)" ]]; then
+    printf '%b' '\033[1;31m' >&2
+    echo "ERROR: ember-shared is not properly installed! It must be installed before installing Crystallize." >&2
+    printf '%b' '\033[0m' >&2
+    exit 1
+fi
+
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd)."' ERR
+
+skipConfigFile="false"
+if [[ "$1" == "--skip-config-file" ]]; then
+    skipConfigFile="true"
+    shift
+fi
+
+echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
+if [[ -n "$1" ]]; then
+    crystallizeDestdir="$1"
+    shift
+fi
+if [[ "$1" == "--skip-config-file" ]]; then
+    skipConfigFile="true"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizePrefix="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeCapPrefix="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeExecPrefix="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeBindir="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeDatarootdir="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeDatadir="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeSysconfdir="$1"
+    shift
+fi
+if [[ -n "$1" ]]; then
+    crystallizeSharedstatedir="$1"
+    shift
+fi
+if ! [[ -n "$crystallizePrefix" ]]; then
+    if ! [[ -n "$crystallizeCapPrefix" ]]; then
+        crystallizePrefix="$crystallizeDestdir"/usr/local
+    else
+        crystallizePrefix="$crystallizeCapPrefix"
+    fi
+fi
+echo "crystallizePrefix: $crystallizePrefix"
+if ! [[ -n "$crystallizeExecPrefix" ]]; then
+    crystallizeExecPrefix="$crystallizePrefix"
+fi
+echo "crystallizeExecPrefix: $crystallizeExecPrefix"
+if ! [[ -n "$crystallizeBindir" ]]; then
+    crystallizeBindir="$crystallizeExecPrefix"/bin
+fi
+echo "crystallizeBindir: $crystallizeBindir"
+if ! [[ -n "$crystallizeDatarootdir" ]]; then
+    crystallizeDatarootdir="$crystallizePrefix"/share
+fi
+echo "crystallizeDatarootdir: $crystallizeDatarootdir"
+if ! [[ -n "$crystallizeDatadir" ]]; then
+    crystallizeDatadir="$crystallizeDatarootdir"
+fi
+echo "crystallizeDatadir: $crystallizeDatadir"
+if ! [[ -n "$crystallizeSysconfdir" ]]; then
+    crystallizeSysconfdir="$crystallizePrefix"/etc
+fi
+echo "crystallizeSysconfdir: $crystallizeSysconfdir"
+if ! [[ -n "$crystallizeSharedstatedir" ]]; then
+    crystallizeSharedstatedir="$crystallizePrefix"/var
+fi
+echo "crystallizeSharedstatedir: $crystallizeSharedstatedir"
+
+crystallizeEmberdir="$crystallizePrefix"/Ember\ Library
+
+ereplace "/usr/local/etc" "$crystallizeSysconfdir" scripts/crystallize-logsession
+
+mkdir -p "$crystallizeEmberdir"
+mkdir -p "$crystallizeBindir"
+chmod +x scripts/*
+cp scripts/* "$crystallizeBindir/"
+mkdir -p "$crystallizeSysconfdir"
+mkdir -p "$crystallizeSharedstatedir"
+
+if [[ ! -h "$crystallizeSharedstatedir/crystallize" ]] && [[ -d "$crystallizeSharedstatedir/crystallize" ]]; then
+    mv "$crystallizeSharedstatedir/crystallize" "$crystallizeSharedstatedir/ember"
+fi
+[[ -h "$crystallizeSharedstatedir/crystallize" ]] || ln -s "$crystallizeSharedstatedir/ember" "$crystallizeSharedstatedir/crystallize"
+
+if [[ ! -h "$crystallizeSysconfdir/crystallize.conf" ]] && [[ -f "$crystallizeSysconfdir/crystallize.conf" ]]; then
+    mv "$crystallizeSysconfdir/crystallize.conf" "$crystallizeSysconfdir/ember.conf"
+fi
+[[ -h "$crystallizeSysconfdir/crystallize.conf" ]] || ln -s "$crystallizeSysconfdir/ember.conf" "$crystallizeSysconfdir/crystallize.conf"
