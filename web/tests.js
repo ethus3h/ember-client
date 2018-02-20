@@ -1,3 +1,3 @@
 import eite.js
 
-em_execute("hello-world.eite")
+em_execute("idiomatic-hello-world.sems")
