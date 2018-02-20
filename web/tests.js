@@ -1,5 +1,6 @@
 import eite.js
 
+alert("blah");
 var oReq = new XMLHttpRequest();
 oReq.open("GET", "idiomatic-hello-world.sems", true);
 oReq.responseType = "arraybuffer";
