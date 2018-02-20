@@ -1,3 +1,3 @@
-import em.js
+import eite.js
 
-em_execute("hello-world.em")
+em_execute("hello-world.eite")
