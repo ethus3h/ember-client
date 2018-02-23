@@ -49,10 +49,9 @@ window.onload = function() {
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplmeneted
                             break;
                     }
-                    // Do I/O as needed for the rendering
-                    // doRenderIo(targetFormat, this.renderOutputBuf);
                 }
-                return this.renderOutputBuf;
+                // Do I/O as needed for the rendering
+                doRenderIo(targetFormat, this.renderOutputBuf);
             };
             doc.run = function () {
                 // for (var i = 0; i < dcSeq.length; i++) {
