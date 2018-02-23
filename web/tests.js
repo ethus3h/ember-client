@@ -50,7 +50,7 @@ window.onload = function() {
                             break;
                     }
                     // Do I/O as needed for the rendering
-                    // doRenderIo(targetFormat, doc.renderOutputBuf);
+                    // doRenderIo(targetFormat, this.renderOutputBuf);
                 }
                 return this.renderOutputBuf;
             };
