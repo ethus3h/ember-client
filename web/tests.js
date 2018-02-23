@@ -53,9 +53,9 @@ window.onload = function() {
                 doRenderIo(targetFormat, this.renderOutputBuf);
             };
             doc.run = function () {
-                for (var i = 0; i < dcSeq.length; i++) {
-                    console.log(dcSeq[i]);
-                }
+                // for (var i = 0; i < dcSeq.length; i++) {
+                //     console.log(dcSeq[i]);
+                // }
                 this.render('integerList');
             };
         return doc;
