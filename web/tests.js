@@ -27,7 +27,7 @@ window.onload = function() {
     function createDocExecutor(dcSeq) {
         var doc = {};
             doc.dcState = dcSeq;
-            doc.render = function(targetFormat) {
+            doc.render = function (targetFormat) {
                 renderInputBuf = dcState; // copy Dcs for renderer call
                 renderOutputBuf = null;
                 for (var i = 0; i < renderBuf.length; i++) {
