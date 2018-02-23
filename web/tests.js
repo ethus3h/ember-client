@@ -22,6 +22,10 @@ window.onload = function () {
     })();
 }
 
+// Main logic
+function parse() {
+    
+}
 var oReq = new XMLHttpRequest();
 oReq.open("GET", "idiomatic-hello-world.sems", true);
 oReq.responseType = "arraybuffer";
