@@ -34,14 +34,16 @@ window.onload = function() {
         }
     }
 
-    function eiteFromUrl() {
+    function eiteFromUrl(url) {
         var oReq = new XMLHttpRequest();
-        oReq.open("GET", "idiomatic-hello-world.sems", true);
+        oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent) {
             handleDocument(oReq.response); // Note: not oReq.responseText
         };
         oReq.send(null);
     }
+
+eiteFromUrl('idiomatic-hello-world.sems');
 
 }
