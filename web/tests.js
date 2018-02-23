@@ -24,9 +24,16 @@ window.onload = function() {
 
     // Main logic
 
-function parseSems(bytes) {
-    // bytes is array of decimels
+function parseSems(arrayBuffer) {
     dcSeq = [];
+
+    if (arrayBuffer) {
+        var byteArray = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteArray.byteLength; i++) {
+            // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+            console.log(byteArray[i]);
+        }
+    }
 
     return createDocExecutor(dcSeq);
 }
@@ -42,13 +49,6 @@ function createDocExecutor(dcSeq) {
 
     function handleDocument(arrayBuffer) {
         // Takes an ArrayBuffer
-        if (arrayBuffer) {
-            var byteArray = new Uint8Array(arrayBuffer);
-            for (var i = 0; i < byteArray.byteLength; i++) {
-                // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
-                console.log(byteArray[i]);
-            }
-        }
     }
 
     function eiteFromUrl(url) {
