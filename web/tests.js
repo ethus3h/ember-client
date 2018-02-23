@@ -49,10 +49,9 @@ window.onload = function() {
         return createDocExecutor(dcSeq);
     }
 
-    function handleDc(dc) {
-        
+    function runSems(arrayBuffer) {
+        parseSems(arrayBuffer).run();
     }
-
     function handleDocument(arrayBuffer) {
         // Takes an ArrayBuffer
     }
@@ -62,7 +61,7 @@ window.onload = function() {
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent) {
-            handleDocument(oReq.response); // Note: not oReq.responseText
+            runSems(oReq.response); // Note: not oReq.responseText
         };
         oReq.send(null);
     }
