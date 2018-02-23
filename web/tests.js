@@ -29,7 +29,7 @@ window.onload = function() {
             doc.dcSeq = dcSeq;
             doc.run = function () {
                 for (var i = 0; i < dcSeq.length; i++) {
-                    console.log(byteArray[i]);
+                    console.log(dcSeq[i]);
                 }
             };
         return doc;
