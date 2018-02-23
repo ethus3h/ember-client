@@ -1,26 +1,17 @@
 window.onload = function() {
 
-    // Set-up & utility functions
-    {
-        // Return a hexdump of an ArrayBuffer
-        // function buf2hex(buffer) { // buffer is an ArrayBuffer
-        //     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
-        // }
-
-        // Attach console.log to log element
-        (function() {
-            //var old = console.log;
-            var logger = document.getElementById('log');
-            console.log = function(message) {
-                if (typeof message == 'object') {
-                    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-                } else {
-                    logger.innerHTML += message + '<br />';
-                }
-                logger.scrollTop = logger.scrollHeight;
-            };
-        })();
-    }
+    // Attach console.log to log element
+    (function() {
+        var logger = document.getElementById('log');
+        console.log = function(message) {
+            if (typeof message == 'object') {
+                logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+            } else {
+                logger.innerHTML += message + '<br />';
+            }
+            logger.scrollTop = logger.scrollHeight;
+        };
+    })();
 
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
@@ -31,8 +22,6 @@ window.onload = function() {
                 break;
         }
     }
-
-    // Main logic
 
     function createDocExecutor(dcSeq) {
         var doc = {};
@@ -54,9 +43,6 @@ window.onload = function() {
                 doRenderIo(targetFormat, this.renderOutputBuf);
             };
             doc.run = function () {
-                // for (var i = 0; i < dcSeq.length; i++) {
-                //     console.log(dcSeq[i]);
-                // }
                 this.render('integerList');
             };
         return doc;
@@ -90,5 +76,6 @@ window.onload = function() {
         oReq.send(null);
     }
 
-eiteFromUrl('idiomatic-hello-world.sems');
+    eiteFromUrl('idiomatic-hello-world.sems');
+
 };
