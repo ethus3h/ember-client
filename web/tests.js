@@ -43,16 +43,16 @@ window.onload = function() {
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 console.log(this.renderInputBuf);
                 console.log(targetFormat);
-                for (var i = 0; i < this.renderInputBuf.length; i++) {
-                    // Build render output buffer for specified format
-                    switch (targetFormat) {
-                        case 'integerList':
+                // Build render output buffer for specified format
+                switch (targetFormat) {
+                    case 'integerList':
+                        for (var i = 0; i < this.renderInputBuf.length; i++) {
                             console.log(this.renderOutputBuf);
                             console.log(i);
                             this.renderOutputBuf = [];
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
-                            break;
-                    }
+                        }
+                        break;
                 }
                 // Do I/O as needed for the rendering
                 doRenderIo(targetFormat, this.renderOutputBuf);
