@@ -40,9 +40,9 @@ window.onload = function() {
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
-                console.log(this.dcState);
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 console.log(this.renderInputBuf);
+                console.log(targetFormat);
                 for (var i = 0; i < this.renderInputBuf.length; i++) {
                     // Build render output buffer for specified format
                     switch (targetFormat) {
