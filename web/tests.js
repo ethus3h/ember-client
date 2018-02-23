@@ -26,8 +26,11 @@ window.onload = function() {
 
     function createDocExecutor(dcSeq) {
         var doc = {};
-        doc.dcSeq = dcSeq;
-        doc.appendDc
+            doc.dcSeq = dcSeq;
+            doc.appendDc
+            doc.run= function () {
+                
+            }
         return doc;
     }
 
