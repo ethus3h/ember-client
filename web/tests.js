@@ -41,14 +41,10 @@ window.onload = function() {
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
-                console.log(this.renderInputBuf);
-                console.log(targetFormat);
                 // Build render output buffer for specified format
                 switch (targetFormat) {
                     case 'integerList':
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
-                            console.log(this.renderOutputBuf);
-                            console.log(i);
                             this.renderOutputBuf = [];
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                         }
