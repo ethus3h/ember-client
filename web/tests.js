@@ -1,3 +1,4 @@
+window.onload = function () {
 function buf2hex(buffer) { // buffer is an ArrayBuffer
   return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
 }
@@ -14,6 +15,8 @@ function buf2hex(buffer) { // buffer is an ArrayBuffer
         }
     }
 })();
+
+console.log("blah");
 
 var oReq = new XMLHttpRequest();
 oReq.open("GET", "idiomatic-hello-world.sems", true);
@@ -34,3 +37,4 @@ oReq.onload = function (oEvent) {
 oReq.send(null);
 
 //em_execute("idiomatic-hello-world.sems")
+}
