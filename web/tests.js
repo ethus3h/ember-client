@@ -24,6 +24,17 @@ window.onload = function() {
 
     // Main logic
 
+function createSemsParser() {
+    var parser = {};
+    
+    return parser;
+}
+function createDocExecutor() {
+    var doc = {};
+    doc.dcSeq = {};
+    doc.appendDc
+    return doc;
+}
     function handleDc(dc) {
         
     }
