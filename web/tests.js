@@ -25,7 +25,7 @@ window.onload = function() {
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
-                for (var i = 0; i < this.renderBuffer.length; i++) {
+                for (var i = 0; i < renderBuffer.length; i++) {
                     console.log(renderBuffer[i]);
                 }
                 break;
@@ -92,5 +92,4 @@ window.onload = function() {
     }
 
 eiteFromUrl('idiomatic-hello-world.sems');
-
 };
