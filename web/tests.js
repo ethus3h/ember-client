@@ -24,25 +24,27 @@ window.onload = function() {
 
     // Main logic
 
-function parseSems(arrayBuffer) {
-    dcSeq = [];
+    function parseSems(arrayBuffer) {
+        dcSeq = [];
 
-    if (arrayBuffer) {
-        var byteArray = new Uint8Array(arrayBuffer);
-        for (var i = 0; i < byteArray.byteLength; i++) {
-            // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
-            console.log(byteArray[i]);
+        if (arrayBuffer) {
+            var byteArray = new Uint8Array(arrayBuffer);
+            for (var i = 0; i < byteArray.byteLength; i++) {
+                // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+                console.log(byteArray[i]);
+            }
         }
+
+        return createDocExecutor(dcSeq);
     }
 
-    return createDocExecutor(dcSeq);
-}
-function createDocExecutor(dcSeq) {
-    var doc = {};
-    doc.dcSeq = dcSeq;
-    doc.appendDc
-    return doc;
-}
+    function createDocExecutor(dcSeq) {
+        var doc = {};
+        doc.dcSeq = dcSeq;
+        doc.appendDc
+        return doc;
+    }
+
     function handleDc(dc) {
         
     }
