@@ -27,10 +27,11 @@ window.onload = function() {
     function createDocExecutor(dcSeq) {
         var doc = {};
             doc.dcSeq = dcSeq;
-            doc.appendDc
-            doc.run= function () {
-                
-            }
+            doc.run = function () {
+                for (var i = 0; i < dcSeq.length; i++) {
+                    console.log(byteArray[i]);
+                }
+            };
         return doc;
     }
 
@@ -42,7 +43,6 @@ window.onload = function() {
             for (var i = 0; i < byteArray.byteLength; i++) {
                 // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
                 dcSeq[i] = byteArray[i]; // TODO unimplmeneted
-                console.log(byteArray[i]);
             }
         }
 
