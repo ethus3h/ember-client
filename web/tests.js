@@ -17,8 +17,8 @@ window.onload = function () {
             } else {
                 logger.innerHTML += message + '<br />';
             }
+            logger.scrollTop = logger.scrollHeight;
         }
-        logger.scrollTop = logger.scrollHeight;
     })();
 }
 
