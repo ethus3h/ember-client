@@ -45,10 +45,10 @@ window.onload = function() {
                 console.log(targetFormat);
                 for (var i = 0; i < this.renderInputBuf.length; i++) {
                     // Build render output buffer for specified format
-                    console.log(this.renderInputBuf);
-                    console.log(targetFormat);
-                switch (targetFormat) {
+                    switch (targetFormat) {
                         case 'integerList':
+                            console.log(this.renderOutputBuf);
+                            console.log(i);
                             this.renderOutputBuf = [];
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                             break;
