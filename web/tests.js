@@ -3,13 +3,13 @@ window.onload = function() {
     // Set-up & utility functions
     {
         // Return a hexdump of an ArrayBuffer
-        function buf2hex(buffer) { // buffer is an ArrayBuffer
-            return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
-        }
+        // function buf2hex(buffer) { // buffer is an ArrayBuffer
+        //     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+        // }
 
         // Attach console.log to log element
         (function() {
-            var old = console.log;
+            //var old = console.log;
             var logger = document.getElementById('log');
             console.log = function(message) {
                 if (typeof message == 'object') {
@@ -18,7 +18,7 @@ window.onload = function() {
                     logger.innerHTML += message + '<br />';
                 }
                 logger.scrollTop = logger.scrollHeight;
-            }
+            };
         })();
     }
 
