@@ -38,12 +38,13 @@ window.onload = function() {
         var doc = {};
             doc.dcState = dcSeq;
             doc.renderInputBuf = null;
-            doc.renderOutputBuf = [];
+            doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
                 switch (targetFormat) {
                     case 'integerList':
+                        this.renderOutputBuf = [];
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                         }
