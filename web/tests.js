@@ -44,7 +44,7 @@ window.onload = function() {
                 // for (var i = 0; i < dcSeq.length; i++) {
                 //     console.log(dcSeq[i]);
                 // }
-                render();
+                render('integerList');
             };
         return doc;
     }
