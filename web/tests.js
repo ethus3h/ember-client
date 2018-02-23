@@ -24,14 +24,15 @@ window.onload = function() {
 
     // Main logic
 
-function createSemsParser() {
-    var parser = {};
-    
-    return parser;
+function parseSems(bytes) {
+    // bytes is array of decimels
+    dcSeq = [];
+
+    return createDocExecutor(dcSeq);
 }
-function createDocExecutor() {
+function createDocExecutor(dcSeq) {
     var doc = {};
-    doc.dcSeq = {};
+    doc.dcSeq = dcSeq;
     doc.appendDc
     return doc;
 }
