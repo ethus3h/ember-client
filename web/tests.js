@@ -33,21 +33,20 @@ function handleDocument(arrayBuffer) {
         }
       }
 }
-function loadFromUrl() {
-    
+function eiteFromUrl() {
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", "idiomatic-hello-world.sems", true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function (oEvent) {
+      handleDocument( oReq.response); // Note: not oReq.responseText
+     
+      
+    };oReq.send(null);
+
 }
 
-var oReq = new XMLHttpRequest();
-oReq.open("GET", "idiomatic-hello-world.sems", true);
-oReq.responseType = "arraybuffer";
 
-oReq.onload = function (oEvent) {
-  handleDocument( oReq.response); // Note: not oReq.responseText
- 
-  
-};
 
-oReq.send(null);
 
-//em_execute("idiomatic-hello-world.sems")
 }
