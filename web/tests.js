@@ -45,7 +45,9 @@ window.onload = function() {
                 console.log(targetFormat);
                 for (var i = 0; i < this.renderInputBuf.length; i++) {
                     // Build render output buffer for specified format
-                    switch (targetFormat) {
+                    console.log(this.renderInputBuf);
+                    console.log(targetFormat);
+                switch (targetFormat) {
                         case 'integerList':
                             this.renderOutputBuf = [];
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
