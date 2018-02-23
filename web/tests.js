@@ -52,9 +52,6 @@ window.onload = function() {
     function runSems(arrayBuffer) {
         parseSems(arrayBuffer).run();
     }
-    function handleDocument(arrayBuffer) {
-        // Takes an ArrayBuffer
-    }
 
     function eiteFromUrl(url) {
         var oReq = new XMLHttpRequest();
