@@ -23,9 +23,20 @@ window.onload = function () {
 }
 
 // Main logic
-function parse() {
+function handleDocument(arrayBuffer) {
+    // Takes an ArrayBuffer
+      if (arrayBuffer) {
+        var byteArray = new Uint8Array(arrayBuffer);
+        for (var i = 0; i < byteArray.byteLength; i++) {
+          // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+          console.log(byteArray[i]);
+        }
+      }
+}
+function loadFromUrl() {
     
 }
+
 var oReq = new XMLHttpRequest();
 oReq.open("GET", "idiomatic-hello-world.sems", true);
 oReq.responseType = "arraybuffer";
