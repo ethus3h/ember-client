@@ -38,6 +38,7 @@ window.onload = function() {
             var byteArray = new Uint8Array(arrayBuffer);
             for (var i = 0; i < byteArray.byteLength; i++) {
                 // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+                dcSeq[i] = byteArray[i]; # TODO unimplmeneted
                 console.log(byteArray[i]);
             }
         }
