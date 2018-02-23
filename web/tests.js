@@ -38,7 +38,7 @@ window.onload = function() {
         var doc = {};
             doc.dcState = dcSeq;
             doc.renderInputBuf = null;
-            doc.renderOutputBuf = null;
+            doc.renderOutputBuf = [];
             doc.render = function (targetFormat) {
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
