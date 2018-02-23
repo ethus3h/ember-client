@@ -27,10 +27,11 @@ window.onload = function() {
     function createDocExecutor(dcSeq) {
         var doc = {};
             doc.dcState = dcSeq;
+            doc.renderInputBuf;
+            doc.renderOutputBuf;
             doc.render = function (targetFormat) {
                 renderInputBuf = dcState; // copy Dcs for renderer call
-                renderOutputBuf = null;
-                for (var i = 0; i < renderBuf.length; i++) {
+                for (var i = 0; i < renderInputBuf.length; i++) {
                     switch (targetFormat) {
                         case 'integerList':
                             renderOutputBuf = [];
