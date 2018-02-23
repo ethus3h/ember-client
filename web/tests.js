@@ -22,6 +22,16 @@ window.onload = function() {
         })();
     }
 
+    function doRenderIo(targetFormat, renderBuffer) {
+        switch (targetFormat) {
+            case 'integerList':
+                for (var i = 0; i < this.renderBuffer.length; i++) {
+                    console.log(renderBuffer[i]);
+                }
+                break;
+        }
+    }
+
     // Main logic
 
     function createDocExecutor(dcSeq) {
@@ -32,12 +42,15 @@ window.onload = function() {
             doc.render = function (targetFormat) {
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 for (var i = 0; i < this.renderInputBuf.length; i++) {
+                    // Build render output buffer for specified format
                     switch (targetFormat) {
                         case 'integerList':
                             this.renderOutputBuf = [];
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplmeneted
                             break;
                     }
+                    // Do I/O as needed for the rendering
+                    doRenderIo(targetFormat, doc.renderOutputBuf);
                 }
                 return this.renderOutputBuf;
             };
