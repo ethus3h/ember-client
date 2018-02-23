@@ -29,10 +29,16 @@ window.onload = function() {
             doc.dcState = dcSeq;
             doc.render = function(targetFormat) {
                 renderInputBuf = dcState; // copy Dcs for renderer call
-                renderOutputBuf = []; // copy Dcs for renderer call
+                renderOutputBuf = null;
                 for (var i = 0; i < renderBuf.length; i++) {
-                    console.log(dcSeq[i]);
+                    switch (targetFormat) {
+                        case 'integerList':
+                            renderOutputBuf = [];
+                            renderOutputBuf[i] = renderInputBuf[i]; // TODO unimplmeneted
+                            break;
+                    }
                 }
+                return renderOutputBuf;
             }
             doc.run = function () {
                 for (var i = 0; i < dcSeq.length; i++) {
