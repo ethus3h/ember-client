@@ -38,13 +38,10 @@ window.onload = function() {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", "idiomatic-hello-world.sems", true);
         oReq.responseType = "arraybuffer";
-
         oReq.onload = function(oEvent) {
             handleDocument(oReq.response); // Note: not oReq.responseText
-
         };
         oReq.send(null);
-
     }
 
 }
