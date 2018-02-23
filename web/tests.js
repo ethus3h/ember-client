@@ -27,31 +27,31 @@ window.onload = function() {
     function createDocExecutor(dcSeq) {
         var doc = {};
             doc.dcState = dcSeq;
-            doc.renderInputBuf;
-            doc.renderOutputBuf;
+            doc.renderInputBuf = null;
+            doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
-                renderInputBuf = dcState; // copy Dcs for renderer call
-                for (var i = 0; i < renderInputBuf.length; i++) {
+                this.renderInputBuf = this.dcState; // copy Dcs for renderer call
+                for (var i = 0; i < this.renderInputBuf.length; i++) {
                     switch (targetFormat) {
                         case 'integerList':
-                            renderOutputBuf = [];
-                            renderOutputBuf[i] = renderInputBuf[i]; // TODO unimplmeneted
+                            this.renderOutputBuf = [];
+                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplmeneted
                             break;
                     }
                 }
-                return renderOutputBuf;
-            }
+                return this.renderOutputBuf;
+            };
             doc.run = function () {
                 // for (var i = 0; i < dcSeq.length; i++) {
                 //     console.log(dcSeq[i]);
                 // }
-                render('integerList');
+                this.render('integerList');
             };
         return doc;
     }
 
     function parseSems(arrayBuffer) {
-        dcSeq = [];
+        var dcSeq = [];
 
         if (arrayBuffer) {
             var byteArray = new Uint8Array(arrayBuffer);
@@ -80,4 +80,4 @@ window.onload = function() {
 
 eiteFromUrl('idiomatic-hello-world.sems');
 
-}
+};
