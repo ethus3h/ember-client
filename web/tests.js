@@ -28,7 +28,6 @@ oReq.onload = function (oEvent) {
   var arrayBuffer = oReq.response; // Note: not oReq.responseText
   if (arrayBuffer) {
     var byteArray = new Uint8Array(arrayBuffer);
-    console.log(buf2hex(arrayBuffer));
     for (var i = 0; i < byteArray.byteLength; i++) {
       // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
       console.log(byteArray[i]);
