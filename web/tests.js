@@ -23,6 +23,11 @@ window.onload = function() {
     }
 
     // Main logic
+
+    function handleDc(dc) {
+        
+    }
+
     function handleDocument(arrayBuffer) {
         // Takes an ArrayBuffer
         if (arrayBuffer) {
