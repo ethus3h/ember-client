@@ -24,6 +24,13 @@ window.onload = function() {
 
     // Main logic
 
+    function createDocExecutor(dcSeq) {
+        var doc = {};
+        doc.dcSeq = dcSeq;
+        doc.appendDc
+        return doc;
+    }
+
     function parseSems(arrayBuffer) {
         dcSeq = [];
 
@@ -36,13 +43,6 @@ window.onload = function() {
         }
 
         return createDocExecutor(dcSeq);
-    }
-
-    function createDocExecutor(dcSeq) {
-        var doc = {};
-        doc.dcSeq = dcSeq;
-        doc.appendDc
-        return doc;
     }
 
     function handleDc(dc) {
