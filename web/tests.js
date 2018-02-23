@@ -46,7 +46,7 @@ window.onload = function() {
                     switch (targetFormat) {
                         case 'integerList':
                             this.renderOutputBuf = [];
-                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplmeneted
+                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                             break;
                     }
                 }
