@@ -136,8 +136,16 @@ window.onload = function() {
 
     function runEiteTest(format, name) {
         switch (format) {
-            case 'eptb':
-                
+            case 'ept': // Parser test
+                function docFromUrl(format, url, callback) {
+                    var oReq = new XMLHttpRequest();
+                    oReq.open("GET", url, true);
+                    oReq.responseType = "arraybuffer";
+                    oReq.onload = function(oEvent) {
+                        callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
+                    };
+                    oReq.send(null);
+                }
                 break;
             case 'comment':
                 if (isNewline(byteArray[i])) {
@@ -147,7 +155,7 @@ window.onload = function() {
         }
     }
 
-    runEiteTest('eptb', 'idiomatic-hello-world-sems');
+    runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
 };
