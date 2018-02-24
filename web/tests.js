@@ -95,7 +95,7 @@ window.onload = function() {
                             currentDc.push(byteArray[i]);
                         }
                         if (isSpace(byteArray[i])) {
-                            currentDc = 
+                            currentDc = String.fromCharCode()
                             dcSeq.push(currentDc);
                             currentDc = [];
                         }
