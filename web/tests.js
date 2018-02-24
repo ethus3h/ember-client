@@ -1,5 +1,11 @@
 window.onload = function() {
 
+
+// This function check if number n is between a and b 
+// from https://stackoverflow.com/questions/28087842/check-if-number-is-between-two-numbers
+function isBetween(n, a, b) {
+   return (n - a) * (n - b) <= 0
+}
     // Attach console.log to log element
     (function() {
         var logger = document.getElementById('log');
