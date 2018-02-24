@@ -91,6 +91,7 @@ window.onload = function() {
         }
     }
     function parseSems(arrayBuffer) {
+        // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
         var dcSeq = [];
         var parserState = 'dc';
         var currentDc = '';
