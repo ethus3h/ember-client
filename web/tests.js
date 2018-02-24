@@ -77,15 +77,17 @@ window.onload = function() {
 
     function parseSems(arrayBuffer) {
         var dcSeq = [];
-
+        var parserState = 'dc';
         if (arrayBuffer) {
             var byteArray = new Uint8Array(arrayBuffer);
             for (var i = 0; i < byteArray.byteLength; i++) {
                 // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
                 switch (parserState) {
-                    if isBetween(byteArray[i], 48, 57) {
-                        // Is digit
-                    }
+                    case 'dc':
+                        if isDigit(byteArray[i]) {
+                            // Is digit
+                        }
+                        break;
                 }
                 dcSeq[i] = byteArray[i]; // TODO unimplmeneted
             }
