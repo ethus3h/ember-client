@@ -8,8 +8,8 @@ window.onload = function() {
     function isDigit(n) {
         return isBetween(byteArray[i], 48, 57);
     }
-    function isDigit(n) {
-        return isBetween(byteArray[i], 48, 57);
+    function isSpace(n) {
+        return n == 32;
     }
 /*
 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
@@ -92,7 +92,7 @@ window.onload = function() {
                             currentDc = currentDc + byteArray[i];
                         }
                         if isSpace(byteArray[i]) {
-                            currentDc = currentDc + byteArray[i];
+                            dcSeq.push(currentDc);
                         }
                         break;
                 }
