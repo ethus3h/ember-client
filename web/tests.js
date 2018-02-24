@@ -123,16 +123,16 @@ window.onload = function() {
         return dcSeq;
     }
 
-    function docFromUrl(format, url) {
+    function docFromUrl(format, url, callback) {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent) {
-            return createDocObj(format, oReq.response); // Note: not oReq.responseText
+            callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
         };
         oReq.send(null);
     }
 
-    docFromUrl('sems', 'idiomatic-hello-world.sems').run();
+    docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
 };
