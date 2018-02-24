@@ -6,7 +6,7 @@ window.onload = function() {
         return (n - a) * (n - b) <= 0;
     }
     function isDigit(n) {
-        return isBetween(byteArray[i], 48, 57);
+        return isBetween(n, 48, 57);
     }
     function isSpace(n) {
         return n == 32;
