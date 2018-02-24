@@ -47,6 +47,47 @@ window.onload = function() {
         };
     })();
 
+    function docParse(format, content) {
+        switch (format) {
+            case 'sems':
+                return parseSems(content);
+                break;
+        }
+    }
+
+    function parseSems(arrayBuffer) {
+        // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
+        var dcSeq = [];
+        var parserState = 'dc';
+        var currentDc = '';
+        if (arrayBuffer) {
+            var byteArray = new Uint8Array(arrayBuffer);
+            for (var i = 0; i < byteArray.byteLength; i++) {
+                // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+                switch (parserState) {
+                    case 'dc':
+                        if (isDigit(byteArray[i])) {
+                            currentDc = currentDc + String.fromCharCode(byteArray[i]);
+                        }
+                        if (isSpace(byteArray[i])) {
+                            dcSeq.push(currentDc);
+                            currentDc = '';
+                        }
+                        if (byteArray[i] == 35) { // pound sign: start comment
+                            parserState = 'comment';
+                        }
+                        break;
+                    case 'comment':
+                        if (isNewline(byteArray[i])) {
+                            parserState = 'dc';
+                        }
+                        break;
+                }
+            }
+        }
+        return dcSeq;
+    }
+
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
@@ -81,46 +122,6 @@ window.onload = function() {
                 this.render('integerList');
             };
         return doc;
-    }
-
-    function docParse(format, content) {
-        switch (format) {
-            case 'sems':
-                return parseSems(content);
-                break;
-        }
-    }
-    function parseSems(arrayBuffer) {
-        // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
-        var dcSeq = [];
-        var parserState = 'dc';
-        var currentDc = '';
-        if (arrayBuffer) {
-            var byteArray = new Uint8Array(arrayBuffer);
-            for (var i = 0; i < byteArray.byteLength; i++) {
-                // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
-                switch (parserState) {
-                    case 'dc':
-                        if (isDigit(byteArray[i])) {
-                            currentDc = currentDc + String.fromCharCode(byteArray[i]);
-                        }
-                        if (isSpace(byteArray[i])) {
-                            dcSeq.push(currentDc);
-                            currentDc = '';
-                        }
-                        if (byteArray[i] == 35) { // pound sign: start comment
-                            parserState = 'comment';
-                        }
-                        break;
-                    case 'comment':
-                        if (isNewline(byteArray[i])) {
-                            parserState = 'dc';
-                        }
-                        break;
-                }
-            }
-        }
-        return dcSeq;
     }
 
     function docFromUrl(format, url, callback) {
