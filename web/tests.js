@@ -129,13 +129,13 @@ window.onload = function() {
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent) {
-            callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
+            callback(oReq.response); // Note: not oReq.responseText
         };
         oReq.send(null);
     }
 
     function docFromUrl(format, url, callback) {
-        urlLoadAndRun
+        urlLoadAndRun(url, function(responseArrayBuffer) { createDocObj(format, oReq.response); })
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
