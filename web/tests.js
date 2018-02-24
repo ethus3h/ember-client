@@ -5,6 +5,9 @@ window.onload = function() {
     function isBetween(n, a, b) {
         return (n - a) * (n - b) <= 0;
     }
+    function isDigit(n) {
+        return isBetween(byteArray[i], 48, 57);
+    }
 /*
 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q
