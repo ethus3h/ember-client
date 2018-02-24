@@ -8,6 +8,9 @@ window.onload = function() {
     function isDigit(n) {
         return isBetween(byteArray[i], 48, 57);
     }
+    function isDigit(n) {
+        return isBetween(byteArray[i], 48, 57);
+    }
 /*
 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q
@@ -78,6 +81,7 @@ window.onload = function() {
     function parseSems(arrayBuffer) {
         var dcSeq = [];
         var parserState = 'dc';
+        var currentDc = '';
         if (arrayBuffer) {
             var byteArray = new Uint8Array(arrayBuffer);
             for (var i = 0; i < byteArray.byteLength; i++) {
@@ -85,7 +89,10 @@ window.onload = function() {
                 switch (parserState) {
                     case 'dc':
                         if isDigit(byteArray[i]) {
-                            // Is digit
+                            currentDc = currentDc + byteArray[i];
+                        }
+                        if isSpace(byteArray[i]) {
+                            currentDc = currentDc + byteArray[i];
                         }
                         break;
                 }
