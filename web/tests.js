@@ -127,12 +127,10 @@ window.onload = function() {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
-        var doc;
         oReq.onload = function(oEvent) {
-            doc=createDocObj(format, oReq.response); // Note: not oReq.responseText
+            return createDocObj(format, oReq.response); // Note: not oReq.responseText
         };
         oReq.send(null);
-        return doc;
     }
 
     docFromUrl('sems', 'idiomatic-hello-world.sems').run();
