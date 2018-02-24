@@ -134,7 +134,7 @@ window.onload = function() {
         oReq.send(null);
     }
 
-    function runEiteTest() {
+    function runEiteTest('eptb', 'idiomatic-hello-world-sems') {
         
     }
 
