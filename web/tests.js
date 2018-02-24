@@ -134,10 +134,20 @@ window.onload = function() {
         oReq.send(null);
     }
 
-    function runEiteTest('eptb', 'idiomatic-hello-world-sems') {
-        
+    function runEiteTest(format, name) {
+        switch (format) {
+            case 'eptb':
+                
+                break;
+            case 'comment':
+                if (isNewline(byteArray[i])) {
+                    parserState = 'dc';
+                }
+                break;
+        }
     }
 
+    runEiteTest('eptb', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
 };
