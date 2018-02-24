@@ -122,10 +122,6 @@ window.onload = function() {
         return dcSeq;
     }
 
-    function runSems(arrayBuffer) {
-        parseSems(arrayBuffer).run();
-    }
-
     function eiteFromUrl(url) {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
