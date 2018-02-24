@@ -104,8 +104,9 @@ window.onload = function() {
                         break;
                     case 'comment':
                         if isNewline(byteArray[i]) {
-                            
+                            parserState = 'dc';
                         }
+                        break;
                 }
             }
         }
