@@ -57,9 +57,10 @@ window.onload = function() {
         }
     }
 
-    function createDocObj(format, dcSeq) {
+    function createDocObj(format, array) {
+        // array is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in docParse).
         var doc = {};
-            doc.dcState = docParse(format, dcSeq);
+            doc.dcState = docParse(format, array);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
