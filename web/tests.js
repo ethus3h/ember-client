@@ -57,10 +57,10 @@ window.onload = function() {
         }
     }
 
-    function createDocObj(format, array) {
-        // array is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in docParse).
+    function createDocObj(format, content) {
+        // content is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in docParse).
         var doc = {};
-            doc.dcState = docParse(format, array);
+            doc.dcState = docParse(format, content);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
@@ -83,10 +83,10 @@ window.onload = function() {
         return doc;
     }
 
-    function docParse(format, arrayBuffer) {
+    function docParse(format, content) {
         switch (format) {
             case 'sems':
-                return parseSems(arrayBuffer);
+                return parseSems(content);
                 break;
         }
     }
@@ -119,8 +119,7 @@ window.onload = function() {
                 }
             }
         }
-
-        return createDocExecutor(dcSeq);
+        return dcSeq;
     }
 
     function runSems(arrayBuffer) {
