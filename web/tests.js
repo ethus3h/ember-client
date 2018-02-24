@@ -57,9 +57,9 @@ window.onload = function() {
         }
     }
 
-    function createDocExecutor(dcSeq) {
+    function createDocObj(format, dcSeq) {
         var doc = {};
-            doc.dcState = dcSeq;
+            doc.dcState = docParse(format, dcSeq);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
