@@ -134,6 +134,8 @@ window.onload = function() {
         oReq.send(null);
     }
 
+    function runEiteTest()
+
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
 };
