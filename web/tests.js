@@ -91,10 +91,10 @@ window.onload = function() {
                 // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
                 switch (parserState) {
                     case 'dc':
-                        if isDigit(byteArray[i]) {
+                        if (isDigit(byteArray[i])) {
                             currentDc = currentDc + byteArray[i];
                         }
-                        if isSpace(byteArray[i]) {
+                        if (isSpace(byteArray[i])) {
                             dcSeq.push(currentDc);
                             currentDc = '';
                         }
@@ -103,7 +103,7 @@ window.onload = function() {
                         }
                         break;
                     case 'comment':
-                        if isNewline(byteArray[i]) {
+                        if (isNewline(byteArray[i])) {
                             parserState = 'dc';
                         }
                         break;
