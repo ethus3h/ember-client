@@ -124,6 +124,7 @@ window.onload = function() {
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
         oReq.onload = function(oEvent) {
+            createDocObj('sems', oReq.response)
             runSems(oReq.response); // Note: not oReq.responseText
         };
         oReq.send(null);
