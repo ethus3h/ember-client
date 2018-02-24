@@ -136,13 +136,6 @@ window.onload = function() {
 
     function docFromUrl(format, url, callback) {
         urlLoadAndRun(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
-        var oReq = new XMLHttpRequest();
-        oReq.open("GET", url, true);
-        oReq.responseType = "arraybuffer";
-        oReq.onload = function(oEvent) {
-            callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
-        };
-        oReq.send(null);
     }
 
     function runEiteTest(format, name) {
