@@ -5,7 +5,7 @@ window.onload = function() {
     function isBetween(n, a, b) {
         return (n - a) * (n - b) <= 0;
     }
-    
+    //from http://www.asciichart.com/
      0	NUL	16	DLE	32	SP	48	0	64	@	80	P	96	`	112	p
 1	SOH	17	DC1	33	!	49	1	65	A	81	Q	97	a	113	q
 2	STX	18	DC2	34	"	50	2	66	B	82	R	98	b	114	r
