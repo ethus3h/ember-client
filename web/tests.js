@@ -82,6 +82,13 @@ window.onload = function() {
         return doc;
     }
 
+    function docParse(format, arrayBuffer) {
+        switch (format) {
+            case 'sems':
+                return parseSems(arrayBuffer);
+                break;
+        }
+    }
     function parseSems(arrayBuffer) {
         var dcSeq = [];
         var parserState = 'dc';
