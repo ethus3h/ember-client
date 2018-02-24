@@ -143,14 +143,7 @@ window.onload = function() {
         inFormatUrl='../tests/'+name+'.'+format+'/in-format';
         switch (format) {
             case 'ept': // Parser test
-                urlLoadAndRun(in)
-                var oReq = new XMLHttpRequest();
-                oReq.open("GET", name, true);
-                oReq.responseType = "arraybuffer";
-                oReq.onload = function(oEvent) {
-                    callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
-                };
-                oReq.send(null);
+                urlLoadAndRun(inFormatUrl, function(responseArrayBuffer) {})
                 break;
             case 'comment':
                 if (isNewline(byteArray[i])) {
