@@ -139,10 +139,13 @@ window.onload = function() {
     }
 
     function runEiteTest(format, name) {
+        urlPrefix='../tests/'+name+'.'+format+'/';
+        inFormatUrl='../tests/'+name+'.'+format+'/in-format';
         switch (format) {
             case 'ept': // Parser test
+                urlLoadAndRun(in)
                 var oReq = new XMLHttpRequest();
-                oReq.open("GET", url, true);
+                oReq.open("GET", name, true);
                 oReq.responseType = "arraybuffer";
                 oReq.onload = function(oEvent) {
                     callback(createDocObj(format, oReq.response)); // Note: not oReq.responseText
