@@ -84,7 +84,7 @@ window.onload = function() {
     function parseSems(arrayBuffer) {
         var dcSeq = [];
         var parserState = 'dc';
-        var currentDc = [];
+        var currentDc = '';
         if (arrayBuffer) {
             var byteArray = new Uint8Array(arrayBuffer);
             for (var i = 0; i < byteArray.byteLength; i++) {
@@ -92,12 +92,11 @@ window.onload = function() {
                 switch (parserState) {
                     case 'dc':
                         if (isDigit(byteArray[i])) {
-                            currentDc.push(byteArray[i]);
+                            currentDc = currentDc + String.fromCharCode(byteArray[i]);
                         }
                         if (isSpace(byteArray[i])) {
-                            currentDc = String.fromCharCode()
                             dcSeq.push(currentDc);
-                            currentDc = [];
+                            currentDc = '';
                         }
                         if (byteArray[i] == 35) { // pound sign: start comment
                             parserState = 'comment';
