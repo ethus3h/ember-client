@@ -23,7 +23,6 @@ window.onload = function() {
     // Tools for Dc text
     {
         function dcIsNewline(dc) {
-            loadCsv('../data/DcData.csv', appendLineToData, callback, callback);
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
