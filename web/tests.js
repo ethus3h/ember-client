@@ -34,18 +34,16 @@ window.onload = function() {
         15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL
         */
     }
-    // Attach console.log to log element
-    (function() {
-        var logger = document.getElementById('log');
-        eiteLog = function(message) {
-            if (typeof message == 'object') {
-                logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-            } else {
-                logger.innerHTML += message + '<br />';
-            }
-            logger.scrollTop = logger.scrollHeight;
-        };
-    })();
+    // Attach eiteLog to log element
+    var logger = document.getElementById('log');
+    eiteLog = function(message) {
+        if (typeof message == 'object') {
+            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+        } else {
+            logger.innerHTML += message + '<br />';
+        }
+        logger.scrollTop = logger.scrollHeight;
+    };
 
     function docParse(format, content) {
         switch (format) {
@@ -92,7 +90,7 @@ window.onload = function() {
         switch (targetFormat) {
             case 'integerList':
                 for (var i = 0; i < renderBuffer.length; i++) {
-                    console.log(renderBuffer[i]);
+                    eiteLog(renderBuffer[i]);
                 }
                 break;
         }
