@@ -248,6 +248,7 @@ window.onload = function() {
     }
 
     loadCsv('../data/DcList.csv');
+    urlLoadAndRun('../data/DcList.csv', function(responseArrayBuffer) {console.log(responseArrayBuffer);});
 
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
