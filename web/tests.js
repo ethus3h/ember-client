@@ -231,6 +231,9 @@ window.onload = function() {
         Papa.parse(url, {
             download: true,
             encoding: 'UTF-8',
+            newline: "\n",
+            delimiter: ',',
+            quoteChar: '"',
             step: function(results, parser) {
                 console.log("Row data:", results.data);
                 console.log("Row errors:", results.errors);
