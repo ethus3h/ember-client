@@ -60,6 +60,8 @@ window.onload = function() {
         }
     }
 
+    // START PORTABLE CODE
+
     function docParse(format, content) {
         switch (format) {
             case 'sems':
@@ -126,6 +128,8 @@ window.onload = function() {
             };
         return doc;
     }
+
+    // END PORTABLE CODE
 
     function urlLoadAndRun(url, callback) {
         var oReq = new XMLHttpRequest();
