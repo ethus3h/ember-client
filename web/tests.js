@@ -143,7 +143,6 @@ window.onload = function() {
                                 line = 1;
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
-                                throw '';
                                 this.renderOutputBuf[line][i] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
                         }
@@ -184,7 +183,7 @@ window.onload = function() {
                 traits.cellTableHeight = -1; // unlimited
                 let cs = document.characterSet.toLowerCase();
                 switch(cs) {
-                    case 'UTF-8':
+                    case 'utf-8':
                         traits.characterEncoding = 'UTF-8';
                         break;
                     default:
