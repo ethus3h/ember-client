@@ -140,14 +140,17 @@ window.onload = function() {
                     case 'immutableCharacterCells':
                         this.renderOutputBuf = [];
                         let line=0;
+                        let char=0;
                         this.renderOutputBuf[0] = [];
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
                             if (isNewline(this.renderInputBuf[i])) {
                                 line = line + 1;
+                                char = 0;
                                 this.renderOutputBuf[line] = [];
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
-                                this.renderOutputBuf[line][i] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
+                                this.renderOutputBuf[line][char] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
+                                char = char + 1;
                             }
                         }
                         break;
