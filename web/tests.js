@@ -274,8 +274,8 @@ window.onload = function() {
         };
         oReq.send(null);
     }
-    urlLoadForCallback('', function(responseArrayBuffer) {
-        eiteWarn(responseArrayBuffer);
+    urlLoadForCallback('../data/DcData.csv', function(responseArrayBuffer) {
+        console.log(responseArrayBuffer);
     });
 
     function docFromUrl(format, url, callback) {
