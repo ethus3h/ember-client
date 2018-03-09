@@ -1,5 +1,33 @@
 window.onload = function() {
 
+    // Attach eiteLog to log element
+    var logger = document.getElementById('log');
+    eiteLog = function(message) {
+        if (typeof message == 'object') {
+            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+        } else {
+            logger.innerHTML += message + '<br />';
+        }
+        logger.scrollTop = logger.scrollHeight;
+    };
+
+    function doRenderIo(targetFormat, renderBuffer) {
+        switch (targetFormat) {
+            case 'integerList':
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    eiteLog(renderBuffer[i]);
+                }
+                break;
+            case 'immutableCharacterCells':
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    eiteLog(renderBuffer[i]);
+                }
+                break;
+        }
+    }
+
+    // START PORTABLE CODE
+
     // Tools for ASCII text
     {
         // Checks whether n is within the range a and b, including endpoints
@@ -34,33 +62,6 @@ window.onload = function() {
         15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL
         */
     }
-    // Attach eiteLog to log element
-    var logger = document.getElementById('log');
-    eiteLog = function(message) {
-        if (typeof message == 'object') {
-            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-        } else {
-            logger.innerHTML += message + '<br />';
-        }
-        logger.scrollTop = logger.scrollHeight;
-    };
-
-    function doRenderIo(targetFormat, renderBuffer) {
-        switch (targetFormat) {
-            case 'integerList':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
-            case 'immutableCharacterCells':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
-        }
-    }
-
-    // START PORTABLE CODE
 
     function docParse(format, content) {
         switch (format) {
