@@ -12,6 +12,9 @@ window.onload = function() {
     function eiteLog(message) {
         eiteImplLog(message);
     }
+    function eiteWarn(message) {
+        eiteLog('EITE reported warning: '+normalizeMessage(message));
+    }
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
     }
@@ -231,6 +234,10 @@ window.onload = function() {
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
         alert('EITE reported error!: '+normalizeMessage(message));
+    }
+    function eiteWarn(message) {
+        eiteLog('EITE reported warning: '+normalizeMessage(message));
+        alert('EITE reported warning: '+normalizeMessage(message));
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
