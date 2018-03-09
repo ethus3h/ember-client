@@ -20,6 +20,16 @@ window.onload = function() {
         throw 'EITE reported error!: '+normalizeMessage(message);
     }
 
+    // Tools for Dc text
+    {
+        function dcIsNewline(dc) {
+            return false; // TODO: Unimplemented
+        }
+        function dcIsPrintable(dc) {
+            return false; // TODO: Unimplemented
+        }
+    }
+
     // Tools for ASCII text
     {
         // Checks whether n is within the range a and b, including endpoints
