@@ -139,9 +139,11 @@ window.onload = function() {
                     case 'immutableCharacterCells':
                         this.renderOutputBuf = [];
                         let line=0;
+                        this.renderOutputBuf[0] = [];
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
                             if (isNewline(this.renderInputBuf[i])) {
-                                line = 1;
+                                line = = line + 1;
+                                this.renderOutputBuf[line] = [];
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
                                 this.renderOutputBuf[line][i] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
