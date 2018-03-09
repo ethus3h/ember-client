@@ -139,6 +139,9 @@ window.onload = function() {
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                         }
                         break;
+                    default:
+                        eiteError('Unimplemented target format');
+                        break;
                 }
                 // Do I/O as needed for the rendering
                 doRenderIo(targetFormat, this.renderOutputBuf);
