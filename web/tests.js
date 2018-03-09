@@ -193,10 +193,6 @@ window.onload = function() {
 
     // Fully implementation-specific code
 
-    function loadDependency() {
-        
-    }
-
     function globalEval(data) {
         if ( data && data.trim() ) {
             // We use execScript on Internet Explorer
@@ -222,14 +218,15 @@ window.onload = function() {
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
-                eval(xmlhttp.responseText);
+                globalEval(xmlhttp.responseText);
             }
         }
         xmlhttp.open("GET",script,true);
         xmlhttp.send();
     }
-    addScript("path/to/jquery.js");
-    addScript("yourscript.js");
+
+    addScript('papaparse.js');
+
     function eiteImplLog(message) {
         // This function implements logging (which may differ between platforms).
         console.log(normalizeMessage(message));
