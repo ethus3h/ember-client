@@ -59,6 +59,9 @@ window.onload = function() {
             case 'sems':
                 return parseSems(content);
                 break;
+            default:
+                eiteError('Unimplemented document parsing format: '+format);
+                break;
         }
     }
 
@@ -142,7 +145,7 @@ window.onload = function() {
         return doc;
     }
 
-    // END PORTABLE CODE
+    // END PORTABLE CODE #######################################################
 
     function eiteImplLog(message) {
         console.log(normalizeMessage(message));
