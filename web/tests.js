@@ -2,7 +2,7 @@ window.onload = function() {
 
     // Attach eiteLog to log element
     var logger = document.getElementById('log');
-    eiteLog = function(message) {
+    function eiteLog(message) {
         if (typeof message == 'object') {
             logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
         } else {
@@ -10,6 +10,10 @@ window.onload = function() {
         }
         logger.scrollTop = logger.scrollHeight;
     };
+    function eiteError(message) {
+        console.log('EITE reported error!: '+eiteError);
+        alert('EITE reported error!: '+eiteError);
+    }
 
     function getBestFormat() {
         return 'immutableCharacterCells';
@@ -38,6 +42,9 @@ window.onload = function() {
                 for (var i = 0; i < renderBuffer.length; i++) {
                     eiteLog(renderBuffer[i]);
                 }
+                break;
+            default:
+                eiteError('Unimplemented render I/O format');
                 break;
         }
     }
@@ -140,7 +147,7 @@ window.onload = function() {
                         }
                         break;
                     default:
-                        eiteError('Unimplemented target format');
+                        eiteError('Unimplemented document render target format');
                         break;
                 }
                 // Do I/O as needed for the rendering
@@ -179,6 +186,9 @@ window.onload = function() {
                 if (isNewline(byteArray[i])) {
                     parserState = 'dc';
                 }
+                break;
+            default:
+                eiteError('Unimplemented test format');
                 break;
         }
     }
