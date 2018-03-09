@@ -319,6 +319,12 @@ window.onload = function() {
         );
     }
 
+    datasets=[
+        ['DcData', '../data/DcData.csv'],
+        ['mappings/from/ascii', '']
+    ];
+    datasets
+
     loadDataset('dcs', '../data/DcData.csv');
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
