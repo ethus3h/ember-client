@@ -147,8 +147,11 @@ window.onload = function() {
                         }
                         break;
                     case 'immutableCharacterCells':
-                        this.renderOutputBuf = '';
-                        
+                        this.renderOutputBuf = [];
+                        let line=0;
+                        for (var i = 0; i < this.renderInputBuf.length; i++) {
+                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
+                        }
                         break;
                     default:
                         eiteError('Unimplemented document render target format: '+targetFormat);
