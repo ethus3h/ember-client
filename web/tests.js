@@ -164,13 +164,14 @@ window.onload = function() {
                 traits.cellTableWidth = -1; // unlimited
                 traits.cellTableHeight = -1; // unlimited
                 let cs = Document.characterSet();
-                switch(Document.characterSet()) {
+                switch(cs) {
                     case 'UTF-8':
                     case 'utf-8':
                         traits.characterSet = 'UTF-8';
+                        break;
                     default:
-                        eiteError('Unimplemented document render target format: '+targetFormat);
-
+                        eiteError('Unimplemented character set: '+cs);
+                        break
                 }
                 break;
         }
