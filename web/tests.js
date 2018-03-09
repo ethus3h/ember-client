@@ -248,11 +248,13 @@ window.onload = function() {
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
         alert('EITE reported error!: '+normalizeMessage(message));
+        console.trace();
         throw 'EITE reported error!: '+normalizeMessage(message);
     }
     function eiteWarn(message) {
         eiteLog('EITE reported warning: '+normalizeMessage(message));
         alert('EITE reported warning: '+normalizeMessage(message));
+        console.trace();
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
