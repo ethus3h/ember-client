@@ -44,7 +44,7 @@ window.onload = function() {
                 }
                 break;
             default:
-                eiteError('Unimplemented render I/O format');
+                eiteError('Unimplemented render I/O format: '+targetFormat);
                 break;
         }
     }
@@ -147,7 +147,7 @@ window.onload = function() {
                         }
                         break;
                     default:
-                        eiteError('Unimplemented document render target format');
+                        eiteError('Unimplemented document render target format: '+targetFormat);
                         break;
                 }
                 // Do I/O as needed for the rendering
@@ -188,7 +188,7 @@ window.onload = function() {
                 }
                 break;
             default:
-                eiteError('Unimplemented test format');
+                eiteError('Unimplemented test format: '+format);
                 break;
         }
     }
