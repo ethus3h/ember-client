@@ -160,6 +160,7 @@ window.onload = function() {
                                 this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
                         }
+                console.log(renderBuffer);
                         break;
                     default:
                         eiteError('Unimplemented document render target format: '+targetFormat);
@@ -230,7 +231,6 @@ window.onload = function() {
         switch (targetFormat) {
             case 'integerList':
             case 'immutableCharacterCells':
-                console.log( 'a');
                 let immutableCharCellOutput = document.getElementById('log');
                 for (var i = 0; i < renderBuffer.length; i++) {
                     immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
