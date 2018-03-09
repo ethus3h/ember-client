@@ -60,6 +60,9 @@ window.onload = function() {
         function isDigit(n) {
             return isBetween(n, 48, 57);
         }
+        function isPrintable(n) {
+            return isBetween(n, 32, 126);
+        }
         function isSpace(n) {
             return n == 32;
         }
@@ -150,7 +153,12 @@ window.onload = function() {
                         this.renderOutputBuf = [];
                         let line=0;
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
-                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
+                            if (isNewline(this.renderInputBuf[i])) {
+                                
+                            }
+                            if (isPrintable(this.renderInputBuf[i])) {
+                                this.renderOutputBuf[]
+                            }
                         }
                         break;
                     default:
