@@ -7,9 +7,8 @@ window.onload = function() {
             return message;
         }
     }
-    // Attach eiteLog to log element
-    var logger = document.getElementById('log');
     function eiteLog(message) {
+        console.log(normalizeMessage(message));
         logger.innerHTML += normalizeMessage(message) + '<br />';
         logger.scrollTop = logger.scrollHeight;
     };
@@ -37,11 +36,8 @@ window.onload = function() {
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
             case 'immutableCharacterCells':
+                var htmlImmutableCharacterCellOutputElement = document.getElementById('log');
                 for (var i = 0; i < renderBuffer.length; i++) {
                     eiteLog(renderBuffer[i]);
                 }
