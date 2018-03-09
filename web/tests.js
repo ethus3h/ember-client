@@ -2,6 +2,9 @@ window.onload = function() {
 
     // Attach eiteLog to log element
     var logger = document.getElementById('log');
+    function normalizeMessage(message) {
+        
+    }
     function eiteLog(message) {
         if (typeof message == 'object') {
             logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
@@ -11,7 +14,7 @@ window.onload = function() {
         logger.scrollTop = logger.scrollHeight;
     };
     function eiteError(message) {
-        console.log('EITE reported error!: '+message);
+        eiteLog('EITE reported error!: '+message);
         alert('EITE reported error!: '+message);
     }
 
