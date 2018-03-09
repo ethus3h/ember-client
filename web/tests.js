@@ -37,7 +37,7 @@ window.onload = function() {
     // Attach console.log to log element
     (function() {
         var logger = document.getElementById('log');
-        console.log = function(message) {
+        eiteLog = function(message) {
             if (typeof message == 'object') {
                 logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
             } else {
