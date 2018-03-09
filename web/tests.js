@@ -296,6 +296,8 @@ window.onload = function() {
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
-    docFromUrl('sems', 'idiomatic-hello-world.sems', async function (doc) { await doc.run(); } );
+    function() {
+        await docFromUrl('sems', 'idiomatic-hello-world.sems', async function (doc) { await doc.run(); } );
+    }()
 
 };
