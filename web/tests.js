@@ -73,7 +73,7 @@ window.onload = function() {
             case 'ASCII-safe-subset':
             case 'UTF-8':
                 console.log(dc+' became '+String.fromCharCode(dc));
-                return String.fromCharCode(dc);
+                return String.fromCharCode(dc); // TODO: Unimplemented
                 break;
             default:
                 eiteError('Unimplemented character encoding: '+characterEncoding);
