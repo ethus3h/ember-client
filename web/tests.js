@@ -146,6 +146,10 @@ window.onload = function() {
                             this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
                         }
                         break;
+                    case 'immutableCharacterCells':
+                        this.renderOutputBuf = '';
+                        
+                        break;
                     default:
                         eiteError('Unimplemented document render target format: '+targetFormat);
                         break;
