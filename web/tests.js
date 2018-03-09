@@ -1,5 +1,3 @@
-import 'papaparse.js';
-
 window.onload = function() {
 
     // START PORTABLE CODE
