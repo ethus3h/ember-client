@@ -247,7 +247,7 @@ window.onload = function() {
         })
     }
 
-    //loadCsv('../data/DcList.csv');
+    loadCsv('../data/DcData.csv');
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
@@ -274,9 +274,6 @@ window.onload = function() {
         };
         oReq.send(null);
     }
-    urlLoadForCallback('../data/DcData.csv', function(responseArrayBuffer) {
-        console.log(responseArrayBuffer);
-    });
 
     function docFromUrl(format, url, callback) {
         urlLoadForCallback(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
