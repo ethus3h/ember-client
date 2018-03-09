@@ -134,7 +134,7 @@ window.onload = function() {
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
-                if ( targetFormat === '' ) {
+                if ( targetFormat === undefined ) {
                     targetFormat = getBestFormat();
                 }
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
