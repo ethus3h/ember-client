@@ -295,6 +295,17 @@ window.onload = function() {
         }
     }
 
+    // Set up dcData
+    dcData = {};
+    dcData.dcs = [];
+    function dcDataAppendDataset(dataset) {
+        dcData.dcs[dataset] = [];
+    }
+    function dcDataAppendLine(dataset, line) {
+        dcData.dcs[dataset].push(line);
+    }
+    loadCsv('../data/DcData.csv', function(){}, function(){}, function(){})
+
     runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
