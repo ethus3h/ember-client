@@ -3,6 +3,7 @@ window.onload = function() {
     // START PORTABLE CODE
 
     function dcImplementation(dcData) {
+        var impl = {
         function normalizeMessage(message) {
             if (typeof message == 'object') {
                 return (JSON && JSON.stringify ? JSON.stringify(message) : message);
@@ -174,6 +175,8 @@ window.onload = function() {
                 };
             return doc;
         }
+    };
+    return impl;
     }
 
     // END PORTABLE CODE #######################################################
