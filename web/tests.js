@@ -246,7 +246,7 @@ window.onload = function() {
         })
     }
 
-    loadCsv('../data/DcData.csv',undefined,undefined,function(res,file){console.log(res);});
+    loadCsv('../data/DcData.csv',function(){},function(){},function(res,file){console.log(res);});
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
