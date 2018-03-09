@@ -57,8 +57,8 @@ window.onload = function() {
         */
     }
 
-    function printableDcToChar(dc, characterSet) {
-        switch (characterSet) {
+    function printableDcToChar(dc, characterEncoding) {
+        switch (characterEncoding) {
             case 'ASCII-safe-subset':
                 return String.fromCharCode(dc);
                 break;
