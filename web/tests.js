@@ -230,7 +230,17 @@ window.onload = function() {
     function loadCsv(url) {
         Papa.parse(url, {
             download: true,
-            
+            encoding: UTF-8',
+step: function(results, parser) {
+	console.log("Row data:", results.data);
+	console.log("Row errors:", results.errors);
+},
+complete: function(results, file) {
+	console.log("Parsing complete:", results, file);
+},
+error: function(results, file) {
+    throw 'error parsing';
+}
         })
     }
 
