@@ -93,6 +93,11 @@ window.onload = function() {
                     eiteLog(renderBuffer[i]);
                 }
                 break;
+            case 'appendOnlyTerminal':
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    eiteLog(renderBuffer[i]);
+                }
+                break;
         }
     }
 
