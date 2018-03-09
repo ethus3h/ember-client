@@ -142,7 +142,7 @@ window.onload = function() {
                         this.renderOutputBuf[0] = [];
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
                             if (isNewline(this.renderInputBuf[i])) {
-                                line = = line + 1;
+                                line = line + 1;
                                 this.renderOutputBuf[line] = [];
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
