@@ -17,6 +17,7 @@ window.onload = function() {
     }
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
+        throw 'EITE reported error!: '+normalizeMessage(message);
     }
 
     // Tools for ASCII text
@@ -123,7 +124,7 @@ window.onload = function() {
                     targetFormat = getEnvironmentBestFormat();
                 }
                 if ( renderTraits === undefined ) {
-                    renderTraits = getEnvironmentRenderTraits();
+                    renderTraits = getEnvironmentRenderTraits(targetFormat);
                 }
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
@@ -172,6 +173,9 @@ window.onload = function() {
     }
 
     function getEnvironmentRenderTraits(targetFormat) {
+        if ( targetFormat === undefined ) {
+            eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
+        }
         var traits = {};
         switch (targetFormat) {
             case 'integerList':
@@ -245,6 +249,7 @@ window.onload = function() {
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
         alert('EITE reported error!: '+normalizeMessage(message));
+        throw 'EITE reported error!: '+normalizeMessage(message);
     }
     function eiteWarn(message) {
         eiteLog('EITE reported warning: '+normalizeMessage(message));
