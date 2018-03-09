@@ -248,7 +248,7 @@ window.onload = function() {
     }
 
     loadCsv('../data/DcList.csv');
-    urlLoadAndRun('../data/DcList.csv', function(responseArrayBuffer) {eiteWarn(responseArrayBuffer);});
+    urlLoadForCallback('../data/DcList.csv', function(responseArrayBuffer) {eiteWarn(responseArrayBuffer);});
 
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
@@ -266,7 +266,7 @@ window.onload = function() {
         }
     }
 
-    function urlLoadAndRun(url, callback) {
+    function urlLoadForCallback(url, callback) {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
@@ -277,7 +277,7 @@ window.onload = function() {
     }
 
     function docFromUrl(format, url, callback) {
-        urlLoadAndRun(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
+        urlLoadForCallback(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
     }
 
     function runEiteTest(format, name) {
@@ -285,7 +285,7 @@ window.onload = function() {
         inFormatUrl='../tests/'+name+'.'+format+'/in-format';
         switch (format) {
             case 'ept': // Parser test
-                urlLoadAndRun(inFormatUrl, function(responseArrayBuffer) {})
+                urlLoadForCallback(inFormatUrl, function(responseArrayBuffer) {})
                 break;
             case 'comment':
                 if (isNewline(byteArray[i])) {
