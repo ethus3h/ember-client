@@ -13,16 +13,13 @@ window.onload = function() {
 
     function getRenderTraits(targetFormat) {
         switch (targetFormat) {
+            var traits = {};
             case 'integerList':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
             case 'immutableCharacterCells':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
+                traits.cellTableWidth = -1; // unlimited
+                traits.cellTableHeight = -1; // unlimited
                 break;
+            return traits;
         }
     }
 
