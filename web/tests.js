@@ -133,7 +133,7 @@ window.onload = function() {
             doc.dcState = docParse(format, content);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
-            doc.render = function (targetFormat) {
+            doc.render = function(targetFormat) {
                 if ( targetFormat === undefined ) {
                     targetFormat = getBestFormat();
                 }
@@ -143,7 +143,7 @@ window.onload = function() {
                     case 'integerList':
                         this.renderOutputBuf = [];
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
-                            this.renderOutputBuf[i] = this.renderInputBuf[i]; // TODO unimplemented
+                            this.renderOutputBuf[i] = this.renderInputBuf[i];
                         }
                         break;
                     case 'immutableCharacterCells':
