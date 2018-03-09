@@ -15,7 +15,7 @@ window.onload = function() {
         alert('EITE reported error!: '+normalizeMessage(message));
     }
 
-    function getBestFormat() {
+    function getEnvironmentBestFormat() {
         return 'immutableCharacterCells';
     }
 
@@ -136,7 +136,7 @@ window.onload = function() {
             doc.renderOutputBuf = null;
             doc.render = function(targetFormat, renderTraits) {
                 if ( targetFormat === undefined ) {
-                    targetFormat = getBestFormat();
+                    targetFormat = getEnvironmentBestFormat();
                 }
                 if ( renderTraits === undefined ) {
                     renderTraits = getEnvironmentRenderTraits();
