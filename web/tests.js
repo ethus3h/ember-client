@@ -148,6 +148,7 @@ window.onload = function() {
     // END PORTABLE CODE #######################################################
 
     function eiteImplLog(message) {
+        // This function implements logging (which may differ between platforms).
         console.log(normalizeMessage(message));
     };
 
