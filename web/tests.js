@@ -1,6 +1,7 @@
 window.onload = function() {
 
     // START PORTABLE CODE
+    // dcData object must be available before calling these functions.
 
     function normalizeMessage(message) {
         if (typeof message == 'object') {
