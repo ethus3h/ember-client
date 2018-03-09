@@ -23,6 +23,8 @@ window.onload = function() {
     // Tools for Dc text
     {
         function dcIsNewline(dc) {
+            loadCsv('../data/DcData.csv', callback, callback, callback);
+            return data
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
@@ -246,7 +248,6 @@ window.onload = function() {
         })
     }
 
-    loadCsv('../data/DcData.csv',undefined,undefined,function(res,file){console.log(res);});
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
