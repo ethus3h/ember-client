@@ -303,8 +303,12 @@ window.onload = function() {
     function dcDataAppendLine(dataset, line) {
         dcData[dataset].push(line);
     }
-    function loadDataset(dataset, callback) {
-        dcDataAppendDataset('dcs');
+    function loadDatasets(callback) {
+        if(datasets.length > 0) {
+            loadDataset(datasets[0], )
+        }
+
+        dcDataAppendDataset(dataset);
         loadCsv(
             '../data/'+dataset+'.csv',
             function(results,parser){
@@ -314,7 +318,7 @@ window.onload = function() {
                 callback();
             },
             function(){
-                eiteError('Error reported while parsing '+dcs+'!')
+                eiteError('Error reported while parsing '+dataset+'!')
             }
         );
     }
@@ -323,9 +327,9 @@ window.onload = function() {
         'DcData',
         'mappings/from/ascii'
     ];
-    datasetsInitialCount = 0;
 
-    loadDataset(datasets[0], );
+    loadDataset(datasets[0], function(){
+    });
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
