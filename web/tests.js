@@ -228,6 +228,7 @@ globalEval: function( data ) {
 }
 addScript("path/to/jquery.js");
 addScript("yourscript.js");
+# from https://stackoverflow.com/questions/16932595/how-to-import-javascript-dependencies-in-one-file
     function eiteImplLog(message) {
         // This function implements logging (which may differ between platforms).
         console.log(normalizeMessage(message));
