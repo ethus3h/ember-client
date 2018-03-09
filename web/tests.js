@@ -296,15 +296,17 @@ window.onload = function() {
     }
 
     // Set up dcData
-    dcData = {};
-    dcData.dcs = [];
+    dcData = [];
     function dcDataAppendDataset(dataset) {
-        dcData.dcs[dataset] = [];
+        dcData[dataset] = [];
     }
     function dcDataAppendLine(dataset, line) {
-        dcData.dcs[dataset].push(line);
+        dcData[dataset].push(line);
     }
-    loadCsv('../data/DcData.csv', function(){}, function(){}, function(){})
+    function loadDataset('dcs', callback) {
+        dcDataAppendDataset('dcs');
+        loadCsv('../data/DcData.csv', function(results,parser){dcDataAppendLine('dcs', results);}, function(){callback();}, function(){eiteError('Error reported while parsing '+dcs+'!')})
+    }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
