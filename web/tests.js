@@ -303,10 +303,10 @@ window.onload = function() {
     function dcDataAppendLine(dataset, line) {
         dcData[dataset].push(line);
     }
-    function loadDataset(dataset, url, callback) {
+    function loadDataset(dataset, callback) {
         dcDataAppendDataset('dcs');
         loadCsv(
-            url,
+            '../data/'+dataset+'.csv',
             function(results,parser){
                 dcDataAppendLine(dataset, results);
             },
@@ -320,8 +320,8 @@ window.onload = function() {
     }
 
     datasets=[
-        ['DcData', '../data/DcData.csv'],
-        ['mappings/from/ascii', '']
+        'DcData',
+        'mappings/from/ascii'
     ];
     datasets
 
