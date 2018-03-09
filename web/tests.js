@@ -24,7 +24,6 @@ window.onload = function() {
     {
         function dcIsNewline(dc) {
             loadCsv('../data/DcData.csv', appendLineToData, callback, callback);
-            return data.
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
