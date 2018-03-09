@@ -227,7 +227,7 @@ window.onload = function() {
         return traits;
     }
 
-    function loadCsv(url) {
+    function loadCsv(url, callback) {
         Papa.parse(url, {
             download: true,
             encoding: 'UTF-8',
@@ -243,7 +243,7 @@ window.onload = function() {
                 console.log("Parsing complete");
             },
             error: function(results, file) {
-                eiteWarn(file);
+                eiteError("Error while loading CSV "+normalizeMessage(file));
             }
         })
     }
