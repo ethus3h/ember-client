@@ -1,5 +1,7 @@
 window.onload = function() {
 
+    import 'papaparse.js';
+
     // START PORTABLE CODE
 
     function normalizeMessage(message) {
@@ -192,8 +194,6 @@ window.onload = function() {
     }
 
     // Fully implementation-specific code
-
-    import 'papaparse.js';
 
     function eiteImplLog(message) {
         // This function implements logging (which may differ between platforms).
