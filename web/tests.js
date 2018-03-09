@@ -11,6 +11,10 @@ window.onload = function() {
         logger.scrollTop = logger.scrollHeight;
     };
 
+    function getBestFormat() {
+        return 'immutableCharacterCells';
+    }
+
     function getRenderTraits(targetFormat) {
         var traits = {};
         switch (targetFormat) {
@@ -123,6 +127,9 @@ window.onload = function() {
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
             doc.render = function (targetFormat) {
+                if ( targetFormat === '' ) {
+                    targetFormat = getBestFormat();
+                }
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
                 switch (targetFormat) {
@@ -136,8 +143,8 @@ window.onload = function() {
                 // Do I/O as needed for the rendering
                 doRenderIo(targetFormat, this.renderOutputBuf);
             };
-            doc.run = function () {
-                this.render('integerList');
+            doc.run = function (targetFormat) {
+                this.render(targetFormat);
             };
         return doc;
     }
