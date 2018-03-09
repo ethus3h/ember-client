@@ -203,9 +203,9 @@ window.onload = function() {
         return 'immutableCharacterCells';
     }
 
-    function getEnvironmentRenderTraits(targetFormat) {
+    async function getEnvironmentRenderTraits(targetFormat) {
         if ( targetFormat === undefined ) {
-            eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
+            await eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
         }
         var traits = {};
         switch (targetFormat) {
@@ -219,7 +219,7 @@ window.onload = function() {
                         traits.characterEncoding = 'UTF-8';
                         break;
                     default:
-                        eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
+                        await eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
                         traits.characterEncoding = 'ASCII-safe-subset';
                         break;
                 }
@@ -247,7 +247,7 @@ window.onload = function() {
         });
     }
 
-    function doRenderIo(targetFormat, renderBuffer) {
+    async function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
             case 'immutableCharacterCells':
@@ -258,7 +258,7 @@ window.onload = function() {
                 }
                 break;
             default:
-                eiteError('Unimplemented render I/O format: '+targetFormat);
+                await eiteError('Unimplemented render I/O format: '+targetFormat);
                 break;
         }
     }
@@ -290,7 +290,7 @@ window.onload = function() {
                 }
                 break;
             default:
-                eiteError('Unimplemented test format: '+format);
+                await eiteError('Unimplemented test format: '+format);
                 break;
         }
     }
