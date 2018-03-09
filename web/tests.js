@@ -1,5 +1,7 @@
 window.onload = function() {
 
+    // START PORTABLE CODE
+
     function normalizeMessage(message) {
         if (typeof message == 'object') {
             return (JSON && JSON.stringify ? JSON.stringify(message) : message);
@@ -7,50 +9,12 @@ window.onload = function() {
             return message;
         }
     }
-    function eiteImplLog(message) {
-        console.log(normalizeMessage(message));
-    };
     function eiteLog(message) {
         eiteImplLog(message);
     }
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
-        alert('EITE reported error!: '+normalizeMessage(message));
     }
-
-    function getEnvironmentBestFormat() {
-        return 'immutableCharacterCells';
-    }
-
-    function getEnvironmentRenderTraits(targetFormat) {
-        var traits = {};
-        switch (targetFormat) {
-            case 'integerList':
-            case 'immutableCharacterCells':
-                traits.cellTableWidth = -1; // unlimited
-                traits.cellTableHeight = -1; // unlimited
-                break;
-        }
-        return traits;
-    }
-
-    function doRenderIo(targetFormat, renderBuffer) {
-        switch (targetFormat) {
-            case 'integerList':
-            case 'immutableCharacterCells':
-                let immutableCharCellOutput = document.getElementById('log');
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
-                    immutableCharCellOutput.scrollTop = logger.scrollHeight;
-                }
-                break;
-            default:
-                eiteError('Unimplemented render I/O format: '+targetFormat);
-                break;
-        }
-    }
-
-    // START PORTABLE CODE
 
     // Tools for ASCII text
     {
@@ -180,6 +144,42 @@ window.onload = function() {
 
     // END PORTABLE CODE
 
+    function eiteImplLog(message) {
+        console.log(normalizeMessage(message));
+    };
+
+    function getEnvironmentBestFormat() {
+        return 'immutableCharacterCells';
+    }
+
+    function getEnvironmentRenderTraits(targetFormat) {
+        var traits = {};
+        switch (targetFormat) {
+            case 'integerList':
+            case 'immutableCharacterCells':
+                traits.cellTableWidth = -1; // unlimited
+                traits.cellTableHeight = -1; // unlimited
+                break;
+        }
+        return traits;
+    }
+
+    function doRenderIo(targetFormat, renderBuffer) {
+        switch (targetFormat) {
+            case 'integerList':
+            case 'immutableCharacterCells':
+                let immutableCharCellOutput = document.getElementById('log');
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
+                    immutableCharCellOutput.scrollTop = logger.scrollHeight;
+                }
+                break;
+            default:
+                eiteError('Unimplemented render I/O format: '+targetFormat);
+                break;
+        }
+    }
+
     function urlLoadAndRun(url, callback) {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
@@ -210,6 +210,12 @@ window.onload = function() {
                 eiteError('Unimplemented test format: '+format);
                 break;
         }
+    }
+
+    // Override error reporting method to show alert
+    function eiteError(message) {
+        eiteLog('EITE reported error!: '+normalizeMessage(message));
+        alert('EITE reported error!: '+normalizeMessage(message));
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
