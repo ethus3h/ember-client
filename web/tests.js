@@ -132,7 +132,7 @@ window.onload = function() {
             doc.dcState = docParse(format, content);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
-            doc.render = function(targetFormat, renderTraits) {
+            doc.render = async function(targetFormat, renderTraits) {
                 if ( targetFormat === undefined ) {
                     targetFormat = await getEnvironmentBestFormat();
                 }
