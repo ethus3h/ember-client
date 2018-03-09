@@ -7,9 +7,12 @@ window.onload = function() {
             return message;
         }
     }
-    function eiteLog(message) {
+    function eiteImplLog(message) {
         console.log(normalizeMessage(message));
     };
+    function eiteLog(message) {
+        eiteImplLog(message);
+    }
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
         alert('EITE reported error!: '+normalizeMessage(message));
