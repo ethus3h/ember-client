@@ -193,39 +193,7 @@ window.onload = function() {
 
     // Fully implementation-specific code
 
-    function globalEval(data) {
-        if ( data && data.trim() ) {
-            // We use execScript on Internet Explorer
-            // We use an anonymous function so that context is window
-            // rather than jQuery in Firefox
-            ( window.execScript || function( data ) {
-                window[ "eval" ].call( window, data );
-            } )( data );
-        }
-    }
-    function addScript(script)
-    {
-        var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// code for IE6, IE5
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange=function()
-        {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-            {
-                globalEval(xmlhttp.responseText);
-            }
-        }
-        xmlhttp.open("GET",script,true);
-        xmlhttp.send();
-    }
-
-    addScript('papaparse.js');
+    import 'papaparse.js';
 
     function eiteImplLog(message) {
         // This function implements logging (which may differ between platforms).
