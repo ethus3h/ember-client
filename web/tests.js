@@ -203,9 +203,9 @@ window.onload = function() {
         return 'immutableCharacterCells';
     }
 
-    async function getEnvironmentRenderTraits(targetFormat) {
+    function getEnvironmentRenderTraits(targetFormat) {
         if ( targetFormat === undefined ) {
-            await eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
+            eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
         }
         var traits = {};
         switch (targetFormat) {
@@ -219,7 +219,7 @@ window.onload = function() {
                         traits.characterEncoding = 'UTF-8';
                         break;
                     default:
-                        await eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
+                        eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
                         traits.characterEncoding = 'ASCII-safe-subset';
                         break;
                 }
@@ -228,7 +228,7 @@ window.onload = function() {
         return traits;
     }
 
-    async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
+    function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
         Papa.parse(url, {
             download: true,
             encoding: 'UTF-8',
@@ -244,10 +244,10 @@ window.onload = function() {
             error: function(results, file) {
                 errorCallback(results, file);
             }
-        })
+        });
     }
 
-    async function doRenderIo(targetFormat, renderBuffer) {
+    function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
             case 'immutableCharacterCells':
@@ -282,10 +282,10 @@ window.onload = function() {
         inFormatUrl='../tests/'+name+'.'+format+'/in-format';
         switch (format) {
             case 'ept': // Parser test
-                urlLoadForCallback(inFormatUrl, function(responseArrayBuffer) {})
+                await urlLoadForCallback(inFormatUrl, function(responseArrayBuffer) {})
                 break;
             case 'comment':
-                if (isNewline(byteArray[i])) {
+                if (await isNewline(byteArray[i])) {
                     parserState = 'dc';
                 }
                 break;
@@ -296,6 +296,6 @@ window.onload = function() {
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
-    docFromUrl('sems', 'idiomatic-hello-world.sems', async function (doc) { doc.run(); } );
+    docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
 
 };
