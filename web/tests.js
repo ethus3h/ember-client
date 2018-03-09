@@ -63,7 +63,7 @@ window.onload = function() {
                 return String.fromCharCode(dc);
                 break;
             default:
-                eiteError('Unimplemented character encoding: '+characterSet);
+                eiteError('Unimplemented character encoding: '+characterEncoding);
                 break;
         }
     }
@@ -180,11 +180,11 @@ window.onload = function() {
                 let cs = Document.characterSet().toLowerCase();
                 switch(cs) {
                     case 'UTF-8':
-                        traits.characterSet = 'UTF-8';
+                        traits.characterEncoding = 'UTF-8';
                         break;
                     default:
                         eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
-                        traits.characterSet = 'ASCII-safe-subset';
+                        traits.characterEncoding = 'ASCII-safe-subset';
                         break;
                 }
                 break;
