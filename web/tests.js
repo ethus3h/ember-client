@@ -227,6 +227,13 @@ window.onload = function() {
         return traits;
     }
 
+    function loadCsv(url) {
+                Papa.parse(url, {
+        	download: true,
+        	// rest of config ...
+        })
+    }
+
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
