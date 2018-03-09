@@ -249,7 +249,6 @@ window.onload = function() {
 
     //loadCsv('../data/DcList.csv');
     urlLoadForCallback('../data/DcList.csv', function(responseArrayBuffer) {
-        throw '';
         eiteWarn(responseArrayBuffer);
     });
 
@@ -269,7 +268,11 @@ window.onload = function() {
         }
     }
 
+    urlLoadForCallback('', function(responseArrayBuffer) {
+        eiteWarn(responseArrayBuffer);
+    });
     function urlLoadForCallback(url, callback) {
+        console.log(callback);
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
