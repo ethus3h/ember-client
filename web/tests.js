@@ -182,7 +182,7 @@ window.onload = function() {
             case 'immutableCharacterCells':
                 traits.cellTableWidth = -1; // unlimited
                 traits.cellTableHeight = -1; // unlimited
-                let cs = Document.characterSet().toLowerCase();
+                let cs = document.characterSet.toLowerCase();
                 switch(cs) {
                     case 'UTF-8':
                         traits.characterEncoding = 'UTF-8';
