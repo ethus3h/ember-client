@@ -242,7 +242,7 @@ window.onload = function() {
                 console.log("Parsing complete:", results, file);
             },
             error: function(results, file) {
-                console.log( 'error parsing');
+                eiteWarn(results);
             }
         })
     }
