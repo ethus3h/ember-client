@@ -238,15 +238,15 @@ window.onload = function() {
                 lineLoadedCallback(results, parser);
             },
             complete: function(results, file) {
-                documentLoadedCallback();
+                documentLoadedCallback(results, file);
             },
             error: function(results, file) {
-                errorCallback(results);
+                errorCallback(results, file);
             }
         })
     }
 
-    loadCsv('../data/DcData.csv', function(results,parser){console.log(results);});
+    loadCsv('../data/DcData.csv',undefined,undefined,function(res,file){console.log(res);});
     function doRenderIo(targetFormat, renderBuffer) {
         switch (targetFormat) {
             case 'integerList':
