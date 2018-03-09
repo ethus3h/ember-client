@@ -268,9 +268,6 @@ window.onload = function() {
         }
     }
 
-    urlLoadForCallback('', function(responseArrayBuffer) {
-        eiteWarn(responseArrayBuffer);
-    });
     function urlLoadForCallback(url, callback) {
         console.log(callback);
         var oReq = new XMLHttpRequest();
@@ -281,6 +278,9 @@ window.onload = function() {
         };
         oReq.send(null);
     }
+    urlLoadForCallback('', function(responseArrayBuffer) {
+        eiteWarn(responseArrayBuffer);
+    });
 
     function docFromUrl(format, url, callback) {
         urlLoadForCallback(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
