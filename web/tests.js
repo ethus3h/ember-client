@@ -45,6 +45,21 @@ window.onload = function() {
         logger.scrollTop = logger.scrollHeight;
     };
 
+    function doRenderIo(targetFormat, renderBuffer) {
+        switch (targetFormat) {
+            case 'integerList':
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    eiteLog(renderBuffer[i]);
+                }
+                break;
+            case 'immutableCharacterCells':
+                for (var i = 0; i < renderBuffer.length; i++) {
+                    eiteLog(renderBuffer[i]);
+                }
+                break;
+        }
+    }
+
     function docParse(format, content) {
         switch (format) {
             case 'sems':
@@ -84,21 +99,6 @@ window.onload = function() {
             }
         }
         return dcSeq;
-    }
-
-    function doRenderIo(targetFormat, renderBuffer) {
-        switch (targetFormat) {
-            case 'integerList':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
-            case 'immutableCharacterCells':
-                for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
-                }
-                break;
-        }
     }
 
     function createDocObj(format, content) {
