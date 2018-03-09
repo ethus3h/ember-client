@@ -2,7 +2,7 @@ window.onload = function() {
 
     // START PORTABLE CODE
 
-    function dcImplementation() {
+    function dcImplementation(dcData) {
         function normalizeMessage(message) {
             if (typeof message == 'object') {
                 return (JSON && JSON.stringify ? JSON.stringify(message) : message);
