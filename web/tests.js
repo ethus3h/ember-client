@@ -305,8 +305,20 @@ window.onload = function() {
     }
     function loadDataset(dataset, url, callback) {
         dcDataAppendDataset('dcs');
-        loadCsv(url, function(results,parser){dcDataAppendLine(dataset, results);}, function(){callback();}, function(){eiteError('Error reported while parsing '+dcs+'!')})
+        loadCsv(
+            url,
+            function(results,parser){
+                dcDataAppendLine(dataset, results);
+            },
+            function(){
+                callback();
+            },
+            function(){
+                eiteError('Error reported while parsing '+dcs+'!')
+            }
+        );
     }
+
     loadDataset('dcs', '../data/DcData.csv');
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
