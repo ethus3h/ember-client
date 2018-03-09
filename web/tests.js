@@ -235,8 +235,9 @@ window.onload = function() {
             delimiter: ',',
             quoteChar: '"',
             step: function(results, parser) {
-                console.log("Row data:", results.data);
-                console.log("Row errors:", results.errors);
+                //console.log("Row data:", results.data);
+                if (results.errors.length > 0 ){
+                console.log("Row errors:", results.errors);}
             },
             complete: function(results, file) {
                 console.log("Parsing complete:", results, file);
