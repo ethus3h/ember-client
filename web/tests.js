@@ -176,6 +176,22 @@ window.onload = function() {
 
     // END PORTABLE CODE #######################################################
 
+    // Implementation-specific overrides of routines available portably
+
+    // Override error reporting method to show alert
+    function eiteError(message) {
+        console.trace();
+        eiteLog('EITE reported error!: '+normalizeMessage(message));
+        alert('EITE reported error!: '+normalizeMessage(message));
+        throw 'EITE reported error!: '+normalizeMessage(message);
+    }
+    function eiteWarn(message) {
+        console.trace();
+        eiteLog('EITE reported warning: '+normalizeMessage(message));
+        alert('EITE reported warning: '+normalizeMessage(message));
+    }
+
+    // Fully implementation-specific code
     function eiteImplLog(message) {
         // This function implements logging (which may differ between platforms).
         console.log(normalizeMessage(message));
@@ -256,19 +272,6 @@ window.onload = function() {
                 eiteError('Unimplemented test format: '+format);
                 break;
         }
-    }
-
-    // Override error reporting method to show alert
-    function eiteError(message) {
-        console.trace();
-        eiteLog('EITE reported error!: '+normalizeMessage(message));
-        alert('EITE reported error!: '+normalizeMessage(message));
-        throw 'EITE reported error!: '+normalizeMessage(message);
-    }
-    function eiteWarn(message) {
-        console.trace();
-        eiteLog('EITE reported warning: '+normalizeMessage(message));
-        alert('EITE reported warning: '+normalizeMessage(message));
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
