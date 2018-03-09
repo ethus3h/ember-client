@@ -142,11 +142,11 @@ window.onload = function() {
                         let line=0;
                         this.renderOutputBuf[0] = '';
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
-                            if (isNewline(this.renderInputBuf[i])) {
+                            if (dcIsNewline(this.renderInputBuf[i])) {
                                 line = line + 1;
                                 this.renderOutputBuf[line] = '';
                             }
-                            if (isPrintable(this.renderInputBuf[i])) {
+                            if (dcIsPrintable(this.renderInputBuf[i])) {
                                 this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
                         }
