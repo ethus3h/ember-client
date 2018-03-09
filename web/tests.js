@@ -229,8 +229,8 @@ window.onload = function() {
 
     function loadCsv(url) {
         Papa.parse(url, {
-        	download: true,
-        	// rest of config ...
+            download: true,
+            
         })
     }
 
