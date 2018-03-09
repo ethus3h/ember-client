@@ -3,7 +3,11 @@ window.onload = function() {
     // Attach eiteLog to log element
     var logger = document.getElementById('log');
     function normalizeMessage(message) {
-        
+        if (typeof message == 'object') {
+            return (JSON && JSON.stringify ? JSON.stringify(message) : message);
+        } else {
+            return message;
+        }
     }
     function eiteLog(message) {
         if (typeof message == 'object') {
