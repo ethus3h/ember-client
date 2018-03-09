@@ -63,7 +63,7 @@ window.onload = function() {
                 return String.fromCharCode(dc);
                 break;
             default:
-                eiteError('Unimplemented character encoding: '+format);
+                eiteError('Unimplemented character encoding: '+characterSet);
                 break;
         }
     }
