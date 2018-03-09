@@ -93,7 +93,7 @@ window.onload = function() {
                     eiteLog(renderBuffer[i]);
                 }
                 break;
-            case 'appendOnlyTerminal':
+            case 'immutableCharacterCells':
                 for (var i = 0; i < renderBuffer.length; i++) {
                     eiteLog(renderBuffer[i]);
                 }
