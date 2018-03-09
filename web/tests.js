@@ -206,7 +206,7 @@ window.onload = function() {
                 let immutableCharCellOutput = document.getElementById('log');
                 for (var i = 0; i < renderBuffer.length; i++) {
                     immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
-                    immutableCharCellOutput.scrollTop = logger.scrollHeight;
+                    immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
                 }
                 break;
             default:
