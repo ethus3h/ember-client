@@ -170,7 +170,8 @@ window.onload = function() {
                         traits.characterSet = 'UTF-8';
                         break;
                     default:
-                        eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII.');
+                        eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
+                        traits.characterSet = 'ASCII-safe-subset';
                         break;
                 }
                 break;
