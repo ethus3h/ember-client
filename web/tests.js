@@ -10,16 +10,12 @@ window.onload = function() {
         }
     }
     function eiteLog(message) {
-        if (typeof message == 'object') {
-            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-        } else {
-            logger.innerHTML += message + '<br />';
-        }
+        logger.innerHTML += normalizeMessage(message) + '<br />';
         logger.scrollTop = logger.scrollHeight;
     };
     function eiteError(message) {
-        eiteLog('EITE reported error!: '+message);
-        alert('EITE reported error!: '+message);
+        eiteLog('EITE reported error!: '+normalizeMessage(message));
+        alert('EITE reported error!: '+normalizeMessage(message));
     }
 
     function getBestFormat() {
