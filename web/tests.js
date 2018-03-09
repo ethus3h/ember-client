@@ -62,6 +62,7 @@ window.onload = function() {
         switch (characterEncoding) {
             case 'ASCII-safe-subset':
             case 'UTF-8':
+                console.log(dc+' became '+String.fromCharCode(dc));
                 return String.fromCharCode(dc);
                 break;
             default:
