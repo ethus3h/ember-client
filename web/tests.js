@@ -1,6 +1,5 @@
 window.onload = function() {
 
-    // Attach eiteLog to log element
     function normalizeMessage(message) {
         if (typeof message == 'object') {
             return (JSON && JSON.stringify ? JSON.stringify(message) : message);
@@ -8,6 +7,7 @@ window.onload = function() {
             return message;
         }
     }
+    // Attach eiteLog to log element
     var logger = document.getElementById('log');
     function eiteLog(message) {
         logger.innerHTML += normalizeMessage(message) + '<br />';
