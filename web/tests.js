@@ -192,11 +192,13 @@ window.onload = function() {
     }
 
     // Fully implementation-specific code
-    
-    
 
-globalEval: function( data ) {
-        if ( data && jQuery.trim( data ) ) {
+    function loadDependency() {
+        
+    }
+
+    function globalEval(data) {
+        if ( data && data.trim() ) {
             // We use execScript on Internet Explorer
             // We use an anonymous function so that context is window
             // rather than jQuery in Firefox
@@ -204,28 +206,28 @@ globalEval: function( data ) {
                 window[ "eval" ].call( window, data );
             } )( data );
         }
-    },
+    }
     function addScript(script)
-{
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange=function()
     {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            eval(xmlhttp.responseText);
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
         }
+        else
+        {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                eval(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET",script,true);
+        xmlhttp.send();
     }
-    xmlhttp.open("GET",script,true);
-    xmlhttp.send();
-}
 addScript("path/to/jquery.js");
 addScript("yourscript.js");
 # from https://stackoverflow.com/questions/16932595/how-to-import-javascript-dependencies-in-one-file
