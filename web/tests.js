@@ -9,8 +9,6 @@ window.onload = function() {
     }
     function eiteLog(message) {
         console.log(normalizeMessage(message));
-        logger.innerHTML += normalizeMessage(message) + '<br />';
-        logger.scrollTop = logger.scrollHeight;
     };
     function eiteError(message) {
         eiteLog('EITE reported error!: '+normalizeMessage(message));
@@ -37,9 +35,10 @@ window.onload = function() {
         switch (targetFormat) {
             case 'integerList':
             case 'immutableCharacterCells':
-                var htmlImmutableCharacterCellOutputElement = document.getElementById('log');
+                let immutableCharCellOutput = document.getElementById('log');
                 for (var i = 0; i < renderBuffer.length; i++) {
-                    eiteLog(renderBuffer[i]);
+                    htmlImmutableCharacterCellOutputElement.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
+                    htmlImmutableCharacterCellOutputElement.scrollTop = logger.scrollHeight;
                 }
                 break;
             default:
