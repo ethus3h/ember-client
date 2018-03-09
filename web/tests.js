@@ -246,15 +246,15 @@ window.onload = function() {
 
     // Override error reporting method to show alert
     function eiteError(message) {
+        console.trace();
         eiteLog('EITE reported error!: '+normalizeMessage(message));
         alert('EITE reported error!: '+normalizeMessage(message));
-        console.trace();
         throw 'EITE reported error!: '+normalizeMessage(message);
     }
     function eiteWarn(message) {
+        console.trace();
         eiteLog('EITE reported warning: '+normalizeMessage(message));
         alert('EITE reported warning: '+normalizeMessage(message));
-        console.trace();
     }
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
