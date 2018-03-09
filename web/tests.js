@@ -128,8 +128,6 @@ window.onload = function() {
                 }
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
-                let trace=console.trace();
-                alert(trace);
                 switch (targetFormat) {
                     case 'integerList':
                         this.renderOutputBuf = [];
