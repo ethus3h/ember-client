@@ -154,10 +154,10 @@ window.onload = function() {
                         let line=0;
                         for (var i = 0; i < this.renderInputBuf.length; i++) {
                             if (isNewline(this.renderInputBuf[i])) {
-                                
+                                line = 1;
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
-                                this.renderOutputBuf[]
+                                this.renderOutputBuf[line][i] = printableDcRender()
                             }
                         }
                         break;
