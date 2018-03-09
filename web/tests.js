@@ -37,8 +37,8 @@ window.onload = function() {
             case 'immutableCharacterCells':
                 let immutableCharCellOutput = document.getElementById('log');
                 for (var i = 0; i < renderBuffer.length; i++) {
-                    htmlImmutableCharacterCellOutputElement.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
-                    htmlImmutableCharacterCellOutputElement.scrollTop = logger.scrollHeight;
+                    immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
+                    immutableCharCellOutput.scrollTop = logger.scrollHeight;
                 }
                 break;
             default:
