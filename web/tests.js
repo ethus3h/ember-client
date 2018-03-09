@@ -12,15 +12,15 @@ window.onload = function() {
     };
 
     function getRenderTraits(targetFormat) {
+        var traits = {};
         switch (targetFormat) {
-            var traits = {};
             case 'integerList':
             case 'immutableCharacterCells':
                 traits.cellTableWidth = -1; // unlimited
                 traits.cellTableHeight = -1; // unlimited
                 break;
-            return traits;
         }
+        return traits;
     }
 
     function doRenderIo(targetFormat, renderBuffer) {
