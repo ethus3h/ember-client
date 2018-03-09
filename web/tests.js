@@ -57,6 +57,17 @@ window.onload = function() {
         */
     }
 
+    printableDcToChar(dc, characterSet) {
+        switch (characterSet) {
+            case 'ASCII-safe-subset':
+                return String.fromCharCode(dc);
+                break;
+            default:
+                eiteError('Unimplemented character encoding: '+format);
+                break;
+        }
+    }
+
     function docParse(format, content) {
         switch (format) {
             case 'sems':
