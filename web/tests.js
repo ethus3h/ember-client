@@ -26,7 +26,7 @@ window.onload = function() {
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
-            return false; // TODO: Unimplemented
+            return true; // TODO: Unimplemented
         }
     }
 
@@ -160,7 +160,6 @@ window.onload = function() {
                                 this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
                         }
-                console.log(renderBuffer);
                         break;
                     default:
                         eiteError('Unimplemented document render target format: '+targetFormat);
