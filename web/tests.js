@@ -240,7 +240,7 @@ window.onload = function() {
                 console.log("Row errors:", results.errors);}
             },
             complete: function(results, file) {
-                console.log("Parsing complete:", results, file);
+                console.log("Parsing complete");
             },
             error: function(results, file) {
                 eiteWarn(file);
@@ -266,7 +266,6 @@ window.onload = function() {
     }
 
     function urlLoadForCallback(url, callback) {
-        console.log(callback);
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
