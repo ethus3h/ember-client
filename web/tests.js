@@ -303,10 +303,11 @@ window.onload = function() {
     function dcDataAppendLine(dataset, line) {
         dcData[dataset].push(line);
     }
-    function loadDataset('dcs', callback) {
+    function loadDataset(dataset, url, callback) {
         dcDataAppendDataset('dcs');
-        loadCsv('../data/DcData.csv', function(results,parser){dcDataAppendLine('dcs', results);}, function(){callback();}, function(){eiteError('Error reported while parsing '+dcs+'!')})
+        loadCsv(url, function(results,parser){dcDataAppendLine(dataset, results);}, function(){callback();}, function(){eiteError('Error reported while parsing '+dcs+'!')})
     }
+    loadDataset('dcs', '../data/DcData.csv');
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
