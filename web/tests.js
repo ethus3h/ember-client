@@ -146,9 +146,9 @@ window.onload = function() {
                                 line = line + 1;
                                 this.renderOutputBuf[line] = '';
                             }
-                            //if (isPrintable(this.renderInputBuf[i])) {
+                            if (isPrintable(this.renderInputBuf[i])) {
                                 this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
-                            //}
+                            }
                         }
                         break;
                     default:
