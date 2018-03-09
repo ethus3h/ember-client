@@ -142,7 +142,7 @@ window.onload = function() {
                                 line = 1;
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
-                                console.log(printableDcToChar);
+                                console.log(printableDcToChar === undefined);
                                 throw '';
                                 this.renderOutputBuf[line][i] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
