@@ -11,8 +11,8 @@ window.onload = function() {
         logger.scrollTop = logger.scrollHeight;
     };
     function eiteError(message) {
-        console.log('EITE reported error!: '+eiteError);
-        alert('EITE reported error!: '+eiteError);
+        console.log('EITE reported error!: '+message);
+        alert('EITE reported error!: '+message);
     }
 
     function getBestFormat() {
