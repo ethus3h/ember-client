@@ -274,7 +274,7 @@ window.onload = function() {
         };
         oReq.send(null);
     }
-    urlLoadForCallback('../data/DcList.csv', function(responseArrayBuffer) {
+    urlLoadForCallback('', function(responseArrayBuffer) {
         eiteWarn(responseArrayBuffer);
     });
 
