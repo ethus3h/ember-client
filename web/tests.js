@@ -323,9 +323,9 @@ window.onload = function() {
         'DcData',
         'mappings/from/ascii'
     ];
-    datasets
+    datasetsInitialCount = 0;
 
-    loadDataset('dcs', '../data/DcData.csv');
+    loadDataset(datasets[0], );
 
     runEiteTest('ept', 'idiomatic-hello-world-sems');
     docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
