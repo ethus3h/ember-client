@@ -247,7 +247,7 @@ window.onload = function() {
         })
     }
 
-    loadCsv('../data/DcList.csv');
+    //loadCsv('../data/DcList.csv');
     urlLoadForCallback('../data/DcList.csv', function(responseArrayBuffer) {
         throw '';
         eiteWarn(responseArrayBuffer);
