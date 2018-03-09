@@ -227,7 +227,7 @@ window.onload = function() {
         return traits;
     }
 
-    function loadCsv(url, callback) {
+    function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
         Papa.parse(url, {
             download: true,
             encoding: 'UTF-8',
@@ -235,15 +235,13 @@ window.onload = function() {
             delimiter: ',',
             quoteChar: '"',
             step: function(results, parser) {
-                //console.log("Row data:", results.data);
-                if (results.errors.length > 0 ){
-                console.log("Row errors:", results.errors);}
+                lineLoadedCallback(results, parser);
             },
             complete: function(results, file) {
-                console.log("Parsing complete");
+                documentLoadedCallback();
             },
             error: function(results, file) {
-                eiteError("Error while loading CSV "+normalizeMessage(file));
+                errorCallback(results);
             }
         })
     }
