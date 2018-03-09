@@ -19,7 +19,7 @@ window.onload = function() {
         return 'immutableCharacterCells';
     }
 
-    function getRenderTraits(targetFormat) {
+    function getEnvironmentRenderTraits(targetFormat) {
         var traits = {};
         switch (targetFormat) {
             case 'integerList':
@@ -136,9 +136,12 @@ window.onload = function() {
             doc.dcState = docParse(format, content);
             doc.renderInputBuf = null;
             doc.renderOutputBuf = null;
-            doc.render = function(targetFormat) {
+            doc.render = function(targetFormat, renderTraits) {
                 if ( targetFormat === undefined ) {
                     targetFormat = getBestFormat();
+                }
+                if ( renderTraits === undefined ) {
+                    renderTraits = getEnvironmentRenderTraits();
                 }
                 this.renderInputBuf = this.dcState; // copy Dcs for renderer call
                 // Build render output buffer for specified format
@@ -157,7 +160,7 @@ window.onload = function() {
                                 line = 1;
                             }
                             if (isPrintable(this.renderInputBuf[i])) {
-                                this.renderOutputBuf[line][i] = printableDcRender()
+                                this.renderOutputBuf[line][i] = printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
                             }
                         }
                         break;
