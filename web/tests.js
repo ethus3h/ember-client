@@ -1,6 +1,6 @@
-window.onload = function() {
+import 'papaparse.js';
 
-    import 'papaparse.js';
+window.onload = function() {
 
     // START PORTABLE CODE
 
