@@ -24,6 +24,7 @@ window.onload = function() {
     // Tools for Dc text
     {
         function dcIsNewline(dc) {
+            if(dcData.DcData[dc].data[0][3]) {}
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
