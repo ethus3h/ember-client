@@ -27,7 +27,7 @@ window.onload = function() {
             return parseInt(dc) + 1;
         }
         function dcGetField(dc, fieldNumber) {
-            return dcData.DcData[dcIdToIdx(dc)].data[0][fieldNumber];
+            return dcData["DcData"][dcIdToIdx(dc)].data[0][fieldNumber];
         }
         function dcGetName(dc) {
             return dcGetField(dc, 1);
