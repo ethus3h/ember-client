@@ -63,6 +63,7 @@ window.onload = function() {
             generalType=type[0];
             switch(type) {
                 case 'Zl':
+                case 'Zp':
                     return false;
                     break;
                 default:
@@ -71,7 +72,7 @@ window.onload = function() {
             switch(generalType) {
                 case '!':
                 case 'C':
-                    return true;
+                    return false;
                     break;
                 default:
                     break;
