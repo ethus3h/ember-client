@@ -62,21 +62,11 @@ window.onload = function() {
             type=dcGetType(dc);
             generalType=type[0];
             switch(type) {
-                case 'Zl':
-                    return false;
-                    break;
-                default:
-                    break;
-            }
-            switch(generalType) {
                 case '!':
                 case 'C':
                     return true;
-                    break;
-                default:
-                    break;
             }
-            return true; // TODO: Unimplemented
+            return false; // TODO: Unimplemented
         }
     }
 
