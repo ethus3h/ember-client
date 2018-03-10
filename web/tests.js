@@ -23,9 +23,11 @@ window.onload = function() {
 
     // Tools for Dc text
     {
+        function dcIdToIdx(dc) {
+            return parseInt(dc) + 1;
+        }
         function dcGetField(dc, fieldNumber) {
-            let index=parseInt(dc) + 1;
-            return dcData.DcData[index].data[0][fieldNumber];
+            return dcData.DcData[dcIdToIdx(dc)].data[0][fieldNumber];
         }
         function dcGetName(dc) {
             return dcGetField(dc, 1);
@@ -125,7 +127,7 @@ window.onload = function() {
             case 'ASCII-safe-subset':
             case 'UTF-8':
                 console.log(dcData);
-                return dcData.DcData[index].data[0][fieldNumber]; // TODO: Unimplemented
+                return dcData["mappings/to/unicode"][index].data[0][fieldNumber]; // TODO: Unimplemented
                 break;
             default:
                 eiteError('Unimplemented character encoding: '+characterEncoding);
