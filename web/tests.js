@@ -34,7 +34,7 @@ window.onload = function() {
             // start at 1 to skip header row
             for(let index = 1; index < length; index++)
                 if(dcData[dataset][index].data[0][filterField] === filterValue) {
-                    return dcData[dataset][index].data[0][filterField];
+                    return dcData[dataset][index].data[0][desiredField];
                 }
             }
         }
