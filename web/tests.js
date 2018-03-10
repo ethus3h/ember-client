@@ -127,7 +127,7 @@ window.onload = function() {
             case 'ASCII-safe-subset':
             case 'UTF-8':
                 console.log(dcData);
-                return dcData["mappings/to/unicode"][dcIdToIdx(dc)].data[0][1]; // TODO: Unimplemented
+                return dcData["mappings/from/unicode"][dcIdToIdx(dc)].data[0][1]; // TODO: Unimplemented
                 break;
             default:
                 eiteError('Unimplemented character encoding: '+characterEncoding);
