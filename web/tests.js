@@ -313,14 +313,14 @@ window.onload = function() {
                     dcDataAppendLine(dataset, results);
                 },
                 function(){
-                    callback();
+                    datasets.shift();
+                    loadDatasets(callback);
                 },
                 function(){
                     eiteError('Error reported while parsing '+dataset+'!')
                 }
             );
-            datasets.shift();
-            loadDatasets(callback);
+            
         }
         else {
             callback();
