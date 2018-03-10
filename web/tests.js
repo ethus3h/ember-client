@@ -304,23 +304,27 @@ window.onload = function() {
         dcData[dataset].push(line);
     }
     function loadDatasets(callback) {
-        if(datasets.length > 0) {
-            loadDataset(datasets[0], )
+        if (datasets.length > 0) {
+            let dataset = datasets[0];
+            dcDataAppendDataset(dataset);
+            loadCsv(
+                '../data/'+dataset+'.csv',
+                function(results,parser){
+                    dcDataAppendLine(dataset, results);
+                },
+                function(){
+                    callback();
+                },
+                function(){
+                    eiteError('Error reported while parsing '+dataset+'!')
+                }
+            );
+            datasets.shift();
+            loadDatasets(callback);
         }
-
-        dcDataAppendDataset(dataset);
-        loadCsv(
-            '../data/'+dataset+'.csv',
-            function(results,parser){
-                dcDataAppendLine(dataset, results);
-            },
-            function(){
-                callback();
-            },
-            function(){
-                eiteError('Error reported while parsing '+dataset+'!')
-            }
-        );
+        else {
+            callback();
+        }
     }
 
     datasets=[
