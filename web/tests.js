@@ -23,8 +23,35 @@ window.onload = function() {
 
     // Tools for Dc text
     {
+        function dcGetField(dc, fieldNumber) {
+            return dcData.DcData[dc+1].data[0][fieldNumber];
+        }
+        function dcGetName(dc) {
+            return dcGetField(dc, 1);
+        }
+        function dcGetCombiningClass(dc) {
+            return dcGetField(dc, 2);
+        }
+        function dcGetBidiClass(dc) {
+            return dcGetField(dc, 3);
+        }
+        function dcGetCasing(dc) {
+            return dcGetField(dc, 4);
+        }
+        function dcGetType(dc) {
+            return dcGetField(dc, 5);
+        }
+        function dcGetScript(dc) {
+            return dcGetField(dc, 6);
+        }
+        function dcGetComplexTraits(dc) {
+            return dcGetField(dc, 7);
+        }
+        function dcGetDescription(dc) {
+            return dcGetField(dc, 8);
+        }
         function dcIsNewline(dc) {
-            if(dcData.DcData[dc].data[0][3]) {}
+            if() {}
             return false; // TODO: Unimplemented
         }
         function dcIsPrintable(dc) {
