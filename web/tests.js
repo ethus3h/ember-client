@@ -24,9 +24,7 @@ window.onload = function() {
     // Tools for Dc text
     {
         function dcGetField(dc, fieldNumber) {
-            console.log(dcData.DcData);
-            let index=dc + 1;
-            console.log(index);
+            let index=parseInt(dc) + 1;
             return dcData.DcData[index].data[0][fieldNumber];
         }
         function dcGetName(dc) {
