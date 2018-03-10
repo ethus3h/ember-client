@@ -25,7 +25,8 @@ window.onload = function() {
     {
         function dcGetField(dc, fieldNumber) {
             console.log(dcData.DcData);
-            return dcData.DcData[dc+1].data[0][fieldNumber];
+            let index=dc + 1;
+            return dcData.DcData[index].data[0][fieldNumber];
         }
         function dcGetName(dc) {
             return dcGetField(dc, 1);
