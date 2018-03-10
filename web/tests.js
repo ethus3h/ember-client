@@ -26,6 +26,9 @@ window.onload = function() {
         function dcIdToIdx(dc) {
             return parseInt(dc) + 1;
         }
+        function dcDataLookupById(dataset, dc, fieldNumber) {
+            return dcData[""]
+        }
         function dcGetField(dc, fieldNumber) {
             return dcData["DcData"][dcIdToIdx(dc)].data[0][fieldNumber];
         }
