@@ -27,10 +27,13 @@ window.onload = function() {
             return parseInt(dc) + 1;
         }
         function dcDataLookupById(dataset, dc, fieldNumber) {
-            return dcData[""]
+            return dcData[dataset][dcIdToIdx(dc)].data[0][fieldNumber];
+        }
+        function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
+            
         }
         function dcGetField(dc, fieldNumber) {
-            return dcData["DcData"][dcIdToIdx(dc)].data[0][fieldNumber];
+            return dcDataLookupById("DcData", dc, fieldNumber);
         }
         function dcGetName(dc) {
             return dcGetField(dc, 1);
