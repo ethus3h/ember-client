@@ -30,8 +30,12 @@ window.onload = function() {
             return dcData[dataset][dcIdToIdx(dc)].data[0][fieldNumber];
         }
         function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
-            for(let index = 0; index < dcData[dataset].length; index++)
-                if()
+            let length = dcData[dataset].length;
+            // start at 1 to skip header row
+            for(let index = 1; index < length; index++)
+                if(dcData[dataset][index].data[0][filterField] === filterValue) {
+                    return dcData[dataset][index].data[0][filterField];
+                }
             }
         }
         function dcGetField(dc, fieldNumber) {
