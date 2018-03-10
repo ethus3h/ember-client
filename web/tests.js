@@ -30,7 +30,9 @@ window.onload = function() {
             return dcData[dataset][dcIdToIdx(dc)].data[0][fieldNumber];
         }
         function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
-            
+            dcData[dataset].forEach(function(row) {
+                if()
+            })
         }
         function dcGetField(dc, fieldNumber) {
             return dcDataLookupById("DcData", dc, fieldNumber);
