@@ -320,7 +320,6 @@ window.onload = function() {
                     eiteError('Error reported while parsing '+dataset+'!')
                 }
             );
-            
         }
         else {
             callback();
