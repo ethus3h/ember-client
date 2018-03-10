@@ -403,3 +403,4 @@ window.onload = function() {
         docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
     });
 };
+// IT WORKS! \o/
