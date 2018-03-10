@@ -51,8 +51,10 @@ window.onload = function() {
             return dcGetField(dc, 8);
         }
         function dcIsNewline(dc) {
-            if() {}
-            return false; // TODO: Unimplemented
+            if(dcGetCombiningClass(dc) === 'B') {
+                return true;
+            }
+            return false;
         }
         function dcIsPrintable(dc) {
             return true; // TODO: Unimplemented
