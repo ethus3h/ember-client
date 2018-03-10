@@ -32,7 +32,7 @@ window.onload = function() {
         function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
             let length = dcData[dataset].length;
             // start at 1 to skip header row
-            for(let index = 1; index < length; index++)
+            for(let index = 1; index < length; index++) {
                 if(dcData[dataset][index].data[0][filterField] === filterValue) {
                     return dcData[dataset][index].data[0][desiredField];
                 }
