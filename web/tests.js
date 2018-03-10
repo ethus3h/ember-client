@@ -124,8 +124,7 @@ window.onload = function() {
         switch (characterEncoding) {
             case 'ASCII-safe-subset':
             case 'UTF-8':
-                
-                return String.fromCharCode(dc); // TODO: Unimplemented
+                return dcData.'mappings/from/unicode'[index].data[0][fieldNumber]; // TODO: Unimplemented
                 break;
             default:
                 eiteError('Unimplemented character encoding: '+characterEncoding);
