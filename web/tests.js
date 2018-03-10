@@ -50,12 +50,14 @@ window.onload = function() {
         function dcGetDescription(dc) {
             return dcGetField(dc, 8);
         }
+
         function dcIsNewline(dc) {
-            if(dcGetCombiningClass(dc) === 'B') {
+            if(dcGetBidiClass(dc) === 'B') {
                 return true;
             }
             return false;
         }
+
         function dcIsPrintable(dc) {
             return true; // TODO: Unimplemented
         }
