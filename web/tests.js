@@ -380,6 +380,8 @@ window.onload = function() {
     datasets=[
         'DcData',
         'mappings/from/ascii'
+        'mappings/from/unicode'
+        'mappings/to/html'
     ];
 
     loadDatasets(function() {
