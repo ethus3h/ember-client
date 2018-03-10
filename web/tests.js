@@ -77,7 +77,7 @@ window.onload = function() {
                 default:
                     break;
             }
-            return true; // TODO: Unimplemented
+            return true;
         }
     }
 
