@@ -124,7 +124,7 @@ window.onload = function() {
         switch (characterEncoding) {
             case 'ASCII-safe-subset':
             case 'UTF-8':
-            console.log(dcData);
+                console.log(dcData);
                 return dcData.DcData[index].data[0][fieldNumber]; // TODO: Unimplemented
                 break;
             default:
@@ -379,8 +379,8 @@ window.onload = function() {
 
     datasets=[
         'DcData',
-        'mappings/from/ascii'
-        'mappings/from/unicode'
+        'mappings/from/ascii',
+        'mappings/from/unicode',
         'mappings/to/html'
     ];
 
