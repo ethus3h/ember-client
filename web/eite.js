@@ -1,6 +1,7 @@
 // This file contains portable code for all JavaScript implementations of EITE.
 // It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
-// To serve these two goals, it should avoid: 
+// To serve these two goals, it should not use I/O, objects, first-class functions, or JavaScript-specific libraries.
+// Things that depend on 
 // dcData object must be available before calling these functions.
 
 function normalizeMessage(message) {
