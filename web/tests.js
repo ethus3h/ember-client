@@ -4,6 +4,4 @@ window.onload = function() {
         runEiteTest('ept', 'idiomatic-hello-world-sems');
         docFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { doc.run(); } );
     });
-
 };
-// IT WORKS! \o/
