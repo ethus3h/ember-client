@@ -1,4 +1,4 @@
-// Implementation-specific overrides of routines available portably
+// Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
 function eiteError(message) {
@@ -13,7 +13,7 @@ function eiteWarn(message) {
     alert('EITE reported warning: '+normalizeMessage(message));
 }
 
-// Fully implementation-specific code
+// Fully platform-specific code
 
 function eiteImplLog(message) {
     // This function implements logging (which may differ between platforms).
