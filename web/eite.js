@@ -5,13 +5,6 @@
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
 
-function normalizeMessage(message) {
-    if (typeof message == 'object') {
-        return (JSON && JSON.stringify ? JSON.stringify(message) : message);
-    } else {
-        return message;
-    }
-}
 function eiteLog(message) {
     eiteImplLog(message);
 }
