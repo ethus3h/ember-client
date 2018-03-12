@@ -1,7 +1,7 @@
 // This file contains portable code for all JavaScript implementations of EITE.
 // It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
 // To serve these two goals, it should not use I/O, objects, first-class functions, or JavaScript-specific libraries.
-// Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or later, other eite-*.js files).
+// Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or eite-nonportable.js for JavaScript-specific code.
 // dcData object must be available before calling these functions.
 
 function normalizeMessage(message) {
