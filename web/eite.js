@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 // This file contains portable code for all JavaScript implementations of EITE.
 // This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
 // It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
@@ -234,3 +235,4 @@ function createDocObj(format, content) {
         };
     return doc;
 }
+// @license-end
