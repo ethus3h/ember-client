@@ -98,7 +98,7 @@ function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-function dcarrDocFromUrl(strFormat, strUrl, callback) {
+function operateOnDocFromUrl(strFormat, strUrl, callback) {
     urlLoadForCallback(strUrl, function(arrbufContent) { callback(dcarrParseDocument(strFormat, arrbufContent)); })
 }
 
