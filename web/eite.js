@@ -7,14 +7,14 @@
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
 
-function eiteLog(message) {
-    eiteImplLog(message);
+function voidEiteLog(strMessage) {
+    implEiteLog(message);
 }
 function eiteWarn(message) {
-    eiteLog('EITE reported warning: '+normalizeMessage(message));
+    voidEiteLog('EITE reported warning: '+normalizeMessage(message));
 }
 function eiteError(message) {
-    eiteLog('EITE reported error!: '+normalizeMessage(message));
+    voidEiteLog('EITE reported error!: '+normalizeMessage(message));
     throw 'EITE reported error!: '+normalizeMessage(message);
 }
 
@@ -187,7 +187,7 @@ function parseSems(arrayBuffer) {
     return dcSeq;
 }
 
-function renderDocument(content, targetFormat, renderTraits) {
+function dcarrConvertDocument(content, targetFormat, renderTraits) {
     output=[]
     // Build render output buffer for specified format
     switch (targetFormat) {
@@ -218,6 +218,6 @@ function renderDocument(content, targetFormat, renderTraits) {
 
 function runDocument(dcarrContent) {
     strTargetFormat = getEnvironmentBestFormat();
-    doRenderIo(renderDocument(dcarrContent, strTargetFormat, getEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
+    doRenderIo(dcarrConvertDocument(dcarrContent, strTargetFormat, getEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
 // @license-end

@@ -7,19 +7,19 @@
 // Override error reporting method to show alert
 function eiteError(message) {
     console.trace();
-    eiteLog('EITE reported error!: '+normalizeMessage(message));
+    voidEiteLog('EITE reported error!: '+normalizeMessage(message));
     alert('EITE reported error!: '+normalizeMessage(message));
     throw 'EITE reported error!: '+normalizeMessage(message);
 }
 function eiteWarn(message) {
     console.trace();
-    eiteLog('EITE reported warning: '+normalizeMessage(message));
+    voidEiteLog('EITE reported warning: '+normalizeMessage(message));
     alert('EITE reported warning: '+normalizeMessage(message));
 }
 
 // Fully platform-specific code
 
-function eiteImplLog(message) {
+function implEiteLog(message) {
     // This function implements logging (which may differ between platforms).
     console.log(normalizeMessage(message));
 };
