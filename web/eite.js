@@ -188,12 +188,6 @@ function parseSems(arrayBuffer) {
 }
 
 function renderDocument(content, targetFormat, renderTraits) {
-    if ( targetFormat === undefined ) {
-        targetFormat = getEnvironmentBestFormat();
-    }
-    if ( renderTraits === undefined ) {
-        renderTraits = getEnvironmentRenderTraits(targetFormat);
-    }
     output=[]
     // Build render output buffer for specified format
     switch (targetFormat) {
@@ -227,9 +221,16 @@ function createDocObj(format, content) {
     var doc = {};
         doc.dcState = docParse(format, content);
         doc.render = function(targetFormat, renderTraits) {
+    if ( targetFormat === undefined ) {
+        targetFormat = getEnvironmentBestFormat();
+    }
+    if ( renderTraits === undefined ) {
+        renderTraits = getEnvironmentRenderTraits(targetFormat);
+    }
             doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
         };
         doc.run = function (targetFormat) {
+            console.log(targetFormat);
             this.render(targetFormat);
         };
     return doc;
