@@ -219,8 +219,7 @@ function renderDocument(content, targetFormat, renderTraits) {
             eiteError('Unimplemented document render target format: '+targetFormat);
             break;
     }
-    // Do I/O as needed for the rendering
-    doRenderIo(targetFormat, this.renderOutputBuf);
+    return output;
 }
 
 function createDocObj(format, content) {
