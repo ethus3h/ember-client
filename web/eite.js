@@ -29,49 +29,49 @@ function eiteError(strMessage) {
     function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
         let length = dcData[dataset].length;
         // start at 1 to skip header row
-        for(let index = 1; index < length; index++) {
+        for (let index = 1; index < length; index++) {
             if(dcData[dataset][index].data[0][filterField] === filterValue) {
                 return dcData[dataset][index].data[0][desiredField];
             }
         }
     }
-    function dcGetField(dc, intFieldNumber) {
+    function strDcGetField(dc, intFieldNumber) {
         return strDcDataLookupById("DcData", dc, intFieldNumber);
     }
-    function dcGetName(dc) {
-        return dcGetField(dc, 1);
+    function strDcGetName(dc) {
+        return strDcGetField(dc, 1);
     }
-    function dcGetCombiningClass(dc) {
-        return dcGetField(dc, 2);
+    function strDcGetCombiningClass(dc) {
+        return strDcGetField(dc, 2);
     }
-    function dcGetBidiClass(dc) {
-        return dcGetField(dc, 3);
+    function strDcGetBidiClass(dc) {
+        return strDcGetField(dc, 3);
     }
-    function dcGetCasing(dc) {
-        return dcGetField(dc, 4);
+    function strDcGetCasing(dc) {
+        return strDcGetField(dc, 4);
     }
-    function dcGetType(dc) {
-        return dcGetField(dc, 5);
+    function strDcGetType(dc) {
+        return strDcGetField(dc, 5);
     }
-    function dcGetScript(dc) {
-        return dcGetField(dc, 6);
+    function strDcGetScript(dc) {
+        return strDcGetField(dc, 6);
     }
-    function dcGetComplexTraits(dc) {
-        return dcGetField(dc, 7);
+    function strDcGetComplexTraits(dc) {
+        return strDcGetField(dc, 7);
     }
-    function dcGetDescription(dc) {
-        return dcGetField(dc, 8);
+    function strDcGetDescription(dc) {
+        return strDcGetField(dc, 8);
     }
 
-    function dcIsNewline(dc) {
-        if(dcGetBidiClass(dc) === 'B') {
+    function boolDcIsNewline(dc) {
+        if(strDcGetBidiClass(dc) === 'B') {
             return true;
         }
         return false;
     }
 
-    function dcIsPrintable(dc) {
-        type=dcGetType(dc);
+    function boolDcIsPrintable(dc) {
+        type=strDcGetType(dc);
         generalType=type[0];
         switch(type) {
             case 'Zl':
@@ -96,19 +96,19 @@ function eiteError(strMessage) {
 // Tools for ASCII text
 {
     // Checks whether n is within the range a and b, including endpoints
-    function isBetween(n, a, b) {
+    function boolIsBetween(n, a, b) {
         return (n - a) * (n - b) <= 0;
     }
-    function isDigit(n) {
-        return isBetween(n, 48, 57);
+    function boolIsDigit(n) {
+        return boolIsBetween(n, 48, 57);
     }
-    function isPrintable(n) {
-        return isBetween(n, 32, 126);
+    function boolIsPrintable(n) {
+        return boolIsBetween(n, 32, 126);
     }
-    function isSpace(n) {
+    function boolIsSpace(n) {
         return n == 32;
     }
-    function isNewline(n) {
+    function boolIsNewline(n) {
         return (n == 10) || (n == 13);
     }
     /*
@@ -165,10 +165,10 @@ function parseSems(arrayBuffer) {
             // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
             switch (parserState) {
                 case 'dc':
-                    if (isDigit(byteArray[i])) {
+                    if (boolIsDigit(byteArray[i])) {
                         currentDc = currentDc + String.fromCharCode(byteArray[i]);
                     }
-                    if (isSpace(byteArray[i])) {
+                    if (boolIsSpace(byteArray[i])) {
                         dcSeq.push(currentDc);
                         currentDc = '';
                     }
@@ -177,7 +177,7 @@ function parseSems(arrayBuffer) {
                     }
                     break;
                 case 'comment':
-                    if (isNewline(byteArray[i])) {
+                    if (boolIsNewline(byteArray[i])) {
                         parserState = 'dc';
                     }
                     break;
@@ -200,11 +200,11 @@ function dcarrConvertDocument(content, targetFormat, renderTraits) {
             let line=0;
             output[0] = '';
             for (var i = 0; i < content.length; i++) {
-                if (dcIsNewline(content[i])) {
+                if (boolDcIsNewline(content[i])) {
                     line = line + 1;
                     output[line] = '';
                 }
-                if (dcIsPrintable(content[i])) {
+                if (boolDcIsPrintable(content[i])) {
                     output[line] = output[line] + printableDcToChar(content[i], renderTraits.characterEncoding);
                 }
             }
