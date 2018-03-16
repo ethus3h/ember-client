@@ -3,7 +3,7 @@ window.onload = function() {
     loadDatasets(function() {
         // This is where the actual commands to run (entry points) should go
         runEiteTest('ept', 'idiomatic-hello-world-sems');
-        runDocFromUrl('sems', 'idiomatic-hello-world.sems', function (doc) { runDocument(doc); } );
+        runDocFromUrl('sems', 'idiomatic-hello-world.sems', function (format, doc) { runDocument(doc); } );
     });
 };
 // @license-end

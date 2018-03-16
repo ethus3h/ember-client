@@ -99,7 +99,7 @@ function urlLoadForCallback(url, callback) {
 }
 
 function docFromUrl(format, url, callback) {
-    urlLoadForCallback(url, function(responseArrayBuffer) { callback(createDocObj(format, responseArrayBuffer)); })
+    urlLoadForCallback(url, function(responseArrayBuffer) { callback(parseDocument(format, responseArrayBuffer)); })
 }
 
 function runEiteTest(format, name) {

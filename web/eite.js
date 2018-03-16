@@ -143,7 +143,7 @@ function printableDcToChar(dc, characterEncoding) {
     }
 }
 
-function docParse(format, content) {
+function parseDocument(format, content) {
     switch (format) {
         case 'sems':
             return parseSems(content);
@@ -216,10 +216,14 @@ function renderDocument(content, targetFormat, renderTraits) {
     return output;
 }
 
+function runDocument(format, content) {
+    
+}
+
 function createDocObj(format, content) {
-    // content is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in docParse).
+    // content is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in parseDocument).
     var doc = {};
-        doc.dcState = docParse(format, content);
+        doc.dcState = parseDocument(format, content);
         doc.render = function(targetFormat, renderTraits) {
             doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
         };
