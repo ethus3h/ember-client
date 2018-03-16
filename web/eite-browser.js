@@ -98,8 +98,8 @@ function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-function docFromUrl(strFormat, strUrl, callback) {
-    urlLoadForCallback(strUrl, function(arrbufContent) { callback(parseDocument(strFormat, arrbufContent)); })
+function dcarrDocFromUrl(strFormat, strUrl, callback) {
+    urlLoadForCallback(strUrl, function(arrbufContent) { callback(dcarrParseDocument(strFormat, arrbufContent)); })
 }
 
 function runEiteTest(format, name) {
