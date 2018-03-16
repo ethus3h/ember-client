@@ -5,23 +5,23 @@
 // Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
-function eiteError(message) {
+function voidEiteError(strMessage) {
     console.trace();
-    voidEiteLog('EITE reported error!: '+normalizeMessage(message));
-    alert('EITE reported error!: '+normalizeMessage(message));
-    throw 'EITE reported error!: '+normalizeMessage(message);
+    voidEiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
+    alert('EITE reported error!: '+implNormalizeMessage(strMessage));
+    throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
 }
-function eiteWarn(message) {
+function voidEiteWarn(strMessage) {
     console.trace();
-    voidEiteLog('EITE reported warning: '+normalizeMessage(message));
-    alert('EITE reported warning: '+normalizeMessage(message));
+    voidEiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
+    alert('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
 
 // Fully platform-specific code
 
-function implEiteLog(message) {
+function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
-    console.log(normalizeMessage(message));
+    console.log(implNormalizeMessage(strMessage));
 };
 
 function getEnvironmentBestFormat() {
@@ -78,7 +78,7 @@ function doRenderIo(renderBuffer, targetFormat) {
         case 'immutableCharacterCells':
             let immutableCharCellOutput = document.getElementById('log');
             for (var i = 0; i < renderBuffer.length; i++) {
-                immutableCharCellOutput.innerHTML += normalizeMessage(renderBuffer[i]) + '<br />';
+                immutableCharCellOutput.innerHTML += implNormalizeMessage(renderBuffer[i]) + '<br />';
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;

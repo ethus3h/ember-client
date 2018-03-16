@@ -8,14 +8,14 @@
 // dcData object must be available before calling these functions.
 
 function voidEiteLog(strMessage) {
-    implEiteLog(message);
+    implEiteLog(strMessage);
 }
-function eiteWarn(message) {
-    voidEiteLog('EITE reported warning: '+normalizeMessage(message));
+function voidEiteWarn(strMessage) {
+    voidEiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
-function eiteError(message) {
-    voidEiteLog('EITE reported error!: '+normalizeMessage(message));
-    throw 'EITE reported error!: '+normalizeMessage(message);
+function eiteError(strMessage) {
+    voidEiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
+    throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
 }
 
 // Tools for Dc text
