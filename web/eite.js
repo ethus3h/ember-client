@@ -188,7 +188,42 @@ function parseSems(arrayBuffer) {
 }
 
 function renderDocument(content, targetFormat, renderTraits) {
-    
+    if ( targetFormat === undefined ) {
+        targetFormat = getEnvironmentBestFormat();
+    }
+    if ( renderTraits === undefined ) {
+        renderTraits = getEnvironmentRenderTraits(targetFormat);
+    }
+    this.renderInputBuf = this.dcState; // copy Dcs for renderer call
+    // Build render output buffer for specified format
+    switch (targetFormat) {
+        case 'integerList':
+            this.renderOutputBuf = [];
+            for (var i = 0; i < this.renderInputBuf.length; i++) {
+                this.renderOutputBuf[i] = this.renderInputBuf[i];
+            }
+            break;
+        case 'immutableCharacterCells':
+            this.renderOutputBuf = [];
+            let line=0;
+            this.renderOutputBuf[0] = '';
+            for (var i = 0; i < this.renderInputBuf.length; i++) {
+                if (dcIsNewline(this.renderInputBuf[i])) {
+                    line = line + 1;
+                    this.renderOutputBuf[line] = '';
+                }
+                if (dcIsPrintable(this.renderInputBuf[i])) {
+                    this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
+                }
+            }
+            break;
+        default:
+            eiteError('Unimplemented document render target format: '+targetFormat);
+            break;
+    }
+    // Do I/O as needed for the rendering
+    doRenderIo(targetFormat, this.renderOutputBuf);
+
 }
 
 function createDocObj(format, content) {
@@ -198,41 +233,6 @@ function createDocObj(format, content) {
         doc.renderInputBuf = null;
         doc.renderOutputBuf = null;
         doc.render = function(targetFormat, renderTraits) {
-            if ( targetFormat === undefined ) {
-                targetFormat = getEnvironmentBestFormat();
-            }
-            if ( renderTraits === undefined ) {
-                renderTraits = getEnvironmentRenderTraits(targetFormat);
-            }
-            this.renderInputBuf = this.dcState; // copy Dcs for renderer call
-            // Build render output buffer for specified format
-            switch (targetFormat) {
-                case 'integerList':
-                    this.renderOutputBuf = [];
-                    for (var i = 0; i < this.renderInputBuf.length; i++) {
-                        this.renderOutputBuf[i] = this.renderInputBuf[i];
-                    }
-                    break;
-                case 'immutableCharacterCells':
-                    this.renderOutputBuf = [];
-                    let line=0;
-                    this.renderOutputBuf[0] = '';
-                    for (var i = 0; i < this.renderInputBuf.length; i++) {
-                        if (dcIsNewline(this.renderInputBuf[i])) {
-                            line = line + 1;
-                            this.renderOutputBuf[line] = '';
-                        }
-                        if (dcIsPrintable(this.renderInputBuf[i])) {
-                            this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
-                        }
-                    }
-                    break;
-                default:
-                    eiteError('Unimplemented document render target format: '+targetFormat);
-                    break;
-            }
-            // Do I/O as needed for the rendering
-            doRenderIo(targetFormat, this.renderOutputBuf);
         };
         doc.run = function (targetFormat) {
             this.render(targetFormat);
