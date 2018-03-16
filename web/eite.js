@@ -156,35 +156,35 @@ function dcarrParseDocument(format, content) {
 
 function dcarrParseSems(arrbufContent) {
     // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
-    var dcSeq = [];
-    var parserState = 'dc';
-    var currentDc = '';
+    var dcarrParseResults = [];
+    var strParserState = 'dc';
+    var strCurrentDc = '';
     if (arrbufContent) {
-        var byteArray = new Uint8Array(arrayBuffer);
-        for (var i = 0; i < byteArray.byteLength; i++) {
+        var bytearrayContent = new Uint8Array(arrbufContent);
+        for (var i = 0; i < bytearrayContent.byteLength; i++) {
             // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
-            switch (parserState) {
+            switch (strParserState) {
                 case 'dc':
-                    if (boolIsDigit(byteArray[i])) {
-                        currentDc = currentDc + String.fromCharCode(byteArray[i]);
+                    if (boolIsDigit(bytearrayContent[i])) {
+                        strCurrentDc = strCurrentDc + String.fromCharCode(byteArray[i]);
                     }
-                    if (boolIsSpace(byteArray[i])) {
-                        dcSeq.push(currentDc);
-                        currentDc = '';
+                    if (boolIsSpace(bytearrayContent[i])) {
+                        dcarrParseResults.push(strCurrentDc);
+                        strCurrentDc = '';
                     }
-                    if (byteArray[i] == 35) { // pound sign: start comment
-                        parserState = 'comment';
+                    if (bytearrayContent[i] == 35) { // pound sign: start comment
+                        strParserState = 'comment';
                     }
                     break;
                 case 'comment':
-                    if (boolIsNewline(byteArray[i])) {
-                        parserState = 'dc';
+                    if (boolIsNewline(bytearrayContent[i])) {
+                        strParserState = 'dc';
                     }
                     break;
             }
         }
     }
-    return dcSeq;
+    return dcarrParseResults;
 }
 
 function dcarrConvertDocument(content, targetFormat, renderTraits) {
