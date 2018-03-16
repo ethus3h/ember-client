@@ -225,12 +225,12 @@ function createDocObj(format, content) {
         };
         doc.run = function () {
     if ( targetFormat === undefined ) {
-        targetFormat = getEnvironmentBestFormat();
     }
     if ( renderTraits === undefined ) {
-        renderTraits = getEnvironmentRenderTraits(targetFormat);
+        renderTraits = ;
     }
-            doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
+            targetFormat = getEnvironmentBestFormat();
+            doRenderIo(renderDocument(this.dcState, targetFormat, getEnvironmentRenderTraits(targetFormat)), targetFormat);
         };
     return doc;
 }
