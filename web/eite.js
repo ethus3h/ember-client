@@ -216,10 +216,9 @@ function renderDocument(content, targetFormat, renderTraits) {
     return output;
 }
 
-function runDocument(content) {
-                targetFormat = getEnvironmentBestFormat();
-                doRenderIo(renderDocument(this.dcState, targetFormat, getEnvironmentRenderTraits(targetFormat)), targetFormat);
-
+function runDocument(dcarrContent) {
+    strTargetFormat = getEnvironmentBestFormat();
+    doRenderIo(renderDocument(dcarrContent, strTargetFormat, getEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
 
 function createDocObj(format, content) {
