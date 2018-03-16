@@ -194,13 +194,12 @@ function renderDocument(content, targetFormat, renderTraits) {
     if ( renderTraits === undefined ) {
         renderTraits = getEnvironmentRenderTraits(targetFormat);
     }
-    this.renderInputBuf = this.dcState; // copy Dcs for renderer call
     // Build render output buffer for specified format
     switch (targetFormat) {
         case 'integerList':
-            this.renderOutputBuf = [];
-            for (var i = 0; i < this.renderInputBuf.length; i++) {
-                this.renderOutputBuf[i] = this.renderInputBuf[i];
+            renderOutputBuf = [];
+            for (var i = 0; i < content.length; i++) {
+                renderOutputBuf[i] = content[i];
             }
             break;
         case 'immutableCharacterCells':
@@ -232,7 +231,7 @@ function createDocObj(format, content) {
         doc.renderInputBuf = null;
         doc.renderOutputBuf = null;
         doc.render = function(targetFormat, renderTraits) {
-            renderDocument(this.renderInputBuf, targetFormat, renderTraits);
+            renderDocument(this.dcState, targetFormat, renderTraits);
         };
         doc.run = function (targetFormat) {
             this.render(targetFormat);
