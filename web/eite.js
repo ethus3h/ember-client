@@ -6,11 +6,13 @@
 // Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or eite-nonportable.js for JavaScript-specific code.
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
+// TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 function eiteLog(strMessage) {
     implEiteLog(strMessage);
 }
 function eiteWarn(strMessage) {
+    // TODO: implNormalizeMessage isn't relevant if callers of the logging functions obey the string constraint on the parameter.
     eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
 function eiteError(strMessage) {
