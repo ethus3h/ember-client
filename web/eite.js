@@ -223,7 +223,6 @@ function renderDocument(content, targetFormat, renderTraits) {
     }
     // Do I/O as needed for the rendering
     doRenderIo(targetFormat, this.renderOutputBuf);
-
 }
 
 function createDocObj(format, content) {
@@ -233,6 +232,7 @@ function createDocObj(format, content) {
         doc.renderInputBuf = null;
         doc.renderOutputBuf = null;
         doc.render = function(targetFormat, renderTraits) {
+            renderDocument(this.renderInputBuf, targetFormat, renderTraits);
         };
         doc.run = function (targetFormat) {
             this.render(targetFormat);
