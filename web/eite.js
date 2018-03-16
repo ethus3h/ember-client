@@ -187,6 +187,10 @@ function parseSems(arrayBuffer) {
     return dcSeq;
 }
 
+function renderDocument(content) {
+    
+}
+
 function createDocObj(format, content) {
     // content is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in docParse).
     var doc = {};
