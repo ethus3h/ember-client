@@ -187,37 +187,37 @@ function dcarrParseSems(arrbufContent) {
     return dcarrParseResults;
 }
 
-function dcarrConvertDocument(content, targetFormat, renderTraits) {
-    output=[]
+function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
+    dcarrOutput=[]
     // Build render output buffer for specified format
-    switch (targetFormat) {
+    switch (strTargetFormat) {
         case 'integerList':
-            for (var i = 0; i < content.length; i++) {
-                output[i] = content[i];
+            for (var intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+                dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
             break;
         case 'immutableCharacterCells':
-            let line=0;
-            output[0] = '';
-            for (var i = 0; i < content.length; i++) {
-                if (boolDcIsNewline(content[i])) {
-                    line = line + 1;
-                    output[line] = '';
+            let intLine=0;
+            dcarrOutput[0] = '';
+            for (var intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+                if (boolDcIsNewline(dcarrInput[intInputIndex])) {
+                    intLine = intLine + 1;
+                    dcarrOutput[intLine] = '';
                 }
-                if (boolDcIsPrintable(content[i])) {
-                    output[line] = output[line] + strPrintableDcToChar(content[i], renderTraits.characterEncoding);
+                if (boolDcIsPrintable(dcarrInput[intInputIndex])) {
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
                 }
             }
             break;
         default:
-            eiteError('Unimplemented document render target format: '+targetFormat);
+            eiteError('Unimplemented document render target format: '+strTargetFormat);
             break;
     }
-    return output;
+    return dcarrOutput;
 }
 
 function runDocument(dcarrContent) {
-    strTargetFormat = getEnvironmentBestFormat();
-    doRenderIo(dcarrConvertDocument(dcarrContent, strTargetFormat, getEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
+    strTargetFormat = implGetEnvironmentBestFormat();
+    implDoRenderIo(dcarrConvertDocument(dcarrContent, strTargetFormat, implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
 // @license-end

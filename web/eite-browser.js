@@ -24,13 +24,13 @@ function implEiteLog(strMessage) {
     console.log(implNormalizeMessage(strMessage));
 };
 
-function getEnvironmentBestFormat() {
+function implGetEnvironmentBestFormat() {
     return 'immutableCharacterCells';
 }
 
-function getEnvironmentRenderTraits(targetFormat) {
+function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
-        eiteError('getEnvironmentRenderTraits was called without any targetFormat!');
+        eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
     }
     var traits = {};
     switch (targetFormat) {
