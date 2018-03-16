@@ -93,7 +93,7 @@ function urlLoadForCallback(url, callback) {
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
     oReq.onload = function(oEvent) {
-        callback(oReq.response); // Note: not oReq.responseText
+        callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
     };
     oReq.send(null);
 }
