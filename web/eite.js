@@ -143,10 +143,10 @@ function strPrintableDcToChar(dc, strCharacterEncoding) {
     }
 }
 
-function dcarrParseDocument(strFormat, arrbufContent) {
+function dcarrParseDocument(strFormat, bytearrayContent) {
     switch (strFormat) {
         case 'sems':
-            return dcarrParseSems(arrbufContent);
+            return dcarrParseSems(bytearrayContent);
             break;
         default:
             eiteError('Unimplemented document parsing format: '+strFormat);
@@ -155,7 +155,7 @@ function dcarrParseDocument(strFormat, arrbufContent) {
 }
 
 function dcarrParseSems(bytearrayContent) {
-    // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
+    // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     var dcarrParseResults = [];
     var strParserState = 'dc';
     var strCurrentDc = '';

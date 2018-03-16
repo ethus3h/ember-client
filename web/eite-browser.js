@@ -99,23 +99,19 @@ function urlLoadForCallback(url, callback) {
 }
 
 function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    urlLoadForCallback(strUrl, function(arrbufContent) { callback(dcarrParseDocument(strFormat, arrbufContent)); })
+    urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
-function runEiteTest(format, name) {
-    urlPrefix='../tests/'+name+'.'+format+'/';
-    inFormatUrl='../tests/'+name+'.'+format+'/in-format';
-    switch (format) {
+function runEiteTest(strTestFormat, strTestName) {
+    // TODO: Unfinished implementation
+    strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';
+    strTestInputFormatUrl='../tests/'+strTestName+'.'+strTestFormat+'/in-format';
+    switch (strTestFormat) {
         case 'ept': // Parser test
-            urlLoadForCallback(inFormatUrl, function(responseArrayBuffer) {})
-            break;
-        case 'comment':
-            if (isNewline(byteArray[i])) {
-                parserState = 'dc';
-            }
+            urlLoadForCallback(strTestInputFormatUrl, function(bytearrayContent) {})
             break;
         default:
-            eiteError('Unimplemented test format: '+format);
+            eiteError('Unimplemented test format: '+strTestFormat);
             break;
     }
 }
