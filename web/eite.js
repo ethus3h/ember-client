@@ -206,13 +206,13 @@ function renderDocument(content, targetFormat, renderTraits) {
             this.renderOutputBuf = [];
             let line=0;
             this.renderOutputBuf[0] = '';
-            for (var i = 0; i < this.renderInputBuf.length; i++) {
-                if (dcIsNewline(this.renderInputBuf[i])) {
+            for (var i = 0; i < content.length; i++) {
+                if (dcIsNewline(content[i])) {
                     line = line + 1;
                     this.renderOutputBuf[line] = '';
                 }
-                if (dcIsPrintable(this.renderInputBuf[i])) {
-                    this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(this.renderInputBuf[i], renderTraits.characterEncoding);
+                if (dcIsPrintable(content[i])) {
+                    this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(content[i], renderTraits.characterEncoding);
                 }
             }
             break;
