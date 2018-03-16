@@ -143,13 +143,13 @@ function strPrintableDcToChar(dc, strCharacterEncoding) {
     }
 }
 
-function dcarrParseDocument(format, content) {
-    switch (format) {
+function dcarrParseDocument(strFormat, arrbufContent) {
+    switch (strFormat) {
         case 'sems':
-            return dcarrParseSems(content);
+            return dcarrParseSems(arrbufContent);
             break;
         default:
-            eiteError('Unimplemented document parsing format: '+format);
+            eiteError('Unimplemented document parsing format: '+strFormat);
             break;
     }
 }
@@ -161,23 +161,23 @@ function dcarrParseSems(arrbufContent) {
     var strCurrentDc = '';
     if (arrbufContent) {
         var bytearrayContent = new Uint8Array(arrbufContent);
-        for (var i = 0; i < bytearrayContent.byteLength; i++) {
-            // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
+        for (var intByteOffset = 0; intByteOffset < bytearrayContent.byteLength; intByteOffset++) {
+            // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
             switch (strParserState) {
                 case 'dc':
-                    if (boolIsDigit(bytearrayContent[i])) {
-                        strCurrentDc = strCurrentDc + String.fromCharCode(bytearrayContent[i]);
+                    if (boolIsDigit(bytearrayContent[intByteOffset])) {
+                        strCurrentDc = strCurrentDc + String.fromCharCode(bytearrayContent[intByteOffset]);
                     }
-                    if (boolIsSpace(bytearrayContent[i])) {
+                    if (boolIsSpace(bytearrayContent[intByteOffset])) {
                         dcarrParseResults.push(strCurrentDc);
                         strCurrentDc = '';
                     }
-                    if (bytearrayContent[i] == 35) { // pound sign: start comment
+                    if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
                         strParserState = 'comment';
                     }
                     break;
                 case 'comment':
-                    if (boolIsNewline(bytearrayContent[i])) {
+                    if (boolIsNewline(bytearrayContent[intByteOffset])) {
                         strParserState = 'dc';
                     }
                     break;
