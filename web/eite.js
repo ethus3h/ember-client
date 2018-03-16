@@ -154,12 +154,12 @@ function dcarrParseDocument(format, content) {
     }
 }
 
-function dcarrParseSems(arrayBuffer) {
+function dcarrParseSems(arrbufContent) {
     // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
     var dcSeq = [];
     var parserState = 'dc';
     var currentDc = '';
-    if (arrayBuffer) {
+    if (arrbufContent) {
         var byteArray = new Uint8Array(arrayBuffer);
         for (var i = 0; i < byteArray.byteLength; i++) {
             // do something with each byte in the array. byteArray[i] holds the decimal value of the given byte.
