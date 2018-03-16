@@ -71,9 +71,9 @@ function eiteError(strMessage) {
     }
 
     function boolDcIsPrintable(dc) {
-        type=strDcGetType(dc);
-        generalType=type[0];
-        switch(type) {
+        strType=strDcGetType(dc);
+        strGeneralType=strType[0];
+        switch(strType) {
             case 'Zl':
             case 'Zp':
                 return false;
@@ -81,7 +81,7 @@ function eiteError(strMessage) {
             default:
                 break;
         }
-        switch(generalType) {
+        switch(strGeneralType) {
             case '!':
             case 'C':
                 return false;
@@ -95,21 +95,21 @@ function eiteError(strMessage) {
 
 // Tools for ASCII text
 {
-    // Checks whether n is within the range a and b, including endpoints
-    function boolIsBetween(n, a, b) {
-        return (n - a) * (n - b) <= 0;
+    // Checks whether N is within the range A and B, including endpoints
+    function boolIsBetween(intN, intA, intB) {
+        return (intN - intA) * (intN - intB) <= 0;
     }
-    function boolIsDigit(n) {
-        return boolIsBetween(n, 48, 57);
+    function boolIsDigit(intN) {
+        return boolIsBetween(intN, 48, 57);
     }
-    function boolIsPrintable(n) {
-        return boolIsBetween(n, 32, 126);
+    function boolIsPrintable(intN) {
+        return boolIsBetween(intN, 32, 126);
     }
-    function boolIsSpace(n) {
-        return n == 32;
+    function boolIsSpace(intN) {
+        return intN == 32;
     }
-    function boolIsNewline(n) {
-        return (n == 10) || (n == 13);
+    function boolIsNewline(intN) {
+        return (intN == 10) || (intN == 13);
     }
     /*
     0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
