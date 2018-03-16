@@ -131,7 +131,7 @@ function eiteError(strMessage) {
     */
 }
 
-function printableDcToChar(dc, characterEncoding) {
+function strPrintableDcToChar(dc, characterEncoding) {
     switch (characterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
@@ -205,7 +205,7 @@ function dcarrConvertDocument(content, targetFormat, renderTraits) {
                     output[line] = '';
                 }
                 if (boolDcIsPrintable(content[i])) {
-                    output[line] = output[line] + printableDcToChar(content[i], renderTraits.characterEncoding);
+                    output[line] = output[line] + strPrintableDcToChar(content[i], renderTraits.characterEncoding);
                 }
             }
             break;
