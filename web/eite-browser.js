@@ -72,7 +72,7 @@ function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback)
     })
 }
 
-function doRenderIo(renderBuffer, targetFormat) {
+function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case 'integerList':
         case 'immutableCharacterCells':
