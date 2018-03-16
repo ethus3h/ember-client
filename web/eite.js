@@ -131,22 +131,22 @@ function eiteError(strMessage) {
     */
 }
 
-function strPrintableDcToChar(dc, characterEncoding) {
-    switch (characterEncoding) {
+function strPrintableDcToChar(dc, strCharacterEncoding) {
+    switch (strCharacterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
             return String.fromCharCode('0x'+strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
-            eiteError('Unimplemented character encoding: '+characterEncoding);
+            eiteError('Unimplemented character encoding: '+strCharacterEncoding);
             break;
     }
 }
 
-function parseDocument(format, content) {
+function dcarrParseDocument(format, content) {
     switch (format) {
         case 'sems':
-            return parseSems(content);
+            return dcarrParseSems(content);
             break;
         default:
             eiteError('Unimplemented document parsing format: '+format);
@@ -154,7 +154,7 @@ function parseDocument(format, content) {
     }
 }
 
-function parseSems(arrayBuffer) {
+function dcarrParseSems(arrayBuffer) {
     // Accepts an ArrayBuffer of bytes of a SEMS format document. Returns an array of Dcs.
     var dcSeq = [];
     var parserState = 'dc';
