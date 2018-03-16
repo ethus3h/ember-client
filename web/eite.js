@@ -194,25 +194,24 @@ function renderDocument(content, targetFormat, renderTraits) {
     if ( renderTraits === undefined ) {
         renderTraits = getEnvironmentRenderTraits(targetFormat);
     }
+    output=[]
     // Build render output buffer for specified format
     switch (targetFormat) {
         case 'integerList':
-            renderOutputBuf = [];
             for (var i = 0; i < content.length; i++) {
-                renderOutputBuf[i] = content[i];
+                output[i] = content[i];
             }
             break;
         case 'immutableCharacterCells':
-            this.renderOutputBuf = [];
             let line=0;
-            this.renderOutputBuf[0] = '';
+            output[0] = '';
             for (var i = 0; i < content.length; i++) {
                 if (dcIsNewline(content[i])) {
                     line = line + 1;
-                    this.renderOutputBuf[line] = '';
+                    output[line] = '';
                 }
                 if (dcIsPrintable(content[i])) {
-                    this.renderOutputBuf[line] = this.renderOutputBuf[line] + printableDcToChar(content[i], renderTraits.characterEncoding);
+                    output[line] = output[line] + printableDcToChar(content[i], renderTraits.characterEncoding);
                 }
             }
             break;
@@ -231,7 +230,7 @@ function createDocObj(format, content) {
         doc.renderInputBuf = null;
         doc.renderOutputBuf = null;
         doc.render = function(targetFormat, renderTraits) {
-            renderDocument(this.dcState, targetFormat, renderTraits);
+            doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
         };
         doc.run = function (targetFormat) {
             this.render(targetFormat);
