@@ -224,11 +224,6 @@ function createDocObj(format, content) {
             doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
         };
         doc.run = function () {
-    if ( targetFormat === undefined ) {
-    }
-    if ( renderTraits === undefined ) {
-        renderTraits = ;
-    }
             targetFormat = getEnvironmentBestFormat();
             doRenderIo(renderDocument(this.dcState, targetFormat, getEnvironmentRenderTraits(targetFormat)), targetFormat);
         };
