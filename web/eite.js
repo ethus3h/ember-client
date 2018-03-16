@@ -7,14 +7,14 @@
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
 
-function voidEiteLog(strMessage) {
+function eiteLog(strMessage) {
     implEiteLog(strMessage);
 }
-function voidEiteWarn(strMessage) {
-    voidEiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
+function eiteWarn(strMessage) {
+    eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
 function eiteError(strMessage) {
-    voidEiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
+    eiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
     throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
 }
 
