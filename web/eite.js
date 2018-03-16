@@ -187,7 +187,7 @@ function parseSems(arrayBuffer) {
     return dcSeq;
 }
 
-function renderDocument(content) {
+function renderDocument(content, targetFormat, renderTraits) {
     
 }
 
