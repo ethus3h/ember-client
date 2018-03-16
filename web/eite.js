@@ -27,11 +27,11 @@ function eiteError(strMessage) {
         return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     }
     function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
-        let length = dcData[dataset].length;
+        let intLength = dcData[strDataset].length;
         // start at 1 to skip header row
-        for (let index = 1; index < length; index++) {
-            if(dcData[dataset][index].data[0][filterField] === filterValue) {
-                return dcData[dataset][index].data[0][desiredField];
+        for (let intRow = 1; intRow < intLength; intRow++) {
+            if(dcData[strDataset][intRow].data[0][filterField] === filterValue) {
+                return dcData[strDataset][intRow].data[0][desiredField];
             }
         }
     }
@@ -166,7 +166,7 @@ function dcarrParseSems(arrbufContent) {
             switch (strParserState) {
                 case 'dc':
                     if (boolIsDigit(bytearrayContent[i])) {
-                        strCurrentDc = strCurrentDc + String.fromCharCode(byteArray[i]);
+                        strCurrentDc = strCurrentDc + String.fromCharCode(bytearrayContent[i]);
                     }
                     if (boolIsSpace(bytearrayContent[i])) {
                         dcarrParseResults.push(strCurrentDc);
