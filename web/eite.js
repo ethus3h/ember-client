@@ -220,16 +220,4 @@ function runDocument(dcarrContent) {
     strTargetFormat = getEnvironmentBestFormat();
     doRenderIo(renderDocument(dcarrContent, strTargetFormat, getEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
-
-function createDocObj(format, content) {
-    // content is an ArrayBuffer. Perhaps it could be other data types later if useful (they would be implemented as other formats in parseDocument).
-    var doc = {};
-        doc.dcState = parseDocument(format, content);
-        doc.render = function(targetFormat, renderTraits) {
-            doRenderIo(renderDocument(this.dcState, targetFormat, renderTraits), targetFormat);
-        };
-        doc.run = function () {
-        };
-    return doc;
-}
 // @license-end
