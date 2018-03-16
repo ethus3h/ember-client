@@ -20,13 +20,13 @@ function eiteError(strMessage) {
 
 // Tools for Dc text
 {
-    function dcIdToIdx(dc) {
+    function intDcIdToCsvRow(dc) {
         return parseInt(dc) + 1;
     }
-    function dcDataLookupById(dataset, dc, fieldNumber) {
-        return dcData[dataset][dcIdToIdx(dc)].data[0][fieldNumber];
+    function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+        return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     }
-    function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
+    function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
         let length = dcData[dataset].length;
         // start at 1 to skip header row
         for(let index = 1; index < length; index++) {
@@ -35,8 +35,8 @@ function eiteError(strMessage) {
             }
         }
     }
-    function dcGetField(dc, fieldNumber) {
-        return dcDataLookupById("DcData", dc, fieldNumber);
+    function dcGetField(dc, intFieldNumber) {
+        return strDcDataLookupById("DcData", dc, intFieldNumber);
     }
     function dcGetName(dc) {
         return dcGetField(dc, 1);
@@ -135,7 +135,7 @@ function printableDcToChar(dc, characterEncoding) {
     switch (characterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
-            return String.fromCharCode('0x'+dcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            return String.fromCharCode('0x'+strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
             eiteError('Unimplemented character encoding: '+characterEncoding);
