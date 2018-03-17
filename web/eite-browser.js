@@ -25,12 +25,6 @@ function assertIsString(str) {
     }
 }
 
-function assertIsInteger(int) {
-    if (typeof int !== "string") {
-        eiteError("Assertion failed: "+str+" is not a string.")
-    }
-}
-
 function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
     console.log(implNormalizeMessage(strMessage));
