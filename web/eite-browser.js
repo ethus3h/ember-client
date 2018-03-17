@@ -19,8 +19,14 @@ function eiteWarn(strMessage) {
 
 // Fully platform-specific code
 
-assertIsString(str) {
+function assertIsString(str) {
     if (typeof str !== "string") {
+        eiteError("Assertion failed: "+str+" is not a string.")
+    }
+}
+
+function assertIsInteger(int) {
+    if (typeof int !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")
     }
 }
