@@ -102,6 +102,10 @@ function operateOnDocFromUrl(strFormat, strUrl, callback) {
     urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
+function implStrFromUnicodeHex(strCharacter) {
+    return String.fromCharCode('0x'+strCharacter);
+}
+
 function runEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
     strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';

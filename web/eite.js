@@ -137,7 +137,7 @@ function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
-            return String.fromCharCode('0x'+strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            return implStrFromUnicodeHex(strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
             eiteError('Unimplemented character encoding: '+strCharacterEncoding);
