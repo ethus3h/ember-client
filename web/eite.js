@@ -9,6 +9,7 @@
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 function eiteLog(strMessage) {
+    assertIsString(strMessage);
     implEiteLog(strMessage);
 }
 function eiteWarn(strMessage) {

@@ -19,6 +19,12 @@ function eiteWarn(strMessage) {
 
 // Fully platform-specific code
 
+assertIsString(str) {
+    if (typeof str !== "string") {
+        eiteError("Assertion failed: "+str+" is not a string.")
+    }
+}
+
 function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
     console.log(implNormalizeMessage(strMessage));
