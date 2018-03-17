@@ -13,12 +13,13 @@ function eiteLog(strMessage) {
     implEiteLog(strMessage);
 }
 function eiteWarn(strMessage) {
-    // TODO: implNormalizeMessage isn't relevant if callers of the logging functions obey the string constraint on the parameter.
+    assertIsString(strMessage);
     eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
 function eiteError(strMessage) {
-    eiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
-    throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
+    assertIsString(strMessage);
+    eiteLog('EITE reported error!: '+strMessage);
+    throw 'EITE reported error!: '+strMessage;
 }
 
 // Tools for Dc text
