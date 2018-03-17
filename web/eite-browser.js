@@ -77,7 +77,7 @@ function implDoRenderIo(renderBuffer, targetFormat) {
         case 'integerList':
         case 'immutableCharacterCells':
             let immutableCharCellOutput = document.getElementById('log');
-            for (var i = 0; i < renderBuffer.length; i++) {
+            for (let i = 0; i < renderBuffer.length; i++) {
                 immutableCharCellOutput.innerHTML += implNormalizeMessage(renderBuffer[i]) + '<br />';
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }

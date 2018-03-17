@@ -2,7 +2,7 @@
 // This file contains portable code for all JavaScript implementations of EITE.
 // This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
 // It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
-// To serve these two goals, it should not use I/O, objects, first-class functions, or JavaScript-specific libraries.
+// To serve these two goals, it should not use I/O, objects, first-class functions, JavaScript-specific libraries, or null/undefined values.
 // Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or eite-nonportable.js for JavaScript-specific code.
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
@@ -161,7 +161,7 @@ function dcarrParseSems(bytearrayContent) {
     var dcarrParseResults = [];
     var strParserState = 'dc';
     var strCurrentDc = '';
-    for (var intByteOffset = 0; intByteOffset < bytearrayContent.byteLength; intByteOffset++) {
+    for (let intByteOffset = 0; intByteOffset < bytearrayContent.byteLength; intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
             case 'dc':
@@ -191,14 +191,14 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     // Build render output buffer for specified format
     switch (strTargetFormat) {
         case 'integerList':
-            for (var intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+            for (let intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
             break;
         case 'immutableCharacterCells':
             let intLine=0;
             dcarrOutput[0] = '';
-            for (var intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+            for (let intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
                 if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = '';
