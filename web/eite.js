@@ -14,12 +14,12 @@ function eiteLog(strMessage) {
 }
 function eiteWarn(strMessage) {
     assertIsString(strMessage);
-    eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
+    eiteLog('EITE reported warning: '+strMessages);
 }
 function eiteError(strMessage) {
     assertIsString(strMessage);
     eiteLog('EITE reported error!: '+strMessage);
-    throw 'EITE reported error!: '+strMessage;
+    die('EITE reported error!: '+strMessage);
 }
 
 // Tools for Dc text

@@ -25,6 +25,10 @@ function assertIsString(str) {
     }
 }
 
+function die(strMessage) {
+    throw strMessage;
+}
+
 function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
     console.log(implNormalizeMessage(strMessage));
