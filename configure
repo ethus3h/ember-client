@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -x
 
 local currentArgPrefix
 while [[ -n "$1" ]]; do
