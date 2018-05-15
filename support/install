@@ -105,6 +105,7 @@ cp -r logic "$eiteDatadir/eite/"
 cp -r tests "$eiteDatadir/eite/"
 cp -r docs/* "$eiteDatadir/doc/eite/"
 
+rm web/papaparse.js
 cp /usr/share/javascript/PapaParse/papaparse.js web/
 
 cp -r web "$eiteDatadir/eite/"
