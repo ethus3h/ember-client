@@ -5,35 +5,24 @@ while [[ -n "$1" ]]; do
     currentArgPrefix="${1%%=*}"
     case $currentArgPrefix in
     --prefix)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.prefix
         ;;
     --mandir)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.mandir
         ;;
     --infodir)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.infodir
         ;;
     --datadir)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.datadir
         ;;
     --sysconfdir)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.sysconfdir
         ;;
     --localstatedir)
-        print "$prefix" > support/.prefix
+        printf '%s' "$prefix" > support/.localstatedir
         ;;
     *)
         true
         ;;
     esac
-
-
--prefix="${EPREFIX}"/usr 
-            ${CBUILD:+--build=${CBUILD}} \
-            --host=${CHOST} \
-            ${CTARGET:+--target=${CTARGET}} \
-            --mandir="${EPREFIX}"/usr/share/man \
-            --infodir="${EPREFIX}"/usr/share/info \
-            --datadir="${EPREFIX}"/usr/share \
-            --sysconfdir="${EPREFIX}"/etc \
-            --localstatedir="${EPREFIX}"/var/lib
