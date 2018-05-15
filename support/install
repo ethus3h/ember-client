@@ -104,3 +104,7 @@ cp -r data "$eiteDatadir/eite/"
 cp -r logic "$eiteDatadir/eite/"
 cp -r tests "$eiteDatadir/eite/"
 cp -r docs/* "$eiteDatadir/doc/eite/"
+
+cp "$eiteDatarootdir"/javascript/PapaParse/papaparse.js web/
+
+cp -r web "$eiteDatadir/eite/"
