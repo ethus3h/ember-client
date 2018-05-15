@@ -19,6 +19,12 @@ if [[ "$1" == "--skip-config-file" ]]; then
     shift
 fi
 
+overrideInstalledAppDataDir="/usr/share"
+if [[ "$1" == "--override-data-dir="* ]]; then
+    overrideInstalledAppDataDir="${1#*=}"
+    shift
+fi
+
 #echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
 if [[ -n "$1" ]]; then
     eiteDestdir="$1"
@@ -106,6 +112,6 @@ cp -r tests "$eiteDatadir/eite/"
 cp -r docs/* "$eiteDatadir/doc/eite/"
 
 rm web/papaparse.js
-cp /usr/share/javascript/PapaParse/papaparse.js web/
+cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js web/
 
 cp -r web "$eiteDatadir/eite/"
