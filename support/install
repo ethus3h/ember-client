@@ -26,7 +26,12 @@ if [[ "$1" == "--override-data-dir="* ]] && [[ -n "$overrideInstalledAppDataDirA
 fi
 shift
 
-emberPrefix="$(cat support/prefix)"
+emberPrefix="$(<support/prefix)" || true
+emberMandir="$(<support/mandir)" || true
+emberInfodir="$(<support/prefix)" || true
+emberDatadir="$(<support/prefix)" || true
+emberSysconfdir="$(<support/prefix)" || true
+emberLocalstatedir="$(<support/prefix)" || true
 
 #echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
 if [[ -n "$1" ]]; then
