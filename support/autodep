@@ -21,7 +21,7 @@ if ! ebs_loc="$(type -P "ember_bash_setup")" || [[ -z $ebs_loc ]]; then
     pushd ember_bash_setup
     make
     make install
-    make autodep
+    make autodep # Run autodep *after* installing for ember-shared, unlike other packages.
     popd
     rm -r ember_bash_setup
 fi
