@@ -95,14 +95,20 @@ fi
 echo "emberDatarootdir: $emberDatarootdir"
 if [[ -z "$emberDatadir" ]]; then
     emberDatadir="$emberDestdir$emberDatarootdir"
+else
+    emberDatadir="$emberDestdir$emberDatadir"
 fi
 echo "emberDatadir: $emberDatadir"
 if [[ -z "$emberSysconfdir" ]]; then
     emberSysconfdir="$emberPrefix"/etc
+else
+    emberSysconfdir="$emberPrefix$emberSysconfdir"
 fi
 echo "emberSysconfdir: $emberSysconfdir"
 if [[ -z "$emberSharedstatedir" ]]; then
     emberSharedstatedir="$emberPrefix"/var
+else
+    emberSharedstatedir="$emberPrefix$emberSharedstatedir"
 fi
 echo "emberSharedstatedir: $emberSharedstatedir"
 
