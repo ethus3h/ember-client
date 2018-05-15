@@ -112,6 +112,8 @@ else
 fi
 echo "emberSharedstatedir: $emberSharedstatedir"
 
+#### End of Makefile install script template ####
+
 mkdir -p "$emberDatadir/eite"
 mkdir -p "$emberDatadir/doc/eite"
 mkdir -p "$emberBindir"
