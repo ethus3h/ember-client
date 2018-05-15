@@ -28,45 +28,45 @@ shift
 
 emberPrefix="$(<support/prefix)" || true
 emberMandir="$(<support/mandir)" || true
-emberInfodir="$(<support/prefix)" || true
-emberDatadir="$(<support/prefix)" || true
-emberSysconfdir="$(<support/prefix)" || true
-emberLocalstatedir="$(<support/prefix)" || true
+emberInfodir="$(<support/infodir)" || true
+emberDatadir="$(<support/datadir)" || true
+emberSysconfdir="$(<support/sysconfdir)" || true
+emberLocalstatedir="$(<support/localstatedir)" || true
 
 #echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
-if [[ -n "$1" ]]; then
+if [[ -z "$emberDestdir" ]] && [[ -n "$1" ]]; then
     emberDestdir="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberPrefix" ]] && [[ -n "$1" ]]; then
     emberPrefix="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberCapPrefix" ]] && [[ -n "$1" ]]; then
     emberCapPrefix="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberExecPrefix" ]] && [[ -n "$1" ]]; then
     emberExecPrefix="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberBindir" ]] && [[ -n "$1" ]]; then
     emberBindir="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberDatarootdir" ]] && [[ -n "$1" ]]; then
     emberDatarootdir="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberDatadir" ]] && [[ -n "$1" ]]; then
     emberDatadir="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberSysconfdir" ]] && [[ -n "$1" ]]; then
     emberSysconfdir="$1"
     shift
 fi
-if [[ -n "$1" ]]; then
+if [[ -z "$emberSharedstatedir" ]] && [[ -n "$1" ]]; then
     emberSharedstatedir="$1"
     shift
 fi
