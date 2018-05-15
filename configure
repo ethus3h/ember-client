@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+-prefix="${EPREFIX}"/usr 
+			${CBUILD:+--build=${CBUILD}} \
+			--host=${CHOST} \
+			${CTARGET:+--target=${CTARGET}} \
+			--mandir="${EPREFIX}"/usr/share/man \
+			--infodir="${EPREFIX}"/usr/share/info \
+			--datadir="${EPREFIX}"/usr/share \
+			--sysconfdir="${EPREFIX}"/etc \
+			--localstatedir="${EPREFIX}"/var/lib
