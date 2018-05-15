@@ -2,22 +2,38 @@
 
 local currentArgPrefix
 while [[ -n "$1" ]]; do
-	currentArgPrefix="${1%%=*}"
-	case $action in
-	create)
-    ;;
-*)
-    die "Unknown action."
-    ;;
-esac
+    currentArgPrefix="${1%%=*}"
+    case $currentArgPrefix in
+    --prefix)
+        print "$prefix" > support/.prefix
+        ;;
+    --mandir)
+        print "$prefix" > support/.prefix
+        ;;
+    --infodir)
+        print "$prefix" > support/.prefix
+        ;;
+    --datadir)
+        print "$prefix" > support/.prefix
+        ;;
+    --sysconfdir)
+        print "$prefix" > support/.prefix
+        ;;
+    --localstatedir)
+        print "$prefix" > support/.prefix
+        ;;
+    *)
+        true
+        ;;
+    esac
 
 
 -prefix="${EPREFIX}"/usr 
-			${CBUILD:+--build=${CBUILD}} \
-			--host=${CHOST} \
-			${CTARGET:+--target=${CTARGET}} \
-			--mandir="${EPREFIX}"/usr/share/man \
-			--infodir="${EPREFIX}"/usr/share/info \
-			--datadir="${EPREFIX}"/usr/share \
-			--sysconfdir="${EPREFIX}"/etc \
-			--localstatedir="${EPREFIX}"/var/lib
+            ${CBUILD:+--build=${CBUILD}} \
+            --host=${CHOST} \
+            ${CTARGET:+--target=${CTARGET}} \
+            --mandir="${EPREFIX}"/usr/share/man \
+            --infodir="${EPREFIX}"/usr/share/info \
+            --datadir="${EPREFIX}"/usr/share \
+            --sysconfdir="${EPREFIX}"/etc \
+            --localstatedir="${EPREFIX}"/var/lib
