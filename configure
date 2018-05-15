@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
-set -x
+#set -x
 
-local currentArgPrefix
+currentArgPrefix=""
 while [[ -n "$1" ]]; do
     currentArgPrefix="${1%%=*}"
     case $currentArgPrefix in
     --prefix)
-        printf '%s' "$prefix" > support/.prefix
+        printf '%s' "$1" > support/.prefix
         ;;
     --mandir)
-        printf '%s' "$prefix" > support/.mandir
+        printf '%s' "$1" > support/.mandir
         ;;
     --infodir)
-        printf '%s' "$prefix" > support/.infodir
+        printf '%s' "$1" > support/.infodir
         ;;
     --datadir)
-        printf '%s' "$prefix" > support/.datadir
+        printf '%s' "$1" > support/.datadir
         ;;
     --sysconfdir)
-        printf '%s' "$prefix" > support/.sysconfdir
+        printf '%s' "$1" > support/.sysconfdir
         ;;
     --localstatedir)
-        printf '%s' "$prefix" > support/.localstatedir
+        printf '%s' "$1" > support/.localstatedir
         ;;
     *)
         true
