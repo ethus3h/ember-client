@@ -70,13 +70,14 @@ if [[ -z "$emberSharedstatedir" ]] && [[ -n "$1" ]]; then
     emberSharedstatedir="$1"
     shift
 fi
-if ! [[ -n "$emberPrefix" ]]; then
-    if ! [[ -n "$emberCapPrefix" ]]; then
-        emberPrefix="$emberDestdir"/usr/local
+if [[ -z "$emberPrefix" ]]; then
+    if [[ -z "$emberCapPrefix" ]]; then
+        emberPrefix=/usr/local
     else
         emberPrefix="$emberCapPrefix"
     fi
 fi
+emberPrefix="$emberDestdir$emberPrefix"
 echo "emberPrefix: $emberPrefix"
 if ! [[ -n "$emberExecPrefix" ]]; then
     emberExecPrefix="$emberPrefix"
