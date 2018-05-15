@@ -28,87 +28,87 @@ shift
 
 #echo 1 "$1" 2 "$2" 3 "$3" 4 "$4" 5 "$5" 6 "$6" 7 "$7" 8 "$8" 9 "$9"
 if [[ -n "$1" ]]; then
-    eiteDestdir="$1"
+    emberDestdir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eitePrefix="$1"
+    emberPrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteCapPrefix="$1"
+    emberCapPrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteExecPrefix="$1"
+    emberExecPrefix="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteBindir="$1"
+    emberBindir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteDatarootdir="$1"
+    emberDatarootdir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteDatadir="$1"
+    emberDatadir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteSysconfdir="$1"
+    emberSysconfdir="$1"
     shift
 fi
 if [[ -n "$1" ]]; then
-    eiteSharedstatedir="$1"
+    emberSharedstatedir="$1"
     shift
 fi
-if ! [[ -n "$eitePrefix" ]]; then
-    if ! [[ -n "$eiteCapPrefix" ]]; then
-        eitePrefix="$eiteDestdir"/usr/local
+if ! [[ -n "$emberPrefix" ]]; then
+    if ! [[ -n "$emberCapPrefix" ]]; then
+        emberPrefix="$emberDestdir"/usr/local
     else
-        eitePrefix="$eiteCapPrefix"
+        emberPrefix="$emberCapPrefix"
     fi
 fi
-echo "eitePrefix: $eitePrefix"
-if ! [[ -n "$eiteExecPrefix" ]]; then
-    eiteExecPrefix="$eitePrefix"
+echo "emberPrefix: $emberPrefix"
+if ! [[ -n "$emberExecPrefix" ]]; then
+    emberExecPrefix="$emberPrefix"
 fi
-echo "eiteExecPrefix: $eiteExecPrefix"
-if ! [[ -n "$eiteBindir" ]]; then
-    eiteBindir="$eiteExecPrefix"/bin
+echo "emberExecPrefix: $emberExecPrefix"
+if ! [[ -n "$emberBindir" ]]; then
+    emberBindir="$emberExecPrefix"/bin
 fi
-echo "eiteBindir: $eiteBindir"
-if ! [[ -n "$eiteDatarootdir" ]]; then
-    eiteDatarootdir="$eitePrefix"/share
+echo "emberBindir: $emberBindir"
+if ! [[ -n "$emberDatarootdir" ]]; then
+    emberDatarootdir="$emberPrefix"/share
 fi
-echo "eiteDatarootdir: $eiteDatarootdir"
-if ! [[ -n "$eiteDatadir" ]]; then
-    eiteDatadir="$eiteDatarootdir"
+echo "emberDatarootdir: $emberDatarootdir"
+if ! [[ -n "$emberDatadir" ]]; then
+    emberDatadir="$emberDatarootdir"
 fi
-echo "eiteDatadir: $eiteDatadir"
-if ! [[ -n "$eiteSysconfdir" ]]; then
-    eiteSysconfdir="$eitePrefix"/etc
+echo "emberDatadir: $emberDatadir"
+if ! [[ -n "$emberSysconfdir" ]]; then
+    emberSysconfdir="$emberPrefix"/etc
 fi
-echo "eiteSysconfdir: $eiteSysconfdir"
-if ! [[ -n "$eiteSharedstatedir" ]]; then
-    eiteSharedstatedir="$eitePrefix"/var
+echo "emberSysconfdir: $emberSysconfdir"
+if ! [[ -n "$emberSharedstatedir" ]]; then
+    emberSharedstatedir="$emberPrefix"/var
 fi
-echo "eiteSharedstatedir: $eiteSharedstatedir"
+echo "emberSharedstatedir: $emberSharedstatedir"
 
-mkdir -p "$eiteDatadir/eite"
-mkdir -p "$eiteDatadir/doc/eite"
-mkdir -p "$eiteBindir"
+mkdir -p "$emberDatadir/eite"
+mkdir -p "$emberDatadir/doc/eite"
+mkdir -p "$emberBindir"
 chmod +x cli/*
-cp cli/* "$eiteBindir/"
-mkdir -p "$eiteSysconfdir"
+cp cli/* "$emberBindir/"
+mkdir -p "$emberSysconfdir"
 
-cp -r data "$eiteDatadir/eite/"
-cp -r logic "$eiteDatadir/eite/"
-cp -r tests "$eiteDatadir/eite/"
-cp -r docs/* "$eiteDatadir/doc/eite/"
+cp -r data "$emberDatadir/eite/"
+cp -r logic "$emberDatadir/eite/"
+cp -r tests "$emberDatadir/eite/"
+cp -r docs/* "$emberDatadir/doc/eite/"
 
 rm web/papaparse.js
 cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js web/
 
-cp -r web "$eiteDatadir/eite/"
+cp -r web "$emberDatadir/eite/"
