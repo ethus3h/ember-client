@@ -96,8 +96,8 @@ fi
 mkdir -p "$eiteDatadir/eite"
 mkdir -p "$eiteDatadir/doc/eite"
 mkdir -p "$eiteBindir"
-chmod +x scripts/*
-cp scripts/* "$eiteBindir/"
+chmod +x cli/*
+cp cli/* "$eiteBindir/"
 mkdir -p "$eiteSysconfdir"
 
 cp -r data "$eiteDatadir/eite/"
@@ -105,6 +105,6 @@ cp -r logic "$eiteDatadir/eite/"
 cp -r tests "$eiteDatadir/eite/"
 cp -r docs/* "$eiteDatadir/doc/eite/"
 
-cp "$eiteDatarootdir"/javascript/PapaParse/papaparse.js web/
+cp /usr/share/javascript/PapaParse/papaparse.js web/
 
 cp -r web "$eiteDatadir/eite/"
