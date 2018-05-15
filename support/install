@@ -79,27 +79,29 @@ if [[ -z "$emberPrefix" ]]; then
 fi
 emberPrefix="$emberDestdir$emberPrefix"
 echo "emberPrefix: $emberPrefix"
-if ! [[ -n "$emberExecPrefix" ]]; then
+if [[ -z "$emberExecPrefix" ]]; then
     emberExecPrefix="$emberPrefix"
+else
+    emberExecPrefix="$emberDestdir$emberExecPrefix"
 fi
 echo "emberExecPrefix: $emberExecPrefix"
-if ! [[ -n "$emberBindir" ]]; then
+if [[ -z "$emberBindir" ]]; then
     emberBindir="$emberExecPrefix"/bin
 fi
 echo "emberBindir: $emberBindir"
-if ! [[ -n "$emberDatarootdir" ]]; then
+if [[ -z "$emberDatarootdir" ]]; then
     emberDatarootdir="$emberPrefix"/share
 fi
 echo "emberDatarootdir: $emberDatarootdir"
-if ! [[ -n "$emberDatadir" ]]; then
-    emberDatadir="$emberDatarootdir"
+if [[ -z "$emberDatadir" ]]; then
+    emberDatadir="$emberDestdir$emberDatarootdir"
 fi
 echo "emberDatadir: $emberDatadir"
-if ! [[ -n "$emberSysconfdir" ]]; then
+if [[ -z "$emberSysconfdir" ]]; then
     emberSysconfdir="$emberPrefix"/etc
 fi
 echo "emberSysconfdir: $emberSysconfdir"
-if ! [[ -n "$emberSharedstatedir" ]]; then
+if [[ -z "$emberSharedstatedir" ]]; then
     emberSharedstatedir="$emberPrefix"/var
 fi
 echo "emberSharedstatedir: $emberSharedstatedir"
