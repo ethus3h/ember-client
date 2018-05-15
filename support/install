@@ -21,7 +21,7 @@ fi
 
 overrideInstalledAppDataDir="/usr/share"
 overrideInstalledAppDataDirArg="${1#*=}"
-if [[ -n == "$overrideInstalledAppDataDirArg" ]]; then
+if [[ -n "$overrideInstalledAppDataDirArg" ]]; then
     overrideInstalledAppDataDir="$overrideInstalledAppDataDirArg"
     shift
 fi
