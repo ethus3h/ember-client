@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 source ember_bash_setup &> /dev/null
-set -x
+#set -x
 
 #NOTE: MAINTENANCE: Manual error printing
 if [[ -z "$(ember-getconf emberSharedVersion)" ]]; then
@@ -78,39 +78,41 @@ if [[ -z "$emberPrefix" ]]; then
     fi
 fi
 emberPrefix="$emberDestdir$emberPrefix"
-echo "emberPrefix: $emberPrefix"
+#echo "emberPrefix: $emberPrefix"
 if [[ -z "$emberExecPrefix" ]]; then
     emberExecPrefix="$emberPrefix"
 else
     emberExecPrefix="$emberDestdir$emberExecPrefix"
 fi
-echo "emberExecPrefix: $emberExecPrefix"
+#echo "emberExecPrefix: $emberExecPrefix"
 if [[ -z "$emberBindir" ]]; then
     emberBindir="$emberExecPrefix"/bin
 fi
-echo "emberBindir: $emberBindir"
+#echo "emberBindir: $emberBindir"
 if [[ -z "$emberDatarootdir" ]]; then
     emberDatarootdir="$emberPrefix"/share
 fi
-echo "emberDatarootdir: $emberDatarootdir"
+#echo "emberDatarootdir: $emberDatarootdir"
 if [[ -z "$emberDatadir" ]]; then
     emberDatadir="$emberDestdir$emberDatarootdir"
 else
     emberDatadir="$emberDestdir$emberDatadir"
 fi
-echo "emberDatadir: $emberDatadir"
+#echo "emberDatadir: $emberDatadir"
 if [[ -z "$emberSysconfdir" ]]; then
     emberSysconfdir="$emberPrefix"/etc
 else
     emberSysconfdir="$emberPrefix$emberSysconfdir"
 fi
-echo "emberSysconfdir: $emberSysconfdir"
+#echo "emberSysconfdir: $emberSysconfdir"
 if [[ -z "$emberSharedstatedir" ]]; then
     emberSharedstatedir="$emberPrefix"/var
 else
     emberSharedstatedir="$emberPrefix$emberSharedstatedir"
 fi
-echo "emberSharedstatedir: $emberSharedstatedir"
+#echo "emberSharedstatedir: $emberSharedstatedir"
+
+emberEmberdir="$emberPrefix"/Ember\ Library
 
 #### End of Makefile install script template ####
 
