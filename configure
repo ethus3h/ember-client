@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+
+local currentArgPrefix
+while [[ -n "$1" ]]; do
+	currentArgPrefix="${1%%=*}"
+	case $action in
+	create)
+    ;;
+*)
+    die "Unknown action."
+    ;;
+esac
+
+
 -prefix="${EPREFIX}"/usr 
 			${CBUILD:+--build=${CBUILD}} \
 			--host=${CHOST} \
