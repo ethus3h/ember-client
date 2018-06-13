@@ -24,10 +24,8 @@ async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
 async function strDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField) {
     await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsStr(strFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
-console.log(strDataset, intFilterField, strFilterValue, intDesiredField);
-    let intLength = intDcDataDatasetLength(strDataset);
+    let intLength = await intDcDataDatasetLength(strDataset);
     // start at 1 to skip header row
-    console.log(intLength);
     for (let intRow = 1; intRow < intLength; intRow++) {
         if(dcData[strDataset][intRow].data[0][intFilterField] === strFilterValue) {
             strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
