@@ -7,6 +7,8 @@
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
 // Special types: dc = a string, but with an int as its contents
+// Assert functions return nothing, and should call eiteError if they fail.
+// "eite" functions (logging) return nothing.
 // TODO: DcData and renderTraits shouldn't be used here, since they're JS-specific, complex objects. They should be provided by APIs and/or simple data types instead. This will also allow the "dc" ad-hoc data type to actually be an int, instead of a string containing an int (which is kind of stupid ­— it should just be an int).
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
@@ -178,7 +180,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
-            await eiteError('Unimplemented character encoding: '+strCharacterEncoding);
+            await eiteError('Unimplemented character encoding: ' + strCharacterEncoding);
             break;
     }
 }
@@ -189,7 +191,7 @@ async function dcarrParseDocument(strFormat, bytearrayContent) {
             return await dcarrParseSems(bytearrayContent);
             break;
         default:
-            await eiteError('Unimplemented document parsing format: '+strFormat);
+            await eiteError('Unimplemented document parsing format: ' + strFormat);
             break;
     }
 }
@@ -251,7 +253,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             }
             break;
         default:
-            await eiteError('Unimplemented document render target format: '+strTargetFormat);
+            await eiteError('Unimplemented document render target format: ' + strTargetFormat);
             break;
     }
     return dcarrOutput;

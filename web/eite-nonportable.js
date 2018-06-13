@@ -30,13 +30,13 @@ async function implStrFromUnicodeHex(strCharacter) {
 
 async function implAssertIsInt(int) {
     if (! Number.isInteger(int)) {
-        eiteError("Assertion failed: "+int+" is not an int.")
+        await eiteError("Assertion failed: "+int+" is not an int.")
     }
 }
 
 async function implAssertIsStr(str) {
     if (typeof str !== "string") {
-        eiteError("Assertion failed: "+str+" is not a string.")
+        await eiteError("Assertion failed: "+str+" is not a string.")
     }
 }
 
