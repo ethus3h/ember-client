@@ -22,6 +22,10 @@ function eiteError(strMessage) {
     die('EITE reported error!: '+strMessage);
 }
 
+// async function intDcarrLength(dcarr input) {
+//     return await implIntDcarrLength(input);
+// }
+// 
 // Tools for Dc text
 {
     function intDcIdToCsvRow(dc) {
