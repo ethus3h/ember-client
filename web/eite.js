@@ -203,8 +203,9 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             }
             break;
         case 'immutableCharacterCells':
-            let intLine=0;
+            let intLine = 0;
             dcarrOutput[0] = '';
+            //let intInputLength = intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intDcarrLength(dcarrInput); intInputIndex++) {
                 if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
