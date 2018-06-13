@@ -31,7 +31,8 @@ async function strDcDataLookupByValue(strDataset, intFilterField, strFilterValue
             strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
-    await assertIsStr(strReturn); return strReturn;
+    // await assertIsStr(strReturn); return strReturn;
+    return strReturn;
 }
 
 async function strDcGetField(dc, intFieldNumber) {
