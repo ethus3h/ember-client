@@ -9,10 +9,12 @@ async function intDcIdToCsvRow(dc) {
     await assertIsDc(dc);
     return await intFromStr(dc) + 1;
 }
+
 async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
     await assertIsStr(strDataset); await assertIsDc(dc); await assertIsInt(intFieldNumber);
     return dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber];
 }
+
 async function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
     let intLength = dcData[strDataset].length;
     // start at 1 to skip header row
@@ -22,30 +24,39 @@ async function strDcDataLookupByValue(strDataset, filterField, filterValue, desi
         }
     }
 }
+
 async function strDcGetField(dc, intFieldNumber) {
     return await strDcDataLookupById("DcData", dc, intFieldNumber);
 }
+
 async function strDcGetName(dc) {
     return await strDcGetField(dc, 1);
 }
+
 async function strDcGetCombiningClass(dc) {
     return await strDcGetField(dc, 2);
 }
+
 async function strDcGetBidiClass(dc) {
     return await strDcGetField(dc, 3);
 }
+
 async function strDcGetCasing(dc) {
     return await strDcGetField(dc, 4);
 }
+
 async function strDcGetType(dc) {
     return await strDcGetField(dc, 5);
 }
+
 async function strDcGetScript(dc) {
     return await strDcGetField(dc, 6);
 }
+
 async function strDcGetComplexTraits(dc) {
     return await strDcGetField(dc, 7);
 }
+
 async function strDcGetDescription(dc) {
     return await strDcGetField(dc, 8);
 }
