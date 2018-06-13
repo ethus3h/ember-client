@@ -102,8 +102,8 @@ function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
+async function operateOnDocFromUrl(strFormat, strUrl, callback) {
+    await urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
 function implStrFromByte(intInput) {

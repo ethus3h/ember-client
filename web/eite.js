@@ -24,19 +24,20 @@ function eiteError(strMessage) {
 }
 
 // Utility functions for working with various data types: wrappers for implementation
-function assertIsStr(str) {
-    return implAssertIsStr(str);
-}
 function assertIsInt(int) {
     return implAssertIsInt(int);
 }
+function assertIsStr(str) {
+    return implAssertIsStr(str);
+}
+
 function strFromByte(intInput) {
     assertIsInt(intInput);
     return implStrFromByte(intInput)
 }
-function strFromUnicodeHex(strInput) {
+async function strFromUnicodeHex(strInput) {
     assertIsStr(strInput)
-    return implStrFromUnicodeHex(strInput);
+    return await implStrFromUnicodeHex(strInput);
 }
 async function intDcarrLength(dcarrInput) {
     return await implIntDcarrLength(dcarrInput);
@@ -177,13 +178,13 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
     }
 }
 
-function dcarrParseDocument(strFormat, bytearrayContent) {
+async function dcarrParseDocument(strFormat, bytearrayContent) {
     switch (strFormat) {
         case 'sems':
-            return dcarrParseSems(bytearrayContent);
+            return await dcarrParseSems(bytearrayContent);
             break;
         default:
-            eiteError('Unimplemented document parsing format: '+strFormat);
+            await eiteError('Unimplemented document parsing format: '+strFormat);
             break;
     }
 }
