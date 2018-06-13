@@ -55,80 +55,78 @@ function assertIsDc(dc) {
 }
 
 // Tools for Dc text
-{
-    function intDcIdToCsvRow(dc) {
-        assertIsDc(dc);
-        return strToInt(dc) + 1;
-    }
-    function strDcDataLookupById(strDataset, dc, intFieldNumber) {
-        assertIsStr(strDataset); assertIsDc(dc); assertIsInt(intFieldNumber);
-        return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
-    }
-    function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
-        let intLength = dcData[strDataset].length;
-        // start at 1 to skip header row
-        for (let intRow = 1; intRow < intLength; intRow++) {
-            if(dcData[strDataset][intRow].data[0][filterField] === filterValue) {
-                return dcData[strDataset][intRow].data[0][desiredField];
-            }
+function intDcIdToCsvRow(dc) {
+    assertIsDc(dc);
+    return strToInt(dc) + 1;
+}
+function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+    assertIsStr(strDataset); assertIsDc(dc); assertIsInt(intFieldNumber);
+    return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
+}
+async function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
+    let intLength = dcData[strDataset].length;
+    // start at 1 to skip header row
+    for (let intRow = 1; intRow < intLength; intRow++) {
+        if(dcData[strDataset][intRow].data[0][filterField] === filterValue) {
+            return dcData[strDataset][intRow].data[0][desiredField];
         }
     }
-    function strDcGetField(dc, intFieldNumber) {
-        return strDcDataLookupById("DcData", dc, intFieldNumber);
-    }
-    function strDcGetName(dc) {
-        return strDcGetField(dc, 1);
-    }
-    function strDcGetCombiningClass(dc) {
-        return strDcGetField(dc, 2);
-    }
-    function strDcGetBidiClass(dc) {
-        return strDcGetField(dc, 3);
-    }
-    function strDcGetCasing(dc) {
-        return strDcGetField(dc, 4);
-    }
-    function strDcGetType(dc) {
-        return strDcGetField(dc, 5);
-    }
-    function strDcGetScript(dc) {
-        return strDcGetField(dc, 6);
-    }
-    function strDcGetComplexTraits(dc) {
-        return strDcGetField(dc, 7);
-    }
-    function strDcGetDescription(dc) {
-        return strDcGetField(dc, 8);
-    }
+}
+function strDcGetField(dc, intFieldNumber) {
+    return strDcDataLookupById("DcData", dc, intFieldNumber);
+}
+function strDcGetName(dc) {
+    return strDcGetField(dc, 1);
+}
+function strDcGetCombiningClass(dc) {
+    return strDcGetField(dc, 2);
+}
+function strDcGetBidiClass(dc) {
+    return strDcGetField(dc, 3);
+}
+function strDcGetCasing(dc) {
+    return strDcGetField(dc, 4);
+}
+function strDcGetType(dc) {
+    return strDcGetField(dc, 5);
+}
+function strDcGetScript(dc) {
+    return strDcGetField(dc, 6);
+}
+function strDcGetComplexTraits(dc) {
+    return strDcGetField(dc, 7);
+}
+function strDcGetDescription(dc) {
+    return strDcGetField(dc, 8);
+}
 
-    function boolDcIsNewline(dc) {
-        if(strDcGetBidiClass(dc) === 'B') {
-            return true;
-        }
-        return false;
-    }
-
-    function boolDcIsPrintable(dc) {
-        strType=strDcGetType(dc);
-        strGeneralType=strType[0];
-        switch(strType) {
-            case 'Zl':
-            case 'Zp':
-                return false;
-                break;
-            default:
-                break;
-        }
-        switch(strGeneralType) {
-            case '!':
-            case 'C':
-                return false;
-                break;
-            default:
-                break;
-        }
+function boolDcIsNewline(dc) {
+    if(strDcGetBidiClass(dc) === 'B') {
         return true;
     }
+    return false;
+}
+
+function boolDcIsPrintable(dc) {
+    strType=strDcGetType(dc);
+    strGeneralType=strType[0];
+    switch(strType) {
+        case 'Zl':
+        case 'Zp':
+            return false;
+            break;
+        default:
+            break;
+    }
+    switch(strGeneralType) {
+        case '!':
+        case 'C':
+            return false;
+            break;
+        default:
+            break;
+    }
+    return true;
 }
 
 // Tools for ASCII text
