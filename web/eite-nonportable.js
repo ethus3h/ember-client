@@ -2,7 +2,11 @@
 // This file defines functions with implementations that are specific to the JavaScript implementation of EITE.
 // This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
 
-function implStrNormalizeMessage(message) {
+async function die(strMessage) {
+    throw strMessage;
+}
+
+async function implStrNormalizeMessage(message) {
     if (typeof message == 'object') {
         return (JSON && JSON.stringify ? JSON.stringify(message) : message);
     } else {
@@ -10,17 +14,17 @@ function implStrNormalizeMessage(message) {
     }
 }
 
-function implStrToInt(str) {
+async function implStrToInt(str) {
     return parseInt(str);
 }
 
-function implAssertIsInt(int) {
+async function implAssertIsInt(int) {
     if (! Number.isInteger(int)) {
         eiteError("Assertion failed: "+int+" is not an int.")
     }
 }
 
-function implAssertIsStr(str) {
+async function implAssertIsStr(str) {
     if (typeof str !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")
     }

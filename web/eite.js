@@ -9,34 +9,34 @@
 // Special types: dc = a string
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
-function eiteLog(strMessage) {
-    assertIsStr(strMessage);
-    return implEiteLog(strMessage);
+async function eiteLog(strMessage) {
+    await assertIsStr(strMessage);
+    return await implEiteLog(strMessage);
 }
-function eiteWarn(strMessage) {
-    assertIsStr(strMessage);
-    eiteLog('EITE reported warning: '+strMessages);
+async function eiteWarn(strMessage) {
+    await assertIsStr(strMessage);
+    await eiteLog('EITE reported warning: '+strMessages);
 }
-function eiteError(strMessage) {
-    assertIsStr(strMessage); // FIXME: recursive loop?
-    eiteLog('EITE reported error!: '+strMessage);
-    die('EITE reported error!: '+strMessage);
+async function eiteError(strMessage) {
+    await assertIsStr(strMessage); // FIXME: recursive loop?
+    await eiteLog('EITE reported error!: '+strMessage);
+    await die('EITE reported error!: '+strMessage);
 }
 
 // Utility functions for working with various data types: wrappers for implementation
-function assertIsInt(int) {
-    return implAssertIsInt(int);
+async function assertIsInt(int) {
+    return await implAssertIsInt(int);
 }
-function assertIsStr(str) {
-    return implAssertIsStr(str);
+async function assertIsStr(str) {
+    return await implAssertIsStr(str);
 }
 
-function strFromByte(intInput) {
-    assertIsInt(intInput);
-    return implStrFromByte(intInput)
+async function strFromByte(intInput) {
+    await assertIsInt(intInput);
+    return await implStrFromByte(intInput)
 }
 async function strFromUnicodeHex(strInput) {
-    assertIsStr(strInput)
+    await assertIsStr(strInput)
     return await implStrFromUnicodeHex(strInput);
 }
 async function intDcarrLength(dcarrInput) {
@@ -45,24 +45,24 @@ async function intDcarrLength(dcarrInput) {
 async function intBytearrayLength(bytearrayInput) {
     return await implIntBytearrayLength(bytearrayInput);
 }
-function strToInt(str) {
-    assertIsStr(str);
-    return implStrToInt(str);
+async function strToInt(str) {
+    await assertIsStr(str);
+    return await implStrToInt(str);
 }
 
 // Utility functions for working with various data types
-function assertIsDc(dc) {
-    return assertIsStr(dc);
+async function assertIsDc(dc) {
+    return await assertIsStr(dc);
 }
 
 // Tools for Dc text
-    function intDcIdToCsvRow(dc) {
-        assertIsDc(dc);
-        return strToInt(dc) + 1;
+    async function intDcIdToCsvRow(dc) {
+        await assertIsDc(dc);
+        return await strToInt(dc) + 1;
     }
-    function strDcDataLookupById(strDataset, dc, intFieldNumber) {
-        assertIsStr(strDataset); assertIsDc(dc); assertIsInt(intFieldNumber);
-        return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
+    async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+        await assertIsStr(strDataset); await assertIsDc(dc); await assertIsInt(intFieldNumber);
+        return dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     }
     async function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
         let intLength = dcData[strDataset].length;
