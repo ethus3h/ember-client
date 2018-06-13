@@ -26,42 +26,52 @@ async function strDcDataLookupByValue(strDataset, filterField, filterValue, desi
 }
 
 async function strDcGetField(dc, intFieldNumber) {
+    await assertIsDc(dc); await assertIsInt(intFieldNumber);
     return await strDcDataLookupById("DcData", dc, intFieldNumber);
 }
 
 async function strDcGetName(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 1);
 }
 
 async function strDcGetCombiningClass(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 2);
 }
 
 async function strDcGetBidiClass(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 3);
 }
 
 async function strDcGetCasing(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 4);
 }
 
 async function strDcGetType(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 5);
 }
 
 async function strDcGetScript(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 6);
 }
 
 async function strDcGetComplexTraits(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 7);
 }
 
 async function strDcGetDescription(dc) {
+    await assertIsDc(dc);
     return await strDcGetField(dc, 8);
 }
 
 async function boolDcIsNewline(dc) {
+    await assertIsDc(dc);
     if(await strDcGetBidiClass(dc) === 'B') {
         return true;
     }
@@ -69,6 +79,7 @@ async function boolDcIsNewline(dc) {
 }
 
 async function boolDcIsPrintable(dc) {
+    await assertIsDc(dc);
     let strType = await strDcGetType(dc);
     let strGeneralType = strType[0];
     switch(strType) {
