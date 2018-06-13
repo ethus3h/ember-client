@@ -10,38 +10,6 @@ async function implStrNormalizeMessage(message) {
     }
 }
 
-async function implIntFromStr(str) {
-    return parseInt(str);
-}
-
-async function implStrFromByte(intInput) {
-    await assertIsInt(intInput);
-    return String.fromCharCode(intInput);
-}
-
-async function implStrFromUnicodeHex(strCharacter) {
-    await assertIsStr(strCharacter);
-    return String.fromCharCode('0x'+strCharacter);
-}
-
-async function implAssertIsInt(int) {
-    if (! Number.isInteger(int)) {
-        await eiteError("Assertion failed: "+int+" is not an int.")
-    }
-}
-
-async function implAssertIsStr(str) {
-    if (typeof str !== "string") {
-        await eiteError("Assertion failed: "+str+" is not a string.")
-    }
-}
-
-async function implAssertStrContainsOnlyInt(str) {
-    //TODO: Fake implementation. Should regex match or something instead.
-    await assertIsStr(str);
-    return await assertIsInt(await intFromStr(str));
-}
-
 async function implIntBytearrayLength(bytearrayInput) {
     return bytearrayInput.byteLength;
 }
