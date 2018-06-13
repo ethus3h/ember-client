@@ -7,6 +7,7 @@
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
 // Special types: dc = a string
+// TODO: DcData and renderTraits shouldn't be used here, since they're JS-specific, complex objects. They should be provided by APIs and/or simple data types instead. This will also allow the "dc" ad-hoc data type to actually be an int, instead of a string containing an int (which is kind of stupid).
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 async function eiteLog(strMessage) {
@@ -52,7 +53,7 @@ async function strToInt(str) {
 
 // Utility functions for working with various data types
 async function assertIsDc(dc) {
-    return await assertIsStr(dc);
+    return await assertIsInt(dc);
 }
 
 // Tools for Dc text
