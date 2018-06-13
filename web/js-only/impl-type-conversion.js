@@ -6,7 +6,7 @@
 */
 
 async function implIntFromStr(str) {
-    await assertIsStr str; let intReturn;
+    await assertIsStr(str); let intReturn;
 
     intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
 }
