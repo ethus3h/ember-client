@@ -10,12 +10,4 @@ async function implStrNormalizeMessage(message) {
     }
 }
 
-async function implIntBytearrayLength(bytearrayInput) {
-    return bytearrayInput.byteLength;
-}
-
-async function implIntDcarrLength(dcarrInput) {
-    return dcarrInput.length;
-}
-
 // @license-end
