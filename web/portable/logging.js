@@ -6,12 +6,12 @@
 */
 
 async function die(strMessage) {
-    return await implDie(strMessage);
+    await implDie(strMessage);
 }
 
 async function eiteLog(strMessage) {
     await assertIsStr(strMessage);
-    return await implEiteLog(strMessage);
+    await implEiteLog(strMessage);
 }
 
 async function eiteWarn(strMessage) {
@@ -26,7 +26,7 @@ async function eiteError(strMessage) {
 }
 
 async function eiteFIXMEUnimplemented() {
-    return await implEiteFIXMEUnimplemented();
+    await implEiteFIXMEUnimplemented();
 }
 
 // @license-end

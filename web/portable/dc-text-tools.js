@@ -6,8 +6,8 @@
 */
 
 async function intDcIdToCsvRow(dc) {
-    await assertIsDc(dc);
-    let intReturn = await intFromStr(dc) + 1; await assertIsInt(intReturn); return intReturn;
+    await assertIsDc(dc); let intReturn;
+    intReturn = await intFromStr(dc) + 1; await assertIsInt(intReturn); return intReturn;
 }
 
 async function strDcDataLookupById(strDataset, dc, intFieldNumber) {

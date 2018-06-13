@@ -6,18 +6,24 @@
 */
 
 async function intFromStr(str) {
+    let intReturn;
+
     await assertIsStr(str);
-    return await implIntFromStr(str);
+    intReturn = await implIntFromStr(str); await assertIsInt(intReturn); return intReturn;
 }
 
 async function strFromByte(int) {
+    let strReturn;
+
     await assertIsInt(int);
-    return await implStrFromByte(int)
+    strReturn = await implStrFromByte(int); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strFromUnicodeHex(strInput) {
+    let strReturn;
+
     await assertIsStr(strInput)
-    return await implStrFromUnicodeHex(strInput);
+    return await implStrFromUnicodeHex(strInput); await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
