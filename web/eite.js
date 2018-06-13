@@ -197,7 +197,8 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     // Build render output buffer for specified format
     switch (strTargetFormat) {
         case 'integerList':
-            for (let intInputIndex = 0; intInputIndex < await intDcarrLength(dcarrInput); intInputIndex++) {
+            let intInputLength = await intDcarrLength(dcarrInput);
+            for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
             break;
