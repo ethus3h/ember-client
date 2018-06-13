@@ -24,7 +24,14 @@ function eiteError(strMessage) {
 }
 
 // Utility functions for working with various data types: wrappers for implementation
+function assertIsString(str) {
+    return implAssertIsString(str);
+}
+function assertIsInt(int) {
+    return implAssertIsInt(int);
+}
 function strFromByte(intInput) {
+    assertIsInt(intInput);
     return implStrFromByte(intInput)
 }
 function strFromUnicodeHex(strInput) {
@@ -38,9 +45,6 @@ function intBytearrayLength(bytearrayInput) {
 }
 function strToInt(str) {
     return implStrToInt(str);
-}
-function assertIsString(str) {
-    return implAssertIsString(str);
 }
 
 // Utility functions for working with various data types
