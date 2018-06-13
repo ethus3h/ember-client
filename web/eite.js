@@ -194,15 +194,15 @@ async function dcarrParseSems(bytearrayContent) {
     var dcarrParseResults = [];
     var strParserState = 'dc';
     var strCurrentDc = '';
-    let intContentLength = intBytearrayLength(bytearrayContent);
-    for (let intByteOffset = 0; intByteOffset < intBytearrayLength(bytearrayContent); intByteOffset++) {
+    let intContentLength = await intBytearrayLength(bytearrayContent);
+    for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
             case 'dc':
-                if (boolIsDigit(bytearrayContent[intByteOffset])) {
-                    strCurrentDc = strCurrentDc + strFromByte(bytearrayContent[intByteOffset]);
+                if (await boolIsDigit(bytearrayContent[intByteOffset])) {
+                    strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
-                if (boolIsSpace(bytearrayContent[intByteOffset])) {
+                if (await boolIsSpace(bytearrayContent[intByteOffset])) {
                     dcarrParseResults.push(strCurrentDc);
                     strCurrentDc = '';
                 }
@@ -211,7 +211,7 @@ async function dcarrParseSems(bytearrayContent) {
                 }
                 break;
             case 'comment':
-                if (boolIsNewline(bytearrayContent[intByteOffset])) {
+                if (await boolIsNewline(bytearrayContent[intByteOffset])) {
                     strParserState = 'dc';
                 }
                 break;
