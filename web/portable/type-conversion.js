@@ -11,10 +11,12 @@ async function strFromByte(intInput) {
     await assertIsInt(intInput);
     return await implStrFromByte(intInput)
 }
+
 async function strFromUnicodeHex(strInput) {
     await assertIsStr(strInput)
     return await implStrFromUnicodeHex(strInput);
 }
+
 async function intDcarrLength(dcarrInput) {
     return await implIntDcarrLength(dcarrInput);
 }
