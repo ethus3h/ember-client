@@ -195,10 +195,10 @@ function dcarrParseSems(bytearrayContent) {
 function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     dcarrOutput=[];
     // Build render output buffer for specified format
+    let intInputLength = 0;
     switch (strTargetFormat) {
-        let intInputLength = 0;
         case 'integerList':
-            intInputIndex = intDcarrLength(dcarrInput);
+            intInputLength = intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
@@ -206,7 +206,7 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
         case 'immutableCharacterCells':
             let intLine = 0;
             dcarrOutput[0] = '';
-            intInputIndex = intDcarrLength(dcarrInput);
+            intInputLength = intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
