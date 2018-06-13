@@ -9,10 +9,11 @@ async function assertIsStr(str) {
     return await implAssertIsStr(str);
 }
 
-async function assertIsDc(dc) {
-    return await assertStrContainsOnlyInt(dc);
-}
 async function assertStrContainsOnlyInt(str) {
     await assertIsStr(str);
     return await implAssertStrContainsOnlyInt(str);
+}
+
+async function assertIsDc(dc) {
+    return await assertStrContainsOnlyInt(dc);
 }
