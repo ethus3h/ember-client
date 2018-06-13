@@ -24,6 +24,14 @@ async function assertIsDc(dc) {
     await assertStrContainsOnlyInt(dc);
 }
 
+async function assertIsDcarr(dcarr) {
+    await implAssertIsDcarr(dcarr);
+}
+
+async function assertIsBytearray(bytearray) {
+    await implAssertIsBytearray(bytearray);
+}
+
 
 // Other assertions
 

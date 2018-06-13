@@ -4,14 +4,16 @@
     implIntDcarrLength
 */
 
-async function implIntBytearrayLength(bytearrayInput) {
-    let intReturn;
-    intReturn = bytearrayInput.byteLength; await assertIsInt(intReturn); return intReturn;
+async function implIntBytearrayLength(bytearray) {
+    assertIsBytearray(bytearray); let intReturn;
+
+    intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implIntDcarrLength(dcarrInput) {
-    let intReturn;
-    intReturn = dcarrInput.length; await assertIsInt(intReturn); return intReturn;
+async function implIntDcarrLength(dcarr) {
+    assertIsDcarr(dcarr); let intReturn;
+
+    intReturn = dcarr.length; await assertIsInt(intReturn); return intReturn;
 }
 
 // @license-end

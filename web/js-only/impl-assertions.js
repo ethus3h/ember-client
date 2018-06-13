@@ -26,6 +26,14 @@ async function implAssertIsStr(str) {
     }
 }
 
+async function implAssertIsDcarr(dcarr) {
+    eiteFIXMEUnimplemented("implAssertIsDcarr");
+}
+
+async function implAssertIsBytearray(bytearray) {
+    eiteFIXMEUnimplemented("implAssertIsBytearray");
+}
+
 
 // Other assertions
 
