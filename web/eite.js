@@ -53,7 +53,8 @@ async function strToInt(str) {
 
 // Utility functions for working with various data types
 async function assertIsDc(dc) {
-    return await assertIsInt(strToInt(dc));
+    await assertIsStr(dc);
+    return await assertIsInt(await strToInt(dc));
 }
 
 // Tools for Dc text
