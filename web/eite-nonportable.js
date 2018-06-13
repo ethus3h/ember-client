@@ -14,6 +14,12 @@ function implStrToInt(str) {
     return parseInt(str);
 }
 
+function implAssertIsInt(int) {
+    if (typeof int !== "int") {
+        eiteError("Assertion failed: "+int+" is not ant int.")
+    }
+}
+
 function implAssertIsString(str) {
     if (typeof str !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")

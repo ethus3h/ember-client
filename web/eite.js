@@ -11,7 +11,7 @@
 
 function eiteLog(strMessage) {
     assertIsString(strMessage);
-    implEiteLog(strMessage);
+    return implEiteLog(strMessage);
 }
 function eiteWarn(strMessage) {
     assertIsString(strMessage);
@@ -26,6 +26,9 @@ function eiteError(strMessage) {
 // Utility functions for working with various data types: wrappers for implementation
 function strFromByte(intInput) {
     return implStrFromByte(intInput)
+}
+function strFromUnicodeHex(strInput) {
+    return implStrFromUnicodeHex(strInput);
 }
 async function intDcarrLength(dcarrInput) {
     return await implIntDcarrLength(dcarrInput);
@@ -163,10 +166,10 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
-            return implStrFromUnicodeHex(strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
-            eiteError('Unimplemented character encoding: '+strCharacterEncoding);
+            await eiteError('Unimplemented character encoding: '+strCharacterEncoding);
             break;
     }
 }
