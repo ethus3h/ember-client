@@ -189,7 +189,7 @@ async function dcarrParseDocument(strFormat, bytearrayContent) {
     }
 }
 
-function dcarrParseSems(bytearrayContent) {
+async function dcarrParseSems(bytearrayContent) {
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     var dcarrParseResults = [];
     var strParserState = 'dc';
