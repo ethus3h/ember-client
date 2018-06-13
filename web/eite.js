@@ -217,7 +217,7 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     return dcarrOutput;
 }
 
-function runDocument(dcarrContent) {
+async function runDocument(dcarrContent) {
     strTargetFormat = implGetEnvironmentBestFormat();
     implDoRenderIo(dcarrConvertDocument(dcarrContent, strTargetFormat, implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
