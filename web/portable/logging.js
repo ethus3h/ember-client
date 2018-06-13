@@ -2,6 +2,7 @@
 /* Depends:
     implDie
     implEiteLog
+    implEiteFIXMEUnimplemented
 */
 
 async function die(strMessage) {
@@ -22,6 +23,10 @@ async function eiteError(strMessage) {
     await assertIsStr(strMessage); // FIXME: recursive loop?
     await eiteLog('EITE reported error!: '+strMessage);
     await die('EITE reported error!: '+strMessage);
+}
+
+async function eiteFIXMEUnimplemented() {
+    return await implEiteLog(strMessage);
 }
 
 // @license-end

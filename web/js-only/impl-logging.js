@@ -2,6 +2,7 @@
 /* Provides:
     implDie
     implEiteLog
+    implEiteFIXMEUnimplemented
 */
 
 async function implDie(strMessage) {
@@ -13,5 +14,9 @@ async function implEiteLog(strMessage) {
     await assertIsStr(strMessage);
     console.log(await implStrNormalizeMessage(strMessage));
 };
+
+async function implEiteFIXMEUnimplemented() {
+    await eiteLog("FIXME: Unimplemented at " + new Error().fileName + ":" + new Error().lineNumber);
+}
 
 // @license-end

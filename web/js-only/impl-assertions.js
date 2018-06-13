@@ -27,7 +27,7 @@ async function implAssertIsStr(str) {
 async function implAssertStrContainsOnlyInt(str) {
     await assertIsStr(str);
     //TODO: Fake implementation. Should regex match or something instead.
-    eiteWarn("FIXME: UNIMPLEMENTED");
+    eiteFIXMEUnimplemented();
     return await assertIsInt(await intFromStr(str));
 }
 
