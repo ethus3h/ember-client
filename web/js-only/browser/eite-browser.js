@@ -20,11 +20,6 @@ async function eiteWarn(strMessage) {
 
 // Fully platform-specific code
 
-async function implEiteLog(strMessage) {
-    // This function implements logging (which may differ between platforms).
-    console.log(implStrNormalizeMessage(strMessage));
-};
-
 async function implGetEnvironmentBestFormat() {
     return 'immutableCharacterCells';
 }
