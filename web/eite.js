@@ -73,44 +73,44 @@ function assertIsDc(dc) {
             }
         }
     }
-    function strDcGetField(dc, intFieldNumber) {
-        return strDcDataLookupById("DcData", dc, intFieldNumber);
+    async function strDcGetField(dc, intFieldNumber) {
+        return await strDcDataLookupById("DcData", dc, intFieldNumber);
     }
-    function strDcGetName(dc) {
-        return strDcGetField(dc, 1);
+    async function strDcGetName(dc) {
+        return await strDcGetField(dc, 1);
     }
-    function strDcGetCombiningClass(dc) {
-        return strDcGetField(dc, 2);
+    async function strDcGetCombiningClass(dc) {
+        return await strDcGetField(dc, 2);
     }
-    function strDcGetBidiClass(dc) {
-        return strDcGetField(dc, 3);
+    async function strDcGetBidiClass(dc) {
+        return await strDcGetField(dc, 3);
     }
-    function strDcGetCasing(dc) {
-        return strDcGetField(dc, 4);
+    async function strDcGetCasing(dc) {
+        return await strDcGetField(dc, 4);
     }
-    function strDcGetType(dc) {
-        return strDcGetField(dc, 5);
+    async function strDcGetType(dc) {
+        return await strDcGetField(dc, 5);
     }
-    function strDcGetScript(dc) {
-        return strDcGetField(dc, 6);
+    async function strDcGetScript(dc) {
+        return await strDcGetField(dc, 6);
     }
-    function strDcGetComplexTraits(dc) {
-        return strDcGetField(dc, 7);
+    async function strDcGetComplexTraits(dc) {
+        return await strDcGetField(dc, 7);
     }
-    function strDcGetDescription(dc) {
-        return strDcGetField(dc, 8);
+    async function strDcGetDescription(dc) {
+        return await strDcGetField(dc, 8);
     }
 
-    function boolDcIsNewline(dc) {
-        if(strDcGetBidiClass(dc) === 'B') {
+    async function boolDcIsNewline(dc) {
+        if(await strDcGetBidiClass(dc) === 'B') {
             return true;
         }
         return false;
     }
 
-    function boolDcIsPrintable(dc) {
-        strType=strDcGetType(dc);
-        strGeneralType=strType[0];
+    async function boolDcIsPrintable(dc) {
+        let strType = await strDcGetType(dc);
+        let strGeneralType = strType[0];
         switch(strType) {
             case 'Zl':
             case 'Zp':
@@ -191,9 +191,9 @@ async function dcarrParseDocument(strFormat, bytearrayContent) {
 
 async function dcarrParseSems(bytearrayContent) {
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
-    var dcarrParseResults = [];
-    var strParserState = 'dc';
-    var strCurrentDc = '';
+    let dcarrParseResults = [];
+    let strParserState = 'dc';
+    let strCurrentDc = '';
     let intContentLength = await intBytearrayLength(bytearrayContent);
     for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
