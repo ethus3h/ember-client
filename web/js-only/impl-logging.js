@@ -6,7 +6,7 @@
 */
 
 async function implDie(strMessage) {
-    // Don't call await assertIsStr(strMessage); since it can call implDie and cause a recursive loop
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
     throw strMessage;
 }
