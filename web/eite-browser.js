@@ -19,12 +19,6 @@ function eiteWarn(strMessage) {
 
 // Fully platform-specific code
 
-function assertIsString(str) {
-    if (typeof str !== "string") {
-        eiteError("Assertion failed: "+str+" is not a string.")
-    }
-}
-
 function die(strMessage) {
     throw strMessage;
 }
@@ -112,7 +106,12 @@ function operateOnDocFromUrl(strFormat, strUrl, callback) {
     urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
+function implStrFromByte(intInput) {
+    return String.fromCharCode(intInput);
+}
+
 function implStrFromUnicodeHex(strCharacter) {
+    assertIsString(strCharacter);
     return String.fromCharCode('0x'+strCharacter);
 }
 

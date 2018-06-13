@@ -10,6 +10,20 @@ function implStrNormalizeMessage(message) {
     }
 }
 
+function implStrToInt(str) {
+    return parseInt(str);
+}
+
+function implAssertIsString(str) {
+    if (typeof str !== "string") {
+        eiteError("Assertion failed: "+str+" is not a string.")
+    }
+}
+
+function implIntBytearrayLength(bytearrayInput) {
+    return bytearrayInput.byteLength;
+}
+
 async function implIntDcarrLength(dcarrInput) {
     return dcarrInput.length;
 }

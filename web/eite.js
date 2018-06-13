@@ -6,6 +6,7 @@
 // Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or eite-nonportable.js for JavaScript-specific code.
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
+// Special types: dc = a string
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 function eiteLog(strMessage) {
@@ -17,19 +18,38 @@ function eiteWarn(strMessage) {
     eiteLog('EITE reported warning: '+strMessages);
 }
 function eiteError(strMessage) {
-    assertIsString(strMessage);
+    assertIsString(strMessage); // FIXME: recursive loop?
     eiteLog('EITE reported error!: '+strMessage);
     die('EITE reported error!: '+strMessage);
 }
 
+// Utility functions for working with various data types: wrappers for implementation
+function strFromByte(intInput) {
+    return implStrFromByte(intInput)
+}
 async function intDcarrLength(dcarrInput) {
     return await implIntDcarrLength(dcarrInput);
+}
+function intBytearrayLength(bytearrayInput) {
+    return implIntBytearrayLength(bytearrayInput);
+}
+function strToInt(str) {
+    return implStrToInt(str);
+}
+function assertIsString(str) {
+    return implAssertIsString(str);
+}
+
+// Utility functions for working with various data types
+function assertIsDc(dc) {
+    return assertIsString(dc);
 }
 
 // Tools for Dc text
 {
     function intDcIdToCsvRow(dc) {
-        return parseInt(dc) + 1;
+        assertIsDc(dc);
+        return strToInt(dc) + 1;
     }
     function strDcDataLookupById(strDataset, dc, intFieldNumber) {
         return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
@@ -167,12 +187,13 @@ function dcarrParseSems(bytearrayContent) {
     var dcarrParseResults = [];
     var strParserState = 'dc';
     var strCurrentDc = '';
-    for (let intByteOffset = 0; intByteOffset < bytearrayContent.byteLength; intByteOffset++) {
+    let intContentLength = intBytearrayLength(bytearrayContent);
+    for (let intByteOffset = 0; intByteOffset < intBytearrayLength(bytearrayContent); intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
             case 'dc':
                 if (boolIsDigit(bytearrayContent[intByteOffset])) {
-                    strCurrentDc = strCurrentDc + String.fromCharCode(bytearrayContent[intByteOffset]);
+                    strCurrentDc = strCurrentDc + strFromByte(bytearrayContent[intByteOffset]);
                 }
                 if (boolIsSpace(bytearrayContent[intByteOffset])) {
                     dcarrParseResults.push(strCurrentDc);
