@@ -5,7 +5,7 @@
 // Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
-// TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, afaict...
+// TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
 async function eiteError(strMessage) {
     console.trace();
     await eiteLog('EITE reported error!: '+await implStrNormalizeMessage(strMessage));
