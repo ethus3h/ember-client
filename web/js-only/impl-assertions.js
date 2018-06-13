@@ -6,6 +6,8 @@
     implAssertStrContainsOnlyInt
 */
 
+// Assertions that something is a given type
+
 async function implAssertIsBool(bool) {
     if (typeof bool !== "boolean") {
         await eiteError("Assertion failed: "+bool+" is not a boolean.")
@@ -24,8 +26,12 @@ async function implAssertIsStr(str) {
     }
 }
 
+
+// Other assertions
+
 async function implAssertStrContainsOnlyInt(str) {
     await assertIsStr(str);
+
     //TODO: Fake implementation. Should regex match or something instead.
     eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
