@@ -7,21 +7,21 @@
 // Override error reporting method to show alert
 async function voidEiteError(strMessage) {
     console.trace();
-    eiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
-    alert('EITE reported error!: '+implNormalizeMessage(strMessage));
-    throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
+    await eiteLog('EITE reported error!: '+await implNormalizeMessage(strMessage));
+    alert('EITE reported error!: '+await implNormalizeMessage(strMessage));
+    throw 'EITE reported error!: '+await implNormalizeMessage(strMessage);
 }
 async function eiteWarn(strMessage) {
     console.trace();
-    eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
-    alert('EITE reported warning: '+implNormalizeMessage(strMessage));
+    await eiteLog('EITE reported warning: '+await implNormalizeMessage(strMessage));
+    alert('EITE reported warning: '+await implNormalizeMessage(strMessage));
 }
 
 // Fully platform-specific code
 
 async function assertIsString(str) {
     if (typeof str !== "string") {
-        eiteError("Assertion failed: "+str+" is not a string.")
+        await eiteError("Assertion failed: "+str+" is not a string.")
     }
 }
 
@@ -31,7 +31,7 @@ async function die(strMessage) {
 
 async function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
-    console.log(implNormalizeMessage(strMessage));
+    console.log(await implNormalizeMessage(strMessage));
 };
 
 async function implGetEnvironmentBestFormat() {
@@ -40,7 +40,7 @@ async function implGetEnvironmentBestFormat() {
 
 async function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
-        eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
+        await eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
     }
     var traits = {};
     switch (targetFormat) {
@@ -54,7 +54,7 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
                     traits.characterEncoding = 'UTF-8';
                     break;
                 default:
-                    eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
+                    await eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
                     traits.characterEncoding = 'ASCII-safe-subset';
                     break;
             }
@@ -64,20 +64,20 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
 }
 
 async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
-    Papa.parse(url, {
+    await Papa.parse(url, {
         download: true,
         encoding: 'UTF-8',
         newline: "\n",
         delimiter: ',',
         quoteChar: '"',
-        step: function(results, parser) {
-            lineLoadedCallback(results, parser);
+        step: async function(results, parser) {
+            await lineLoadedCallback(results, parser);
         },
-        complete: function(results, file) {
-            documentLoadedCallback(results, file);
+        complete: async function(results, file) {
+            await documentLoadedCallback(results, file);
         },
-        error: function(results, file) {
-            errorCallback(results, file);
+        error: async function(results, file) {
+            await errorCallback(results, file);
         }
     })
 }
@@ -88,12 +88,12 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
         case 'immutableCharacterCells':
             let immutableCharCellOutput = document.getElementById('log');
             for (let i = 0; i < renderBuffer.length; i++) {
-                immutableCharCellOutput.innerHTML += implNormalizeMessage(renderBuffer[i]) + '<br />';
+                immutableCharCellOutput.innerHTML += await implNormalizeMessage(renderBuffer[i]) + '<br />';
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;
         default:
-            eiteError('Unimplemented render I/O format: '+targetFormat);
+            await eiteError('Unimplemented render I/O format: '+targetFormat);
             break;
     }
 }
@@ -103,7 +103,7 @@ async function urlLoadForCallback(url, callback) {
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
     oReq.onload = function(oEvent) {
-        await callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
     };
     oReq.send(null);
 }
