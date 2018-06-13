@@ -103,13 +103,13 @@ async function urlLoadForCallback(url, callback) {
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
     oReq.onload = function(oEvent) {
-        callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        await callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
     };
     oReq.send(null);
 }
 
 async function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
+    urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
 async function implStrFromUnicodeHex(strCharacter) {
@@ -122,7 +122,7 @@ async function runEiteTest(strTestFormat, strTestName) {
     strTestInputFormatUrl='../tests/'+strTestName+'.'+strTestFormat+'/in-format';
     switch (strTestFormat) {
         case 'ept': // Parser test
-            await urlLoadForCallback(strTestInputFormatUrl, function(bytearrayContent) {})
+            await urlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {})
             break;
         default:
             await eiteError('Unimplemented test format: '+strTestFormat);
@@ -141,23 +141,23 @@ async function dcDataAppendLine(dataset, line) {
 async function loadDatasets(callback) {
     if (datasets.length > 0) {
         let dataset = datasets[0];
-        dcDataAppendDataset(dataset);
-        loadCsv(
+        await dcDataAppendDataset(dataset);
+        await loadCsv(
             '../data/'+dataset+'.csv',
-            function(results,parser){
-                dcDataAppendLine(dataset, results);
+            async function(results,parser){
+                await dcDataAppendLine(dataset, results);
             },
-            function(){
+            async function(){
                 datasets.shift();
-                loadDatasets(callback);
+                await loadDatasets(callback);
             },
-            function(){
-                eiteError('Error reported while parsing '+dataset+'!')
+            async function(){
+                await eiteError('Error reported while parsing '+dataset+'!')
             }
         );
     }
     else {
-        callback();
+        await callback();
     }
 }
 
