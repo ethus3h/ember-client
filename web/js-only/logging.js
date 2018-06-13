@@ -13,3 +13,5 @@ async function implEiteLog(strMessage) {
     await assertIsStr(strMessage);
     console.log(await implStrNormalizeMessage(strMessage));
 };
+
+// @license-end

@@ -18,3 +18,5 @@ async function implStrFromUnicodeHex(strCharacter) {
     await assertIsStr(strCharacter);
     return String.fromCharCode('0x'+strCharacter);
 }
+
+// @license-end

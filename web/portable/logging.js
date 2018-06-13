@@ -23,3 +23,5 @@ async function eiteError(strMessage) {
     await eiteLog('EITE reported error!: '+strMessage);
     await die('EITE reported error!: '+strMessage);
 }
+
+// @license-end

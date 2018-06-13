@@ -11,3 +11,5 @@ async function intBytearrayLength(bytearray) {
 async function intDcarrLength(dcarr) {
     return await implIntDcarrLength(dcarr);
 }
+
+// @license-end

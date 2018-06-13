@@ -22,3 +22,5 @@ async function implAssertStrContainsOnlyInt(str) {
     await assertIsStr(str);
     return await assertIsInt(await intFromStr(str));
 }
+
+// @license-end

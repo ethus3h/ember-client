@@ -21,3 +21,5 @@ async function assertStrContainsOnlyInt(str) {
 async function assertIsDc(dc) {
     return await assertStrContainsOnlyInt(dc);
 }
+
+// @license-end

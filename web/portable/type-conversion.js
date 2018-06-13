@@ -19,3 +19,5 @@ async function strFromUnicodeHex(strInput) {
     await assertIsStr(strInput)
     return await implStrFromUnicodeHex(strInput);
 }
+
+// @license-end

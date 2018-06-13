@@ -11,3 +11,5 @@ async function implIntBytearrayLength(bytearrayInput) {
 async function implIntDcarrLength(dcarrInput) {
     return dcarrInput.length;
 }
+
+// @license-end
