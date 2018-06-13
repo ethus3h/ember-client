@@ -43,7 +43,7 @@ async function implAssertIsStr(str) {
 async function implAssertStrContainsOnlyInt(str) {
     //TODO: Fake implementation. Should regex match or something instead.
     await assertIsStr(str);
-    return await assertIsInt(await strToInt(str));
+    return await assertIsInt(await intFromStr(str));
 }
 
 async function implIntBytearrayLength(bytearrayInput) {

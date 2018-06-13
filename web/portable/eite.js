@@ -20,7 +20,7 @@
 // Tools for Dc text
     async function intDcIdToCsvRow(dc) {
         await assertIsDc(dc);
-        return await strToInt(dc) + 1;
+        return await intFromStr(dc) + 1;
     }
     async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
         await assertIsStr(strDataset); await assertIsDc(dc); await assertIsInt(intFieldNumber);
