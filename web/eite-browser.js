@@ -5,7 +5,8 @@
 // Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
-async function voidEiteError(strMessage) {
+// TODO: How to make this work?
+async function eiteError(strMessage) {
     console.trace();
     await eiteLog('EITE reported error!: '+await implStrNormalizeMessage(strMessage));
     alert('EITE reported error!: '+await implStrNormalizeMessage(strMessage));
