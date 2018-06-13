@@ -196,8 +196,9 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     dcarrOutput=[];
     // Build render output buffer for specified format
     switch (strTargetFormat) {
+        let intInputLength = 0;
         case 'integerList':
-            let intInputLength = intDcarrLength(dcarrInput);
+            intInputIndex = intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
@@ -205,9 +206,8 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
         case 'immutableCharacterCells':
             let intLine = 0;
             dcarrOutput[0] = '';
-            let intInputLength = intDcarrLength(dcarrInput);
+            intInputIndex = intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                console.log(intDcarrLength(dcarrInput));
                 if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = '';
