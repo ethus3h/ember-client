@@ -8,29 +8,29 @@
 // dcData object must be available before calling these functions.
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
-async function eiteLog(strMessage) {
-    await assertIsString(strMessage);
-    await implEiteLog(strMessage);
+function eiteLog(strMessage) {
+    assertIsString(strMessage);
+    implEiteLog(strMessage);
 }
-async function eiteWarn(strMessage) {
-    await assertIsString(strMessage);
-    await eiteLog('EITE reported warning: '+strMessages);
+function eiteWarn(strMessage) {
+    assertIsString(strMessage);
+    eiteLog('EITE reported warning: '+strMessages);
 }
-async function eiteError(strMessage) {
-    await assertIsString(strMessage);
-    await eiteLog('EITE reported error!: '+strMessage);
-    await die('EITE reported error!: '+strMessage);
+function eiteError(strMessage) {
+    assertIsString(strMessage);
+    eiteLog('EITE reported error!: '+strMessage);
+    die('EITE reported error!: '+strMessage);
 }
 
 // Tools for Dc text
 {
-    async function intDcIdToCsvRow(dc) {
+    function intDcIdToCsvRow(dc) {
         return parseInt(dc) + 1;
     }
-    async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+    function strDcDataLookupById(strDataset, dc, intFieldNumber) {
         return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     }
-    async function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
+    function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
         let intLength = dcData[strDataset].length;
         // start at 1 to skip header row
         for (let intRow = 1; intRow < intLength; intRow++) {
@@ -39,43 +39,43 @@ async function eiteError(strMessage) {
             }
         }
     }
-    async function strDcGetField(dc, intFieldNumber) {
-        return await strDcDataLookupById("DcData", dc, intFieldNumber);
+    function strDcGetField(dc, intFieldNumber) {
+        return strDcDataLookupById("DcData", dc, intFieldNumber);
     }
-    async function strDcGetName(dc) {
-        return await strDcGetField(dc, 1);
+    function strDcGetName(dc) {
+        return strDcGetField(dc, 1);
     }
-    async function strDcGetCombiningClass(dc) {
-        return await strDcGetField(dc, 2);
+    function strDcGetCombiningClass(dc) {
+        return strDcGetField(dc, 2);
     }
-    async function strDcGetBidiClass(dc) {
-        return await strDcGetField(dc, 3);
+    function strDcGetBidiClass(dc) {
+        return strDcGetField(dc, 3);
     }
-    async function strDcGetCasing(dc) {
-        return await strDcGetField(dc, 4);
+    function strDcGetCasing(dc) {
+        return strDcGetField(dc, 4);
     }
-    async function strDcGetType(dc) {
-        return await strDcGetField(dc, 5);
+    function strDcGetType(dc) {
+        return strDcGetField(dc, 5);
     }
-    async function strDcGetScript(dc) {
-        return await strDcGetField(dc, 6);
+    function strDcGetScript(dc) {
+        return strDcGetField(dc, 6);
     }
-    async function strDcGetComplexTraits(dc) {
-        return await strDcGetField(dc, 7);
+    function strDcGetComplexTraits(dc) {
+        return strDcGetField(dc, 7);
     }
-    async function strDcGetDescription(dc) {
-        return await strDcGetField(dc, 8);
+    function strDcGetDescription(dc) {
+        return strDcGetField(dc, 8);
     }
 
-    async function boolDcIsNewline(dc) {
-        if(await strDcGetBidiClass(dc) === 'B') {
+    function boolDcIsNewline(dc) {
+        if(strDcGetBidiClass(dc) === 'B') {
             return true;
         }
         return false;
     }
 
-    async function boolDcIsPrintable(dc) {
-        strType=await strDcGetType(dc);
+    function boolDcIsPrintable(dc) {
+        strType=strDcGetType(dc);
         strGeneralType=strType[0];
         switch(strType) {
             case 'Zl':
@@ -100,19 +100,19 @@ async function eiteError(strMessage) {
 // Tools for ASCII text
 {
     // Checks whether N is within the range A and B, including endpoints
-    async function boolIsBetween(intN, intA, intB) {
+    function boolIsBetween(intN, intA, intB) {
         return (intN - intA) * (intN - intB) <= 0;
     }
-    async function boolIsDigit(intN) {
-        return await boolIsBetween(intN, 48, 57);
+    function boolIsDigit(intN) {
+        return boolIsBetween(intN, 48, 57);
     }
-    async function boolIsPrintable(intN) {
-        return await boolIsBetween(intN, 32, 126);
+    function boolIsPrintable(intN) {
+        return boolIsBetween(intN, 32, 126);
     }
-    async function boolIsSpace(intN) {
+    function boolIsSpace(intN) {
         return intN == 32;
     }
-    async function boolIsNewline(intN) {
+    function boolIsNewline(intN) {
         return (intN == 10) || (intN == 13);
     }
     /*
@@ -135,30 +135,30 @@ async function eiteError(strMessage) {
     */
 }
 
-async function strPrintableDcToChar(dc, strCharacterEncoding) {
+function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
-            return await implStrFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            return implStrFromUnicodeHex(strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
-            await eiteError('Unimplemented character encoding: '+strCharacterEncoding);
+            eiteError('Unimplemented character encoding: '+strCharacterEncoding);
             break;
     }
 }
 
-async function dcarrParseDocument(strFormat, bytearrayContent) {
+function dcarrParseDocument(strFormat, bytearrayContent) {
     switch (strFormat) {
         case 'sems':
-            return await dcarrParseSems(bytearrayContent);
+            return dcarrParseSems(bytearrayContent);
             break;
         default:
-            await eiteError('Unimplemented document parsing format: '+strFormat);
+            eiteError('Unimplemented document parsing format: '+strFormat);
             break;
     }
 }
 
-async function dcarrParseSems(bytearrayContent) {
+function dcarrParseSems(bytearrayContent) {
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     var dcarrParseResults = [];
     var strParserState = 'dc';
@@ -167,10 +167,10 @@ async function dcarrParseSems(bytearrayContent) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
             case 'dc':
-                if (await boolIsDigit(bytearrayContent[intByteOffset])) {
+                if (boolIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + String.fromCharCode(bytearrayContent[intByteOffset]);
                 }
-                if (await boolIsSpace(bytearrayContent[intByteOffset])) {
+                if (boolIsSpace(bytearrayContent[intByteOffset])) {
                     dcarrParseResults.push(strCurrentDc);
                     strCurrentDc = '';
                 }
@@ -179,7 +179,7 @@ async function dcarrParseSems(bytearrayContent) {
                 }
                 break;
             case 'comment':
-                if (await boolIsNewline(bytearrayContent[intByteOffset])) {
+                if (boolIsNewline(bytearrayContent[intByteOffset])) {
                     strParserState = 'dc';
                 }
                 break;
@@ -188,7 +188,7 @@ async function dcarrParseSems(bytearrayContent) {
     return dcarrParseResults;
 }
 
-async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
+function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     dcarrOutput=[]
     // Build render output buffer for specified format
     switch (strTargetFormat) {
@@ -201,24 +201,24 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             let intLine=0;
             dcarrOutput[0] = '';
             for (let intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
-                if (await boolDcIsNewline(dcarrInput[intInputIndex])) {
+                if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = '';
                 }
-                if (await boolDcIsPrintable(dcarrInput[intInputIndex])) {
-                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
+                if (boolDcIsPrintable(dcarrInput[intInputIndex])) {
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
                 }
             }
             break;
         default:
-            await eiteError('Unimplemented document render target format: '+strTargetFormat);
+            eiteError('Unimplemented document render target format: '+strTargetFormat);
             break;
     }
     return dcarrOutput;
 }
 
-async function runDocument(dcarrContent) {
-    strTargetFormat = await implGetEnvironmentBestFormat();
-    await implDoRenderIo(await dcarrConvertDocument(dcarrContent, strTargetFormat, await implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
+function runDocument(dcarrContent) {
+    strTargetFormat = implGetEnvironmentBestFormat();
+    implDoRenderIo(dcarrConvertDocument(dcarrContent, strTargetFormat, implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
 // @license-end

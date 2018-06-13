@@ -5,42 +5,42 @@
 // Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
-async function voidEiteError(strMessage) {
+function voidEiteError(strMessage) {
     console.trace();
-    await eiteLog('EITE reported error!: '+await implNormalizeMessage(strMessage));
-    alert('EITE reported error!: '+await implNormalizeMessage(strMessage));
-    throw 'EITE reported error!: '+await implNormalizeMessage(strMessage);
+    eiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
+    alert('EITE reported error!: '+implNormalizeMessage(strMessage));
+    throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
 }
-async function eiteWarn(strMessage) {
+function eiteWarn(strMessage) {
     console.trace();
-    await eiteLog('EITE reported warning: '+await implNormalizeMessage(strMessage));
-    alert('EITE reported warning: '+await implNormalizeMessage(strMessage));
+    eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
+    alert('EITE reported warning: '+implNormalizeMessage(strMessage));
 }
 
 // Fully platform-specific code
 
-async function assertIsString(str) {
+function assertIsString(str) {
     if (typeof str !== "string") {
-        await eiteError("Assertion failed: "+str+" is not a string.")
+        eiteError("Assertion failed: "+str+" is not a string.")
     }
 }
 
-async function die(strMessage) {
+function die(strMessage) {
     throw strMessage;
 }
 
-async function implEiteLog(strMessage) {
+function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
-    console.log(await implNormalizeMessage(strMessage));
+    console.log(implNormalizeMessage(strMessage));
 };
 
-async function implGetEnvironmentBestFormat() {
+function implGetEnvironmentBestFormat() {
     return 'immutableCharacterCells';
 }
 
-async function implGetEnvironmentRenderTraits(targetFormat) {
+function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
-        await eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
+        eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
     }
     var traits = {};
     switch (targetFormat) {
@@ -54,7 +54,7 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
                     traits.characterEncoding = 'UTF-8';
                     break;
                 default:
-                    await eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
+                    eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
                     traits.characterEncoding = 'ASCII-safe-subset';
                     break;
             }
@@ -63,42 +63,42 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
     return traits;
 }
 
-async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
-    await Papa.parse(url, {
+function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
+    Papa.parse(url, {
         download: true,
         encoding: 'UTF-8',
         newline: "\n",
         delimiter: ',',
         quoteChar: '"',
-        step: async function(results, parser) {
-            await lineLoadedCallback(results, parser);
+        step: function(results, parser) {
+            lineLoadedCallback(results, parser);
         },
-        complete: async function(results, file) {
-            await documentLoadedCallback(results, file);
+        complete: function(results, file) {
+            documentLoadedCallback(results, file);
         },
-        error: async function(results, file) {
-            await errorCallback(results, file);
+        error: function(results, file) {
+            errorCallback(results, file);
         }
     })
 }
 
-async function implDoRenderIo(renderBuffer, targetFormat) {
+function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case 'integerList':
         case 'immutableCharacterCells':
             let immutableCharCellOutput = document.getElementById('log');
             for (let i = 0; i < renderBuffer.length; i++) {
-                immutableCharCellOutput.innerHTML += await implNormalizeMessage(renderBuffer[i]) + '<br />';
+                immutableCharCellOutput.innerHTML += implNormalizeMessage(renderBuffer[i]) + '<br />';
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;
         default:
-            await eiteError('Unimplemented render I/O format: '+targetFormat);
+            eiteError('Unimplemented render I/O format: '+targetFormat);
             break;
     }
 }
 
-async function urlLoadForCallback(url, callback) {
+function urlLoadForCallback(url, callback) {
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
@@ -108,56 +108,56 @@ async function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-async function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); })
+function operateOnDocFromUrl(strFormat, strUrl, callback) {
+    urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
-async function implStrFromUnicodeHex(strCharacter) {
+function implStrFromUnicodeHex(strCharacter) {
     return String.fromCharCode('0x'+strCharacter);
 }
 
-async function runEiteTest(strTestFormat, strTestName) {
+function runEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
     strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';
     strTestInputFormatUrl='../tests/'+strTestName+'.'+strTestFormat+'/in-format';
     switch (strTestFormat) {
         case 'ept': // Parser test
-            await urlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {})
+            urlLoadForCallback(strTestInputFormatUrl, function(bytearrayContent) {})
             break;
         default:
-            await eiteError('Unimplemented test format: '+strTestFormat);
+            eiteError('Unimplemented test format: '+strTestFormat);
             break;
     }
 }
 
 // Set up dcData
 dcData = [];
-async function dcDataAppendDataset(dataset) {
+function dcDataAppendDataset(dataset) {
     dcData[dataset] = [];
 }
-async function dcDataAppendLine(dataset, line) {
+function dcDataAppendLine(dataset, line) {
     dcData[dataset].push(line);
 }
-async function loadDatasets(callback) {
+function loadDatasets(callback) {
     if (datasets.length > 0) {
         let dataset = datasets[0];
-        await dcDataAppendDataset(dataset);
-        await loadCsv(
+        dcDataAppendDataset(dataset);
+        loadCsv(
             '../data/'+dataset+'.csv',
-            async function(results,parser){
-                await dcDataAppendLine(dataset, results);
+            function(results,parser){
+                dcDataAppendLine(dataset, results);
             },
-            async function(){
+            function(){
                 datasets.shift();
-                await loadDatasets(callback);
+                loadDatasets(callback);
             },
-            async function(){
-                await eiteError('Error reported while parsing '+dataset+'!')
+            function(){
+                eiteError('Error reported while parsing '+dataset+'!')
             }
         );
     }
     else {
-        await callback();
+        callback();
     }
 }
 
