@@ -26,7 +26,7 @@ async function eiteError(strMessage) {
 }
 
 async function eiteFIXMEUnimplemented() {
-    return await implEiteLog(strMessage);
+    return await implEiteFIXMEUnimplemented();
 }
 
 // @license-end
