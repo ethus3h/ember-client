@@ -61,6 +61,9 @@ function assertIsDc(dc) {
         return strToInt(dc) + 1;
     }
     function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+        assertIsStr(strDataset);
+        assertIsDc(dc);
+        assertIsInt(intFieldNumber);
         return dcData[strDataset][intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     }
     function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
