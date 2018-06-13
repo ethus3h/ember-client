@@ -5,13 +5,13 @@
 // Platform-specific overrides of routines available portably
 
 // Override error reporting method to show alert
-function voidEiteError(strMessage) {
+async function voidEiteError(strMessage) {
     console.trace();
     eiteLog('EITE reported error!: '+implNormalizeMessage(strMessage));
     alert('EITE reported error!: '+implNormalizeMessage(strMessage));
     throw 'EITE reported error!: '+implNormalizeMessage(strMessage);
 }
-function eiteWarn(strMessage) {
+async function eiteWarn(strMessage) {
     console.trace();
     eiteLog('EITE reported warning: '+implNormalizeMessage(strMessage));
     alert('EITE reported warning: '+implNormalizeMessage(strMessage));
@@ -19,26 +19,26 @@ function eiteWarn(strMessage) {
 
 // Fully platform-specific code
 
-function assertIsString(str) {
+async function assertIsString(str) {
     if (typeof str !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")
     }
 }
 
-function die(strMessage) {
+async function die(strMessage) {
     throw strMessage;
 }
 
-function implEiteLog(strMessage) {
+async function implEiteLog(strMessage) {
     // This function implements logging (which may differ between platforms).
     console.log(implNormalizeMessage(strMessage));
 };
 
-function implGetEnvironmentBestFormat() {
+async function implGetEnvironmentBestFormat() {
     return 'immutableCharacterCells';
 }
 
-function implGetEnvironmentRenderTraits(targetFormat) {
+async function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
         eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
     }
@@ -63,7 +63,7 @@ function implGetEnvironmentRenderTraits(targetFormat) {
     return traits;
 }
 
-function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
+async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
     Papa.parse(url, {
         download: true,
         encoding: 'UTF-8',
@@ -82,7 +82,7 @@ function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback)
     })
 }
 
-function implDoRenderIo(renderBuffer, targetFormat) {
+async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case 'integerList':
         case 'immutableCharacterCells':
@@ -98,7 +98,7 @@ function implDoRenderIo(renderBuffer, targetFormat) {
     }
 }
 
-function urlLoadForCallback(url, callback) {
+async function urlLoadForCallback(url, callback) {
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
@@ -108,37 +108,37 @@ function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-function operateOnDocFromUrl(strFormat, strUrl, callback) {
+async function operateOnDocFromUrl(strFormat, strUrl, callback) {
     urlLoadForCallback(strUrl, function(bytearrayContent) { callback(dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
-function implStrFromUnicodeHex(strCharacter) {
+async function implStrFromUnicodeHex(strCharacter) {
     return String.fromCharCode('0x'+strCharacter);
 }
 
-function runEiteTest(strTestFormat, strTestName) {
+async function runEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
     strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';
     strTestInputFormatUrl='../tests/'+strTestName+'.'+strTestFormat+'/in-format';
     switch (strTestFormat) {
         case 'ept': // Parser test
-            urlLoadForCallback(strTestInputFormatUrl, function(bytearrayContent) {})
+            await urlLoadForCallback(strTestInputFormatUrl, function(bytearrayContent) {})
             break;
         default:
-            eiteError('Unimplemented test format: '+strTestFormat);
+            await eiteError('Unimplemented test format: '+strTestFormat);
             break;
     }
 }
 
 // Set up dcData
 dcData = [];
-function dcDataAppendDataset(dataset) {
+async function dcDataAppendDataset(dataset) {
     dcData[dataset] = [];
 }
-function dcDataAppendLine(dataset, line) {
+async function dcDataAppendLine(dataset, line) {
     dcData[dataset].push(line);
 }
-function loadDatasets(callback) {
+async function loadDatasets(callback) {
     if (datasets.length > 0) {
         let dataset = datasets[0];
         dcDataAppendDataset(dataset);
