@@ -42,8 +42,8 @@ async function strFromUnicodeHex(strInput) {
 async function intDcarrLength(dcarrInput) {
     return await implIntDcarrLength(dcarrInput);
 }
-function intBytearrayLength(bytearrayInput) {
-    return implIntBytearrayLength(bytearrayInput);
+async function intBytearrayLength(bytearrayInput) {
+    return await implIntBytearrayLength(bytearrayInput);
 }
 function strToInt(str) {
     assertIsStr(str);
@@ -132,19 +132,19 @@ function assertIsDc(dc) {
 
 // Tools for ASCII text
     // Checks whether N is within the range A and B, including endpoints
-    function boolIsBetween(intN, intA, intB) {
+    async function boolIsBetween(intN, intA, intB) {
         return (intN - intA) * (intN - intB) <= 0;
     }
-    function boolIsDigit(intN) {
-        return boolIsBetween(intN, 48, 57);
+    async function boolIsDigit(intN) {
+        return await boolIsBetween(intN, 48, 57);
     }
-    function boolIsPrintable(intN) {
-        return boolIsBetween(intN, 32, 126);
+    async function boolIsPrintable(intN) {
+        return await boolIsBetween(intN, 32, 126);
     }
-    function boolIsSpace(intN) {
+    async function boolIsSpace(intN) {
         return intN == 32;
     }
-    function boolIsNewline(intN) {
+    async function boolIsNewline(intN) {
         return (intN == 10) || (intN == 13);
     }
     /*

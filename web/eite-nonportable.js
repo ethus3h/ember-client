@@ -26,7 +26,7 @@ function implAssertIsStr(str) {
     }
 }
 
-function implIntBytearrayLength(bytearrayInput) {
+async function implIntBytearrayLength(bytearrayInput) {
     return bytearrayInput.byteLength;
 }
 
