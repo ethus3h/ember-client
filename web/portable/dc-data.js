@@ -21,14 +21,14 @@ async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
     strReturn = dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
 }
 
-async function strDcDataLookupByValue(strDataset, strFilterField, strFilterValue, strDesiredField) {
-    await assertIsStr(strDataset); await assertIsStr(strFilterField); await assertIsStr(strFilterValue); await assertIsStr(strDesiredField); let strReturn;
+async function strDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField) {
+    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsStr(strFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
     let intLength = intDcDataDatasetLength(strDataset);
     // start at 1 to skip header row
     for (let intRow = 1; intRow < intLength; intRow++) {
-        if(dcData[strDataset][intRow].data[0][strFilterField] === strFilterValue) {
-            strReturn = dcData[strDataset][intRow].data[0][strDesiredField]; await assertIsStr(strReturn); return strReturn;
+        if(dcData[strDataset][intRow].data[0][intFilterField] === strFilterValue) {
+            strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
     await assertIsStr(strReturn); return strReturn;
