@@ -159,7 +159,7 @@ function assertIsDc(dc) {
     */
 }
 
-function strPrintableDcToChar(dc, strCharacterEncoding) {
+async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case 'ASCII-safe-subset':
         case 'UTF-8':
