@@ -193,7 +193,7 @@ function dcarrParseSems(bytearrayContent) {
 }
 
 function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
-    dcarrOutput=[]
+    dcarrOutput=[];
     // Build render output buffer for specified format
     switch (strTargetFormat) {
         case 'integerList':
