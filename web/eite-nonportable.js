@@ -24,6 +24,16 @@ async function implAssertIsInt(int) {
     }
 }
 
+async function implStrFromByte(intInput) {
+    await assertIsInt(intInput);
+    return String.fromCharCode(intInput);
+}
+
+async function implStrFromUnicodeHex(strCharacter) {
+    await assertIsStr(strCharacter);
+    return String.fromCharCode('0x'+strCharacter);
+}
+
 async function implAssertIsStr(str) {
     if (typeof str !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")

@@ -103,15 +103,6 @@ async function operateOnDocFromUrl(strFormat, strUrl, callback) {
     await urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); })
 }
 
-async function implStrFromByte(intInput) {
-    return String.fromCharCode(intInput);
-}
-
-async function implStrFromUnicodeHex(strCharacter) {
-    await assertIsStr(strCharacter);
-    return String.fromCharCode('0x'+strCharacter);
-}
-
 async function runEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
     strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';
