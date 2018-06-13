@@ -5,12 +5,14 @@
 */
 
 async function intBytearrayLength(bytearray) {
-    let intReturn;
+    assertIsBytearray(bytearray); let intReturn;
+
     intReturn = await implIntBytearrayLength(bytearray); await assertIsInt(intReturn); return intReturn;
 }
 
 async function intDcarrLength(dcarr) {
-    let intReturn;
+    assertIsDcarr(dcarr); let intReturn;
+
     intReturn = await implIntDcarrLength(dcarr); await assertIsInt(intReturn); return intReturn;
 }
 
