@@ -10,22 +10,22 @@
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 function eiteLog(strMessage) {
-    assertIsString(strMessage);
+    assertIsStr(strMessage);
     return implEiteLog(strMessage);
 }
 function eiteWarn(strMessage) {
-    assertIsString(strMessage);
+    assertIsStr(strMessage);
     eiteLog('EITE reported warning: '+strMessages);
 }
 function eiteError(strMessage) {
-    assertIsString(strMessage); // FIXME: recursive loop?
+    assertIsStr(strMessage); // FIXME: recursive loop?
     eiteLog('EITE reported error!: '+strMessage);
     die('EITE reported error!: '+strMessage);
 }
 
 // Utility functions for working with various data types: wrappers for implementation
-function assertIsString(str) {
-    return implAssertIsString(str);
+function assertIsStr(str) {
+    return implAssertIsStr(str);
 }
 function assertIsInt(int) {
     return implAssertIsInt(int);
@@ -35,6 +35,7 @@ function strFromByte(intInput) {
     return implStrFromByte(intInput)
 }
 function strFromUnicodeHex(strInput) {
+    assertIsStr(strInput)
     return implStrFromUnicodeHex(strInput);
 }
 async function intDcarrLength(dcarrInput) {
@@ -49,7 +50,7 @@ function strToInt(str) {
 
 // Utility functions for working with various data types
 function assertIsDc(dc) {
-    return assertIsString(dc);
+    return assertIsStr(dc);
 }
 
 // Tools for Dc text

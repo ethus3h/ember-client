@@ -15,12 +15,12 @@ function implStrToInt(str) {
 }
 
 function implAssertIsInt(int) {
-    if (typeof int !== "int") {
-        eiteError("Assertion failed: "+int+" is not ant int.")
+    if (! Number.isInteger(int)) {
+        eiteError("Assertion failed: "+int+" is not an int.")
     }
 }
 
-function implAssertIsString(str) {
+function implAssertIsStr(str) {
     if (typeof str !== "string") {
         eiteError("Assertion failed: "+str+" is not a string.")
     }

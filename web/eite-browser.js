@@ -111,7 +111,7 @@ function implStrFromByte(intInput) {
 }
 
 function implStrFromUnicodeHex(strCharacter) {
-    assertIsString(strCharacter);
+    assertIsStr(strCharacter);
     return String.fromCharCode('0x'+strCharacter);
 }
 
