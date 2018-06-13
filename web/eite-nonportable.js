@@ -10,7 +10,7 @@ function implStrNormalizeMessage(message) {
     }
 }
 
-function implIntDcarrLength(dcarrInput) {
+async function implIntDcarrLength(dcarrInput) {
     return dcarrInput.length;
 }
 

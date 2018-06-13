@@ -22,8 +22,8 @@ function eiteError(strMessage) {
     die('EITE reported error!: '+strMessage);
 }
 
-function intDcarrLength(dcarrInput) {
-    return implIntDcarrLength(dcarrInput);
+async function intDcarrLength(dcarrInput) {
+    return await implIntDcarrLength(dcarrInput);
 }
 
 // Tools for Dc text
@@ -192,7 +192,7 @@ function dcarrParseSems(bytearrayContent) {
     return dcarrParseResults;
 }
 
-function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
+async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     dcarrOutput=[];
     // Build render output buffer for specified format
     let intInputLength = 0;
@@ -206,19 +206,19 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
         case 'immutableCharacterCells':
             let intLine = 0;
             dcarrOutput[0] = '';
-            intInputLength = intDcarrLength(dcarrInput);
+            intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                if (boolDcIsNewline(dcarrInput[intInputIndex])) {
+                if (await boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = '';
                 }
-                if (boolDcIsPrintable(dcarrInput[intInputIndex])) {
-                    dcarrOutput[intLine] = dcarrOutput[intLine] + strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
+                if (await boolDcIsPrintable(dcarrInput[intInputIndex])) {
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
                 }
             }
             break;
         default:
-            eiteError('Unimplemented document render target format: '+strTargetFormat);
+            await eiteError('Unimplemented document render target format: '+strTargetFormat);
             break;
     }
     return dcarrOutput;
