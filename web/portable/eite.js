@@ -34,10 +34,6 @@ async function strToInt(str) {
     await assertIsStr(str);
     return await implStrToInt(str);
 }
-async function assertStrContainsOnlyInt(str) {
-    await assertIsStr(str);
-    return await implAssertStrContainsOnlyInt(str);
-}
 
 // Utility functions for working with various data types
 // Tools for Dc text
