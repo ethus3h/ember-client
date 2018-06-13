@@ -6,6 +6,8 @@
     implAssertStrContainsOnlyInt
 */
 
+// Assertions that something is a given type
+
 async function assertIsBool(bool) {
     await implAssertIsBool(bool);
 }
@@ -18,13 +20,17 @@ async function assertIsStr(str) {
     await implAssertIsStr(str);
 }
 
-async function assertStrContainsOnlyInt(str) {
-    await assertIsStr(str);
-    await implAssertStrContainsOnlyInt(str);
-}
-
 async function assertIsDc(dc) {
     await assertStrContainsOnlyInt(dc);
+}
+
+
+// Other assertions
+
+async function assertStrContainsOnlyInt(str) {
+    await assertIsStr(str);
+
+    await implAssertStrContainsOnlyInt(str);
 }
 
 // @license-end
