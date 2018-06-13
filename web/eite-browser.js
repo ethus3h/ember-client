@@ -8,14 +8,14 @@
 // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
 async function eiteError(strMessage) {
     console.trace();
-    await eiteLog('EITE reported error!: '+await implStrNormalizeMessage(strMessage));
-    alert('EITE reported error!: '+await implStrNormalizeMessage(strMessage));
-    throw 'EITE reported error!: '+await implStrNormalizeMessage(strMessage);
+    await eiteLog('EITE reported error!: ' + await implStrNormalizeMessage(strMessage));
+    alert('EITE reported error!: ' + await implStrNormalizeMessage(strMessage));
+    throw 'EITE reported error!: ' + await implStrNormalizeMessage(strMessage);
 }
 async function eiteWarn(strMessage) {
     console.trace();
-    await eiteLog('EITE reported warning: '+await implStrNormalizeMessage(strMessage));
-    alert('EITE reported warning: '+await implStrNormalizeMessage(strMessage));
+    await eiteLog('EITE reported warning: ' + await implStrNormalizeMessage(strMessage));
+    alert('EITE reported warning: ' + await implStrNormalizeMessage(strMessage));
 }
 
 // Fully platform-specific code
