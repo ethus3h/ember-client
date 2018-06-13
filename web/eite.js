@@ -45,6 +45,7 @@ function intBytearrayLength(bytearrayInput) {
     return implIntBytearrayLength(bytearrayInput);
 }
 function strToInt(str) {
+    assertIsStr(str);
     return implStrToInt(str);
 }
 
