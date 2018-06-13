@@ -3,6 +3,8 @@
     implAssertIsBool
     implAssertIsInt
     implAssertIsStr
+    implAssertIsDcarr
+    implAssertIsBytearray
     implAssertStrContainsOnlyInt
 */
 
