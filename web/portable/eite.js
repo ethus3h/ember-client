@@ -13,27 +13,8 @@
 // TODO: DcData and renderTraits shouldn't be used here, since they're JS-specific, complex objects. They should be provided by APIs and/or simple data types instead. This will also allow the "dc" ad-hoc data type to actually be an int, instead of a string containing an int (which is kind of stupid ­— it should just be an int).
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
-async function eiteLog(strMessage) {
-    await assertIsStr(strMessage);
-    return await implEiteLog(strMessage);
-}
-async function eiteWarn(strMessage) {
-    await assertIsStr(strMessage);
-    await eiteLog('EITE reported warning: '+strMessages);
-}
-async function eiteError(strMessage) {
-    await assertIsStr(strMessage); // FIXME: recursive loop?
-    await eiteLog('EITE reported error!: '+strMessage);
-    await die('EITE reported error!: '+strMessage);
-}
 
 // Utility functions for working with various data types: wrappers for implementation
-async function assertIsInt(int) {
-    return await implAssertIsInt(int);
-}
-async function assertIsStr(str) {
-    return await implAssertIsStr(str);
-}
 
 async function strFromByte(intInput) {
     await assertIsInt(intInput);
@@ -59,10 +40,6 @@ async function assertStrContainsOnlyInt(str) {
 }
 
 // Utility functions for working with various data types
-async function assertIsDc(dc) {
-    return await assertStrContainsOnlyInt(dc);
-}
-
 // Tools for Dc text
     async function intDcIdToCsvRow(dc) {
         await assertIsDc(dc);

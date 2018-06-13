@@ -1,3 +1,5 @@
+// API deps: implEiteLog
+
 async function eiteLog(strMessage) {
     await assertIsStr(strMessage);
     return await implEiteLog(strMessage);
