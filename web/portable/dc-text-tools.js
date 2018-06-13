@@ -12,93 +12,90 @@ async function intDcIdToCsvRow(dc) {
 }
 
 async function strDcDataLookupById(strDataset, dc, intFieldNumber) {
+    let strReturn;
     await assertIsStr(strDataset); await assertIsDc(dc); await assertIsInt(intFieldNumber);
-    let strReturn = dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber];
+    strReturn = dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber];
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcDataLookupByValue(strDataset, filterField, filterValue, desiredField) {
+    let strReturn;
     let intLength = dcData[strDataset].length;
     // start at 1 to skip header row
     for (let intRow = 1; intRow < intLength; intRow++) {
         if(dcData[strDataset][intRow].data[0][filterField] === filterValue) {
-            let strReturn = dcData[strDataset][intRow].data[0][desiredField];
+            strReturn = dcData[strDataset][intRow].data[0][desiredField];
         }
     }
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetField(dc, intFieldNumber) {
+    let strReturn;
     await assertIsDc(dc); await assertIsInt(intFieldNumber);
-    let strReturn = await strDcDataLookupById("DcData", dc, intFieldNumber);
+    strReturn = await strDcDataLookupById("DcData", dc, intFieldNumber);
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetName(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 1);
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 1);
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetCombiningClass(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 2);
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 2);
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetBidiClass(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 3);
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 3);
     await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetCasing(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 4);
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 4); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetType(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 5);
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 5); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetScript(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 6);
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 6); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetComplexTraits(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 7);
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 7); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetDescription(dc) {
-    await assertIsDc(dc);
-    let strReturn = await strDcGetField(dc, 8);
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsDc(dc); let strReturn;
+    strReturn = await strDcGetField(dc, 8); await assertIsStr(strReturn); return strReturn;
 }
 
 async function boolDcIsNewline(dc) {
-    await assertIsDc(dc);
+    await assertIsDc(dc); let boolReturn;
     if(await strDcGetBidiClass(dc) === 'B') {
-        let boolReturn = true;
+        boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
     }
-    let boolReturn = false;
-    await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolDcIsPrintable(dc) {
-    await assertIsDc(dc);
+    await assertIsDc(dc); let boolReturn;
     let strType = await strDcGetType(dc);
     let strGeneralType = strType[0];
     switch(strType) {
         case 'Zl':
         case 'Zp':
-            let boolReturn = false;
+            boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
             break;
         default:
             break;
@@ -106,13 +103,12 @@ async function boolDcIsPrintable(dc) {
     switch(strGeneralType) {
         case '!':
         case 'C':
-            let boolReturn = false;
+            boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
             break;
         default:
             break;
     }
-    let boolReturn = true;
-    await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
 }
 
 // @license-end

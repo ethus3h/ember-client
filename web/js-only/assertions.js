@@ -7,7 +7,7 @@
 */
 
 async function implAssertIsBool(bool) {
-    if (typeof bool !== "bool") {
+    if (typeof bool !== "boolean") {
         await eiteError("Assertion failed: "+bool+" is not a boolean.")
     }
 }
