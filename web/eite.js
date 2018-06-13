@@ -22,8 +22,8 @@ function eiteError(strMessage) {
     die('EITE reported error!: '+strMessage);
 }
 
-function intDcarrLength(dcarr input) {
-    return implIntDcarrLength(input);
+function intDcarrLength(dcarrInput) {
+    return implIntDcarrLength(dcarrInput);
 }
 
 // Tools for Dc text
@@ -197,14 +197,14 @@ function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     // Build render output buffer for specified format
     switch (strTargetFormat) {
         case 'integerList':
-            for (let intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+            for (let intInputIndex = 0; intInputIndex < await intDcarrLength(dcarrInput); intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
             break;
         case 'immutableCharacterCells':
             let intLine=0;
             dcarrOutput[0] = '';
-            for (let intInputIndex = 0; intInputIndex < dcarrInput.length; intInputIndex++) {
+            for (let intInputIndex = 0; intInputIndex < intDcarrLength(dcarrInput); intInputIndex++) {
                 if (boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = '';
