@@ -3,6 +3,7 @@
 // This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
 // It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
 // To serve these two goals, it should not use I/O, objects, first-class functions, JavaScript-specific libraries, or null/undefined values.
+// TODO: It should probably also declare all array sizes? Or else, put array operations into the non-portable categories, and have a set of impl* functions as an API for them instead.
 // Things that depend on I/O and JavaScript-specific libraries (e.g. logging using JSON.stringify) should be implemented in eite-[platform].js  (for platform-specific code) or eite-nonportable.js for JavaScript-specific code.
 // Those files should use clearly defined APIs that this file's code can call, so that they can be implemented as appropriate in other implementations.
 // dcData object must be available before calling these functions.
