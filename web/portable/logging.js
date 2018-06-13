@@ -30,10 +30,10 @@ async function eiteError(strMessage) {
     await die('EITE reported error!: '+strMessage);
 }
 
-async function eiteFIXMEUnimplemented() {
-    await assertIsStr(strMessage);
+async function eiteFIXMEUnimplemented(strLocation) {
+    await assertIsStr(strLocation);
 
-    await implEiteFIXMEUnimplemented();
+    await implEiteFIXMEUnimplemented(strLocation);
 }
 
 // @license-end

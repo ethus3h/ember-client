@@ -15,8 +15,8 @@ async function implEiteLog(strMessage) {
     console.log(await implStrNormalizeMessage(strMessage));
 };
 
-async function implEiteFIXMEUnimplemented() {
-    await eiteLog("FIXME: Unimplemented at " + new Error().fileName + ":" + new Error().lineNumber);
+async function implEiteFIXMEUnimplemented(strLocation) {
+    await eiteLog("FIXME: Unimplemented in " + strLocation);
 }
 
 // @license-end
