@@ -14,7 +14,7 @@ async function implStrNormalizeMessage(message) {
     }
 }
 
-async function implStrToInt(str) {
+async function implIntFromStr(str) {
     return parseInt(str);
 }
 

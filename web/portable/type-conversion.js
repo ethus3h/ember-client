@@ -21,7 +21,7 @@ async function intDcarrLength(dcarrInput) {
 async function intBytearrayLength(bytearrayInput) {
     return await implIntBytearrayLength(bytearrayInput);
 }
-async function strToInt(str) {
+async function intFromStr(str) {
     await assertIsStr(str);
-    return await implStrToInt(str);
+    return await implIntFromStr(str);
 }
