@@ -3,6 +3,10 @@
     implEiteLog
 */
 
+async function die(strMessage) {
+    return await implDie(strMessage);
+}
+
 async function eiteLog(strMessage) {
     await assertIsStr(strMessage);
     return await implEiteLog(strMessage);
