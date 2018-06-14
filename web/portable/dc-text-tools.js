@@ -11,11 +11,21 @@ async function boolDcIsNewline(dc) {
     boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
 }
 
+async function boolDcIsSpace(dc) {
+    await assertIsDc(dc); let boolReturn;
+
+    if(await strDcGetType(dc) === "Zs") {
+        boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
+    }
+    boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
+}
+
 async function boolDcIsPrintable(dc) {
     await assertIsDc(dc); let boolReturn;
 
     let strType = await strDcGetType(dc);
     let strGeneralType = await strCharAtPos(strType, 0);
+    console.log("dc "+dc+"is a "+strType);
     switch(strType) {
         case "Zl":
         case "Zp":
@@ -32,7 +42,6 @@ async function boolDcIsPrintable(dc) {
         default:
             break;
     }
-    console.log("dc "+ dc +"is printable? :"+boolReturn);
     boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
 }
 

@@ -88,7 +88,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = "";
                 }
-                if (await boolDcIsPrintable(dcarrInput[intInputIndex])) {
+                if (await boolDcIsPrintable(dcarrInput[intInputIndex]) || await boolDcIsSpace(dcarrInput[intInputIndex]) ) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
                 }
             }
