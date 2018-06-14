@@ -2,7 +2,8 @@
 /* Provides:
     implNewDcarr
     implDcCustomTypeDcarrDcAtPos
-    implCustomTypeDcarrPush
+    implVoidCustomTypeDcarrPut
+    implVoidCustomTypeDcarrPush
 */
 
 Dcarrs = [];

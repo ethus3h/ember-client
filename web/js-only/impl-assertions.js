@@ -1,6 +1,8 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 /* Provides:
     implAssertIsBool
+    implAssertIsTrue
+    implAssertIsFalse
     implAssertIsInt
     implAssertIsStr
     implAssertIsDcarr
@@ -21,6 +23,14 @@ async function implAssertIsTrue(bool) {
 
     if (bool !== true) {
         await eiteError("Assertion failed: "+bool+" is not true.");
+    }
+}
+
+async function implAssertIsFalse(bool) {
+    await assertIsBool(bool);
+
+    if (bool !== false) {
+        await eiteError("Assertion failed: "+bool+" is not false.");
     }
 }
 
