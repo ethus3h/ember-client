@@ -25,9 +25,9 @@ async function customTypeDcarrPut(dcarr, intIndex, dcToAdd) {
 }
 
 async function customTypeDcarrPush(dcarr, dcToAdd) {
-    await assertIsDcarr(await dcarr); await assertIsDc(dcToAdd);
+    await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
 
-    await implVoidCustomTypeDcarrPush(await dcarr, dcToAdd);
+    await implVoidCustomTypeDcarrPush(dcarr, dcToAdd);
 }
 
 // @license-end
