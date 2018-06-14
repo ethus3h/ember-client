@@ -22,7 +22,7 @@ async function strDcDataLookupByDc(dc, intFieldNumber) {
 }
 
 async function strDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
-    await assertIsStr(strDataset); await assertIsDc(dc); await assertIsInt(intFieldNumber); let strReturn;
+    await assertIsStr(strDataset); await assertIsInt(intRowNumber); await assertIsInt(intFieldNumber); let strReturn;
 
     strReturn = await implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber); await assertIsStr(strReturn); return strReturn;
 }
