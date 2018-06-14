@@ -17,6 +17,8 @@ async function dcarrParseDocument(strFormat, bytearrayContent) {
 }
 
 async function dcarrParseSems(bytearrayContent) {
+    await assertIsBytearray(bytearrayContent); let dcarrReturn;
+
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     let dcarrParseResults = [];
     let strParserState = "dc";
@@ -44,7 +46,7 @@ async function dcarrParseSems(bytearrayContent) {
                 break;
         }
     }
-    return dcarrParseResults;
+    dcarrReturn = dcarrParseResults; await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 // @license-end
