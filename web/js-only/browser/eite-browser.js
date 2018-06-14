@@ -65,7 +65,7 @@ async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCal
         error: async function(results, file) {
             await errorCallback(results, file);
         }
-    })
+    });
 }
 
 async function implDoRenderIo(renderBuffer, targetFormat) {
