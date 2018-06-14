@@ -30,7 +30,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             intInputLength = await intDcarrLength(dcarrInput);
             console.log(intInputLength);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                let dcAtInputIndex = customTypeDcarrDcAtPos(dcarrInput,intInputIndex);
+                let dcAtInputIndex = await customTypeDcarrDcAtPos(dcarrInput,intInputIndex);
                 if (await boolDcIsNewline(dcAtInputIndex)) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = "";
