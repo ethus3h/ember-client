@@ -14,11 +14,6 @@
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 
-// Utility functions for working with various data types: wrappers for implementation
-
-// Utility functions for working with various data types
-// Tools for Dc text
-
 // Tools for ASCII text
     // Checks whether N is within the range A and B, including endpoints
     async function boolIsBetween(intN, intA, intB) {
