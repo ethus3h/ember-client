@@ -10,7 +10,7 @@ async function implNewDcarr() {
     let dcarrReturn;
 
     Dcarrs[Dcarrs.length + 1] = [];
-    console.log(Dcarrs);
+    console.log(Dcarrs);console.log(Dcarrs.length);
     dcarrReturn = Dcarrs.length; await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
