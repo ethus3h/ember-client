@@ -49,7 +49,7 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
     return traits;
 }
 
-async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
+async function implLoadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
     await Papa.parse(url, {
         download: true,
         encoding: "UTF-8",
@@ -84,7 +84,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
     }
 }
 
-async function urlLoadForCallback(url, callback) {
+async function implUrlLoadForCallback(url, callback) {
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
@@ -94,44 +94,44 @@ async function urlLoadForCallback(url, callback) {
     oReq.send(null);
 }
 
-async function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    await urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); });
+async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
+    await implUrlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); });
 }
 
-async function runEiteTest(strTestFormat, strTestName) {
+async function implRunEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
-    strTestUrlPrefix="../tests/"+strTestName+"."+strTestFormat+"/";
-    strTestInputFormatUrl="../tests/"+strTestName+"."+strTestFormat+"/in-format";
+    strTestUrlPrefix="../tests/" + strTestName + "." + strTestFormat + "/";
+    strTestInputFormatUrl="../tests/" + strTestName + "." + strTestFormat + "/in-format";
     switch (strTestFormat) {
         case "ept": // Parser test
-            await urlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
+            await implUrlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
             break;
         default:
-            await eiteError("Unimplemented test format: "+strTestFormat);
+            await eiteError("Unimplemented test format: " + strTestFormat);
             break;
     }
 }
 
 // Set up dcData
 dcData = [];
-async function dcDataAppendDataset(dataset) {
+async function implDcDataAppendDataset(dataset) {
     dcData[dataset] = [];
 }
-async function dcDataAppendLine(dataset, line) {
+async function implDcDataAppendLine(dataset, line) {
     dcData[dataset].push(line);
 }
-async function loadDatasets(callback) {
+async function implLoadDatasets(callback) {
     if (datasets.length > 0) {
         let dataset = datasets[0];
-        await dcDataAppendDataset(dataset);
-        await loadCsv(
+        await implDcDataAppendDataset(dataset);
+        await implLoadCsv(
             "../data/" + dataset + ".csv",
             async function(results,parser){
-                await dcDataAppendLine(dataset, results);
+                await implDcDataAppendLine(dataset, results);
             },
             async function(){
                 datasets.shift();
-                await loadDatasets(callback);
+                await implLoadDatasets(callback);
             },
             async function(){
                 await eiteError("Error reported while parsing "+dataset+"!");
