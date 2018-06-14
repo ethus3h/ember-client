@@ -3,15 +3,16 @@
 */
 
 async function dcarrParseDocument(strFormat, bytearrayContent) {
-    await assertIsStr(strFormat); await assertIsBytearray(bytearrayContent); let dcarrReturn = newDcarr();
+    await assertIsStr(strFormat); await assertIsBytearray(bytearrayContent); let dcarrReturn;
     switch (strFormat) {
         case "sems":
-            return await dcarrParseSems(bytearrayContent);
+            dcarrReturn = await dcarrParseSems(bytearrayContent); await assertIsDcarr(dcarrReturn); return dcarrReturn;
             break;
         default:
             await eiteError("Unimplemented document parsing format: " + strFormat);
             break;
     }
+    await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 // @license-end
