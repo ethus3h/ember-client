@@ -8,15 +8,19 @@
 async function boolAsciiIsDigit(intN) {
     return await boolIntIsBetween(intN, 48, 57);
 }
+
 async function boolAsciiIsPrintable(intN) {
     return await boolIntIsBetween(intN, 32, 126);
 }
+
 async function boolAsciiIsSpace(intN) {
     return intN == 32;
 }
+
 async function boolAsciiIsNewline(intN) {
     return (intN == 10) || (intN == 13);
 }
+
 /*
 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q
