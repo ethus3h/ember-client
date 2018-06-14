@@ -12,6 +12,12 @@ async function assertIsBool(bool) {
     await implAssertIsBool(bool);
 }
 
+async function assertIsTrue(bool) {
+    await assertIsBool(bool);
+
+    await implAssertIsTrue(bool);
+}
+
 async function assertIsInt(int) {
     await implAssertIsInt(int);
 }

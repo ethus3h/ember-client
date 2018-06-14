@@ -16,6 +16,14 @@ async function implAssertIsBool(bool) {
     }
 }
 
+async function implAssertIsTrue(bool) {
+    await assertIsBool(bool);
+
+    if (bool !== true) {
+        await eiteError("Assertion failed: "+bool+" is not true.");
+    }
+}
+
 async function implAssertIsInt(int) {
     if (! Number.isInteger(int)) {
         await eiteError("Assertion failed: "+int+" is not an int.");
@@ -29,11 +37,14 @@ async function implAssertIsStr(str) {
 }
 
 async function implAssertIsDcarr(dcarr) {
-    eiteFIXMEUnimplemented("implAssertIsDcarr");
+    await assertIsInt(dcarr);
+    await assertIsTrue(dcarr > 0);
+    await assertIsTrue(dcarr < Dcarrs.length);
+    await eiteFIXMEUnimplemented("implAssertIsDcarr");
 }
 
 async function implAssertIsBytearray(bytearray) {
-    eiteFIXMEUnimplemented("implAssertIsBytearray");
+    await eiteFIXMEUnimplemented("implAssertIsBytearray");
 }
 
 
@@ -43,7 +54,7 @@ async function implAssertStrContainsOnlyInt(str) {
     await assertIsStr(str);
 
     //TODO: Fake implementation. Should regex match or something instead.
-    eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
+    await eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
 }
 
