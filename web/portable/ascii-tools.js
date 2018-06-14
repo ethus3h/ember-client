@@ -1,24 +1,29 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Depends:
-    implIntBytearrayLength
-    implIntDcarrLength
-    implStrSubstring
+/* Depends: (none)
 */
 
 async function boolAsciiIsDigit(intN) {
-    return await boolIntIsBetween(intN, 48, 57);
+    await assertIsInt(intN); let boolReturn;
+
+    boolReturn = await boolIntIsBetween(intN, 48, 57); await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolAsciiIsPrintable(intN) {
-    return await boolIntIsBetween(intN, 32, 126);
+    await assertIsInt(intN); let boolReturn;
+
+    boolReturn = await boolIntIsBetween(intN, 32, 126); await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolAsciiIsSpace(intN) {
-    return intN == 32;
+    await assertIsInt(intN); let boolReturn;
+
+    boolReturn = intN == 32; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolAsciiIsNewline(intN) {
-    return (intN == 10) || (intN == 13);
+    await assertIsInt(intN); let boolReturn;
+
+    boolReturn = (intN == 10) || (intN == 13); await assertIsBool(boolReturn); return boolReturn;
 }
 
 /*
