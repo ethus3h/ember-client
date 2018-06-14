@@ -5,7 +5,7 @@
 async function newDcarr() {
     let strReturn;
 
-    await eiteFIXMEUnimplemented();
+    await eiteFIXMEUnimplemented("newDcarr");
     strReturn = "unimplemented"; await assertIsStr(strReturn); return strReturn;
 }
 
