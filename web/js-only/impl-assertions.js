@@ -48,8 +48,6 @@ async function implAssertIsStr(str) {
 
 async function implAssertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
-    console.log(dcarr);
-    console.log(Dcarrs.length);
     await assertIsTrue(dcarr >= 0);
     await assertIsTrue(dcarr < Dcarrs.length);
     await eiteFIXMEUnimplemented("implAssertIsDcarr");
