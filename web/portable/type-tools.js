@@ -5,6 +5,13 @@
     implStrSubstring
 */
 
+async function boolIntIsBetween(intN, intA, intB) {
+    assertIsInt(intN); assertIsInt(intA); assertIsInt(intB); let boolReturn;
+
+    // Checks whether N is within the range A and B, including endpoints
+    boolReturn = ( (intN - intA) * (intN - intB) ) <= 0; await assertIsBool(boolReturn); return boolReturn;
+}
+
 async function intBytearrayLength(bytearray) {
     assertIsBytearray(bytearray); let intReturn;
 
