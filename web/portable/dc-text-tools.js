@@ -8,7 +8,7 @@
 async function boolDcIsNewline(dc) {
     await assertIsDc(dc); let boolReturn;
 
-    if(await strDcGetBidiClass(dc) === 'B') {
+    if(await strDcGetBidiClass(dc) === "B") {
         boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
     }
     boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
@@ -20,16 +20,16 @@ async function boolDcIsPrintable(dc) {
     let strType = await strDcGetType(dc);
     let strGeneralType = strType[0];
     switch(strType) {
-        case 'Zl':
-        case 'Zp':
+        case "Zl":
+        case "Zp":
             boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
             break;
         default:
             break;
     }
     switch(strGeneralType) {
-        case '!':
-        case 'C':
+        case "!":
+        case "C":
             boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
             break;
         default:

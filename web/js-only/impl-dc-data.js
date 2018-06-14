@@ -2,6 +2,7 @@
 /* Provides:
     implIntDcDataDatasetLength
     implStrDcDataLookupById
+    implStrDcDataLookupByValue
 */
 
 async function implIntDcDataDatasetLength(strDataset) {

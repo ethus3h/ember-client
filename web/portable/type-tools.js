@@ -16,4 +16,16 @@ async function intDcarrLength(dcarr) {
     intReturn = await implIntDcarrLength(dcarr); await assertIsInt(intReturn); return intReturn;
 }
 
+async function strSubstring(str, intStart, intLength) {
+    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+
+    strReturn = await implStrSubstring(str, intStart, intLength); await assertIsStr(strReturn); return strReturn;
+}
+
+async function strCharAtPos(str, intIndex) {
+    assertIsStr(str); assertIsInt(intIndex); let strReturn;
+
+    strReturn = await strSubstring(str, intIndex, 1); await assertIsStr(strReturn); return strReturn;
+}
+
 // @license-end
