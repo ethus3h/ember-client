@@ -28,9 +28,9 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             let intLine = 0;
             dcarrOutput[0] = "";
             intInputLength = await intDcarrLength(dcarrInput);
-            console.log(intInputLength);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                let dcAtInputIndex = await customTypeDcarrDcAtPos(dcarrInput,intInputIndex);
+                let dcAtInputIndex = await customTypeDcarrDcAtPos(dcarrInput, intInputIndex);
+                console.log(dcAtInputIndex);
                 if (await boolDcIsNewline(dcAtInputIndex)) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = "";
