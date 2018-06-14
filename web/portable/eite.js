@@ -46,10 +46,10 @@ async function dcarrParseSems(bytearrayContent) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
             case "dc":
-                if (await boolIsDigit(bytearrayContent[intByteOffset])) {
+                if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
-                if (await boolIsSpace(bytearrayContent[intByteOffset])) {
+                if (await boolAsciiIsSpace(bytearrayContent[intByteOffset])) {
                     dcarrParseResults.push(strCurrentDc);
                     strCurrentDc = "";
                 }
@@ -58,7 +58,7 @@ async function dcarrParseSems(bytearrayContent) {
                 }
                 break;
             case "comment":
-                if (await boolIsNewline(bytearrayContent[intByteOffset])) {
+                if (await boolAsciiIsNewline(bytearrayContent[intByteOffset])) {
                     strParserState = "dc";
                 }
                 break;
