@@ -5,6 +5,8 @@
     implStrSubstring
 */
 
+esversion: 6;
+
 async function boolIntIsBetween(intN, intA, intB) {
     assertIsInt(intN); assertIsInt(intA); assertIsInt(intB); let boolReturn;
 
