@@ -9,13 +9,15 @@ Dcarrs = [];
 async function implNewDcarr() {
     let dcarrReturn;
 
-    Dcarrs[Dcarrs.length() + 1] = [];
-    dcarrReturn = Dcarrs.length(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    Dcarrs[Dcarrs.length + 1] = [];
+    console.log(Dcarrs);
+    dcarrReturn = Dcarrs.length; await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
     await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
-
+    console.log(Dcarrs);
+    console.log(dcarr);
     Dcarrs[dcarr].push(dcToAdd);
 }
 
