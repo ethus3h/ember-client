@@ -20,7 +20,7 @@ async function dcarrParseSems(bytearrayContent) {
     await assertIsBytearray(bytearrayContent); let dcarrReturn;
 
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
-    let dcarrParseResults = [];
+    let dcarrParseResults = newDcarr();
     let strParserState = "dc";
     let strCurrentDc = "";
     let intContentLength = await intBytearrayLength(bytearrayContent);
@@ -32,7 +32,7 @@ async function dcarrParseSems(bytearrayContent) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
                 if (await boolAsciiIsSpace(bytearrayContent[intByteOffset])) {
-                    dcarrParseResults.push(strCurrentDc);
+                    await customTypeDcarrPush(dcarrParseResults, strCurrentDc); dcarrParseResults.push(strCurrentDc);
                     strCurrentDc = "";
                 }
                 if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
