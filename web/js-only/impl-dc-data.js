@@ -13,7 +13,7 @@ async function implIntDcDataDatasetLength(strDataset) {
 async function implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
     await assertIsStr(strDataset); await assertIsInt(intRowNumber); await assertIsInt(intFieldNumber); let strReturn;
 
-    strReturn = dcData[strDataset][await intDcIdToCsvRow(dc)].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
+    strReturn = dcData[strDataset][intRowNumber].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
