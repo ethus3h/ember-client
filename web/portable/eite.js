@@ -20,18 +20,18 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
-            await eiteError('Unimplemented character encoding: ' + strCharacterEncoding);
+            await eiteError("Unimplemented character encoding: " + strCharacterEncoding);
             break;
     }
 }
 
 async function dcarrParseDocument(strFormat, bytearrayContent) {
     switch (strFormat) {
-        case 'sems':
+        case "sems":
             return await dcarrParseSems(bytearrayContent);
             break;
         default:
-            await eiteError('Unimplemented document parsing format: ' + strFormat);
+            await eiteError("Unimplemented document parsing format: " + strFormat);
             break;
     }
 }
@@ -39,27 +39,27 @@ async function dcarrParseDocument(strFormat, bytearrayContent) {
 async function dcarrParseSems(bytearrayContent) {
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     let dcarrParseResults = [];
-    let strParserState = 'dc';
-    let strCurrentDc = '';
+    let strParserState = "dc";
+    let strCurrentDc = "";
     let intContentLength = await intBytearrayLength(bytearrayContent);
     for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
         switch (strParserState) {
-            case 'dc':
+            case "dc":
                 if (await boolIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
                 if (await boolIsSpace(bytearrayContent[intByteOffset])) {
                     dcarrParseResults.push(strCurrentDc);
-                    strCurrentDc = '';
+                    strCurrentDc = "";
                 }
                 if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
-                    strParserState = 'comment';
+                    strParserState = "comment";
                 }
                 break;
-            case 'comment':
+            case "comment":
                 if (await boolIsNewline(bytearrayContent[intByteOffset])) {
-                    strParserState = 'dc';
+                    strParserState = "dc";
                 }
                 break;
         }
@@ -72,20 +72,20 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     // Build render output buffer for specified format
     let intInputLength = 0;
     switch (strTargetFormat) {
-        case 'integerList':
+        case "integerList":
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 dcarrOutput[intInputIndex] = dcarrInput[intInputIndex];
             }
             break;
-        case 'immutableCharacterCells':
+        case "immutableCharacterCells":
             let intLine = 0;
-            dcarrOutput[0] = '';
+            dcarrOutput[0] = "";
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 if (await boolDcIsNewline(dcarrInput[intInputIndex])) {
                     intLine = intLine + 1;
-                    dcarrOutput[intLine] = '';
+                    dcarrOutput[intLine] = "";
                 }
                 if (await boolDcIsPrintable(dcarrInput[intInputIndex])) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcarrInput[intInputIndex], renderTraits.characterEncoding);
@@ -93,7 +93,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             }
             break;
         default:
-            await eiteError('Unimplemented document render target format: ' + strTargetFormat);
+            await eiteError("Unimplemented document render target format: " + strTargetFormat);
             break;
     }
     return dcarrOutput;
