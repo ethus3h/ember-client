@@ -52,10 +52,10 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
 async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
     await Papa.parse(url, {
         download: true,
-        encoding: 'UTF-8',
+        encoding: "UTF-8",
         newline: "\n",
-        delimiter: ',',
-        quoteChar: '"',
+        delimiter: ",",
+        quoteChar: "\"",
         step: async function(results, parser) {
             await lineLoadedCallback(results, parser);
         },
@@ -70,16 +70,16 @@ async function loadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCal
 
 async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
-        case 'integerList':
-        case 'immutableCharacterCells':
-            let immutableCharCellOutput = document.getElementById('log');
+        case "integerList":
+        case "immutableCharacterCells":
+            let immutableCharCellOutput = document.getElementById("log");
             for (let i = 0; i < renderBuffer.length; i++) {
-                immutableCharCellOutput.innerHTML += await implStrNormalizeMessage(renderBuffer[i]) + '<br />';
+                immutableCharCellOutput.innerHTML += await implStrNormalizeMessage(renderBuffer[i]) + "<br />";
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;
         default:
-            await eiteError('Unimplemented render I/O format: '+targetFormat);
+            await eiteError("Unimplemented render I/O format: "+targetFormat);
             break;
     }
 }
@@ -95,19 +95,19 @@ async function urlLoadForCallback(url, callback) {
 }
 
 async function operateOnDocFromUrl(strFormat, strUrl, callback) {
-    await urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); })
+    await urlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); });
 }
 
 async function runEiteTest(strTestFormat, strTestName) {
     // TODO: Unfinished implementation
-    strTestUrlPrefix='../tests/'+strTestName+'.'+strTestFormat+'/';
-    strTestInputFormatUrl='../tests/'+strTestName+'.'+strTestFormat+'/in-format';
+    strTestUrlPrefix="../tests/"+strTestName+"."+strTestFormat+"/";
+    strTestInputFormatUrl="../tests/"+strTestName+"."+strTestFormat+"/in-format";
     switch (strTestFormat) {
-        case 'ept': // Parser test
-            await urlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {})
+        case "ept": // Parser test
+            await urlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
             break;
         default:
-            await eiteError('Unimplemented test format: '+strTestFormat);
+            await eiteError("Unimplemented test format: "+strTestFormat);
             break;
     }
 }
@@ -125,7 +125,7 @@ async function loadDatasets(callback) {
         let dataset = datasets[0];
         await dcDataAppendDataset(dataset);
         await loadCsv(
-            '../data/'+dataset+'.csv',
+            "../data/" + dataset + ".csv",
             async function(results,parser){
                 await dcDataAppendLine(dataset, results);
             },
@@ -134,7 +134,7 @@ async function loadDatasets(callback) {
                 await loadDatasets(callback);
             },
             async function(){
-                await eiteError('Error reported while parsing '+dataset+'!')
+                await eiteError("Error reported while parsing "+dataset+"!");
             }
         );
     }
@@ -144,9 +144,9 @@ async function loadDatasets(callback) {
 }
 
 datasets=[
-    'DcData',
-    'mappings/from/ascii',
-    'mappings/from/unicode',
-    'mappings/to/html'
+    "DcData",
+    "mappings/from/ascii",
+    "mappings/from/unicode",
+    "mappings/to/html"
 ];
 // @license-end
