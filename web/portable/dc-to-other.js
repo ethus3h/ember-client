@@ -3,15 +3,18 @@
 */
 
 async function strPrintableDcToChar(dc, strCharacterEncoding) {
+    await assertIsDc(dc); await assertIsStr(strCharacterEncoding); let strReturn;
+
     switch (strCharacterEncoding) {
         case "ASCII-safe-subset":
         case "UTF-8":
-            return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0)); assertIsStr(strReturn); return strReturn;
             break;
         default:
             await eiteError("Unimplemented character encoding: " + strCharacterEncoding);
             break;
     }
+    assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
