@@ -25,7 +25,6 @@ async function boolDcIsPrintable(dc) {
 
     let strType = await strDcGetType(dc);
     let strGeneralType = await strCharAtPos(strType, 0);
-    console.log("dc "+dc+"is a "+strType);
     switch(strType) {
         case "Zl":
         case "Zp":
