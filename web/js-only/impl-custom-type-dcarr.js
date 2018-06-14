@@ -1,7 +1,7 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 /* Provides:
     implNewDcarr
-    implCustomTypeDcarrValueAtPos
+    implCustomTypeDcarrDcAtPos
     implCustomTypeDcarrPush
 */
 
@@ -14,10 +14,10 @@ async function implNewDcarr() {
     dcarrReturn = Dcarrs.length - 1; await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
-async function implCustomTypeDcarrValueAtPos(dcarr, intIndex) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex);
+async function implCustomTypeDcarrDcAtPos(dcarr, intIndex) {
+    await assertIsDcarr(dcarr); await assertIsInt(intIndex); let dcReturn;
 
-    await implCustomTypeDcarrValueAtPos(dcarr, intIndex);
+    dcReturn = Dcarrs[dcarr]; assertIsDc(dcReturn); return dcReturn;
 }
 
 async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
