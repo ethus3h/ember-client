@@ -2,6 +2,7 @@
 /* Depends:
     implIntBytearrayLength
     implIntDcarrLength
+    implStrSubstring
 */
 
 async function intBytearrayLength(bytearray) {

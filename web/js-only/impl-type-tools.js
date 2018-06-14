@@ -2,6 +2,7 @@
 /* Provides:
     implIntBytearrayLength
     implIntDcarrLength
+    implStrSubstring
 */
 
 async function implIntBytearrayLength(bytearray) {
@@ -14,6 +15,12 @@ async function implIntDcarrLength(dcarr) {
     assertIsDcarr(dcarr); let intReturn;
 
     intReturn = dcarr.length; await assertIsInt(intReturn); return intReturn;
+}
+
+async function implStrSubstring(str, intStart, intLength) {
+    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+
+    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
