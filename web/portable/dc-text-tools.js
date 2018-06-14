@@ -18,7 +18,7 @@ async function boolDcIsPrintable(dc) {
     await assertIsDc(dc); let boolReturn;
 
     let strType = await strDcGetType(dc);
-    let strGeneralType = strCharAtPos(strType, 0);
+    let strGeneralType = await strCharAtPos(strType, 0);
     switch(strType) {
         case "Zl":
         case "Zp":
