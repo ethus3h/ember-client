@@ -43,7 +43,7 @@ async function dcarrParseSems(bytearrayContent) {
     let strCurrentDc = "";
     let intContentLength = await intBytearrayLength(bytearrayContent);
     for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
-        // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte.
+        // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         switch (strParserState) {
             case "dc":
                 if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
