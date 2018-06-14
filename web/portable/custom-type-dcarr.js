@@ -7,8 +7,7 @@
 async function newDcarr() {
     let dcarrReturn;
 
-    await eiteFIXMEUnimplemented("newDcarr");
-    dcarrReturn = Dcarrs.length(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    dcarrReturn = implNewDcarr(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 async function customTypeDcarrPush(dcarr, dcToAdd) {
