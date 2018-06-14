@@ -14,7 +14,7 @@ async function implIntBytearrayLength(bytearray) {
 async function implIntDcarrLength(dcarr) {
     assertIsDcarr(dcarr); let intReturn;
 
-    intReturn = dcarr.length; await assertIsInt(intReturn); return intReturn;
+    intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
 }
 
 async function implStrSubstring(str, intStart, intLength) {

@@ -3,6 +3,7 @@
 */
 
 async function boolDcIsNewline(dc) {
+    console.log(dc);
     await assertIsDc(dc); let boolReturn;
 
     if(await strDcGetBidiClass(dc) === "B") {
