@@ -9,6 +9,7 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "rules": {
+        "no-undef": "off",
         "indent": [
             "error",
             4
