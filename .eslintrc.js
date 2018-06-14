@@ -11,6 +11,9 @@ module.exports = {
     "rules": {
         "no-undef": "off",
         "no-unused-vars": "off",
+        "no-case-declarations": "off",
+        "no-unreachable": "off",
+        "no-console": "off",
         "indent": [
             "error",
             4,

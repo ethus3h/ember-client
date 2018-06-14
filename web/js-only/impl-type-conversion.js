@@ -20,7 +20,7 @@ async function implStrFromByte(intInput) {
 async function implStrFromUnicodeHex(strCharacter) {
     await assertIsStr(strCharacter); let strReturn;
 
-    strReturn = String.fromCharCode('0x'+strCharacter); await assertIsStr(strReturn); return strReturn;
+    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end

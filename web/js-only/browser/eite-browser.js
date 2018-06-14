@@ -8,40 +8,40 @@
 // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
 async function eiteError(strMessage) {
     console.trace();
-    await eiteLog('EITE reported error!: ' + await implStrNormalizeMessage(strMessage));
-    alert('EITE reported error!: ' + await implStrNormalizeMessage(strMessage));
-    throw 'EITE reported error!: ' + await implStrNormalizeMessage(strMessage);
+    await eiteLog("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
+    alert("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
+    throw "EITE reported error!: " + await implStrNormalizeMessage(strMessage);
 }
 async function eiteWarn(strMessage) {
     console.trace();
-    await eiteLog('EITE reported warning: ' + await implStrNormalizeMessage(strMessage));
-    alert('EITE reported warning: ' + await implStrNormalizeMessage(strMessage));
+    await eiteLog("EITE reported warning: " + await implStrNormalizeMessage(strMessage));
+    alert("EITE reported warning: " + await implStrNormalizeMessage(strMessage));
 }
 
 // Fully platform-specific code
 
 async function implGetEnvironmentBestFormat() {
-    return 'immutableCharacterCells';
+    return "immutableCharacterCells";
 }
 
 async function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
-        await eiteError('implGetEnvironmentRenderTraits was called without any targetFormat!');
+        await eiteError("implGetEnvironmentRenderTraits was called without any targetFormat!");
     }
     var traits = {};
     switch (targetFormat) {
-        case 'integerList':
-        case 'immutableCharacterCells':
+        case "integerList":
+        case "immutableCharacterCells":
             traits.cellTableWidth = -1; // unlimited
             traits.cellTableHeight = -1; // unlimited
             let cs = document.characterSet.toLowerCase();
             switch(cs) {
-                case 'utf-8':
-                    traits.characterEncoding = 'UTF-8';
+                case "utf-8":
+                    traits.characterEncoding = "UTF-8";
                     break;
                 default:
-                    await eiteWarn('Unimplemented character set: '+cs+'. Falling back to ASCII-safe-subset.');
-                    traits.characterEncoding = 'ASCII-safe-subset';
+                    await eiteWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
+                    traits.characterEncoding = "ASCII-safe-subset";
                     break;
             }
             break;

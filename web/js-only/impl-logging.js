@@ -16,7 +16,7 @@ async function implEiteLog(strMessage) {
     // Log the provided message
 
     console.log(await implStrNormalizeMessage(strMessage));
-};
+}
 
 async function implEiteFIXMEUnimplemented(strLocation) {
     await assertIsStr(strLocation);

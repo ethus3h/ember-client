@@ -12,19 +12,19 @@
 
 async function implAssertIsBool(bool) {
     if (typeof bool !== "boolean") {
-        await eiteError("Assertion failed: "+bool+" is not a boolean.")
+        await eiteError("Assertion failed: "+bool+" is not a boolean.");
     }
 }
 
 async function implAssertIsInt(int) {
     if (! Number.isInteger(int)) {
-        await eiteError("Assertion failed: "+int+" is not an int.")
+        await eiteError("Assertion failed: "+int+" is not an int.");
     }
 }
 
 async function implAssertIsStr(str) {
     if (typeof str !== "string") {
-        await eiteError("Assertion failed: "+str+" is not a string.")
+        await eiteError("Assertion failed: "+str+" is not a string.");
     }
 }
 
