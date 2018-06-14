@@ -3,6 +3,7 @@
 */
 
 async function dcarrParseDocument(strFormat, bytearrayContent) {
+    await assertIsStr(strFormat); await assertIsBytearray(bytearrayContent); let dcarrReturn = newDcarr();
     switch (strFormat) {
         case "sems":
             return await dcarrParseSems(bytearrayContent);
