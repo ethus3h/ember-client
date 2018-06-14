@@ -9,7 +9,7 @@
 async function newDcarr() {
     let dcarrReturn;
 
-    dcarrReturn = implNewDcarr(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    dcarrReturn = await implNewDcarr(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 async function dcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
