@@ -3,8 +3,8 @@
 window.onload = function() {
     loadDatasets(function() {
         // This is where the actual commands to run (entry points) should go
-        runEiteTest('ept', 'idiomatic-hello-world-sems');
-        operateOnDocFromUrl('sems', 'idiomatic-hello-world.sems', async function (doc) { await runDocument(doc); } );
+        runEiteTest("ept", "idiomatic-hello-world-sems");
+        operateOnDocFromUrl("sems", "idiomatic-hello-world.sems", async function (doc) { await runDocument(doc); } );
     });
 };
 
