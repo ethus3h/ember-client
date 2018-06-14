@@ -16,7 +16,7 @@ async function implNewDcarr() {
 async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
     await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
 
-    await implCustomTypeDcarrPush();
+    Dcarrs[dcarr].push(dcToAdd);
 }
 
 // @license-end

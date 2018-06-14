@@ -32,7 +32,7 @@ async function dcarrParseSems(bytearrayContent) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
                 if (await boolAsciiIsSpace(bytearrayContent[intByteOffset])) {
-                    await customTypeDcarrPush(dcarrParseResults, strCurrentDc); dcarrParseResults.push(strCurrentDc);
+                    await customTypeDcarrPush(dcarrParseResults, strCurrentDc);
                     strCurrentDc = "";
                 }
                 if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
