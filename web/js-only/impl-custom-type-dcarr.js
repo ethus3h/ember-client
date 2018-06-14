@@ -17,7 +17,7 @@ async function implNewDcarr() {
 async function implCustomTypeDcarrDcAtPos(dcarr, intIndex) {
     await assertIsDcarr(dcarr); await assertIsInt(intIndex); let dcReturn;
 
-    dcReturn = Dcarrs[dcarr]; assertIsDc(dcReturn); return dcReturn;
+    dcReturn = Dcarrs[dcarr][intIndex]; assertIsDc(dcReturn); return dcReturn;
 }
 
 async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
