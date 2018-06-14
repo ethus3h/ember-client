@@ -10,18 +10,13 @@ async function implNewDcarr() {
     let dcarrReturn;
 
     Dcarrs[Dcarrs.length] = [];
-    console.log(Dcarrs);console.log(Dcarrs.length);
     dcarrReturn = Dcarrs.length - 1; await assertIsDcarr(dcarrReturn); return dcarrReturn;
 }
 
 async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
     await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
 
-    console.log(Dcarrs);
-    console.log(dcarr);
-    console.log(Dcarrs[0]);
-    console.log(Dcarrs[await dcarr]);
-    Dcarrs[dcarr].push(dcToAdd);
+    Dcarrs[await dcarr].push(dcToAdd);
 }
 
 // @license-end
