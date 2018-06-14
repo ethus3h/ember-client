@@ -20,7 +20,7 @@ async function implCustomTypeDcarrPush(dcarr, dcToAdd) {
     console.log(Dcarrs);
     console.log(dcarr);
     console.log(Dcarrs[0]);
-    console.log(Dcarrs[dcarr]);
+    console.log(Dcarrs[await dcarr]);
     Dcarrs[dcarr].push(dcToAdd);
 }
 
