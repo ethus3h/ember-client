@@ -20,14 +20,14 @@ async function eiteLog(strMessage) {
 async function eiteWarn(strMessage) {
     await assertIsStr(strMessage);
 
-    await eiteLog('EITE reported warning: '+strMessages);
+    await eiteLog("EITE reported warning: "+strMessages);
 }
 
 async function eiteError(strMessage) {
     // Don't run await assertIsStr(strMessage); here since it can call eiteError, making a recursive loop
 
-    await eiteLog('EITE reported error!: '+strMessage);
-    await die('EITE reported error!: '+strMessage);
+    await eiteLog("EITE reported error!: "+strMessage);
+    await die("EITE reported error!: "+strMessage);
 }
 
 async function eiteFIXMEUnimplemented(strLocation) {

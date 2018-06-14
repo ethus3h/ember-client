@@ -10,9 +10,11 @@ module.exports = {
     "extends": "eslint:recommended",
     "rules": {
         "no-undef": "off",
+        "no-unused-vars": "off",
         "indent": [
             "error",
-            4
+            4,
+            { "SwitchCase": 1 }
         ],
         "linebreak-style": [
             "error",

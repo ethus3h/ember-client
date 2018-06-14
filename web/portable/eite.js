@@ -15,8 +15,8 @@
 
 async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
-        case 'ASCII-safe-subset':
-        case 'UTF-8':
+        case "ASCII-safe-subset":
+        case "UTF-8":
             return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             break;
         default:
