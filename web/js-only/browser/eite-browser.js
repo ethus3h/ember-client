@@ -79,7 +79,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             }
             break;
         default:
-            await eiteError("Unimplemented render I/O format: "+targetFormat);
+            await eiteError("Unimplemented render I/O format: " + targetFormat);
             break;
     }
 }

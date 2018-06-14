@@ -32,6 +32,7 @@ async function boolDcIsPrintable(dc) {
         default:
             break;
     }
+    console.log("dc "+ dc +"is printable? :"+boolReturn);
     boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
 }
 
