@@ -13,29 +13,6 @@
 // TODO: DcData and renderTraits shouldn't be used here, since they're JS-specific, complex objects. They should be provided by APIs and/or simple data types instead. This will also allow the "dc" ad-hoc data type to actually be an int, instead of a string containing an int (which is kind of stupid ­— it should just be an int).
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
-async function strPrintableDcToChar(dc, strCharacterEncoding) {
-    switch (strCharacterEncoding) {
-        case "ASCII-safe-subset":
-        case "UTF-8":
-            return await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
-            break;
-        default:
-            await eiteError("Unimplemented character encoding: " + strCharacterEncoding);
-            break;
-    }
-}
-
-async function dcarrParseDocument(strFormat, bytearrayContent) {
-    switch (strFormat) {
-        case "sems":
-            return await dcarrParseSems(bytearrayContent);
-            break;
-        default:
-            await eiteError("Unimplemented document parsing format: " + strFormat);
-            break;
-    }
-}
-
 async function dcarrParseSems(bytearrayContent) {
     // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
     let dcarrParseResults = [];
