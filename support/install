@@ -37,9 +37,12 @@ if [[ -e scripts ]]; then
     find scripts -maxdepth 1 -type f -exec cp {} "$emberBindir/" \;
 fi
 
-if [[ -e docs/futuramerlin-web-toolkit-output ]]; then
+if [[ -f 'docs/.futuramerlin-web-toolkit/.futuramerlin-web-toolkit.cfg' ]] && [[ -d docs/futuramerlin-web-toolkit-output ]]; then
     mkdir -p "$emberDatadir/doc/$packageName"
     cp -r docs/futuramerlin-web-toolkit-output/* "$emberDatadir/doc/$packageName/"
+elif [[ -d docs ]]; then
+    mkdir -p "$emberDatadir/doc/$packageName"
+    cp -r docs/* "$emberDatadir/doc/$packageName/"
 fi
 
 if [[ -e "support/$packageName.conf" ]]; then
