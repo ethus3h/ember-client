@@ -61,4 +61,5 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
         die "Unknown parser state $parserState."
         ;;
     esac
+    print_r "$tokens"
  done
