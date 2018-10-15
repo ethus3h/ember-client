@@ -15,10 +15,13 @@ targetLang="$2"
 
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     case $byte in
-    create)
+    72)
+        echo "It's a r"
+    2F)
+        echo "It's a slash"
         ;;
     *)
         die "Unexpected byte."
-    ;;
+        ;;
     esac
 done
