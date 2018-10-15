@@ -11,6 +11,9 @@ input="$1"
 targetLang="$2"
 
 tokens=()
+# Add empty slots to the array for the first token
+tokens+="" # Token type goes in even numbered slots
+tokens+="" # Token content goes in odd numbered slots
 parserState="token"
 currentToken=""
 
@@ -28,36 +31,33 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
         if asciiIsLetter "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
-            parserState="token-end"
+            # End of token
+            tokens+=""
+            tokens+=""
         elif asciiIsNewline "$byte"; then
-            parserState="token-end"
+            # End of token
+            tokens+=""
+            tokens+=""
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
+            tokens[-2]="comment"
+            tokens[-1]="${tokens[-1]} $byte"
+        else
+            die "Unexpected byte $byte."
         fi
         ;;
+    comment)
+        if asciiIsNewline "$byte"; then
+            parserState="token"
+            tokens+=""
+            tokens+=""
+        elif asciiIsPrintable "$byte"; then
+            tokens[-1]="${tokens[-1]} $byte"
+        else
+            die "Non-printable byte $byte in a comment."
+        fi
     *)
-        die "Unexpected byte."
+        die "Unknown parser state $parserState."
         ;;
     esac
-        switch (strParserState) {
-            case "token":
-                if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
-                    strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
-                }
-                if (await boolAsciiIsSpace(bytearrayContent[intByteOffset])) {
-                    await customTypeDcarrPush(dcarrParseResults, strCurrentDc);
-                    strCurrentDc = "";
-                }
-                if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
-                    strParserState = "comment";
-                }
-                break;
-            case "comment":
-                if (await boolAsciiIsNewline(bytearrayContent[intByteOffset])) {
-                    strParserState = "dc";
-                }
-                break;
-        }
-    }
-    dcarrReturn = dcarrParseResults; await assertIsDcarr(dcarrReturn); return dcarrReturn;
-done
+ done
