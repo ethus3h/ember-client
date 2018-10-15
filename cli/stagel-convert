@@ -9,3 +9,4 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # | hexdump -v -e '1/1 "%02X "' | tr ' ' '\12' | sed 's/5C/5C\n5C/g' | sed 's/0A/5C\n0A/g' | tr '\12' ' ' | xxd -r -p | tr '\0' '\12' >> ".egup.stat" || die ".egup.stat"" could not be generated!"
 #  | while IFS= read -rd '' statPath; IFS= read -rd '' statLink; IFS= read -rd '' statStat; do
+echo test
