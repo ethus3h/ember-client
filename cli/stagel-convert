@@ -13,6 +13,4 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 input="$1"
 targetLang="$2"
 
-hexdump -v -e '1/1 "%02X "' < "$input" | while IFS=' ' read -rd '' byte; do
-    echo "$byte"
-done
+hexdump -v -e '1/1 "%02X "' < "$input"
