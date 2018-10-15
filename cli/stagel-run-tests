@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 cd tests || die
 
-runTest stagel-routine-minimal
-#runTest stagel-fizzbuzz-routine
+runTest stagel/js/stagel-routine-minimal
+#runTest stagel/js/stagel-fizzbuzz-routine
 
 reportTests
