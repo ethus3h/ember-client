@@ -18,6 +18,6 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     if asciiIsPrintable "$byte"; then
         print "Pr $byte "
     else
-        die "Unexpected byte."
+        die "Unexpected byte $byte."
     fi
 done
