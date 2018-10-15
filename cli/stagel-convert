@@ -23,11 +23,17 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     else
         die "Unexpected byte $byte."
     fi
-    case $byte in
-    72|2F)
-        echo "It's a r"
-    2F)
-        echo "It's a slash"
+    case $parserState in
+    token)
+        if asciiIsLetter "$byte"; then
+            tokens[-1]="${tokens[-1]} $byte"
+        elif asciiIsSpace "$byte"; then
+            parserState="token-end"
+        elif asciiIsNewline "$byte"; then
+            parserState="token-end"
+        elif [[ "$byte" == 35 ]]; then
+            parserState="comment"
+        fi
         ;;
     *)
         die "Unexpected byte."
