@@ -18,7 +18,7 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     if asciiIsPrintable "$byte"; then
         print "Pr $byte "
     elif asciiIsNewline "$byte"; then
-        print "Nl $byte "
+        echo "Nl $byte "
     else
         die "Unexpected byte $byte."
     fi
