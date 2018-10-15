@@ -14,10 +14,9 @@ input="$1"
 targetLang="$2"
 
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
-    case $byte in
-    72|2F)
-        echo "It's a r"
-        echo "It's a slash"
+    byte=$(( 16#$byte )) # Convert to decimal
+    if asciiIsPrintable "$byte"; then
+        print "Pr $byte "
         ;;
     *)
         die "Unexpected byte."
