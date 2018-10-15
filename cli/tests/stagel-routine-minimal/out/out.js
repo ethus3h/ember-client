@@ -1,4 +1,6 @@
 async function fbSwitcher(intNum) {
     await assertIsInt(intNum); let strReturn;
-    // Test comment (Note that this function is a type error because it doesn't )
+    // Test comment
+        strReturn = await implStrFromUnicodeHex(strInput); await assertIsStr(strReturn); return strReturn;
+
 }
