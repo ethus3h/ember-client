@@ -14,12 +14,11 @@ input="$1"
 targetLang="$2"
 
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
-    echo "a$byte"case $action in
-create)
-   ;;
-*)
-    die "Unknown action."
+    case $byte in
+    create)
+        ;;
+    *)
+        die "Unexpected byte."
     ;;
-esac
-
+    esac
 done
