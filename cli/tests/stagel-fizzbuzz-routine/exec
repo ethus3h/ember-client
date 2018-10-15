@@ -7,6 +7,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 [[ -e "run" ]] && rm -r "run"
 
-../../futuramerlin-web-toolkit-build-blog "in" "run"
+mkdir run
+
+../../stagel-convert "in" "js" > "run/out.js"
 
 assert directoryEquals "out" "run"
