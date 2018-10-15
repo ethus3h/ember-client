@@ -11,7 +11,8 @@ input="$1"
 targetLang="$2"
 
 tokens=()
-parserState="dc"
+parserState="token"
+currentToken=""
 
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
@@ -22,10 +23,8 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     else
         die "Unexpected byte $byte."
     fi
-    for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
-        // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         switch (strParserState) {
-            case "dc":
+            case "token":
                 if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
