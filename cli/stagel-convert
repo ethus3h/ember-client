@@ -23,6 +23,16 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     else
         die "Unexpected byte $byte."
     fi
+    case $byte in
+    72|2F)
+        echo "It's a r"
+    2F)
+        echo "It's a slash"
+        ;;
+    *)
+        die "Unexpected byte."
+        ;;
+    esac
         switch (strParserState) {
             case "token":
                 if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
