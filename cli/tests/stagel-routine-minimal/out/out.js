@@ -1,5 +1,4 @@
-async function intFromStr(str) {
-    await assertIsStr(str); let intReturn;
-
-    intReturn = await implIntFromStr(str); await assertIsInt(intReturn); return intReturn;
+async function fbSwitcher(intNum) {
+    await assertIsInt(intNum); let strReturn;
+    // Test comment (Note that this function is a type error because it doesn't )
 }
