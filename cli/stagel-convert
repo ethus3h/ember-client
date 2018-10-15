@@ -15,9 +15,8 @@ targetLang="$2"
 
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     case $byte in
-    72)
+    72|2F)
         echo "It's a r"
-    2F)
         echo "It's a slash"
         ;;
     *)
