@@ -56,6 +56,7 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
         else
             die "Non-printable byte $byte in a comment."
         fi
+        ;;
     *)
         die "Unknown parser state $parserState."
         ;;
