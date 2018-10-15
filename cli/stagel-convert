@@ -7,12 +7,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Takes a StageL file as first argument, and prints out equivalent code in the language of the second argument (bash/js).
 
-# | hexdump -v -e '1/1 "%02X\n"' | tr ' ' '\12' | sed 's/5C/5C\n5C/g' | sed 's/0A/5C\n0A/g' | tr '\12' ' ' | xxd -r -p | tr '\0' '\12' >> ".egup.stat" || die ".egup.stat"" could not be generated!"
-#  | while IFS= read -rd '' statPath; IFS= read -rd '' statLink; IFS= read -rd '' statStat; do
-
 input="$1"
 targetLang="$2"
-set -x
+
+tokens=()
+parserState="dc"
+
 hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     if asciiIsPrintable "$byte"; then
@@ -22,9 +22,6 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     else
         die "Unexpected byte $byte."
     fi
-    tokens=()
-    parserState="dc"
-    let intContentLength = await intBytearrayLength(bytearrayContent);
     for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         switch (strParserState) {
