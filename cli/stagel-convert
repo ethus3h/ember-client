@@ -38,8 +38,8 @@ while read -r byte; do
                 tokens+=("")
             fi
         elif [[ "$byte" == 39 ]]; then
-            parserState="literal-str"
-            tokens[-2]="literal-str"
+            parserState="literal-s"
+            tokens[-2]="literal-s"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
             tokens[-2]="comment"
@@ -58,7 +58,7 @@ while read -r byte; do
             die "Non-printable byte $byte in a comment."
         fi
         ;;
-    literal-str)
+    literal-s)
         if [[ "$byte" == 39 ]]; then
             parserState="token"
             tokens+=("")
@@ -141,7 +141,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 unset 'stateStack[-1]'
                 unset 'blockStack[-1]'
                 ;;
-            command)
+            command-*)
                 stateStack[-1]="routine-definition-body"
                 ;;
             comment)
@@ -155,9 +155,11 @@ for (( i=0; i<tokenCount; i++ )); do
             ;;
         routine-definition-body)
             case "${tokens[$i - 1]}" in
-            command)
+            command-*)
                 # A token in the body of the routine
                 echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
+                # We need to parse its argument list, now.
+                stateStack+=("argument-list")
                 ;;
             dedent)
                 # Found the end of the routine body.
@@ -177,6 +179,37 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             *)
                 die "Expected command, dedent, routine definition, or comment in body of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
+                ;;
+            esac
+            ;;
+       argument-list)
+            case "${tokens[$i - 1]}" in
+            literal-*)
+                # A token in the body of the routine
+                echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
+                # We need to parse its argument list, now.
+                stateStack+=("argument-list")
+                ;;
+            ident-r-*)
+                # The command owning the arglist being parsed must be "run". So we'll parse its arglist too.
+                assert equals "${tokens[$i]}" "run"
+                stateStack+=("argument-list")
+                ;;
+            ident-*)
+                # Some type of data.
+                ;;
+            command)
+                # A command is being used to get its value.
+                indentationLevel=$((indentationLevel - 1))
+                unset 'stateStack[-1]'
+                unset 'blockStack[-1]'
+                ;;
+            comment)
+                # It's a comment.
+                echo "Comment: ${tokens[$i]}"
+                ;;
+            *)
+                die "Expected literal, identifier, routine name, or comment in argument list of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
                 ;;
             esac
             ;;
