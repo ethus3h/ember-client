@@ -1,4 +1,4 @@
-Printing 30 tokens.
+Printing 15 tokens.
 Token #1:   114 47 115 47 102 98 83 119 105 116 99 104 101 114
 Token #3:   110 47 110 117 109
 Token #5:  
