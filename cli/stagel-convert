@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd): The required dependency ember-shared could not be found (or ember_bash_setup could not be sourced for some other reason)." >&2; printf '%b' '\033[0m' >&2; exit 1; }
-set -x
+#set -x
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
@@ -78,6 +78,18 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 tokenCount="${#tokens[@]}"
+
+for (( i=0; i<tokenCount; i++ )); do
+    if (( i % 2 )); then
+        if [[ -z "${tokens[$i - 1]}" ]]; then
+            case "${tokens[$i]}" in
+            " 114 47 "*)
+                tokens[$i - 1]="routine-declaration"
+                ;;
+            esac
+        fi
+    fi
+done
 
 echo "Printing $((tokenCount / 2)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
