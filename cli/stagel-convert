@@ -32,8 +32,8 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
             tokens+=""
             tokens+=""
         elif [[ "$byte" == 39 ]]; then
-            parserState="stringLiteral"
-            tokens[-2]="stringLiteral"
+            parserState="literal-str"
+            tokens[-2]="literal-str"
             tokens[-1]="${tokens[-1]} $byte"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
