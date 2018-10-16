@@ -205,9 +205,6 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             command)
                 # A command is being used to get its value.
-                indentationLevel=$((indentationLevel - 1))
-                unset 'stateStack[-1]'
-                unset 'blockStack[-1]'
                 ;;
             comment)
                 # It's a comment.
