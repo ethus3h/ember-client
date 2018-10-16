@@ -280,3 +280,4 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 278,Built-in type identifier: Number,0,BN,,!Cx,EL Types,,,
 279,Routine invocation,0,BN,,!Cx,EL Miscellaneous,:~ [identifier],"Invoke the specified routine (unlike lang.invoke, this form of invocation is not shown in the EM source form of the document)",
 280,Built-in type identifier: Routine,0,BN,,!Cx,EL Types,,,
+ 
