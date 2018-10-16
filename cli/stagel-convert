@@ -27,12 +27,16 @@ while read -r byte; do
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
             # End of token
-            tokens+=("")
-            tokens+=("")
+            if [[ -n "${tokens[-1]}" ]]; then
+                tokens+=("")
+                tokens+=("")
+            fi
         elif asciiIsNewline "$byte"; then
             # End of token
-            tokens+=("")
-            tokens+=("")
+            if [[ -n "${tokens[-1]}" ]]; then
+                tokens+=("")
+                tokens+=("")
+            fi
         elif [[ "$byte" == 39 ]]; then
             parserState="literal-str"
             tokens[-2]="literal-str"
