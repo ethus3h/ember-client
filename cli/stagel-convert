@@ -75,7 +75,7 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 tokenCount="${#tokens[@]}"
 
 echo "Printing $((tokenCount / 2)) tokens."
-for (( i=0; i<${tokenCount}; i++ )); do
+for (( i=0; i<tokenCount; i++ )); do
     (( i % 2 )) && echo "Token #$i: ${tokens[$i - 1]}: ${tokens[$i]}"
 done
 
