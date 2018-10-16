@@ -100,21 +100,28 @@ done
 # We now know what each token is, so let's do the code generation.
 
 indentationLevel=0
-tokenTypeStack=()
+stateStack=("code")
 
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
-        case "${tokens[$i - 1]}" in
-        ident-r-s)
-            echo "Entered routine definition for ${tokens[$i]}."
-            indentationLevel=$((indentationLevel + 1))
-            tokenTypeStack+=("routine-definition")
-            ;;
-        ident-n)
-            
+        case "${stateStack[-1]}" in
+        code)
+            case "${tokens[$i - 1]}" in
+            ident-r-s)
+                echo "Entered routine definition for ${tokens[$i]}."
+                indentationLevel=$((indentationLevel + 1))
+                stateStack+=("routine-definition")
+                ;;
+            ident-n)
+                
+                ;;
+            *)
+                tokens[$i - 1]="command"
+                ;;
+            esac
             ;;
         *)
-            tokens[$i - 1]="command"
+            die "Unimplemented code generation state"
             ;;
         esac
     fi
