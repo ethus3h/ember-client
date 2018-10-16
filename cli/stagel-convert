@@ -95,5 +95,3 @@ echo "Printing $((tokenCount / 2)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
     (( i % 2 )) && echo "Token #$i: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
 done
-
-print_r "${tokens[@]}"
