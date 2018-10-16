@@ -97,6 +97,11 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 
+echo "Document contains $((tokenCount / 2)) tokens." >&2
+for (( i=0; i<tokenCount; i++ )); do
+    (( i % 2 )) && echo "Token #$i: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
+done
+
 # We now know what each token is, so let's do the code generation.
 
 indentationLevel=0
@@ -180,9 +185,4 @@ for (( i=0; i<tokenCount; i++ )); do
             ;;
         esac
     fi
-done
-
-echo "Document contains $((tokenCount / 2)) tokens." >&2
-for (( i=0; i<tokenCount; i++ )); do
-    (( i % 2 )) && echo "Token #$i: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
 done
