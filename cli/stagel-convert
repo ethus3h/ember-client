@@ -25,12 +25,12 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
             # End of token
-            tokens+=""
-            tokens+=""
+            tokens+=("")
+            tokens+=("")
         elif asciiIsNewline "$byte"; then
             # End of token
-            tokens+=""
-            tokens+=""
+            tokens+=("")
+            tokens+=("")
         elif [[ "$byte" == 39 ]]; then
             parserState="literal-str"
             tokens[-2]="literal-str"
@@ -44,8 +44,8 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     comment)
         if asciiIsNewline "$byte"; then
             parserState="token"
-            tokens+=""
-            tokens+=""
+            tokens+=("")
+            tokens+=("")
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
@@ -55,8 +55,8 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
     literal-str)
         if [[ "$byte" == 39 ]]; then
             parserState="token"
-            tokens+=""
-            tokens+=""
+            tokens+=("")
+            tokens+=("")
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
