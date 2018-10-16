@@ -79,23 +79,18 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
 tokenCount="${#tokens[@]}"
 
-parserStack=()
-
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
             case "${tokens[$i]}" in
             " 114 47 115 47 "*)
                 tokens[$i - 1]="ident-r-s"
-                parserStack+=("routine-definition")
                 ;;
             " 110 47 "*)
                 tokens[$i - 1]="ident-n"
-                parserStack+=("routine-definition")
                 ;;
             *)
                 tokens[$i - 1]="command"
-                parserStack+=("routine-definition")
                 ;;
             esac
         fi
