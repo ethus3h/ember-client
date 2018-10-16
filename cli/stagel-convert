@@ -139,8 +139,12 @@ for (( i=0; i<tokenCount; i++ )); do
             command)
                 stateStack[-1]=("routine-definition-body")
                 ;;
+            comment)
+                # It's a comment.
+                echo "Comment: ${tokens[$i]}"
+                ;;
             *)
-                die "Expected data ident, dedent, or command in routine definition of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
+                die "Expected data ident, dedent, command, or comment in routine definition of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
                 ;;
             esac
             ;;
@@ -156,6 +160,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 unset 'stateStack[-1]'
                 unset 'blockStack[-1]'
                 ;;
+            comment)
+                # It's a comment.
+                echo "Comment: ${tokens[$i]}"
+                ;;
             ident-r-*)
                 echo "Entered routine definition for ${tokens[$i]}."
                 indentationLevel=$((indentationLevel + 1))
@@ -163,7 +171,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 blockStack+=("${tokens[$i]}")
                 ;;
             *)
-                die "Expected command, dedent, or routine definition in body of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
+                die "Expected command, dedent, routine definition, or comment in body of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
                 ;;
             esac
             ;;
