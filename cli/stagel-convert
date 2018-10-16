@@ -17,7 +17,7 @@ tokens+="" # Token content goes in odd numbered slots
 parserState="token"
 currentToken=""
 
-hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
+while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     case $parserState in
     token)
@@ -67,5 +67,6 @@ hexdump -v -e '1/1 "%02X\n"' < "$input" | while read -r byte; do
         die "Unknown parser state $parserState."
         ;;
     esac
-done
+done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
+
 print_r "$tokens"
