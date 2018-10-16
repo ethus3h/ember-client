@@ -113,7 +113,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 stateStack+=("routine-definition")
                 ;;
             ident-n)
-                
+                echo "Ident"
                 ;;
             *)
                 tokens[$i - 1]="command"
