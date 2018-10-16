@@ -166,6 +166,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 die "Expected command, dedent, or routine definition in body of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
                 ;;
             esac
+            ;;
         *)
             die "Unimplemented code generation state ${stateStack[-1]}"
             ;;
