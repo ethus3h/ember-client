@@ -138,6 +138,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 # A token in the body of the routine
                 echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
                 ;;
+            esac
             ;;
         *)
             die "Unimplemented code generation state ${stateStack[-1]}"
