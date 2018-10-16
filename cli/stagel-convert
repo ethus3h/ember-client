@@ -69,4 +69,4 @@ while read -r byte; do
     esac
 done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
-print_r "$tokens"
+print_r "${tokens[@]}"
