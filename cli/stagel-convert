@@ -120,9 +120,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             esac
             ;;
-        routine-de
+        routine-definition)
+            warn "Routine definition"
+            ;;
         *)
-            warn "Unimplemented code generation state ${stateStack[-1]}"
+            die "Unimplemented code generation state ${stateStack[-1]}"
             ;;
         esac
     fi
