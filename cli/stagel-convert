@@ -121,7 +121,8 @@ for (( i=0; i<tokenCount; i++ )); do
             esac
             ;;
         routine-definition)
-            warn "Routine definition"
+            # Format: token, [type...], code body
+            # So now we look for as many types as there are. When no more types, it enters the code body of the routine. When there's a dedent, it leaves the code body of the routine.
             ;;
         *)
             die "Unimplemented code generation state ${stateStack[-1]}"
