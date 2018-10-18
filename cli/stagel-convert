@@ -43,13 +43,21 @@ potentialIndentLevel=""
 prevByte=""
 currentIndentLevel="0"
 indentSpacesCounted="0"
+foundIndentTestPoint=""
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
         if [[ "$lookingForIndent" == "true" ]]; then
-            if 
+            if asciiIsSpace "$byte"; then
+                indentSpacesCounted=$(( indentSpacesCounted + 1 ))
+                if [[ "$indentSpacesCounted" == $(( (currentIndentLevel ) * 4 )) ]]; then
+                    foundIndentTestPoint="true"
+                    lookingForIndent=""
+                fi
+            fi
+        fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
