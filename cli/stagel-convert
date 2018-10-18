@@ -65,7 +65,8 @@ while read -r byte; do
         fi
         if [[ "$foundIndentTestPoint" == "true" ]]; then
             foundIndentTestPoint=""
-            if asciiIsPrintable "$byte"; then
+            if ! asciiIsPrintable "$byte"; then
+                lookingForIndent="true"
             fi
         fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
