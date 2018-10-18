@@ -104,6 +104,12 @@ for (( i=0; i<tokenCount; i++ )); do
                 tokens[$i - 1]="command"
                 ;;
             esac
+            case "${tokens[$i]}" in
+            " 114 47 "*)
+                # It's a routine, so insert the 
+                
+                ;;
+            esac
         fi
     fi
 done
