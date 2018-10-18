@@ -104,12 +104,6 @@ for (( i=0; i<tokenCount; i++ )); do
                 tokens[$i - 1]="command"
                 ;;
             esac
-            case "${tokens[$i]}" in
-            " 114 47 "*)
-                # It's a routine, so insert the 
-                
-                ;;
-            esac
         fi
     fi
 done
@@ -135,6 +129,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 indentationLevel=$((indentationLevel + 1))
                 stateStack+=("routine-definition")
                 blockStack+=("${tokens[$i]}")
+                insertToken "$i" "r-def-arglist-start" ""
                 ;;
             ident-n)
                 ;;
@@ -163,6 +158,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
                 # We need to parse its argument list, now.
                 stateStack+=("argument-list")
+                insertToken "$i" "r-def-arglist-end" ""
+                insertToken "$((i + 2))" "r-call-arglist-start" ""
                 ;;
             comment)
                 # It's a comment.
