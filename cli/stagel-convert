@@ -48,10 +48,12 @@ while read -r byte; do
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
+        if [[ "$lookingForIndent" == "true" ]]; then
+            
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
-            if asciiIsNewline "$prevToken" || potentialIndentLevel="true"; then
+            if asciiIsNewline "$prevToken" || [[ potentialIndentLevel == "true" ]]; then
                 potentialIndentLevel="true"
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
                 if [[ "$indentSpacesCounted" == $(( (currentIndentLevel + 1 ) * 4 )) ]]; then
@@ -59,7 +61,7 @@ while read -r byte; do
                     currentIndentLevel=$(( currentIndentLevel + 1 ))
                     potentialIndentLevel=""
                     indentSpacesCounted="0"
-                    
+                    pushToken "indent" "e"
                 fi
             elif [[ -n "${tokens[-1]}" ]]; then
                 # End of token.
