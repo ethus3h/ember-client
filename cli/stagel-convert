@@ -44,9 +44,8 @@ while read -r byte; do
             if asciiIsNewline "$prevToken"; then
                 potentialIndentLevel="true"
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
-            fi
-                # End of token
-            if [[ -n "${tokens[-1]}" ]]; then
+            elif [[ -n "${tokens[-1]}" ]]; then
+                # End of token.
                 # There's a token in the last slot in the tokens array, so make a new slot for the next one
                 tokens+=("")
                 tokens+=("")
