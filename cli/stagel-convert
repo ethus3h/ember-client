@@ -49,7 +49,7 @@ while read -r byte; do
     case $parserState in
     token)
         if [[ "$lookingForIndent" == "true" ]]; then
-            
+            if 
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
@@ -70,6 +70,7 @@ while read -r byte; do
                 tokens+=("")
             fi
         elif asciiIsNewline "$byte"; then
+            lookingForIndent="true"
             # End of token
             if [[ -n "${tokens[-1]}" ]]; then
                 tokens+=("")
