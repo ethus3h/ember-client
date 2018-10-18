@@ -56,19 +56,21 @@ while read -r byte; do
                     foundIndentTestPoint="true"
                     lookingForIndent=""
                 fi
-            fi
+            else
         fi
         if [[ "$foundIndentTestPoint" == "true" ]]; then
             foundIndentTestPoint=""
             if asciiIsPrintable "$byte"; then
             fi
-        else
+        fi
+        if [[ "$lookingForIndent" == "true" ]]; then
             if ! asciiIsSpace "$byte"; then
                 # Dedented.
                 currentIndentLevel=$(( currentIndentLevel - 1 ))
                 indentSpacesCounted="0"
                 pushToken "dedent" "e"
             fi
+        fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
