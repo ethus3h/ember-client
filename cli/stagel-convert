@@ -29,6 +29,10 @@ insertToken() {
     tokens="${tokensTemp[@]}"
 }
 
+potentialIndentLevel=""
+prevToken=""
+currentIndentLevel="0"
+indentSpacesCounted="0"
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
@@ -37,8 +41,13 @@ while read -r byte; do
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
-            # End of token
+            if asciiIsNewline "$prevToken"; then
+                potentialIndentLevel="true"
+                indentSpacesCounted=$(( indentSpacesCounted + 1 ))
+            fi
+                # End of token
             if [[ -n "${tokens[-1]}" ]]; then
+                # There's a token in the last slot in the tokens array, so make a new slot for the next one
                 tokens+=("")
                 tokens+=("")
             fi
@@ -57,6 +66,7 @@ while read -r byte; do
         else
             die "Unexpected byte $byte in basic token."
         fi
+        prevToken="$byte"
         ;;
     comment)
         if asciiIsNewline "$byte"; then
