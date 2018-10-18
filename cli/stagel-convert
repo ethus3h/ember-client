@@ -18,6 +18,17 @@ parserState="token"
 
 # First, break up the input into tokens in the tokens array. This doesn't support streaming, so isn't good for long documents, but should suffice for now. The format should be streamable to other formats; this was just easier to implement for now.
 
+insertToken() {
+    local insertAfter="$1"
+    local newTokenType="$2"
+    local newToken="$3"
+    local tokensTemp=("${tokens[@]:0:insertAfter}")
+    tokensTemp+=("$newTokenType")
+    tokensTemp+=("$newToken")
+    tokensTemp+=("${tokens[@]:insertAfter}")
+    tokens="${tokensTemp[@]}"
+}
+
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
