@@ -18,6 +18,16 @@ parserState="token"
 
 # First, break up the input into tokens in the tokens array. This doesn't support streaming, so isn't good for long documents, but should suffice for now. The format should be streamable to other formats; this was just easier to implement for now.
 
+pushToken() {
+    if [[ -n "${tokens[-1]}" ]]; then
+        # There's a token in the last slot in the tokens array, so make a new slot for the next one
+        tokens+=("")
+        tokens+=("")
+    fi
+    tokens[-2]="$1"
+    tokens[-1]="$2"
+}
+
 insertToken() {
     local insertAfter="$1"
     local newTokenType="$2"
@@ -41,9 +51,16 @@ while read -r byte; do
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
-            if asciiIsNewline "$prevToken"; then
+            if asciiIsNewline "$prevToken" || potentialIndentLevel="true"; then
                 potentialIndentLevel="true"
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
+                if [[ "$indentSpacesCounted" == $(( (currentIndentLevel + 1 ) * 4 )) ]]; then
+                    # We're now another indent level down.
+                    currentIndentLevel=$(( currentIndentLevel + 1 ))
+                    potentialIndentLevel=""
+                    indentSpacesCounted="0"
+                    
+                fi
             elif [[ -n "${tokens[-1]}" ]]; then
                 # End of token.
                 # There's a token in the last slot in the tokens array, so make a new slot for the next one
@@ -138,7 +155,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 indentationLevel=$((indentationLevel + 1))
                 stateStack+=("routine-definition")
                 blockStack+=("${tokens[$i]}")
-                insertToken "$i" "r-def-arglist-start" ""
+                insertToken "$i" "r-def-arglist-start" "e"
                 ;;
             ident-n)
                 ;;
@@ -167,8 +184,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
                 # We need to parse its argument list, now.
                 stateStack+=("argument-list")
-                insertToken "$i" "r-def-arglist-end" ""
-                insertToken "$((i + 2))" "r-call-arglist-start" ""
+                insertToken "$i" "r-def-arglist-end" "e" # e for empty, since there isn't really a token value for this but if it were actually empty it would be considered not a token in other checks.
+                insertToken "$((i + 2))" "r-call-arglist-start" "e"
                 ;;
             comment)
                 # It's a comment.
