@@ -59,12 +59,19 @@ while read -r byte; do
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
-        if asc
+        if [[ "$countingIndentSpaces" == "true" ]] && asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
+            countingIndentSpaces="false"
+            if [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel - 1 ) * 4 )) ]]; then
+                pushToken "dedent" ""
+            elif [[ "$indentSpacesCounted" -eq $(( currentIndentLevel * 4 )) ]]; then
+                pushToken "dedent" ""
+            elif [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel + 1 ) * 4 )) ]]; then
+                pushToken "indent" ""
+            fi
+        fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
-            if [[ "$indentSpacesCounted" == $(( (currentIndentLevel + 1 ) * 4 )) ]]; then
-
             if [[ -n "${tokens[-1]}" ]]; then
                 # End of token.
                 # There's a token in the last slot in the tokens array, so make a new slot for the next one
