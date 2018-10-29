@@ -166,8 +166,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 tokens[$i - 1]="command"
                 ;;
             esac
-            case "${tokens[$i]}" in
-            " 114 47 "*)
+            if [[ "${tokens[$i]}" == " 114 47 "* ]]; then
                 # It's a routine identifier, either invocation or declaration
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
                     # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert an indent token, and set the state that we want to find the end of the param list and then dedent
@@ -175,6 +174,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     wantDedentAfterParameterList="true"
                     true
                 fi
+            fi
                 ;;
             " 110 "*)
                 # It's 
