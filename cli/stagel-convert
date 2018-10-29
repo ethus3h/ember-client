@@ -159,7 +159,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
                     set -x
                     # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
-                    insertToken "$((i - 2))" "indent" ""
+                    insertToken "$((i - 1))" "indent" ""
                     wantDedentAfterParameterList="true"
                     set +x
                     true
