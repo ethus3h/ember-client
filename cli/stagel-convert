@@ -47,6 +47,7 @@ foundIndentTestPoint=""
 # We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
 tokens+=("start-document")
 tokens+=("")
+pushToken
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
