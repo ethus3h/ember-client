@@ -138,6 +138,7 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
 tokenCount="${#tokens[@]}"
 
+wantDedentAfterParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
@@ -146,7 +147,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 tokens[$i - 1]="ident-r-s"
                 tokens[$i]="${tokens[$i]# 114 47 115 47}"
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
-                    insertAfter "$((i - 1))" "indent" ""
+                    # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
+                    insertAfter "$((i - 2))" "indent" ""
+                    wantDedentAfterParameterList="true"
+                    i="$((i + 2))"
+                fi
                 ;;
             " 110 47 "*)
                 tokens[$i - 1]="ident-n"
