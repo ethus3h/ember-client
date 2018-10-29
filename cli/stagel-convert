@@ -175,14 +175,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     true
                 fi
             fi
-                ;;
-            " 110 "*)
-                # It's 
-                ;;
-            *)
-                true
-                ;;
-            esac
+            if [[ "${tokens[$i]}" == " 110 47 "* ]]; then
+                # It's an identifier (TODO: right now, this only tests for numbers)
+                if [[ "$wantDedentAfterParameterList" == "true" ]]; then
+                    # Ok, let's see if we've found the end of the parameter list
+                fi
+            fi
         fi
     fi
 done
