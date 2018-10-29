@@ -170,14 +170,14 @@ for (( i=0; i<tokenCount; i++ )); do
             " 114 47 "*)
                 # It's a routine identifier, either invocation or declaration
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
-                    # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
+                    # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert an indent token, and set the state that we want to find the end of the param list and then dedent
                     insertToken "$((i + 1))" "indent" ""
                     wantDedentAfterParameterList="true"
                     true
                 fi
                 ;;
             " 110 "*)
-                
+                # It's 
                 ;;
             *)
                 true
