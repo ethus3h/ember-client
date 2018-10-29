@@ -51,7 +51,7 @@ tokens+=("") # Token content goes in odd numbered slots
 parserState="token"
 prevByte=""
 currentIndentLevel="0"
-countingIndentSpaces="true"
+contint
 indentSpacesCounted="0"
 
 while read -r byte; do
@@ -59,8 +59,6 @@ while read -r byte; do
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
-        if asciiIsPrintable "$byte"; then
-        
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
