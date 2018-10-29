@@ -148,8 +148,9 @@ while read -r byte; do
     esac
 done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
-while [[ "$currentIndentLevel" -gt 0 ]]; then
-    
+for (( i=0; i<currentIndentLevel; i++ )); do
+    pushToken dedent ""
+done
 
 # Not all the tokens are identified yet. So, now, let's label them all.
 
