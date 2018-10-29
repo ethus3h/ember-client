@@ -194,6 +194,11 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 
+if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
+    unset 'tokens[-1]'
+    unset 'tokens[-2]'
+fi
+
 tokenCount="${#tokens[@]}"
 echo "Document contains $((tokenCount / 2)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
