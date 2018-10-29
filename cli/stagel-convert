@@ -53,9 +53,17 @@ prevByte=""
 currentIndentLevel="0"
 countingIndentSpaces="true"
 indentSpacesCounted="0"
+lineNumber="1"
+columnNumber="1"
 
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
+    if asciiIsNewline "$byte"; then
+        lineNumber=$(( lineNumber + 1 ))
+        columnNumber=1
+    else
+        columnNumber=$(( columnNumber + 1 ))
+    fi
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
@@ -64,9 +72,11 @@ while read -r byte; do
             if [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel - 1 ) * 4 )) ]]; then
                 pushToken "dedent" ""
             elif [[ "$indentSpacesCounted" -eq $(( currentIndentLevel * 4 )) ]]; then
-                pushToken "dedent" ""
+                true # The expected number of indent spaces was found; do nothing
             elif [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel + 1 ) * 4 )) ]]; then
                 pushToken "indent" ""
+            else
+                die "Found $indentSpacesCounted spaces on line $lineNumber, column $columnNumber, but the current indentation level would expect $(( currentIndentLevel * 4 )) spaces."
             fi
         fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
