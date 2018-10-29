@@ -80,7 +80,6 @@ while read -r byte; do
                     true # The expected number of indent spaces was found; do nothing
                 elif [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel + 1 ) * 4 )) ]]; then
                     pushToken "indent" ""
-                    print_r "${tokens[@]}" >&2
                     currentIndentLevel=$(( currentIndentLevel + 1 ))
                 else
                     die "Found $indentSpacesCounted spaces on line $lineNumber, column $columnNumber, but the current indentation level would expect $(( currentIndentLevel * 4 )) spaces."
@@ -151,9 +150,11 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 for (( i=0; i<=currentIndentLevel; i++ )); do
     pushToken dedent ""
 done
-
+set -x
+                    print_r "${tokens[@]}" >&2
 pushToken "end-document" ""
-
+                    print_r "${tokens[@]}" >&2
+set +x
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 tokenCount="${#tokens[@]}"
