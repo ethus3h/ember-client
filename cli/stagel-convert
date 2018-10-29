@@ -163,6 +163,14 @@ done
 
 # We now know what each token is, so let's do the code generation.
 
+if [[ "$targetLang" == "parsed" ]]; then
+    # Just dump the parse results and exit
+    for (( i=0; i<tokenCount; i++ )); do
+        (( i % 2 )) && echo "${tokens[$i - 1]} ${tokens[$i]}"
+    done
+    exit
+fi
+
 indentationLevel=0
 stateStack=("code")
 blockStack=("root")
