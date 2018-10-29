@@ -1,2 +1,12 @@
-Routine  114 47 115 47 102 98 83 119 105 116 99 104 101 114 has an integer argument
-Comment: e 32 84 101 115 116 32 99 111 109 109 101 110 116
+ident-r-s  114 47 115 47 102 98 83 119 105 116 99 104 101 114
+ident-n  110 47 110 117 109
+comment e 32 84 101 115 116 32 99 111 109 109 101 110 116
+dedent e 114
+dedent e 101
+dedent e 116
+dedent e 117
+dedent e 114
+dedent e 110
+literal-s e
+dedent e
+command 
