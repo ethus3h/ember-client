@@ -11,10 +11,6 @@ input="$1"
 targetLang="$2"
 
 tokens=()
-# Add empty slots to the array for the first token
-tokens+=("") # Token type goes in even numbered slots
-tokens+=("") # Token content goes in odd numbered slots
-parserState="token"
 
 # First, break up the input into tokens in the tokens array. This doesn't support streaming, so isn't good for long documents, but should suffice for now. The format should be streamable to other formats; this was just easier to implement for now.
 
@@ -39,15 +35,21 @@ insertToken() {
     tokens="${tokensTemp[@]}"
 }
 
+# We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
+tokens+=("start-document")
+tokens+=("")
+
+# Add empty slots to the array for the first token
+tokens+=("") # Token type goes in even numbered slots
+tokens+=("") # Token content goes in odd numbered slots
+
+parserState="token"
 potentialIndentLevel=""
 prevByte=""
 currentIndentLevel="0"
 indentSpacesCounted="0"
 foundIndentTestPoint=""
-# We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
-tokens+=("start-document")
-tokens+=("")
-pushToken
+
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
