@@ -60,7 +60,7 @@ while read -r byte; do
                 # Dedented.
                 currentIndentLevel=$(( currentIndentLevel - 1 ))
                 indentSpacesCounted="0"
-                pushToken "dedent" "e"
+                pushToken "dedent" ""
             fi
         fi
         if [[ "$foundIndentTestPoint" == "true" ]]; then
@@ -144,9 +144,11 @@ for (( i=0; i<tokenCount; i++ )); do
             case "${tokens[$i]}" in
             " 114 47 115 47 "*)
                 tokens[$i - 1]="ident-r-s"
+                tokens[$i]="${tokens[$i]# 114 47 115 47}"
                 ;;
             " 110 47 "*)
                 tokens[$i - 1]="ident-n"
+                tokens[$i]="${tokens[$i]# 110 47}"
                 ;;
             *)
                 tokens[$i - 1]="command"
