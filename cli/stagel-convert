@@ -29,9 +29,13 @@ insertToken() {
     local newTokenType="$2"
     local newToken="$3"
     local tokensTemp=("${tokens[@]:0:insertAfter}")
+    print_r "${tokensTemp[@]}" >&2
     tokensTemp+=("$newTokenType")
+    print_r "${tokensTemp[@]}" >&2
     tokensTemp+=("$newToken")
+    print_r "${tokensTemp[@]}" >&2
     tokensTemp+=("${tokens[@]:insertAfter}")
+    print_r "${tokensTemp[@]}" >&2
     tokens="${tokensTemp[@]}"
 }
 
