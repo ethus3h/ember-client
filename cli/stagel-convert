@@ -195,6 +195,7 @@ for (( i=0; i<tokenCount; i++ )); do
         fi
     fi
 done
+                    print_r "${tokens[@]}" >&2
 
 echo "Document contains $((tokenCount / 2)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
