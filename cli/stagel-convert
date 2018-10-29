@@ -37,6 +37,7 @@ insertToken() {
     tokensTemp+=("${tokens[@]:insertAfter}")
     print_r "${tokensTemp[@]}" >&2
     tokens="${tokensTemp[@]}"
+    print_r "${tokens[@]}" >&2
 }
 
 # We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
