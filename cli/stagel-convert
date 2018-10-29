@@ -152,6 +152,8 @@ for (( i=0; i<=currentIndentLevel; i++ )); do
     pushToken dedent ""
 done
 
+pushToken "end-document" ""
+
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 tokenCount="${#tokens[@]}"
