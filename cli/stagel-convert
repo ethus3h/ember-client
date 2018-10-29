@@ -67,6 +67,7 @@ while read -r byte; do
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
+        set -x
         if [[ "$countingIndentSpaces" == "true" ]]; then
             if asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
                 countingIndentSpaces="false"
@@ -89,6 +90,7 @@ while read -r byte; do
         if asciiIsNewline "$byte"; then
             countingIndentSpaces="true"
         fi
+        set +x
 
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
