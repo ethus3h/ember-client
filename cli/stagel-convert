@@ -157,12 +157,6 @@ for (( i=0; i<tokenCount; i++ )); do
             " 114 47 115 47 "*)
                 tokens[$i - 1]="ident-r-s"
                 tokens[$i]="${tokens[$i]# 114 47 115 47}"
-                if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
-                    # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
-                    insertToken "$((i + 1))" "indent" ""
-                    wantDedentAfterParameterList="true"
-                    true
-                fi
                 ;;
             " 110 47 "*)
                 tokens[$i - 1]="ident-n"
@@ -170,6 +164,23 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             *)
                 tokens[$i - 1]="command"
+                ;;
+            esac
+            case "${tokens[$i]}" in
+            " 114 47 "*)
+                # It's a routine identifier, either invocation or declaration
+                if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
+                    # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
+                    insertToken "$((i + 1))" "indent" ""
+                    wantDedentAfterParameterList="true"
+                    true
+                fi
+                ;;
+            " 110 "*)
+                
+                ;;
+            *)
+                true
                 ;;
             esac
         fi
