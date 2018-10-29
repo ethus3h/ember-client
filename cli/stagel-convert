@@ -129,11 +129,13 @@ for (( i=0; i<tokenCount; i++ )); do
                 fi
             fi
             if [[ "$inParameterList" == "true" ]]; then
+                set -x
                 # Ok, let's see if we've found the end of the parameter list: if the current token is anything but a non-routine identifier, it's the end of the param list, so dedent
                 if [[ "${tokens[$i + 3]}" != " 110 47 "* ]]; then
                     # It's the end of the parameter list (TODO: right now, this only tests for numbers)
                     insertToken "$((i + 5))" "dedent" ""
                 fi
+                set +x
             fi
             case "${tokens[$i]}" in
             " 114 47 115 47 "*)
