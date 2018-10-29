@@ -85,6 +85,11 @@ while read -r byte; do
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
             fi
         fi
+
+        if asciiIsNewline "$byte"; then
+            countingIndentSpaces="true"
+        fi
+
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
