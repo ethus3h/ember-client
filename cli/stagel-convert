@@ -44,6 +44,9 @@ prevByte=""
 currentIndentLevel="0"
 indentSpacesCounted="0"
 foundIndentTestPoint=""
+# We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
+tokens+=("start-document")
+tokens+=("")
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     tokenCount="${#tokens[@]}" >&2
@@ -149,7 +152,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
                     set -x
                     # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert indent 
-                    insertToken "$((tokenCount - i - 2))" "indent" ""
+                    insertToken "$((i - 2))" "indent" ""
                     wantDedentAfterParameterList="true"
                     set +x
                     true
