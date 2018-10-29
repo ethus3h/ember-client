@@ -36,7 +36,7 @@ insertToken() {
     print_r "${tokensTemp[@]}" >&2
     tokensTemp+=("${tokens[@]:insertAfter}")
     print_r "${tokensTemp[@]}" >&2
-    tokens="${tokensTemp[@]}"
+    tokens=("${tokensTemp[@]}")
     print_r "${tokens[@]}" >&2
 }
 
