@@ -153,20 +153,6 @@ wantDedentAfterParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
-            case "${tokens[$i]}" in
-            " 114 47 115 47 "*)
-                tokens[$i - 1]="ident-r-s"
-                tokens[$i]="${tokens[$i]# 114 47 115 47}"
-                ;;
-            " 110 47 "*)
-                tokens[$i - 1]="ident-n"
-                tokens[$i]="${tokens[$i]# 110 47}"
-                ;;
-            *)
-                tokens[$i - 1]="command"
-                ;;
-            esac
-            set -x
             if [[ "${tokens[$i]}" == " 114 47 "* ]]; then
                 # It's a routine identifier, either invocation or declaration
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
@@ -182,7 +168,19 @@ for (( i=0; i<tokenCount; i++ )); do
                     insertToken "$((i + 1))" "dedent" ""
                 fi
             fi
-            set +x
+            case "${tokens[$i]}" in
+            " 114 47 115 47 "*)
+                tokens[$i - 1]="ident-r-s"
+                tokens[$i]="${tokens[$i]# 114 47 115 47}"
+                ;;
+            " 110 47 "*)
+                tokens[$i - 1]="ident-n"
+                tokens[$i]="${tokens[$i]# 110 47}"
+                ;;
+            *)
+                tokens[$i - 1]="command"
+                ;;
+            esac
         fi
     fi
 done
