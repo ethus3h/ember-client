@@ -154,6 +154,8 @@ set -x
                     print_r "${tokens[@]}" >&2
 pushToken "end-document" ""
                     print_r "${tokens[@]}" >&2
+                    echo "${#tokens[@]}" >&2
+                    echo "COUNT"
 set +x
 # Not all the tokens are identified yet. So, now, let's label them all.
 
