@@ -147,7 +147,7 @@ while read -r byte; do
     esac
 done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
-for (( i=0; i<=currentIndentLevel; i++ )); do
+for (( i=0; i<currentIndentLevel; i++ )); do
     pushToken dedent ""
 done
 
