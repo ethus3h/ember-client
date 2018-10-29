@@ -149,7 +149,6 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
 tokenCount="${#tokens[@]}"
 
-wantDedentAfterParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
@@ -171,15 +170,15 @@ for (( i=0; i<tokenCount; i++ )); do
                 if [[ "${tokens[$i - 3]}" != "command" ]] && [[ "${tokens[$i - 2]}" != "run" ]]; then
                     # It's not being run, so it's not an invocation, meaning it must be a declaration of this routine. So, insert an indent token
                     insertToken "$((i + 1))" "indent" ""
-                    wantDedentAfterParameterList="true"
-                    true
+                    # Ok, let's see if we've found the end of the parameter list: if the next token is anything but a non-routine identifier, it's the end of the param list, so dedent
+                    if [[ "${tokens[$i]}" != " 110 47 "* ]]; then
+                        insertToken "$((i + 1))" "indent" ""
+                    fi
                 fi
             fi
                 # It's an identifier (TODO: right now, this only tests for numbers)
             if [[ "$wantDedentAfterParameterList" == "true" ]]; then
-                # Ok, let's see if we've found the end of the parameter list: if the next token is anything but a literal, 
-                if [[ "${tokens[$i]}" == " 110 47 "* ]]; then
-                fi
+                
             fi
         fi
     fi
