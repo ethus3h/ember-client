@@ -60,12 +60,12 @@ while read -r byte; do
     tokenCount="${#tokens[@]}" >&2
     case $parserState in
     token)
-        if [[ "$lookingForIndent" == "true" ]]; then
+        if [[ "$atBeginningOfLine" == "true" ]]; then
             if asciiIsSpace "$byte"; then
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
                 if [[ "$indentSpacesCounted" == $(( (currentIndentLevel ) * 4 )) ]]; then
                     foundIndentTestPoint="true"
-                    lookingForIndent=""
+                    atBeginningOfLine=""
                 fi
             else
                 # Dedented.
@@ -77,7 +77,7 @@ while read -r byte; do
         if [[ "$foundIndentTestPoint" == "true" ]]; then
             foundIndentTestPoint=""
             if ! asciiIsPrintable "$byte"; then
-                lookingForIndent="true"
+                atBeginningOfLine="true"
             fi
         fi
         if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
@@ -100,7 +100,7 @@ while read -r byte; do
                 tokens+=("")
             fi
         elif asciiIsNewline "$byte"; then
-            lookingForIndent="true"
+            atBeginningOfLine="true"
             # End of token
             if [[ -n "${tokens[-1]}" ]]; then
                 tokens+=("")
