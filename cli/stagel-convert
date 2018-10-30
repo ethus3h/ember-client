@@ -52,7 +52,6 @@ tokens+=("") # Token type goes in even numbered slots
 tokens+=("") # Token content goes in odd numbered slots
 
 parserState="token"
-prevByte=""
 currentIndentLevel="0"
 countingIndentSpaces="true"
 indentSpacesCounted="0"
@@ -117,7 +116,6 @@ while read -r byte; do
         else
             die "Unexpected byte $byte in basic token."
         fi
-        prevByte="$byte"
         ;;
     comment)
         if asciiIsNewline "$byte"; then
