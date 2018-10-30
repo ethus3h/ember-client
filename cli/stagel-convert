@@ -177,6 +177,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     insertToken "$((i + 5))" "dedent" ""
                 fi
             fi
+            # Set the token names in the table for these that aren't yet identified
             case "${tokens[$i]}" in
             " 114 47 115 47 "*)
                 tokens[$i - 1]="ident-r-s"
@@ -194,6 +195,12 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 
+# Identify command tokens, and their associated parameter lists.
+# Possible commands:
+# run [routine-identifier] [parameters-for-routine (literals or references)]
+# ...
+
+# If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
     unset 'tokens[-2]'
