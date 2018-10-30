@@ -245,7 +245,7 @@ fi
 
 codegenStartDocument() {
     case "$targetLang" in
-    "javascript")
+    "js")
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -255,7 +255,7 @@ codegenStartDocument() {
 
 codegenRoutineDefinitionStart() {
     case "$targetLang" in
-    "javascript")
+    "js")
         print "async function $1("
         ;;
     *)
