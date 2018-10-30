@@ -277,7 +277,6 @@ for (( i=0; i<tokenCount; i++ )); do
         code)
             case "${tokens[$i - 1]}" in
             ident-r-*)
-            set -x
                 codegenRoutineDefinitionStart "$(asciiDecListToText "${tokens[$i]}")"
                 indentationLevel=$((indentationLevel + 1))
                 stateStack+=("routine-definition")
