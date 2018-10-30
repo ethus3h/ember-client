@@ -155,6 +155,14 @@ pushToken "end-document" ""
 
 tokenCount="${#tokens[@]}"
 
+# Convert command tokens' labels to strings instead of space-separated ASCII
+for (( i=0; i<tokenCount; i++ )); do
+    if (( i % 2 )); then
+        if [[ "${tokens[$i - 1]}" == "command" ]]; then
+            
+    fi
+done
+
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 inParameterList="false"
