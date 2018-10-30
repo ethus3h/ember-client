@@ -159,7 +159,10 @@ tokenCount="${#tokens[@]}"
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ "${tokens[$i - 1]}" == "command" ]]; then
-            
+            commandName=""
+            while read -r num; do
+                commandName="$commandName$(printf "\x"$(printf "%x\n" "$num")"")"
+            done <<< "${tokens[$i]}"
     fi
 done
 
