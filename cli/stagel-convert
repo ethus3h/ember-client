@@ -244,9 +244,11 @@ indentationLevel=0
 stateStack=("code")
 blockStack=("root")
 
+codegenRoutineDefinition
+
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
-        echo "${stateStack[-1]}" >&2
+        echo "State: ${stateStack[-1]}, token: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
         case "${stateStack[-1]}" in
         code)
             case "${tokens[$i - 1]}" in
@@ -254,12 +256,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 indentationLevel=$((indentationLevel + 1))
                 stateStack+=("routine-definition")
                 blockStack+=("${tokens[$i]}")
-                insertToken "$i" "r-def-arglist-start" "e"
                 ;;
             ident-n)
                 ;;
             *)
-                tokens[$i - 1]="command"
                 ;;
             esac
             ;;
@@ -283,8 +283,6 @@ for (( i=0; i<tokenCount; i++ )); do
                 echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
                 # We need to parse its argument list, now.
                 stateStack+=("argument-list")
-                insertToken "$i" "r-def-arglist-end" "e" # e for empty, since there isn't really a token value for this but if it were actually empty it would be considered not a token in other checks.
-                insertToken "$((i + 2))" "r-call-arglist-start" "e"
                 ;;
             comment)
                 # It's a comment.
