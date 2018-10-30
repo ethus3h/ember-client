@@ -199,10 +199,8 @@ tokenCount="${#tokens[@]}"
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ "${tokens[$i - 1]}" == "command" ]]; then
-            set -x
             echo "${tokens[$i]}" 1>&2
             tokens[$i]="$(asciiDecListToText <<< "${tokens[$i]}")"
-            set +x
         fi
     fi
 done
@@ -230,7 +228,7 @@ tokenCount="${#tokens[@]}"
 
 echo "Document contains $((tokenCount / 2)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
-    (( i % 2 )) && echo "Token #$i: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
+    (( i % 2 )) && echo "Token #$((i / 2 + 1)): ${tokens[$i - 1]}: ${tokens[$i]}" >&2
 done
 
 # We now know what each token is, so let's do the code generation.
