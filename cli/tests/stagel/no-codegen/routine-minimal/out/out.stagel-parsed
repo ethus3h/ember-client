@@ -5,7 +5,7 @@ ident-n  110 117 109
 dedent 
 indent 
 comment  32 84 101 115 116 32 99 111 109 109 101 110 116
-return 
+command return
 literal-s 
 dedent 
 end-document
