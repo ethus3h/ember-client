@@ -200,6 +200,7 @@ for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ "${tokens[$i - 1]}" == "command" ]]; then
             set -x
+            echo "${tokens[$i]}" 1>&2
             tokens[$i]="$(asciiDecListToText <<< "${tokens[$i]}")"
             set +x
         fi
