@@ -232,6 +232,7 @@ for (( i=0; i<tokenCount; i++ )); do
 done
 
 # We now know what each token is, so let's do the code generation.
+
 if [[ "$targetLang" == "parsed" ]]; then
     # Just dump the parse results and exit
     for (( i=0; i<tokenCount; i++ )); do
@@ -240,29 +241,34 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 
-indentationLevel=0
-stateStack=("code")
-blockStack=("root")
+# Define a function for each type of output needed for code generation
 
 codegenStartDocument() {
+    case "$targetLang" in
+    "javascript")
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
 }
 
 codegenRoutineDefinitionStart() {
-           case "$targetLang" in
-            " 114 47 115 47 "*)
-                tokens[$i - 1]="ident-r-s"
-                tokens[$i]="${tokens[$i]# 114 47 115 47}"
-                ;;
-            " 110 47 "*)
-                tokens[$i - 1]="ident-n"
-                tokens[$i]="${tokens[$i]# 110 47}"
-                ;;
-            *)
-                tokens[$i - 1]="command"
-                ;;
-            esac
-    print "async function $1("
+    case "$targetLang" in
+    "javascript")
+        print "async function $1("
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
 }
+
+# Set up the variables we'll need for going through the tokens and generating the code
+
+indentationLevel=0
+stateStack=("code")
+blockStack=("root")
 
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
