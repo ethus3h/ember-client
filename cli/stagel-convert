@@ -231,7 +231,7 @@ for (( i=0; i<tokenCount; i++ )); do
 done
 
 # We now know what each token is, so let's do the code generation.
-
+set -x
 if [[ "$targetLang" == "parsed" ]]; then
     # Just dump the parse results and exit
     for (( i=0; i<tokenCount; i++ )); do
