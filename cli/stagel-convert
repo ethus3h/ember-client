@@ -247,7 +247,21 @@ blockStack=("root")
 codegenStartDocument() {
 }
 
-codegenRoutineDefinition() {
+codegenRoutineDefinitionStart() {
+           case "$targetLang" in
+            " 114 47 115 47 "*)
+                tokens[$i - 1]="ident-r-s"
+                tokens[$i]="${tokens[$i]# 114 47 115 47}"
+                ;;
+            " 110 47 "*)
+                tokens[$i - 1]="ident-n"
+                tokens[$i]="${tokens[$i]# 110 47}"
+                ;;
+            *)
+                tokens[$i - 1]="command"
+                ;;
+            esac
+    print "async function $1("
 }
 
 for (( i=0; i<tokenCount; i++ )); do
