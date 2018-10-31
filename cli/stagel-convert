@@ -476,6 +476,8 @@ for (( i=0; i<tokenCount; i++ )); do
             routine-definition-end)
                 codegenRoutineDefinitionEnd
                 unset 'stateStack[-1]'
+                unset 'blockStack[-1]'
+                unset 'blockStack[-1]'
                 ;;
             *)
                 die "Unimplemented code generation state ${stateStack[-1]}"
