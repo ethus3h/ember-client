@@ -261,6 +261,7 @@ codegenRoutineDefinitionStart() {
         print "async function $codegenRoutineDefnName("
         print_r "${codegenRoutineDefnArgList}"
         print ")"$'\n'
+        codegenPrintIndentationSpaces
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
