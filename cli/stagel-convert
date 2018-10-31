@@ -284,10 +284,11 @@ codegenComment() {
 }
 
 codegenCommandInvocation() {
-    codegenPrintIndentationSpaces
     # "return" is special
     case "$codegenRoutineName" in
     "return")
+        print $'\n'
+        codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
             codegenType "${blockStack[-2]}"
@@ -306,6 +307,7 @@ codegenCommandInvocation() {
         esac
         ;;
     *)
+        codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
             print "await $codegenRoutineName("
