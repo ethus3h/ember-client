@@ -284,7 +284,13 @@ codegenRoutineDefinitionStart() {
         [[ "$codegenRoutineType" == "ident-r-n" ]] && print 'Int'
         [[ "$codegenRoutineType" == "ident-r-arr-s" ]] && print 'StrArray'
         [[ "$codegenRoutineType" == "ident-r-arr-n" ]] && print 'IntArray'
-        print "(intNum); let strReturn;"
+        print "(intNum); "
+        print "let "
+        [[ "$codegenRoutineType" == "ident-r-s" ]] && print 'str'
+        [[ "$codegenRoutineType" == "ident-r-n" ]] && print 'int'
+        [[ "$codegenRoutineType" == "ident-r-arr-s" ]] && print 'strArray'
+        [[ "$codegenRoutineType" == "ident-r-arr-n" ]] && print 'intArray'
+        print "Return;"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
