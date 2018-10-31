@@ -272,6 +272,9 @@ for (( i=0; i<tokenCount; i++ )); do
                 indent)
                     codegenIndent=$((codegenIndent + 1))
                     ;;
+                dedent)
+                    codegenIndent=$((codegenIndent - 1))
+                    ;;
                 ident-r-*)
                     codegenRoutineDefnName="$(asciiDecListToText "${tokens[$i]}")"
                     stateStack+=("routine-definition")
