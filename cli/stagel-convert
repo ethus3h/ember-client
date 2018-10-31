@@ -276,14 +276,17 @@ for (( i=0; i<tokenCount; i++ )); do
             case "${stateStack[-1]}" in
             code)
                 case "${tokens[$i - 1]}" in
+                start-document)
+                    codegenStartDocument
+                    ;;
+                indent)
+                    codegenIndent=$((codegenIndent + 1))
+                    ;;
                 ident-r-*)
                     codegenRoutineDefinitionStart "$(asciiDecListToText "${tokens[$i]}")"
                     indentationLevel=$((indentationLevel + 1))
                     stateStack+=("routine-definition")
                     blockStack+=("${tokens[$i]}")
-                    ;;
-                start-document)
-                    codegenStartDocument
                     ;;
                 *)
                     die "A ${tokens[$i - 1]}, ${tokens[$i]}, isn't allowed here, in ${blockStack[-1]}."
