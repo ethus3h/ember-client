@@ -279,6 +279,12 @@ codegenRoutineDefinitionStart() {
         print_r "${codegenArgList[@]}"
         print ")"$'\n'
         codegenPrintIndentationSpaces
+        print "await assertIs"
+        [[ "$codegenRoutineType" == "ident-r-s" ]] && print 'Str'
+        [[ "$codegenRoutineType" == "ident-r-n" ]] && print 'Int'
+        [[ "$codegenRoutineType" == "ident-r-arr-s" ]] && print 'StrArray'
+        [[ "$codegenRoutineType" == "ident-r-arr-n" ]] && print 'IntArray'
+        print "(intNum); let strReturn;"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
