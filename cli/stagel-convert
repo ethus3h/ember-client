@@ -274,7 +274,7 @@ for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         echo "State: ${stateStack[-1]}, token: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
-            codegenComment "${tokens[$i]}"
+            codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         else
             case "${stateStack[-1]}" in
             code)
@@ -300,17 +300,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 # So now we look for as many types as there are. When no more types, it enters the code body of the routine. When there's a dedent, it leaves the code body of the routine.
                 case "${tokens[$i - 1]}" in
                 literal-*)
-                    # A token in the body of the routine
-                    echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
-                    # We need to parse its argument list, now.
-                    stateStack+=("argument-list")
+                    # Some type of data, literal.
                     ;;
                 ident-*)
-                    # Some type of data.
-                    ;;
-                comment)
-                    # It's a comment.
-                    echo "Comment: $(asciiDecListToText "${tokens[$i]}")"
+                    # Some type of data, reference.
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the routine declaration (but not the body of it), drop back and continue parsing.
