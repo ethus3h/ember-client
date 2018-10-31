@@ -304,18 +304,15 @@ codegenRoutineDefinitionStart() {
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 print "await assertIs"
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-s" ]] && print 'Str'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-n" ]] && print 'Int'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-s" ]] && print 'StrArray'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-n" ]] && print 'IntArray'
-                print "(intNum); "
+                codegenType "${codegenArgList[$k - 1]}" "true"
+                print "("
+                codegenType "${codegenArgList[$k - 1]}"
+                print "${codegenArgList[$k]}^"
+                print "); "
             fi
         done
         print "let "
-        [[ "$codegenRoutineType" == "ident-r-s" ]] && print 'str'
-        [[ "$codegenRoutineType" == "ident-r-n" ]] && print 'int'
-        [[ "$codegenRoutineType" == "ident-r-arr-s" ]] && print 'strArray'
-        [[ "$codegenRoutineType" == "ident-r-arr-n" ]] && print 'intArray'
+        codegenType "$codegenRoutineType"
         print "Return;"
         ;;
     *)
