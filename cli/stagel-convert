@@ -267,15 +267,15 @@ codegenCommandInvocation() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
-    codegenRoutineDefnName=""
-    codegenRoutineDefnArgList=()
+    codegenRoutineName=""
+    codegenArgList=()
 }
 
 codegenRoutineDefinitionStart() {
     case "$targetLang" in
     "js")
-        print "async function $codegenRoutineDefnName("
-        print_r "${codegenRoutineDefnArgList}"
+        print "async function $codegenRoutineName("
+        print_r "${codegenArgList}"
         print ")"$'\n'
         codegenPrintIndentationSpaces
         ;;
@@ -283,8 +283,8 @@ codegenRoutineDefinitionStart() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
-    codegenRoutineDefnName=""
-    codegenRoutineDefnArgList=()
+    codegenRoutineName=""
+    codegenArgList=()
 }
 
 # Set up the variables we'll need for going through the tokens and generating the code
@@ -314,12 +314,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenIndent=$((codegenIndent - 1))
                     ;;
                 ident-r-*)
-                    codegenRoutineDefnName="$(asciiDecListToText "${tokens[$i]}")"
+                    codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                     stateStack+=("routine-definition")
                     blockStack+=("${tokens[$i]}")
                     ;;
                 command)
-                    codegenCommandName="$(asciiDecListToText "${tokens[$i]}")"
+                    codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                     stateStack+=("arglist")
                     ;;
                 *)
