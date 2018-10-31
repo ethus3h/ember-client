@@ -312,7 +312,6 @@ codegenRoutineDefinitionStart() {
                 fi
             fi
         done
-        print_r "${codegenArgList[@]}"
         print ")"$'\n'
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
