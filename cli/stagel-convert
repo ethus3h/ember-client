@@ -335,7 +335,7 @@ codegenRoutineDefinitionStart() {
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
             print "let "
             codegenType "$codegenRoutineType"
-            print "Return;"$'\n'
+            print "Return;"$'\n\n'
         fi
         ;;
     *)
