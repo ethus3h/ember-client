@@ -253,6 +253,17 @@ codegenStartDocument() {
     esac
 }
 
+codegenComment() {
+    case "$targetLang" in
+    "js")
+        print "/* $1 */"
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenRoutineDefinitionStart() {
     case "$targetLang" in
     "js")
