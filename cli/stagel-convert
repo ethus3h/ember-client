@@ -332,13 +332,11 @@ codegenRoutineDefinitionStart() {
                 fi
             fi
         done
-        set -x
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
             print "let "
             codegenType "$codegenRoutineType"
             print "Return;"$'\n'
         fi
-        set +x
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -376,10 +374,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenIndent=$((codegenIndent - 1))
                     ;;
                 ident-r-*)
+        set -x
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                     codegenRoutineType="$(asciiDecListToText "${tokens[$i - 1]}")"
                     state="routine-definition"
                     blockStack+=("${tokens[$i]}")
+                    set +x
                     ;;
                 command)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
