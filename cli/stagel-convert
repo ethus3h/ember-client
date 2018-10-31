@@ -368,11 +368,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 literal-*)
                     # Some type of data, literal.
-                    codegenArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}", "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 ident-*)
                     # Some type of data, reference.
-                    codegenArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}", "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
@@ -388,7 +388,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 ident-*)
                     # Some type of data, reference.
-                    codegenArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}", "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 *)
                     # The routine definition parameter list is ended, so do codegen for the routine declaration (but not the body of it), drop back and continue parsing.
