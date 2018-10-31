@@ -259,7 +259,7 @@ codegenCommandInvocation() {
     case "$targetLang" in
     "js")
         print "await $codegenRoutineName("
-        print_r "${codegenArgList}"
+        print_r "${codegenArgList[@]}"
         print ")"$'\n'
         codegenPrintIndentationSpaces
         ;;
@@ -275,7 +275,7 @@ codegenRoutineDefinitionStart() {
     case "$targetLang" in
     "js")
         print "async function $codegenRoutineName("
-        print_r "${codegenArgList}"
+        print_r "${codegenArgList[@]}"
         print ")"$'\n'
         codegenPrintIndentationSpaces
         ;;
@@ -352,8 +352,6 @@ for (( i=0; i<tokenCount; i++ )); do
                 ident-*)
                     # Some type of data, reference.
                     codegenArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
-                    print_r "${codegenArgList[@]}" 1>&2
-                    echo "HEREREREERERERR""${tokens[$i]}" 1>&2
                     ;;
                 *)
                     # The routine definition parameter list is ended, so do codegen for the routine declaration (but not the body of it), drop back and continue parsing.
