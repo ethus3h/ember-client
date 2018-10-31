@@ -295,34 +295,6 @@ for (( i=0; i<tokenCount; i++ )); do
                 # Format: token, [type...], code body
                 # So now we look for as many types as there are. When no more types, it enters the code body of the routine. When there's a dedent, it leaves the code body of the routine.
                 case "${tokens[$i - 1]}" in
-                ident-n)
-                    codegenRoutineDefnArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
-                    ;;
-                dedent)
-                    # This routine dedented without having any body declared.
-                    warn "The routine ${blockStack[-1]} does not have a body declared."
-                    indentationLevel=$((indentationLevel - 1))
-                    unset 'stateStack[-1]'
-                    unset 'blockStack[-1]'
-                    ;;
-                command)
-                    stateStack[-1]="routine-definition-body"
-                    # A token in the body of the routine
-                    echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
-                    # We need to parse its argument list, now.
-                    stateStack+=("argument-list")
-                    ;;
-                comment)
-                    # It's a comment.
-                    echo "Comment: ${tokens[$i]}"
-                    ;;
-                *)
-                    die "Expected data ident, dedent, command, or comment in routine definition of ${blockStack[-1]}; found ${tokens[$i - 1]}: ${tokens[$i]} instead."
-                    ;;
-                esac
-                ;;
-        argument-list)
-                case "${tokens[$i - 1]}" in
                 literal-*)
                     # A token in the body of the routine
                     echo "Token of routine ${blockStack[-1]} body: ${tokens[$i - 1]}: ${tokens[$i]}"
