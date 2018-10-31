@@ -4,3 +4,5 @@ async function fbSwitcher(intNum) {
     /*  Test comment */
     await (declare -a arr=([0]="literal-s" [1]="")
 )
+let Return;
+
