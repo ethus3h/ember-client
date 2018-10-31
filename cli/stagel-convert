@@ -272,6 +272,7 @@ codegenEndDocument() {
 }
 
 codegenComment() {
+    codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
         print "/* $1 */"
@@ -288,7 +289,6 @@ codegenCommandInvocation() {
         print "await $codegenRoutineName("
         print_r "${codegenArgList[@]}"
         print ")"$'\n'
-        codegenPrintIndentationSpaces
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
