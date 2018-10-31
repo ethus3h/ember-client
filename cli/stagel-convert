@@ -214,6 +214,7 @@ fi
 
 codegenIndent=0
 codegenRoutineName=""
+codegenRoutineType=""
 codegenArgList=()
 
 # Define a function for each type of output needed for code generation
@@ -315,6 +316,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
+                    codegenRoutineType="$(asciiDecListToText "${tokens[$i - 1]}")"
                     state="routine-definition"
                     blockStack+=("${tokens[$i]}")
                     ;;
