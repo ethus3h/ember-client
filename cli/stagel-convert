@@ -290,14 +290,14 @@ codegenCommandInvocation() {
     "return")
         case "$targetLang" in
         "js")
-            codegenType "$codegenRoutineType"
+            codegenType "${blockStack[-2]}"
             print "Return = "
             print "; await assertIs"
-            codegenType "$codegenRoutineType" true
+            codegenType "${blockStack[-2]}" true
             print "("
-            codegenType "$codegenRoutineType"
+            codegenType "${blockStack[-2]}"
             print "Return); return "
-            codegenType "$codegenRoutineType"
+            codegenType "${blockStack[-2]}"
             print "Return;"$'\n'
             ;;
         *)
