@@ -348,10 +348,58 @@ codegenRoutineDefinitionStart() {
     codegenArgList=()
 }
 
+codegenRoutineDefinitionEnd() {
+    case "$targetLang" in
+    "js")
+        print "async function $codegenRoutineName("
+        argumentCount="${#codegenArgList[@]}"
+        for (( k=0; k<argumentCount; k++ )); do
+            if (( k % 2 )); then
+                codegenType "${codegenArgList[$k - 1]}"
+                if [[ "$k" == $((argumentCount - 1)) ]]; then
+                    print "${codegenArgList[$k]^}"
+                else
+                    print "${codegenArgList[$k]^}, "
+                fi
+            fi
+        done
+        print ") {"$'\n'
+        codegenIndent=$(( codegenIndent + 1 ))
+        codegenPrintIndentationSpaces
+        codegenIndent=$(( codegenIndent - 1 ))
+        for (( k=0; k<argumentCount; k++ )); do
+            if (( k % 2 )); then
+                print "await assertIs"
+                codegenType "${codegenArgList[$k - 1]}" "true"
+                print "("
+                codegenType "${codegenArgList[$k - 1]}"
+                print "${codegenArgList[$k]^}"
+                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
+                    print ");"
+                else
+                    print "); "
+                fi
+            fi
+        done
+        if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+            print "let "
+            codegenType "$codegenRoutineType"
+            print "Return;"$'\n\n'
+        fi
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+    codegenRoutineType=""
+    codegenRoutineName=""
+    codegenArgList=()
+}
+
 # Set up the variables we'll need for going through the tokens and generating the code
 
 stateStack=("code")
-blockStack=("root")
+blockStack=("root" "")
 
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
@@ -379,7 +427,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                     codegenRoutineType="${tokens[$i - 1]}"
                     stateStack+=("routine-definition")
-                    blockStack+=("${tokens[$i]}")
+                    blockStack+=("${tokens[$i - 1]}" "${tokens[$i]}")
                     ;;
                 command)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
@@ -424,6 +472,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     i=$((i - 2))
                     ;;
                 esac
+                ;;
+            routine-definition-end)
+                codegenRoutineDefinitionEnd
+                unset 'stateStack[-1]'
                 ;;
             *)
                 die "Unimplemented code generation state ${stateStack[-1]}"
