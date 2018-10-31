@@ -221,12 +221,18 @@ codegenArgList=()
 
 codegenType() {
     # First arg: type; second arg: "true" for uppercase first letter
+    local result=""
     case "$targetLang" in
     "js")
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-s" ]] && print 'Str'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-n" ]] && print 'Int'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-s" ]] && print 'StrArray'
-                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-n" ]] && print 'IntArray'
+        [[ "$1" == "ident-r-s" ]] && result='str'
+        [[ "$1" == "ident-r-n" ]] && result='int'
+        [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-r-arr-n" ]] && result='intArray'
+        if [[ "$2" == "true" ]]; then
+            print "$result^"
+        else
+            print "$result"
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
