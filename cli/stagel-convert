@@ -218,6 +218,12 @@ codegenRoutineDefnArgList=()
 
 # Define a function for each type of output needed for code generation
 
+codegenPrintIndentationSpaces() {
+    for (( i=0; i<codegenIndent; i++ )); do
+        print '    '
+    done
+}
+
 codegenStartDocument() {
     case "$targetLang" in
     "js")
@@ -254,12 +260,14 @@ codegenRoutineDefinitionStart() {
     "js")
         print "async function $codegenRoutineDefnName("
         print_r "${codegenRoutineDefnArgList}"
+        print ")"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
     codegenRoutineDefnName=""
+    codegenRoutineDefnArgList=()
 }
 
 # Set up the variables we'll need for going through the tokens and generating the code
