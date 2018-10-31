@@ -289,16 +289,16 @@ codegenRoutineDefinitionStart() {
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
-stateStack=("code")
+state="code"
 blockStack=("root")
 
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
-        echo "State: ${stateStack[-1]}, token: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
+        echo "State: $state, token: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         else
-            case "${stateStack[-1]}" in
+            case "$state" in
             code)
                 case "${tokens[$i - 1]}" in
                 start-document)
@@ -315,7 +315,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
-                    stateStack+=("routine-definition")
+                    state="routine-definition"
                     blockStack+=("${tokens[$i]}")
                     ;;
                 command)
