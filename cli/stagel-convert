@@ -373,6 +373,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 dedent)
                     codegenIndent=$((codegenIndent - 1))
+                    unset 'stateStack[-1]'
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
