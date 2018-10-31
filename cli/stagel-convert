@@ -245,6 +245,22 @@ codegenType() {
     esac
 }
 
+codegenLiteral() {
+    # First arg: type; second arg: value
+    case "$targetLang" in
+    "js")
+        case "$1" in
+        "literal-s")
+            print \'"$2"\'
+            ;;
+        esac
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenPrintIndentationSpaces() {
     for (( j=0; j<codegenIndent; j++ )); do
         print '    '
@@ -293,6 +309,7 @@ codegenCommandInvocation() {
         "js")
             codegenType "${blockStack[-2]}"
             print "Return = "
+            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             print "; await assertIs"
             codegenType "${blockStack[-2]}" true
             print "("
