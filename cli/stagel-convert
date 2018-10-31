@@ -219,6 +219,21 @@ codegenArgList=()
 
 # Define a function for each type of output needed for code generation
 
+codegenType() {
+    # First arg: type; second arg: "true" for uppercase first letter
+    case "$targetLang" in
+    "js")
+                [[ "${codegenArgList[$k - 1]}" == "ident-r-s" ]] && print 'Str'
+                [[ "${codegenArgList[$k - 1]}" == "ident-r-n" ]] && print 'Int'
+                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-s" ]] && print 'StrArray'
+                [[ "${codegenArgList[$k - 1]}" == "ident-r-arr-n" ]] && print 'IntArray'
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenPrintIndentationSpaces() {
     for (( j=0; j<codegenIndent; j++ )); do
         print '    '
