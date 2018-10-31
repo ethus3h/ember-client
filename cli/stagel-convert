@@ -312,7 +312,7 @@ codegenRoutineDefinitionStart() {
                 fi
             fi
         done
-        print ")"$'\n'
+        print ") {"$'\n'
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
@@ -332,7 +332,7 @@ codegenRoutineDefinitionStart() {
         done
         print "let "
         codegenType "$codegenRoutineType"
-        print "Return;"
+        print "Return;"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
