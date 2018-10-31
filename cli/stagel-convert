@@ -228,6 +228,16 @@ codegenStartDocument() {
     esac
 }
 
+codegenEndDocument() {
+    case "$targetLang" in
+    "js")
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenComment() {
     case "$targetLang" in
     "js")
@@ -268,6 +278,9 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 start-document)
                     codegenStartDocument
+                    ;;
+                end-document)
+                    codegenEndDocument
                     ;;
                 indent)
                     codegenIndent=$((codegenIndent + 1))
