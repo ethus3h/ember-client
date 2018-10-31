@@ -374,12 +374,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenIndent=$((codegenIndent - 1))
                     ;;
                 ident-r-*)
-        set -x
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
-                    codegenRoutineType="$(asciiDecListToText "${tokens[$i - 1]}")"
+                    codegenRoutineType="${tokens[$i - 1]}"
                     state="routine-definition"
                     blockStack+=("${tokens[$i]}")
-                    set +x
                     ;;
                 command)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
