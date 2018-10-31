@@ -219,7 +219,7 @@ codegenRoutineDefnArgList=()
 # Define a function for each type of output needed for code generation
 
 codegenPrintIndentationSpaces() {
-    for (( i=0; i<codegenIndent; i++ )); do
+    for (( j=0; j<codegenIndent; j++ )); do
         print '    '
     done
 }
