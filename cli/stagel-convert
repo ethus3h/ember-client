@@ -303,7 +303,9 @@ codegenRoutineDefinitionStart() {
         print "async function $codegenRoutineName("
         print_r "${codegenArgList[@]}"
         print ")"$'\n'
+        codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
+        codegenIndent=$(( codegenIndent - 1 ))
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
