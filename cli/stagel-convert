@@ -213,8 +213,8 @@ if [[ "$targetLang" == "parsed" ]]; then
 fi
 
 codegenIndent=0
-codegenRoutineName=""
 codegenRoutineType=""
+codegenRoutineName=""
 codegenArgList=()
 
 # Define a function for each type of output needed for code generation
@@ -294,6 +294,7 @@ codegenCommandInvocation() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
+    codegenRoutineType=""
     codegenRoutineName=""
     codegenArgList=()
 }
@@ -331,16 +332,19 @@ codegenRoutineDefinitionStart() {
                 fi
             fi
         done
+        set -x
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
             print "let "
             codegenType "$codegenRoutineType"
             print "Return;"$'\n'
         fi
+        set +x
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
+    codegenRoutineType=""
     codegenRoutineName=""
     codegenArgList=()
 }
