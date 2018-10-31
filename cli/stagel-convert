@@ -224,6 +224,10 @@ codegenType() {
     local result=""
     case "$targetLang" in
     "js")
+        [[ "$1" == "ident-s" ]] && result='str'
+        [[ "$1" == "ident-n" ]] && result='int'
+        [[ "$1" == "ident-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-arr-n" ]] && result='intArray'
         [[ "$1" == "ident-r-s" ]] && result='str'
         [[ "$1" == "ident-r-n" ]] && result='int'
         [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
