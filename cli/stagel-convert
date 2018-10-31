@@ -288,18 +288,29 @@ codegenCommandInvocation() {
     # "return" is special
     case "$codegenRoutineName" in
     "return")
+        case "$targetLang" in
+        "js")
+            print "strReturn = ''; await assertIsStr(strReturn); return strReturn;"
+            print "await $codegenRoutineName("
+            print_r "${codegenArgList[@]}"
+            print ")"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
         ;;
     *)
-        ;;
-    esac
-    case "$targetLang" in
-    "js")
-        print "await $codegenRoutineName("
-        print_r "${codegenArgList[@]}"
-        print ")"$'\n'
-        ;;
-    *)
-        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        case "$targetLang" in
+        "js")
+            print "await $codegenRoutineName("
+            print_r "${codegenArgList[@]}"
+            print ")"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
         ;;
     esac
     codegenRoutineType=""
