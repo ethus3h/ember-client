@@ -213,8 +213,8 @@ if [[ "$targetLang" == "parsed" ]]; then
 fi
 
 codegenIndent=0
-codegenRoutineDefnName=""
-codegenRoutineDefnArgList=()
+codegenRoutineName=""
+codegenArgList=()
 
 # Define a function for each type of output needed for code generation
 
@@ -253,6 +253,22 @@ codegenComment() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
+}
+
+codegenCommandInvocation() {
+    case "$targetLang" in
+    "js")
+        print "await $codegenRoutineName("
+        print_r "${codegenArgList}"
+        print ")"$'\n'
+        codegenPrintIndentationSpaces
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+    codegenRoutineDefnName=""
+    codegenRoutineDefnArgList=()
 }
 
 codegenRoutineDefinitionStart() {
@@ -321,7 +337,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
-                    codegenRoutineDefinitionStart
+                    codegenCommandInvocation
                     unset 'stateStack[-1]'
                     i=$((i - 2))
                     ;;
