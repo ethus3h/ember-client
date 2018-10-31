@@ -201,7 +201,6 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 
-
 # If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
