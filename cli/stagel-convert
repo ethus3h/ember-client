@@ -229,7 +229,7 @@ codegenType() {
         [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
         [[ "$1" == "ident-r-arr-n" ]] && result='intArray'
         if [[ "$2" == "true" ]]; then
-            print "$result^"
+            print "${result^}"
         else
             print "$result"
         fi
@@ -307,7 +307,7 @@ codegenRoutineDefinitionStart() {
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 print "("
                 codegenType "${codegenArgList[$k - 1]}"
-                print "${codegenArgList[$k]}^"
+                print "${codegenArgList[$k]^}"
                 print "); "
             fi
         done
