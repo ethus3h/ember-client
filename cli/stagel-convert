@@ -285,6 +285,13 @@ codegenComment() {
 
 codegenCommandInvocation() {
     codegenPrintIndentationSpaces
+    # "return" is special
+    case "$codegenRoutineName" in
+    "return")
+        ;;
+    *)
+        ;;
+    esac
     case "$targetLang" in
     "js")
         print "await $codegenRoutineName("
