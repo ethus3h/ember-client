@@ -232,6 +232,7 @@ codegenType() {
         [[ "$1" == "ident-r-n" ]] && result='int'
         [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
         [[ "$1" == "ident-r-arr-n" ]] && result='intArray'
+        [[ -z "$result" ]] && result="$1"
         if [[ "$2" == "true" ]]; then
             print "${result^}"
         else
@@ -323,7 +324,7 @@ codegenRoutineDefinitionStart() {
                 print "("
                 codegenType "${codegenArgList[$k - 1]}"
                 print "${codegenArgList[$k]^}"
-                if [[ "$k" == $((argumentCount - 1)) ]]; then
+                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
                     print ");"
                 else
                     print "); "
