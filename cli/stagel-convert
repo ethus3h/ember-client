@@ -351,7 +351,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 ident-*)
                     # Some type of data, reference.
-                    codegenArgList+=("${tokens[$i - 1]}", "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}")
+                    codegenArgList+=("${tokens[$i]}")
                     print_r "${codegenArgList}" 1>&2
                     echo "HEREREREERERERR""${tokens[$i]}" 1>&2
                     ;;
