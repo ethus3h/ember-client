@@ -365,6 +365,3 @@ for (( i=0; i<tokenCount; i++ )); do
         fi
     fi
 done
-
-print_r "${stateStack[@]}" >&2
-print_r "${blockStack[@]}" >&2
