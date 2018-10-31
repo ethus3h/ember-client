@@ -324,16 +324,18 @@ codegenRoutineDefinitionStart() {
                 print "("
                 codegenType "${codegenArgList[$k - 1]}"
                 print "${codegenArgList[$k]^}"
-                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
                     print ");"
                 else
                     print "); "
                 fi
             fi
         done
-        print "let "
-        codegenType "$codegenRoutineType"
-        print "Return;"$'\n'
+        if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+            print "let "
+            codegenType "$codegenRoutineType"
+            print "Return;"$'\n'
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
