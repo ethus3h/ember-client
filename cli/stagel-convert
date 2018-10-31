@@ -290,10 +290,15 @@ codegenCommandInvocation() {
     "return")
         case "$targetLang" in
         "js")
-            print "strReturn = ''; await assertIsStr(strReturn); return strReturn;"
-            print "await $codegenRoutineName("
-            print_r "${codegenArgList[@]}"
-            print ")"$'\n'
+            codegenType "$codegenRoutineType"
+            print "Return = "
+            print "; await assertIs"
+            codegenType "$codegenRoutineType" true
+            print "("
+            codegenType "$codegenRoutineType"
+            print "Return); return "
+            codegenType "$codegenRoutineType"
+            print "Return;"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
