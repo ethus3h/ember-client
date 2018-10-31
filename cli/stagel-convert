@@ -320,7 +320,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 command)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
-                    stateStack+=("arglist")
+                    state="arglist"
                     ;;
                 *)
                     die "A ${tokens[$i - 1]}, ${tokens[$i]}, isn't allowed here, in ${blockStack[-1]}."
@@ -338,7 +338,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                     codegenCommandInvocation
-                    unset 'stateStack[-1]'
+                    state="code"
                     i=$((i - 2))
                     ;;
                 esac
@@ -353,13 +353,13 @@ for (( i=0; i<tokenCount; i++ )); do
                 *)
                     # The routine definition parameter list is ended, so do codegen for the routine declaration (but not the body of it), drop back and continue parsing.
                     codegenRoutineDefinitionStart
-                    unset 'stateStack[-1]'
+                    state="code"
                     i=$((i - 2))
                     ;;
                 esac
                 ;;
             *)
-                die "Unimplemented code generation state ${stateStack[-1]}"
+                die "Unimplemented code generation state $state"
                 ;;
             esac
         fi
