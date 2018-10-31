@@ -351,11 +351,7 @@ codegenRoutineDefinitionStart() {
 codegenRoutineDefinitionEnd() {
     case "$targetLang" in
     "js")
-        if [[ "${blockStack[-1]}" != "void" ]]; then
-            print "let "
-            codegenType "$codegenRoutineType"
-            print "Return;"$'\n\n'
-        fi
+        print "}"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -397,7 +393,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     blockStack+=("${tokens[$i - 1]}" "${tokens[$i]}")
                     ;;
                 command)
-                    codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
+                    codegenRoutineName="${tokens[$i]}"
                     stateStack+=("arglist")
                     ;;
                 *)
