@@ -275,7 +275,7 @@ codegenComment() {
     codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
-        print "/* $1 */"
+        print "/* $1 */"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
