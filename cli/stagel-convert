@@ -153,6 +153,12 @@ pushToken "end-document" ""
 
 tokenCount="${#tokens[@]}"
 
+# If there's an empty token slot at the end, remove it
+if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
+    unset 'tokens[-1]'
+    unset 'tokens[-2]'
+fi
+
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 inParameterList="false"
@@ -188,12 +194,6 @@ for (( i=0; i<tokenCount; i++ )); do
         fi
     fi
 done
-
-# If there's an empty token slot at the end, remove it
-if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
-    unset 'tokens[-1]'
-    unset 'tokens[-2]'
-fi
 
 tokenCount="${#tokens[@]}"
 
