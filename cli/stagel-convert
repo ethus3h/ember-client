@@ -282,12 +282,11 @@ for (( i=0; i<tokenCount; i++ )); do
                     stateStack+=("routine-definition")
                     blockStack+=("${tokens[$i]}")
                     ;;
-                ident-n)
-                    ;;
                 start-document)
                     codegenStartDocument
                     ;;
                 *)
+                    die "A ${tokens[$i - 1]}, ${tokens[$i]}, isn't allowed here, in ${blockStack[-1]}."
                     ;;
                 esac
                 ;;
