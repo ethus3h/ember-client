@@ -351,37 +351,7 @@ codegenRoutineDefinitionStart() {
 codegenRoutineDefinitionEnd() {
     case "$targetLang" in
     "js")
-        print "async function $codegenRoutineName("
-        argumentCount="${#codegenArgList[@]}"
-        for (( k=0; k<argumentCount; k++ )); do
-            if (( k % 2 )); then
-                codegenType "${codegenArgList[$k - 1]}"
-                if [[ "$k" == $((argumentCount - 1)) ]]; then
-                    print "${codegenArgList[$k]^}"
-                else
-                    print "${codegenArgList[$k]^}, "
-                fi
-            fi
-        done
-        print ") {"$'\n'
-        codegenIndent=$(( codegenIndent + 1 ))
-        codegenPrintIndentationSpaces
-        codegenIndent=$(( codegenIndent - 1 ))
-        for (( k=0; k<argumentCount; k++ )); do
-            if (( k % 2 )); then
-                print "await assertIs"
-                codegenType "${codegenArgList[$k - 1]}" "true"
-                print "("
-                codegenType "${codegenArgList[$k - 1]}"
-                print "${codegenArgList[$k]^}"
-                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                    print ");"
-                else
-                    print "); "
-                fi
-            fi
-        done
-        if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+        if [[ "${blockStack[-1]}" != "void" ]]; then
             print "let "
             codegenType "$codegenRoutineType"
             print "Return;"$'\n\n'
@@ -391,9 +361,6 @@ codegenRoutineDefinitionEnd() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
-    codegenRoutineType=""
-    codegenRoutineName=""
-    codegenArgList=()
 }
 
 # Set up the variables we'll need for going through the tokens and generating the code
