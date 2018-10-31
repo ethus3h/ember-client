@@ -225,6 +225,7 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 
+codegenIndent=0
 codegenRoutineDefnArgList=()
 
 # Define a function for each type of output needed for code generation
@@ -263,7 +264,6 @@ codegenRoutineDefinitionStart() {
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
-indentationLevel=0
 stateStack=("code")
 blockStack=("root")
 
@@ -284,7 +284,6 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 ident-r-*)
                     codegenRoutineDefinitionStart "$(asciiDecListToText "${tokens[$i]}")"
-                    indentationLevel=$((indentationLevel + 1))
                     stateStack+=("routine-definition")
                     blockStack+=("${tokens[$i]}")
                     ;;
