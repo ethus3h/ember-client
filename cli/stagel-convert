@@ -71,8 +71,6 @@ while read -r byte; do
     token)
         if [[ "$countingIndentSpaces" == "true" ]]; then
             if asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
-                countingIndentSpaces="false"
-                indentSpacesCounted="0"
                 if [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel - 1 ) * 4 )) ]]; then
                     pushToken "dedent" ""
                     currentIndentLevel=$(( currentIndentLevel - 1 ))
@@ -84,6 +82,8 @@ while read -r byte; do
                 else
                     die "Found $indentSpacesCounted spaces on line $lineNumber, column $columnNumber, but the current indentation level would expect $(( currentIndentLevel * 4 )) spaces."
                 fi
+                countingIndentSpaces="false"
+                indentSpacesCounted="0"
             elif [[ "$byte" == "32" ]]; then
                 indentSpacesCounted=$(( indentSpacesCounted + 1 ))
             fi
@@ -93,7 +93,7 @@ while read -r byte; do
             countingIndentSpaces="true"
         fi
 
-        if asciiIsLetter "$byte" || asciiIsDigit "$byte" || [[ "$byte" == 47 ]]; then
+        if asciiIsLetter "$byte" || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
             if [[ -n "${tokens[-1]}" ]]; then
