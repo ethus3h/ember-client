@@ -47,12 +47,14 @@ insertToken() {
 }
 
 # We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
+tokens+=("")
 tokens+=("start-document")
 tokens+=("")
 
 # Add empty slots to the array for the first token
-tokens+=("") # Token type goes in even numbered slots
-tokens+=("") # Token content goes in odd numbered slots
+tokens+=("") # Line/column/depth goes in first slot
+tokens+=("") # Token type goes in second slot
+tokens+=("") # Token content goes in third slot
 
 parserState="token"
 currentIndentLevel="0"
