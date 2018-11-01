@@ -67,9 +67,6 @@ while read -r byte; do
         columnNumber=$(( columnNumber + 1 ))
     fi
     tokenCount="${#tokens[@]}" >&2
-    if [[ "$lineNumber" -eq 5 ]]; then
-        die "ricehurchCLRHUCR.hrcuho"
-    fi
     case $parserState in
     token)
         if [[ "$countingIndentSpaces" == "true" ]]; then
@@ -118,7 +115,6 @@ while read -r byte; do
             tokens[-2]="literal-s"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
-            set -x
             tokens[-2]="comment"
         else
             die "Unexpected byte $byte in basic token."
@@ -129,6 +125,7 @@ while read -r byte; do
             parserState="token"
             tokens+=("")
             tokens+=("")
+            countingIndentSpaces="true"
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
@@ -140,6 +137,7 @@ while read -r byte; do
             parserState="token"
             tokens+=("")
             tokens+=("")
+            countingIndentSpaces="true"
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
