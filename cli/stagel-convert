@@ -169,7 +169,8 @@ for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
-            if asciiIsDigit "${tokens[$i]%% *}"; then
+            temp="${tokens[$i]:2}"
+            if asciiIsDigit "${temp%% *}"; then
                 tokens[$i - 1]="literal-n"
             else
                 case "${tokens[$i]}" in
