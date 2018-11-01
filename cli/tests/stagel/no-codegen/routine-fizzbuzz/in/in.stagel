@@ -1,10 +1,6 @@
 r/s/fbSwitcher n/num
-    if
-        test
-            eq 0
-                mod n/num 15
-        do
-            return 'FizzBuzz' # just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL.
+    if test eq 0 mod n/num 15
+        return 'FizzBuzz' # just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL.
     # Or it could be written using brackets like this. Also the "test" and "do" commands are optional since if knows what it's about.
     if test eq 0 mod n/num 5
         return 'Buzz' # This isn't very fun to read, though.
