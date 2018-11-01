@@ -71,7 +71,8 @@ while read -r byte; do
     token)
         if [[ "$countingIndentSpaces" == "true" ]]; then
             if asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
-                if [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel - 1 ) * 4 )) ]]; then
+                if [[ $(( indentSpacesCounted % 4 )) -eq 0 ]] && [[ "$indentSpacesCounted" -lt $(( currentIndentLevel * 4 )) ]]; then
+                    echo "TARGET SPACUES $indentSpacesCounted" 1>&2
                     pushToken "dedent" ""
                     currentIndentLevel=$(( currentIndentLevel - 1 ))
                 elif [[ "$indentSpacesCounted" -eq $(( currentIndentLevel * 4 )) ]]; then
