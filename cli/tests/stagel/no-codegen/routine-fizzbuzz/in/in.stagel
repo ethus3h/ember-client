@@ -10,7 +10,7 @@ r/s/fbSwitcher n/num
         return 'Buzz' # This isn't very fun to read, though.
         # Or, the brackets can be omitted since the number of things needed can be used to infer. The / between type and identifier maybe can also be omitted (have types be reserved words).
     if eq 0 mod n num 3
-        return "Fizz" # Even less fun to read.
+        return 'Fizz' # Even less fun to read.
 
 r s fizzBuzz # A string is an array of 8-bit bytes.
     output-assert -n # the output should be non-empty. Unless otherwise specified, would take and yield nothing.
