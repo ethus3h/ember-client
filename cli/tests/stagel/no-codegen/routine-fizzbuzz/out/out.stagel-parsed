@@ -7,7 +7,7 @@ indent
 command test
 indent 
 command eq
-command 0
+literal-n 0
 indent 
 command mod
 ident-n  110 117 109
