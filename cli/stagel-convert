@@ -185,7 +185,7 @@ fi
 
 inParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
-    if (( (i+1) % 3 )); then
+    if (( i % 3 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:1}"
