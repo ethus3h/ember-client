@@ -82,7 +82,7 @@ while read -r byte; do
                     pushToken "indent" ""
                     currentIndentLevel=$(( currentIndentLevel + 1 ))
                 else
-                    warn "Found $indentSpacesCounted spaces on line $lineNumber, column $columnNumber, but the current indentation level would expect $(( currentIndentLevel * 4 )) spaces."
+                    die "Found $indentSpacesCounted spaces on line $lineNumber, column $columnNumber, but the current indentation level would expect $(( currentIndentLevel * 4 )) spaces."
                 fi
                 countingIndentSpaces="false"
                 indentSpacesCounted="0"
