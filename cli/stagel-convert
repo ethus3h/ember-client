@@ -226,6 +226,7 @@ for (( i=0; i<tokenCount; i++ )); do
 done
 
 tokenCount="${#tokens[@]}"
+print_r "${tokens[@]}" >&2
 
 echo "Document contains $((tokenCount / 3)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
