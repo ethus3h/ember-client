@@ -1,19 +1,19 @@
 command 
-start-document command
-command 
-  114 47 115 47 102 98 83 119 105 116 99 104 101 114
- 114 47 115 47 102 98 83 119 105 116 99 104 101 114 command
-  110 47 110 117 109
- 110 47 110 117 109 command
-indent command
-command 
+start-document 
+ command
+ident-r-s  102 98 83 119 105 116 99 104 101 114
+ 102 98 83 119 105 116 99 104 101 114 command
+ident-n  110 117 109
+ 110 117 109 command
+indent 
+ command
 comment  32 84 101 115 116 32 99 111 109 109 101 110 116
  32 84 101 115 116 32 99 111 109 109 101 110 116 command
-  114 101 116 117 114 110
- 114 101 116 117 114 110 command
-literal-s command
-command 
-dedent command
-command 
-end-document command
-command 
+command return
+return command
+literal-s 
+ command
+dedent 
+ command
+end-document 
+ command
