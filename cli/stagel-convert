@@ -169,7 +169,7 @@ for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
-            firstByte="${tokens[$i]:2}"
+            firstByte="${tokens[$i]:1}"
             echo "ABCGUOCBICGCGEOHUCGEOUH:$firstByte:${firstByte%% *}:" 1>&2
             if asciiIsDigit "${firstByte%% *}"; then
                 tokens[$i - 1]="literal-n"
