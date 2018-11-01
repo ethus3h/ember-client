@@ -73,7 +73,7 @@ while read -r byte; do
             if asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
                 if [[ $(( indentSpacesCounted % 4 )) -eq 0 ]] && [[ "$indentSpacesCounted" -lt $(( currentIndentLevel * 4 )) ]]; then
                 set -x
-                    for (( i=0; i<$((currentIndentLevel / 4)); i++ )); do
+                    for (( i=0; i<currentIndentLevel; i++ )); do
                         pushToken dedent ""
                         currentIndentLevel=$(( currentIndentLevel - 1 ))
                     done
