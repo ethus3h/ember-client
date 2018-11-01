@@ -172,6 +172,7 @@ done
 
 pushToken "end-document" ""
 
+print_r "${tokens[@]}" >&2
 tokenCount="${#tokens[@]}"
 
 # If there's an empty token slot at the end, remove it
