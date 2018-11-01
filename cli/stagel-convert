@@ -117,6 +117,7 @@ while read -r byte; do
             tokens[-2]="literal-s"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
+            set -x
             tokens[-2]="comment"
         else
             die "Unexpected byte $byte in basic token."
