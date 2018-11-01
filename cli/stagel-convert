@@ -212,7 +212,7 @@ tokenCount="${#tokens[@]}"
 
 # Convert command & number tokens' labels to strings instead of space-separated ASCII
 for (( i=0; i<tokenCount; i++ )); do
-    if (( i % 2 )); then
+    if (( i % 3 )); then
         if [[ "${tokens[$i - 1]}" == "command" ]] || [[ "${tokens[$i - 1]}" == "literal-n" ]]; then
             echo "${tokens[$i]}" 1>&2
             tokens[$i]="$(asciiDecListToText <<< "${tokens[$i]}")"

@@ -3,16 +3,16 @@ command
  114 47 115 47 102 98 83 119 105 116 99 104 101 114 command
 command 
  110 47 110 117 109 command
-command indent
-command command
 command 
+command 
+ comment
  32 84 101 115 116 32 99 111 109 109 101 110 116 command
 command 
  114 101 116 117 114 110 command
 command 
 command 
  dedent
-command command
 command 
+ end-document
 command 
  
