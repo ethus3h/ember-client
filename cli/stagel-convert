@@ -171,6 +171,7 @@ for (( i=0; i<tokenCount; i++ )); do
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:2}"
             if asciiIsDigit "${firstByte%% *}"; then
+                echo "ABCGUOCBICGCGEOHUCGEOUH" 1>&2
                 tokens[$i - 1]="literal-n"
             else
                 case "${tokens[$i]}" in
