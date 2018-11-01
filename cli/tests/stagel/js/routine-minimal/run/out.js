@@ -1,7 +1,6 @@
+/* Test comment */
 async function fbSwitcher(intNum) {
     await assertIsInt(intNum); let strReturn;
 
-    /* Test comment */
 
-    strReturn = ''; await assertIsStr(strReturn); return strReturn;
-}
+strReturn = ''; await assertIsStr(strReturn); return strReturn;
