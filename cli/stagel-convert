@@ -67,6 +67,9 @@ while read -r byte; do
         columnNumber=$(( columnNumber + 1 ))
     fi
     tokenCount="${#tokens[@]}" >&2
+    if [[ "$lineNumber" -eq 5 ]]; then
+        die "ricehurchCLRHUCR.hrcuho"
+    fi
     case $parserState in
     token)
         if [[ "$countingIndentSpaces" == "true" ]]; then
