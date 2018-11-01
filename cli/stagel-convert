@@ -137,7 +137,6 @@ while read -r byte; do
             parserState="token"
             tokens+=("")
             tokens+=("")
-            countingIndentSpaces="true"
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
