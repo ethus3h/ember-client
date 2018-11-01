@@ -95,7 +95,7 @@ while read -r byte; do
             countingIndentSpaces="true"
         fi
 
-        if asciiIsLetter "$byte" || asciiIsDigit "$byte" || [[ "$byte" == 47 ]]; then
+        if asciiIsLetter "$byte" || asciiIsDigit "$byte" || [[ "$byte" == 45 ]] || [[ "$byte" == 47 ]]; then
             tokens[-1]="${tokens[-1]} $byte"
         elif asciiIsSpace "$byte"; then
             if [[ -n "${tokens[-1]}" ]]; then
