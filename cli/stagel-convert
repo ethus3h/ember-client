@@ -72,9 +72,10 @@ while read -r byte; do
         if [[ "$countingIndentSpaces" == "true" ]]; then
             if asciiIsPrintable "$byte" && [[ "$byte" != "32" ]]; then
                 if [[ $(( indentSpacesCounted % 4 )) -eq 0 ]] && [[ "$indentSpacesCounted" -lt $(( currentIndentLevel * 4 )) ]]; then
-                    echo "TARGET SPACUES $indentSpacesCounted" 1>&2
-                    pushToken "dedent" ""
-                    currentIndentLevel=$(( currentIndentLevel - 1 ))
+                    for (( i=0; i<$((currentIndentLevel / 4)); i++ )); do
+                        pushToken dedent ""
+                        currentIndentLevel=$(( currentIndentLevel - 1 ))
+                    done
                 elif [[ "$indentSpacesCounted" -eq $(( currentIndentLevel * 4 )) ]]; then
                     true # The expected number of indent spaces was found; do nothing
                 elif [[ "$indentSpacesCounted" -eq $(( ( currentIndentLevel + 1 ) * 4 )) ]]; then
