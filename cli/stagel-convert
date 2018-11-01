@@ -19,10 +19,12 @@ pushToken() {
         # There's a token in the last slot in the tokens array, so make a new slot for the next one
         tokens+=("")
         tokens+=("")
+        tokens+=("")
     fi
     tokens[-2]="$1"
     tokens[-1]="$2"
     # Make a new slot for whatever happens next
+    tokens+=("")
     tokens+=("")
     tokens+=("")
 }
@@ -33,6 +35,7 @@ insertToken() {
     local newToken="$3"
     local tokensTemp=("${tokens[@]:0:insertAfter}")
     #print_r "${tokensTemp[@]}" >&2
+    tokensTemp+=("${tokens[$((insertAfter - 2))]}")
     tokensTemp+=("$newTokenType")
     #print_r "${tokensTemp[@]}" >&2
     tokensTemp+=("$newToken")
@@ -111,10 +114,12 @@ while read -r byte; do
                 # There's a token in the last slot in the tokens array, so make a new slot for the next one
                 tokens+=("")
                 tokens+=("")
+                tokens+=("")
             fi
         elif asciiIsNewline "$byte"; then
             # End of token
             if [[ -n "${tokens[-1]}" ]]; then
+                tokens+=("")
                 tokens+=("")
                 tokens+=("")
             fi
@@ -133,6 +138,7 @@ while read -r byte; do
             parserState="token"
             tokens+=("")
             tokens+=("")
+            tokens+=("")
             countingIndentSpaces="true"
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
@@ -143,6 +149,7 @@ while read -r byte; do
     literal-s)
         if [[ "$byte" == 39 ]]; then
             parserState="token"
+            tokens+=("")
             tokens+=("")
             tokens+=("")
         elif asciiIsPrintable "$byte"; then
@@ -169,13 +176,14 @@ tokenCount="${#tokens[@]}"
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
     unset 'tokens[-2]'
+    unset 'tokens[-3]'
 fi
 
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 inParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
-    if (( i % 2 )); then
+    if (( i % 3 )); then
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:1}"
@@ -214,9 +222,9 @@ done
 
 tokenCount="${#tokens[@]}"
 
-echo "Document contains $((tokenCount / 2)) tokens." >&2
+echo "Document contains $((tokenCount / 3)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
-    (( i % 2 )) && echo "Token #$((i / 2 + 1)): ${tokens[$i - 1]}: ${tokens[$i]}" >&2
+    (( i % 3 )) && echo "Token #$((i / 3 + 1)): ${tokens[$i - 1]}: ${tokens[$i]}" >&2
 done
 
 # We now know what each token is, so let's do the code generation.
@@ -224,7 +232,7 @@ done
 if [[ "$targetLang" == "parsed" ]]; then
     # Just dump the parse results and exit
     for (( i=0; i<tokenCount; i++ )); do
-        (( i % 2 )) && echo "${tokens[$i - 1]} ${tokens[$i]}"
+        (( i % 3 )) && echo "${tokens[$i - 1]} ${tokens[$i]}"
     done
     exit
 fi
@@ -424,7 +432,7 @@ stateStack=("code")
 blockStack=("root" "")
 
 for (( i=0; i<tokenCount; i++ )); do
-    if (( i % 2 )); then
+    if (( i % 3 )); then
         echo "State: ${stateStack[-1]}, token: ${tokens[$i - 1]}: ${tokens[$i]}" >&2
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
