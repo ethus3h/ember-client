@@ -170,7 +170,6 @@ for (( i=0; i<tokenCount; i++ )); do
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:1}"
-            echo "ABCGUOCBICGCGEOHUCGEOUH:$firstByte:${firstByte%% *}:" 1>&2
             if asciiIsDigit "${firstByte%% *}"; then
                 tokens[$i - 1]="literal-n"
             else
@@ -194,10 +193,10 @@ done
 
 tokenCount="${#tokens[@]}"
 
-# Convert command tokens' labels to strings instead of space-separated ASCII
+# Convert command & number tokens' labels to strings instead of space-separated ASCII
 for (( i=0; i<tokenCount; i++ )); do
     if (( i % 2 )); then
-        if [[ "${tokens[$i - 1]}" == "command" ]]; then
+        if [[ "${tokens[$i - 1]}" == "command" ]] || [[ "${tokens[$i - 1]}" == "literal-n" ]]; then
             echo "${tokens[$i]}" 1>&2
             tokens[$i]="$(asciiDecListToText <<< "${tokens[$i]}")"
         fi
