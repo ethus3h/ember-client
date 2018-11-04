@@ -12,6 +12,5 @@ async function fbSwitcher(intNum) {
 }
             await do(declare -a arr=()
 )
-                /* just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL. */
 
-                rootReturn = 'FizzBuzz'; await assertIsRoot(rootReturn); return rootReturn;
+                rootReturn = ; await assertIsRoot(rootReturn); return rootReturn;
