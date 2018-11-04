@@ -14,17 +14,24 @@ tokens=()
 
 # First, break up the input into tokens in the tokens array. This doesn't support streaming, so isn't good for long documents, but should suffice for now. The format should be streamable to other formats; this was just easier to implement for now.
 
+parserState="token"
+currentIndentLevel="0"
+countingIndentSpaces="true"
+indentSpacesCounted="0"
+lineNumber="1"
+columnNumber="1"
+
 pushToken() {
     if [[ -n "${tokens[-1]}" ]]; then
         # There's a token in the last slot in the tokens array, so make a new slot for the next one
-        tokens+=("")
+        tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
         tokens+=("")
         tokens+=("")
     fi
     tokens[-2]="$1"
     tokens[-1]="$2"
     # Make a new slot for whatever happens next
-    tokens+=("")
+    tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
     tokens+=("")
     tokens+=("")
 }
@@ -47,21 +54,14 @@ insertToken() {
 }
 
 # We need a dummy token at the beginning so we can insertToken after it (otherwise it would be inserting after something that doesn't exist)
-tokens+=("")
+tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
 tokens+=("start-document")
 tokens+=("")
 
 # Add empty slots to the array for the first token
-tokens+=("") # Line/column/depth goes in first slot
+tokens+=("$lineNumber:$columnNumber:$currentIndentLevel") # Line/column/depth goes in first slot
 tokens+=("") # Token type goes in second slot
 tokens+=("") # Token content goes in third slot
-
-parserState="token"
-currentIndentLevel="0"
-countingIndentSpaces="true"
-indentSpacesCounted="0"
-lineNumber="1"
-columnNumber="1"
 
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
@@ -114,22 +114,24 @@ while read -r byte; do
             if [[ -n "${tokens[-1]}" ]]; then
                 # End of token.
                 # There's a token in the last slot in the tokens array, so make a new slot for the next one
-                tokens+=("")
+                tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
                 tokens+=("")
                 tokens+=("")
             fi
         elif asciiIsNewline "$byte"; then
             # End of token
             if [[ -n "${tokens[-1]}" ]]; then
-                tokens+=("")
+                tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
                 tokens+=("")
                 tokens+=("")
             fi
         elif [[ "$byte" == 39 ]]; then
             parserState="literal-s"
+            tokens[-3]=("$lineNumber:$columnNumber:$currentIndentLevel")
             tokens[-2]="literal-s"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
+            tokens[-3]=("$lineNumber:$columnNumber:$currentIndentLevel")
             tokens[-2]="comment"
         else
             die "Unexpected byte $byte in basic token."
@@ -138,7 +140,7 @@ while read -r byte; do
     comment)
         if asciiIsNewline "$byte"; then
             parserState="token"
-            tokens+=("")
+            tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
             tokens+=("")
             tokens+=("")
             countingIndentSpaces="true"
@@ -151,7 +153,7 @@ while read -r byte; do
     literal-s)
         if [[ "$byte" == 39 ]]; then
             parserState="token"
-            tokens+=("")
+            tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
             tokens+=("")
             tokens+=("")
         elif asciiIsPrintable "$byte"; then
