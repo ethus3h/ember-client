@@ -171,8 +171,8 @@ done < <(hexdump -v -e '1/1 "%02X\n"' < "$input")
 
 tempIndentLevel="$currentIndentLevel"
 for (( i=0; i<tempIndentLevel; i++ )); do
-    pushToken dedent ""
     currentIndentLevel=$(( currentIndentLevel - 1 ))
+    pushToken dedent ""
 done
 
 pushToken "end-document" ""
