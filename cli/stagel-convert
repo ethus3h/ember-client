@@ -179,8 +179,8 @@ declare -p tokens >&2
 # If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
-    unset 'tokens[-2]'
-    unset 'tokens[-3]'
+    unset 'tokens[-1]'
+    unset 'tokens[-1]'
 fi
 
 declare -p tokens >&2
