@@ -174,16 +174,12 @@ pushToken "end-document" ""
 
 tokenCount="${#tokens[@]}"
 
-declare -p tokens >&2
-
 # If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
     unset 'tokens[-1]'
     unset 'tokens[-1]'
 fi
-
-declare -p tokens >&2
 
 # Not all the tokens are identified yet. So, now, let's label them all.
 
@@ -217,6 +213,9 @@ done
 tokenCount="${#tokens[@]}"
 
 # Convert command & number tokens' labels to strings instead of space-separated ASCII
+
+declare -p tokens >&2
+
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
         if [[ "${tokens[$i - 1]}" == "command" ]] || [[ "${tokens[$i - 1]}" == "literal-n" ]]; then
