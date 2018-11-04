@@ -184,8 +184,6 @@ fi
 
 # Not all the tokens are identified yet. So, now, let's label them all.
 
-print_r "${tokens[@]}" >&2
-set -x
 inParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
@@ -213,7 +211,6 @@ for (( i=0; i<tokenCount; i++ )); do
         fi
     fi
 done
-set +x
 tokenCount="${#tokens[@]}"
 
 # Convert command & number tokens' labels to strings instead of space-separated ASCII
