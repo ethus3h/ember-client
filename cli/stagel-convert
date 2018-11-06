@@ -539,7 +539,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     stateStack[-1]="routine-definition-end"
                     stateStack+=("code")
                     # Avoid putting in an extra code level
-                    [[ "${tokens[$i - 1]}" == "newline" ]] && [[ "${tokens[$i + 2]}" == "indent" ]] && i=$((i + 1))
+                    [[ "${tokens[$i - 1]}" == "newline" ]] && [[ "${tokens[$i + 2]}" == "indent" ]] && i=$((i + 3))
                     ;;
                 *)
                     die "Routine definition unexpected token type"
