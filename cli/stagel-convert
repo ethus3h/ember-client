@@ -556,26 +556,52 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             arglist)
                 echo "Working on arglist" >&2
-                case "${tokens[$i - 1]}" in
-                literal-*)
-                    # Some type of data, literal.
-                    codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
-                    ;;
-                ident-*)
-                    # Some type of data, reference.
-                    codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
-                    ;;
-                command)
-                    codegenRoutineName="${tokens[$i]}"
-                    stateStack+=("arglist")
+                case "${tokens[$i]}" in
+                return)
+                    case "${tokens[$i - 1]}" in
+                    literal-*)
+                        # Some type of data, literal.
+                        codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                        ;;
+                    ident-*)
+                        # Some type of data, reference.
+                        codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                        ;;
+                    command)
+                        codegenRoutineName="${tokens[$i]}"
+                        stateStack+=("arglist")
+                        ;;
+                    *)
+                        # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                        codegenCommandInvocationStart
+                        unset 'stateStack[-1]'
+                        i=$((i - 3))
+                        ;;
+                    esac
                     ;;
                 *)
-                    # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
-                    set -x
-                    codegenCommandInvocationEnd
-                    set +x
-                    unset 'stateStack[-1]'
-                    i=$((i - 3))
+                    case "${tokens[$i - 1]}" in
+                    literal-*)
+                        # Some type of data, literal.
+                        codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                        ;;
+                    ident-*)
+                        # Some type of data, reference.
+                        codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                        ;;
+                    command)
+                        codegenRoutineName="${tokens[$i]}"
+                        stateStack+=("arglist")
+                        ;;
+                    *)
+                        # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                        set -x
+                        codegenCommandInvocationEnd
+                        set +x
+                        unset 'stateStack[-1]'
+                        i=$((i - 3))
+                        ;;
+                    esac
                     ;;
                 esac
                 ;;
