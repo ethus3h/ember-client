@@ -332,9 +332,9 @@ codegenComment() {
 }
 
 codegenCommandInvocation() {
-    # "return" is special
     case "$codegenRoutineName" in
     "return")
+        # Return needs its own handling
         print $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
@@ -354,6 +354,9 @@ codegenCommandInvocation() {
             die "${FUNCNAME[0]} is not implemented in $targetLang."
             ;;
         esac
+        ;;
+    add|eq|mod)
+        # These commands are implemented with impl* calls
         ;;
     *)
         codegenPrintIndentationSpaces
