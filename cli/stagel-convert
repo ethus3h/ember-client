@@ -67,21 +67,21 @@ while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     if asciiIsNewline "$byte" || { [[ "$parserState" == "token" ]] && [[ "$byte" == "59" ]]; }; then
         pushToken newline ""
-    set -x
         lineNumber=$(( lineNumber + 1 ))
         columnNumber=1
     else
         columnNumber=$(( columnNumber + 1 ))
     fi
+    declare -p tokens >&2
     tokenCount="${#tokens[@]}" >&2
-    comment='
-    if [[ $lineNumber -eq 10 ]]; then
+    #comment='
+    if [[ $lineNumber -eq 2 ]]; then
         set -x
     fi
-    if [[ $lineNumber -eq 13 ]]; then
+    if [[ $lineNumber -eq 3 ]]; then
         die
     fi
-    '
+    #'
     case $parserState in
     token)
         if [[ "$countingIndentSpaces" == "true" ]]; then
