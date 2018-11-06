@@ -65,7 +65,8 @@ tokens+=("") # Token content goes in third slot
 
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
-    if asciiIsNewline "$byte"; then
+    if asciiIsNewline "$byte" || [[ "$parserState" == "token" ]] && [[ "$byte" == "59" ]]; then
+        pushToken newline ""
         lineNumber=$(( lineNumber + 1 ))
         columnNumber=1
     else
