@@ -453,6 +453,7 @@ for (( i=0; i<tokenCount; i++ )); do
         else
             case "${stateStack[-1]}" in
             code)
+                echo "Working on code" >&2
                 case "${tokens[$i - 1]}" in
                 start-document)
                     codegenStartDocument
@@ -480,6 +481,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 esac
                 ;;
             arglist)
+                echo "Working on arglist" >&2
                 case "${tokens[$i - 1]}" in
                 literal-*)
                     # Some type of data, literal.
@@ -498,6 +500,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 esac
                 ;;
             routine-definition)
+                echo "Working on routine definition" >&2
                 # Format: token, [ident...], code body
                 # So now we look for as many types as there are. When no more types, it enters the code body of the routine. When there's a dedent, it leaves the code body of the routine.
                 case "${tokens[$i - 1]}" in
@@ -514,6 +517,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 esac
                 ;;
             routine-definition-end)
+                echo "Working on routine definition end" >&2
                 unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
                 unset 'blockStack[-1]'

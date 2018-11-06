@@ -9,7 +9,7 @@ cd tests || die
 
 #runTest stagel/no-codegen/routine-minimal
 #runTest stagel/no-codegen/routine-fizzbuzz
-runTest stagel/js/routine-minimal
+runTest -v stagel/js/routine-minimal
 #runTest -v stagel/js/routine-fizzbuzz
 
 reportTests
