@@ -561,10 +561,6 @@ for (( i=0; i<tokenCount; i++ )); do
                         # Some type of data, reference.
                         codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                         ;;
-                    command)
-                        codegenRoutineName="${tokens[$i]}"
-                        stateStack+=("arglist")
-                        ;;
                     *)
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                         codegenCommandInvocationStart
