@@ -490,6 +490,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenRoutineName="${tokens[$i]}"
                     stateStack+=("arglist")
                     ;;
+                newline)
+                    ;;
                 *)
                     die "A ${tokens[$i - 1]}, ${tokens[$i]}, isn't allowed here, in ${blockStack[-1]}."
                     ;;
@@ -505,6 +507,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 ident-*)
                     # Some type of data, reference.
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                    ;;
+                command)
+                    codegenRoutineName="${tokens[$i]}"
+                    stateStack+=("arglist")
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
