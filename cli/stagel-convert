@@ -364,8 +364,6 @@ codegenCommandInvocationStart() {
         case "$targetLang" in
         "js")
             print "await $codegenRoutineName("
-            print_r "${codegenArgList[@]}"
-            print ")"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -431,8 +429,6 @@ codegenCommandInvocationEnd() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            print "await $codegenRoutineName("
-            print_r "${codegenArgList[@]}"
             print ")"$'\n'
             ;;
         *)
