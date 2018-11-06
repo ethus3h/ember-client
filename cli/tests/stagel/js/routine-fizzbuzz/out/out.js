@@ -28,6 +28,7 @@ async function fizzBuzz() {
     return-assert -n
     let intCounter = 1;
     while (! implEq(intCounter, 100)) {
-        eq n/counter 100
-        run r/s/fbSwitcher n/counter
+        intCounter = implAdd(intCounter, 1);
+        await fbSwitcher(intCounter);
+    }
 }

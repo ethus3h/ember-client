@@ -15,4 +15,4 @@ r/s/fizzBuzz # A string is an array of 8-bit bytes.
     until
         eq n/counter 100
         set n/counter add n/counter 1
-        run r/s/fbSwitcher n/counter
+        return r/s/fbSwitcher n/counter
