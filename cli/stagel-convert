@@ -336,7 +336,75 @@ codegenComment() {
     esac
 }
 
-codegenCommandInvocation() {
+codegenCommandInvocationStart() {
+    case "$codegenRoutineName" in
+    "return")
+        # Return needs its own handling
+        print $'\n'
+        codegenPrintIndentationSpaces
+        case "$targetLang" in
+        "js")
+            codegenType "${blockStack[-2]}"
+            print "Return = "
+            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            print "; await assertIs"
+            codegenType "${blockStack[-2]}" true
+            print "("
+            codegenType "${blockStack[-2]}"
+            print "Return); return "
+            codegenType "${blockStack[-2]}"
+            print "Return;"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
+    add|eq|mod)
+        # These commands are implemented with impl* calls
+        case "$targetLang" in
+        "js")
+            print "await impl${codegenRoutineName^}("
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    print "await assertIs"
+                    codegenType "${codegenArgList[$k - 1]}" "true"
+                    print "("
+                    codegenType "${codegenArgList[$k - 1]}"
+                    print "${codegenArgList[$k]^}"
+                    if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
+                        print ");"
+                    else
+                        print "); "
+                    fi
+                fi
+            done
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
+    *)
+        codegenPrintIndentationSpaces
+        case "$targetLang" in
+        "js")
+            print "await $codegenRoutineName("
+            print_r "${codegenArgList[@]}"
+            print ")"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
+    esac
+    codegenRoutineType=""
+    codegenRoutineName=""
+    codegenArgList=()
+}
+
+codegenCommandInvocationEnd() {
     case "$codegenRoutineName" in
     "return")
         # Return needs its own handling
@@ -517,6 +585,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             arglist)
                 echo "Working on arglist" >&2
+                codegenCommandInvocationStart
                 case "${tokens[$i - 1]}" in
                 literal-*)
                     # Some type of data, literal.
@@ -532,7 +601,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
-                    codegenCommandInvocation
+                    codegenCommandInvocationEnd
                     unset 'stateStack[-1]'
                     i=$((i - 3))
                     ;;
