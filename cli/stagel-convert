@@ -357,6 +357,14 @@ codegenCommandInvocation() {
         ;;
     add|eq|mod)
         # These commands are implemented with impl* calls
+        case "$targetLang" in
+        "js")
+            print "await impl${codegenRoutineName^}("
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
         ;;
     *)
         codegenPrintIndentationSpaces
