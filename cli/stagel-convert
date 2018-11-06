@@ -360,6 +360,10 @@ codegenCommandInvocationStart() {
             ;;
         esac
         ;;
+    if)
+        codegenPrintIndentationSpaces
+        print "if ("
+        ;;
     add|eq|mod)
         # These commands are implemented with impl* calls
         case "$targetLang" in
