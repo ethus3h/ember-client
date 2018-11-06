@@ -444,6 +444,12 @@ for (( i=0; i<tokenCount; i++ )); do
         echo "State: ${stateStack[-1]}, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
+        elif [[ "${tokens[$i - 1]}" == "indent" ]]; then
+            codegenIndent=$((codegenIndent + 1))
+            stateStack+=("code")
+        elif [[ "${tokens[$i - 1]}" == "dedent" ]]; then
+            codegenIndent=$((codegenIndent - 1))
+            unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
             code)
@@ -455,12 +461,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenEndDocument
                     ;;
                 indent)
-                    codegenIndent=$((codegenIndent + 1))
-                    stateStack+=("code")
                     ;;
                 dedent)
-                    codegenIndent=$((codegenIndent - 1))
-                    unset 'stateStack[-1]'
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
