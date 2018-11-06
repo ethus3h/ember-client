@@ -508,12 +508,15 @@ for (( i=0; i<tokenCount; i++ )); do
                     # Some type of data, reference.
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
-                *)
+                indent)
                     # The routine definition parameter list is ended, so do codegen for the routine declaration (but not the body of it), drop back and continue parsing.
                     codegenRoutineDefinitionStart
                     stateStack[-1]="routine-definition-end"
+                    stateStack+=("code")
                     i=$((i - 3))
                     ;;
+                *)
+                    die "Routine definition unexpected token type"
                 esac
                 ;;
             routine-definition-end)
