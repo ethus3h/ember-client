@@ -448,9 +448,7 @@ for (( i=0; i<tokenCount; i++ )); do
 
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
             echo "(Inserting a comment)" >&2
-            set -x
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
-            set +x
         else
             case "${stateStack[-1]}" in
             code)
