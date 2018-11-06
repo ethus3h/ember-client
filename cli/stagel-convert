@@ -513,9 +513,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 esac
                 ;;
             routine-definition-end)
+                unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
-                unset 'stateStack[-1]'
-                unset 'stateStack[-1]'
                 unset 'blockStack[-1]'
                 unset 'blockStack[-1]'
                 ;;
