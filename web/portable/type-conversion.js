@@ -22,6 +22,7 @@ async function strFromUnicodeHex(strInput) {
 
     if(/^[A-F0-9]+$/.test(strInput)) {
         strReturn = await implStrFromUnicodeHex(strInput);
+    }
     else {
         strReturn = strInput;
     }
