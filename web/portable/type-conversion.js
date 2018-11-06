@@ -20,7 +20,12 @@ async function strFromByte(int) {
 async function strFromUnicodeHex(strInput) {
     await assertIsStr(strInput); let strReturn;
 
-    strReturn = await implStrFromUnicodeHex(strInput); await assertIsStr(strReturn); return strReturn;
+    if(/^[A-F0-9]+$/.test(strInput)) {
+        strReturn = await implStrFromUnicodeHex(strInput);
+    else {
+        strReturn = strInput;
+    }
+    await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
