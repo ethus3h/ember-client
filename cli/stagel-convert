@@ -365,6 +365,20 @@ codegenCommandInvocation() {
         case "$targetLang" in
         "js")
             print "await impl${codegenRoutineName^}("
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    print "await assertIs"
+                    codegenType "${codegenArgList[$k - 1]}" "true"
+                    print "("
+                    codegenType "${codegenArgList[$k - 1]}"
+                    print "${codegenArgList[$k]^}"
+                    if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
+                        print ");"
+                    else
+                        print "); "
+                    fi
+                fi
+            done
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
