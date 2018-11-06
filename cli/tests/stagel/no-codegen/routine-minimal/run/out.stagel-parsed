@@ -1,9 +1,0 @@
-start-document 
-ident-r-s  102 98 83 119 105 116 99 104 101 114
-newline  110 47 110 117 109
-indent 
-newline  32 84 101 115 116 32 99 111 109 109 101 110 116 59 32 115 101 109 105 99 111 108 111 110
-command return
-literal-s 
-dedent 
-end-document 

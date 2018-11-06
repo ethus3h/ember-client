@@ -22,7 +22,7 @@ lineNumber="1"
 columnNumber="1"
 
 pushToken() {
-    if [[ -n "${tokens[-1]}" ]]; then
+    if [[ -n "${tokens[-1]}" ]] || [[ -n "${tokens[-2]}" ]]; then
         # There's a token in the last slot in the tokens array, so make a new slot for the next one
         tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
         tokens+=("")
@@ -75,10 +75,10 @@ while read -r byte; do
     declare -p tokens >&2
     tokenCount="${#tokens[@]}" >&2
     #comment='
-    if [[ $lineNumber -eq 2 ]]; then
+    if [[ $lineNumber -eq 3 ]]; then
         set -x
     fi
-    if [[ $lineNumber -eq 3 ]]; then
+    if [[ $lineNumber -eq 4 ]]; then
         die
     fi
     #'
