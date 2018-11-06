@@ -35,7 +35,7 @@ async function fbSwitcher(intNum) {
 /* A string is an array of 8-bit bytes. */
     await return-assert(declare -a arr=()
 )
-    /* the output should be non-empty. Unless otherwise specified, would take and yield nothing. */
+    /* the output should be non-empty. */
     await -n(declare -a arr=()
 )
     await new(declare -a arr=([0]="ident-n" [1]="counter" [2]="literal-n" [3]=$'\001')
@@ -44,5 +44,9 @@ async function fbSwitcher(intNum) {
 )
         await eq(declare -a arr=([0]="ident-n" [1]="counter" [2]="literal-n" [3]="d")
 )
-        await run(declare -a arr=([0]="ident-r-s" [1]="fbSwitcher" [2]="ident-n" [3]="counter")
+        await set(declare -a arr=([0]="ident-n" [1]="counter")
 )
+        await add(declare -a arr=([0]="ident-n" [1]="counter" [2]="literal-n" [3]=$'\001')
+)
+
+        rootReturn = ; await assertIsRoot(rootReturn); return rootReturn;
