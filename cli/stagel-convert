@@ -542,8 +542,17 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 command)
                     codegenRoutineName="${tokens[$i]}"
-                    [[ "${tokens[$i]}" == "return" ]] && stateStack+=("return")
-                    [[ "${tokens[$i]}" != "return" ]] && stateStack+=("arglist")
+                    case "${tokens[$i]}" in
+                    return)
+                        stateStack+=("return")
+                        ;;
+                    if)
+                        stateStack+=("if")
+                        ;;
+                    *)
+                        stateStack+=("arglist")
+                        ;;
+                    esac
                     ;;
                 newline)
                     ;;
