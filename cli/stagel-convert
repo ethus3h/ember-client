@@ -340,20 +340,8 @@ codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
     "return")
         # Return needs its own handling
-        print $'\n'
-        codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            codegenType "${blockStack[-2]}"
-            print "Return = "
-            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            print "; await assertIs"
-            codegenType "${blockStack[-2]}" true
-            print "("
-            codegenType "${blockStack[-2]}"
-            print "Return); return "
-            codegenType "${blockStack[-2]}"
-            print "Return;"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -365,20 +353,6 @@ codegenCommandInvocationStart() {
         case "$targetLang" in
         "js")
             print "await impl${codegenRoutineName^}("
-            for (( k=0; k<argumentCount; k++ )); do
-                if (( k % 2 )); then
-                    print "await assertIs"
-                    codegenType "${codegenArgList[$k - 1]}" "true"
-                    print "("
-                    codegenType "${codegenArgList[$k - 1]}"
-                    print "${codegenArgList[$k]^}"
-                    if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                        print ");"
-                    else
-                        print "); "
-                    fi
-                fi
-            done
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
