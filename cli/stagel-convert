@@ -775,12 +775,12 @@ for (( i=0; i<tokenCount; i++ )); do
                             codegenCommandInvocationEnd
                             unset 'stateStack[-1]'
                             i=$((i - 3))
-                            if [[ "${#stateStack[@]}" -gt "$testIndent" ]]; then
-                                echo "BLOH BLHOBL HBLOH BBLOB BLOB BLOB BLOB" >&2
-                                codegenIndent
-                                stateStack+=("code")
-                                testIndent=0
-                            fi
+                            #if [[ "${#stateStack[@]}" -gt "$testIndent" ]]; then
+                                #echo "BLOH BLHOBL HBLOH BBLOB BLOB BLOB BLOB" >&2
+                                #codegenIndent
+                                #stateStack+=("code")
+                                #testIndent=0
+                            #fi
                         fi
                     fi
                     ;;
