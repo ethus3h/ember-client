@@ -1,4 +1,4 @@
-if (await implEq(, await implMod())) {
+if (await implEq(0, await implMod())) {
 
-    rootReturn = 'FizzBuzz'; await assertIsRoot(rootReturn); return rootReturn;
+    rootReturn = ''; await assertIsRoot(rootReturn); return rootReturn;
 }

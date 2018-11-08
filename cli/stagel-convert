@@ -669,9 +669,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     else
-                        set -x
                         codegenCommandInvocationArglist
-                        set +x
                         [[ "${tokens[$i - 3]}" != "if" ]] && codegenCommandInvocationArgSeparator
                         codegenRoutineName="${tokens[$i]}"
                         codegenCommandInvocationStart
@@ -686,6 +684,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     if [[ "$ifParameterFound" == "true" ]]; then
                         ifParameterFound="false"
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                        codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
@@ -696,6 +695,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 newline)
                     if [[ "${stateStack[-1]}" != "if" ]]; then
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                        codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
@@ -703,6 +703,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                    codegenCommandInvocationArglist
                     codegenCommandInvocationEnd
                     unset 'stateStack[-1]'
                     i=$((i - 3))
