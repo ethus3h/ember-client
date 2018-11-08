@@ -336,7 +336,9 @@ codegenIndent() {
 }
 
 codegenDedent() {
+    codegenIndent=$(( codegenIndent - 1 ))
     codegenPrintIndentationSpaces
+    codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
     "js")
         print '}'$'\n'
