@@ -739,6 +739,9 @@ for (( i=0; i<tokenCount; i++ )); do
                         # The arglist is ended, so drop back and continue parsing.
                         unset 'stateStack[-1]'
                         i=$((i - 3))
+                        testParameterFound="false"
+                        codegenIndent
+                        stateStack+=("code")
                     else
                         codegenCommandInvocationArglist
                         codegenIsTestCommand "${tokens[$i - 3]}" || codegenCommandInvocationArgSeparator
@@ -755,12 +758,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 indent)
                     if [[ "$testParameterFound" == "true" ]]; then
-                        testParameterFound="false"
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
+                        testParameterFound="false"
                         codegenIndent
                         stateStack+=("code")
                     else
@@ -775,6 +778,9 @@ for (( i=0; i<tokenCount; i++ )); do
                             codegenCommandInvocationEnd
                             unset 'stateStack[-1]'
                             i=$((i - 3))
+                            testParameterFound="false"
+                            codegenIndent
+                            stateStack+=("code")
                         fi
                     fi
                     ;;
@@ -784,6 +790,9 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenCommandInvocationEnd
                     unset 'stateStack[-1]'
                     i=$((i - 3))
+                    testParameterFound="false"
+                    codegenIndent
+                    stateStack+=("code")
                     ;;
                 esac
                 ;;
