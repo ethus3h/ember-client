@@ -305,14 +305,9 @@ codegenReference() {
     # First arg: type; second arg: value
     case "$targetLang" in
     "js")
-        case "$1" in
-        "literal-s")
-            print \'"$2"\'
-            ;;
-        "literal-n")
-            print "$2"
-            ;;
-        esac
+        print '$'
+        codegenType "$1"
+        print "${2^}"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
