@@ -444,7 +444,7 @@ codegenCommandInvocationStart() {
         "js")
             codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             print '='
-            "${codegenArgList[-3]}" "${codegenArgList[-4]}"
+            codegenLiteral "${codegenArgList[-4]}" "${codegenArgList[-3]}"
             print ";"$'\n'
             ;;
         *)
