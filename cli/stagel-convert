@@ -379,11 +379,12 @@ codegenComment() {
 
 codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
-    "new")
+    new)
+        codegenPrintIndentationSpaces
         print "let "
         codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
         ;;
-    "return")
+    return)
         # Return needs its own handling
         print $'\n'
         codegenPrintIndentationSpaces
@@ -477,7 +478,7 @@ codegenCommandInvocationArglist() {
 
 codegenCommandInvocationEnd() {
     case "$codegenRoutineName" in
-    "return")
+    return|new)
         # This shouldn't happen, because it's all handled in codegenCommandInvocationStart
         die "Internal error (this is a bug): codegenCommandInvocationEnd called for return"
         ;;
