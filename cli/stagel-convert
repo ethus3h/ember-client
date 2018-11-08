@@ -651,7 +651,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         i=$((i - 3))
                     else
                         codegenCommandInvocationArglist
-                        codegenCommandInvocationArgSeparator
+                        [[ "${tokens[$i - 3]}" != "if" ]] && codegenCommandInvocationArgSeparator
                         codegenRoutineName="${tokens[$i]}"
                         codegenCommandInvocationStart
                         if [[ "${stateStack[-1]}" == "if" ]]; then
