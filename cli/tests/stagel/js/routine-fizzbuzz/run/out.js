@@ -1,4 +1,3 @@
-
 async function fbSwitcher(intNum) {
     await assertIsInt(intNum); let strReturn;
 
@@ -24,7 +23,7 @@ async function fbSwitcher(intNum) {
 async function fizzBuzz() {
     let strReturn;
 
-    await return-assert(,     await -n(    /* the output should be non-empty. */
+    /* return-assert -n # the output should be non-empty. */
 );
 );
     let literal-n1;
