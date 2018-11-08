@@ -1,4 +1,4 @@
-if (await implEq(0, await implMod(15))) {
+if (await implEq(0, 15)) {
     let strN;
     strN='FizzBuzz';
 }
