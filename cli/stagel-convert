@@ -451,11 +451,13 @@ codegenCommandInvocationArglist() {
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
+            set -x
                 if [[ "$codegenArgList[$k - 1]" == literal-* ]]; then
                     codegenLiteral "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
                 else
                     codegenReference "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
                 fi
+                set +x
                 if [[ "$k" != $((argumentCount - 1)) ]]; then
                     codegenCommandInvocationArgSeparator
                 fi
