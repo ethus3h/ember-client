@@ -639,7 +639,6 @@ codegenIsTestCommand() {
 stateStack=("code")
 blockStack=("root" "")
 testParameterFound="false"
-wantDeferredIndent="false"
 
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
@@ -766,7 +765,6 @@ for (( i=0; i<tokenCount; i++ )); do
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="true"
                     else
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="indent-deferred"
-                        wantDeferredIndent="true"
                     fi
                     ;;
                 newline)
