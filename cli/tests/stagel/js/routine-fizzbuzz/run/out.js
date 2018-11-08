@@ -24,8 +24,6 @@ async function fizzBuzz() {
     let strReturn;
 
     /* return-assert -n # the output should be non-empty. */
-);
-);
     let literal-n1;
     await until();
  {
