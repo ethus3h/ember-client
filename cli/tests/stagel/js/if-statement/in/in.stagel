@@ -1,2 +1,3 @@
 if eq 0 mod n/num 15
-    return 'FizzBuzz'
+    new n
+    set n 'FizzBuzz'
