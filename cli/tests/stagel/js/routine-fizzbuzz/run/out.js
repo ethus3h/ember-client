@@ -28,7 +28,6 @@ await implEq(0, await implMod(intNum, 3);
     let literal-n1;
     await until() {
 await implEq(intCounter, 100);
-        =;
-await implAdd(intCounter, 1);
+        intCounter=await implAdd(intCounter, 1);
 
         
