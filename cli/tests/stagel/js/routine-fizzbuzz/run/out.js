@@ -15,3 +15,16 @@ async function fbSwitcher(intNum) {
     }
     if (    /* Could also write it like this, with the condition on another line */
 await implMod(await assertIsLiteral-n(literal-n);         )        /* Comment 4 */
+
+        strReturn = 'Fizz'; await assertIsStr(strReturn); return strReturn;
+    }
+/* A string is an array of 8-bit bytes. */
+async function fizzBuzz() {
+    let strReturn;
+
+    /* the output should be non-empty. */
+    )    )    )    ) {
+await implEq(await implAdd(        )
+        strReturn = ; await assertIsStr(strReturn); return strReturn;
+    }
+}
