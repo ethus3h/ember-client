@@ -550,7 +550,7 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     esac
-    if ! contains "if" "${stateStack[@]}"; then
+    if ! contains "test" "${stateStack[@]}"; then
         print ';'$'\n'
     fi
     codegenRoutineType=""
