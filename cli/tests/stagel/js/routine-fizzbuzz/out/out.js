@@ -24,6 +24,7 @@ async function fbSwitcher(intNum) {
 
 async function fizzBuzz() {
     let strReturn;
+
     /* return-assert -n # the output should be non-empty. */
     let intCounter = 1;
     while (! await implEq(intCounter, 100)) {
