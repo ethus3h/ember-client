@@ -379,6 +379,10 @@ codegenComment() {
 
 codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
+    "new")
+        print "let "
+        codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+        ;;
     "return")
         # Return needs its own handling
         print $'\n'
