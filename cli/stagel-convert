@@ -281,6 +281,7 @@ codegenArgList=()
 # Define a function for each type of output needed for code generation
 
 codegenType() {
+    echo "Codegen: Type" >&2
     # First arg: type; second arg: "true" for uppercase first letter
     local result=""
     case "$targetLang" in
@@ -307,6 +308,7 @@ codegenType() {
 }
 
 codegenLiteral() {
+    echo "Codegen: Literal" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
     "js")
@@ -326,6 +328,7 @@ codegenLiteral() {
 }
 
 codegenReference() {
+    echo "Codegen: Reference" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
     "js")
@@ -345,6 +348,7 @@ codegenPrintIndentationSpaces() {
 }
 
 codegenStartDocument() {
+    echo "Codegen: Start document" >&2
     case "$targetLang" in
     "js")
         ;;
@@ -355,6 +359,7 @@ codegenStartDocument() {
 }
 
 codegenEndDocument() {
+    echo "Codegen: End document" >&2
     case "$targetLang" in
     "js")
         ;;
@@ -365,6 +370,7 @@ codegenEndDocument() {
 }
 
 codegenIndent() {
+    echo "Codegen: Indent" >&2
     case "$targetLang" in
     "js")
         print ' {'$'\n'
@@ -376,6 +382,7 @@ codegenIndent() {
 }
 
 codegenDedent() {
+    echo "Codegen: Dedent" >&2
     codegenIndent=$(( codegenIndent - 1 ))
     codegenPrintIndentationSpaces
     codegenIndent=$(( codegenIndent + 1 ))
@@ -390,6 +397,7 @@ codegenDedent() {
 }
 
 codegenComment() {
+    echo "Codegen: Comment" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
@@ -402,6 +410,7 @@ codegenComment() {
 }
 
 codegenCommandInvocationStart() {
+    echo "Codegen: Command invocation start" >&2
     case "$codegenRoutineName" in
     new)
         codegenPrintIndentationSpaces
@@ -491,6 +500,7 @@ codegenCommandInvocationStart() {
 }
 
 codegenCommandInvocationArgSeparator() {
+    echo "Codegen: Command invocation argument separator" >&2
     case "$targetLang" in
     "js")
         print ", "
@@ -502,6 +512,7 @@ codegenCommandInvocationArgSeparator() {
 }
 
 codegenCommandInvocationArglist() {
+    echo "Codegen: Command invocation argument list" >&2
     case "$targetLang" in
     "js")
         argumentCount="${#codegenArgList[@]}"
@@ -528,6 +539,7 @@ codegenCommandInvocationArglist() {
 }
 
 codegenCommandInvocationEnd() {
+    echo "Codegen: Command invocation end" >&2
     case "$codegenRoutineName" in
     return|new)
         # This shouldn't happen, because it's all handled in codegenCommandInvocationStart
@@ -565,6 +577,7 @@ codegenCommandInvocationEnd() {
 }
 
 codegenRoutineDefinitionStart() {
+    echo "Codegen: Routine definition start" >&2
     case "$targetLang" in
     "js")
         print "async function $codegenRoutineName("
@@ -613,6 +626,7 @@ codegenRoutineDefinitionStart() {
 }
 
 codegenRoutineDefinitionEnd() {
+    echo "Codegen: Routine definition end" >&2
     case "$targetLang" in
     "js")
         # print "}"$'\n'
