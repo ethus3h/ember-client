@@ -559,6 +559,9 @@ codegenCommandInvocationEnd() {
 }
 
 codegenRoutineDefinitionStart() {
+    if [[ "${tokens[-2]}" != "root" ]]; then
+        print $'\n'
+    fi
     case "$targetLang" in
     "js")
         print "async function $codegenRoutineName("
