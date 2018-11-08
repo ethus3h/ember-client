@@ -766,12 +766,14 @@ for (( i=0; i<tokenCount; i++ )); do
                     fi
                     ;;
                 newline)
-                    if ! codegenIsTestCommand "${stateStack[-1]}" && [[ "$testParameterFound" == "true" ]]; then
-                        # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
-                        codegenCommandInvocationArglist
-                        codegenCommandInvocationEnd
-                        unset 'stateStack[-1]'
-                        i=$((i - 3))
+                    if ! codegenIsTestCommand "${stateStack[-1]}"; then
+                        if [[ "$testParameterFound" == "true" ]]; then
+                            # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
+                            codegenCommandInvocationArglist
+                            codegenCommandInvocationEnd
+                            unset 'stateStack[-1]'
+                            i=$((i - 3))
+                        fi
                     fi
                     ;;
                 *)
