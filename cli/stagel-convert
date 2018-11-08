@@ -427,21 +427,7 @@ codegenCommandInvocationEnd() {
         # These commands are implemented with impl* calls
         case "$targetLang" in
         "js")
-            print "await impl${codegenRoutineName^}("
-            for (( k=0; k<argumentCount; k++ )); do
-                if (( k % 2 )); then
-                    print "await assertIs"
-                    codegenType "${codegenArgList[$k - 1]}" "true"
-                    print "("
-                    codegenType "${codegenArgList[$k - 1]}"
-                    print "${codegenArgList[$k]^}"
-                    if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                        print ");"
-                    else
-                        print "); "
-                    fi
-                fi
-            done
+            print ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -580,6 +566,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationStart
                         ;;
                     *)
+                        codegenCommandInvocationStart
                         stateStack+=("arglist")
                         ;;
                     esac
@@ -628,6 +615,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     else
+                        codegenCommandInvocationStart
                         if [[ "${stateStack[-1]}" == "if" ]]; then
                             ifParameterFound="true"
                             [[ "${tokens[$i - 3]}" != "if" ]] && codegenPrintIndentationSpaces
