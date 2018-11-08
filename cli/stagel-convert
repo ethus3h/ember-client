@@ -290,6 +290,28 @@ codegenLiteral() {
         "literal-s")
             print \'"$2"\'
             ;;
+        "literal-n")
+            print "$2"
+            ;;
+        esac
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
+codegenReference() {
+    # First arg: type; second arg: value
+    case "$targetLang" in
+    "js")
+        case "$1" in
+        "literal-s")
+            print \'"$2"\'
+            ;;
+        "literal-n")
+            print "$2"
+            ;;
         esac
         ;;
     *)
@@ -434,11 +456,13 @@ codegenCommandInvocationArglist() {
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenType "${codegenArgList[$k - 1]}"
-                if [[ "$k" == $((argumentCount - 1)) ]]; then
-                    print "${codegenArgList[$k]^}"
+                if [[ "$codegenArgList[$k - 1]" == literal-* ]]; then
+                    codegenLiteral "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
                 else
-                    print "${codegenArgList[$k]^}, "
+                    codegenReference "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
+                fi
+                if [[ "$k" != $((argumentCount - 1)) ]]; then
+                    codegenCommandInvocationArgSeparator
                 fi
             fi
         done
