@@ -630,7 +630,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     else
                         if [[ "${stateStack[-1]}" == "if" ]]; then
                             ifParameterFound="true"
-                            codegenPrintIndentationSpaces
+                            [[ "${tokens[$i - 3]}" ]] == "comment" ]] && codegenPrintIndentationSpaces
                         fi
                         codegenRoutineName="${tokens[$i]}"
                         stateStack+=("arglist")
