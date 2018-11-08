@@ -328,7 +328,7 @@ codegenLiteral() {
 }
 
 codegenReference() {
-    echo "Codegen: Reference" >&2
+    echo "Codegen: Reference ${@}" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
     "js")
