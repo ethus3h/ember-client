@@ -781,7 +781,9 @@ for (( i=0; i<tokenCount; i++ )); do
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="true"
                     else
                         print $'\n'
+                        codegenIndent=$(( codegenIndent + 1 ))
                         codegenPrintIndentationSpaces
+                        codegenIndent=$(( codegenIndent - 1 ))
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="indent-deferred"
                     fi
                     ;;
