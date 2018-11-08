@@ -417,6 +417,41 @@ codegenCommandInvocationStart() {
     codegenArgList=()
 }
 
+codegenCommandInvocationArgSeparator() {
+    case "$targetLang" in
+    "js")
+        print ", "
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
+codegenCommandInvocationArglist() {
+    case "$targetLang" in
+    "js")
+        argumentCount="${#codegenArgList[@]}"
+        for (( k=0; k<argumentCount; k++ )); do
+            if (( k % 2 )); then
+                codegenType "${codegenArgList[$k - 1]}"
+                if [[ "$k" == $((argumentCount - 1)) ]]; then
+                    print "${codegenArgList[$k]^}"
+                else
+                    print "${codegenArgList[$k]^}, "
+                fi
+            fi
+        done
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+    codegenRoutineType=""
+    codegenRoutineName=""
+    codegenArgList=()
+}
+
 codegenCommandInvocationEnd() {
     case "$codegenRoutineName" in
     "return")
@@ -615,6 +650,8 @@ for (( i=0; i<tokenCount; i++ )); do
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     else
+                        codegenCommandInvocationArglist
+                        codegenCommandInvocationArgSeparator
                         codegenRoutineName="${tokens[$i]}"
                         codegenCommandInvocationStart
                         if [[ "${stateStack[-1]}" == "if" ]]; then
