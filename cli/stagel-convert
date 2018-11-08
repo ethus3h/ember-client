@@ -336,6 +336,7 @@ codegenIndent() {
 }
 
 codegenDedent() {
+    codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
         print '}'$'\n'
@@ -513,7 +514,7 @@ codegenRoutineDefinitionStart() {
 codegenRoutineDefinitionEnd() {
     case "$targetLang" in
     "js")
-        print "}"$'\n'
+        # print "}"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
