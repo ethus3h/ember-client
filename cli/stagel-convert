@@ -347,6 +347,7 @@ codegenPrintIndentationSpaces() {
         print '    '
     done
     [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
+    true
 }
 
 codegenStartDocument() {
