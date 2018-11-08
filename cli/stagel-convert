@@ -380,7 +380,7 @@ codegenComment() {
 codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
     new)
-        codegenPrintIndentationSpaces
+        #codegenPrintIndentationSpaces
         print "let "
         codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
         ;;
