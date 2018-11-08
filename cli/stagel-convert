@@ -504,6 +504,9 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     esac
+    if [[ "${stateStack[-1]}" != "if" ]]; then
+        print ';'$'\n'
+    fi
     codegenRoutineType=""
     codegenRoutineName=""
     codegenArgList=()
