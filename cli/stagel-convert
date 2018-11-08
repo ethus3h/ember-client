@@ -305,7 +305,6 @@ codegenReference() {
     # First arg: type; second arg: value
     case "$targetLang" in
     "js")
-        print '$'
         codegenType "$1"
         print "${2^}"
         ;;
