@@ -406,7 +406,6 @@ codegenCommandInvocationStart() {
     new)
         codegenPrintIndentationSpaces
         print "let "
-        codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
         ;;
     return)
         # Return needs its own handling
@@ -502,9 +501,12 @@ codegenCommandInvocationArglist() {
 
 codegenCommandInvocationEnd() {
     case "$codegenRoutineName" in
-    return|new)
+    return)
         # This shouldn't happen, because it's all handled in codegenCommandInvocationStart
         die "Internal error (this is a bug): codegenCommandInvocationEnd called for return"
+        ;;
+    new)
+        codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
         ;;
     add|eq|mod)
         # These commands are implemented with impl* calls
