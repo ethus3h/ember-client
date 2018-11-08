@@ -342,9 +342,11 @@ codegenReference() {
 }
 
 codegenPrintIndentationSpaces() {
+    [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent - 1 ))
     for (( j=0; j<codegenIndent; j++ )); do
         print '    '
     done
+    [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
 }
 
 codegenStartDocument() {
