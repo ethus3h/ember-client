@@ -327,7 +327,7 @@ codegenEndDocument() {
 codegenIndent() {
     case "$targetLang" in
     "js")
-        print ' {'
+        print ' {'$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -449,7 +449,7 @@ codegenCommandInvocationEnd() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            print ")"$'\n'
+            print ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
