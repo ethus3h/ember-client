@@ -417,7 +417,6 @@ codegenCommandInvocationStart() {
         esac
         ;;
     return)
-        # Return needs its own handling
         print $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
@@ -433,6 +432,20 @@ codegenCommandInvocationStart() {
             print "Return); return "
             codegenType "${blockStack[-2]}"
             print "Return;"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
+    set)
+        codegenPrintIndentationSpaces
+        case "$targetLang" in
+        "js")
+            codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            print '='
+            "${codegenArgList[-3]}" "${codegenArgList[-4]}"
+            print ";"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
