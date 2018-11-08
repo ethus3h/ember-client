@@ -639,7 +639,7 @@ codegenIsTestCommand() {
 stateStack=("code")
 blockStack=("root" "")
 testParameterFound="false"
-testIndent="0"
+testIndent=0
 
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
@@ -775,9 +775,11 @@ for (( i=0; i<tokenCount; i++ )); do
                             codegenCommandInvocationEnd
                             unset 'stateStack[-1]'
                             i=$((i - 3))
-                            #if [[ "$testIndent" ]]
-                            #codegenIndent
-                            #stateStack+=("code")
+                            if [[ "${#stateStack[@]}" -gt "$testIndent" ]]; then
+                                codegenIndent
+                                stateStack+=("code")
+                                testIndent=0
+                            fi
                         fi
                     fi
                     ;;
