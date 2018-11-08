@@ -644,7 +644,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
                     return|new)
-                        stateStack+=("return")
+                        stateStack+=("oneshot-command")
                         ;;
                     if)
                         stateStack+=("if")
@@ -664,7 +664,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 esac
                 ;;
-            return)
+            oneshot-command)
                 case "${tokens[$i - 1]}" in
                 literal-*)
                     # Some type of data, literal.
