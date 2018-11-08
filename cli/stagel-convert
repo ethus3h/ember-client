@@ -442,10 +442,16 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
-            print '='
-            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            print ";"$'\n'
+            if [[ "${codegenArgList[-4]+a}" ]]; then
+                codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+                print '='
+                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                print ";"$'\n'
+            else
+                # It's getting set to a command's return value
+                codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                print '='
+            fi
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
