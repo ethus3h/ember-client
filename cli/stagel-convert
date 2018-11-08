@@ -539,7 +539,7 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     *)
-        codegenPrintIndentationSpaces
+        #codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
             print ")"
