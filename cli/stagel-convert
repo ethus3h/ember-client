@@ -629,6 +629,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 indent)
                     if [[ "$ifParameterFound" == "true" ]]; then
+                        ifParameterFound="false"
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
