@@ -664,12 +664,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 indent)
                     codegenIndent
-                    #codegenIndent=$((codegenIndent + 1))
                     stateStack+=("code")
                     ;;
                 dedent)
                     codegenDedent
-                    #codegenIndent=$((codegenIndent - 1))
                     unset 'stateStack[-1]'
                     ;;
                 ident-r-*)
@@ -765,6 +763,8 @@ for (( i=0; i<tokenCount; i++ )); do
                         i=$((i - 3))
                     else
                         codegenIsTestCommand "${stateStack[-1]}" && testParameterFound="true"
+                        codegenIndent
+                        stateStack+=("code")
                     fi
                     ;;
                 newline)
