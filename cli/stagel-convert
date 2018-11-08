@@ -644,6 +644,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
+                    fi
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
