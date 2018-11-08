@@ -386,6 +386,7 @@ codegenCommandInvocationStart() {
         case "$targetLang" in
         "js")
             codegenType "${blockStack[-2]}"
+            [[ codegenType "${blockStack[-2]}" == "root" ]] && die "Tried to return, but was not inside a routine!"
             print "Return = "
             codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             print "; await assertIs"
