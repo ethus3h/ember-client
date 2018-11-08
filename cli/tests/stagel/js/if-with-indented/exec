@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd): The required dependency ember-shared could not be found (or ember_bash_setup could not be sourced for some other reason)." >&2; printf '%b' '\033[0m' >&2; exit 1; }
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd)."' ERR
+
 #set -x
 
-trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+[[ -e "run" ]] && rm -r "run"
 
-cd tests || die
+mkdir run
 
-runTest stagel/no-codegen/routine-minimal
-runTest stagel/no-codegen/routine-fizzbuzz
-runTest stagel/js/routine-minimal
-runTest stagel/js/if-statement
-runTest stagel/js/if-with-indented
-#runTest -v stagel/js/routine-fizzbuzz
+../../../../stagel-convert "in/in.stagel" "js" > "run/out.js"
 
-reportTests
+assert directoryEquals "out" "run"
