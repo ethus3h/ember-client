@@ -288,7 +288,7 @@ codegenLiteral() {
     "js")
         case "$1" in
         "literal-s")
-            print \'"$2"\'
+            print \'"$(asciiDecListToText "$2")"\'
             ;;
         "literal-n")
             print "$2"
@@ -656,7 +656,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 literal-*)
                     # Some type of data, literal.
                     [[ "${stateStack[-1]}" == "if" ]] && ifParameterFound="true"
-                    codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
+                    codegenArgList+=("${tokens[$i - 1]}" "${tokens[$i]}")
                     ;;
                 ident-*)
                     # Some type of data, reference.
