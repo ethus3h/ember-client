@@ -405,8 +405,16 @@ codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
     new)
         codegenPrintIndentationSpaces
-        print "let "
-        codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+        case "$targetLang" in
+        "js")
+            print "let "
+            codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            print ";"$'\n'
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
         ;;
     return)
         # Return needs its own handling
@@ -643,7 +651,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 command)
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
-                    return|new)
+                    new|return|set)
                         stateStack+=("oneshot-command")
                         ;;
                     if)
