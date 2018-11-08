@@ -775,6 +775,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 indent|newline)
                     # The routine definition parameter list is ended, so do codegen for the routine declaration (but not the body of it), and continue parsing.
                     if [[ "${tokens[$i - 3]}" != "start-document" ]]; then
+                    declare -p tokens >&2
                         print $'\n'
                     fi
                     codegenRoutineDefinitionStart
