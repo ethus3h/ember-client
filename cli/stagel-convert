@@ -203,13 +203,37 @@ for (( i=0; i<tokenCount; i++ )); do
                 tokens[$i - 1]="literal-n"
             else
                 case "${tokens[$i]}" in
+                " 114 47 110 47 "*)
+                    tokens[$i - 1]="ident-r-n"
+                    tokens[$i]="${tokens[$i]# 114 47 110 47}"
+                    ;;
                 " 114 47 115 47 "*)
                     tokens[$i - 1]="ident-r-s"
                     tokens[$i]="${tokens[$i]# 114 47 115 47}"
                     ;;
+                " 114 47 97 110 47 "*)
+                    tokens[$i - 1]="ident-r-arr-n"
+                    tokens[$i]="${tokens[$i]# 114 47 97 110 47}"
+                    ;;
+                " 114 47 97 115 47 "*)
+                    tokens[$i - 1]="ident-r-arr-s"
+                    tokens[$i]="${tokens[$i]# 114 47 97 115 47}"
+                    ;;
                 " 110 47 "*)
                     tokens[$i - 1]="ident-n"
                     tokens[$i]="${tokens[$i]# 110 47}"
+                    ;;
+                " 115 47 "*)
+                    tokens[$i - 1]="ident-s"
+                    tokens[$i]="${tokens[$i]# 115 47}"
+                    ;;
+                " 97 110 47 "*)
+                    tokens[$i - 1]="ident-arr-n"
+                    tokens[$i]="${tokens[$i]# 97 110 47}"
+                    ;;
+                " 97 115 47 "*)
+                    tokens[$i - 1]="ident-arr-s"
+                    tokens[$i]="${tokens[$i]# 97 115 47}"
                     ;;
                 *)
                     tokens[$i - 1]="command"
@@ -380,7 +404,7 @@ codegenComment() {
 codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
     new)
-        #codegenPrintIndentationSpaces
+        codegenPrintIndentationSpaces
         print "let "
         codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
         ;;
