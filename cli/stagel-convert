@@ -623,9 +623,15 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 command)
-                    [[ "${stateStack[-1]}" == "if" ]] && ifParameterFound="true"
-                    codegenRoutineName="${tokens[$i]}"
-                    stateStack+=("arglist")
+                    if [[ "${tokens[$i]}" == "return" ]]; then
+                        # The arglist is ended, so drop back and continue parsing.
+                        unset 'stateStack[-1]'
+                        i=$((i - 3))
+                    else
+                        [[ "${stateStack[-1]}" == "if" ]] && ifParameterFound="true"
+                        codegenRoutineName="${tokens[$i]}"
+                        stateStack+=("arglist")
+                    fi
                     ;;
                 indent)
                     if [[ "$ifParameterFound" == "true" ]]; then
@@ -645,11 +651,6 @@ for (( i=0; i<tokenCount; i++ )); do
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     fi
-                    ;;
-                return)
-                    # The arglist is ended, so drop back and continue parsing.
-                    unset 'stateStack[-1]'
-                    i=$((i - 3))
                     ;;
                 *)
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
