@@ -749,7 +749,6 @@ for (( i=0; i<tokenCount; i++ )); do
                             testParameterFound="true"
                             codegenIsTestCommand "${tokens[$i - 3]}" || codegenPrintIndentationSpaces
                         fi
-                        stateStack+=("code")
                         #set -x
                         stateStack+=("arglist")
                     fi
