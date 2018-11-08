@@ -504,7 +504,7 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     esac
-    if [[ "${stateStack[-1]}" != "if" ]]; then
+    if contains "if" "${stateStack[@]}"; then
         print ';'$'\n'
     fi
     codegenRoutineType=""
