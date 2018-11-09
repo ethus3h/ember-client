@@ -280,8 +280,12 @@ codegenArgList=()
 
 # Define a function for each type of output needed for code generation
 
+codegenDebug() {
+    echo "Codegen: $1 / ${@} / ${stateStack[@]} / ${blockStack[@]}" >&2
+}
+
 codegenType() {
-    echo "Codegen: Type ${@} ${stateStack[@]}" >&2
+    codegenDebug "Type" "${@}" >&2
     # First arg: type; second arg: "true" for uppercase first letter
     local result=""
     case "$targetLang" in
@@ -400,7 +404,7 @@ codegenDedent() {
 }
 
 codegenComment() {
-    echo "Codegen: Comment ${@} ${stateStack[@]}" >&2
+    echo "Codegen: Comment / ${@} / ${stateStack[@]} / ${blockStack[@]}" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
@@ -705,6 +709,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         ;;
                     for|if|until|while)
                         stateStack+=("test")
+                        blockStack+=("${tokens[$i]}")
                         codegenCommandInvocationStart
                         ;;
                     *)
