@@ -709,7 +709,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         ;;
                     for|if|until|while)
                         stateStack+=("test")
-                        blockStack+=("${tokens[$i]}")
+                        blockStack+=("test" "${tokens[$i]}")
                         codegenCommandInvocationStart
                         ;;
                     *)
