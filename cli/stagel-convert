@@ -281,7 +281,7 @@ codegenArgList=()
 # Define a function for each type of output needed for code generation
 
 codegenDebug() {
-    echo "Codegen: $1 / ${@} / ${stateStack[@]} / ${blockStack[@]}" >&2
+    echo "Codegen: $1 / Args: ${@} / States: ${stateStack[@]} / Blocks: ${blockStack[@]}." >&2
 }
 
 codegenType() {
