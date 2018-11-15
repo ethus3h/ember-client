@@ -760,6 +760,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 command)
+                set -x
                     if [[ "${tokens[$i]}" == "return" ]] || { [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" == "true" ]] ; }; then
                         # The arglist is ended, so drop back and continue parsing.
                         echo "ENDEDE ARGE LIST" >&2
@@ -779,9 +780,10 @@ for (( i=0; i<tokenCount; i++ )); do
                         fi
                         stateStack+=("arglist")
                     fi
+                    set +x
                     ;;
                 indent)
-                    set -x
+                    #set -x
                     if [[ "$testParameterFound" == "true" ]]; then
                         testParameterFound="false"
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
