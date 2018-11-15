@@ -664,6 +664,9 @@ testParameterFound="false"
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
         codegenIndent="${tokens[$i - 2]##*:}"
+        if [[ "$testParameterFound" == "indent-deferred" ]]; then
+            codegenIndent=$(( codegenIndent - 1 ))
+        fi
 
         echo >&2
         echo "State: ${stateStack[-1]}, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
@@ -795,7 +798,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenIndent=$(( codegenIndent - 1 ))
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="indent-deferred"
                     fi
-                    set +x
+                    #set +x
                     ;;
                 newline)
                     if [[ "${stateStack[-1]}" != "test" ]]; then
