@@ -577,6 +577,8 @@ codegenCommandInvocationEnd() {
     esac
     if ! contains "test" "${stateStack[@]}"; then
         print ';'$'\n'
+    else
+        codegenIndent
     fi
     codegenRoutineType=""
     codegenRoutineName=""
