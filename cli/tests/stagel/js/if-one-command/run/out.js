@@ -15,3 +15,7 @@
 44
 47
 50
+if (await implEq(0, 15)) {
+    let strN;
+    strN='FizzBuzz';
+}

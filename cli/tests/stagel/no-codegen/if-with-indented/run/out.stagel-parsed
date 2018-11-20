@@ -19,20 +19,20 @@
 56
 59
 start-document 
-  105 102
+command if
 newline 
 indent 
-  101 113
-  48
-  109 111 100
-  110 47 110 117 109
-  49 53
+command eq
+literal-n 0
+command mod
+ident-n  110 117 109
+literal-n 15
 newline 
-  110 101 119
-  115 47 110
+command new
+ident-s  110
 newline 
-  115 101 116
-  115 47 110
+command set
+ident-s  110
 literal-s  70 105 122 122 66 117 122 122
 newline 
 dedent 
