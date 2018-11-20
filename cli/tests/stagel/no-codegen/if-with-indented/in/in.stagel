@@ -1,3 +1,4 @@
-r/s/fbSwitcher n/num
-    # Test comment; semicolon
-    return ''
+if
+    eq 0 mod n/num 15
+    new s/n
+    set s/n 'FizzBuzz'
