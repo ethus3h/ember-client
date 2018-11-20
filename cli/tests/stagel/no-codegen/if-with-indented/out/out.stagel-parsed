@@ -1,12 +1,19 @@
 start-document 
-ident-r-s  102 98 83 119 105 116 99 104 101 114
-ident-n  110 117 109
+command if
 newline 
 indent 
-comment  32 84 101 115 116 32 99 111 109 109 101 110 116 59 32 115 101 109 105 99 111 108 111 110
+command eq
+literal-n 0
+command mod
+ident-n  110 117 109
+literal-n 15
 newline 
-command return
-literal-s 
+command new
+ident-s  110
+newline 
+command set
+ident-s  110
+literal-s  70 105 122 122 66 117 122 122
 newline 
 dedent 
 end-document 
