@@ -246,8 +246,8 @@ for (( i=0; i<tokenCount; i++ )); do
         fi
     fi
 done
+set +x
 tokenCount="${#tokens[@]}"
-set =x
 # Convert command & number tokens' labels to strings instead of space-separated ASCII
 
 for (( i=0; i<tokenCount; i++ )); do
