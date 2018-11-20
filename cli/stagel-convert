@@ -193,6 +193,7 @@ if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
     unset 'tokens[-1]'
 fi
 
+declare -p tokens >&2
 # Not all the tokens are identified yet. So, now, let's label them all.
 
 inParameterList="false"
