@@ -180,6 +180,7 @@ for (( i=0; i<tempIndentLevel; i++ )); do
     pushToken dedent ""
 done
 
+declare -p tokens >&2
 set -x
 pushToken "end-document" ""
 set +x
