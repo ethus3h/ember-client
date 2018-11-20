@@ -8,11 +8,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 cd tests || die
 
 runTest stagel/no-codegen/routine-minimal
+runTest -v stagel/no-codegen/if-with-indented
 runTest stagel/no-codegen/routine-fizzbuzz
 runTest stagel/js/routine-minimal
-runTest -v stagel/js/if-statement
+#runTest -v stagel/js/if-statement
 runTest stagel/js/if-one-command
-runTest -v stagel/js/if-with-indented
+#runTest -v stagel/js/if-with-indented
 #runTest -v stagel/js/routine-fizzbuzz
 
 reportTests
