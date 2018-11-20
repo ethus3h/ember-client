@@ -656,7 +656,7 @@ codegenIsTestCommand() {
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
-stateStack=("code")
+stateStack=("root" "code")
 blockStack=("root" "")
 testParameterFound="false"
 
