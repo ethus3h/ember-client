@@ -14,6 +14,6 @@ runTest stagel/js/routine-minimal
 runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
 runTest stagel/js/if-with-indented
-#runTest -v stagel/js/routine-fizzbuzz
+runTest -v stagel/js/routine-fizzbuzz
 
 reportTests
