@@ -180,11 +180,11 @@ for (( i=0; i<tempIndentLevel; i++ )); do
     pushToken dedent ""
 done
 
-declare -p tokens >&2
 set -x
 pushToken "end-document" ""
 set +x
 tokenCount="${#tokens[@]}"
+declare -p tokens >&2
 
 # If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
