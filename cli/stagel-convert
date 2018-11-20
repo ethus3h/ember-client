@@ -184,7 +184,6 @@ set -x
 pushToken "end-document" ""
 set +x
 tokenCount="${#tokens[@]}"
-declare -p tokens >&2
 
 # If there's an empty token slot at the end, remove it
 if [[ -z "${tokens[-1]}" ]] && [[ -z "${tokens[-2]}" ]]; then
@@ -199,6 +198,7 @@ declare -p tokens >&2
 inParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
+        [[ "$i" -ge 50 ]] && set -x
         if [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:1}"
@@ -247,7 +247,7 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 tokenCount="${#tokens[@]}"
-
+set =x
 # Convert command & number tokens' labels to strings instead of space-separated ASCII
 
 for (( i=0; i<tokenCount; i++ )); do
