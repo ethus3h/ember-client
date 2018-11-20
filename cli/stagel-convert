@@ -198,7 +198,8 @@ declare -p tokens >&2
 inParameterList="false"
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
-        [[ "$i" -ge 50 ]] && set -x
+        [[ "$i" -ge 56 ]] && set -x
+        echo "$i"
         if [[ -z "${tokens[$i - 1]+x}" ]] && [[ -z "${tokens[$i - 1]}" ]]; then
             # Set the token names in the table for these that aren't yet identified
             firstByte="${tokens[$i]:1}"
