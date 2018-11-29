@@ -1,5 +1,3 @@
 {
-    {
-        await implEq(0, 0);
-    }
+    await implEq(0, 0);
 }
