@@ -417,7 +417,6 @@ codegenComment() {
 }
 
 codegenGetCurrentRoutineType() {
-set -x
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
         if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
@@ -426,7 +425,6 @@ set -x
         fi
         counter=$(( counter - 1 ))
     done
-    return 0
 }
 
 codegenCommandInvocationStart() {
@@ -451,7 +449,6 @@ codegenCommandInvocationStart() {
         case "$targetLang" in
         "js")
             local returnType
-            set -x
             returnType="$(codegenGetCurrentRoutineType)"
             [[ "$returnType" == "root" ]] && die "Tried to return, but was not inside a routine!"
             codegenType "$returnType"
