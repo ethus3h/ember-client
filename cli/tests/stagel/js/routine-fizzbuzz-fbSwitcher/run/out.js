@@ -20,21 +20,3 @@ async function fbSwitcher(intNum) {
 
         testReturn = 'Fizz'; await assertIsTest(testReturn); return testReturn;
     }
-
-/* A string is an array of 8-bit bytes. */
-async function fizzBuzz() {
-    let strReturn;
-
-    /* return-assert -n # the output should be non-empty. */
-    let literal-n1;
-    await until() {
-await implEq(intCounter, 100,         =intCounter, await implAdd(intCounter, 1);
- {
-);
- {
-);
- {
-
-        testReturn = ; await assertIsTest(testReturn); return testReturn;
-    }
-}
