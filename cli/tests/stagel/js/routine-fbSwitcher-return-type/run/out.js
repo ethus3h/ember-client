@@ -3,6 +3,4 @@ async function fbSwitcher(intNum) {
 
     if (await implEq(0, await implMod(intNum, 15))) {
 
-        testReturn = 'Buzz'; await assertIsTest(testReturn); return testReturn;
-    }
-}
+        
