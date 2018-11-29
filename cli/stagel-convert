@@ -420,7 +420,7 @@ codegenGetCurrentRoutineType() {
 set -x
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
-        if codegenType "${blockStack[$counter]}" ; then
+        if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
             print "${blockStack[$counter]}"
             return 0
         fi
