@@ -417,13 +417,14 @@ codegenComment() {
 }
 
 codegenGetCurrentRoutineType() {
+set -x
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
         if codegenType "${blockStack[$counter]}" &> /dev/null; then
             print "${blockStack[$counter]}"
             return 0
         fi
-        counter = $(( counter + 1 ))
+        counter=$(( counter - 1 ))
     done
     return 0
 }
