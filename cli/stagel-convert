@@ -380,7 +380,8 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     case "$targetLang" in
     "js")
-        print ' {'$'\n'
+        [[ "${state[-1]}" == "code" ]] || print ' '
+        print '{'$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
