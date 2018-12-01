@@ -14,6 +14,7 @@ async function fbSwitcher(intNum) {
         /* Comment 3 */
     }
     if (/* Could also write it like this, with the condition on another line */
+
         await implEq(0, await implMod(intNum, 3))) {
         /* Comment 4 */
 
