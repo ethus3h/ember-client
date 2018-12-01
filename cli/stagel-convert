@@ -283,7 +283,7 @@ codegenNewlineLookingForSpaces="true" # True while finding indentation spaces at
 codegenTestIndentDeferred="false" # True while waiting to come to the code-block portion of a "test"-style construct (e.g. "if") that has a multiline test part
 stateStack=("root" "code")
 blockStack=("root" "")
-testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true".
+testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true". It's returned to "false" once the test's associated code block is located.
 codegenStatus="Nothing done yet"
 
 # Define a function for each type of output needed for code generation
@@ -839,13 +839,13 @@ for (( i=0; i<tokenCount; i++ )); do
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
+                        unset 'stateStack[-1]'
                         if [[ "$codegenTestIndentDeferred" == "indent-deferred" ]]; then
                             codegenIndent
                             codegenTestIndentDeferred="false"
                             stateStack+=("code")
                             blockStack+=("plain-block" "")
                         fi
-                        unset 'stateStack[-1]'
                         i=$((i - 3))
                     fi
                     ;;
