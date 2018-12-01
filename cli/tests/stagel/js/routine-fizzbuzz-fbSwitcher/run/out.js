@@ -10,4 +10,14 @@ async function fbSwitcher(intNum) {
     if (await implEq(0, await implMod(intNum, 5))) {
         /* Comment 2 */
 
-        
+        strReturn = 'Buzz'; await assertIsStr(strReturn); return strReturn;
+        /* Comment 3 */
+    }
+    if (/* Could also write it like this, with the condition on another line */
+
+        await implEq(0, await implMod(intNum, 3))) {
+        /* Comment 4 */
+
+        strReturn = 'Fizz'; await assertIsStr(strReturn); return strReturn;
+    }
+}
