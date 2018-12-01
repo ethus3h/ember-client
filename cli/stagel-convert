@@ -493,6 +493,7 @@ codegenCommandInvocationStart() {
         print "if ("
         ;;
     add|eq|mod)
+        codegenPrintIndentationSpaces
         # These commands are implemented with impl* calls
         case "$targetLang" in
         "js")
