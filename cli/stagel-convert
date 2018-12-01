@@ -369,6 +369,7 @@ codegenPrintIndentationSpaces() {
     for (( j=0; j<codegenIndent; j++ )); do
         codegenOnNewLine && codegenOutput '    '
     done
+    true
 }
 
 codegenStartDocument() {
