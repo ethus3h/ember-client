@@ -277,6 +277,7 @@ codegenRoutineType=""
 codegenRoutineName=""
 codegenArgList=()
 codegenNewLine="true"
+codegenNewlineLookingForSpaces="true"
 
 # Define a function for each type of output needed for code generation
 
@@ -286,7 +287,15 @@ codegenOnNewLine() {
 
 codegenOutput() {
     print "${@}"
-    [[ "$*" == *$'\n' ]] || [[ "$*" == *$'    ' ]] && codegenNewLine="true" || codegenNewLine="false"
+    if [[ "$*" == *$'\n' ]]; then
+        codegenNewLine="true"
+        codegenNewlineLookingForSpaces="true"
+    elif [[ "$codegenNewlineLookingForSpaces" == "true" ]] && [[ "$*" == *$'    ' ]]; then
+        codegenNewLine="true"
+        codegenNewlineLookingForSpaces="true"
+    else
+        codegenNewLine="false"
+    fi
 }
 
 codegenDebug() {
