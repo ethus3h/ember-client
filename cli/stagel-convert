@@ -829,9 +829,10 @@ for (( i=0; i<tokenCount; i++ )); do
                         true # This isn't a reliable indicator that a value has been found.
                         #[[ "${stateStack[-1]}" == "test" ]] && testParameterFound="true"
                     else
-                        codegenOutput $'\n'
+                        true
+                        #codegenOutput $'\n'
                         #codegenIndent=$(( codegenIndent + 1 ))
-                        codegenPrintIndentationSpaces
+                        #codegenPrintIndentationSpaces
                         #codegenIndent=$(( codegenIndent - 1 ))
                     fi
                     ;;
