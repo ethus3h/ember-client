@@ -896,7 +896,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 [[ "${tokens[$i - 1]}" == "dedent" ]] && codegenDedent
                 unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
-                # Don't call blockStackRemoveLast here: routine-definition-end state is entered by encountering a dedent, which will take care of calling it.
+                blockStackRemoveLast
                 ;;
             root)
                 true
