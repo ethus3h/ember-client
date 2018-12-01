@@ -848,8 +848,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     fi
                     # If the test continues onto a new line, make a note that the indentation count will be offset accordingly until the end of the test is found.
                     if [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" != "true" ]]; then
-                        #codegenOutput $'\n'
-                        true
+                        codegenOutput $'\n'
+                        #true
                         #testParameterFound="indent-deferred"
                     fi
                     ;;
