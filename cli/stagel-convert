@@ -726,8 +726,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 indent)
                     codegenIndent
-                    [[ "${stateStack[-1]}" == "test" ]] || blockStack+=("plain-block" "")
                     stateStack+=("code")
+                    [[ "${blockStack[-2]}" == "test" ]] || blockStack+=("plain-block" "")
                     ;;
                 dedent)
                     codegenDedent
