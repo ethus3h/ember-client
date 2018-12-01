@@ -833,7 +833,10 @@ for (( i=0; i<tokenCount; i++ )); do
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
-                        [[ "$codegenTestIndentDeferred" == "indent-deferred" ]] && codegenIndent
+                        if [[ "$codegenTestIndentDeferred" == "indent-deferred" ]]; then
+                            codegenIndent
+                            blockStack+=("plain-block" "")
+                        fi
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     fi
