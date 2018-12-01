@@ -698,7 +698,7 @@ testParameterFound="false" # This is set to "false" usually. When a token that u
 
 blockStackRemoveLast() {
     print_r "${blockStack[@]}" >&2
-    if [[ "$blockStack[-1]" == "" ]] && [[ "$blockStack[-2]" == "plain-block" ]] && [[ "$blockStack[-4]" == "test" ]]; then
+    if [[ "${blockStack[-1]}" == "" ]] && [[ "${blockStack[-2]}" == "plain-block" ]] && [[ "${blockStack[-4]}" == "test" ]]; then
         unset 'blockStack[-1]'
         unset 'blockStack[-1]'
     fi
