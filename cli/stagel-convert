@@ -276,8 +276,13 @@ codegenIndent=0
 codegenRoutineType=""
 codegenRoutineName=""
 codegenArgList=()
+codegenNewLine="true"
 
 # Define a function for each type of output needed for code generation
+
+codegenOnNewLine() {
+    [[ "$codegenNewLine" == "true" ]]
+}
 
 codegenDebug() {
     echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: ${@} / States: ${stateStack[@]} / Blocks: ${blockStack[@]}." >&2
@@ -348,7 +353,7 @@ codegenReference() {
 codegenPrintIndentationSpaces() {
     [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent - 1 ))
     for (( j=0; j<codegenIndent; j++ )); do
-        [[ "${stateStack[-1]}" == "code" ]] && print '    '
+        codegenOnNewLine && print '    '
     done
     [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
     true
@@ -380,8 +385,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     case "$targetLang" in
     "js")
-        [[ "${stateStack[-1]}" == "code" ]] || print ' '
-        [[ "${blockStack[-1]}" == "if" ]] && print ' '
+        codegenOnNewLine || print ' '
         print '{'$'\n'
         ;;
     *)
