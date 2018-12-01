@@ -286,7 +286,7 @@ codegenOnNewLine() {
 
 codegenOutput() {
     print "${@}"
-    [[ "${@[-1]}" == *\n ]] && codegenNewLine="true"
+    [[ "${@[-1]}" == *\n ]] && codegenNewLine="true" || codegenNewLine="false"
 }
 
 codegenDebug() {
