@@ -703,6 +703,7 @@ blockStackRemoveLast() {
         unset 'blockStack[-1]'
     fi
     unset 'blockStack[-1]'
+    [[ "${blockStack[-1]}" == "root" ]] && die "Internal error: Trying to remove root block!"
     unset 'blockStack[-1]'
 }
 
