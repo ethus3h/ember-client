@@ -286,11 +286,11 @@ codegenOnNewLine() {
 
 codegenOutput() {
     print "${@}"
-    [[ "${@[-1]}" == *\n ]] && codegenNewLine="true" || codegenNewLine="false"
+    [[ "${@[-1]}" == *$'\n' ]] && codegenNewLine="true" || codegenNewLine="false"
 }
 
 codegenDebug() {
-    echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: ${@} / States: ${stateStack[@]} / Blocks: ${blockStack[@]}." >&2
+    echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]}." >&2
 }
 
 codegenType() {
