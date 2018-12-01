@@ -300,7 +300,7 @@ codegenOutput() {
 }
 
 codegenDebug() {
-    echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]}." >&2
+    echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]} / ($codegenNewlineLookingForSpaces/$codegenTestIndentDeferred)." >&2
     #print_r "${blockStack[@]}" >&2
 }
 
@@ -715,6 +715,7 @@ for (( i=0; i<tokenCount; i++ )); do
         #declare -p tokens >&2
         #declare -p stateStack >&2
         echo "State: ${stateStack[-1]}:$codegenIndent, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
+        codegenDebug
 
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
             echo "(Inserting a comment)" >&2
