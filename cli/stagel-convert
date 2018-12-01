@@ -380,7 +380,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     case "$targetLang" in
     "js")
-        [[ "${state[-1]}" == "code" ]] || print ' '
+        [[ "${stateStack[-1]}" == "code" ]] || print ' '
         print '{'$'\n'
         ;;
     *)
