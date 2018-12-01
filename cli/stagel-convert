@@ -310,9 +310,9 @@ codegenType() {
         #[[ -z "$result" ]] && result="$1"
         [[ -z "$result" ]] && die "$1 is not a recognized type!"
         if [[ "$2" == "true" ]]; then
-            print "${result^}"
+            codegenOutput "${result^}"
         else
-            print "$result"
+            codegenOutput "$result"
         fi
         ;;
     *)
@@ -328,10 +328,10 @@ codegenLiteral() {
     "js")
         case "$1" in
         "literal-s")
-            print \'"$(asciiDecListToText "$2")"\'
+            codegenOutput \'"$(asciiDecListToText "$2")"\'
             ;;
         "literal-n")
-            print "$2"
+            codegenOutput "$2"
             ;;
         esac
         ;;
@@ -347,7 +347,7 @@ codegenReference() {
     case "$targetLang" in
     "js")
         codegenType "$1"
-        print "${2^}"
+        codegenOutput "${2^}"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -358,7 +358,7 @@ codegenReference() {
 codegenPrintIndentationSpaces() {
     [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent - 1 ))
     for (( j=0; j<codegenIndent; j++ )); do
-        codegenOnNewLine && print '    '
+        codegenOnNewLine && codegenOutput '    '
     done
     [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
     true
@@ -390,8 +390,8 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOnNewLine || print ' '
-        print '{'$'\n'
+        codegenOnNewLine || codegenOutput ' '
+        codegenOutput '{'$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -406,7 +406,7 @@ codegenDedent() {
     codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
     "js")
-        print '}'$'\n'
+        codegenOutput '}'$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -419,7 +419,7 @@ codegenComment() {
     codegenPrintIndentationSpaces
     case "$targetLang" in
     "js")
-        print "/*""$1 */"$'\n'
+        codegenOutput "/*""$1 */"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -431,7 +431,7 @@ codegenGetCurrentRoutineType() {
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
         if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
-            print "${blockStack[$counter]}"
+            codegenOutput "${blockStack[$counter]}"
             return 0
         fi
         counter=$(( counter - 1 ))
@@ -445,9 +445,9 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            print "let "
+            codegenOutput "let "
             codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            print ";"$'\n'
+            codegenOutput ";"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -455,7 +455,7 @@ codegenCommandInvocationStart() {
         esac
         ;;
     return)
-        print $'\n'
+        codegenOutput $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
@@ -463,15 +463,15 @@ codegenCommandInvocationStart() {
             returnType="$(codegenGetCurrentRoutineType)" || true
             [[ -z "$returnType" ]] && die "Tried to return, but was not inside a routine!"
             codegenType "$returnType"
-            print "Return = "
+            codegenOutput "Return = "
             codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            print "; await assertIs"
+            codegenOutput "; await assertIs"
             codegenType "$returnType" true
-            print "("
+            codegenOutput "("
             codegenType "$returnType"
-            print "Return); return "
+            codegenOutput "Return); return "
             codegenType "$returnType"
-            print "Return;"$'\n'
+            codegenOutput "Return;"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -484,13 +484,13 @@ codegenCommandInvocationStart() {
         "js")
             if [[ "${codegenArgList[-4]+a}" ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
-                print '='
+                codegenOutput '='
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                print ";"$'\n'
+                codegenOutput ";"$'\n'
             else
                 # It's getting set to a command's return value
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                print '='
+                codegenOutput '='
             fi
             ;;
         *)
@@ -500,14 +500,14 @@ codegenCommandInvocationStart() {
         ;;
     if)
         codegenPrintIndentationSpaces
-        print "if ("
+        codegenOutput "if ("
         ;;
     add|eq|mod)
         codegenPrintIndentationSpaces
         # These commands are implemented with impl* calls
         case "$targetLang" in
         "js")
-            print "await impl${codegenRoutineName^}("
+            codegenOutput "await impl${codegenRoutineName^}("
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -518,7 +518,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            print "await $codegenRoutineName("
+            codegenOutput "await $codegenRoutineName("
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -535,7 +535,7 @@ codegenCommandInvocationArgSeparator() {
     codegenDebug "Command invocation argument separator" "${@}" >&2
     case "$targetLang" in
     "js")
-        print ", "
+        codegenOutput ", "
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -581,7 +581,7 @@ codegenCommandInvocationEnd() {
         # These commands are implemented with impl* calls
         case "$targetLang" in
         "js")
-            print ")"
+            codegenOutput ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -592,7 +592,7 @@ codegenCommandInvocationEnd() {
         #codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            print ")"
+            codegenOutput ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -601,7 +601,7 @@ codegenCommandInvocationEnd() {
         ;;
     esac
     if ! contains "test" "${stateStack[@]}"; then
-        print ';'$'\n'
+        codegenOutput ';'$'\n'
     fi
     codegenRoutineType=""
     codegenRoutineName=""
@@ -612,40 +612,40 @@ codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
     "js")
-        print "async function $codegenRoutineName("
+        codegenOutput "async function $codegenRoutineName("
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenType "${codegenArgList[$k - 1]}"
                 if [[ "$k" == $((argumentCount - 1)) ]]; then
-                    print "${codegenArgList[$k]^}"
+                    codegenOutput "${codegenArgList[$k]^}"
                 else
-                    print "${codegenArgList[$k]^}, "
+                    codegenOutput "${codegenArgList[$k]^}, "
                 fi
             fi
         done
-        print ") {"$'\n'
+        codegenOutput ") {"$'\n'
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                print "await assertIs"
+                codegenOutput "await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
-                print "("
+                codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
-                print "${codegenArgList[$k]^}"
+                codegenOutput "${codegenArgList[$k]^}"
                 if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                    print ");"
+                    codegenOutput ");"
                 else
-                    print "); "
+                    codegenOutput "); "
                 fi
             fi
         done
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
-            print "let "
+            codegenOutput "let "
             codegenType "$codegenRoutineType"
-            print "Return;"$'\n\n'
+            codegenOutput "Return;"$'\n\n'
         fi
         ;;
     *)
@@ -661,7 +661,7 @@ codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
-        # print "}"$'\n'
+        # codegenOutput "}"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -722,8 +722,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                     if [[ "${tokens[$i - 4]}" != "start-document" ]]; then
-                    declare -p tokens >&2
-                        print $'\n'
+                        declare -p tokens >&2
+                        codegenOutput $'\n'
                     fi
                     codegenRoutineType="${tokens[$i - 1]}"
                     stateStack+=("routine-definition")
@@ -819,7 +819,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     elif [[ "$testParameterFound" == "indent-deferred" ]]; then
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="true"
                     else
-                        print $'\n'
+                        codegenOutput $'\n'
                         codegenIndent=$(( codegenIndent + 1 ))
                         codegenPrintIndentationSpaces
                         codegenIndent=$(( codegenIndent - 1 ))
