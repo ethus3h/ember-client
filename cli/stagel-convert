@@ -365,11 +365,11 @@ codegenReference() {
 }
 
 codegenPrintIndentationSpaces() {
-    [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent - 1 ))
+    #[[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent - 1 ))
     for (( j=0; j<codegenIndent; j++ )); do
         codegenOnNewLine && codegenOutput '    '
     done
-    [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
+    #[[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent=$(( codegenIndent + 1 ))
     true
 }
 
