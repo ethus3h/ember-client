@@ -11,12 +11,12 @@ runTest stagel/no-codegen/routine-minimal
 runTest stagel/no-codegen/if-with-indented
 #runTest stagel/no-codegen/routine-fizzbuzz
 runTest stagel/js/routine-minimal
-runTest -v stagel/js/bare-block
+runTest stagel/js/bare-block
 runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
 runTest stagel/js/if-with-indented
 #runTest -v stagel/js/if-with-comment-before-condition
-runTest stagel/js/routine-fbSwitcher-return-type
+runTest -v stagel/js/routine-fbSwitcher-return-type
 #runTest -v stagel/js/routine-fizzbuzz-fbSwitcher
 #runTest -v stagel/js/routine-fizzbuzz
 
