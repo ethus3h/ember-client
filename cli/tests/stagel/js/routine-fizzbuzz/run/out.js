@@ -24,4 +24,6 @@ async function fbSwitcher(intNum) {
 /* A string is an array of 8-bit bytes. */
 {
     /* return-assert -n # the output should be non-empty. */
-    let 
+    let int1;
+    await until() {
+        await implEq(intCounter, 100, 
