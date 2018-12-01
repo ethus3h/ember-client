@@ -10,7 +10,7 @@ cd tests || die
 runTest stagel/no-codegen/routine-minimal
 runTest stagel/no-codegen/if-with-indented
 #runTest stagel/no-codegen/routine-fizzbuzz
-runTest -v stagel/js/routine-minimal
+runTest stagel/js/routine-minimal
 runTest stagel/js/bare-block
 runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
