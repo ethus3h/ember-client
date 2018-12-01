@@ -841,10 +841,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                     codegenCommandInvocationArglist
                     codegenCommandInvocationEnd
+                    [[ "${tokens[$i - 1]}" == "dedent" ]] || codegenIndent
                     unset 'stateStack[-1]'
                     i=$((i - 3))
                     testParameterFound="false"
-                    [[ "${tokens[$i - 1]}" == "dedent" ]] || codegenIndent
                     stateStack+=("code")
                     ;;
                 esac
