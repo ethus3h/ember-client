@@ -826,7 +826,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="indent-deferred"
                     fi
                     ;;
-                newline)
+                newline|dedent)
                     if [[ "${stateStack[-1]}" != "test" ]]; then
                         if [[ "$testParameterFound" == "true" ]]; then
                             # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
