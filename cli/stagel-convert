@@ -301,6 +301,7 @@ codegenOutput() {
 
 codegenDebug() {
     echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]}." >&2
+    print_r "${blockStack[@]}" >&2
 }
 
 codegenType() {
