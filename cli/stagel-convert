@@ -381,6 +381,7 @@ codegenIndent() {
     case "$targetLang" in
     "js")
         [[ "${stateStack[-1]}" == "code" ]] || print ' '
+        [[ "${blockStack[-1]}" == "if" ]] || print ' '
         print '{'$'\n'
         ;;
     *)
