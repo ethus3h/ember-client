@@ -14,7 +14,7 @@ runTest stagel/js/routine-minimal
 runTest stagel/js/bare-block
 runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
-runTest -v stagel/js/if-with-indented
+runTest stagel/js/if-with-indented
 runTest stagel/js/if-with-comment
 runTest stagel/js/if-with-comment-and-inner-block
 runTest stagel/js/routine-fbSwitcher-return-type
