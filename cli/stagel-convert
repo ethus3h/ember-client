@@ -277,7 +277,8 @@ codegenRoutineType=""
 codegenRoutineName=""
 codegenArgList=()
 codegenNewLine="true"
-codegenNewlineLookingForSpaces="true"
+codegenNewlineLookingForSpaces="true" # True while finding indentation spaces at the beginning of a line.
+codegenTestIndentDeferred="false" # True while waiting to come to the code-block portion of a "test"-style construct (e.g. "if") that has a multiline test part
 
 # Define a function for each type of output needed for code generation
 
