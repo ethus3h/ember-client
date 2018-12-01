@@ -286,7 +286,7 @@ codegenOnNewLine() {
 
 codegenOutput() {
     print "${@}"
-    [[ "$*" == *$'\n' ]] && codegenNewLine="true" || codegenNewLine="false"
+    [[ "$*" == *$'\n' ]] || [[ "$*" == *$'    ' ]] && codegenNewLine="true" || codegenNewLine="false"
 }
 
 codegenDebug() {
