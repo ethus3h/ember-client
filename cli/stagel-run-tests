@@ -16,7 +16,7 @@ runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
 runTest stagel/js/if-with-indented
 runTest stagel/js/if-with-comment
-runTest stagel/js/if-with-comment-and-inner-block
+runTest -v stagel/js/if-with-comment-and-inner-block
 runTest stagel/js/routine-fbSwitcher-return-type
 #runTest -v stagel/js/routine-fizzbuzz-fbSwitcher
 #runTest -v stagel/js/routine-fizzbuzz
