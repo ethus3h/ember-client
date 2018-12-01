@@ -830,9 +830,9 @@ for (( i=0; i<tokenCount; i++ )); do
                         #[[ "${stateStack[-1]}" == "test" ]] && testParameterFound="true"
                     else
                         codegenOutput $'\n'
-                        codegenIndent=$(( codegenIndent + 1 ))
+                        #codegenIndent=$(( codegenIndent + 1 ))
                         codegenPrintIndentationSpaces
-                        codegenIndent=$(( codegenIndent - 1 ))
+                        #codegenIndent=$(( codegenIndent - 1 ))
                     fi
                     ;;
                 newline)
@@ -848,7 +848,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     # If the test continues onto a new line, make a note that the indentation count will be offset accordingly until the end of the test is found.
                     if [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" != "true" ]]; then
                         codegenOutput $'\n'
-                        testParameterFound="indent-deferred"
+                        true
+                        #testParameterFound="indent-deferred"
                     fi
                     ;;
                 *)
