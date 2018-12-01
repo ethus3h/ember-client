@@ -697,6 +697,10 @@ blockStack=("root" "")
 testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true".
 
 blockStackRemoveLast() {
+    if [[ "$blockStack[-1]" == "" ]] && [[ "$blockStack[-2]" == "plain-block" ]] && [[ "$blockStack[-4]" == "test" ]]; then
+        unset 'blockStack[-1]'
+        unset 'blockStack[-1]'
+    fi
     unset 'blockStack[-1]'
     unset 'blockStack[-1]'
 }
@@ -727,7 +731,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 indent)
                     codegenIndent
                     stateStack+=("code")
-                    [[ "${blockStack[-2]}" == "test" ]] || blockStack+=("plain-block" "")
+                    blockStack+=("plain-block" "")
                     ;;
                 dedent)
                     codegenDedent
