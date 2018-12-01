@@ -895,5 +895,7 @@ for (( i=0; i<tokenCount; i++ )); do
     fi
 done
 
+[[ "${#blockStack[@]}" == "2" ]] || die "Internal error: not all blocks were consumed! This is a bug in the code."
+
 print_r "${stateStack[@]}" >&2
 print_r "${blockStack[@]}" >&2
