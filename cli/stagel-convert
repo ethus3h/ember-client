@@ -827,6 +827,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
+                        [[ "$testParameterFound" == "indent-deferred" ]] && codegenIndent
                     elif [[ "$testParameterFound" == "indent-deferred" ]]; then
                         #codegenIndent
                         true # This isn't a reliable indicator that a value has been found.
