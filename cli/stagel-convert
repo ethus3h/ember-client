@@ -878,7 +878,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             routine-definition-end)
                 echo "Working on routine definition end" >&2
-                "${tokens[$i - 1]}" && codegenDedent
+                [[ "${tokens[$i - 1]}" == "dedent" ]] && codegenDedent
                 unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
                 unset 'blockStack[-1]'
