@@ -670,7 +670,7 @@ codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput "}"$'\n'
+        # codegenOutput "}"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -721,10 +721,12 @@ for (( i=0; i<tokenCount; i++ )); do
                 indent)
                     codegenIndent
                     stateStack+=("code")
+                    blockStack+=("plain-block")
                     ;;
                 dedent)
                     codegenDedent
                     unset 'stateStack[-1]'
+                    unset 'blockStack[-1]'
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
@@ -798,6 +800,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
+                        unset 'blockStack[-1]'
                         i=$((i - 3))
                         codegenIndent
                     else
@@ -821,6 +824,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationEnd
                         [[ "$codegenTestIndentDeferred" == "indent-deferred" ]] && codegenIndent
                         unset 'stateStack[-1]'
+                        unset 'blockStack[-1]'
                         i=$((i - 3))
                     fi
                     ;;
@@ -832,6 +836,7 @@ for (( i=0; i<tokenCount; i++ )); do
                             codegenCommandInvocationArglist
                             codegenCommandInvocationEnd
                             unset 'stateStack[-1]'
+                            unset 'blockStack[-1]'
                             i=$((i - 3))
                         fi
                     fi
@@ -847,6 +852,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenCommandInvocationEnd
                     [[ "${tokens[$i - 1]}" == "dedent" ]] || codegenIndent
                     unset 'stateStack[-1]'
+                    unset 'blockStack[-1]'
                     i=$((i - 3))
                     [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="false"
                     stateStack+=("code")
@@ -876,6 +882,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             routine-definition-end)
                 echo "Working on routine definition end" >&2
+                "${tokens[$i - 1]}" && codegenDedent
                 unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
                 unset 'blockStack[-1]'
