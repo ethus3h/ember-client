@@ -272,6 +272,8 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 
+# Set up the variables we'll need for going through the tokens and generating the code
+
 codegenIndent=0
 codegenRoutineType=""
 codegenRoutineName=""
@@ -279,6 +281,10 @@ codegenArgList=()
 codegenNewLine="true"
 codegenNewlineLookingForSpaces="true" # True while finding indentation spaces at the beginning of a line.
 codegenTestIndentDeferred="false" # True while waiting to come to the code-block portion of a "test"-style construct (e.g. "if") that has a multiline test part
+stateStack=("root" "code")
+blockStack=("root" "")
+testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true".
+codegenStatus="Nothing done yet"
 
 # Define a function for each type of output needed for code generation
 
@@ -300,7 +306,7 @@ codegenOutput() {
 }
 
 codegenDebug() {
-    echo "Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]} / ($codegenNewlineLookingForSpaces/$codegenTestIndentDeferred/$testParameterFound)." >&2
+    echo "$codegenStatus (Debug info: Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]} / ($codegenNewlineLookingForSpaces/$codegenTestIndentDeferred/$testParameterFound).)" >&2
     #print_r "${blockStack[@]}" >&2
 }
 
@@ -690,12 +696,6 @@ codegenIsTestCommand() {
     esac
 }
 
-# Set up the variables we'll need for going through the tokens and generating the code
-
-stateStack=("root" "code")
-blockStack=("root" "")
-testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true".
-
 blockStackRemoveLast() {
     print_r "${blockStack[@]}" >&2
     if [[ "${blockStack[-1]}" == "" ]] && [[ "${blockStack[-2]}" == "plain-block" ]] && [[ "${blockStack[-4]}" == "test" ]]; then
@@ -714,7 +714,7 @@ for (( i=0; i<tokenCount; i++ )); do
 
         #declare -p tokens >&2
         #declare -p stateStack >&2
-        echo "State: ${stateStack[-1]}:$codegenIndent, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
+        codegenStatus="State: ${stateStack[-1]}:$codegenIndent, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)"
         codegenDebug
 
         if [[ "${tokens[$i - 1]}" == "comment" ]]; then
