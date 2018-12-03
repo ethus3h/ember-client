@@ -25,5 +25,5 @@ async function fbSwitcher(intNum) {
 {
     /* return-assert -n # the output should be non-empty. */
     let int1;
-    await until() {
+    while !() {
         await implEq(intCounter, 100, 
