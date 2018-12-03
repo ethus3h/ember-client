@@ -516,7 +516,7 @@ codegenCommandInvocationStart() {
             ;;
         esac
         ;;
-    if|while|for)
+    if|while)
         codegenPrintIndentationSpaces
         codegenOutput "$codegenRoutineName ("
         ;;
@@ -762,7 +762,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     new|return|set)
                         stateStack+=("oneshot-command")
                         ;;
-                    for|if|until|while)
+                    if|until|while)
                         stateStack+=("test")
                         blockStack+=("test" "${tokens[$i]}")
                         codegenCommandInvocationStart
