@@ -21,7 +21,6 @@ async function fbSwitcher(intNum) {
 }
 
 /* A string is an array of 8-bit bytes. */
-
 async function fizzBuzz() {
     let strReturn;
 
