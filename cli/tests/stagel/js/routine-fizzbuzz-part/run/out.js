@@ -21,11 +21,4 @@ async function fbSwitcher(intNum) {
         strReturn = 'Fizz'; await assertIsStr(strReturn); return strReturn;
     }
     }
-
-/* A string is an array of 8-bit bytes. */
-async function fizzBuzz() {
-    let strReturn;
-
-
-    strReturn = 'a'; await assertIsStr(strReturn); return strReturn;
-}
+/* */
