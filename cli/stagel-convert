@@ -367,7 +367,8 @@ codegenLiteral() {
 
 codegenReference() {
     codegenDebug "Reference" "${@}" >&2
-    # First arg: type; second arg: value
+    # Reference to a variable
+    # First arg: type; second arg: name
     case "$targetLang" in
     "js")
         codegenType "$1"
@@ -484,7 +485,8 @@ codegenCommandInvocationStart() {
         case "$targetLang" in
         "js")
             codegenOutput "let "
-            codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             codegenOutput ";"$'\n'
             ;;
         *)
