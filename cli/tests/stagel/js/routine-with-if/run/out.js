@@ -3,7 +3,7 @@ async function fbSwitcher(intNum) {
 
     if (await implEq(0, 0)) {
 
-        strReturn = await (str'a'); await assertIsStr(strReturn); return strReturn;
+        strReturn = 'a'; await assertIsStr(strReturn); return strReturn;
     }
 }
 /* */
