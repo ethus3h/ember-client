@@ -10,9 +10,4 @@ r/s/fbSwitcher n/num
         return 'Fizz' # Comment 4
 
 r/s/fizzBuzz # A string is an array of 8-bit bytes.
-    # return-assert -n # the output should be non-empty.
-    new n/counter 1
-    until
-        eq n/counter 100
-        set n/counter add n/counter 1
-        return r/s/fbSwitcher n/counter
+    return 'a'
