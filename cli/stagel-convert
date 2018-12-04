@@ -467,7 +467,7 @@ codegenCommandInvocationStart() {
     case "$codegenRoutineName" in
     new)
         if [[ "${codegenArgList[-4]+a}" ]]; then
-            die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
+            die "Sorry, invoking functions isn't available when declaring a variable. Please use set to assign it after declaration."
         fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
@@ -482,6 +482,9 @@ codegenCommandInvocationStart() {
         esac
         ;;
     return)
+        if [[ "${codegenArgList[-4]+a}" ]]; then
+            die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
+        fi
         codegenOutput $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
@@ -491,11 +494,7 @@ codegenCommandInvocationStart() {
             [[ -z "$returnType" ]] && die "Tried to return, but was not inside a routine!"
             codegenType "$returnType"
             codegenOutput "Return = "
-            if [[ "${codegenArgList[-4]+a}" ]]; then
-                die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
-            else
-                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            fi
+            codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             codegenOutput "; await assertIs"
             codegenType "$returnType" true
             codegenOutput "("
