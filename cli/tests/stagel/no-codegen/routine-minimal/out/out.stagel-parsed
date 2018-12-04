@@ -7,6 +7,6 @@ comment  32 84 101 115 116 32 99 111 109 109 101 110 116 59 32 115 101 109 105 9
 newline 
 command return
 literal-s 
-dedent 
 newline 
+dedent 
 end-document 
