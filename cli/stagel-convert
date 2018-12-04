@@ -508,13 +508,13 @@ codegenCommandInvocationStart() {
         "js")
             if [[ "${codegenArgList[-4]+a}" ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
-                codegenOutput '='
+                codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ";"$'\n'
             else
                 # It's getting set to a command's return value
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                codegenOutput '='
+                codegenOutput ' = '
             fi
             ;;
         *)
