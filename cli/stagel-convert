@@ -486,6 +486,7 @@ codegenCommandInvocationStart() {
         "js")
             codegenOutput "let "
             codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+            codegenOutput " = "
             codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             codegenOutput ";"$'\n'
             ;;
