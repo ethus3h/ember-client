@@ -715,7 +715,7 @@ blockStackRemoveLast() {
     unset 'blockStack[-1]'
 }
 
-#set -x
+set -x
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
         codegenIndent="${tokens[$i - 2]##*:}"
