@@ -63,7 +63,7 @@ tokens+=("")
 tokens+=("$lineNumber:$columnNumber:$currentIndentLevel") # Line/column/depth goes in first slot
 tokens+=("") # Token type goes in second slot
 tokens+=("") # Token content goes in third slot
-set -x
+#set -x
 while read -r byte; do
     byte=$(( 16#$byte )) # Convert to decimal
     if asciiIsNewline "$byte" || { [[ "$parserState" == "token" ]] && [[ "$byte" == "59" ]]; }; then
