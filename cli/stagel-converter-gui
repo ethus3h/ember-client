@@ -9,6 +9,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # in one terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; ee ./stagel-converter-gui-doc.stagel
 # Move that terminal to the left.
 # In another terminal, run: watch .3 cat ./stagel-converter-gui-doc-output.js
+# Move that terminal to the right.
+# In a third terminal, run: ./stagel-converter-gui
+# Move that terminal to the bottom.
 
 while true; do
     zenity --info --text="Type your program in the left area.
