@@ -30,7 +30,7 @@ async function fizzBuzz() {
     let int1;
     while !(
         await implEq(intCounter, 100)) {
-        intCounter=await implAdd(intCounter, 1);
+        intCounter = await implAdd(intCounter, 1);
 
         strReturn = ; await assertIsStr(strReturn); return strReturn;
     }
