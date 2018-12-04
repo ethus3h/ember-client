@@ -489,12 +489,12 @@ codegenCommandInvocationStart() {
             codegenType "$returnType"
             codegenOutput "Return = "
             if [[ "${codegenArgList[-4]+a}" ]]; then
-                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            else
                 codegenOutput "await ${codegenArgList[-3]}("
                 codegenType "${codegenArgList[-2]}"
                 codegenCommandInvocationArglist
                 codegenOutput ")"
+            else
+                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
             codegenOutput "; await assertIs"
             codegenType "$returnType" true
