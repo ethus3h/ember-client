@@ -826,8 +826,8 @@ for (( i=0; i<tokenCount; i++ )); do
                         # The arglist is ended, so drop back and continue parsing.
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
-                        unset 'stateStack[-1]'
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="false"
+                        unset 'stateStack[-1]'
                         i=$((i - 3))
                         if [[ "$codegenTestIndentDeferred" == "indent-deferred" ]]; then
                             codegenIndent
