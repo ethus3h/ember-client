@@ -268,7 +268,7 @@ done
 if [[ "$targetLang" == "parsed" ]]; then
     # Just dump the parse results and exit
     for (( i=0; i<tokenCount; i++ )); do
-        ! (( (i+1) % 3 )) && echo "${tokens[$i - 1]} ${tokens[$i]}"
+        echo "${tokens[$i]}"
     done
     true
     exit
