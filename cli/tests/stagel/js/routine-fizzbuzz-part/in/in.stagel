@@ -9,5 +9,4 @@ r/s/fbSwitcher n/num
         eq 0 mod n/num 3
         return 'Fizz' # Comment 4
 
-r/s/fizzBuzz # A string is an array of 8-bit bytes.
-    return 'a'
+#
