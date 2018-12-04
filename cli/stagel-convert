@@ -489,11 +489,13 @@ codegenCommandInvocationStart() {
             codegenType "$returnType"
             codegenOutput "Return = "
             if [[ "${codegenArgList[-4]+a}" ]]; then
+                set -x
                 codegenOutput "await ${codegenArgList[-3]}("
                 unset 'codegenArgList[-4]'
                 unset 'codegenArgList[-3]'
                 codegenCommandInvocationArglist
                 codegenOutput ")"
+                set +x
             else
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi

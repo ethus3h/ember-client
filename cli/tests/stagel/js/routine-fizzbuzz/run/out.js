@@ -32,6 +32,4 @@ async function fizzBuzz() {
         await implEq(intCounter, 100)) {
         intCounter = await implAdd(intCounter, 1);
 
-        strReturn = await fbSwitcher(intstrFbSwitcher, intCounter); await assertIsStr(strReturn); return strReturn;
-    }
-}
+        strReturn = await fbSwitcher(
