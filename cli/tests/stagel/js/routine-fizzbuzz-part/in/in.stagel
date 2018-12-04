@@ -1,4 +1,5 @@
 r/s/fbSwitcher n/num
-    return 'Fizz' # Comment 4
+    if eq 0 0
+        return 'a'
 
 #
