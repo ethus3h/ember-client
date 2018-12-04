@@ -462,6 +462,17 @@ codegenGetCurrentRoutineType() {
     done
 }
 
+codegenArglistHasInvocation() {
+    local counter="${#blockStack[@]}"
+    while [[ "$counter" -ge 0 ]]; do
+        if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
+            codegenOutput "${blockStack[$counter]}"
+            return 0
+        fi
+        counter=$(( counter - 1 ))
+    done
+}
+
 codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
