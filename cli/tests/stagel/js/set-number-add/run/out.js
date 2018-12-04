@@ -4,4 +4,6 @@ async function f() {
     let int1;
     while !(
         await implEq(intCounter, 100)) {
-        intCounter = await implAdd(intCounter, 1, let 
+        intCounter = await implAdd(intCounter, 1);
+    }
+}
