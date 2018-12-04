@@ -14,7 +14,7 @@ r/s/fizzBuzz # A string is an array of 8-bit bytes.
     new n/counter 1
     until
         eq n/counter 100
-        set n/counter add n/counter 1
+        eq n/counter add n/counter 1
         new s/temp ''
         set s/temp r/s/fbSwitcher n/counter
         return s/temp
