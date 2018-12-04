@@ -1,7 +1,1 @@
-async function f() {
-    let strReturn;
-
-    let int1;
-    intCounter = await implAdd(intCounter, 1, await implEq(strTemp, '');
-}
-);
+intCounter = await implAdd(intCounter, await sub(intCounter, 2);
