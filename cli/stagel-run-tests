@@ -24,6 +24,6 @@ runTest stagel/js/if-with-comment-and-inner-block
 runTest stagel/js/routine-fbSwitcher-return-type
 runTest stagel/js/routine-fizzbuzz-fbSwitcher
 runTest stagel/js/routine-with-if
-#runTest -v stagel/js/routine-fizzbuzz
+runTest stagel/js/routine-fizzbuzz
 
 reportTests
