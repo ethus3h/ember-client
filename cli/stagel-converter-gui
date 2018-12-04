@@ -16,15 +16,18 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Move that terminal to the lower right.
 
 while true; do
+    clear
     echo "Type your program here.
     An example program is shown in the lower left area.
     Press Alt+C when you are done, and your program will be converted.
-    It will show up in the upper right area, as JavaScript."
+    It will show up in the right area, as JavaScript."
+
+    cat >> ./stagel-converter-gui-doc.stagel 2>/dev/null || true
 
     ./stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js" || true
 
     eogup-single || true
 
-    rm "./stagel-converter-gui-doc.stagel"
+    rm "./stagel-converter-gui-doc.stagel" || true
     touch "./stagel-converter-gui-doc.stagel"
 done
