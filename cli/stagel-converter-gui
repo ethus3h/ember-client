@@ -17,10 +17,10 @@ while true; do
     clear
     echo "Type your program here.
     An example program is shown in the lower left area.
-    Type \"EOF\" when you are done, and your program will be converted.
+    Press Alt+C when you are done, and your program will be converted.
     It will show up in the right area, as JavaScript."
 
-    cat >> ./stagel-converter-gui-doc.stagel << EOF 2>/dev/null || true
+    cat >> ./stagel-converter-gui-doc.stagel 2>/dev/null || true
 
     ./stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js" || true
 
