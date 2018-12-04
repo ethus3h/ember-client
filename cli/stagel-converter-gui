@@ -23,7 +23,7 @@ while true; do
     cat >> ./stagel-converter-gui-doc.stagel 2>/dev/null || true
 
     ./stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js" || true
-    
+
     (
         cd ..
         eogup-single || true
