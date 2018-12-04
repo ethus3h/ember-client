@@ -6,5 +6,4 @@ async function fbSwitcher(intNum) {
         strReturn = 'a'; await assertIsStr(strReturn); return strReturn;
     }
 }
-
 /* */
