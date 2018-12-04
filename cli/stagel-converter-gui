@@ -14,10 +14,10 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Move that terminal to the bottom.
 
 while true; do
-    zenity --info --text="Type your program in the middle area.
-    An example program is shown in the left area.
+    zenity --info --text="Type your program in the upper left area.
+    An example program is shown in the lower left area.
     Click OK to convert the program!
-    It will show up in the right area, as JavaScript."
+    It will show up in the upper right area, as JavaScript."
     stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js"
     eogup-single
     rm "./stagel-converter-gui-doc.stagel"
