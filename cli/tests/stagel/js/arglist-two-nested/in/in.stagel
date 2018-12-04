@@ -1,1 +1,1 @@
-set n/counter add n/counter sub n/counter 2
+set n/counter add n/counter 2
