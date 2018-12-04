@@ -1,4 +1,1 @@
-r/s/f
-    new n/counter 1
-    set n/counter add n/counter 1
-    new s/temp ''
+set n/counter add n/counter sub n/counter 2
