@@ -466,6 +466,9 @@ codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
     new)
+        if [[ "${codegenArgList[-4]+a}" ]]; then
+            die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
+        fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
