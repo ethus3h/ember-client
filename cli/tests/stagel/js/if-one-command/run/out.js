@@ -1,2 +1,4 @@
 if (await implEq(0, 15)) {
-    let 
+    let strN;
+    strN='FizzBuzz';
+}
