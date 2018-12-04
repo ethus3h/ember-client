@@ -19,5 +19,5 @@ async function fbSwitcher(intNum) {
         /* Comment 4 */
 
         strReturn = 'Fizz'; await assertIsStr(strReturn); return strReturn;
-    }
+}
 }
