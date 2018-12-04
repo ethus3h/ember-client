@@ -27,8 +27,10 @@ async function fizzBuzz() {
 
     /* return-assert -n # the output should be non-empty. */
     let intCounter = 1;
-    while (! await implEq(intCounter, 100)) {
+    while !(
+        await implEq(intCounter, 100)) {
         intCounter = await implAdd(intCounter, 1);
-        await fbSwitcher(intCounter);
+
+        strReturn = await fbSwitcher(intCounter); await assertIsStr(strReturn); return strReturn;
     }
 }
