@@ -21,7 +21,7 @@ while true; do
     Click OK to convert the program!
     It will show up in the upper right area, as JavaScript."
 
-    stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js"
+    ./stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js"
 
     eogup-single
 
