@@ -14,7 +14,7 @@ runTest stagel/no-codegen/if-with-comment
 runTest stagel/no-codegen/routine-with-if
 #runTest stagel/no-codegen/routine-fizzbuzz
 runTest stagel/js/routine-minimal
-runTest -v stagel/js/two-routines
+runTest stagel/js/two-routines
 runTest stagel/js/bare-block
 runTest stagel/js/if-statement
 runTest stagel/js/if-one-command
