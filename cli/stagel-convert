@@ -493,7 +493,9 @@ codegenCommandInvocationStart() {
             else
                 codegenOutput "await ${codegenArgList[-3]}("
                 codegenType "${codegenArgList[-2]}"
-                
+                codegenCommandInvocationArglist
+                codegenOutput ")"
+            fi
             codegenOutput "; await assertIs"
             codegenType "$returnType" true
             codegenOutput "("
