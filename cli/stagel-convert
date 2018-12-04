@@ -827,6 +827,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
+                        [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="false"
                         i=$((i - 3))
                         if [[ "$codegenTestIndentDeferred" == "indent-deferred" ]]; then
                             codegenIndent
@@ -848,7 +849,6 @@ for (( i=0; i<tokenCount; i++ )); do
                     fi
                     ;;
                 indent)
-                set -x
                     if [[ "$testParameterFound" == "true" ]]; then
                         [[ "${stateStack[-1]}" == "test" ]] && testParameterFound="false"
                         # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
@@ -863,7 +863,6 @@ for (( i=0; i<tokenCount; i++ )); do
                         fi
                         i=$((i - 3))
                     fi
-                    set +x
                     ;;
                 newline)
                     if [[ "${stateStack[-1]}" != "test" ]]; then
@@ -882,9 +881,9 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenTestIndentDeferred="indent-deferred"
                     fi
                     ;;
-                dedent|end-document)
+                dedent|end-document|*)
                     # The arglist or test parameter is ended, so do codegen for the command invocation, drop back and continue parsing.
-                    #die "What's this token ${tokens[$i - 1]} ${tokens[$i]} doing here? does it need special handling? This warning can maybe be removed later if there is a good reason for this catch-all case."
+                    # * matches e.g. routine definitions
                     codegenCommandInvocationArglist
                     codegenCommandInvocationEnd
                     #[[ "${tokens[$i - 1]}" == "dedent" ]] || codegenIndent
