@@ -451,7 +451,7 @@ codegenComment() {
     esac
 }
 
-codegenGetCurrentRoutineType() {
+codegenArglistHasInvocation() {
     local counter="${#codegenArgList[@]}"
     while [[ "$counter" -ge 0 ]]; do
         if  [[ "${codegenArgList[$counter]}" == ident-r-* ]]; then
@@ -459,9 +459,10 @@ codegenGetCurrentRoutineType() {
         fi
         counter=$(( counter - 1 ))
     done
+    return 1
 }
 
-codegenArglistHasInvocation() {
+codegenGetCurrentRoutineType() {
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
         if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
@@ -476,7 +477,7 @@ codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
     new)
-        if [[ "${codegenArgList[-4]+a}" ]]; then
+        if codegenArglistHasInvocation; then
             die "Sorry, invoking functions isn't available when declaring a variable. Please use set to assign it after declaration."
         fi
         codegenPrintIndentationSpaces
@@ -492,7 +493,7 @@ codegenCommandInvocationStart() {
         esac
         ;;
     return)
-        if [[ "${codegenArgList[-4]+a}" ]]; then
+        if codegenArglistHasInvocation; then
             die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
         fi
         codegenOutput $'\n'
