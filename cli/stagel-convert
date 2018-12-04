@@ -297,6 +297,7 @@ codegenOnNewLine() {
 }
 
 codegenOutput() {
+    echo "(codegenOutput: ${@})" >&2
     print "${@}"
     if [[ "$*" == *$'\n' ]]; then
         codegenNewLine="true"
