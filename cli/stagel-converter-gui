@@ -9,7 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Open a terminal, and move it to the lower left. Run: clear; cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; less ./stagel-converter-gui-example.stagel
 
-# Open another terminal, and move it to the right. Run: clear; cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; watch -n 1 cat ./stagel-converter-gui-doc-output.js
+# Open another terminal, and move it to the right. Run: clear; cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; watch -n 1 -t cat ./stagel-converter-gui-doc-output.js
 
 # Open a third terminal, and move it to the upper left. Run: cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; ./stagel-converter-gui
 
@@ -17,10 +17,10 @@ while true; do
     clear
     echo "Type your program here.
     An example program is shown in the lower left area.
-    Press Alt+C when you are done, and your program will be converted.
+    Type \"EOF\" when you are done, and your program will be converted.
     It will show up in the right area, as JavaScript."
 
-    cat >> ./stagel-converter-gui-doc.stagel 2>/dev/null || true
+    cat >> ./stagel-converter-gui-doc.stagel << EOF 2>/dev/null || true
 
     ./stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js" || true
 
