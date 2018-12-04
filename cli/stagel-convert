@@ -452,10 +452,9 @@ codegenComment() {
 }
 
 codegenGetCurrentRoutineType() {
-    local counter="${#blockStack[@]}"
+    local counter="${#codegenArgList[@]}"
     while [[ "$counter" -ge 0 ]]; do
-        if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
-            codegenOutput "${blockStack[$counter]}"
+        if  [[ "${codegenArgList[$counter]}" == ident-r-* ]]; then
             return 0
         fi
         counter=$(( counter - 1 ))
