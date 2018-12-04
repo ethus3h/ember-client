@@ -646,7 +646,7 @@ codegenCommandInvocationEnd() {
         ;;
     esac
     if ! contains "test" "${stateStack[@]}"; then
-        codegenOutput ';'$'\n'
+        [[ "${stateStack[-2]}" != "arglist" ]] && codegenOutput ';'$'\n'
     fi
     codegenRoutineType=""
     codegenRoutineName=""
