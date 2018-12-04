@@ -1,3 +1,8 @@
 r/s/f
     new n/counter 1
-    set n/counter add n/counter 1
+    until
+        eq n/counter 100
+        set n/counter add n/counter 1
+        new s/temp ''
+        set s/temp r/s/fbSwitcher n/counter
+        return s/temp
