@@ -484,16 +484,15 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
+            codegenOutput "let "
             if [[ "${codegenArgList[-4]+a}" ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                codegenOutput ";"$'\n'
             else
-                codegenOutput "let "
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                codegenOutput ";"$'\n'
             fi
+            codegenOutput ";"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
