@@ -11,10 +11,10 @@ newline
 indent 
 command return
 literal-s  97
-dedent 
-dedent 
 newline 
 newline 
+dedent 
+dedent 
 comment 
 newline 
 end-document 
