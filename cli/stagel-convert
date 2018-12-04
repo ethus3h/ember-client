@@ -874,7 +874,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 *)
                     # The arglist or test parameter is ended, so do codegen for the command invocation, drop back and continue parsing.
-                    warn "What's this token ${tokens[$i - 1]} ${tokens[$i]} doing here? does it need special handling? This warning can maybe be removed later if there is a good reason for this catch-all case."
+                    die "What's this token ${tokens[$i - 1]} ${tokens[$i]} doing here? does it need special handling? This warning can maybe be removed later if there is a good reason for this catch-all case."
                     codegenCommandInvocationArglist
                     codegenCommandInvocationEnd
                     [[ "${tokens[$i - 1]}" == "dedent" ]] || codegenIndent
@@ -911,6 +911,8 @@ for (( i=0; i<tokenCount; i++ )); do
                 [[ "${tokens[$i - 1]}" == "dedent" ]] && codegenDedent
                 unset 'stateStack[-1]'
                 codegenRoutineDefinitionEnd
+                # And we'll reprocess this token now that we're done with this routine-definition.
+                i=$((i - 3))
                 # Don't call blockStackRemoveLast here: routine-definition-end state is entered by encountering a dedent while in code mode of the body of the routine, which will pop from the stateStack (thereby uncovering the routine-definition-end state) and take care of calling blockStackRemoveLast.
                 ;;
             root)
