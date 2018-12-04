@@ -489,7 +489,7 @@ codegenCommandInvocationStart() {
             codegenType "$returnType"
             codegenOutput "Return = "
             if [[ "${codegenArgList[-4]+a}" ]]; then
-                die "Sorry, composing functions isn't available when returning. Please assign the value to a variable and return that."
+                die "Sorry, invoking functions isn't available when returning. Please assign the value to a variable and return that."
             else
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
