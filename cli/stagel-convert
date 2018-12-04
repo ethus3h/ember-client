@@ -420,10 +420,11 @@ codegenIndent() {
 }
 
 codegenDedent() {
+    set -x
     codegenDebug "Dedent" "${@}" >&2
-    codegenIndent=$(( codegenIndent - 1 ))
+    #codegenIndent=$(( codegenIndent - 1 ))
     codegenPrintIndentationSpaces
-    codegenIndent=$(( codegenIndent + 1 ))
+    #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
     "js")
         codegenOutput '}'$'\n'
@@ -432,6 +433,7 @@ codegenDedent() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
+    set +x
 }
 
 codegenComment() {
