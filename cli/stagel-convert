@@ -780,7 +780,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     esac
                     ;;
                 newline)
-                    [[ "${tokens[$i - 4]}" == "newline" ]] && codegenOutput $'\n'
+                    #[[ "${tokens[$i - 4]}" == "newline" ]] && codegenOutput $'\n'
                     ;;
                 *)
                     die "A ${tokens[$i - 1]}, ${tokens[$i]}, isn't allowed here, in ${blockStack[-2]} ${blockStack[-1]}."
