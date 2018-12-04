@@ -310,7 +310,7 @@ codegenOutput() {
 }
 
 codegenDebug() {
-    echo "$codegenStatus (Debug info: Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]} / ($codegenNewlineLookingForSpaces/$codegenTestIndentDeferred/$testParameterFound).)" >&2
+    echo "$codegenStatus (Debug info: Codegen: $1, routine $codegenRoutineType:$codegenRoutineName / Args: $* / States: ${stateStack[*]} / Blocks: ${blockStack[*]} / Arglist: ${codegenArgList[*]} / ($codegenNewlineLookingForSpaces/$codegenTestIndentDeferred/$testParameterFound).)" >&2
     #print_r "${blockStack[@]}" >&2
 }
 
