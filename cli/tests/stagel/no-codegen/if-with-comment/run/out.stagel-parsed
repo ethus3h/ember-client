@@ -1,19 +1,19 @@
 start-document 
+indent 
 command if
+comment  32 99 111 109 109 101 110 116
 newline 
 indent 
 command eq
 literal-n 0
 command mod
 ident-n  110 117 109
-literal-n 15
+literal-n 3
 newline 
-command new
-ident-s  110
+command eq
+literal-n 0
+literal-n 0
 newline 
-command set
-ident-s  110
-literal-s  70 105 122 122 66 117 122 122
-newline 
+dedent 
 dedent 
 end-document 
