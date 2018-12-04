@@ -855,8 +855,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     else
                         if [[ "${stateStack[-1]}" != "test" ]]; then
                             codegenCommandInvocationArglist
+                            codegenIsTestCommand "${tokens[$i - 3]}" || codegenCommandInvocationEnd
                             codegenIsTestCommand "${tokens[$i - 3]}" || codegenCommandInvocationArgSeparator
-                            codegenCommandInvocationEnd
                         fi
                         codegenRoutineName="${tokens[$i]}"
                         codegenCommandInvocationStart
