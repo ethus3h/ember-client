@@ -421,9 +421,7 @@ codegenIndent() {
 
 codegenDedent() {
     codegenDebug "Dedent" "${@}" >&2
-    codegenIndent=$(( codegenIndent - 1 ))
     codegenPrintIndentationSpaces
-    codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
     "js")
         codegenOutput '}'$'\n'
