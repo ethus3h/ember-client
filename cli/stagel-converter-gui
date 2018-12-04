@@ -14,5 +14,5 @@ while true; do
     zenity --info --text="Type your program in the left area.
     Click OK to convert the program!
     It will show up in the right area, as JavaScript."
-    stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "run/out.js
+    stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js"
 done
