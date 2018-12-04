@@ -493,6 +493,7 @@ codegenCommandInvocationStart() {
                 codegenOutput "await ${codegenArgList[-3]}("
                 unset 'codegenArgList[-4]'
                 unset 'codegenArgList[-3]'
+                print_r "${codegenArgList[@]}" >&2
                 codegenCommandInvocationArglist
                 codegenOutput ")"
                 set +x
