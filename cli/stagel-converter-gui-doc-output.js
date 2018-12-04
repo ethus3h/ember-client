@@ -1,7 +1,3 @@
-async function test() {
-    let strReturn;
+await test();
 
-
-    strReturn = ; await assertIsStr(strReturn); return strReturn;
-    await a();
-}
+    
