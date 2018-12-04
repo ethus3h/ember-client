@@ -28,7 +28,7 @@ pushToken() {
         tokens+=("")
         tokens+=("")
     fi
-    #tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
+    tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
     tokens[-2]="$1"
     tokens[-1]="$2"
     # Make a new slot for whatever happens next
