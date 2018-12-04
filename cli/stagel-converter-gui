@@ -8,11 +8,11 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Setup:
 # in one terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; cat >> ./stagel-converter-gui-doc.stagel
 # Move that terminal to the upper left.
-# In another terminal, run: watch .3 cat ./stagel-converter-gui-example.stagel
+# In another terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; watch -n .3 cat ./stagel-converter-gui-example.stagel
 # Move that terminal to the lower left.
-# In another terminal, run: watch .3 cat ./stagel-converter-gui-doc-output.js
+# In another terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; watch -n .3 cat ./stagel-converter-gui-doc-output.js
 # Move that terminal to the upper right.
-# In a third terminal, run: ./stagel-converter-gui
+# In a third terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; ./stagel-converter-gui
 # Move that terminal to the lower right.
 
 while true; do
@@ -20,7 +20,11 @@ while true; do
     An example program is shown in the lower left area.
     Click OK to convert the program!
     It will show up in the upper right area, as JavaScript."
+
     stagel-convert "./stagel-converter-gui-doc.stagel" "js" > "./stagel-converter-gui-doc-output.js"
+
     eogup-single
+
     rm "./stagel-converter-gui-doc.stagel"
+    touch "./stagel-converter-gui-doc.stagel"
 done
