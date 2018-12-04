@@ -5,8 +5,14 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+# Setup:
+# in one terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment'; ee ./stagel-converter-gui-doc.stagel
+# Move that terminal to the left.
+# In another terminal, run: watch .3 ./
+
 while true; do
     zenity --info --text="Type your program in the left area.
     Click OK to convert the program!
     It will show up in the right area, as JavaScript."
+    stagel-convert 
 done
