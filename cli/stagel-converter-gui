@@ -6,5 +6,7 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 while true; do
-    zenity --info --text="Testing..."
+    zenity --info --text="Type your program in the left area.
+    Click OK to convert the program!
+    It will show up in the right area, as JavaScript."
 done
