@@ -8,7 +8,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Setup:
 # In one terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; cat ./stagel-converter-gui-example.stagel
 # Move that terminal to the lower left.
-# In a second terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; watch -n .3 cat ./stagel-converter-gui-doc-output.js
+# In a second terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; watch -n 1 cat ./stagel-converter-gui-doc-output.js
 # Move that terminal to the right.
 # In a third terminal, run: cd '/Ember Library/Ember/ember-information-technology-environment/cli/'; ./stagel-converter-gui
 # Move that terminal to the upper left.
