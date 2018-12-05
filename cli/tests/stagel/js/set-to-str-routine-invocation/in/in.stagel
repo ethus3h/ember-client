@@ -1,2 +1,1 @@
-set n/counter add n/counter 1
-new s/temp ''
+set s/temp r/s/fbSwitcher n/counter
