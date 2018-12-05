@@ -754,7 +754,7 @@ for (( i=0; i<tokenCount; i++ )); do
         codegenStatus="State: ${stateStack[-1]}:$codegenIndent, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)"
         codegenDebug
 
-        if [[ "${tokens[$i - 1]}" == "comment" ]]; then
+        if [[ "${tokens[$i - 1]}" == "comment" ]] && [[ "${stateStack[-1]}" != "arglist" ]]; then
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         else
