@@ -847,7 +847,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     ;;
                 command)
-                    if [[ "${tokens[$i]}" == return|new|set ]] || { [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" == "true" ]] ; }; then
+                    if [[ "${tokens[$i]}" =~ ^(return|new|set)$ ]] || { [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" == "true" ]] ; }; then
                         # The arglist is ended, so drop back and continue parsing.
                         codegenCommandInvocationArglist
                         codegenCommandInvocationEnd
