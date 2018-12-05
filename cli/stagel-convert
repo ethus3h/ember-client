@@ -530,7 +530,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            if [[ "${codegenArgList[-4]+a}" ]]; then
+            if [[ -v codegenArgList[-4] ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
