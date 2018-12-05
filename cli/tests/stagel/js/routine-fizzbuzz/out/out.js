@@ -29,7 +29,9 @@ async function fizzBuzz() {
     while !(
         await implEq(intCounter, 100)) {
         intCounter = await implAdd(intCounter, 1);
+        let strTemp = '';
+        strTemp = await fbSwitcher(intCounter);
 
-        strReturn = await fbSwitcher(intCounter); await assertIsStr(strReturn); return strReturn;
+        strReturn = strTemp; await assertIsStr(strReturn); return strReturn;
     }
 }
