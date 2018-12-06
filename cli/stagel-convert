@@ -891,7 +891,8 @@ for (( i=0; i<tokenCount; i++ )); do
                                 [[ "$codegenLastKnownArglistCount" != 0 ]] && codegenCommandInvocationArgSeparator
                             fi
                         fi
-                        codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
+                        codegenRoutineName="${tokens[$i]}"
+                        [[ "${tokens[$i - 1]}" == ident-r-* ]] && codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
                         codegenCommandInvocationStart
                         if [[ "${stateStack[-1]}" == "test" ]]; then
                             testParameterFound="true"
