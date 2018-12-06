@@ -601,6 +601,7 @@ codegenCommandInvocationArglist() {
     codegenDebug "Command invocation argument list" "${@}" >&2
     case "$targetLang" in
     "js")
+    set -x
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
