@@ -636,7 +636,7 @@ codegenCommandInvocationEnd() {
         # These commands are implemented with impl* calls
         case "$targetLang" in
         "js")
-            { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-2]}" =~ ^(new|return|set)$ ]]; } || codegenOutput ")"
+            { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set)$ ]]; } || codegenOutput ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
