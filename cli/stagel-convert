@@ -559,8 +559,8 @@ codegenCommandInvocationStart() {
                 # It's getting set to a command's return value
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ' = '
-                unset codegenArgList[-1]
-                unset codegenArgList[-1]
+                unset 'codegenArgList[-1]'
+                unset 'codegenArgList[-1]'
             fi
             ;;
         *)

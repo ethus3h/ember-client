@@ -1,1 +1,1 @@
-int 99 111 117 110 116 101 114 = , await implAdd(intCounter, await implSub(intCounter, 2)));
+intCounter = 

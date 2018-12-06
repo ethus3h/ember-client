@@ -1,2 +1,2 @@
-let int 99 111 117 110 116 101 114;
+let intCounter;
 1);
