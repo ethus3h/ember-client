@@ -842,6 +842,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenArgList+=("${tokens[$i - 1]}" "${tokens[$i]}")
                     unset 'stateStack[-1]'
                     codegenCommandInvocationStart
+                    ;;
                 *)
                     die "A ${blockStack[-2]} ${blockStack[-1]} wants an identifier here, not a ${tokens[$i - 1]}."
                     ;;
