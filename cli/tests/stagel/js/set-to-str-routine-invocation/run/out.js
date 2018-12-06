@@ -1,2 +1,0 @@
-strTemp, strFbSwitcher, intCounter);
-await (

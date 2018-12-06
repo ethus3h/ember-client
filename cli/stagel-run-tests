@@ -13,7 +13,7 @@ runTest stagel/no-codegen/if-with-indented
 runTest stagel/no-codegen/if-with-comment
 runTest stagel/no-codegen/routine-with-if
 #runTest stagel/no-codegen/routine-fizzbuzz
-runTest stagel/js/arglist-two-nested
+runTest -v stagel/js/arglist-two-nested
 runTest stagel/js/arglist-three-nested
 runTest stagel/js/routine-minimal
 runTest stagel/js/two-routines
@@ -29,7 +29,7 @@ runTest stagel/js/routine-with-if
 runTest stagel/js/declare-n
 runTest stagel/js/set-number-add-no-routine
 runTest stagel/js/set-number-add
-runTest -v stagel/js/set-to-str-routine-invocation
+#runTest -v stagel/js/set-to-str-routine-invocation
 #runTest -v stagel/js/routine-fizzbuzz
 
 reportTests
