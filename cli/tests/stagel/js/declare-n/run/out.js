@@ -1,1 +1,1 @@
-let intCounter1;
+let intCounter = 1;
