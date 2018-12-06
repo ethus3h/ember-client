@@ -799,7 +799,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     new|return|set)
                         stateStack+=("arglist")
                         blockStack+=("command" "${tokens[$i]}")
-                        # We need to slurp up the first two tokens of this arglist, representing the identifier. Then, codegenCommandInvocationStart gets called.
+                        # We need to slurp up the first two tokens of this arglist, representing the identifier, since they're needed by codegenCommandInvocationStart. Then, codegenCommandInvocationStart gets called.
                         stateStack+=("identifier-command-argument-accumulation")
                         ;;
                     *)
