@@ -1,0 +1,1 @@
+strTemp = strFbSwitcher, intCounter;
