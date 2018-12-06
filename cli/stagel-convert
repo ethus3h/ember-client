@@ -654,8 +654,8 @@ codegenCommandInvocationEnd() {
     esac
     if ! contains "test" "${stateStack[@]}"; then
         [[ "${stateStack[-2]}" != "arglist" ]] && codegenOutput ';'$'\n'
-        blockStackRemoveLast
     fi
+    blockStackRemoveLast
     codegenRoutineType=""
     codegenRoutineName=""
     codegenArgList=()
@@ -889,6 +889,7 @@ for (( i=0; i<tokenCount; i++ )); do
                             testParameterFound="true"
                         fi
                         stateStack+=("arglist")
+                        blockStack+=("arglist-command" "${tokens[$i]}")
                     fi
                     ;;
                 indent)
