@@ -670,6 +670,7 @@ codegenRoutineDefinitionStart() {
     "js")
         codegenOutput "async function $codegenRoutineName("
         argumentCount="${#codegenArgList[@]}"
+        codegenLastKnownArglistCount="$argumentCount"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenType "${codegenArgList[$k - 1]}"
@@ -885,7 +886,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         if [[ "${stateStack[-1]}" != "test" ]]; then
                             codegenCommandInvocationArglist
                             if ! codegenIsTestCommand "${tokens[$i - 3]}"; then
-                                [[ "${#codegenArgList[@]}" != 0 ]] && codegenCommandInvocationArgSeparator
+                                [[ "$codegenLastKnownArglistCount" != 0 ]] && codegenCommandInvocationArgSeparator
                             fi
                         fi
                         codegenRoutineName="${tokens[$i]}"
