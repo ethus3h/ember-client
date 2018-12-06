@@ -827,7 +827,6 @@ for (( i=0; i<tokenCount; i++ )); do
                     # The arglist is ended, so do codegen for the command invocation, drop back and continue parsing.
                     codegenCommandInvocationStart
                     unset 'stateStack[-1]'
-                    stateStack+=("arglist")
                     i=$((i - 3))
                     ;;
                 esac
