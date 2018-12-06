@@ -559,6 +559,8 @@ codegenCommandInvocationStart() {
                 # It's getting set to a command's return value
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ' = '
+                unset codegenArgList[-1]
+                unset codegenArgList[-1]
             fi
             ;;
         *)
@@ -840,7 +842,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 echo "Working on ${stateStack[-1]}" >&2
                 case "${tokens[$i - 1]}" in
                 ident-*)
-                    codegenArgList+=("${tokens[$i - 1]}" "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     unset 'stateStack[-1]'
                     codegenCommandInvocationStart
                     ;;
