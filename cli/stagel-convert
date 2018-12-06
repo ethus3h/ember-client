@@ -488,11 +488,8 @@ codegenCommandInvocationStart() {
             codegenOutput "let "
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
-                #codegenOutput ' = '
-                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            elif [[ "${#codegenArgList[@]}" -eq 2 ]]; then
-                codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ' = '
+                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             else
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
