@@ -791,13 +791,16 @@ for (( i=0; i<tokenCount; i++ )); do
                 command)
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
-                    new|return)
-                        blockStack+=("command" "${tokens[$i]}")
-                        ;;
                     if|until|while)
                         stateStack+=("test")
                         blockStack+=("test" "${tokens[$i]}")
                         codegenCommandInvocationStart
+                        ;;
+                    new|return|set)
+                        stateStack+=("arglist")
+                        blockStack+=("command" "${tokens[$i]}")
+                        # We need to slurp up the first two tokens of this arglist, representing the identifier. Then, codegenCommandInvocationStart gets called.
+                        stateStack+=("identifier-command-argument-accumulation")
                         ;;
                     *)
                         stateStack+=("arglist")
