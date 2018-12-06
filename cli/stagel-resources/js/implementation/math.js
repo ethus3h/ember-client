@@ -5,22 +5,22 @@
     implMod
 */
 
-async function implAdd(num) {
-    assertIsBytearray(bytearray); let intReturn;
+async function implAdd(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
+    intReturn = intA + intB; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implIntDcarrLength(dcarr) {
-    assertIsDcarr(dcarr); let intReturn;
+async function implSub(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
+    intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implStrSubstring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+async function implMod(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
+    intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
 
 // @license-end
