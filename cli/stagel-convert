@@ -853,7 +853,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ident-*)
                     codegenArgList+=("${tokens[$i - 1]}" "$(asciiDecListToText "${tokens[$i]}")")
                     unset 'stateStack[-1]'
-                    tokenLookahead="${tokens[$i + 4]}" # should hold the next token type
+                    tokenLookahead="${tokens[$i + 2]}" # should hold the next token type
                     codegenCommandInvocationStart
                     ;;
                 *)
