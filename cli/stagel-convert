@@ -546,6 +546,26 @@ codegenCommandInvocationStart() {
             ;;
         esac
         ;;
+    set)
+        codegenPrintIndentationSpaces
+        case "$targetLang" in
+        "js")
+            if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
+                codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+                codegenOutput ' = '
+                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                codegenOutput ";"$'\n'
+            else
+                # It's getting set to a command's return value
+                codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                codegenOutput ' = '
+            fi
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
     *)
         codegenPrintIndentationSpaces
         case "$targetLang" in
