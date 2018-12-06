@@ -34,6 +34,6 @@ async function fizzBuzz() {
         let strTemp = '';
         strTemp = await fbSwitcher(intCounter);
 
-        strReturn = ; await assertIsStr(strReturn); return strReturn;
+        strReturn = strTemp; await assertIsStr(strReturn); return strReturn;
     }
 }
