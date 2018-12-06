@@ -437,7 +437,7 @@ codegenDedent() {
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
-    set +x
+    #set +x
 }
 
 codegenComment() {
@@ -602,7 +602,7 @@ codegenCommandInvocationArglist() {
     codegenDebug "Command invocation argument list" "${@}" >&2
     case "$targetLang" in
     "js")
-    set -x
+    #set -x
         argumentCount="${#codegenArgList[@]}"
         codegenLastKnownArglistCount="$argumentCount"
         for (( k=0; k<argumentCount; k++ )); do
