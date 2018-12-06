@@ -1,1 +1,1 @@
-intCounter = await (intCounter, await (intCounter, 2));
+intCounter = await implAdd(intCounter, await implSub(intCounter, 2));
