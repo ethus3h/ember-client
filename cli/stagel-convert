@@ -279,6 +279,7 @@ fi
 # Set up the variables we'll need for going through the tokens and generating the code
 
 codegenIndent=0
+codegenLastKnownArglistCount=0
 codegenRoutineType=""
 codegenRoutineName=""
 codegenArgList=()
@@ -603,6 +604,7 @@ codegenCommandInvocationArglist() {
     "js")
     set -x
         argumentCount="${#codegenArgList[@]}"
+        codegenLastKnownArglistCount="$argumentCount"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 if [[ "${codegenArgList[$k - 1]}" == literal-* ]]; then
@@ -670,7 +672,6 @@ codegenRoutineDefinitionStart() {
     "js")
         codegenOutput "async function $codegenRoutineName("
         argumentCount="${#codegenArgList[@]}"
-        codegenLastKnownArglistCount="$argumentCount"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenType "${codegenArgList[$k - 1]}"
