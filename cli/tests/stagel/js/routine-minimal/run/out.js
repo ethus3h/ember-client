@@ -4,4 +4,5 @@ async function fbSwitcher(intNum) {
     /* Test comment; semicolon */
 
     strReturn = ''; await assertIsStr(strReturn); return strReturn;
+);
 }
