@@ -808,7 +808,7 @@ for (( i=0; i<tokenCount; i++ )); do
                         # We need to slurp up the first token of this arglist, representing the identifier, since it's needed by codegenCommandInvocationStart. Then, codegenCommandInvocationStart gets called.
                         stateStack+=("identifier-command-argument-accumulation")
                         ;;
-                    return
+                    return)
                         stateStack+=("oneshot-command")
                         ;;
                     *)

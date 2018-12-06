@@ -1,2 +1,0 @@
-let intCounter;
-1;
