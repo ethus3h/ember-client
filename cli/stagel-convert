@@ -490,7 +490,7 @@ codegenCommandInvocationStart() {
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 #codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-            elif [[ "${#codegenArgList[@]}" -ge 2 ]]; then
+            elif [[ "${#codegenArgList[@]}" -eq 2 ]]; then
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ' = '
             else
