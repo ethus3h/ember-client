@@ -1,9 +1,8 @@
 async function f() {
     let strReturn;
 
-    let intCounter = 1;
-);
-    intCounter = , await implAdd(intCounter, 1));
-    let strTemp = '';
-);
-}
+intCounter, 1);
+    await (intCounter);
+    await (await implAdd(intCounter, 1);
+strTemp, '');
+    await (}

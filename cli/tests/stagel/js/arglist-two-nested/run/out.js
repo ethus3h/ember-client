@@ -1,1 +1,2 @@
-intCounter = , await implAdd(intCounter, 2));
+intCounter);
+await (await implAdd(intCounter, 2);

@@ -1,3 +1,4 @@
-intCounter = , await implAdd(intCounter, 1));
-let strTemp = '';
-);
+intCounter);
+await (await implAdd(intCounter, 1);
+strTemp, '');
+await (

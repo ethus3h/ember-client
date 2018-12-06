@@ -1,2 +1,2 @@
-strFbSwitcher = ;
-);
+strTemp, strFbSwitcher, intCounter);
+await (
