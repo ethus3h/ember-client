@@ -493,7 +493,7 @@ codegenCommandInvocationStart() {
             else
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
-            codegenOutput ";"$'\n'
+            #codegenOutput ";"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
