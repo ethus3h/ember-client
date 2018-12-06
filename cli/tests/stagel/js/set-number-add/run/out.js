@@ -3,4 +3,7 @@ async function f() {
 
     let intCounter;
 1);
-    intCounter = 
+    intCounter = , await implAdd(intCounter, 1));
+    let strTemp;
+'');
+}
