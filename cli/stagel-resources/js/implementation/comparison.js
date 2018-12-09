@@ -1,6 +1,5 @@
-/* booleans.js, provides:
-    implAnd
-    implNot
+/* comparison.js, provides:
+    implEq
 */
 
 async function implAnd(boolA, boolB) {
