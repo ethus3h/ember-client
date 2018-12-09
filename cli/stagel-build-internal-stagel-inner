@@ -5,23 +5,4 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Build the StageR library
-
-stagelBuildStagerInner() {
-    if [[ -f "./stagel-convert" ]]; then
-        ./stagel-convert "$1" "$2" >> ./stagel-resources/stager/stager."$2"
-    else
-        stagel-convert "$1" "$2" >> ./stagel-resources/stager/stager."$2"
-    fi
-}
-
-targets=(js sh)
-
-targetCount="${#targets[@]}"
-for (( i=0; i<targetCount; i++ )); do
-    [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
-
-    rm -f ./stagel-resources/stager/stager."${targets[$i]}"
-
-    find ./stagel-resources/stager/ -name '*.stagel' -exec stagelBuildStagerInner {} "${targets[$i]}" \;
-done
+cat "$1" >> "./stagel-resources/$2/stagel.$2"

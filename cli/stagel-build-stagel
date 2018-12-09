@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library. Also build StageR while we're at it.
 
-if [[ -f "./stagel-build-stager" ]]; then
+if [[ -f "./stagel-build-internal-stager" ]]; then
     ./stagel-build-internal-stager
 else
     stagel-build-internal-stager
@@ -17,6 +17,9 @@ stagelBuildStagelInner() {
     cat "$1" >> "./stagel-resources/$2/stagel.$2"
 }
 
+cmd="stagel-build-internal-stagel-inner"
+[[ -f "./stagel-build-internal-stagel-inner" ]] && cmd=./"$cmd"
+
 targets=(js sh)
 
 targetCount="${#targets[@]}"
@@ -25,5 +28,5 @@ for (( i=0; i<targetCount; i++ )); do
 
     rm -f ./stagel-resources/"${targets[$i]}"/stagel."${targets[$i]}"
 
-    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec stagelBuildStagelInner {} "${targets[$i]}" \;
+    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$cmd" {} "${targets[$i]}" \;
 done
