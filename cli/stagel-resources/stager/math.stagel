@@ -20,3 +20,4 @@ r/b/xor b/a b/b
     new b/temp
     set b/temp nand b/a b/b
     set b/temp and b/temp or b/a b/b
+    return b/temp
