@@ -562,7 +562,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         codegenOutput "while !("
         ;;
-    add|sub|eq|mod)
+    and|not|add|sub|eq|mod)
         codegenPrintIndentationSpaces
         # These commands are implemented with impl* calls
         case "$targetLang" in
