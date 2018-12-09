@@ -1,5 +1,7 @@
 /* comparison.js, provides:
     implEq
+    implGt
+    implLt
 */
 
 async function implEq(a, b) {
@@ -22,4 +24,3 @@ async function implLt(a, b) {
 
     boolReturn = a < b; await assertIsBool(boolReturn); return boolReturn;
 }
-
