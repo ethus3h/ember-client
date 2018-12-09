@@ -7,18 +7,17 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library
 
-targets=(js bash)
-
-tokenCount="${#tokens[@]}"
-for (( i=0; i<tokenCount; i++ )); do
-for
-
-[[ -d "./stagel-resources/$target" ]] || continue
-
 stagelBuildStagelInner() {
-    cat "$1" >> ./stagel-resources/js/stagel.js
+    cat "$2" >> "./stagel-resources/$1/stagel.$1"
 }
 
-rm -f ./stagel-resources/js/stagel.js
+targets=(js sh)
 
-find ./stagel-resources/js/ -name '*.js' -exec stagelBuildStagelInner {} \;
+targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
+    [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
+
+    rm -f ./stagel-resources/"${targets[$i]}"/stagel."${targets[$i]}"
+
+    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec stagelBuildStagelInner "${targets[$i]}" {} \;
+done
