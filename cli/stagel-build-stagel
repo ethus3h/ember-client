@@ -13,16 +13,26 @@ else
     stagel-build-internal-stager
 fi
 
-cmd="stagel-build-internal-stagel-inner"
-[[ -f "./stagel-build-internal-stagel-inner" ]] && cmd=./"$cmd"
+slcmd="stagel-build-internal-stagel-inner"
+[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
+srcmd="stagel-build-internal-stager-inner"
+[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
 targets=(js sh)
 
 targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
+    #StageL
     [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
 
     rm -f ./stagel-resources/"${targets[$i]}"/stagel."${targets[$i]}"
 
-    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$cmd" {} "${targets[$i]}" \;
+    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+
+    #StageR
+    [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
+
+    rm -f ./stagel-resources/stager/stager."${targets[$i]}"
+
+    find ./stagel-resources/stager/ -name '*.stagel' -exec "$cmd" {} "${targets[$i]}" \;
 done
