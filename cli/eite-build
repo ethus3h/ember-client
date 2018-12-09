@@ -8,9 +8,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # First build StageL
 
 if [[ -f "./stagel-build-stagel" ]]; then
-    ./stagel-build-stagel
+    ./stagel-build-stagel &>/dev/null
 else
-    stagel-build-stagel
+    stagel-build-stagel &>/dev/null
 fi
 
 # Now build anything else needed for EITE.
