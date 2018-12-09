@@ -15,6 +15,16 @@ stagelBuildStagerInner() {
     fi
 }
 
+targets=(js sh)
+
+targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
+    [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
+
+    rm -f ./stagel-resources/"${targets[$i]}"/stagel."${targets[$i]}"
+
+    find ./stagel-resources/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec stagelBuildStagelInner "${targets[$i]}" {} \;
+done
 rm -f ./stagel-resources/stager/stager.js
 
 find ./stagel-resources/stager/ -name '*.stagel' -exec stagelBuildStagerInner {} \;
