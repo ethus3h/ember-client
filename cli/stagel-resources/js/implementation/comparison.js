@@ -2,14 +2,24 @@
     implEq
 */
 
-async function implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
+async function implEq(a, b) {
+    /* Can compare booleans, ints, or strings. */
+    let boolReturn;
 
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = a == b; await assertIsBool(boolReturn); return boolReturn;
 }
 
-async function implNot(boolA) {
-    assertIsBool(boolA); let boolReturn;
+async function implGt(a, b) {
+    /* Can compare booleans or ints */
+    let boolReturn;
 
-    boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = a > b; await assertIsBool(boolReturn); return boolReturn;
 }
+
+async function implLt(a, b) {
+    /* Can compare booleans or ints */
+    let boolReturn;
+
+    boolReturn = a < b; await assertIsBool(boolReturn); return boolReturn;
+}
+
