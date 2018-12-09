@@ -13,4 +13,11 @@ else
     stagel-build-stagel
 fi
 
-# Now build anything else needed for EITE. Remember to build all implementations!
+# Now build anything else needed for EITE.
+
+targets=(js sh)
+
+targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
+    echo "Nothing to do for "${targets[$i]}" EITE yet, I guess."
+done
