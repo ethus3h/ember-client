@@ -339,16 +339,20 @@ codegenType() {
     local result=""
     case "$targetLang" in
     "js")
-        [[ "$1" == "literal-s" ]] && result='str'
+        [[ "$1" == "literal-b" ]] && result='bool'
         [[ "$1" == "literal-n" ]] && result='int'
-        [[ "$1" == "ident-s" ]] && result='str'
+        [[ "$1" == "literal-s" ]] && result='str'
+        [[ "$1" == "ident-b" ]] && result='bool'
         [[ "$1" == "ident-n" ]] && result='int'
-        [[ "$1" == "ident-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-s" ]] && result='str'
         [[ "$1" == "ident-arr-n" ]] && result='intArray'
-        [[ "$1" == "ident-r-s" ]] && result='str'
+        [[ "$1" == "ident-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-r-b" ]] && result='bool'
         [[ "$1" == "ident-r-n" ]] && result='int'
-        [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-r-s" ]] && result='str'
+        [[ "$1" == "ident-r-v" ]] && result='void'
         [[ "$1" == "ident-r-arr-n" ]] && result='intArray'
+        [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
         #[[ -z "$result" ]] && result="$1"
         [[ -z "$result" ]] && die "$1 is not a recognized type!"
         if [[ "$2" == "true" ]]; then
