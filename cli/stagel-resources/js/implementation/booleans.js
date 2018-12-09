@@ -1,9 +1,7 @@
-/* math.js, provides:
+/* booleans.js, provides:
     implAnd
     implNot
-    implAdd
-    implSub
-    implMod
+    implEq
 */
 
 async function implAnd(boolA, boolB) {
