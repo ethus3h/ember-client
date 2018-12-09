@@ -1,1 +1,4 @@
-new n/counter 1
+r/b/or b/a b/b
+    new b/temp
+    set b/temp not and not b/a not b/b
+    return b/temp
