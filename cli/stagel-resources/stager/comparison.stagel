@@ -1,26 +1,38 @@
-r/b/or b/a b/b
+# Calling a comparison with different types is an error. All types must be same type.
+
+r/b/ne g/a g/b
     new b/temp
-    set b/temp not b/a
-    set b/temp not and b/temp not b/b
+    set b/temp not eq g/a g/b
     return b/temp
 
-r/b/nor b/a b/b
+r/b/ge g/a g/b
     new b/temp
-    set b/temp not or b/a b/b
+    set b/temp eq g/a g/b
+    set b/temp or b/temp gt g/a g/b
     return b/temp
 
-r/b/nand b/a b/b
+r/b/le g/a g/b
     new b/temp
-    set b/temp not and b/a b/b
+    set b/temp eq g/a g/b
+    set b/temp or b/temp lt g/a g/b
     return b/temp
 
-r/b/xor b/a b/b
+r/b/ngt g/a g/b
     new b/temp
-    set b/temp nand b/a b/b
-    set b/temp and b/temp or b/a b/b
+    set b/temp not gt g/a g/b
     return b/temp
 
-r/b/xnor b/a b/b
+r/b/nlt g/a g/b
     new b/temp
-    set b/temp not xor b/a b/b
+    set b/temp not lt g/a g/b
+    return b/temp
+
+r/b/nge g/a g/b
+    new b/temp
+    set b/temp not ge g/a g/b
+    return b/temp
+
+r/b/nle g/a g/b
+    new b/temp
+    set b/temp not le g/a g/b
     return b/temp

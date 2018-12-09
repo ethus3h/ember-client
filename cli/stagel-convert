@@ -343,6 +343,7 @@ codegenType() {
         [[ "$1" == "literal-n" ]] && result='int'
         [[ "$1" == "literal-s" ]] && result='str'
         [[ "$1" == "ident-b" ]] && result='bool'
+        [[ "$1" == "ident-g" ]] && result='generic'
         [[ "$1" == "ident-n" ]] && result='int'
         [[ "$1" == "ident-s" ]] && result='str'
         [[ "$1" == "ident-arr-n" ]] && result='intArray'
