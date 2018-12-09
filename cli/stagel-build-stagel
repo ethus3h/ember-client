@@ -13,10 +13,6 @@ else
     stagel-build-internal-stager
 fi
 
-stagelBuildStagelInner() {
-    cat "$1" >> "./stagel-resources/$2/stagel.$2"
-}
-
 cmd="stagel-build-internal-stagel-inner"
 [[ -f "./stagel-build-internal-stagel-inner" ]] && cmd=./"$cmd"
 
