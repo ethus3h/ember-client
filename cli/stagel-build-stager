@@ -23,8 +23,5 @@ for (( i=0; i<targetCount; i++ )); do
 
     rm -f ./stagel-resources/stager/stager."${targets[$i]}"
 
-    find ./stagel-resources/stager/ -name '*.stagel' -exec stagelBuildStagerInner {} \;
+    find ./stagel-resources/stager/ -name '*.stagel' -exec stagelBuildStagerInner {} "${targets[$i]}" \;
 done
-rm -f ./stagel-resources/stager/stager.js
-
-find ./stagel-resources/stager/ -name '*.stagel' -exec stagelBuildStagerInner {} \;
