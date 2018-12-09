@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 async function or(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
@@ -44,3 +45,4 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
+// @license-end
