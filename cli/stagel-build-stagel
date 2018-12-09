@@ -8,9 +8,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Build the StageL library. Also build StageR while we're at it.
 
 if [[ -f "./stagel-build-stager" ]]; then
-    ./stagel-build-stager
+    ./stagel-build-internal-stager
 else
-    stagel-build-stager
+    stagel-build-internal-stager
 fi
 
 stagelBuildStagelInner() {
