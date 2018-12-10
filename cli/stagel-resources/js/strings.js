@@ -1,10 +1,9 @@
 /* strings, provides:
     implCat
-    implNot
 */
 
-async function implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
+async function implCat(strA, strB) {
+    assertIsStr(strA); assertIsStr(strB); let strReturn;
 
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+    strReturn = concat(strA, strB); await assertIsStr(strReturn); return strReturn;
 }
