@@ -1,4 +1,4 @@
-/* math.js, provides:
+/* math, provides:
     implAdd
     implSub
     implMod

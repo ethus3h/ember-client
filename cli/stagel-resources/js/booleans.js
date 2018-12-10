@@ -1,4 +1,4 @@
-/* booleans.js, provides:
+/* booleans, provides:
     implAnd
     implNot
 */

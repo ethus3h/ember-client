@@ -1,4 +1,4 @@
-/* comparison.js, provides:
+/* comparison, provides:
     implEq
     implGt
     implLt
