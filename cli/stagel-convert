@@ -573,6 +573,18 @@ codegenArrayEntryDelimiter() {
     esac
 }
 
+codegenStartArray() {
+    codegenDebug "Start array" "${@}" >&2
+    case "$targetLang" in
+    "js")
+        codegenOutput '( '
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
