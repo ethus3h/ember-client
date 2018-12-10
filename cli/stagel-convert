@@ -534,8 +534,10 @@ codegenInitializeType() {
             codegenOutput "()"
             ;;
         "intArray")
+            codegenOutput "()"
             ;;
         "strArray")
+            codegenOutput "()"
             ;;
         esac
         ;;
