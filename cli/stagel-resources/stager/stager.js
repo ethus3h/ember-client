@@ -48,5 +48,69 @@ async function xnor(boolA, boolB) {
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
 
+async function ne(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implNot(await implEq(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function ge(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implEq(intA, intB);
+    boolTemp = await or(boolTemp, await implGt(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function le(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implEq(intA, intB);
+    boolTemp = await or(boolTemp, await implLt(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function ngt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implNot(await implGt(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function nlt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implNot(await implLt(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function nge(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implNot(await ge(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function nle(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    let boolTemp;
+    boolTemp = await implNot(await le(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
 
 // @license-end
