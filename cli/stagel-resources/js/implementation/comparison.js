@@ -4,23 +4,20 @@
     implLt
 */
 
-async function implEq(a, b) {
-    /* Can compare booleans, ints, or strings. */
-    let boolReturn;
+async function implEq(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = a == b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
 }
 
-async function implGt(a, b) {
-    /* Can compare booleans or ints */
-    let boolReturn;
+async function implGt(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = a > b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA > genericB; await assertIsBool(boolReturn); return boolReturn;
 }
 
-async function implLt(a, b) {
-    /* Can compare booleans or ints */
-    let boolReturn;
+async function implLt(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = a < b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA < genericB; await assertIsBool(boolReturn); return boolReturn;
 }
