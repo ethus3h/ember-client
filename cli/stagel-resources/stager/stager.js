@@ -46,6 +46,16 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
+await r/v/assertIsByte(intIn);
+{
+    let boolTemp;
+    boolTemp = await le(intIn, 255);
+    let strIn;
+    strIn = await strFromInt(intIn);
+    if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
+        await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
+    }
+}
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
