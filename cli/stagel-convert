@@ -515,6 +515,27 @@ codegenGetCurrentRoutineType() {
     done
 }
 
+codegenInitializeType() {
+    codegenDebug "Initialize type" "${@}" >&2
+    case "$targetLang" in
+    "js")
+        codegenOutput " = "
+        case "$(codegenType)" in
+        "bool")
+        "int")
+        "str")
+        "boolArray")
+        "intArray")
+        "strArray")
+            ;;
+        esac
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
@@ -533,7 +554,12 @@ codegenCommandInvocationStart() {
             else
                 set -x
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
-                [[ "$tokenLookahead" =~ ^(ident-|literal-) ]] && codegenOutput ' = ' && tokenLookahead=""
+                if [[ "$tokenLookahead" =~ ^(ident-|literal-) ]]; then
+                    codegenOutput ' = '
+                    tokenLookahead=""
+                else
+                    codegenInitializeType "${codegenArgList[-4]}"
+                fi
                 set +x
             fi
             ;;
