@@ -549,6 +549,30 @@ codegenInitializeType() {
     esac
 }
 
+codegenStartArray() {
+    codegenDebug "Start array" "${@}" >&2
+    case "$targetLang" in
+    "js")
+        codegenOutput '( '
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
+codegenArrayEntryDelimiter() {
+    codegenDebug "Start array" "${@}" >&2
+    case "$targetLang" in
+    "js")
+        codegenOutput ' '
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
@@ -849,16 +873,16 @@ for (( i=0; i<tokenCount; i++ )); do
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
-            codegenStartArray
+            codegenStartArray "n"
             stateStack+=("literal-an")
         elif [[ "${tokens[$i - 1]}" == "literal-an-end" ]]; then
-            codegenEndArray
+            codegenEndArray "n"
             unset 'stateStack[-1]'
         elif [[ "${tokens[$i - 1]}" == "literal-as-start" ]]; then
-            codegenStartArray
+            codegenStartArray "s"
             stateStack+=("literal-as")
         elif [[ "${tokens[$i - 1]}" == "literal-as-end" ]]; then
-            codegenEndArray
+            codegenEndArray "s"
             unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
