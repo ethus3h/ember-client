@@ -812,11 +812,11 @@ for (( i=0; i<tokenCount; i++ )); do
         elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
             stateStack+=("literal-an")
         elif [[ "${tokens[$i - 1]}" == "literal-an-end" ]]; then
-            stateStack+=("literal-an")
+            unset 'stateStack[-1]'
         elif [[ "${tokens[$i - 1]}" == "literal-as-start" ]]; then
             stateStack+=("literal-as")
         elif [[ "${tokens[$i - 1]}" == "literal-as-end" ]]; then
-            stateStack+=("literal-an")
+            unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
             code)
