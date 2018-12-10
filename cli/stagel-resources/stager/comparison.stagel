@@ -5,34 +5,34 @@ r/b/ne g/a g/b
     set b/temp not eq g/a g/b
     return b/temp
 
-r/b/ge g/a g/b
+r/b/ge n/a n/b
     new b/temp
-    set b/temp eq g/a g/b
-    set b/temp or b/temp gt g/a g/b
+    set b/temp eq n/a n/b
+    set b/temp or b/temp gt n/a n/b
     return b/temp
 
-r/b/le g/a g/b
+r/b/le n/a n/b
     new b/temp
-    set b/temp eq g/a g/b
-    set b/temp or b/temp lt g/a g/b
+    set b/temp eq n/a n/b
+    set b/temp or b/temp lt n/a n/b
     return b/temp
 
-r/b/ngt g/a g/b
+r/b/ngt n/a n/b
     new b/temp
-    set b/temp not gt g/a g/b
+    set b/temp not gt n/a n/b
     return b/temp
 
-r/b/nlt g/a g/b
+r/b/nlt n/a n/b
     new b/temp
-    set b/temp not lt g/a g/b
+    set b/temp not lt n/a n/b
     return b/temp
 
-r/b/nge g/a g/b
+r/b/nge n/a n/b
     new b/temp
-    set b/temp not ge g/a g/b
+    set b/temp not ge n/a n/b
     return b/temp
 
-r/b/nle g/a g/b
+r/b/nle n/a n/b
     new b/temp
-    set b/temp not le g/a g/b
+    set b/temp not le n/a n/b
     return b/temp
