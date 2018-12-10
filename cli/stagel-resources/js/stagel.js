@@ -1,32 +1,28 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
-    implDie
-    implEiteLog
-    implEiteFIXMEUnimplemented
+/* math, provides:
+    implAdd
+    implSub
+    implMod
 */
 
-async function implDie(strMessage) {
-    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
+async function implAdd(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    throw strMessage;
+    intReturn = intA + intB; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implEiteLog(strMessage) {
-    await assertIsStr(strMessage);
-    // Log the provided message
+async function implSub(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    console.log(await implStrNormalizeMessage(strMessage));
+    intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implEiteFIXMEUnimplemented(strLocation) {
-    await assertIsStr(strLocation);
+async function implMod(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
 
-    await eiteLog("FIXME: Unimplemented in " + strLocation);
+    intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
-
-// @license-end
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 /* Provides:
     implNewDcarr
@@ -102,7 +98,31 @@ async function implStrSubstring(str, intStart, intLength) {
 }
 
 // @license-end
-/* booleans.js, provides:
+/* logging, provides:
+    implDie
+    implEiteLog
+    implEiteFIXMEUnimplemented
+*/
+
+async function implDie(strMessage) {
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
+
+    throw strMessage;
+}
+
+async function implEiteLog(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    console.log(await implStrNormalizeMessage(strMessage));
+}
+
+async function implEiteFIXMEUnimplemented(strLocation) {
+    await assertIsStr(strLocation);
+
+    await eiteLog("FIXME: Unimplemented in " + strLocation);
+}
+/* booleans, provides:
     implAnd
     implNot
 */
@@ -118,8 +138,30 @@ async function implNot(boolA) {
 
     boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
 }
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
+/* comparison, provides:
+    implEq
+    implGt
+    implLt
+*/
+
+async function implEq(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
+
+    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function implGt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    boolReturn = intA > intB; await assertIsBool(boolReturn); return boolReturn;
+}
+
+async function implLt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
+}
+/* assertions, provides:
     implAssertIsBool
     implAssertIsTrue
     implAssertIsFalse
@@ -185,54 +227,6 @@ async function implAssertStrContainsOnlyInt(str) {
     //TODO: Fake implementation. Should regex match or something instead.
     await eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
-}
-
-// @license-end
-/* comparison.js, provides:
-    implEq
-    implGt
-    implLt
-*/
-
-async function implEq(genericA, genericB) {
-    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
-
-    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
-}
-
-async function implGt(intA, intB) {
-    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
-
-    boolReturn = intA > intB; await assertIsBool(boolReturn); return boolReturn;
-}
-
-async function implLt(intA, intB) {
-    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
-
-    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
-}
-/* math.js, provides:
-    implAdd
-    implSub
-    implMod
-*/
-
-async function implAdd(intA, intB) {
-    assertIsInt(intA); assertIsInt(intB); let intReturn;
-
-    intReturn = intA + intB; await assertIsInt(intReturn); return intReturn;
-}
-
-async function implSub(intA, intB) {
-    assertIsInt(intA); assertIsInt(intB); let intReturn;
-
-    intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
-}
-
-async function implMod(intA, intB) {
-    assertIsInt(intA); assertIsInt(intB); let intReturn;
-
-    intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 /* Provides:
