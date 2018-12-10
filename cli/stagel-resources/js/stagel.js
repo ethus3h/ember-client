@@ -194,25 +194,22 @@ async function implAssertStrContainsOnlyInt(str) {
     implLt
 */
 
-async function implEq(a, b) {
-    /* Can compare booleans, ints, or strings. */
-    let boolReturn;
+async function implEq(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = a == b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
 }
 
-async function implGt(a, b) {
-    /* Can compare booleans or ints */
-    let boolReturn;
+async function implGt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    boolReturn = a > b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = intA > intB; await assertIsBool(boolReturn); return boolReturn;
 }
 
-async function implLt(a, b) {
-    /* Can compare booleans or ints */
-    let boolReturn;
+async function implLt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    boolReturn = a < b; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
 }
 /* math.js, provides:
     implAdd

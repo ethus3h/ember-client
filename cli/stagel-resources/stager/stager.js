@@ -48,11 +48,11 @@ async function xnor(boolA, boolB) {
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
 
-async function ne(intA, intB) {
-    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+async function ne(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
     let boolTemp;
-    boolTemp = await implNot(await implEq(intA, intB));
+    boolTemp = await implNot(await implEq(genericA, genericB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
