@@ -112,5 +112,8 @@ async function nle(intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
+/*r/s/strFromByte n/in */
+/*     */
+/*r/s/strFromUnicodeHex s/in */
 
 // @license-end

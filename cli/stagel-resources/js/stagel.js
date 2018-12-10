@@ -23,84 +23,41 @@ async function implMod(intA, intB) {
 
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
-    implNewDcarr
-    implDcCustomTypeDcarrDcAtPos
-    implVoidCustomTypeDcarrPut
-    implVoidCustomTypeDcarrPush
+/* type-conversion, provides:
+    implIntFromStr
+    implStrFromByte
+    implStrFromUnicodeHex
 */
 
-Dcarrs = [];
+async function implIntFromStr(str) {
+    await assertIsStr(str); let intReturn;
 
-async function implNewDcarr() {
-    let dcarrReturn;
-
-    Dcarrs[Dcarrs.length] = [];
-    dcarrReturn = Dcarrs.length - 1; await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
 }
 
-async function implDcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex); let dcReturn;
+async function implStrFromByte(intInput) {
+    await assertIsInt(intInput); let strReturn;
 
-    dcReturn = Dcarrs[dcarr][intIndex]; assertIsDc(dcReturn); return dcReturn;
+    strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
 }
 
-async function implVoidCustomTypeDcarrPut(dcarr, intIndex, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex); await assertIsDc(dcToAdd);
+async function implStrFromUnicodeHex(strCharacter) {
+    await assertIsStr(strCharacter); let strReturn;
 
-    Dcarrs[await dcarr][intIndex] = dcToAdd;
+    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }
-
-async function implVoidCustomTypeDcarrPush(dcarr, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
-
-    Dcarrs[await dcarr].push(dcToAdd);
-}
-
-// @license-end
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-// This file defines functions with implementations that are specific to the JavaScript implementation of EITE.
-// This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
-
-async function implStrNormalizeMessage(message) {
-    if (typeof message == "object") {
-        return (JSON && JSON.stringify ? JSON.stringify(message) : message);
-    } else {
-        return message;
-    }
-}
-
-// @license-end
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
-    implIntBytearrayLength
-    implIntDcarrLength
-    implStrSubstring
+/* strings, provides:
+    implCat
 */
 
-async function implIntBytearrayLength(bytearray) {
-    assertIsBytearray(bytearray); let intReturn;
+async function implCat(strA, strB) {
+    assertIsStr(strA); assertIsStr(strB); let strReturn;
 
-    intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
+    strReturn = concat(strA, strB); await assertIsStr(strReturn); return strReturn;
 }
-
-async function implIntDcarrLength(dcarr) {
-    assertIsDcarr(dcarr); let intReturn;
-
-    intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
-}
-
-async function implStrSubstring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
-
-    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
-}
-
-// @license-end
 /* logging, provides:
     implDie
-    implEiteLog
+    implLog
     implEiteFIXMEUnimplemented
 */
 
@@ -110,7 +67,14 @@ async function implDie(strMessage) {
     throw strMessage;
 }
 
-async function implEiteLog(strMessage) {
+async function implWarn(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    console.log(await implStrNormalizeMessage(strMessage));
+}
+
+async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
@@ -228,65 +192,28 @@ async function implAssertStrContainsOnlyInt(str) {
     await eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
 }
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
-    implIntFromStr
-    implStrFromByte
-    implStrFromUnicodeHex
+/* type-tools, provides:
+    implIntBytearrayLength
+    implIntDcarrLength
+    implStrSubstring
 */
 
-async function implIntFromStr(str) {
-    await assertIsStr(str); let intReturn;
+async function implIntBytearrayLength(bytearray) {
+    assertIsBytearray(bytearray); let intReturn;
 
-    intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
+    intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implStrFromByte(intInput) {
-    await assertIsInt(intInput); let strReturn;
+async function implIntDcarrLength(dcarr) {
+    assertIsDcarr(dcarr); let intReturn;
 
-    strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
+    intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implStrFromUnicodeHex(strCharacter) {
-    await assertIsStr(strCharacter); let strReturn;
+async function implStrSubstring(str, intStart, intLength) {
+    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
-    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
+    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
-
-// @license-end
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-/* Provides:
-    implIntDcDataDatasetLength
-    implStrDcDataLookupById
-    implStrDcDataLookupByValue
-*/
-
-async function implIntDcDataDatasetLength(strDataset) {
-    assertIsStr(strDataset); let intReturn;
-
-    intReturn = await dcData[strDataset].length; await assertIsInt(intReturn); return intReturn;
-}
-
-async function implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
-    await assertIsStr(strDataset); await assertIsInt(intRowNumber); await assertIsInt(intFieldNumber); let strReturn;
-
-    strReturn = dcData[strDataset][intRowNumber].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
-}
-
-async function implStrDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField) {
-    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsStr(strFilterValue); await assertIsInt(intDesiredField); let strReturn;
-
-    console.log(strDataset, intFilterField, strFilterValue, intDesiredField, dcData);
-    let intLength = await intDcDataDatasetLength(strDataset);
-    // start at 1 to skip header row
-    for (let intRow = 1; intRow < intLength; intRow++) {
-        if(dcData[strDataset][intRow].data[0][intFilterField] === strFilterValue) {
-            strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
-        }
-    }
-    await assertIsStr(strReturn); return strReturn;
-}
-
-// @license-end
 
 // @license-end

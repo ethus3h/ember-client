@@ -4,4 +4,4 @@ r/v/assertIsByte n/in
     new s/in
     set s/in strFromInt n/in
     if not and b/temp ge n/in 0
-        die cat "Assertion failed: " cat s/in " is not a byte."
+        die cat 'Assertion failed: ' cat s/in ' is not a byte.'

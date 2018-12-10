@@ -14,6 +14,8 @@ srcmd="stagel-build-internal-stager-inner"
 
 targets=(js sh)
 
+# FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
+
 targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
     [[ -d "./stagel-resources/${targets[$i]}" ]] || continue
