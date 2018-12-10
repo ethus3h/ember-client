@@ -858,6 +858,19 @@ for (( i=0; i<tokenCount; i++ )); do
             unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
+            literal-as)
+                case "${tokens[$i - 1]}" in
+                literal-s)
+                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
+                    ;;
+                ident-s)
+                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
+                    ;;
+                *)
+                    die "Unexpected token ${tokens[$i - 1]} in array of strings."
+                    ;;
+                esac
+                ;;
             code)
                 echo "Working on code" >&2
                 case "${tokens[$i - 1]}" in
