@@ -849,12 +849,16 @@ for (( i=0; i<tokenCount; i++ )); do
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
+            codegenStartArray
             stateStack+=("literal-an")
         elif [[ "${tokens[$i - 1]}" == "literal-an-end" ]]; then
+            codegenEndArray
             unset 'stateStack[-1]'
         elif [[ "${tokens[$i - 1]}" == "literal-as-start" ]]; then
+            codegenStartArray
             stateStack+=("literal-as")
         elif [[ "${tokens[$i - 1]}" == "literal-as-end" ]]; then
+            codegenEndArray
             unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
