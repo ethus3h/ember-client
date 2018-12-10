@@ -136,6 +136,10 @@ while read -r byte; do
             parserState="literal-s"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
             tokens[-2]="literal-s"
+        elif [[ "$byte" == 91 ]]; then
+            parserState="literal-as"
+            tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
+            tokens[-2]="literal-as"
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
@@ -223,15 +227,15 @@ for (( i=0; i<tokenCount; i++ )); do
                     tokens[$i]="${tokens[$i]# 114 47 118 47}"
                     ;;
                 " 114 47 97 98 47 "*)
-                    tokens[$i - 1]="ident-r-arr-b"
+                    tokens[$i - 1]="ident-r-ab"
                     tokens[$i]="${tokens[$i]# 114 47 97 98 47}"
                     ;;
                 " 114 47 97 110 47 "*)
-                    tokens[$i - 1]="ident-r-arr-n"
+                    tokens[$i - 1]="ident-r-an"
                     tokens[$i]="${tokens[$i]# 114 47 97 110 47}"
                     ;;
                 " 114 47 97 115 47 "*)
-                    tokens[$i - 1]="ident-r-arr-s"
+                    tokens[$i - 1]="ident-r-as"
                     tokens[$i]="${tokens[$i]# 114 47 97 115 47}"
                     ;;
                 " 98 47 "*)
@@ -251,15 +255,15 @@ for (( i=0; i<tokenCount; i++ )); do
                     tokens[$i]="${tokens[$i]# 115 47}"
                     ;;
                 " 97 98 47 "*)
-                    tokens[$i - 1]="ident-arr-b"
+                    tokens[$i - 1]="ident-ab"
                     tokens[$i]="${tokens[$i]# 97 98 47}"
                     ;;
                 " 97 110 47 "*)
-                    tokens[$i - 1]="ident-arr-n"
+                    tokens[$i - 1]="ident-an"
                     tokens[$i]="${tokens[$i]# 97 110 47}"
                     ;;
                 " 97 115 47 "*)
-                    tokens[$i - 1]="ident-arr-s"
+                    tokens[$i - 1]="ident-as"
                     tokens[$i]="${tokens[$i]# 97 115 47}"
                     ;;
                 *)
@@ -354,14 +358,16 @@ codegenType() {
         [[ "$1" == "ident-g" ]] && result='generic'
         [[ "$1" == "ident-n" ]] && result='int'
         [[ "$1" == "ident-s" ]] && result='str'
-        [[ "$1" == "ident-arr-n" ]] && result='intArray'
-        [[ "$1" == "ident-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-ab" ]] && result='boolArray'
+        [[ "$1" == "ident-an" ]] && result='intArray'
+        [[ "$1" == "ident-as" ]] && result='strArray'
         [[ "$1" == "ident-r-b" ]] && result='bool'
         [[ "$1" == "ident-r-n" ]] && result='int'
         [[ "$1" == "ident-r-s" ]] && result='str'
         [[ "$1" == "ident-r-v" ]] && result='void'
-        [[ "$1" == "ident-r-arr-n" ]] && result='intArray'
-        [[ "$1" == "ident-r-arr-s" ]] && result='strArray'
+        [[ "$1" == "ident-r-ab" ]] && result='boolArray'
+        [[ "$1" == "ident-r-an" ]] && result='intArray'
+        [[ "$1" == "ident-r-as" ]] && result='strArray'
         #[[ -z "$result" ]] && result="$1"
         [[ -z "$result" ]] && die "$1 is not a recognized type!"
         if [[ "$2" == "true" ]]; then
