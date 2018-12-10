@@ -34,6 +34,6 @@ runTest stagel/js/set-to-str-routine-invocation
 runTest stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
 runTest stagel/js/generic-parameter
-runTest stagel/js/array-s
+runTest -v stagel/js/array-s
 
 reportTests
