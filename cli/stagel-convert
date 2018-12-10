@@ -522,10 +522,19 @@ codegenInitializeType() {
         codegenOutput " = "
         case "$(codegenType)" in
         "bool")
+            codegenOutput 'false'
+            ;;
         "int")
+            codegenOutput '0'
+            ;;
         "str")
+            codegenOutput "''"
+            ;;
         "boolArray")
+            codegenOutput "()"
+            ;;
         "intArray")
+            ;;
         "strArray")
             ;;
         esac
