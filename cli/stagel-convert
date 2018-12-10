@@ -218,6 +218,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     tokens[$i - 1]="ident-r-s"
                     tokens[$i]="${tokens[$i]# 114 47 115 47}"
                     ;;
+                " 114 47 118 47 "*)
+                    tokens[$i - 1]="ident-r-v"
+                    tokens[$i]="${tokens[$i]# 114 47 118 47}"
+                    ;;
                 " 114 47 97 98 47 "*)
                     tokens[$i - 1]="ident-r-arr-b"
                     tokens[$i]="${tokens[$i]# 114 47 97 98 47}"
