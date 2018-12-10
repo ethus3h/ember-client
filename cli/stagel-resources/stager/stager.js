@@ -46,8 +46,9 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
-await r/v/assertIsByte(intIn);
-{
+async function assertIsByte(intIn) {
+    await assertIsInt(intIn); let voidReturn;
+
     let boolTemp;
     boolTemp = await le(intIn, 255);
     let strIn;
