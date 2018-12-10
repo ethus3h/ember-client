@@ -866,9 +866,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 literal-s)
                     codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 ident-s)
                     codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 *)
                     die "Unexpected token ${tokens[$i - 1]} in array of strings."
