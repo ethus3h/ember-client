@@ -565,7 +565,7 @@ codegenCommandInvocationStart() {
                 codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             else
-                set -x
+                #set -x
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 if [[ "$tokenLookahead" =~ ^(ident-|literal-) ]]; then
                     codegenOutput ' = '
@@ -573,7 +573,7 @@ codegenCommandInvocationStart() {
                 else
                     codegenInitializeType "${codegenArgList[-2]}"
                 fi
-                set +x
+                #set +x
             fi
             ;;
         *)
