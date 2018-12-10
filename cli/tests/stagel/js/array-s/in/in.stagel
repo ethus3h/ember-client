@@ -1,4 +1,5 @@
-r/b/ne g/a g/b
-    new b/temp
-    set b/temp not eq g/a g/b
-    return b/temp
+r/s/strFromByte n/in
+    new as/chars
+    set as/chars [ '' '' '' '' '' '' '' ] # 0 through 6
+    as-append as/chars [ 'd' 'b' 'l' #test
+        'c' 'b' 'a' ]
