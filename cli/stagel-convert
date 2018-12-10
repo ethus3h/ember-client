@@ -910,6 +910,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline|indent|dedent)
                     ;;
+                indent)
+                    blockStack+=("" "")
+                    ;;
+                dedent)
+                    unset 'blockStack[-1]'
+                    ;;
                 *)
                     die "Unexpected token ${tokens[$i - 1]} in array of strings."
                     ;;
