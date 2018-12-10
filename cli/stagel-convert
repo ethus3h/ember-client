@@ -136,6 +136,10 @@ while read -r byte; do
             parserState="literal-s"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
             tokens[-2]="literal-s"
+        elif [[ "$byte" == 40 ]]; then
+            parserState="literal-an"
+            tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
+            tokens[-2]="literal-an"
         elif [[ "$byte" == 91 ]]; then
             parserState="literal-as"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
