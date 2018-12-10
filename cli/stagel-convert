@@ -520,7 +520,7 @@ codegenInitializeType() {
     case "$targetLang" in
     "js")
         codegenOutput " = "
-        case "$(codegenType)" in
+        case "$(codegenType "$1")" in
         "bool")
             codegenOutput 'false'
             ;;
@@ -539,6 +539,8 @@ codegenInitializeType() {
         "strArray")
             codegenOutput "()"
             ;;
+        *)
+            die "Initialize requested for unexpected type of $1."
         esac
         ;;
     *)
