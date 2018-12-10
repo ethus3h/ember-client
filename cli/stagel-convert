@@ -908,7 +908,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
                     [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
                     ;;
-                newline|indent|dedent)
+                newline)
                     ;;
                 indent)
                     blockStack+=("" "")
