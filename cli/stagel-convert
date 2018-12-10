@@ -138,8 +138,12 @@ while read -r byte; do
             tokens[-2]="literal-s"
         elif [[ "$byte" == 40 ]]; then
             pushToken literal-an-start ""
+        elif [[ "$byte" == 41 ]]; then
+            pushToken literal-an-end ""
         elif [[ "$byte" == 91 ]]; then
             pushToken literal-as-start ""
+        elif [[ "$byte" == 93 ]]; then
+            pushToken literal-as-end ""
         elif [[ "$byte" == 35 ]]; then
             parserState="comment"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
@@ -805,6 +809,8 @@ for (( i=0; i<tokenCount; i++ )); do
         if [[ "${tokens[$i - 1]}" == "comment" ]] && [[ "${stateStack[-1]}" != "arglist" ]]; then
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
+        elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
+            stateStack+=("literal-an")
         else
             case "${stateStack[-1]}" in
             code)
