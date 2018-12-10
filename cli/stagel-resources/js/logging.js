@@ -1,6 +1,6 @@
 /* logging, provides:
     implDie
-    implEiteLog
+    implLog
     implEiteFIXMEUnimplemented
 */
 
@@ -10,7 +10,14 @@ async function implDie(strMessage) {
     throw strMessage;
 }
 
-async function implEiteLog(strMessage) {
+async function implWarn(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    console.log(await implStrNormalizeMessage(strMessage));
+}
+
+async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
