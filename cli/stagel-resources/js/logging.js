@@ -22,5 +22,3 @@ async function implEiteFIXMEUnimplemented(strLocation) {
 
     await eiteLog("FIXME: Unimplemented in " + strLocation);
 }
-
-// @license-end

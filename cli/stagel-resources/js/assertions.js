@@ -65,5 +65,3 @@ async function implAssertStrContainsOnlyInt(str) {
     await eiteFIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
 }
-
-// @license-end
