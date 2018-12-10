@@ -1,5 +1,4 @@
-r/b/or b/a b/b
+r/b/ne g/a g/b
     new b/temp
-    set b/temp not b/a
-    set b/temp not and b/temp not b/b
+    set b/temp not eq g/a g/b
     return b/temp
