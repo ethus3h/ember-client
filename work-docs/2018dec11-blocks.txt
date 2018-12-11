@@ -23,3 +23,4 @@ blocks:
 		Text
 	What I'm proposing:
 		(All of the above)
+32 total blocks; 5 trays
