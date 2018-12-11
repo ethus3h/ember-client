@@ -911,7 +911,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 newline)
                     ;;
                 indent)
-                    codegenOnNewLine && codegenPrintIndentationSpaces
+                    if codegenOnNewLine; then
+    #codegenIndent=$(( codegenIndent - 1 ))
+    codegenPrintIndentationSpaces
+    #codegenIndent=$(( codegenIndent + 1 ))
                     blockStack+=("" "")
                     ;;
                 dedent)
