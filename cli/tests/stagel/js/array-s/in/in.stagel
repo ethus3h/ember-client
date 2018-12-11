@@ -1,5 +1,7 @@
 r/s/strFromByte n/in
     new as/chars
     set as/chars [ '' '' '' '' '' '' '' ] # 0 through 6
-    as-append as/chars [ 'd' 'b' 'l' #test
+    new as/temp
+    set as/temp [ 'd' 'b' 'l' #test
     'c' 'b' 'a' ]
+    as-append as/chars as/temp
