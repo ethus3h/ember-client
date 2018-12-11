@@ -5,6 +5,6 @@ async function strFromByte(intIn) {
     strArrayChars = ( '' '' '' '' '' '' '');
     /* 0 through 6 */
     await as-append(( 'd' 'b' 'l'/*test */
-    'c' 'b' 'a')strArrayChars);
+        'c' 'b' 'a')strArrayChars);
     }
 }
