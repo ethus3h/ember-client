@@ -912,12 +912,18 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 indent)
                     if codegenOnNewLine; then
-    #codegenIndent=$(( codegenIndent - 1 ))
-    codegenPrintIndentationSpaces
-    #codegenIndent=$(( codegenIndent + 1 ))
+                        codegenIndent=$(( codegenIndent + 1 ))
+                        codegenPrintIndentationSpaces
+                        codegenIndent=$(( codegenIndent - 1 ))
+                    fi
                     blockStack+=("" "")
                     ;;
                 dedent)
+                    if codegenOnNewLine; then
+                        codegenIndent=$(( codegenIndent - 1 ))
+                        codegenPrintIndentationSpaces
+                        codegenIndent=$(( codegenIndent + 1 ))
+                    fi
                     unset 'blockStack[-1]'
                     ;;
                 *)
