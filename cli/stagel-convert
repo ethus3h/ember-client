@@ -270,6 +270,10 @@ for (( i=0; i<tokenCount; i++ )); do
                     tokens[$i - 1]="ident-as"
                     tokens[$i]="${tokens[$i]# 97 115 47}"
                     ;;
+                " 103 97 47 "*)
+                    tokens[$i - 1]="ident-ga"
+                    tokens[$i]="${tokens[$i]# 103 97 47}"
+                    ;;
                 *)
                     tokens[$i - 1]="command"
                     ;;
@@ -365,6 +369,7 @@ codegenType() {
         [[ "$1" == "ident-ab" ]] && result='boolArray'
         [[ "$1" == "ident-an" ]] && result='intArray'
         [[ "$1" == "ident-as" ]] && result='strArray'
+        [[ "$1" == "ident-ga" ]] && result='genericArray'
         [[ "$1" == "ident-r-b" ]] && result='bool'
         [[ "$1" == "ident-r-n" ]] && result='int'
         [[ "$1" == "ident-r-s" ]] && result='str'
