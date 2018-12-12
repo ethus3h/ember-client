@@ -4,6 +4,8 @@ async function strFromByte(intIn) {
     let strArrayChars = ();
     strArrayChars = ( '' '' '' '' '' '' '');
     /* 0 through 6 */
-    await as-append(( 'd' 'b' 'l'/*test */
-    'c' 'b' 'a')strArrayChars);
+    let strArrayTemp = ();
+    strArrayTemp = ( 'd' 'b' 'l'/*test */
+    'c' 'b' 'a');
+    await as-append(strArrayChars, strArrayTemp);
 }
