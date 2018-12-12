@@ -136,6 +136,10 @@ while read -r byte; do
             parserState="literal-s"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
             tokens[-2]="literal-s"
+        elif [[ "$byte" == 60 ]]; then
+            pushToken literal-ab-start ""
+        elif [[ "$byte" == 62 ]]; then
+            pushToken literal-ab-end ""
         elif [[ "$byte" == 40 ]]; then
             pushToken literal-an-start ""
         elif [[ "$byte" == 41 ]]; then
@@ -575,7 +579,7 @@ codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput ' '
+        codegenOutput ', '
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
