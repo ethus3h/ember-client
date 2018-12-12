@@ -920,13 +920,13 @@ for (( i=0; i<tokenCount; i++ )); do
             case "${stateStack[-1]}" in
             literal-ab)
                 case "${tokens[$i - 1]}" in
-                literal-s)
+                literal-b)
                     codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayEntryDelimiter
                     ;;
-                ident-s)
+                ident-b)
                     codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 newline)
                     codegenPrintIndentationSpaces
