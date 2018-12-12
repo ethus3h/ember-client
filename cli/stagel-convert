@@ -918,6 +918,42 @@ for (( i=0; i<tokenCount; i++ )); do
             unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
+            literal-ab)
+                case "${tokens[$i - 1]}" in
+                literal-s)
+                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    ;;
+                ident-s)
+                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    ;;
+                newline)
+                    codegenPrintIndentationSpaces
+                    ;;
+                *)
+                    die "Unexpected token ${tokens[$i - 1]} in array of booleans."
+                    ;;
+                esac
+                ;;
+            literal-an)
+                case "${tokens[$i - 1]}" in
+                literal-n)
+                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayEntryDelimiter
+                    ;;
+                ident-n)
+                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayEntryDelimiter
+                    ;;
+                newline)
+                    codegenPrintIndentationSpaces
+                    ;;
+                *)
+                    die "Unexpected token ${tokens[$i - 1]} in array of numbers."
+                    ;;
+                esac
+                ;;
             literal-as)
                 case "${tokens[$i - 1]}" in
                 literal-s)
