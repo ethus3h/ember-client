@@ -591,7 +591,7 @@ codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput ']'
+        codegenOutput ' ]'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -949,6 +949,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 newline)
+                    codegenArrayEntryDelimiter
+                    codegenOutput $'\n'
                     codegenPrintIndentationSpaces
                     ;;
                 *)
@@ -967,6 +969,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 newline)
+                    codegenArrayEntryDelimiter
+                    codegenOutput $'\n'
                     codegenPrintIndentationSpaces
                     ;;
                 *)
