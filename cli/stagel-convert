@@ -929,6 +929,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayEntryDelimiter
                     ;;
                 newline)
+                    codegenArrayEntryDelimiter
+                    codegenOutput $'\n'
                     codegenPrintIndentationSpaces
                     ;;
                 *)
