@@ -5,4 +5,7 @@ async function strFromByte(intIn) {
     strArrayChars = [ '', '', '', '', '', '', ''];
     /* 0 through 6 */
     let strArrayTemp = [];
-    strArrayTemp = [ 
+    strArrayTemp = [ 'd', 'b', 'l'/*test */
+    'c', 'b', 'a'];
+    await append(strArrayChars, strArrayTemp);
+}
