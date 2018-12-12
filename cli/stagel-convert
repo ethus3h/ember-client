@@ -541,13 +541,13 @@ codegenInitializeType() {
             codegenOutput "''"
             ;;
         "boolArray")
-            codegenOutput "()"
+            codegenOutput "[]"
             ;;
         "intArray")
-            codegenOutput "()"
+            codegenOutput "[]"
             ;;
         "strArray")
-            codegenOutput "()"
+            codegenOutput "[]"
             ;;
         *)
             die "Initialize requested for unexpected type of $1."
@@ -563,7 +563,7 @@ codegenStartArray() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput '( '
+        codegenOutput '[ '
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -587,7 +587,7 @@ codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput ')'
+        codegenOutput ']'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
