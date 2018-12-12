@@ -4,4 +4,4 @@ r/s/strFromByte n/in
     new as/temp
     set as/temp [ 'd' 'b' 'l' #test
     'c' 'b' 'a' ]
-    as-append as/chars as/temp
+    append as/chars as/temp
