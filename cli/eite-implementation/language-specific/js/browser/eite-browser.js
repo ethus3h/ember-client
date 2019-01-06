@@ -5,15 +5,25 @@
 // Override error reporting method to show alert
 // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
 async function error(strMessage) {
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
+
+    await warn(strMessage);
+
     console.trace();
-    await eiteLog("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
-    alert("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
-    throw "EITE reported error!: " + await implStrNormalizeMessage(strMessage);
+    alert("EITE reported error!: " + strMessage);
+
+    throw strMessage;
 }
 async function warn(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    await FIXMEUnimplemented("implWarn");
+
+    console.log(strMessage);
+
     console.trace();
-    await eiteLog("EITE reported warning: " + await implStrNormalizeMessage(strMessage));
-    alert("EITE reported warning: " + await implStrNormalizeMessage(strMessage));
+    alert("EITE reported warning: " + strMessage);
 }
 
 // Fully platform-specific code
