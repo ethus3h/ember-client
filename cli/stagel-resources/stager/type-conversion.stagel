@@ -5,5 +5,7 @@ r/s/strFromByte n/in
     set as/temp [ 'd' 'b' 'l'
     'c' 'b' 'a' ]
     append as/chars as/temp
+    return ''
 
 r/s/strFromUnicodeHex s/in
+    return ''
