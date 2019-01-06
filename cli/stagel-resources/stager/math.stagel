@@ -1,0 +1,9 @@
+r/b/intIsBetween b/a b/b
+    new b/temp
+    set b/temp not b/a
+    set b/temp not and b/temp not b/b
+    return b/temp
+    assertIsInt(intN); assertIsInt(intA); assertIsInt(intB); let boolReturn;
+
+    // Checks whether N is within the range A and B, including endpoints
+    boolReturn = ( (intN - intA) * (intN - intB) ) <= 0; await assertIsBool(boolReturn); return boolReturn;
