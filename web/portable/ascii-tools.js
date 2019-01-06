@@ -5,13 +5,13 @@
 async function boolAsciiIsDigit(intN) {
     await assertIsInt(intN); let boolReturn;
 
-    boolReturn = await boolIntIsBetween(intN, 48, 57); await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = await intIsBetween(intN, 48, 57); await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolAsciiIsPrintable(intN) {
     await assertIsInt(intN); let boolReturn;
 
-    boolReturn = await boolIntIsBetween(intN, 32, 126); await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = await intIsBetween(intN, 32, 126); await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function boolAsciiIsSpace(intN) {
