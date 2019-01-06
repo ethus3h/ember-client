@@ -82,7 +82,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
         case "immutableCharacterCells":
             let immutableCharCellOutput = document.getElementById("log");
             for (let i = 0; i < renderBuffer.length; i++) {
-                immutableCharCellOutput.innerHTML += await implStrNormalizeMessage(renderBuffer[i]) + "<br />";
+                immutableCharCellOutput.innerHTML += renderBuffer[i] + "<br />";
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;
