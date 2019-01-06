@@ -12,7 +12,7 @@
 // Assertions that something is a given type
 
 async function assertIsBool(bool) {
-    if (typeof bool !== "boolean") {
+    if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
         await implError("Assertion failed: "+bool+" is not a boolean.");
     }
 }
