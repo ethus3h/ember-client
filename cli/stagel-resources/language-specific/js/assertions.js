@@ -45,6 +45,12 @@ async function assertIsStr(str) {
     }
 }
 
+async function assertIsGeneric(val) {
+    if (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(int)) {
+        await implError("Assertion failed: "+val+" cannot be used as a generic.");
+    }
+}
+
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
