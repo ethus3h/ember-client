@@ -30,24 +30,24 @@ async function implMod(intA, intB) {
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
 /* type-conversion, provides:
-    implIntFromStr
-    implStrFromByte
-    implStrFromUnicodeHex
+    intFromStr
+    strFromByte
+    strFromUnicodeHex
 */
 
-async function implIntFromStr(str) {
+async function intFromStr(str) {
     await assertIsStr(str); let intReturn;
 
     intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
 }
 
-async function implStrFromByte(intInput) {
+async function strFromByte(intInput) {
     await assertIsInt(intInput); let strReturn;
 
     strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
 }
 
-async function implStrFromUnicodeHex(strCharacter) {
+async function strFromUnicodeHex(strCharacter) {
     await assertIsStr(strCharacter); let strReturn;
 
     strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
