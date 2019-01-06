@@ -14,7 +14,8 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
         case "HTML":
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             if(strReturn === "\u0000") {
-                strReturn = await await strDcDataLookupByValue("mappings/to/html", 0, dc, 0));
+                /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
+                strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1));
             }
             assertIsStr(strReturn); return strReturn;
             break;
