@@ -2,7 +2,7 @@
     implDie
     implWarn
     implLog
-    implEiteFIXMEUnimplemented
+    implFIXMEUnimplemented
 */
 
 async function implDie(strMessage) {
