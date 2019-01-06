@@ -11,13 +11,13 @@
 
 // Assertions that something is a given type
 
-async function implAssertIsBool(bool) {
+async function assertIsBool(bool) {
     if (typeof bool !== "boolean") {
         await implError("Assertion failed: "+bool+" is not a boolean.");
     }
 }
 
-async function implAssertIsTrue(bool) {
+async function assertIsTrue(bool) {
     await assertIsBool(bool);
 
     if (bool !== true) {
@@ -25,7 +25,7 @@ async function implAssertIsTrue(bool) {
     }
 }
 
-async function implAssertIsFalse(bool) {
+async function assertIsFalse(bool) {
     await assertIsBool(bool);
 
     if (bool !== false) {
@@ -33,19 +33,19 @@ async function implAssertIsFalse(bool) {
     }
 }
 
-async function implAssertIsInt(int) {
+async function assertIsInt(int) {
     if (! Number.isInteger(int)) {
         await implError("Assertion failed: "+int+" is not an int.");
     }
 }
 
-async function implAssertIsStr(str) {
+async function assertIsStr(str) {
     if (typeof str !== "string") {
         await implError("Assertion failed: "+str+" is not a string.");
     }
 }
 
-async function implAssertIsDcarr(dcarr) {
+async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
     await assertIsTrue(dcarr < Dcarrs.length);
@@ -58,10 +58,10 @@ async function implAssertIsBytearray(bytearray) {
 
 // Other assertions
 
-async function implAssertStrContainsOnlyInt(str) {
+async function assertStrContainsOnlyInt(str) {
     await assertIsStr(str);
 
     //TODO: Fake implementation. Should regex match or something instead.
-    await implFIXMEUnimplemented("implAssertStrContainsOnlyInt");
+    await FIXMEUnimplemented("implAssertStrContainsOnlyInt");
     return await assertIsInt(await intFromStr(str));
 }
