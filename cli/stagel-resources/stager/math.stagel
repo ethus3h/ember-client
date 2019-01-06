@@ -1,9 +1,9 @@
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
     new n/t1
-    set n/t1 sub b/n b/a
+    set n/t1 sub n/n n/a
     new n/t2
-    set n/t2 sub b/n b/b
+    set n/t2 sub n/n n/b
     new n/t3
     set n/t3 mul n/t1 n/t2
     new b/temp
