@@ -10,7 +10,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
         case "UTF-8":
             implLog("blucer");
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
-            assertIsStr(strReturn); console.log(typeof strReturn); return strReturn;
+            assertIsStr(strReturn); console.log([strReturn]); return strReturn;
             break;
         default:
             await eiteError("Unimplemented character encoding: " + strCharacterEncoding);
