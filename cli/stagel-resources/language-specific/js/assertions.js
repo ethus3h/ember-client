@@ -34,25 +34,25 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
-    if (! Number.isInteger(int)) {
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null) {
         await implError("Assertion failed: "+int+" is not an int.");
     }
 }
 
 async function assertIsStr(str) {
-    if (typeof str !== "string") {
+    if (typeof str !== "string" || typeof str === "undefined" || str === null) {
         await implError("Assertion failed: "+str+" is not a string.");
     }
 }
 
 async function assertIsGeneric(val) {
-    if (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) {
+    if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
         await implError("Assertion failed: "+val+" cannot be used as a generic.");
     }
 }
 
 async function assertIsArray(arr) {
-    if(! Array.isArray(arr)) {
+    if ((! Array.isArray(arr)) || typeof bool === "undefined" || bool === null) {
         await implError("Assertion failed: "+arr+" is not an array.");
     }
 }
