@@ -9,7 +9,7 @@ async function implCat(strA, strB) {
     strReturn = concat(strA, strB); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strSubstring(str, intStart, intLength) {
+async function implSubstr(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
     strReturn = await implStrSubstring(str, intStart, intLength); await assertIsStr(strReturn); return strReturn;
