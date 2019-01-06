@@ -74,14 +74,14 @@ async function implWarn(strMessage) {
 
     await implFIXMEUnimplemented("implWarn");
 
-    console.log(await implStrNormalizeMessage(strMessage));
+    console.log(strMessage);
 }
 
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    console.log(await implStrNormalizeMessage(strMessage));
+    console.log(strMessage);
 }
 
 async function implFIXMEUnimplemented(strLocation) {
