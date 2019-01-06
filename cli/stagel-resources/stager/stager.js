@@ -128,9 +128,9 @@ async function intIsBetween(intN, intA, intB) {
 
     /* Checks whether N is within the range A and B, including endpoints */
     let intT1 = 0;
-    intT1 = await implSub(boolN, boolA);
+    intT1 = await implSub(intN, intA);
     let intT2 = 0;
-    intT2 = await implSub(boolN, boolB);
+    intT2 = await implSub(intN, intB);
     let intT3 = 0;
     intT3 = await implMul(intT1, intT2);
     let boolTemp = false;
