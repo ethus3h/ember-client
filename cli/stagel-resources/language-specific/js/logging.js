@@ -1,5 +1,6 @@
 /* logging, provides:
     implDie
+    implWarn
     implLog
     implEiteFIXMEUnimplemented
 */
@@ -14,6 +15,8 @@ async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
+    await implFIXMEUnimplemented("implWarn");
+
     console.log(await implStrNormalizeMessage(strMessage));
 }
 
@@ -24,8 +27,8 @@ async function implLog(strMessage) {
     console.log(await implStrNormalizeMessage(strMessage));
 }
 
-async function implEiteFIXMEUnimplemented(strLocation) {
+async function implFIXMEUnimplemented(strLocation) {
     await assertIsStr(strLocation);
 
-    await eiteLog("FIXME: Unimplemented in " + strLocation);
+    await implLog("FIXME: Unimplemented in " + strLocation);
 }
