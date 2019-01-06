@@ -3,7 +3,7 @@
 async function or(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(boolA);
     boolTemp = await implNot(await implAnd(boolTemp, await implNot(boolB)));
 
@@ -13,7 +13,7 @@ async function or(boolA, boolB) {
 async function nor(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await or(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -22,7 +22,7 @@ async function nor(boolA, boolB) {
 async function nand(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await implAnd(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -31,7 +31,7 @@ async function nand(boolA, boolB) {
 async function xor(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await nand(boolA, boolB);
     boolTemp = await implAnd(boolTemp, await or(boolA, boolB));
 
@@ -41,7 +41,7 @@ async function xor(boolA, boolB) {
 async function xnor(boolA, boolB) {
     await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await xor(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -49,9 +49,9 @@ async function xnor(boolA, boolB) {
 async function assertIsByte(intIn) {
     await assertIsInt(intIn); let voidReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await le(intIn, 255);
-    let strIn;
+    let strIn = '';
     strIn = await strFromInt(intIn);
     if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
@@ -62,7 +62,7 @@ async function assertIsByte(intIn) {
 async function ne(genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await implEq(genericA, genericB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -71,7 +71,7 @@ async function ne(genericA, genericB) {
 async function ge(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implEq(intA, intB);
     boolTemp = await or(boolTemp, await implGt(intA, intB));
 
@@ -81,7 +81,7 @@ async function ge(intA, intB) {
 async function le(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implEq(intA, intB);
     boolTemp = await or(boolTemp, await implLt(intA, intB));
 
@@ -91,7 +91,7 @@ async function le(intA, intB) {
 async function ngt(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await implGt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -100,7 +100,7 @@ async function ngt(intA, intB) {
 async function nlt(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await implLt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -109,7 +109,7 @@ async function nlt(intA, intB) {
 async function nge(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await ge(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
@@ -118,13 +118,16 @@ async function nge(intA, intB) {
 async function nle(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    let boolTemp;
+    let boolTemp = false;
     boolTemp = await implNot(await le(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
-/*r/s/strFromByte n/in */
-/*     */
-/*r/s/strFromUnicodeHex s/in */
+async function strFromByte(intIn) {
+    await assertIsInt(intIn); let strReturn;
 
+    let strArrayChars = [];
+    strArrayChars = [ '', '', '', '', '', '', '' ];
+    /* 0 through 6 */
+    await as-append([ 'd', 'b', 'l'
 // @license-end
