@@ -52,7 +52,7 @@ async function assertIsGeneric(val) {
 }
 
 async function assertIsArray(arr) {
-    if ((! Array.isArray(arr)) || typeof bool === "undefined" || bool === null) {
+    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
         await implError("Assertion failed: "+arr+" is not an array.");
     }
 }
