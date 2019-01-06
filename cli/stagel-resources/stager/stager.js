@@ -123,6 +123,21 @@ async function nle(intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
+async function intIsBetween(intN, intA, intB) {
+    await assertIsInt(intN); await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    /* Checks whether N is within the range A and B, including endpoints */
+    let intT1 = 0;
+    intT1 = await implSub(boolN, boolA);
+    let intT2 = 0;
+    intT2 = await implSub(boolN, boolB);
+    let intT3 = 0;
+    intT3 = await implMul(intT1, intT2);
+    let boolTemp = false;
+    boolTemp = await le(intT3, 0);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
+}
 async function strFromByte(intIn) {
     await assertIsInt(intIn); let strReturn;
 

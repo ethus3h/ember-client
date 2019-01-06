@@ -18,6 +18,12 @@ async function implSub(intA, intB) {
     intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
 }
 
+async function implMul(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
+
+    intReturn = intA * intB; await assertIsInt(intReturn); return intReturn;
+}
+
 async function implMod(intA, intB) {
     assertIsInt(intA); assertIsInt(intB); let intReturn;
 
@@ -48,12 +54,19 @@ async function implStrFromUnicodeHex(strCharacter) {
 }
 /* strings, provides:
     implCat
+    substring
 */
 
 async function implCat(strA, strB) {
     assertIsStr(strA); assertIsStr(strB); let strReturn;
 
     strReturn = concat(strA, strB); await assertIsStr(strReturn); return strReturn;
+}
+
+async function substring(str, intStart, intLength) {
+    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+
+    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
 /* logging, provides:
     implDie
@@ -200,7 +213,6 @@ async function assertStrContainsOnlyInt(str) {
 /* type-tools, provides:
     implIntBytearrayLength
     implIntDcarrLength
-    implStrSubstring
 */
 
 async function intBytearrayLength(bytearray) {
@@ -213,12 +225,6 @@ async function intDcarrLength(dcarr) {
     assertIsDcarr(dcarr); let intReturn;
 
     intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
-}
-
-async function strSubstring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
-
-    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
