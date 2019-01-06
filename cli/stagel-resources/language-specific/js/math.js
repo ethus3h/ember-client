@@ -16,6 +16,12 @@ async function implSub(intA, intB) {
     intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
 }
 
+async function implMul(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
+
+    intReturn = intA * intB; await assertIsInt(intReturn); return intReturn;
+}
+
 async function implMod(intA, intB) {
     assertIsInt(intA); assertIsInt(intB); let intReturn;
 
