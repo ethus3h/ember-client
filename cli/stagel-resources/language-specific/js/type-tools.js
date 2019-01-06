@@ -15,9 +15,3 @@ async function intDcarrLength(dcarr) {
 
     intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
 }
-
-async function strSubstring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
-
-    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
-}

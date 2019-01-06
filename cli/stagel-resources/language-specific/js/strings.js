@@ -1,6 +1,6 @@
 /* strings, provides:
     implCat
-    implSubstr
+    strSubstring
 */
 
 async function implCat(strA, strB) {
@@ -9,8 +9,8 @@ async function implCat(strA, strB) {
     strReturn = concat(strA, strB); await assertIsStr(strReturn); return strReturn;
 }
 
-async function implSubstr(str, intStart, intLength) {
+async function strSubstring(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
-    strReturn = await implStrSubstring(str, intStart, intLength); await assertIsStr(strReturn); return strReturn;
+    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
