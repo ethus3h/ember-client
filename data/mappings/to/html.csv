@@ -283,7 +283,7 @@ Dc,"HTML equivalent, if different from Unicode character mapping"
 281,
 282,
 283,
-284,
+284,"<span style=""font-family: soccer"">o</span>"
 285,
-286,
-287,
+286,<em>
+287,</em>
