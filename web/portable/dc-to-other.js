@@ -8,6 +8,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case "ASCII-safe-subset":
         case "UTF-8":
+            implLog("blucer");
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             assertIsStr(strReturn); return strReturn;
             break;
