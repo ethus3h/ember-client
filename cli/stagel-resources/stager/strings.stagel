@@ -1,1 +1,4 @@
- 
+r/s/strCharAtPos s/str n/index
+    new s/temp
+    set s/temp substring s/str n/index 1
+    return s/temp
