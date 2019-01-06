@@ -25,10 +25,10 @@ async function implStrDcDataLookupByValue(strDataset, intFilterField, strFilterV
     // start at 1 to skip header row
     for (let intRow = 1; intRow < intLength; intRow++) {
         if(dcData[strDataset][intRow].data[0][intFilterField] === strFilterValue) {
-            strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
+            strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); console.log(strReturn); return strReturn;
         }
     }
-    await assertIsStr(strReturn); return strReturn;
+    await assertIsStr(strReturn); console.log(strReturn); return strReturn;
 }
 
 // @license-end
