@@ -211,6 +211,10 @@ async function assertIsArray(arr) {
     }
 }
 
+async function assertIsDc(dc) {
+    await assertStrContainsOnlyInt(dc);
+}
+
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
