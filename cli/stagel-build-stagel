@@ -14,5 +14,7 @@ if [[ "$1" == "-v" ]]; then
     shift
     "$sicmd" "$@"
 else
+    echo "Building, please wait..."
     "$sicmd" "$@" &> /dev/null
+    echo "Done."
 fi
