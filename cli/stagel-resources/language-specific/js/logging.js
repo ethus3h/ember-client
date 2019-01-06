@@ -1,19 +1,19 @@
 /* logging, provides:
-    die
-    warn
-    log
+    implDie
+    implWarn
+    implLog
     FIXMEUnimplemented
 */
 
-async function die(strMessage) {
+async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
-    await warn(strMessage);
+    await implWarn(strMessage);
 
     throw strMessage;
 }
 
-async function warn(strMessage) {
+async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
@@ -22,7 +22,7 @@ async function warn(strMessage) {
     console.log(strMessage);
 }
 
-async function log(strMessage) {
+async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
