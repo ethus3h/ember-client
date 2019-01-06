@@ -2,17 +2,15 @@
 // This file defines functions with implementations that are specific to Web browser implementation of EITE in JavaScript.
 // This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
 
-// Platform-specific overrides of routines available portably
-
 // Override error reporting method to show alert
 // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
-async function eiteError(strMessage) {
+async function error(strMessage) {
     console.trace();
     await eiteLog("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
     alert("EITE reported error!: " + await implStrNormalizeMessage(strMessage));
     throw "EITE reported error!: " + await implStrNormalizeMessage(strMessage);
 }
-async function eiteWarn(strMessage) {
+async function warn(strMessage) {
     console.trace();
     await eiteLog("EITE reported warning: " + await implStrNormalizeMessage(strMessage));
     alert("EITE reported warning: " + await implStrNormalizeMessage(strMessage));

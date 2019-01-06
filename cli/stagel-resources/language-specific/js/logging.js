@@ -1,34 +1,34 @@
 /* logging, provides:
-    implDie
-    implWarn
-    implLog
-    implFIXMEUnimplemented
+    die
+    warn
+    log
+    FIXMEUnimplemented
 */
 
-async function implDie(strMessage) {
+async function die(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
     throw strMessage;
 }
 
-async function implWarn(strMessage) {
+async function warn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    await implFIXMEUnimplemented("implWarn");
+    await FIXMEUnimplemented("implWarn");
 
     console.log(strMessage);
 }
 
-async function implLog(strMessage) {
+async function log(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
     console.log(strMessage);
 }
 
-async function implFIXMEUnimplemented(strLocation) {
+async function FIXMEUnimplemented(strLocation) {
     await assertIsStr(strLocation);
 
-    await implLog("FIXME: Unimplemented in " + strLocation);
+    await log("FIXME: Unimplemented in " + strLocation);
 }
