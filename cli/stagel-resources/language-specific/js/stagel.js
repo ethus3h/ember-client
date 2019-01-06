@@ -58,7 +58,7 @@ async function strFromUnicodeHex(strCharacter) {
 
 async function append(array1, array2) {
     await assertIsArray(array1); await assertIsArray(array2); let arrayReturn;
-/*FIXME*/
+
     arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
 }
 /* strings, provides:
@@ -166,7 +166,7 @@ async function implLt(intA, intB) {
 // Assertions that something is a given type
 
 async function assertIsBool(bool) {
-    if (typeof bool !== "boolean") {
+    if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
         await implError("Assertion failed: "+bool+" is not a boolean.");
     }
 }
@@ -188,25 +188,25 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
-    if (! Number.isInteger(int)) {
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null) {
         await implError("Assertion failed: "+int+" is not an int.");
     }
 }
 
 async function assertIsStr(str) {
-    if (typeof str !== "string") {
+    if (typeof str !== "string" || typeof str === "undefined" || str === null) {
         await implError("Assertion failed: "+str+" is not a string.");
     }
 }
 
 async function assertIsGeneric(val) {
-    if (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) {
+    if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
         await implError("Assertion failed: "+val+" cannot be used as a generic.");
     }
 }
 
 async function assertIsArray(arr) {
-    if(! Array.isArray(arr)) {
+    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
         await implError("Assertion failed: "+arr+" is not an array.");
     }
 }
