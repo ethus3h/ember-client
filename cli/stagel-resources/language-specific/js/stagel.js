@@ -52,6 +52,15 @@ async function implStrFromUnicodeHex(strCharacter) {
 
     strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }
+/* arrays, provides:
+    append
+*/
+
+async function append(array1, array2) {
+    await assertIsArray(array1); await assertIsArray(array2); let arrayReturn;
+/*FIXME*/
+    arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
+}
 /* strings, provides:
     implCat
     substring
