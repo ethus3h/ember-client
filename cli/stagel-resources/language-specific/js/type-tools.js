@@ -1,7 +1,6 @@
 /* type-tools, provides:
     implIntBytearrayLength
     implIntDcarrLength
-    implStrSubstring
 */
 
 async function intBytearrayLength(bytearray) {
