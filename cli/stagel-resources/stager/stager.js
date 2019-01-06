@@ -129,5 +129,14 @@ async function strFromByte(intIn) {
     let strArrayChars = [];
     strArrayChars = [ '', '', '', '', '', '', '' ];
     /* 0 through 6 */
-    await as-append([ 'd', 'b', 'l'
+    let strArrayTemp = [];
+    strArrayTemp = [ 'd', 'b', 'l', 
+    'c', 'b', 'a' ];
+    await append(strArrayChars, strArrayTemp);
+}
+
+async function strFromUnicodeHex(strIn) {
+    await assertIsStr(strIn); let strReturn;
+
+
 // @license-end
