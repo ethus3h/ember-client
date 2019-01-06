@@ -51,6 +51,12 @@ async function assertIsGeneric(val) {
     }
 }
 
+async function assertIsArray(arr) {
+    if(! Array.isArray(arr)) {
+        await implError("Assertion failed: "+arr+" is not an array.");
+    }
+}
+
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
