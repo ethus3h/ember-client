@@ -183,8 +183,8 @@ async function assertIsDcarr(dcarr) {
     await assertIsTrue(dcarr < Dcarrs.length);
 }
 
-async function implAssertIsBytearray(bytearray) {
-    await implFIXMEUnimplemented("implAssertIsBytearray");
+async function assertIsBytearray(bytearray) {
+    await FIXMEUnimplemented("implAssertIsBytearray");
 }
 
 
