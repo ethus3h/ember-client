@@ -152,11 +152,4 @@ async function strFromByte(intIn) {
     strReturn = ''; await assertIsStr(strReturn); return strReturn;
 }
 
-async function strFromUnicodeHex(strIn) {
-    await assertIsStr(strIn); let strReturn;
-
-
-    strReturn = ''; await assertIsStr(strReturn); return strReturn;
-}
-
 // @license-end
