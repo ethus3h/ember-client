@@ -4,17 +4,17 @@
 
 // Override error reporting method to show alert
 // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
-async function error(strMessage) {
+async function implError(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
-    await warn(strMessage);
+    await implWarn(strMessage);
 
     console.trace();
     alert("EITE reported error!: " + strMessage);
 
     throw strMessage;
 }
-async function warn(strMessage) {
+async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
@@ -48,7 +48,7 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
                     traits.characterEncoding = "UTF-8";
                     break;
                 default:
-                    await eiteWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
+                    await implWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
                     traits.characterEncoding = "ASCII-safe-subset";
                     break;
             }
