@@ -1,7 +1,11 @@
-r/b/intIsBetween b/a b/b
+r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
+    new n/t1
+    set n/t1 sub b/n b/a
+    new n/t2
+    set n/t2 sub b/n b/b
+    new n/t3
+    set n/t3 mul n/t1 n/t2
     new b/temp
-    set b/temp not b/a
-    set b/temp not and b/temp not b/b
+    set b/temp le n/t3 0
     return b/temp
-    boolReturn = ( (intN - intA) * (intN - intB) ) <= 0; await assertIsBool(boolReturn); return boolReturn;
