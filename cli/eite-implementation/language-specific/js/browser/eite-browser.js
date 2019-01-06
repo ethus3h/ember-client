@@ -45,7 +45,8 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
             let cs = document.characterSet.toLowerCase();
             switch(cs) {
                 case "utf-8":
-                    traits.characterEncoding = "UTF-8";
+                    /* traits.characterEncoding = "UTF-8"; */
+                    traits.characterEncoding = "HTML";
                     break;
                 default:
                     await implWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
