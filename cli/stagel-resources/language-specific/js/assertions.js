@@ -1,12 +1,12 @@
 /* assertions, provides:
-    implAssertIsBool
-    implAssertIsTrue
-    implAssertIsFalse
-    implAssertIsInt
-    implAssertIsStr
-    implAssertIsDcarr
-    implAssertIsBytearray
-    implAssertStrContainsOnlyInt
+    assertIsBool
+    assertIsTrue
+    assertIsFalse
+    assertIsInt
+    assertIsStr
+    assertIsDcarr
+    assertIsBytearray
+    assertStrContainsOnlyInt
 */
 
 // Assertions that something is a given type
