@@ -1,8 +1,1 @@
-r/s/strFromByte n/in
-    new as/chars
-    set as/chars [ '' '' '' '' '' '' '' ] # 0 through 6
-    new as/temp
-    set as/temp [ 'd' 'b' 'l'
-    'c' 'b' 'a' ]
-    append as/chars as/temp
-    return ''
+ 
