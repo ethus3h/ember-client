@@ -32,5 +32,5 @@ async function implLog(strMessage) {
 async function FIXMEUnimplemented(strLocation) {
     await assertIsStr(strLocation);
 
-    await log("FIXME: Unimplemented in " + strLocation);
+    await implLog("FIXME: Unimplemented in " + strLocation);
 }
