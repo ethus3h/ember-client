@@ -33,7 +33,7 @@ async function asciiIsNewline(intN) {
     let boolT1 = false;
     boolT1 = await implEq(intN, 10);
     let boolT2 = false;
-    boolT2 = await or(boolTemp, await implEq(intN, 13));
+    boolT2 = await or(boolT1, await implEq(intN, 13));
 
     boolReturn = boolT2; await assertIsBool(boolReturn); return boolReturn;
 }
