@@ -9,3 +9,12 @@ r/v/assertIsByte n/in
 r/v/assertIsArray ga/in
     # Just a convenience wrapper
     assertIsGenericArray ga/in
+
+r/v/assertStrContainsOnlyInt s/in
+    new n/temp
+    set n/temp len s/in
+    new n/i
+    set n/i 0
+    while lt n/i n/temp
+        
+        set n/i add n/i 1
