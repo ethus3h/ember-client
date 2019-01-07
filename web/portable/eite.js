@@ -56,12 +56,6 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                     await implLog(await arrayToString(dcarrOutput));
                 }
             }
-            strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
-            if (strReturn === "\u0000") {
-                /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
-                strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
-            }
-            assertIsStr(strReturn); return strReturn;
             break;
         default:
             await eiteError("Unimplemented document render target format: " + strTargetFormat);
