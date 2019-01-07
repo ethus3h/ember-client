@@ -27,7 +27,9 @@ r/v/assertStrContainsOnlyInt s/in
 
 r/v/assertIsNonnegative n/in
     if lt n/in 0
-        die cat 'Assertion failed: ' cat n/in ' is negative.'
+        new s/temp
+        set s/temp strFromInt n/in
+        die cat 'Assertion failed: ' cat s/temp ' is negative.'
 
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
