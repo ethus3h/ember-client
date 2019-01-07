@@ -67,6 +67,12 @@ async function get(array, index) {
 
     returnVal=array[index]; await assertIsGeneric(returnVal); return returnVal;
 }
+
+async function count(array) {
+    await assertIsArray(array); let intReturn;
+
+    intReturn=Object.keys(array).length; await assertIsInt(intReturn); return intReturn;
+}
 /* strings, provides:
     implCat
     substring
