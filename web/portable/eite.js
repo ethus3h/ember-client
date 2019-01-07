@@ -50,9 +50,9 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                 /* FIXME: doesn't accept HTML-renderable Dcs */
                 if (await boolDcIsNewline(dcAtInputIndex) || await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex)) {
                     dcarrOutput.push(dcAtInputIndex);
+                    await implLog(await strPrintArr(dcarrOutput));
                 }
             }
-            await implLog(await strPrintArr(dcarrOutput));
             break;
         default:
             await eiteError("Unimplemented document render target format: " + strTargetFormat);
