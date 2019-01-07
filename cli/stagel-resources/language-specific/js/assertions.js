@@ -4,9 +4,9 @@
     assertIsFalse
     assertIsInt
     assertIsStr
+    assertIsDc
     assertIsDcarr
     assertIsBytearray
-    assertStrContainsOnlyInt
 */
 
 // Assertions that something is a given type

@@ -1,5 +1,7 @@
 /* arrays, provides:
     append
+    get
+    count
 */
 
 async function append(array1, array2) {
