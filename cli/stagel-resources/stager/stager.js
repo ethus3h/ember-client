@@ -65,6 +65,13 @@ async function assertIsByte(intIn) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
     }
 }
+
+async function assertIsArray(genericArrayIn) {
+    await assertIsGenericArray(genericArrayIn); let voidReturn;
+
+    /* Just a convenience wrapper */
+    await assertIsGenericArray(genericArrayIn);
+}
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {

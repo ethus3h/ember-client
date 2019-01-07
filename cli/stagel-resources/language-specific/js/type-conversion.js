@@ -21,3 +21,9 @@ async function strFromUnicodeHex(strCharacter) {
 
     strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }
+
+async function strFrom(input) {
+    await assertIsGeneric(input); let strReturn;
+
+    strReturn = String(input); await assertIsStr(strReturn); return strReturn;
+}
