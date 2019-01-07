@@ -5,7 +5,7 @@
 */
 
 async function intFromStr(str) {
-    await assertIsStr(str); let intReturn;
+    await assertStrContainsOnlyInt(str); let intReturn;
 
     intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
 }
