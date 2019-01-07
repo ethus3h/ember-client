@@ -28,10 +28,10 @@ async function dcarrParseSems(bytearrayContent) {
         // do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         switch (strParserState) {
             case "dc":
-                if (await boolAsciiIsDigit(bytearrayContent[intByteOffset])) {
+                if (await asciiIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
                 }
-                if (await boolAsciiIsSpace(bytearrayContent[intByteOffset])) {
+                if (await asciiIsSpace(bytearrayContent[intByteOffset])) {
                     await customTypeDcarrPush(dcarrParseResults, strCurrentDc);
                     strCurrentDc = "";
                 }
@@ -40,7 +40,7 @@ async function dcarrParseSems(bytearrayContent) {
                 }
                 break;
             case "comment":
-                if (await boolAsciiIsNewline(bytearrayContent[intByteOffset])) {
+                if (await asciiIsNewline(bytearrayContent[intByteOffset])) {
                     strParserState = "dc";
                 }
                 break;
