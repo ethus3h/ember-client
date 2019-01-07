@@ -25,5 +25,9 @@ r/v/assertStrContainsOnlyInt s/in
             die cat 'Assertion failed: ' cat s/in ' does not only contain an integer.'
         set n/i add n/i 1
 
+r/v/assertIsNonnegative n/in
+    if lt n/in 0
+        die cat 'Assertion failed: ' cat n/in ' is negative.'
+
 r/v/assertIsDc n/in
-    assertStrContainsOnlyInt n/in
+    assertIsNonnegative n/in
