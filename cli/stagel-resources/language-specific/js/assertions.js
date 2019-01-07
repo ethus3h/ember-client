@@ -34,7 +34,7 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -214748364 || int > 2147483647) {
         await implError("Assertion failed: "+int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
     }
 }
