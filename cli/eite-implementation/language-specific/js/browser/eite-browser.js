@@ -98,6 +98,9 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
             }
             break;
+        case "HTML":
+            /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
+            break;
         default:
             await eiteError("Unimplemented render I/O format: " + targetFormat);
             break;

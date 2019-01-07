@@ -42,7 +42,6 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             }
             break;
         case "HTML":
-            /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
             dcarrOutput[0] = "";
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
