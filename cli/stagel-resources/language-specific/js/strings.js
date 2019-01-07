@@ -14,3 +14,10 @@ async function substring(str, intStart, intLength) {
 
     strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
 }
+
+async function len(str) {
+    assertIsStr(str); let intReturn;
+
+    intReturn = str.length; await assertIsInt(intReturn); return intReturn;
+}
+
