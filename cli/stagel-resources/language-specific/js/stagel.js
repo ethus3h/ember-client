@@ -254,17 +254,6 @@ async function assertIsDcarr(dcarr) {
 async function assertIsBytearray(bytearray) {
     await FIXMEUnimplemented("implAssertIsBytearray");
 }
-
-
-// Other assertions
-
-async function assertStrContainsOnlyInt(str) {
-    await assertIsStr(str);
-
-    //TODO: Fake implementation. Should regex match or something instead.
-    await FIXMEUnimplemented("implAssertStrContainsOnlyInt");
-    return await assertIsInt(await intFromStr(str));
-}
 /* type-tools, provides:
     implIntBytearrayLength
     implIntDcarrLength
