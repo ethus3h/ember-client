@@ -38,9 +38,9 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
         await eiteError("implGetEnvironmentRenderTraits was called without any targetFormat!");
     }
     var traits = {};
+    let cs = document.characterSet.toLowerCase();
     switch (targetFormat) {
         case "HTML":
-            let cs = document.characterSet.toLowerCase();
             switch(cs) {
                 case "utf-8":
                     traits.characterEncoding = "UTF-8";
@@ -55,7 +55,6 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
         case "immutableCharacterCells":
             traits.cellTableWidth = -1; // unlimited
             traits.cellTableHeight = -1; // unlimited
-            let cs = document.characterSet.toLowerCase();
             switch(cs) {
                 case "utf-8":
                     traits.characterEncoding = "UTF-8";
