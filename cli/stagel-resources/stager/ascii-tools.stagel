@@ -17,7 +17,7 @@ r/b/asciiIsNewline n/n
     new b/t1
     set b/t1 eq n/n 10
     new b/t2
-    set b/t2 or b/temp eq n/n 13
+    set b/t2 or b/t1 eq n/n 13
     return b/t2
 
 # 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
