@@ -43,6 +43,20 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             break;
         case "HTML":
             /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
+            dcarrOutput[0] = "";
+            intInputLength = await intDcarrLength(dcarrInput);
+            for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
+                let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
+                implLog(dcAtInputIndex);
+                if (await boolDcIsNewline(dcAtInputIndex)) {
+                    intLine = intLine + 1;
+                    dcarrOutput[intLine] = "";
+                }
+                if (await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex) ) {
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
+                    await implLog(await arrayToString(dcarrOutput));
+                }
+            }
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             if (strReturn === "\u0000") {
                 /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
