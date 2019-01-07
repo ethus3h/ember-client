@@ -104,8 +104,8 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             let htmlOutputRootElement = document.getElementById("eiteDocumentRoot");
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
-                if (await boolDcIsNewline(renderBuffer[i])) {
-                    strOutputHtml = strOutputHtml + 
+                if (await boolDcIsNewline(dcAtInputIndex) || await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex)) {
+                    strOutputHtml = strOutputHtml + await strPrintableDcToChar(renderBuffer[i], "HTML");
                 }
             }
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
