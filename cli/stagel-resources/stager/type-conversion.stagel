@@ -6,6 +6,6 @@ r/s/strPrintArr ga/input
     new s/out
     while lt n/i n/count
         set s/out cat s/out strFrom get ga/input n/i
-        set s/out cat s/out ', '
+        set s/out cat s/out ' '
         set n/i add n/i 1
     return s/out
