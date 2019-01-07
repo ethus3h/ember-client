@@ -137,6 +137,7 @@ async function assertIsChar(strIn) {
 async function assertStrContainsOnlyInt(strIn) {
     await assertIsStr(strIn); let voidReturn;
 
+    /* Positive int, specifically. Only digits allowed. */
     let intTemp = 0;
     intTemp = await len(strIn);
     let intI = 0;
@@ -149,10 +150,18 @@ async function assertStrContainsOnlyInt(strIn) {
     }
 }
 
+async function assertIsNonnegative(intIn) {
+    await assertIsInt(intIn); let voidReturn;
+
+    if (await implLt(intIn, 0)) {
+        await implDie(await implCat('Assertion failed: ', await implCat(intIn, ' is negative.')));
+    }
+}
+
 async function assertIsDc(intIn) {
     await assertIsInt(intIn); let voidReturn;
 
-    await assertStrContainsOnlyInt(intIn);
+    await assertIsNonnegative(intIn);
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
 
