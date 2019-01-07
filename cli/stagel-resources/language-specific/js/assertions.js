@@ -34,8 +34,8 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null) {
-        await implError("Assertion failed: "+int+" is not an int.");
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < 0 || int > 4294967295) {
+        await implError("Assertion failed: "+int+" is not an int, or is outside the currently allowed range of 32 bit unsigned (0 to 4,294,967,295).");
     }
 }
 
@@ -61,10 +61,6 @@ async function assertIsGenericItem(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
         await implError("Assertion failed: "+arr+" is not a generic item.");
     }
-}
-
-async function assertIsDc(dc) {
-    await assertStrContainsOnlyInt(dc);
 }
 
 async function assertIsDcarr(dcarr) {
