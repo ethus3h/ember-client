@@ -92,7 +92,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case "integerList":
         case "immutableCharacterCells":
-            let immutableCharCellOutput = document.getElementById("log");
+            let immutableCharCellOutput = document.getElementById("eiteDocumentRoot");
             for (let i = 0; i < renderBuffer.length; i++) {
                 immutableCharCellOutput.innerHTML += renderBuffer[i] + "<br />";
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
@@ -100,6 +100,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             break;
         case "HTML":
             /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
+            let htmlOutputRootElement = document.getElementById("eiteDocumentRoot");
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             if (strReturn === "\u0000") {
                 /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
