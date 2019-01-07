@@ -146,5 +146,20 @@ async function intIsBetween(intN, intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
+async function strPrintArr(genericArrayInput) {
+    await assertIsGenericArray(genericArrayInput); let strReturn;
+
+    let intCount = 0;
+    intCount = await count(genericArrayInput);
+    let intI = 0;
+    intI = 0;
+    let strOut = '';
+    while (await implLt(intI, intCount)) {
+        strOut = await implCat(strOut, await strFrom(await get(genericArrayInput, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strOut; await assertIsStr(strReturn); return strReturn;
+}
 
 // @license-end
