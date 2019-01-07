@@ -162,7 +162,7 @@ async function strPrintArr(genericArrayInput) {
     intI = 0;
     let strOut = '';
     while (await implLt(intI, intCount)) {
-        strOut = await implCat(strOut, await strFrom(await get(genericArrayInput, intI)));
+        strOut = await implCat(await implCat(strOut, ', ', await strFrom(await get(genericArrayInput, intI))));
         intI = await implAdd(intI, 1);
     }
 
