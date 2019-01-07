@@ -222,6 +222,7 @@ async function assertIsFalse(bool) {
 
 async function assertIsInt(int) {
     if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+        console.log(int);
         console.log(int < -2147483648);
         console.log(int > 2147483647);
         console.log((! Number.isInteger(int)));
