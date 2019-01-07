@@ -51,9 +51,15 @@ async function assertIsGeneric(val) {
     }
 }
 
-async function assertIsArray(arr) {
+async function assertIsGenericArray(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
         await implError("Assertion failed: "+arr+" is not an array.");
+    }
+}
+
+async function assertIsGenericItem(arr) {
+    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
+        await implError("Assertion failed: "+arr+" is not a generic item.");
     }
 }
 
