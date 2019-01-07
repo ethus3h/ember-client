@@ -100,7 +100,14 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             break;
         case "HTML":
             /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
+            /* This shouldn't actually do I/O; that should be handled somewhere else I think. This function (implDoRenderIo) is currently handling both doc rendering and I/O. TODO: Split them. */
             let htmlOutputRootElement = document.getElementById("eiteDocumentRoot");
+            let strOutputHtml = "";
+            for (let i = 0; i < renderBuffer.length; i++) {
+                if (await boolDcIsNewline(renderBuffer[i])) {
+                    strOutputHtml = strOutputHtml + 
+                }
+            }
             strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             if (strReturn === "\u0000") {
                 /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
