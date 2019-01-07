@@ -30,14 +30,14 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
-                console.log(dcAtInputIndex);
+                implLog(dcAtInputIndex);
                 if (await boolDcIsNewline(dcAtInputIndex)) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = "";
                 }
                 if (await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex) ) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
-            console.log(dcarrOutput);
+                    await implLog(await arrayToString(dcarrOutput));
                 }
             }
             break;
