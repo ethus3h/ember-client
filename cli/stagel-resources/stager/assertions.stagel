@@ -11,7 +11,8 @@ r/v/assertIsArray ga/in
     assertIsGenericArray ga/in
 
 r/v/assertIsChar s/in
-    
+    if ne 1 len s/in
+        die cat 'Assertion failed: ' cat s/in ' is not a character.'
 
 r/v/assertStrContainsOnlyInt s/in
     new n/temp
