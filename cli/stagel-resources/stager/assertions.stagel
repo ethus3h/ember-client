@@ -23,3 +23,6 @@ r/v/assertStrContainsOnlyInt s/in
         if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
             die cat 'Assertion failed: ' cat s/in ' does not only contain an integer.'
         set n/i add n/i 1
+
+r/v/assertIsDc n/in
+    assertStrContainsOnlyInt n/in
