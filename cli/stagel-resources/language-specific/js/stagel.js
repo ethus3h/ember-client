@@ -66,6 +66,8 @@ async function byteFromChar(strInput) {
 }
 /* arrays, provides:
     append
+    get
+    count
 */
 
 async function append(array1, array2) {
@@ -189,9 +191,9 @@ async function implLt(intA, intB) {
     assertIsFalse
     assertIsInt
     assertIsStr
+    assertIsDc
     assertIsDcarr
     assertIsBytearray
-    assertStrContainsOnlyInt
 */
 
 // Assertions that something is a given type
@@ -219,8 +221,8 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null) {
-        await implError("Assertion failed: "+int+" is not an int.");
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < 0 || int > 2147483647) {
+        await implError("Assertion failed: "+int+" is not an int, or is outside the currently allowed range of 32 bit signed nonnegative (0 to 2,147,483,647).");
     }
 }
 
@@ -246,10 +248,6 @@ async function assertIsGenericItem(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
         await implError("Assertion failed: "+arr+" is not a generic item.");
     }
-}
-
-async function assertIsDc(dc) {
-    await assertStrContainsOnlyInt(dc);
 }
 
 async function assertIsDcarr(dcarr) {

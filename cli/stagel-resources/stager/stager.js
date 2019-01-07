@@ -148,6 +148,12 @@ async function assertStrContainsOnlyInt(strIn) {
         intI = await implAdd(intI, 1);
     }
 }
+
+async function assertIsDc(intIn) {
+    await assertIsInt(intIn); let voidReturn;
+
+    await assertStrContainsOnlyInt(intIn);
+}
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
