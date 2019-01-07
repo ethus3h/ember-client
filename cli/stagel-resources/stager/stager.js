@@ -3,35 +3,39 @@
 async function asciiIsDigit(intN) {
     await assertIsInt(intN); let boolReturn;
 
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 48, 57);
 
-    boolReturn = ; await assertIsBool(boolReturn); return boolReturn;
-    await intIsBetween(intN, 48, 57);
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function asciiIsPrintable(intN) {
     await assertIsInt(intN); let boolReturn;
 
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 32, 126);
 
-    boolReturn = ; await assertIsBool(boolReturn); return boolReturn;
-    await intIsBetween(intN, 32, 126);
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function asciiIsSpace(intN) {
     await assertIsInt(intN); let boolReturn;
 
+    let boolTemp = false;
+    boolTemp = await implEq(intN, 32);
 
-    boolReturn = ; await assertIsBool(boolReturn); return boolReturn;
-    await implEq(intN, 32);
+    boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function asciiIsNewline(intN) {
     await assertIsInt(intN); let boolReturn;
 
-    let boolTemp = false;
-    boolTemp = await implEq(intN, 10);
+    let boolT1 = false;
+    boolT1 = await implEq(intN, 10);
+    let boolT2 = false;
+    boolT2 = await or(boolTemp, await implEq(intN, 13));
 
-    boolReturn = ; await assertIsBool(boolReturn); return boolReturn;
-    await or(boolTemp, await implEq(intN, 13));
+    boolReturn = boolT2; await assertIsBool(boolReturn); return boolReturn;
 }
 /* 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p */
 /* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
