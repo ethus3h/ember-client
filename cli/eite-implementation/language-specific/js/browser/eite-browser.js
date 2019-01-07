@@ -40,6 +40,7 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
     var traits = {};
     switch (targetFormat) {
         case "HTML":
+            let cs = document.characterSet.toLowerCase();
             switch(cs) {
                 case "utf-8":
                     traits.characterEncoding = "UTF-8";
