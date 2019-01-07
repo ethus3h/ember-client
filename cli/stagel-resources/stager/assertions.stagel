@@ -15,6 +15,7 @@ r/v/assertIsChar s/in
         die cat 'Assertion failed: ' cat s/in ' is not a character.'
 
 r/v/assertStrContainsOnlyInt s/in
+    # Positive int, specifically. Only digits allowed.
     new n/temp
     set n/temp len s/in
     new n/i
