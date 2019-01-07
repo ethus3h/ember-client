@@ -27,3 +27,9 @@ async function strFrom(input) {
 
     strReturn = String(input); await assertIsStr(strReturn); return strReturn;
 }
+
+async function byteFromChar(strInput) {
+    await assertIsChar(strInput); let intReturn;
+
+    intReturn = strInput.charCodeAt(0); await assertIsInt(intReturn); return intReturn;
+}
