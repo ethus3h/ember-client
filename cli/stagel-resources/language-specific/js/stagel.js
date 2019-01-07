@@ -36,7 +36,7 @@ async function implMod(intA, intB) {
 */
 
 async function intFromStr(str) {
-    await assertIsStr(str); let intReturn;
+    await assertStrContainsOnlyInt(str); let intReturn;
 
     intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
 }
@@ -57,6 +57,12 @@ async function strFrom(input) {
     await assertIsGeneric(input); let strReturn;
 
     strReturn = String(input); await assertIsStr(strReturn); return strReturn;
+}
+
+async function byteFromChar(strInput) {
+    await assertIsChar(strInput); let intReturn;
+
+    intReturn = strInput.charCodeAt(0); await assertIsInt(intReturn); return intReturn;
 }
 /* arrays, provides:
     append

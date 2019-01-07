@@ -72,6 +72,29 @@ async function assertIsArray(genericArrayIn) {
     /* Just a convenience wrapper */
     await assertIsGenericArray(genericArrayIn);
 }
+
+async function assertIsChar(strIn) {
+    await assertIsStr(strIn); let voidReturn;
+
+    if (await ne(1, await len(strIn))) {
+        await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a character.')));
+    }
+}
+
+async function assertStrContainsOnlyInt(strIn) {
+    await assertIsStr(strIn); let voidReturn;
+
+    let intTemp = 0;
+    intTemp = await len(strIn);
+    let intI = 0;
+    intI = 0;
+    while (await implLt(intI, intTemp)) {
+        if (await implNot(await asciiIsDigit(await byteFromChar(await strCharAtPos(strIn, intI))))) {
+            await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' does not only contain an integer.')));
+        }
+        intI = await implAdd(intI, 1);
+    }
+}
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
