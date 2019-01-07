@@ -37,7 +37,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                 }
                 if (await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex) ) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
-                    await implLog(await arrayToString(dcarrOutput));
+                    await implLog(await strPrintArr(dcarrOutput));
                 }
             }
             break;
@@ -53,7 +53,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                 }
                 if (await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex) ) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
-                    await implLog(await arrayToString(dcarrOutput));
+                    await implLog(await strPrintArr(dcarrOutput));
                 }
             }
             break;
