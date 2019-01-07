@@ -52,6 +52,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                     dcarrOutput.push(dcAtInputIndex);
                 }
             }
+            await implLog(await strPrintArr(dcarrOutput));
             break;
         default:
             await eiteError("Unimplemented document render target format: " + strTargetFormat);
