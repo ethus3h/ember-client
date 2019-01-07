@@ -154,7 +154,9 @@ async function assertIsNonnegative(intIn) {
     await assertIsInt(intIn); let voidReturn;
 
     if (await implLt(intIn, 0)) {
-        await implDie(await implCat('Assertion failed: ', await implCat(intIn, ' is negative.')));
+        let strTemp = '';
+        strTemp = await strFromInt(intIn);
+        await implDie(await implCat('Assertion failed: ', await implCat(strTemp, ' is negative.')));
     }
 }
 
