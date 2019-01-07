@@ -5,3 +5,7 @@ r/v/assertIsByte n/in
     set s/in strFromInt n/in
     if not and b/temp ge n/in 0
         die cat 'Assertion failed: ' cat s/in ' is not a byte.'
+
+r/v/assertIsArray ga/in
+    # Just a convenience wrapper
+    assertIsGenericArray ga/in
