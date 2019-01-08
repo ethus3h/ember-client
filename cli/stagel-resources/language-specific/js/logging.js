@@ -89,21 +89,13 @@ async function internalDebugFlush() {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    await implDebug("Entered block parameter list: " + strBlockName, 3);
-    if (strBlockName === undefined) {
-        await implDie("Block entry specified but no block name given");
-    }
-    await stagelDebugCallstack.push(strBlockName);
-}
-
-async function internalDebugStackEnter(strBlockName) {
     if (strBlockName === undefined) {
         await implDie("Block entry specified but no block name given");
     }
 
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
-    await implDebug("Entered block: " + await stagelDebugCallstack.slice(-1)[0] + " (" + await internalDebugFlush() + ")", 2);
+    await implDebug("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
 }
 
 async function internalDebugStackExit() {

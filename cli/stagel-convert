@@ -824,7 +824,6 @@ codegenRoutineDefinitionStart() {
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
-        codegenOutput "await internalDebugStackEnter('$codegenRoutineName'); "
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenOutput "await internalDebugCollect('"
@@ -837,9 +836,9 @@ codegenRoutineDefinitionStart() {
                 codegenType "${codegenArgList[$k - 1]}"
                 codegenOutput "${codegenArgList[$k]^}"
                 if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                    codegenOutput "); await internalDebugStackEnterEnd();"
+                    codegenOutput "); await internalDebugStackEnter('$codegenRoutineName');"
                 else
-                    codegenOutput "); await internalDebugStackEnterEnd(); "
+                    codegenOutput "); await internalDebugStackEnter('$codegenRoutineName'); "
                 fi
             fi
         done
