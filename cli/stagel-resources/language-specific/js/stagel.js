@@ -154,8 +154,8 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    console.log(strMessage);
-    console.log(stagelDebugCallstack);
+    /* console.log(strMessage);
+    console.log(stagelDebugCallstack); */
     if(Object.keys(stagelDebugCallstack).length > 0) {
         console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
     }
