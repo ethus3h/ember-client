@@ -79,6 +79,9 @@ async function internalDebugFlush() {
 
 async function internalDebugStackEnter(strBlockName) {
     await implDebug("Entered block parameter list: " + strBlockName, 3);
+    if (strBlockName === undefined) {
+        implDie("Block entry specified but no block name given");
+    }
     await stagelDebugCallstack.push(strBlockName);
 }
 
