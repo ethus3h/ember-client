@@ -9,6 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 input="$1"
 filename="$(basename "$input")"
+filename="${filename//.stagel}" # Don't include extension in name when displaying it in backtraces
 targetLang="$2"
 
 tokens=()
@@ -834,7 +835,7 @@ codegenRoutineDefinitionStart() {
                 codegenOutput "${codegenArgList[$k]^} + '; '); "
             fi
         done
-        codegenOutput "await internalDebugStackEnter('$filename:$codegenRoutineName');"
+        codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
         if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
             codegenOutput " "
         fi
