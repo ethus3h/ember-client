@@ -856,8 +856,11 @@ codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenDedent
-        codegenOutput "await implDebugStackExit();"$'\n'
+        if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
+            # We do this here for void functions
+            codegenDedent
+            codegenOutput "await implDebugStackExit();"$'\n'
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
