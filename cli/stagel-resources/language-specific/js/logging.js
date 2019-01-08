@@ -45,10 +45,10 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    /* console.log(strMessage);
-    console.log(stagelDebugCallstack); */
+    console.log(strMessage);
+    /* console.log(stagelDebugCallstack); */
     if(await Object.keys(stagelDebugCallstack).length > 0) {
-        await console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
+        await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
 }
 
