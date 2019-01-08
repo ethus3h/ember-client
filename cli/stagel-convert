@@ -8,6 +8,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Takes a StageL file as first argument, and prints out equivalent code in the language of the second argument (bash/js).
 
 input="$1"
+filename="$(basename "$input")"
 targetLang="$2"
 
 tokens=()
@@ -833,7 +834,7 @@ codegenRoutineDefinitionStart() {
                 codegenOutput "${codegenArgList[$k]^} + '; '); "
             fi
         done
-        codegenOutput "await internalDebugStackEnter('$codegenRoutineName');"
+        codegenOutput "await internalDebugStackEnter('$filename:$codegenRoutineName');"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenOutput "await assertIs"
