@@ -7,8 +7,8 @@ async function asciiIsDigit(intN) {
     boolTemp = await intIsBetween(intN, 48, 57);
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function asciiIsPrintable(intN) {
     await implDebugStackEnter('asciiIsPrintable'); await implDebugCollect('ident-n N; '); await assertIsInt(intN); let boolReturn;
 
@@ -16,8 +16,8 @@ async function asciiIsPrintable(intN) {
     boolTemp = await intIsBetween(intN, 32, 126);
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function asciiIsSpace(intN) {
     await implDebugStackEnter('asciiIsSpace'); await implDebugCollect('ident-n N; '); await assertIsInt(intN); let boolReturn;
 
@@ -25,8 +25,8 @@ async function asciiIsSpace(intN) {
     boolTemp = await implEq(intN, 32);
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function asciiIsNewline(intN) {
     await implDebugStackEnter('asciiIsNewline'); await implDebugCollect('ident-n N; '); await assertIsInt(intN); let boolReturn;
 
@@ -36,9 +36,9 @@ async function asciiIsNewline(intN) {
     boolT2 = await or(boolT1, await implEq(intN, 13));
 
     boolReturn = boolT2; await assertIsBool(boolReturn); return boolReturn;
-}
+await implDebugStackExit(); }
 /* 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p */
-await implDebugStackExit(); /* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
+/* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
 /* 2  STX    18 DC2    34 "    50 2    66 B    82 R    98  b    114 r */
 /* 3  ETX    19 DC3    35 #    51 3    67 C    83 S    99  c    115 s */
 /* 4  EOT    20 DC4    36 $    52 4    68 D    84 T    100 d    116 t */
@@ -60,8 +60,8 @@ async function strCharAtPos(strStr, intIndex) {
     strTemp = await substring(strStr, intIndex, 1);
 
     strReturn = strTemp; await assertIsStr(strReturn); return strReturn;
-}
-await implDebugStackExit(); async function or(boolA, boolB) {
+await implDebugStackExit(); }
+async function or(boolA, boolB) {
     await implDebugStackEnter('or'); await implDebugCollect('ident-b A; '); await assertIsBool(boolA); await implDebugCollect('ident-b B; '); await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
@@ -69,8 +69,8 @@ await implDebugStackExit(); async function or(boolA, boolB) {
     boolTemp = await implNot(await implAnd(boolTemp, await implNot(boolB)));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function nor(boolA, boolB) {
     await implDebugStackEnter('nor'); await implDebugCollect('ident-b A; '); await assertIsBool(boolA); await implDebugCollect('ident-b B; '); await assertIsBool(boolB); let boolReturn;
 
@@ -78,8 +78,8 @@ async function nor(boolA, boolB) {
     boolTemp = await implNot(await or(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function nand(boolA, boolB) {
     await implDebugStackEnter('nand'); await implDebugCollect('ident-b A; '); await assertIsBool(boolA); await implDebugCollect('ident-b B; '); await assertIsBool(boolB); let boolReturn;
 
@@ -87,8 +87,8 @@ async function nand(boolA, boolB) {
     boolTemp = await implNot(await implAnd(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function xor(boolA, boolB) {
     await implDebugStackEnter('xor'); await implDebugCollect('ident-b A; '); await assertIsBool(boolA); await implDebugCollect('ident-b B; '); await assertIsBool(boolB); let boolReturn;
 
@@ -97,8 +97,8 @@ async function xor(boolA, boolB) {
     boolTemp = await implAnd(boolTemp, await or(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function xnor(boolA, boolB) {
     await implDebugStackEnter('xnor'); await implDebugCollect('ident-b A; '); await assertIsBool(boolA); await implDebugCollect('ident-b B; '); await assertIsBool(boolB); let boolReturn;
 
@@ -106,8 +106,8 @@ async function xnor(boolA, boolB) {
     boolTemp = await implNot(await xor(boolA, boolB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); async function assertIsByte(intIn) {
+await implDebugStackExit(); }
+async function assertIsByte(intIn) {
     await implDebugStackEnter('assertIsByte'); await implDebugCollect('ident-n In; '); await assertIsInt(intIn); let voidReturn;
 
     let boolTemp = false;
@@ -117,23 +117,23 @@ await implDebugStackExit(); async function assertIsByte(intIn) {
     if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
     }
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function assertIsArray(genericArrayIn) {
     await implDebugStackEnter('assertIsArray'); await implDebugCollect('ident-ga In; '); await assertIsGenericArray(genericArrayIn); let voidReturn;
 
     /* Just a convenience wrapper */
     await assertIsGenericArray(genericArrayIn);
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function assertIsChar(strIn) {
     await implDebugStackEnter('assertIsChar'); await implDebugCollect('ident-s In; '); await assertIsStr(strIn); let voidReturn;
 
     if (await ne(1, await len(strIn))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a character.')));
     }
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function assertStrContainsOnlyInt(strIn) {
     await implDebugStackEnter('assertStrContainsOnlyInt'); await implDebugCollect('ident-s In; '); await assertIsStr(strIn); let voidReturn;
 
@@ -148,8 +148,8 @@ async function assertStrContainsOnlyInt(strIn) {
         }
         intI = await implAdd(intI, 1);
     }
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function assertIsNonnegative(intIn) {
     await implDebugStackEnter('assertIsNonnegative'); await implDebugCollect('ident-n In; '); await assertIsInt(intIn); let voidReturn;
 
@@ -158,14 +158,14 @@ async function assertIsNonnegative(intIn) {
         strTemp = await strFromInt(intIn);
         await implDie(await implCat('Assertion failed: ', await implCat(strTemp, ' is negative.')));
     }
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function assertIsDc(intIn) {
     await implDebugStackEnter('assertIsDc'); await implDebugCollect('ident-n In; '); await assertIsInt(intIn); let voidReturn;
 
     await assertIsNonnegative(intIn);
-}
-await implDebugStackExit(); /* Calling a comparison with different types is an error. All types must be same type. */
+await implDebugStackExit(); }
+/* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
     await implDebugStackEnter('ne'); await implDebugCollect('ident-g A; '); await assertIsGeneric(genericA); await implDebugCollect('ident-g B; '); await assertIsGeneric(genericB); let boolReturn;
@@ -174,8 +174,8 @@ async function ne(genericA, genericB) {
     boolTemp = await implNot(await implEq(genericA, genericB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function ge(intA, intB) {
     await implDebugStackEnter('ge'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -184,8 +184,8 @@ async function ge(intA, intB) {
     boolTemp = await or(boolTemp, await implGt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function le(intA, intB) {
     await implDebugStackEnter('le'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -194,8 +194,8 @@ async function le(intA, intB) {
     boolTemp = await or(boolTemp, await implLt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function ngt(intA, intB) {
     await implDebugStackEnter('ngt'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -203,8 +203,8 @@ async function ngt(intA, intB) {
     boolTemp = await implNot(await implGt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function nlt(intA, intB) {
     await implDebugStackEnter('nlt'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -212,8 +212,8 @@ async function nlt(intA, intB) {
     boolTemp = await implNot(await implLt(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function nge(intA, intB) {
     await implDebugStackEnter('nge'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -221,8 +221,8 @@ async function nge(intA, intB) {
     boolTemp = await implNot(await ge(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 async function nle(intA, intB) {
     await implDebugStackEnter('nle'); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
@@ -230,8 +230,8 @@ async function nle(intA, intB) {
     boolTemp = await implNot(await le(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); async function intIsBetween(intN, intA, intB) {
+await implDebugStackExit(); }
+async function intIsBetween(intN, intA, intB) {
     await implDebugStackEnter('intIsBetween'); await implDebugCollect('ident-n N; '); await assertIsInt(intN); await implDebugCollect('ident-n A; '); await assertIsInt(intA); await implDebugCollect('ident-n B; '); await assertIsInt(intB); let boolReturn;
 
     /* Checks whether N is within the range A and B, including endpoints */
@@ -245,8 +245,8 @@ await implDebugStackExit(); async function intIsBetween(intN, intA, intB) {
     boolTemp = await le(intT3, 0);
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); return boolReturn;
-}
-await implDebugStackExit(); async function strPrintArr(genericArrayInput) {
+await implDebugStackExit(); }
+async function strPrintArr(genericArrayInput) {
     await implDebugStackEnter('strPrintArr'); await implDebugCollect('ident-ga Input; '); await assertIsGenericArray(genericArrayInput); let strReturn;
 
     let intCount = 0;
@@ -261,6 +261,6 @@ await implDebugStackExit(); async function strPrintArr(genericArrayInput) {
     }
 
     strReturn = strOut; await assertIsStr(strReturn); return strReturn;
-}
-await implDebugStackExit(); 
+await implDebugStackExit(); }
+
 // @license-end
