@@ -6,6 +6,7 @@
 */
 
 var STAGEL_DEBUG;
+let stagelDebugCallstack = [];
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
@@ -29,6 +30,15 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
+}
+
+async function implDebugStackEnter(strBlockName) {
+    implDebug(strBlockName, 2);
+    stagelDebugCallstack.push(strBlockName);
+}
+
+async function implDebugStackExit() {
+    implDebug(stagelDebugCallstack.pop(), 2);
 }
 
 async function implDebug(strMessage, intLevel) {
