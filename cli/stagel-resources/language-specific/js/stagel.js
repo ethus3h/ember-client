@@ -190,18 +190,16 @@ async function internalDebugFlush() {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    console.log("Stackoooooo");
     await implDebug("Entered block parameter list: " + strBlockName, 3);
     await stagelDebugCallstack.push(strBlockName);
 }
 
-async function internalDebugStackEnterEnd(strBlockName) {
+async function internalDebugStackEnterEnd() {
     await implDebug("Entered block: " + strBlockName + " (" + await internalDebugFlush() + ")", 2);
-    await stagelDebugCallstack.push(strBlockName);
 }
 
 async function internalDebugStackExit() {
-    if(stagelDebugCallstack[-1] === undefined) {
+    if (stagelDebugCallstack[-1] === undefined) {
         implDie("Exited block, but no block on stack");
     }
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
