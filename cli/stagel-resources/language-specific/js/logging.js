@@ -84,12 +84,15 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackEnterEnd(strBlockName) {
+    if (strBlockName === undefined) {
+        implDie("Block name ")
+    }
     await implDebug("Entered block: " + strBlockName + " (" + await internalDebugFlush() + ")", 2);
     await stagelDebugCallstack.push(strBlockName);
 }
 
 async function internalDebugStackExit() {
-    if(stagelDebugCallstack[-1] === undefined) {
+    if (stagelDebugCallstack[-1] === undefined) {
         implDie("Exited block, but no block on stack");
     }
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
