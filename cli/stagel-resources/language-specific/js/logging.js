@@ -76,6 +76,15 @@ async function FIXMEUnimplemented(strLocation) {
 
 // Internal functions
 
+async function internalDebugQuiet(strMessage, intLevel) {
+    await assertIsStr(strMessage); await assertIsInt(intLevel);
+    // Log the provided message, but don't print a trace for it
+
+    if (intLevel <= STAGEL_DEBUG) {
+        await implLog(strMessage);
+    }
+}
+
 async function internalDebugCollect(strMessageFragment) {
     stagelDebugCollection = stagelDebugCollection + strMessageFragment;
 }
