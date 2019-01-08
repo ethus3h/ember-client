@@ -171,7 +171,7 @@ async function implDebug(strMessage, intLevel) {
         implLog(strMessage);
     }
 
-    console.log(strMessage);
+    console.log(strMessage, intLevel);
 }
 
 async function setDebugLevel(intLevel) {
