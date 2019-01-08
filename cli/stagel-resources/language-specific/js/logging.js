@@ -55,7 +55,12 @@ async function implDebugStackExit() {
 }
 
 async function implDebugPrintStack() {
-    while()
+    let i=0;
+    let count;
+    count = await Object.keys(array).length
+    while(i<stagelDebugCallstack.count) {
+        
+    }
     await implDebugCollect()
 }
 
@@ -73,8 +78,6 @@ async function setDebugLevel(intLevel) {
     // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
     STAGEL_DEBUG=intLevel;
-
-    console.log(strMessage);
 }
 
 async function FIXMEUnimplemented(strLocation) {
