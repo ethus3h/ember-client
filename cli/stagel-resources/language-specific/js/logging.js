@@ -29,6 +29,22 @@ async function implLog(strMessage) {
     console.log(strMessage);
 }
 
+async function implDebug(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    console.log(strMessage);
+}
+
+async function setDebugLevel(intLevel) {
+    await assertIsInt(intLevel);
+    // Set the debug level to the level specified. Int from 0 to 4 inclusive. Default 0.
+
+    STAGEL_DEBUG=intLevel;
+
+    console.log(strMessage);
+}
+
 async function FIXMEUnimplemented(strLocation) {
     await assertIsStr(strLocation);
 
