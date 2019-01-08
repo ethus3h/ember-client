@@ -46,9 +46,11 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
-    /* console.log(stagelDebugCallstack); */
     if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
+    }
+    else {
+        await console.log("(Previous message sent from non-StageL code.)");
     }
 }
 
