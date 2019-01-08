@@ -90,7 +90,7 @@ async function internalDebugStackEnterEnd() {
 }
 
 async function internalDebugStackExit() {
-    if (stagelDebugCallstack[-1] === undefined) {
+    if (stagelDebugCallstack.slice(-1)[0] === undefined) {
         implDie("Exited block, but no block on stack");
     }
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
