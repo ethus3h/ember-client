@@ -7,6 +7,7 @@
 
 var STAGEL_DEBUG;
 let stagelDebugCallstack = [];
+let stagelDebugAccumulate = "";
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
@@ -22,7 +23,7 @@ async function implWarn(strMessage) {
 
     await FIXMEUnimplemented("implWarn");
 
-    console.log(strMessage);
+    implLog(strMessage);
 }
 
 async function implLog(strMessage) {
@@ -32,13 +33,22 @@ async function implLog(strMessage) {
     console.log(strMessage);
 }
 
+async function implDebugAccumulate(strMessageFragment) {
+    stagelDebugAccumulate = stagelDebugAccumulate + strMessageFragment;
+}
+
+async function implDebugFlush(strMessageFragment) {
+    implDebug("Resetting ")
+    stagelDebugAccumulate = stagelDebugAccumulate + strMessageFragment;
+}
+
 async function implDebugStackEnter(strBlockName) {
-    implDebug(strBlockName, 2);
+    implDebug("Entered block: " + strBlockName, 2);
     stagelDebugCallstack.push(strBlockName);
 }
 
 async function implDebugStackExit() {
-    implDebug(stagelDebugCallstack.pop(), 2);
+    implDebug("Exited block: " + stagelDebugCallstack.pop(), 2);
 }
 
 async function implDebug(strMessage, intLevel) {
