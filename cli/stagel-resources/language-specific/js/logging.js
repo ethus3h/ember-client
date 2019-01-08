@@ -6,6 +6,9 @@
 */
 
 var STAGEL_DEBUG;
+if (STAGEL_DEBUG === undefined) {
+    STAGEL_DEBUG = 0;
+}
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
 
