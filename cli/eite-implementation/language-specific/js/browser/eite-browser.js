@@ -18,11 +18,10 @@ async function implError(strMessage) {
     }
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
 
-    console.trace();
-
     await FIXMEUnimplemented("implError");
     await implWarn(strMessage);
 
+    console.trace();
     alert("EITE reported error!: " + strMessage);
 }
 
@@ -30,10 +29,10 @@ async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    console.trace();
-
     await FIXMEUnimplemented("implWarn");
     await implLog(strMessage);
+
+    console.trace();
 }
 
 // Fully platform-specific code
@@ -102,7 +101,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case "integerList":
         case "immutableCharacterCells":
-            let immutableCharCellOutput = document.getElementById("eiteDocumentRoot");
+            let immutableCharCellOutput = await document.getElementById("eiteDocumentRoot");
             for (let i = 0; i < renderBuffer.length; i++) {
                 immutableCharCellOutput.innerHTML += renderBuffer[i] + "<br />";
                 immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
@@ -111,10 +110,11 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
         case "HTML":
             /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
             /* This shouldn't actually do I/O; that should be handled somewhere else I think. This function (implDoRenderIo) is currently handling both doc rendering and I/O. TODO: Split them. */
-            let htmlOutputRootElement = document.getElementById("eiteDocumentRoot");
+            let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
                 if (await boolDcIsPrintable(renderBuffer[i]) || await boolDcIsNewline(renderBuffer[i]) || await boolDcIsSpace(renderBuffer[i])) {
+                    console.log("Ok for "+renderBuffer[i]);
                     strOutputHtml = strOutputHtml + await strPrintableDcToChar(renderBuffer[i], "HTML");
                 }
             }
