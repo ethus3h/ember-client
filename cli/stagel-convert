@@ -824,10 +824,10 @@ codegenRoutineDefinitionStart() {
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
-        codegenOutput "await implDebugStackEnter('$codegenRoutineName'); "
+        codegenOutput "await internalDebugStackEnter('$codegenRoutineName'); "
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenOutput "await implDebugCollect('${codegenArgList[$k - 1]} ${codegenArgList[$k]^}; '); await assertIs"
+                codegenOutput "await internalDebugCollect('${codegenArgList[$k - 1]} ${codegenArgList[$k]^}; '); await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
@@ -863,7 +863,7 @@ codegenRoutineDefinitionPreEnd() {
             codegenPrintIndentationSpaces
             codegenIndent=$(( codegenIndent - 1 ))
         fi
-        codegenOutput "await implDebugStackExit();"
+        codegenOutput "await internalDebugStackExit();"
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
         else
