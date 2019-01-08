@@ -7,7 +7,7 @@
 
 var STAGEL_DEBUG;
 let stagelDebugCallstack = [];
-let stagelDebugAccumulate = "";
+let stagelDebugCollection = "";
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
@@ -33,13 +33,13 @@ async function implLog(strMessage) {
     console.log(strMessage);
 }
 
-async function implDebugAccumulate(strMessageFragment) {
-    stagelDebugAccumulate = stagelDebugAccumulate + strMessageFragment;
+async function implDebugCollect(strMessageFragment) {
+    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
 }
 
 async function implDebugFlush(strMessageFragment) {
-    implDebug("Resetting ")
-    stagelDebugAccumulate = stagelDebugAccumulate + strMessageFragment;
+    implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 2);
+    stagelDebugCollection = "";
 }
 
 async function implDebugStackEnter(strBlockName) {
