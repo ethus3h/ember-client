@@ -202,8 +202,8 @@ async function internalDebugQuiet(strMessage, intLevel) {
     // Log the provided message, but don't print a trace for it
 
     if (intLevel <= STAGEL_DEBUG) {
-        await implLog(strMessage);
-        /* console.log(strMessage); */
+        // await implLog(strMessage);
+        console.log(strMessage);
     }
 }
 
@@ -224,9 +224,6 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
-    await console.log("Stack entry "+strBlockName);
-    await console.log(stagelDebugCollection);
-    await console.log(stagelDebugCallstack);
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
     await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
