@@ -99,6 +99,8 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackExit() {
+    console.log("Exiting block");
+    console.log(stagelDebugCallstack);
     if (stagelDebugCallstack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
