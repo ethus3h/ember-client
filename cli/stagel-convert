@@ -838,12 +838,12 @@ codegenRoutineDefinitionStart() {
                 if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
                     codegenOutput "); await internalDebugStackEnter('$codegenRoutineName');"
                 else
-                    codegenOutput "); await internalDebugStackEnter('$codegenRoutineName'); "
+                    codegenOutput "); "
                 fi
             fi
         done
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
-            codegenOutput "let "
+            codegenOutput "await internalDebugStackEnter('$codegenRoutineName'); let "
             codegenType "$codegenRoutineType"
             codegenOutput "Return;"$'\n\n'
         fi
