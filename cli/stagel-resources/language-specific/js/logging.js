@@ -22,6 +22,13 @@ async function implDie(strMessage) {
     throw strMessage;
 }
 
+async function implError(strMessage) {
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+    await FIXMEUnimplemented("implError");
+    await implWarn(strMessage);
+}
+
 async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
