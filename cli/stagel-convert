@@ -653,7 +653,9 @@ codegenCommandInvocationStart() {
             codegenType "$returnType" true
             codegenOutput "("
             codegenType "$returnType"
-            codegenOutput "Return); return "
+            codegenOutput "Return); "
+            codegenRoutineDefinitionPreEnd
+            codegenOutput "return "
             codegenType "$returnType"
             codegenOutput "Return;"$'\n'
             ;;
@@ -857,7 +859,8 @@ codegenRoutineDefinitionPreEnd() {
     case "$targetLang" in
     "js")
         [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenDedent
-        codegenOutput "await implDebugStackExit();"$'\n'
+        codegenOutput "await implDebugStackExit();"
+        [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenOutput $'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
