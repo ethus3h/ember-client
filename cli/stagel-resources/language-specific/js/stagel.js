@@ -155,6 +155,7 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
+    console.log(stagelDebugCallstack);
     if(Object.keys(stagelDebugCallstack).length > 0) {
         console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
     }
@@ -189,7 +190,7 @@ async function internalDebugCollect(strMessageFragment) {
 }
 
 async function internalDebugFlush() {
-    console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection);
+    /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
     temp = stagelDebugCollection;
     stagelDebugCollection = "";
@@ -219,7 +220,6 @@ async function internalDebugPrintStack() {
     let i=0;
     let count;
     count = Object.keys(stagelDebugCallstack).length;
-    console.log(stagelDebugCallstack);
     let result="";
     while (i<count) {
         /* FIXME: This could probably be optimized if it's problematically slow. */
