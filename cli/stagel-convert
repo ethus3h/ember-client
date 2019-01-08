@@ -829,7 +829,9 @@ codegenRoutineDefinitionStart() {
             if (( k % 2 )); then
                 codegenOutput "await internalDebugCollect('"
                 codegenType "${codegenArgList[$k - 1]}"
-                codegenOutput " ${codegenArgList[$k]^}; '); await assertIs"
+                codegenOutput " ${codegenArgList[$k]^} = ' + "
+                codegenType "${codegenArgList[$k - 1]}"
+                codegenOutput "${codegenArgList[$k]^} + '; '); await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
