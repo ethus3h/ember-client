@@ -70,7 +70,7 @@ async function internalDebugCollect(strMessageFragment) {
 }
 
 async function internalDebugFlush() {
-    console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection);
+    /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
     temp = stagelDebugCollection;
     stagelDebugCollection = "";
