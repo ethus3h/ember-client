@@ -85,7 +85,7 @@ async function internalDebugStackEnter(strBlockName) {
 
 async function internalDebugStackEnterEnd(strBlockName) {
     if (strBlockName === undefined) {
-        implDie("Block name ")
+        implDie("Block name not given when calling internalDebugStackEnterEnd")
     }
     await implDebug("Entered block: " + strBlockName + " (" + await internalDebugFlush() + ")", 2);
     await stagelDebugCallstack.push(strBlockName);
