@@ -852,6 +852,19 @@ codegenRoutineDefinitionStart() {
     codegenArgList=()
 }
 
+codegenRoutineDefinitionPreEnd() {
+    codegenDebug "Routine definition end" "${@}" >&2
+    case "$targetLang" in
+    "js")
+        codegenOutput "await implDebugStackExit(); "
+        # codegenOutput "}"$'\n'
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
@@ -997,8 +1010,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     blockStack+=("plain-block" "")
                     ;;
                 dedent)
-                    echo "BOLUCHERCUHEOCRUHCREHUC ${blockStack[-1]}" 1>&2
-                    [[ "${blockStack[-1]}" == "uuuu" ]] && codegenRoutineDefinitionPreEnd
+                    [[ "${blockStack[-2]}" == ident-r* ]] && codegenRoutineDefinitionPreEnd
                     codegenDedent
                     unset 'stateStack[-1]'
                     blockStackRemoveLast
