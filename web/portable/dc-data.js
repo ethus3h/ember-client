@@ -26,7 +26,7 @@ async function strDcDataLookupByValue(strDataset, intFilterField, strFilterValue
 async function strDcGetField(dc, intFieldNumber) {
     await assertIsDc(dc); await assertIsInt(intFieldNumber); let strReturn;
 
-    strReturn = await strDcDataLookupById("DcData", await intFromStr(dc) + 1, intFieldNumber); await assertIsStr(strReturn); return strReturn;
+    strReturn = await strDcDataLookupById("DcData", dc + 1, intFieldNumber); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetName(dc) {
