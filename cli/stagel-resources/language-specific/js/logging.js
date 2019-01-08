@@ -96,7 +96,8 @@ async function internalDebugStackEnter(strBlockName) {
     await stagelDebugCallstack.push(strBlockName);
 }
 
-async function internalDebugStackEnterEnd() {
+async function internalDebugStackEnter(strBlockName) {
+    
     await implDebug("Entered block: " + await stagelDebugCallstack.slice(-1)[0] + " (" + await internalDebugFlush() + ")", 2);
 }
 
