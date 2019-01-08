@@ -1,7 +1,7 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
 async function asciiIsDigit(intN) {
-    await internalDebugStackEnter('asciiIsDigit'); await internalDebugCollect('int N; '); await assertIsInt(intN); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await assertIsInt(intN); await internalDebugStackEnter('asciiIsDigit'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await intIsBetween(intN, 48, 57);
@@ -10,7 +10,7 @@ async function asciiIsDigit(intN) {
 }
 
 async function asciiIsPrintable(intN) {
-    await internalDebugStackEnter('asciiIsPrintable'); await internalDebugCollect('int N; '); await assertIsInt(intN); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await assertIsInt(intN); await internalDebugStackEnter('asciiIsPrintable'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await intIsBetween(intN, 32, 126);
@@ -19,7 +19,7 @@ async function asciiIsPrintable(intN) {
 }
 
 async function asciiIsSpace(intN) {
-    await internalDebugStackEnter('asciiIsSpace'); await internalDebugCollect('int N; '); await assertIsInt(intN); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await assertIsInt(intN); await internalDebugStackEnter('asciiIsSpace'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implEq(intN, 32);
@@ -28,7 +28,7 @@ async function asciiIsSpace(intN) {
 }
 
 async function asciiIsNewline(intN) {
-    await internalDebugStackEnter('asciiIsNewline'); await internalDebugCollect('int N; '); await assertIsInt(intN); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await assertIsInt(intN); await internalDebugStackEnter('asciiIsNewline'); let boolReturn;
 
     let boolT1 = false;
     boolT1 = await implEq(intN, 10);
@@ -54,7 +54,7 @@ async function asciiIsNewline(intN) {
 /* 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~ */
 /* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
 async function strCharAtPos(strStr, intIndex) {
-    await internalDebugStackEnter('strCharAtPos'); await internalDebugCollect('str Str; '); await assertIsStr(strStr); await internalDebugStackEnterEnd(); await internalDebugCollect('int Index; '); await assertIsInt(intIndex); await internalDebugStackEnterEnd(); let strReturn;
+    await internalDebugCollect('str Str = ' + strStr + '; '); await assertIsStr(strStr); await internalDebugStackEnter('strCharAtPos'); await internalDebugCollect('int Index = ' + intIndex + '; '); await assertIsInt(intIndex); await internalDebugStackEnter('strCharAtPos'); let strReturn;
 
     let strTemp = '';
     strTemp = await substring(strStr, intIndex, 1);
@@ -62,7 +62,7 @@ async function strCharAtPos(strStr, intIndex) {
     strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 async function or(boolA, boolB) {
-    await internalDebugStackEnter('or'); await internalDebugCollect('bool A; '); await assertIsBool(boolA); await internalDebugStackEnterEnd(); await internalDebugCollect('bool B; '); await assertIsBool(boolB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await assertIsBool(boolA); await internalDebugStackEnter('or'); await internalDebugCollect('bool B = ' + boolB + '; '); await assertIsBool(boolB); await internalDebugStackEnter('or'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(boolA);
@@ -72,7 +72,7 @@ async function or(boolA, boolB) {
 }
 
 async function nor(boolA, boolB) {
-    await internalDebugStackEnter('nor'); await internalDebugCollect('bool A; '); await assertIsBool(boolA); await internalDebugStackEnterEnd(); await internalDebugCollect('bool B; '); await assertIsBool(boolB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await assertIsBool(boolA); await internalDebugStackEnter('nor'); await internalDebugCollect('bool B = ' + boolB + '; '); await assertIsBool(boolB); await internalDebugStackEnter('nor'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await or(boolA, boolB));
@@ -81,7 +81,7 @@ async function nor(boolA, boolB) {
 }
 
 async function nand(boolA, boolB) {
-    await internalDebugStackEnter('nand'); await internalDebugCollect('bool A; '); await assertIsBool(boolA); await internalDebugStackEnterEnd(); await internalDebugCollect('bool B; '); await assertIsBool(boolB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await assertIsBool(boolA); await internalDebugStackEnter('nand'); await internalDebugCollect('bool B = ' + boolB + '; '); await assertIsBool(boolB); await internalDebugStackEnter('nand'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await implAnd(boolA, boolB));
@@ -90,7 +90,7 @@ async function nand(boolA, boolB) {
 }
 
 async function xor(boolA, boolB) {
-    await internalDebugStackEnter('xor'); await internalDebugCollect('bool A; '); await assertIsBool(boolA); await internalDebugStackEnterEnd(); await internalDebugCollect('bool B; '); await assertIsBool(boolB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await assertIsBool(boolA); await internalDebugStackEnter('xor'); await internalDebugCollect('bool B = ' + boolB + '; '); await assertIsBool(boolB); await internalDebugStackEnter('xor'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await nand(boolA, boolB);
@@ -100,7 +100,7 @@ async function xor(boolA, boolB) {
 }
 
 async function xnor(boolA, boolB) {
-    await internalDebugStackEnter('xnor'); await internalDebugCollect('bool A; '); await assertIsBool(boolA); await internalDebugStackEnterEnd(); await internalDebugCollect('bool B; '); await assertIsBool(boolB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await assertIsBool(boolA); await internalDebugStackEnter('xnor'); await internalDebugCollect('bool B = ' + boolB + '; '); await assertIsBool(boolB); await internalDebugStackEnter('xnor'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await xor(boolA, boolB));
@@ -108,7 +108,7 @@ async function xnor(boolA, boolB) {
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function assertIsByte(intIn) {
-    await internalDebugStackEnter('assertIsByte'); await internalDebugCollect('int In; '); await assertIsInt(intIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await assertIsInt(intIn); await internalDebugStackEnter('assertIsByte'); let voidReturn;
 
     let boolTemp = false;
     boolTemp = await le(intIn, 255);
@@ -121,7 +121,7 @@ async function assertIsByte(intIn) {
 }
 
 async function assertIsArray(genericArrayIn) {
-    await internalDebugStackEnter('assertIsArray'); await internalDebugCollect('genericArray In; '); await assertIsGenericArray(genericArrayIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await assertIsGenericArray(genericArrayIn); await internalDebugStackEnter('assertIsArray'); let voidReturn;
 
     /* Just a convenience wrapper */
     await assertIsGenericArray(genericArrayIn);
@@ -129,7 +129,7 @@ async function assertIsArray(genericArrayIn) {
 }
 
 async function assertIsChar(strIn) {
-    await internalDebugStackEnter('assertIsChar'); await internalDebugCollect('str In; '); await assertIsStr(strIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('str In = ' + strIn + '; '); await assertIsStr(strIn); await internalDebugStackEnter('assertIsChar'); let voidReturn;
 
     if (await ne(1, await len(strIn))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a character.')));
@@ -138,7 +138,7 @@ async function assertIsChar(strIn) {
 }
 
 async function assertStrContainsOnlyInt(strIn) {
-    await internalDebugStackEnter('assertStrContainsOnlyInt'); await internalDebugCollect('str In; '); await assertIsStr(strIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('str In = ' + strIn + '; '); await assertIsStr(strIn); await internalDebugStackEnter('assertStrContainsOnlyInt'); let voidReturn;
 
     /* Positive int, specifically. Only digits allowed. */
     let intTemp = 0;
@@ -155,7 +155,7 @@ async function assertStrContainsOnlyInt(strIn) {
 }
 
 async function assertIsNonnegative(intIn) {
-    await internalDebugStackEnter('assertIsNonnegative'); await internalDebugCollect('int In; '); await assertIsInt(intIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await assertIsInt(intIn); await internalDebugStackEnter('assertIsNonnegative'); let voidReturn;
 
     if (await implLt(intIn, 0)) {
         let strTemp = '';
@@ -166,7 +166,7 @@ async function assertIsNonnegative(intIn) {
 }
 
 async function assertIsDc(intIn) {
-    await internalDebugStackEnter('assertIsDc'); await internalDebugCollect('int In; '); await assertIsInt(intIn); await internalDebugStackEnterEnd(); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await assertIsInt(intIn); await internalDebugStackEnter('assertIsDc'); let voidReturn;
 
     await assertIsNonnegative(intIn);
     await internalDebugStackExit();
@@ -174,7 +174,7 @@ async function assertIsDc(intIn) {
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
-    await internalDebugStackEnter('ne'); await internalDebugCollect('generic A; '); await assertIsGeneric(genericA); await internalDebugStackEnterEnd(); await internalDebugCollect('generic B; '); await assertIsGeneric(genericB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('generic A = ' + genericA + '; '); await assertIsGeneric(genericA); await internalDebugStackEnter('ne'); await internalDebugCollect('generic B = ' + genericB + '; '); await assertIsGeneric(genericB); await internalDebugStackEnter('ne'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await implEq(genericA, genericB));
@@ -183,7 +183,7 @@ async function ne(genericA, genericB) {
 }
 
 async function ge(intA, intB) {
-    await internalDebugStackEnter('ge'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('ge'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('ge'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implEq(intA, intB);
@@ -193,7 +193,7 @@ async function ge(intA, intB) {
 }
 
 async function le(intA, intB) {
-    await internalDebugStackEnter('le'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('le'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('le'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implEq(intA, intB);
@@ -203,7 +203,7 @@ async function le(intA, intB) {
 }
 
 async function ngt(intA, intB) {
-    await internalDebugStackEnter('ngt'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('ngt'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('ngt'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await implGt(intA, intB));
@@ -212,7 +212,7 @@ async function ngt(intA, intB) {
 }
 
 async function nlt(intA, intB) {
-    await internalDebugStackEnter('nlt'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('nlt'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('nlt'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await implLt(intA, intB));
@@ -221,7 +221,7 @@ async function nlt(intA, intB) {
 }
 
 async function nge(intA, intB) {
-    await internalDebugStackEnter('nge'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('nge'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('nge'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await ge(intA, intB));
@@ -230,7 +230,7 @@ async function nge(intA, intB) {
 }
 
 async function nle(intA, intB) {
-    await internalDebugStackEnter('nle'); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('nle'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('nle'); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await le(intA, intB));
@@ -238,7 +238,7 @@ async function nle(intA, intB) {
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function intIsBetween(intN, intA, intB) {
-    await internalDebugStackEnter('intIsBetween'); await internalDebugCollect('int N; '); await assertIsInt(intN); await internalDebugStackEnterEnd(); await internalDebugCollect('int A; '); await assertIsInt(intA); await internalDebugStackEnterEnd(); await internalDebugCollect('int B; '); await assertIsInt(intB); await internalDebugStackEnterEnd(); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await assertIsInt(intN); await internalDebugStackEnter('intIsBetween'); await internalDebugCollect('int A = ' + intA + '; '); await assertIsInt(intA); await internalDebugStackEnter('intIsBetween'); await internalDebugCollect('int B = ' + intB + '; '); await assertIsInt(intB); await internalDebugStackEnter('intIsBetween'); let boolReturn;
 
     /* Checks whether N is within the range A and B, including endpoints */
     let intT1 = 0;
@@ -253,7 +253,7 @@ async function intIsBetween(intN, intA, intB) {
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function strPrintArr(genericArrayInput) {
-    await internalDebugStackEnter('strPrintArr'); await internalDebugCollect('genericArray Input; '); await assertIsGenericArray(genericArrayInput); await internalDebugStackEnterEnd(); let strReturn;
+    await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await assertIsGenericArray(genericArrayInput); await internalDebugStackEnter('strPrintArr'); let strReturn;
 
     let intCount = 0;
     intCount = await count(genericArrayInput);
