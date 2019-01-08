@@ -29,16 +29,20 @@ async function implLog(strMessage) {
     console.log(strMessage);
 }
 
-async function implDebug(strMessage) {
-    await assertIsStr(strMessage);
+async function implDebug(strMessage, intLevel) {
+    await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
+
+    if (intLevel <= STAGEL_DEBUG) {
+        implLog(strMessage);
+    }
 
     console.log(strMessage);
 }
 
 async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
-    // Set the debug level to the level specified. Int from 0 to 4 inclusive. Default 0.
+    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = verbose printing
 
     STAGEL_DEBUG=intLevel;
 
