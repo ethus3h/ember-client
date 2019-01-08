@@ -36,7 +36,9 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
-    console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
+    if(Object.keys(stagelDebugCallstack).length > 0) {
+        console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
+    }
 }
 
 async function implDebug(strMessage, intLevel) {
