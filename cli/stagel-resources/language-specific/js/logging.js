@@ -60,6 +60,10 @@ async function internalDebugStackEnter(strBlockName) {
     await implDebug("Entered block: " + strBlockName, 2);
     await stagelDebugCallstack.push(strBlockName);
 }
+async function internalDebugStackEnter(strBlockName) {
+    await implDebug("Entered block: " + strBlockName, 2);
+    await stagelDebugCallstack.push(strBlockName);
+}
 
 async function internalDebugStackExit() {
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);

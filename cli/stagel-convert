@@ -833,9 +833,9 @@ codegenRoutineDefinitionStart() {
                 codegenType "${codegenArgList[$k - 1]}"
                 codegenOutput "${codegenArgList[$k]^}"
                 if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
-                    codegenOutput ");"
+                    codegenOutput "); await internalDebugStackEnterEnd();"
                 else
-                    codegenOutput "); "
+                    codegenOutput "); await internalDebugStackEnterEnd(); "
                 fi
             fi
         done
