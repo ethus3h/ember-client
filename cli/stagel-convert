@@ -858,7 +858,12 @@ codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
-        [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenPrintIndentationSpaces
+        if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
+            #codegenIndent=$(( codegenIndent - 1 ))
+    codegenPrintIndentationSpaces
+    #codegenIndent=$(( codegenIndent + 1 ))
+
+            codegenPrintIndentationSpaces
         codegenOutput "await implDebugStackExit();"
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
