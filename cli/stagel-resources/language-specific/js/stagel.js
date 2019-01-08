@@ -188,6 +188,7 @@ async function internalDebugFlush() {
 }
 
 async function internalDebugStackEnter(strBlockName) {
+    console.log("Stackoooooo");
     await implDebug("Entered block parameter list: " + strBlockName, 3);
     await stagelDebugCallstack.push(strBlockName);
 }
@@ -208,6 +209,7 @@ async function internalDebugPrintStack() {
     let i=0;
     let count;
     count = Object.keys(stagelDebugCallstack).length;
+    console.log(stagelDebugCallstack);
     let result="";
     while (i<count) {
         /* FIXME: This could probably be optimized if it's problematically slow. */
