@@ -117,6 +117,10 @@ async function len(str) {
     FIXMEUnimplemented
 */
 
+var STAGEL_DEBUG;
+let stagelDebugCallstack = [];
+let stagelDebugCollection = "";
+
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
@@ -131,12 +135,50 @@ async function implWarn(strMessage) {
 
     await FIXMEUnimplemented("implWarn");
 
-    console.log(strMessage);
+    implLog(strMessage);
 }
 
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
+
+    console.log(strMessage);
+}
+
+async function implDebugCollect(strMessageFragment) {
+    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
+}
+
+async function implDebugFlush(strMessageFragment) {
+    implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 2);
+    stagelDebugCollection = "";
+}
+
+async function implDebugStackEnter(strBlockName) {
+    implDebug("Entered block: " + strBlockName, 2);
+    stagelDebugCallstack.push(strBlockName);
+}
+
+async function implDebugStackExit() {
+    implDebug("Exited block: " + stagelDebugCallstack.pop(), 2);
+}
+
+async function implDebug(strMessage, intLevel) {
+    await assertIsStr(strMessage); await assertIsInt(intLevel);
+    // Log the provided message
+
+    if (intLevel <= STAGEL_DEBUG) {
+        implLog(strMessage);
+    }
+
+    console.log(strMessage);
+}
+
+async function setDebugLevel(intLevel) {
+    await assertIsInt(intLevel);
+    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = verbose printing
+
+    STAGEL_DEBUG=intLevel;
 
     console.log(strMessage);
 }
@@ -221,6 +263,7 @@ async function assertIsFalse(bool) {
 }
 
 async function assertIsInt(int) {
+    return;
     if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
         await implError("Assertion failed: "+int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
     }
