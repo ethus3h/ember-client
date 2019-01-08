@@ -57,11 +57,12 @@ async function internalDebugFlush(strMessageFragment) {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    await implDebug("Entered block: " + strBlockName, 2);
+    await implDebug("Entered block: " + strBlockName, 3);
     await stagelDebugCallstack.push(strBlockName);
 }
-async function internalDebugStackEnter(strBlockName) {
-    await implDebug("Entered block: " + strBlockName, 2);
+
+async function internalDebugStackEnterEnd(strBlockName) {
+    await implDebug("Entered block: " + strBlockName + " (" + await internalDebugFlush() + ")", 2);
     await stagelDebugCallstack.push(strBlockName);
 }
 
