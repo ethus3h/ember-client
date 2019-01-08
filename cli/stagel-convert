@@ -856,7 +856,8 @@ codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput "await implDebugStackExit(); "
+        codegenDedent
+        codegenOutput "await implDebugStackExit();"$'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
