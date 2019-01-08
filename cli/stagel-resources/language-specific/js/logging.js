@@ -19,7 +19,7 @@ async function implDie(strMessage) {
 
     await implWarn(strMessage);
 
-    await throw strMessage;
+    throw strMessage;
 }
 
 async function implWarn(strMessage) {
@@ -37,7 +37,7 @@ async function implLog(strMessage) {
 
     /* console.log(strMessage);
     console.log(stagelDebugCallstack); */
-    if(Object.keys(stagelDebugCallstack).length > 0) {
+    if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
     }
 }
@@ -81,18 +81,18 @@ async function internalDebugFlush() {
 async function internalDebugStackEnter(strBlockName) {
     await implDebug("Entered block parameter list: " + strBlockName, 3);
     if (strBlockName === undefined) {
-        implDie("Block entry specified but no block name given");
+        await implDie("Block entry specified but no block name given");
     }
     await stagelDebugCallstack.push(strBlockName);
 }
 
 async function internalDebugStackEnterEnd() {
-    await implDebug("Entered block: " + stagelDebugCallstack.slice(-1)[0] + " (" + await internalDebugFlush() + ")", 2);
+    await implDebug("Entered block: " + await stagelDebugCallstack.slice(-1)[0] + " (" + await internalDebugFlush() + ")", 2);
 }
 
 async function internalDebugStackExit() {
     if (stagelDebugCallstack.slice(-1)[0] === undefined) {
-        implDie("Exited block, but no block on stack");
+        await implDie("Exited block, but no block on stack");
     }
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
 }
@@ -100,7 +100,7 @@ async function internalDebugStackExit() {
 async function internalDebugPrintStack() {
     let i=0;
     let count;
-    count = Object.keys(stagelDebugCallstack).length;
+    count = await Object.keys(stagelDebugCallstack).length;
     let result="";
     while (i<count) {
         /* FIXME: This could probably be optimized if it's problematically slow. */
