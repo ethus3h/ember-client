@@ -105,9 +105,9 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
-    console.log("Stack entry "+strBlockName);
-    console.log(stagelDebugCollection);
-    console.log(stagelDebugCallstack);
+    await console.log("Stack entry "+strBlockName);
+    await console.log(stagelDebugCollection);
+    await console.log(stagelDebugCallstack);
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
     await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
