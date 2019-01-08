@@ -20,7 +20,7 @@ async function implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber)
 async function implStrDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
     await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsGeneric(genericFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
-    await console.log(strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
+    //await console.log(strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
     let intLength = await intDcDataDatasetLength(strDataset);
     // start at 1 to skip header row
     let strFilterValue = await strFrom(genericFilterValue);
@@ -29,8 +29,8 @@ async function implStrDcDataLookupByValue(strDataset, intFilterField, genericFil
             strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
-    await console.log("SEARCHING", strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
-    //strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
+    //await console.log("SEARCHING", strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
+    strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
 
 // @license-end
