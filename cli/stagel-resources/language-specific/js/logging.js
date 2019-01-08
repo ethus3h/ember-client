@@ -59,7 +59,7 @@ async function implDebug(strMessage, intLevel) {
         implLog(strMessage);
     }
 
-    console.log(strMessage, intLevel);
+    console.log(strMessage, intLevel, STAGEL_DEBUG);
 }
 
 async function setDebugLevel(intLevel) {
