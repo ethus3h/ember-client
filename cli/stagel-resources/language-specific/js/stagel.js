@@ -224,19 +224,16 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
-    console.log("Stack entry "+strBlockName);
-    console.log(stagelDebugCollection);
-    console.log(stagelDebugCallstack);
+    await console.log("Stack entry "+strBlockName);
+    await console.log(stagelDebugCollection);
+    await console.log(stagelDebugCallstack);
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
     await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
 }
 
 async function internalDebugStackExit() {
-    await console.log("Exiting block");
-    await console.log(stagelDebugCallstack);
     if (stagelDebugCallstack.slice(-1)[0] === undefined) {
-        await console.log("Bouchechuc");
         await implDie("Exited block, but no block on stack");
     }
     await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);

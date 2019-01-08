@@ -114,10 +114,7 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackExit() {
-    await console.log("Exiting block");
-    await console.log(stagelDebugCallstack);
     if (stagelDebugCallstack.slice(-1)[0] === undefined) {
-        await console.log("Bouchechuc");
         await implDie("Exited block, but no block on stack");
     }
     await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);
