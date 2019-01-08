@@ -117,7 +117,7 @@ async function assertIsByte(intIn) {
     if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
     }
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 
 async function assertIsArray(genericArrayIn) {
@@ -125,7 +125,7 @@ async function assertIsArray(genericArrayIn) {
 
     /* Just a convenience wrapper */
     await assertIsGenericArray(genericArrayIn);
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 
 async function assertIsChar(strIn) {
@@ -134,7 +134,7 @@ async function assertIsChar(strIn) {
     if (await ne(1, await len(strIn))) {
         await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a character.')));
     }
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 
 async function assertStrContainsOnlyInt(strIn) {
@@ -151,7 +151,7 @@ async function assertStrContainsOnlyInt(strIn) {
         }
         intI = await implAdd(intI, 1);
     }
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 
 async function assertIsNonnegative(intIn) {
@@ -162,14 +162,14 @@ async function assertIsNonnegative(intIn) {
         strTemp = await strFromInt(intIn);
         await implDie(await implCat('Assertion failed: ', await implCat(strTemp, ' is negative.')));
     }
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 
 async function assertIsDc(intIn) {
     await implDebugStackEnter('assertIsDc'); await implDebugCollect('ident-n In; '); await assertIsInt(intIn); let voidReturn;
 
     await assertIsNonnegative(intIn);
-await implDebugStackExit();
+    await implDebugStackExit();
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
 
