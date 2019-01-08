@@ -4,7 +4,6 @@
     assertIsFalse
     assertIsInt
     assertIsStr
-    assertIsDc
     assertIsDcarr
     assertIsBytearray
 */
