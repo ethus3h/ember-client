@@ -827,7 +827,9 @@ codegenRoutineDefinitionStart() {
         codegenOutput "await internalDebugStackEnter('$codegenRoutineName'); "
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenOutput "await internalDebugCollect('${codegenArgList[$k - 1]} ${codegenArgList[$k]^}; '); await assertIs"
+                codegenOutput "await internalDebugCollect('"
+                codegenType "${codegenArgList[$k - 1]}"
+                codegenOutput " ${codegenArgList[$k]^}; '); await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
