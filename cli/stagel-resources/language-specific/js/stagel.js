@@ -195,7 +195,7 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackEnterEnd() {
-    await implDebug("Entered block: " + strBlockName + " (" + await internalDebugFlush() + ")", 2);
+    await implDebug("Entered block: " + stagelDebugCallstack[-1] + " (" + await internalDebugFlush() + ")", 2);
 }
 
 async function internalDebugStackExit() {
