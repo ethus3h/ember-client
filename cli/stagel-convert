@@ -860,7 +860,11 @@ codegenRoutineDefinitionPreEnd() {
     "js")
         [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenDedent
         codegenOutput "await implDebugStackExit();"
-        [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenOutput $'\n'
+        if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
+            codegenOutput $'\n'
+        else
+            codegenOutput " "
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
