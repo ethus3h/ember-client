@@ -21,7 +21,7 @@ async function implError(strMessage) {
     await FIXMEUnimplemented("implError");
     await implWarn(strMessage);
 
-    console.trace();
+    await console.trace();
     alert("EITE reported error!: " + strMessage);
 }
 
@@ -32,7 +32,26 @@ async function implWarn(strMessage) {
     await FIXMEUnimplemented("implWarn");
     await implLog(strMessage);
 
-    console.trace();
+    await console.trace();
+}
+
+async function implLog(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    await console.log(strMessage);
+    if(await Object.keys(stagelDebugCallstack).length > 0) {
+        await console.log("Previous message sent at: " + await internalDebugPrintStack());
+    }
+    else {
+        if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
+            await console.log("(Previous message sent from non-StageL code.)");
+            await console.trace();
+        }
+    }
+    if (3 <= STAGEL_DEBUG) {
+        await console.trace();
+    }
 }
 
 // Fully platform-specific code

@@ -50,7 +50,9 @@ async function implLog(strMessage) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
-        await console.log("(Previous message sent from non-StageL code: no backtrace available.)");
+        if (2 <= STAGEL_DEBUG) {
+            await console.log("(Previous message sent from non-StageL code.)");
+        }
     }
 }
 
