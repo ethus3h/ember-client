@@ -110,10 +110,10 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
         case "HTML":
             /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
             /* This shouldn't actually do I/O; that should be handled somewhere else I think. This function (implDoRenderIo) is currently handling both doc rendering and I/O. TODO: Split them. */
-            let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
+                     console.log("Ok for ");
+           let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
-                    console.log("Ok for "+renderBuffer[i]);
                 if (await boolDcIsPrintable(renderBuffer[i]) || await boolDcIsNewline(renderBuffer[i]) || await boolDcIsSpace(renderBuffer[i])) {
                     strOutputHtml = strOutputHtml + await strPrintableDcToChar(renderBuffer[i], "HTML");
                 }
