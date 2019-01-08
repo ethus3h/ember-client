@@ -102,4 +102,5 @@ async function internalDebugPrintStack() {
         result = result + stagelDebugCallstack[i] + " ";
         i = i + 1;
     }
+    return result;
 }
