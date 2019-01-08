@@ -33,7 +33,8 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    console.log(strMessage + "(trace: " + stagelDebugCollection + ")");
+    console.log(strMessage);
+    console.log("(Trace for prev. message: " + await implDebugFlush() + ")");
 }
 
 async function implDebug(strMessage, intLevel) {
