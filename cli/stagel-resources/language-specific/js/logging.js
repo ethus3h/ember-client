@@ -52,8 +52,10 @@ async function internalDebugCollect(strMessageFragment) {
 
 async function internalDebugFlush(strMessageFragment) {
     await implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 3);
-    return stagelDebugCollection;
+    let temp;
+    temp = stagelDebugCollection;
     stagelDebugCollection = "";
+    return temp;
 }
 
 async function internalDebugStackEnter(strBlockName) {
