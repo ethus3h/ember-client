@@ -13,42 +13,27 @@ async function implDie(strMessage) {
 }
 
 async function implError(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+    console.trace();
 
     await FIXMEUnimplemented("implError");
     await implWarn(strMessage);
-}
 
-async function implWarn(strMessage) {
-    await assertIsStr(strMessage);
-    // Log the provided message
-
-    await FIXMEUnimplemented("implWarn");
-
-    await implLog(strMessage);
-}
-
-async function implError(strMessage) {
-    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
-
-    await implWarn(strMessage);
-
-    console.trace();
     alert("EITE reported error!: " + strMessage);
-
-    throw strMessage;
 }
 
 async function implWarn(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    await FIXMEUnimplemented("implWarn");
-
-    console.log(strMessage);
-
     console.trace();
-    alert("EITE reported warning: " + strMessage);
+
+    await FIXMEUnimplemented("implWarn");
+    await implLog(strMessage);
 }
 
 // Fully platform-specific code
