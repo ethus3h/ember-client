@@ -17,14 +17,14 @@ async function implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber)
     strReturn = dcData[strDataset][intRowNumber].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
 }
 
-async function implStrDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField) {
-    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsStr(strFilterValue); await assertIsInt(intDesiredField); let strReturn;
+async function implStrDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
+    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsGeneric(genericFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
-    console.log(strDataset, intFilterField, strFilterValue, intDesiredField, dcData);
+    console.log(strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
     let intLength = await intDcDataDatasetLength(strDataset);
     // start at 1 to skip header row
     for (let intRow = 1; intRow < intLength; intRow++) {
-        if(dcData[strDataset][intRow].data[0][intFilterField] === strFilterValue) {
+        if(dcData[strDataset][intRow].data[0][intFilterField] === genericFilterValue) {
             strReturn = dcData[strDataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }

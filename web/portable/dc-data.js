@@ -17,10 +17,10 @@ async function strDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
     strReturn = await implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField) {
-    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsStr(strFilterValue); await assertIsInt(intDesiredField); let strReturn;
+async function strDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
+    await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsGeneric(genericFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
-    strReturn = await implStrDcDataLookupByValue(strDataset, intFilterField, strFilterValue, intDesiredField); await assertIsStr(strReturn); return strReturn;
+    strReturn = await implStrDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField); await assertIsStr(strReturn); return strReturn;
 }
 
 async function strDcGetField(dc, intFieldNumber) {
