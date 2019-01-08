@@ -649,7 +649,7 @@ codegenCommandInvocationStart() {
             else
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
-            codegenOutput "; await assertIs"
+            codegenOutput "; assertIs"
             codegenType "$returnType" true
             codegenOutput "("
             codegenType "$returnType"
@@ -676,7 +676,7 @@ codegenCommandInvocationStart() {
         # The only purpose of using "impl" now is to prevent collisions with things that are likely to be reserved words in target languages; so, e.g. "implFIXMEUnimplemented" is unnecessary since it can just be "FIXMEUnimplemented" and be unlikely to collide.
         case "$targetLang" in
         "js")
-            codegenOutput "await impl${codegenRoutineName^}("
+            codegenOutput "impl${codegenRoutineName^}("
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -709,7 +709,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            codegenOutput "await $codegenRoutineName("
+            codegenOutput "$codegenRoutineName("
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -806,7 +806,7 @@ codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
     "js")
-        codegenOutput "async function $codegenRoutineName("
+        codegenOutput "function $codegenRoutineName("
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
@@ -824,7 +824,7 @@ codegenRoutineDefinitionStart() {
         codegenIndent=$(( codegenIndent - 1 ))
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenOutput "await assertIs"
+                codegenOutput "assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
