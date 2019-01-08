@@ -296,7 +296,6 @@ async function implLt(intA, intB) {
     assertIsFalse
     assertIsInt
     assertIsStr
-    assertIsDc
     assertIsDcarr
     assertIsBytearray
 */
