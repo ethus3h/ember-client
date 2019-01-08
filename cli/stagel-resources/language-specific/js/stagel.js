@@ -136,9 +136,19 @@ let stagelDebugCollection = "";
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
-    await implWarn(strMessage);
+    await implError(strMessage);
 
     throw strMessage;
+}
+
+async function implError(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+    await FIXMEUnimplemented("implError");
+    await implWarn(strMessage);
 }
 
 async function implWarn(strMessage) {
