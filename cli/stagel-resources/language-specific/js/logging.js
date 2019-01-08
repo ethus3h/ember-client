@@ -33,7 +33,16 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
 
-    console.log(strMessage);
+    console.log(strMessage + "(trace: " + stagelDebugCollection + ")");
+}
+
+async function implDebug(strMessage, intLevel) {
+    await assertIsStr(strMessage); await assertIsInt(intLevel);
+    // Log the provided message
+
+    if (intLevel <= STAGEL_DEBUG) {
+        await implLog(strMessage);
+    }
 }
 
 async function implDebugCollect(strMessageFragment) {
@@ -42,6 +51,7 @@ async function implDebugCollect(strMessageFragment) {
 
 async function implDebugFlush(strMessageFragment) {
     await implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 3);
+    return stagelDebugCollection;
     stagelDebugCollection = "";
 }
 
@@ -61,15 +71,6 @@ async function implDebugPrintStack() {
     while (i<count) {
         await implDebugCollect(stagelDebugCallstack[i] + " ");
         i = i + 1;
-    }
-}
-
-async function implDebug(strMessage, intLevel) {
-    await assertIsStr(strMessage); await assertIsInt(intLevel);
-    // Log the provided message
-
-    if (intLevel <= STAGEL_DEBUG) {
-        await implLog(strMessage);
     }
 }
 
