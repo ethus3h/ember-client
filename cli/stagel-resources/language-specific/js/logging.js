@@ -34,7 +34,7 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
-    console.log("(Trace for prev. message: " + await implDebugFlush() + ")");
+    console.log("(Trace for prev. message: " + await internalDebugFlush() + ")");
 }
 
 async function implDebug(strMessage, intLevel) {
@@ -46,31 +46,31 @@ async function implDebug(strMessage, intLevel) {
     }
 }
 
-async function implDebugCollect(strMessageFragment) {
+async function internalDebugCollect(strMessageFragment) {
     stagelDebugCollection = stagelDebugCollection + strMessageFragment;
 }
 
-async function implDebugFlush(strMessageFragment) {
+async function internalDebugFlush(strMessageFragment) {
     await implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 3);
     return stagelDebugCollection;
     stagelDebugCollection = "";
 }
 
-async function implDebugStackEnter(strBlockName) {
+async function internalDebugStackEnter(strBlockName) {
     await implDebug("Entered block: " + strBlockName, 2);
     await stagelDebugCallstack.push(strBlockName);
 }
 
-async function implDebugStackExit() {
+async function internalDebugStackExit() {
     await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
 }
 
-async function implDebugPrintStack() {
+async function internalDebugPrintStack() {
     let i=0;
     let count;
     count = Object.keys(stagelDebugCallstack).length;
     while (i<count) {
-        await implDebugCollect(stagelDebugCallstack[i] + " ");
+        await internalDebugCollect(stagelDebugCallstack[i] + " ");
         i = i + 1;
     }
 }
