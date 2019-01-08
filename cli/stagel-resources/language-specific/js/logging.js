@@ -57,11 +57,11 @@ async function implDebugStackExit() {
 async function implDebugPrintStack() {
     let i=0;
     let count;
-    count = await Object.keys(array).length
-    while(i<stagelDebugCallstack.count) {
-        
+    count = Object.keys(stagelDebugCallstack).length;
+    while (i<count) {
+        await implDebugCollect(stagelDebugCallstack[i] + " ");
+        i = i + 1;
     }
-    await implDebugCollect()
 }
 
 async function implDebug(strMessage, intLevel) {
