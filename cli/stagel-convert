@@ -1190,9 +1190,9 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             routine-definition-end)
                 echo "Working on routine definition end" >&2
+                codegenRoutineDefinitionEnd
                 [[ "${tokens[$i - 1]}" == "dedent" ]] && codegenDedent
                 unset 'stateStack[-1]'
-                codegenRoutineDefinitionEnd
                 # And we'll reprocess this token now that we're done with this routine-definition.
                 i=$((i - 3))
                 # Don't call blockStackRemoveLast here: routine-definition-end state is entered by encountering a dedent while in code mode of the body of the routine, which will pop from the stateStack (thereby uncovering the routine-definition-end state) and take care of calling blockStackRemoveLast.
