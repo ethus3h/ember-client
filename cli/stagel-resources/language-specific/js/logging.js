@@ -81,7 +81,8 @@ async function internalDebugQuiet(strMessage, intLevel) {
     // Log the provided message, but don't print a trace for it
 
     if (intLevel <= STAGEL_DEBUG) {
-        console.log(strMessage);
+        await implLog(strMessage);
+        /* console.log(strMessage); */
     }
 }
 
