@@ -2,12 +2,14 @@
     implDie
     implWarn
     implLog
+    implDebug
+    setDebugLevel
     FIXMEUnimplemented
 */
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 0;
+    STAGEL_DEBUG = 3;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
@@ -46,6 +48,21 @@ async function implDebug(strMessage, intLevel) {
     }
 }
 
+async function setDebugLevel(intLevel) {
+    await assertIsInt(intLevel);
+    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
+
+    STAGEL_DEBUG=intLevel;
+}
+
+async function FIXMEUnimplemented(strLocation) {
+    await assertIsStr(strLocation);
+
+    await implLog("FIXME: Unimplemented in " + strLocation);
+}
+
+// Internal functions
+
 async function internalDebugCollect(strMessageFragment) {
     stagelDebugCollection = stagelDebugCollection + strMessageFragment;
 }
@@ -59,7 +76,7 @@ async function internalDebugFlush(strMessageFragment) {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    await implDebug("Entered block: " + strBlockName, 3);
+    await implDebug("Entered block parameter list: " + strBlockName, 3);
     await stagelDebugCallstack.push(strBlockName);
 }
 
@@ -80,17 +97,4 @@ async function internalDebugPrintStack() {
         await internalDebugCollect(stagelDebugCallstack[i] + " ");
         i = i + 1;
     }
-}
-
-async function setDebugLevel(intLevel) {
-    await assertIsInt(intLevel);
-    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
-
-    STAGEL_DEBUG=intLevel;
-}
-
-async function FIXMEUnimplemented(strLocation) {
-    await assertIsStr(strLocation);
-
-    await implLog("FIXME: Unimplemented in " + strLocation);
 }
