@@ -822,9 +822,10 @@ codegenRoutineDefinitionStart() {
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
+        codegenOutput "await implDebugStackEnter('$codegenRoutineName'); "
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenOutput "await assertIs"
+                codegenOutput "await implDebugCollect('${codegenArgList[$k - 1]} ${codegenArgList[$k]^}; '); await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
                 codegenType "${codegenArgList[$k - 1]}"
@@ -855,6 +856,7 @@ codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
     "js")
+        codegenOutput "await implDebugStackExit(); "
         # codegenOutput "}"$'\n'
         ;;
     *)
