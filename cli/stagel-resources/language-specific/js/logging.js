@@ -81,7 +81,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
     // Log the provided message, but don't print a trace for it
 
     if (intLevel <= STAGEL_DEBUG) {
-        await implLog(strMessage);
+        console.log(strMessage);
     }
 }
 
@@ -104,7 +104,7 @@ async function internalDebugStackEnter(strBlockName) {
 
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
-    await implDebug("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
+    await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
 }
 
 async function internalDebugStackExit() {
@@ -114,7 +114,7 @@ async function internalDebugStackExit() {
         await console.log("Bouchechuc");
         await implDie("Exited block, but no block on stack");
     }
-    await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
+    await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);
 }
 
 async function internalDebugPrintStack() {
