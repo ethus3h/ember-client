@@ -835,6 +835,9 @@ codegenRoutineDefinitionStart() {
             fi
         done
         codegenOutput "await internalDebugStackEnter('$filename:$codegenRoutineName');"
+        if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+            codegenOutput " "
+        fi
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
                 codegenOutput "await assertIs"
