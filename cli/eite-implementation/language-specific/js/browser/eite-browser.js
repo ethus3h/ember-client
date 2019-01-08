@@ -40,6 +40,7 @@ async function implLog(strMessage) {
     // Log the provided message
 
     await console.log(strMessage);
+    await console.trace();
     if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
