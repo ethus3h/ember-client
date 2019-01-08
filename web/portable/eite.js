@@ -30,14 +30,14 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
-                implLog(await strFrom(dcAtInputIndex));
+                //await implLog(await strFrom(dcAtInputIndex));
                 if (await boolDcIsNewline(dcAtInputIndex)) {
                     intLine = intLine + 1;
                     dcarrOutput[intLine] = "";
                 }
                 if (await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex) ) {
                     dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
-                    await implLog(await strPrintArr(dcarrOutput));
+                    //await implLog(await strPrintArr(dcarrOutput));
                 }
             }
             break;
@@ -46,11 +46,11 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
             intInputLength = await intDcarrLength(dcarrInput);
             for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
                 let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
-                await implLog(await strFrom(dcAtInputIndex));
+                //await implLog(await strFrom(dcAtInputIndex));
                 /* FIXME: doesn't accept HTML-renderable Dcs */
                 if (await boolDcIsNewline(dcAtInputIndex) || await boolDcIsPrintable(dcAtInputIndex) || await boolDcIsSpace(dcAtInputIndex)) {
                     await dcarrOutput.push(dcAtInputIndex);
-                    await implLog(await strPrintArr(dcarrOutput));
+                    //await implLog(await strPrintArr(dcarrOutput));
                 }
             }
             break;
