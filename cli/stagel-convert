@@ -997,6 +997,8 @@ for (( i=0; i<tokenCount; i++ )); do
                     blockStack+=("plain-block" "")
                     ;;
                 dedent)
+                    echo "BOLUCHERCUHEOCRUHCREHUC ${blockStack[-1]}" 1>&2
+                    [[ "${blockStack[-1]}" == "uuuu" ]] && codegenRoutineDefinitionPreEnd
                     codegenDedent
                     unset 'stateStack[-1]'
                     blockStackRemoveLast
