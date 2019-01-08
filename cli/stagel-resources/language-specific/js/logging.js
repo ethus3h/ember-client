@@ -68,7 +68,7 @@ async function internalDebugCollect(strMessageFragment) {
 }
 
 async function internalDebugFlush(strMessageFragment) {
-    await implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 3);
+    console.log("Flushing debug message fragment collector, which contains: " + strMessageFragment);
     let temp;
     temp = stagelDebugCollection;
     stagelDebugCollection = "";
