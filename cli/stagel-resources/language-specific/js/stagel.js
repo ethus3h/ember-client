@@ -138,7 +138,7 @@ async function implWarn(strMessage) {
 
     await FIXMEUnimplemented("implWarn");
 
-    implLog(strMessage);
+    await implLog(strMessage);
 }
 
 async function implLog(strMessage) {
@@ -146,24 +146,7 @@ async function implLog(strMessage) {
     // Log the provided message
 
     console.log(strMessage);
-}
-
-async function implDebugCollect(strMessageFragment) {
-    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
-}
-
-async function implDebugFlush(strMessageFragment) {
-    implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 2);
-    stagelDebugCollection = "";
-}
-
-async function implDebugStackEnter(strBlockName) {
-    implDebug("Entered block: " + strBlockName, 2);
-    stagelDebugCallstack.push(strBlockName);
-}
-
-async function implDebugStackExit() {
-    implDebug("Exited block: " + stagelDebugCallstack.pop(), 2);
+    console.log("(Trace for prev. message: " + await implDebugFlush() + ")");
 }
 
 async function implDebug(strMessage, intLevel) {
@@ -171,19 +154,44 @@ async function implDebug(strMessage, intLevel) {
     // Log the provided message
 
     if (intLevel <= STAGEL_DEBUG) {
-        implLog(strMessage);
+        await implLog(strMessage);
     }
+}
 
-    console.log(strMessage, intLevel, STAGEL_DEBUG);
+async function implDebugCollect(strMessageFragment) {
+    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
+}
+
+async function implDebugFlush(strMessageFragment) {
+    await implDebug("Flushing debug message fragment collector, which contains: " + strMessageFragment, 3);
+    return stagelDebugCollection;
+    stagelDebugCollection = "";
+}
+
+async function implDebugStackEnter(strBlockName) {
+    await implDebug("Entered block: " + strBlockName, 2);
+    await stagelDebugCallstack.push(strBlockName);
+}
+
+async function implDebugStackExit() {
+    await implDebug("Exited block: " + await stagelDebugCallstack.pop(), 3);
+}
+
+async function implDebugPrintStack() {
+    let i=0;
+    let count;
+    count = Object.keys(stagelDebugCallstack).length;
+    while (i<count) {
+        await implDebugCollect(stagelDebugCallstack[i] + " ");
+        i = i + 1;
+    }
 }
 
 async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
-    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = verbose printing
+    // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
     STAGEL_DEBUG=intLevel;
-
-    console.log(strMessage);
 }
 
 async function FIXMEUnimplemented(strLocation) {
