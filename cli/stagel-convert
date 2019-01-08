@@ -842,6 +842,24 @@ codegenRoutineDefinitionStart() {
                 fi
             fi
         done
+        for (( k=0; k<argumentCount; k++ )); do
+            if (( k % 2 )); then
+                codegenOutput "await internalDebugCollect('"
+                codegenType "${codegenArgList[$k - 1]}"
+                codegenOutput " ${codegenArgList[$k]^} = ' + "
+                codegenType "${codegenArgList[$k - 1]}"
+                codegenOutput "${codegenArgList[$k]^} + '; '); await assertIs"
+                codegenType "${codegenArgList[$k - 1]}" "true"
+                codegenOutput "("
+                codegenType "${codegenArgList[$k - 1]}"
+                codegenOutput "${codegenArgList[$k]^}"
+                if [[ "$k" == $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" == "void" ]]; then
+                    codegenOutput "); await internalDebugStackEnter('$codegenRoutineName');"
+                else
+                    codegenOutput "); "
+                fi
+            fi
+        done
         if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
             codegenOutput "await internalDebugStackEnter('$codegenRoutineName'); let "
             codegenType "$codegenRoutineType"
