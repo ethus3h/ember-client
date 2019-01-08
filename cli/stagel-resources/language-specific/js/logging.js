@@ -19,7 +19,7 @@ async function implDie(strMessage) {
 
     await implWarn(strMessage);
 
-    throw strMessage;
+    await throw strMessage;
 }
 
 async function implWarn(strMessage) {
@@ -38,7 +38,7 @@ async function implLog(strMessage) {
     /* console.log(strMessage);
     console.log(stagelDebugCallstack); */
     if(Object.keys(stagelDebugCallstack).length > 0) {
-        console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
+        await console.log("(Trace for prev. message: " + await internalDebugPrintStack() + ")");
     }
 }
 
