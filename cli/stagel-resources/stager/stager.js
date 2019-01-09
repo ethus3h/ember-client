@@ -61,6 +61,21 @@ async function strCharAtPos(strStr, intIndex) {
 
     strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
+async function reverseStr(strStr) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('reverseStr:strings'); await assertIsStr(strStr); let strReturn;
+
+    let intL = 0;
+    intL = await len(strStr);
+    let intC = 0;
+    intC = 0;
+    let strRes = '';
+    while (await le(intC, intL)) {
+        strRes = await implCat(strRes, await strCharAtPos(strStr, await implSub(intL, intC)));
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 async function or(boolA, boolB) {
     await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
@@ -131,9 +146,15 @@ async function assertIsArray(genericArrayIn) {
 async function assertIsChar(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn); let voidReturn;
 
-    if (await ne(1, await len(strIn))) {
-        await assertionFailed(await implCat(strIn, ' is not a character.'));
-    }
+    await assertIsCharByte(await byteFromChar(strIn));
+    await internalDebugStackExit();
+}
+
+async function assertIsCharByte(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn); let voidReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    await assertTrue(await intIsBetween(32, 126));
     await internalDebugStackExit();
 }
 
@@ -252,6 +273,79 @@ async function intIsBetween(intN, intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
+async function intToBaseNChar(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('intToBaseNChar:math'); await assertIsInt(intN); let strReturn;
+
+    /* Returns the nth digit in base 36 or less (using capitalized digits). */
+    await assertIsTrue(await intIsBetween(intN, 0, 36));
+    let strRes = '';
+    if (await le(intN, 9)) {
+        strRes = await strFromByte(await implAdd(intN, 48));
+    }
+    await else();
+    {
+        strRes = await strFromByte(await implAdd(intN, 55));
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function intFromBaseNChar(strN) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugStackEnter('intFromBaseNChar:math'); await assertIsStr(strN); let intReturn;
+
+    /* Returns an int given the nth digit in base 36 or less (using capitalized digits). */
+    await assertIsChar(strN);
+    let intRes = 0;
+    intRes = await byteFromChar(strN);
+    if (await ge(intRes, 65)) {
+        intRes = await implSub(intRes, 55);
+    }
+    await else();
+    {
+        intRes = await implSub(intRes, 48);
+    }
+    await assertIsTrue(await intIsBetween(intRes, 0, 36));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function intFromBaseStr(strN, intB) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
+
+    /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    let intRes = 0;
+    intRes = 0;
+    let intLen = 0;
+    intLen = await len(strN);
+    let intInt = 0;
+    intInt = 0;
+    let intPow = 0;
+    intPow = 1;
+    while (await ge(intLen, 0)) {
+        intLen = await implSub(intLen, 1);
+        intInt = await intFromBaseNChar(await strCharAtPos(strN, intLen));
+        await assertIsTrue(await implLt(intInt, intB));
+        intRes = await implAdd(await implMul(intInt, intPow));
+        intPow = await implMul(intPow, intB);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function intToBaseStr(intN, intB) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intToBaseStr:math'); await assertIsInt(intN);await assertIsInt(intB); let strReturn;
+
+    /* Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    let strRes = '';
+    while (await implGt(intN, 0)) {
+        strRes = await implCat(strRes, await intToBaseNChar(await implMod(intN, intB)));
+        intN = await implDiv(intN, intB);
+    }
+    strRes = await reverseStr(strRes);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
@@ -267,6 +361,16 @@ async function strPrintArr(genericArrayInput) {
     }
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strFromHex(strCharacter) {
+    await internalDebugCollect('str Character = ' + strCharacter + '; '); await internalDebugStackEnter('strFromHex:type-conversion'); await assertIsStr(strCharacter); let strReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    let strRes = '';
+    strRes = await strFromByte(await intFromBaseStr(strCharacter));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 // @license-end

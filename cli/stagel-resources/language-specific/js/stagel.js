@@ -4,6 +4,7 @@
     implAdd
     implSub
     implMul
+    implDiv
     implMod
 */
 
@@ -23,6 +24,22 @@ async function implMul(intA, intB) {
     assertIsInt(intA); assertIsInt(intB); let intReturn;
 
     intReturn = intA * intB; await assertIsInt(intReturn); return intReturn;
+}
+
+async function implDiv(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
+
+    // Should round towards zero. Note a portability gotcha: before C99, rounding was different. See https://stackoverflow.com/questions/17795421/bug-in-glibc-div-code
+    // It may be preferable to implement it in StageL directly at some point, but I can't be bothered to figure out how right now, and it would probably be slower than relying on native implementations.
+
+    floatReturn = intA / intB;
+    if (floatReturn < 0) {
+        intReturn = Math.ceil(floatReturn);
+    }
+    else {
+        intReturn = Math.floor(floatReturn);
+    }
+    assertIsInt(intReturn); return intReturn;
 }
 
 async function implMod(intA, intB) {
@@ -50,14 +67,6 @@ async function strFromByte(intInput) {
     strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strFromHex(strCharacter) {
-    await assertIsStr(strCharacter); let strReturn;
-
-    // Bear in mind that StageL doesn't attempt to support Unicode.
-
-    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
-}
-
 async function strFrom(input) {
     await assertIsGeneric(input); let strReturn;
 
@@ -65,9 +74,16 @@ async function strFrom(input) {
 }
 
 async function byteFromChar(strInput) {
-    await assertIsChar(strInput); let intReturn;
+    await assertIsStr(strInput);
+    // Bear in mind that StageL doesn't attempt to support Unicode.
+    // We can't use assertIsChar here, because it depends on byteFromChar.
+    let intReturn;
+    intReturn = strInput.charCodeAt(0);
 
-    intReturn = strInput.charCodeAt(0); await assertIsInt(intReturn); return intReturn;
+    await assertIsTrue(intReturn > 31);
+    await assertIsTrue(intReturn < 127);
+
+    await assertIsInt(intReturn); return intReturn;
 }
 /* arrays, provides:
     append
