@@ -18,14 +18,6 @@ async function strFromByte(intInput) {
     strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strFromHex(strCharacter) {
-    await assertIsStr(strCharacter); let strReturn;
-
-    // Bear in mind that StageL doesn't attempt to support Unicode.
-
-    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
-}
-
 async function strFrom(input) {
     await assertIsGeneric(input); let strReturn;
 
