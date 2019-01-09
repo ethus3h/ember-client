@@ -76,6 +76,67 @@ async function reverseStr(strStr) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+async function bitOr(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(intByte1);
+    intTemp = await bitNot(await bitAnd(intTemp, await bitNot(intByte2)));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitNor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitOr(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitNand(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNand:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitAnd(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitXor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNand(intByte1, intByte2);
+    intTemp = await bitAnd(intTemp, await bitOr(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitXnor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXnor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitXor(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
 async function or(boolA, boolB) {
     await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
@@ -125,13 +186,7 @@ async function xnor(boolA, boolB) {
 async function assertIsByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn); let voidReturn;
 
-    let boolTemp = false;
-    boolTemp = await le(intIn, 255);
-    let strIn = '';
-    strIn = await strFromInt(intIn);
-    if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
-        await assertionFailed(await implCat(strIn, ' is not a byte.'));
-    }
+    await assertTrue(await intIsBetween(intIn, 0, 255));
     await internalDebugStackExit();
 }
 
@@ -154,7 +209,7 @@ async function assertIsCharByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn); let voidReturn;
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
-    await assertTrue(await intIsBetween(32, 126));
+    await assertTrue(await intIsBetween(intIn, 32, 126));
     await internalDebugStackExit();
 }
 
