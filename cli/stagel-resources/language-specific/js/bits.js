@@ -3,7 +3,7 @@
     bitNot
 */
 
-// Note that bitwise operations in StageL operate on bytes rather than uint32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation.
+// Note that bitwise operations in StageL operate on bytes rather than int32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation.
 
 async function bitAnd(byteA, byteB) {
     await assertIsByte(byteA); await assertIsByte(byteB); let byteReturn;
@@ -42,10 +42,10 @@ async function bitRshift(byteA, intPlaces) {
 
 // Internal function
 
-async function internalBitwiseMask(uint32input) {
+async function internalBitwiseMask(int32input) {
     let byteReturn;
     let byteMask;
     byteMask = 255;
-    byteReturn = byteReturn & byteMask; /* zero out all but the least significant bits, which are what we want */
+    byteReturn = int32input & byteMask; /* zero out all but the least significant bits, which are what we want */
     return byteReturn;
 }
