@@ -35,5 +35,6 @@ r/n/intFromBaseNChar s/n
 r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base
     new s/res
-    
+    while gt n/n 0
+        set s/res cat s/res 
     return s/res

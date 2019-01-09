@@ -10,5 +10,5 @@ r/s/reverseStr s/str
     set n/c 0
     new s/res
     while le n/c n/l
-        set s/res cat s/res strCharAtPos s/str sub n/l 1
+        set s/res cat s/res strCharAtPos s/str sub n/l n/c
     return s/res
