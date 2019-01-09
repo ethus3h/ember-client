@@ -3,13 +3,13 @@
     implBitNot
 */
 
-async function implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
+async function implBitAnd(byteA, byteB) {
+    assertIsByte(byteA); assertIsByte(byteB); let byteReturn;
 
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+    byteReturn = byteA && byteB; await assertIsByte(byteReturn); return byteReturn;
 }
 
-async function implNot(boolA) {
+async function implBitNot(boolA) {
     assertIsBool(boolA); let boolReturn;
 
     boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;

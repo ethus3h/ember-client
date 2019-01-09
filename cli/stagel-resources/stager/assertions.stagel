@@ -1,10 +1,5 @@
 r/v/assertIsByte n/in
-    new b/temp
-    set b/temp le n/in 255
-    new s/in
-    set s/in strFromInt n/in
-    if not and b/temp ge n/in 0
-        assertionFailed cat s/in ' is not a byte.'
+    assertTrue intIsBetween n/in 0 255
 
 r/v/assertIsArray ga/in
     # Just a convenience wrapper
@@ -15,7 +10,7 @@ r/v/assertIsChar s/in
 
 r/v/assertIsCharByte n/in
     # Bear in mind that StageL doesn't attempt to support Unicode.
-    assertTrue intIsBetween 32 126
+    assertTrue intIsBetween n/in 32 126
 
 r/v/assertStrContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
