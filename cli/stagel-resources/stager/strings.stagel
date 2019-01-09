@@ -3,6 +3,10 @@ r/s/strCharAtPos s/str n/index
     set s/temp substring s/str n/index 1
     return s/temp
 
+r/s/strApp s/str1 s/str2
+    new s/res
+    set s/res cat s/str1 s/str2
+
 r/s/reverseStr s/str
     new n/l
     set n/l len s/str
