@@ -25,7 +25,12 @@ async function strFrom(input) {
 }
 
 async function byteFromChar(strInput) {
-    await assertIsChar(strInput); let intReturn;
+    // Bear in mind that StageL doesn't attempt to support Unicode.
+    // We can't use assertIsChar here, because it depends on byteFromChar.
+    let strResult
+    await assertIsTrue(strInput.charCodeAt(0))
+    await assertIsChar(strInput);
+    let intReturn;
 
     intReturn = strInput.charCodeAt(0); await assertIsInt(intReturn); return intReturn;
 }

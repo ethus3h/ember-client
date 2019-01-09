@@ -11,10 +11,10 @@ r/v/assertIsArray ga/in
     assertIsGenericArray ga/in
 
 r/v/assertIsChar s/in
-    if ne 1 len s/in
-        assertionFailed cat s/in ' is not a character.'
+    assertIsCharByte byteFromChar s/in
 
 r/v/assertIsCharByte n/in
+    # Bear in mind that StageL doesn't attempt to support Unicode.
     assertTrue intIsBetween 32 126
 
 r/v/assertStrContainsOnlyInt s/in

@@ -15,11 +15,3 @@ r/s/strFromHex s/character
     new s/res
     set s/res strFromByte intFromBaseStr s/character
     return s/res
-    async function strFromHex(strCharacter) {
-    await assertIsStr(strCharacter); let strReturn;
-
-    // 
-
-    strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
-}
-
