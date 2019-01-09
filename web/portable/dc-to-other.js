@@ -8,11 +8,11 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case "ASCII-safe-subset":
         case "UTF-8":
-            strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            strReturn = await strFromHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             assertIsStr(strReturn); return strReturn;
             break;
         case "HTML":
-            strReturn = await strFromUnicodeHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            strReturn = await strFromHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             if (strReturn === "\u0000") {
                 /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
                 strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
