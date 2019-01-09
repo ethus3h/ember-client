@@ -1,7 +1,7 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
 async function asciiIsDigit(intN) {
-    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:ascii-tools'); await assertIsInt(intN); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await intIsBetween(intN, 48, 57);
@@ -10,7 +10,7 @@ async function asciiIsDigit(intN) {
 }
 
 async function asciiIsPrintable(intN) {
-    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsPrintable:ascii-tools'); await assertIsInt(intN); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsPrintable:format-ascii'); await assertIsInt(intN); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await intIsBetween(intN, 32, 126);
@@ -19,7 +19,7 @@ async function asciiIsPrintable(intN) {
 }
 
 async function asciiIsSpace(intN) {
-    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsSpace:ascii-tools'); await assertIsInt(intN); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsSpace:format-ascii'); await assertIsInt(intN); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implEq(intN, 32);
@@ -28,7 +28,7 @@ async function asciiIsSpace(intN) {
 }
 
 async function asciiIsNewline(intN) {
-    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsNewline:ascii-tools'); await assertIsInt(intN); let boolReturn;
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsNewline:format-ascii'); await assertIsInt(intN); let boolReturn;
 
     let boolT1 = false;
     boolT1 = await implEq(intN, 10);
@@ -62,7 +62,7 @@ async function strCharAtPos(strStr, intIndex) {
     strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 async function or(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:boolean-logic'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(boolA);
@@ -72,7 +72,7 @@ async function or(boolA, boolB) {
 }
 
 async function nor(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nor:boolean-logic'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nor:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await or(boolA, boolB));
@@ -81,7 +81,7 @@ async function nor(boolA, boolB) {
 }
 
 async function nand(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nand:boolean-logic'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nand:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await implAnd(boolA, boolB));
@@ -90,7 +90,7 @@ async function nand(boolA, boolB) {
 }
 
 async function xor(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xor:boolean-logic'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xor:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await nand(boolA, boolB);
@@ -100,7 +100,7 @@ async function xor(boolA, boolB) {
 }
 
 async function xnor(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xnor:boolean-logic'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xnor:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
     boolTemp = await implNot(await xor(boolA, boolB));

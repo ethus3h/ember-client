@@ -3,6 +3,7 @@
 /* math, provides:
     implAdd
     implSub
+    implMul
     implMod
 */
 
@@ -44,11 +45,15 @@ async function intFromStr(str) {
 async function strFromByte(intInput) {
     await assertIsInt(intInput); let strReturn;
 
+    // Expects a decimal byte as input. Bear in mind that StageL doesn't attempt to support Unicode.
+
     strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strFromUnicodeHex(strCharacter) {
+async function strFromHex(strCharacter) {
     await assertIsStr(strCharacter); let strReturn;
+
+    // Bear in mind that StageL doesn't attempt to support Unicode.
 
     strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }
