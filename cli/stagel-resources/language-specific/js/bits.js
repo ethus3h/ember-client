@@ -35,7 +35,7 @@ async function bitRshift(byteA, intPlaces) {
 
     await assertIsBetween(intPlaces, 0, 31);
 
-    byteReturn = await internalBitwiseMask(byteA >>> intPlaces);
+    byteReturn = await internalBitwiseMask(byteA >>> intPlaces); /* >>> is needed in JavaScript to make it fill zeroes behind it. >> does something else. */
 
     await assertIsByte(byteReturn); return byteReturn;
 }
