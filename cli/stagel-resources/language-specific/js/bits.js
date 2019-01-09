@@ -23,7 +23,7 @@ async function bitNot(byteA) {
 async function bitLshift(byteA, intPlaces) {
     await assertIsByte(byteA); await assertIsInt(intPlaces); let byteReturn;
 
-    await assertIsBetween(intPlaces, 0, 31);
+    await assertIsBetween(intPlaces, 0, 8);
 
     byteReturn = await internalBitwiseMask(byteA << intPlaces);
 
@@ -33,7 +33,7 @@ async function bitLshift(byteA, intPlaces) {
 async function bitRshift(byteA, intPlaces) {
     await assertIsByte(byteA); await assertIsInt(intPlaces); let byteReturn;
 
-    await assertIsBetween(intPlaces, 0, 31);
+    await assertIsBetween(intPlaces, 0, 8);
 
     byteReturn = await internalBitwiseMask(byteA >>> intPlaces); /* >>> is needed in JavaScript to make it fill zeroes behind it. >> does something else. */
 
