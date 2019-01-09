@@ -10,10 +10,15 @@ r/s/strPrintArr ga/input
         set n/i add n/i 1
     return s/out
 
+r/s/strFromHex s/character
+    # Bear in mind that StageL doesn't attempt to support Unicode.
+    new s/res
+    set s/res strFromByte intFromBaseStr s/character
+    return s/res
     async function strFromHex(strCharacter) {
     await assertIsStr(strCharacter); let strReturn;
 
-    // Bear in mind that StageL doesn't attempt to support Unicode.
+    // 
 
     strReturn = String.fromCharCode("0x" + strCharacter); await assertIsStr(strReturn); return strReturn;
 }

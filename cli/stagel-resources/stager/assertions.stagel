@@ -14,6 +14,9 @@ r/v/assertIsChar s/in
     if ne 1 len s/in
         assertionFailed cat s/in ' is not a character.'
 
+r/v/assertIsCharByte n/in
+    assertTrue intIsBetween 32 126
+
 r/v/assertStrContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
     new n/temp
