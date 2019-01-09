@@ -3,7 +3,7 @@
     bitNot
 */
 
-// Note that bitwise operations in StageL operate on bytes rather than ints. Consequently, C-style bitwise operations must be emulated for the Javascript implementation.
+// Note that bitwise operations in StageL operate on bytes rather than uint32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation.
 
 async function bitAnd(byteA, byteB) {
     assertIsByte(byteA); assertIsByte(byteB); let byteReturn;

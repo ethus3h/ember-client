@@ -1,1 +1,6 @@
- 
+r/n/bitLShift n/byte
+    assertIsByte n/byte
+    new n/return
+    set n/return 
+    assertIsByte n/return
+    return n/return
