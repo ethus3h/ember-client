@@ -56,7 +56,7 @@ async function implMod(intA, intB) {
 async function intFromStr(str) {
     await assertStrContainsOnlyInt(str); let intReturn;
 
-    intReturn = parseInt(str); await assertIsInt(intReturn); return intReturn;
+    intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
 }
 
 async function strFromByte(intInput) {
