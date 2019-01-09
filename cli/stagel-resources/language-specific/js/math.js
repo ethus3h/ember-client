@@ -1,6 +1,7 @@
 /* math, provides:
     implAdd
     implSub
+    implMul
     implMod
 */
 
