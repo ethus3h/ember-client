@@ -9,3 +9,7 @@ r/b/intIsBetween n/n n/a n/b
     new b/temp
     set b/temp le n/t3 0
     return b/temp
+
+r/s/intToBaseStr n/n n/b
+    # Returns a string representing n in the requested base
+    
