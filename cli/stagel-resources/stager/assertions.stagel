@@ -4,7 +4,7 @@ r/v/assertIsByte n/in
     new s/in
     set s/in strFromInt n/in
     if not and b/temp ge n/in 0
-        die cat 'Assertion failed: ' cat s/in ' is not a byte.'
+        assertionFailed cat s/in ' is not a byte.'
 
 r/v/assertIsArray ga/in
     # Just a convenience wrapper
@@ -12,7 +12,7 @@ r/v/assertIsArray ga/in
 
 r/v/assertIsChar s/in
     if ne 1 len s/in
-        die cat 'Assertion failed: ' cat s/in ' is not a character.'
+        assertionFailed cat s/in ' is not a character.'
 
 r/v/assertStrContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
@@ -22,14 +22,14 @@ r/v/assertStrContainsOnlyInt s/in
     set n/i 0
     while lt n/i n/temp
         if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
-            die cat 'Assertion failed: ' cat s/in ' does not only contain an integer.'
+            assertionFailed cat s/in ' does not only contain an integer.'
         set n/i add n/i 1
 
 r/v/assertIsNonnegative n/in
     if lt n/in 0
         new s/temp
         set s/temp strFromInt n/in
-        die cat 'Assertion failed: ' cat s/temp ' is negative.'
+        assertionFailed cat s/temp ' is negative.'
 
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
