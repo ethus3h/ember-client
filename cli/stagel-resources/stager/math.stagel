@@ -35,18 +35,20 @@ r/n/intFromBaseNChar s/n
 r/n/intFromBaseStr s/n n/b
     # Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
     new n/res
+    set n/res 0
     new n/len
     set n/len len s/n
-    set n/len sub n/len 1
     new n/int
+    set n/int 0
+    new n/pow
+    set n/pow 1
     while ge n/len 0
-        set n/int intFromBaseNChar strCharAtPos s/n n/len
-        if 
-        set s/res cat s/res intToBaseNChar mod n/n n/b
-        set n/n div n/n n/b
         set n/len sub n/len 1
-    set s/res reverseStr s/res
-    return s/res
+        set n/int intFromBaseNChar strCharAtPos s/n n/len
+        assertIsTrue lt n/int n/b
+        set n/res add mul n/int n/pow
+        set n/pow mul n/pow n/b
+    return n/res
 
 r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
