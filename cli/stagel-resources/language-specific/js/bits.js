@@ -30,6 +30,16 @@ async function bitLshift(byteA, intPlaces) {
     await assertIsByte(byteReturn); return byteReturn;
 }
 
+async function bitRshift(byteA, intPlaces) {
+    await assertIsByte(byteA); await assertIsInt(intPlaces); let byteReturn;
+
+    await assertIsBetween(intPlaces, 0, 31);
+
+    byteReturn = await internalBitwiseMask(byteA >>> intPlaces);
+
+    await assertIsByte(byteReturn); return byteReturn;
+}
+
 // Internal function
 
 async function internalBitwiseMask(uint32input) {
