@@ -115,7 +115,7 @@ async function assertIsByte(intIn) {
     let strIn = '';
     strIn = await strFromInt(intIn);
     if (await implNot(await implAnd(boolTemp, await ge(intIn, 0)))) {
-        await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a byte.')));
+        await assertionFailed(await implCat(strIn, ' is not a byte.'));
     }
     await internalDebugStackExit();
 }
@@ -132,7 +132,7 @@ async function assertIsChar(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn); let voidReturn;
 
     if (await ne(1, await len(strIn))) {
-        await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' is not a character.')));
+        await assertionFailed(await implCat(strIn, ' is not a character.'));
     }
     await internalDebugStackExit();
 }
@@ -147,7 +147,7 @@ async function assertStrContainsOnlyInt(strIn) {
     intI = 0;
     while (await implLt(intI, intTemp)) {
         if (await implNot(await asciiIsDigit(await byteFromChar(await strCharAtPos(strIn, intI))))) {
-            await implDie(await implCat('Assertion failed: ', await implCat(strIn, ' does not only contain an integer.')));
+            await assertionFailed(await implCat(strIn, ' does not only contain an integer.'));
         }
         intI = await implAdd(intI, 1);
     }
@@ -160,7 +160,7 @@ async function assertIsNonnegative(intIn) {
     if (await implLt(intIn, 0)) {
         let strTemp = '';
         strTemp = await strFromInt(intIn);
-        await implDie(await implCat('Assertion failed: ', await implCat(strTemp, ' is negative.')));
+        await assertionFailed(await implCat(strTemp, ' is negative.'));
     }
     await internalDebugStackExit();
 }
