@@ -37,5 +37,6 @@ r/s/intToBaseStr n/n n/b
     new s/res
     while gt n/n 0
         set s/res cat s/res intToBaseNChar mod n/n n/b
-        set n/n imp
+        set n/n div n/n n/b
+    set s/res reverseStr s/res
     return s/res
