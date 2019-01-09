@@ -10,7 +10,7 @@ async function implBitAnd(byteA, byteB) {
 }
 
 async function implBitNot(boolA) {
-    assertIsBool(boolA); let boolReturn;
+    assertIsByte(byteA); let byteReturn;
 
-    boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
+    byteReturn = !byteA; await assertIsByte(byteReturn); return byteReturn;
 }
