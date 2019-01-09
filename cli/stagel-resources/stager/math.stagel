@@ -33,7 +33,7 @@ r/n/intFromBaseNChar s/n
     return n/res
 
 r/s/intToBaseStr n/n n/b
-    # Returns a string representing n in the requested base
+    # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
     new s/res
     while gt n/n 0
         set s/res cat s/res intToBaseNChar mod n/n n/b
