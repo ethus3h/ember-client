@@ -11,14 +11,14 @@ r/b/intIsBetween n/n n/a n/b
     return b/temp
 
 r/s/intToBaseNChar n/n
-    # Returns the nth digit in base 36 or less
+    # Returns the nth digit in base 36 or less (using capitalized digits).
     assertIsTrue intIsBetween n/n 0 36
     new s/res
     if le n/n 9
         set s/res strFromByte add n/n 48
     else
-        set s/res strFr
-    return 
+        set s/res strFromByte add n/n 55
+    return s/res
 
 r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base
