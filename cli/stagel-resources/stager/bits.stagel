@@ -1,29 +1,32 @@
 r/n/bitOr n/byte1 n/byte2
-    new b/temp
-    set b/temp not b/a
-    set b/temp not and b/temp not b/b
-    return b/temp
+    new n/temp
+    set n/temp bitNot n/byte1
+    set n/temp bitNot bitAnd n/temp bitNot n/byte2
+    return n/temp
 
 r/n/bitNor n/byte1 n/byte2
     new n/temp
     set n/temp bitNot bitOr n/byte1 n/byte2
-    return b/temp
+    return n/temp
 
 r/n/bitNand n/byte1 n/byte2
-    new b/temp
-    set b/temp not and n/byte1 n/byte2
-    return b/temp
+    new n/temp
+    set n/temp bitNot bitAnd n/byte1 n/byte2
+    return n/temp
 
 r/n/bitXor n/byte1 n/byte2
-    new b/temp
-    set b/temp nand n/byte1 n/byte2
-    set b/temp and b/temp or b/a b/b
-    return b/temp
+    new n/temp
+    set n/temp bitNand n/byte1 n/byte2
+    set n/temp bitAnd n/temp bitOr n/byte1 n/byte2
+    return n/temp
 
 r/n/bitXnor n/byte1 n/byte2
-    new b/temp
-    set b/temp not xor b/a b/b
-    return b/temp
+    assertIsByte n/byte1
+    assertIsByte n/byte2
+    new n/temp
+    set n/temp bitNot bitXor n/byte1 n/byte2
+    assertIsByte n/temp
+    return n/temp
 
 r/n/bitLShift n/byte
     assertIsByte n/byte
