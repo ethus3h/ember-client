@@ -792,7 +792,7 @@ codegenCommandInvocationEnd() {
     else)
         case "$targetLang" in
         "js")
-            # nothing needed
+            # Nothing needed
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
