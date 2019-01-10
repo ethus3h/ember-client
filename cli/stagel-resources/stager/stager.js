@@ -183,10 +183,14 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+/*r/v/assertIsTrue b/in */
+/*    if ne b/in true */
+/*        assertionFailed cat bool ' is not true.' */
+
 async function assertIsByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn); let voidReturn;
 
-    await assertTrue(await intIsBetween(intIn, 0, 255));
+    await assertIsTrue(await intIsBetween(intIn, 0, 255));
     await internalDebugStackExit();
 }
 
@@ -209,7 +213,7 @@ async function assertIsCharByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn); let voidReturn;
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
-    await assertTrue(await intIsBetween(intIn, 32, 126));
+    await assertIsTrue(await intIsBetween(intIn, 32, 126));
     await internalDebugStackExit();
 }
 
