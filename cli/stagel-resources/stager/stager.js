@@ -421,7 +421,7 @@ async function strFromHex(strCharacter) {
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
     let strRes = '';
-    strRes = await strFromByte(await intFromBaseStr(strCharacter));
+    strRes = await strFromByte(await intFromBaseStr(strCharacter, 16));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
