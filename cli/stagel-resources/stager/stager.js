@@ -379,7 +379,7 @@ async function intFromBaseStr(strN, intB) {
     intInt = 0;
     let intPow = 0;
     intPow = 1;
-    while (await ge(intLen, 0)) {
+    while (await implGt(intLen, 0)) {
         intLen = await implSub(intLen, 1);
         intInt = await intFromBaseNChar(await strCharAtPos(strN, intLen));
         await assertIsTrue(await implLt(intInt, intB));
