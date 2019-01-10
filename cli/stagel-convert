@@ -789,16 +789,6 @@ codegenCommandInvocationEnd() {
             ;;
         esac
         ;;
-    else)
-        case "$targetLang" in
-        "js")
-            # Nothing needed
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
-        ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
