@@ -46,7 +46,7 @@ r/n/intFromBaseStr s/n n/b
         set n/len sub n/len 1
         set n/int intFromBaseNChar strCharAtPos s/n n/len
         assertIsTrue lt n/int n/b
-        set n/res add mul n/int n/pow
+        set n/res add n/res mul n/int n/pow
         set n/pow mul n/pow n/b
     return n/res
 
