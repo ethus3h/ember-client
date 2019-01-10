@@ -1,5 +1,9 @@
+#r/v/assertIsTrue b/in
+#    if ne b/in true
+#        assertionFailed cat bool ' is not true.'
+
 r/v/assertIsByte n/in
-    assertTrue intIsBetween n/in 0 255
+    assertIsTrue intIsBetween n/in 0 255
 
 r/v/assertIsArray ga/in
     # Just a convenience wrapper
@@ -10,7 +14,7 @@ r/v/assertIsChar s/in
 
 r/v/assertIsCharByte n/in
     # Bear in mind that StageL doesn't attempt to support Unicode.
-    assertTrue intIsBetween n/in 32 126
+    assertIsTrue intIsBetween n/in 32 126
 
 r/v/assertStrContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
