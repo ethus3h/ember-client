@@ -789,16 +789,6 @@ codegenCommandInvocationEnd() {
             ;;
         esac
         ;;
-    else)
-        case "$targetLang" in
-        "js")
-            # Nothing needed
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
-        ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
@@ -1192,8 +1182,8 @@ for (( i=0; i<tokenCount; i++ )); do
                         # (This gets called multiple times for a single test, when there are multiple arglists to close for it.)
                         if [[ "${blockStack[-1]}" != "else" ]]; then
                             codegenCommandInvocationArglist
+                            codegenCommandInvocationEnd
                         fi
-                        codegenCommandInvocationEnd
                         unset 'stateStack[-1]'
                         i=$((i - 3))
                     fi
