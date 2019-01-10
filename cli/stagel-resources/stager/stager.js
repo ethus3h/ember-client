@@ -338,7 +338,7 @@ async function intToBaseNChar(intN) {
     if (await le(intN, 9)) {
         strRes = await strFromByte(await implAdd(intN, 48));
     }
-    await else();
+    else );
     {
         strRes = await strFromByte(await implAdd(intN, 55));
     }
@@ -356,7 +356,7 @@ async function intFromBaseNChar(strN) {
     if (await ge(intRes, 65)) {
         intRes = await implSub(intRes, 55);
     }
-    await else();
+    else );
     {
         intRes = await implSub(intRes, 48);
     }
