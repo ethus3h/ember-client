@@ -16,15 +16,16 @@
 
 async function assertIsBool(bool) {
     if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
-        await assertionFailed("Assertion failed: "+bool+" is not a boolean.");
+        await assertionFailed(bool+" is not a boolean.");
     }
 }
 
+/* TODO: move assertIsTrue/assertIsFalse to StageR once bool literals are available */
 async function assertIsTrue(bool) {
     await assertIsBool(bool);
 
     if (bool !== true) {
-        await assertionFailed("Assertion failed: "+bool+" is not true.");
+        await assertionFailed(bool+" is not true.");
     }
 }
 
@@ -32,7 +33,7 @@ async function assertIsFalse(bool) {
     await assertIsBool(bool);
 
     if (bool !== false) {
-        await assertionFailed("Assertion failed: "+bool+" is not false.");
+        await assertionFailed(bool+" is not false.");
     }
 }
 
@@ -44,25 +45,25 @@ async function assertIsInt(int) {
 
 async function assertIsStr(str) {
     if (typeof str !== "string" || typeof str === "undefined" || str === null) {
-        await assertionFailed("Assertion failed: "+str+" is not a string.");
+        await assertionFailed(str+" is not a string.");
     }
 }
 
 async function assertIsGeneric(val) {
     if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed("Assertion failed: "+val+" cannot be used as a generic.");
+        await assertionFailed(val+" cannot be used as a generic.");
     }
 }
 
 async function assertIsGenericArray(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
-        await assertionFailed("Assertion failed: "+arr+" is not an array.");
+        await assertionFailed(arr+" is not an array.");
     }
 }
 
 async function assertIsGenericItem(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed("Assertion failed: "+arr+" is not a generic item.");
+        await assertionFailed(arr+" is not a generic item.");
     }
 }
 
