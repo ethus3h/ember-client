@@ -383,6 +383,8 @@ async function intFromBaseStr(strN, intB) {
         intLen = await implSub(intLen, 1);
         intInt = await intFromBaseNChar(await strCharAtPos(strN, intLen));
         await assertIsTrue(await implLt(intInt, intB));
+        alert(intInt);
+        alert(intPow);
         intRes = await implAdd(await implMul(intInt, intPow));
         intPow = await implMul(intPow, intB);
     }
