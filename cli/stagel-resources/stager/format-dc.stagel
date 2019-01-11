@@ -1,2 +1,4 @@
 r/b/isDc n/in
-    return isNonnegative n/in
+    new b/res
+    set b/res isNonnegative n/in
+    return b/res
