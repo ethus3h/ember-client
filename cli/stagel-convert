@@ -6,7 +6,7 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 # Takes a StageL file as first argument, and prints out equivalent code in the language of the second argument (bash/js).
-# FIXME: unit tests; literal bools; elif; int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness; are script tags executed in order
+# FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness; are script tags executed in order
 
 input="$1"
 filename="$(basename "$input")"
