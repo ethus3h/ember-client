@@ -362,6 +362,7 @@ async function intFromBaseNChar(strN) {
     else {
         intRes = await implSub(intRes, 48);
     }
+    await implLog(intRes);
     await assertIsTrue(await intIsBetween(intRes, 0, 36));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
