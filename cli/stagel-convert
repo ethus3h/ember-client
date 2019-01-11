@@ -675,13 +675,17 @@ codegenCommandInvocationStart() {
             ;;
         esac
         ;;
-    if|elif|while)
+    if|while)
         codegenPrintIndentationSpaces
         codegenOutput "$codegenRoutineName ("
         ;;
     else)
         codegenPrintIndentationSpaces
         codegenOutput "$codegenRoutineName"
+        ;;
+    elif)
+        codegenPrintIndentationSpaces
+        codegenOutput "else if ("
         ;;
     until)
         codegenPrintIndentationSpaces
