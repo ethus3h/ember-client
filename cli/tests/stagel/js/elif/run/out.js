@@ -6,7 +6,7 @@ elif (await implEq('b', strN));
 {
     strN = 'c';
 }
-else);
+else;
 {
     strN = 'b';
 }

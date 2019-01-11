@@ -810,8 +810,8 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     esac
-    if ! contains "test" "${stateStack[@]}" || [[ "${blockStack[-1]}" == "else" ]]; then
-        [[ "${stateStack[-2]}" != "arglist" ]] && codegenOutput ';'$'\n'
+    if ! contains "test" "${stateStack[@]}"; then
+        [[ "${stateStack[-2]}" != "arglist" ]] && [[ "${blockStack[-1]}" != "else" ]] && codegenOutput ';'$'\n'
     fi
     blockStackRemoveLast
     codegenRoutineType=""
