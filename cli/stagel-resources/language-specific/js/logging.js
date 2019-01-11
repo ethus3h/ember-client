@@ -14,6 +14,11 @@ if (STAGEL_DEBUG === undefined) {
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
 
+// from https://gist.github.com/danharper/74a5102363fbd85f6b67
+function sleep(ms = 0) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
@@ -44,7 +49,7 @@ async function implWarn(strMessage) {
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
-
+    await sleep(100);
     console.log(strMessage);
     if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
