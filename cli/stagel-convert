@@ -420,7 +420,7 @@ codegenLiteral() {
         "literal-s")
             codegenOutput \'"$(asciiDecListToText "$2")"\'
             ;;
-        "literal-n")
+        "literal-n"|"literal-b")
             codegenOutput "$2"
             ;;
         esac
