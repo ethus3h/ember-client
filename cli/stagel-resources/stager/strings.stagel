@@ -20,7 +20,7 @@ r/s/charToUpper s/char
     if intIsBetween n/temp 97 122
         set n/temp sub n/temp 32
     new s/res
-    set s/res charFromByte s/char
+    set s/res charFromByte n/temp
     return s/res
 
 r/s/strToUpper s/str
@@ -41,7 +41,7 @@ r/s/charToLower s/char
     if intIsBetween n/temp 65 90
         set n/temp add n/temp 32
     new s/res
-    set s/res charFromByte s/char
+    set s/res charFromByte n/temp
     return s/res
 
 r/s/strToLower s/str
