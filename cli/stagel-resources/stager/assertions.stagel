@@ -31,6 +31,7 @@ r/v/assertIsNonnegative n/in
     if lt n/in 0
         new s/temp
         set s/temp strFrom n/in
+        log s/temp
         assertionFailed cat s/temp ' is negative.'
 
 r/v/assertIsDc n/in
