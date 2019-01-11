@@ -36,7 +36,7 @@ runTest stagel/js/logical-or
 runTest stagel/js/generic-parameter
 runTest stagel/js/array-s
 runTest stagel/js/bool-literal
-runTest stagel/js/else
+runTest -v stagel/js/else
 runTest stagel/js/elif
 
 reportTests
