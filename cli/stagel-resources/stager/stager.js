@@ -107,6 +107,37 @@ async function strToUpper(strStr) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
+async function charToLower(strChar) {
+    await internalDebugCollect('str Char = ' + strChar + '; '); await internalDebugStackEnter('charToLower:strings'); await assertIsStr(strChar); let strReturn;
+
+    await assertIsChar(strChar);
+    let intTemp = 0;
+    intTemp = await byteFromChar(strChar);
+    if (await intIsBetween(intTemp, 65, 90)) {
+        intTemp = await implAdd(intTemp, 32);
+    }
+    let strRes = '';
+    strRes = await charFromByte(strChar);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strToLower(strStr) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('strToLower:strings'); await assertIsStr(strStr); let strReturn;
+
+    let strRes = '';
+    let intI = 0;
+    intI = 0;
+    let intCount = 0;
+    intCount = await len(strStr);
+    while (await implLt(intI, intCount)) {
+        strRes = await implCat(strRes, await charToLower(await strCharAtPos(strStr, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
@@ -270,7 +301,7 @@ async function assertIsNonnegative(intIn) {
 
     if (await implLt(intIn, 0)) {
         let strTemp = '';
-        strTemp = await strFromInt(intIn);
+        strTemp = await strFrom(intIn);
         await assertionFailed(await implCat(strTemp, ' is negative.'));
     }
     await internalDebugStackExit();
