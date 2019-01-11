@@ -798,21 +798,11 @@ codegenCommandInvocationEnd() {
             ;;
         esac
         ;;
-    else)
-        case "$targetLang" in
-        "js")
-            # Nothing needed
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
-        ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
         "js")
-            { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set)$ ]]; } || codegenOutput ")"
+            { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else)$ ]]; } || codegenOutput ")"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -820,7 +810,7 @@ codegenCommandInvocationEnd() {
         esac
         ;;
     esac
-    if ! contains "test" "${stateStack[@]}"; then
+    if ! contains "test" "${stateStack[@]}" || [[ "${blockStack[-1]}" == "else" ]]; then
         [[ "${stateStack[-2]}" != "arglist" ]] && codegenOutput ';'$'\n'
     fi
     blockStackRemoveLast
