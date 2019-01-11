@@ -27,11 +27,15 @@ r/v/assertStrContainsOnlyInt s/in
             assertionFailed cat s/in ' does not only contain an integer.'
         set n/i add n/i 1
 
-r/v/assertIsNonnegative n/in
+r/b/isNonnegative n/in
     if lt n/in 0
+        return false
+    return true
+
+r/v/assertIsNonnegative n/in
+    if not isNonnegative n/in
         new s/temp
         set s/temp strFrom n/in
-        log s/temp
         assertionFailed cat s/temp ' is negative.'
 
 r/v/assertIsDc n/in
@@ -40,8 +44,10 @@ r/v/assertIsDc n/in
 r/b/isBase n/b
     new b/res
     set b/res intIsBetween n/b 1 36
+    return b/res
+
 r/v/assertIsBase n/b
-    assertIsTrue intIsBetween n/b 1 36
+    assertIsTrue isBase n/b
 
 r/v/assertIsBaseChar s/in n/b
     assertIsChar s/in
