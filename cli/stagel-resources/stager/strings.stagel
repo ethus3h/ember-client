@@ -54,3 +54,17 @@ r/s/strToLower s/str
         set s/res cat s/res charToLower strCharAtPos s/str n/i
         set n/i add n/i 1
     return s/res
+
+r/b/strContainsOnlyInt s/in
+    # Positive int, specifically. Only digits allowed.
+    new n/temp
+    set n/temp len s/in
+    new n/i
+    set n/i 0
+    new b/res
+    set b/res true
+    while lt n/i n/temp
+        if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
+            set b/res false
+        set n/i add n/i 1
+    return b/res
