@@ -11,7 +11,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             assertIsStr(strReturn); return strReturn;
             break;
         case "HTML":
-            console.log(await strFromHex(48));
+            await console.log(await strFromHex(48));
             try {/* FIXME THE BUG IS HERE */
                 strReturn = await strFromHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             }
