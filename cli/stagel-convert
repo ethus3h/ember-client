@@ -916,7 +916,7 @@ codegenRoutineDefinitionEnd() {
 
 codegenIsTestCommand() {
     case "$1" in
-    for|if|until|while)
+    for|if|elif|until|while)
         true
         ;;
     *)
@@ -1063,7 +1063,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 command)
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
-                    if|until|while)
+                    if|elif|until|while)
                         stateStack+=("test")
                         blockStack+=("test" "${tokens[$i]}")
                         codegenCommandInvocationStart
