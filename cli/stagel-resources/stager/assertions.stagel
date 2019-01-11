@@ -79,9 +79,11 @@ r/b/isBaseDigit s/in n/b
     new b/res
     set b/res asciiIsLetterUpper n/digitByte
     set b/res or asciiIsDigit n/digitByte
-    if intIsBetween n/digitByte 48 add 48 n/b
+    if intIsBetween n/digitByte 48 add 47 n/b
+        # The base is decimal or less, and the 
         set b/res and b/res true
         return b/res
+    if intIsBetween n/digitByte 
     if le n/b 10
         set b/res and b/res lt add 48 n/b # 48 = ascii 0, so e.g. 48+5=53=ascii 5, which is the first non-digit in base 5
     else
