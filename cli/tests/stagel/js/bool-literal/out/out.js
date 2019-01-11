@@ -1,4 +1,2 @@
-if (await implEq(0, await implMod(intNum, 15))) {
-    let strN = '';
-    strN = 'FizzBuzz';
-}
+let boolN = false;
+boolN = true;
