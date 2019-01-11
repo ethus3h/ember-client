@@ -79,7 +79,7 @@ r/s/intToBaseStr n/n n/b
     return s/res
 
 r/b/isSupportedBase n/b
-    # StageL math functions support base 1 to base 36.
+    # StageL base conversion routines support base 1 to base 36.
     new b/res
     set b/res intIsBetween n/b 1 36
     return b/res
