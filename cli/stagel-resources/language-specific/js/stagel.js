@@ -53,7 +53,7 @@ async function implMod(intA, intB) {
     strFromUnicodeHex
 */
 
-async function intFromStr(str) {
+async function intFromIntStr(str) {
     await assertStrContainsOnlyInt(str); let intReturn;
 
     intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
