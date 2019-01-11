@@ -841,7 +841,7 @@ codegenRoutineDefinitionStart() {
             fi
         done
         codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
-        if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+        if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
         for (( k=0; k<argumentCount; k++ )); do
@@ -853,10 +853,10 @@ codegenRoutineDefinitionStart() {
                 codegenOutput "${codegenArgList[$k]^});"
             fi
         done
-        if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+        if [[ "$k" != $((argumentCount - 1)) ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
-        if [[ "${codegenArgList[$k - 1]}" != "void" ]]; then
+        if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput "let "
             codegenType "$codegenRoutineType"
             codegenOutput "Return;"$'\n\n'
