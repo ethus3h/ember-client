@@ -37,6 +37,9 @@ r/v/assertIsNonnegative n/in
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
 
+r/b/isBase n/b
+    new b/res
+    set b/res intIsBetween n/b 1 36
 r/v/assertIsBase n/b
     assertIsTrue intIsBetween n/b 1 36
 
