@@ -2,7 +2,7 @@ let strN = '';
 if (await implEq('a', strN)) {
     strN = 'FizzBuzz';
 }
-elif (await implEq('b', strN)) {
+else if (await implEq('b', strN)) {
     strN = 'c';
 }
 else {
