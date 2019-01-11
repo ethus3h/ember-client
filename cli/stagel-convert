@@ -291,7 +291,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 " 102 97 108 115 101")
                     tokens[$i - 1]="literal-b"
-                    tokens[$i]="true"
+                    tokens[$i]="false"
                     ;;
                 *)
                     tokens[$i - 1]="command"

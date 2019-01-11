@@ -1,4 +1,4 @@
 let boolT = false;
-boolT = await true();
+boolT = ;
 let boolF = false;
-boolF = await false();
+boolF = ;
