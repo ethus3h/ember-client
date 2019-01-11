@@ -13,7 +13,9 @@ r/b/intIsBetween n/n n/a n/b
 r/s/intToBaseNChar n/n
     # Returns the nth digit in base 36 or less (using capitalized digits).
     if not intIsBetween n/n 0 36
-        die cat n/n ' is not between the supported range of numbers between 0 and 36 (Z).'
+        new s/temp
+        set s/temp strFrom n/n
+        die cat strFrom s/temp ' is not between the supported range of numbers between 0 and 36 (Z).'
     new s/res
     if le n/n 9
         set s/res strFromByte add n/n 48
