@@ -126,7 +126,7 @@ async function internalDebugPrintStack() {
     let result="";
     while (i<count) {
         /* FIXME: This could probably be optimized if it's problematically slow. */
-        result = result + stagelDebugCallstack[i] + " ";
+        result = result + stagelDebugCallstack.slice(-i)[0] + " < ";
         i = i + 1;
     }
     return result;
