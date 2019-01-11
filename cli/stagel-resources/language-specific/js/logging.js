@@ -49,7 +49,7 @@ async function implWarn(strMessage) {
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
-    await sleep(100);
+    await sleep(1000);
     console.log(strMessage);
     if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
