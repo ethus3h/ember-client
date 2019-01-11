@@ -20,20 +20,20 @@ r/b/asciiIsNewline n/n
     set b/t2 or b/t1 eq n/n 13
     return b/t2
 
-r/b/asciiIsUpperLetter n/n
+r/b/asciiIsLetterUpper n/n
     new b/temp
     set b/temp intIsBetween n/n 65 90
     return b/temp
 
-r/b/asciiIsLowerLetter n/n
+r/b/asciiIsLetterLower n/n
     new b/temp
     set b/temp intIsBetween n/n 97 122
     return b/temp
 
 r/b/asciiIsLetter n/n
     new b/temp
-    set b/temp asciiIsLowerLetter n/n
-    set b/temp or b/temp asciiIsUpperLetter n/n
+    set b/temp asciiIsLetterLower n/n
+    set b/temp or b/temp asciiIsLetterUpper n/n
     return b/temp
 
 # 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p

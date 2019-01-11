@@ -9,11 +9,21 @@ r/v/assertIsArray ga/in
     # Just a convenience wrapper
     assertIsGenericArray ga/in
 
+r/b/isChar s/in
+    new b/res
+    set b/res isCharByte byteFromChar s/in
+    return b/res
+
 r/v/assertIsChar s/in
     assertIsCharByte byteFromChar s/in
 
-r/v/assertIsCharByte n/in
+r/b/isCharByte n/in
     # Bear in mind that StageL doesn't attempt to support Unicode.
+    new b/res
+    set b/res intIsBetween n/in 32 126
+    return b/res
+
+r/v/assertIsCharByte n/in
     assertIsTrue intIsBetween n/in 32 126
 
 r/v/assertStrContainsOnlyInt s/in
@@ -50,17 +60,18 @@ r/v/assertIsBase n/b
     assertIsTrue isBase n/b
 
 r/b/isBaseDigit s/in n/b
+    assertIsChar s/in
+    assertIsBase n/b
+    new s/chr
+    set s/chr charToUpper s/in
+    new n/digitByte
+    set n/digitByte byteFromChar s/in
     new b/res
-    set b/res isChar s/in
-    set b/res and b/res isBase n/b
-    new n/byte
-    set n/byte byteFromChar s/in
-    new b/isDigit
-    set b/isDigit asciiIsLetter n/byte
-    set b/isDigit or asciiIsDigit n/byte
-    set b/res and b/res b/isDigit
+    set b/res asciiIsLetterUpper n/digitByte
+    set b/res or asciiIsDigit n/digitByte
     if le n/b 10
-        set b/res and b/res lt add 
+        set b/res and b/res lt add 48 n/b # 48 = ascii 0, so e.g. 48+5=53=ascii 5, which is the first non-digit in base 5
+    else
     set b/res and b/res b/inRange
 
 r/v/assertIsBaseDigit s/in n/b
