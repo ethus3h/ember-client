@@ -681,7 +681,7 @@ codegenCommandInvocationStart() {
         ;;
     else)
         codegenPrintIndentationSpaces
-        codegenOutput "$codegenRoutineName "
+        codegenOutput "$codegenRoutineName"
         ;;
     until)
         codegenPrintIndentationSpaces
