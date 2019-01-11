@@ -2,6 +2,7 @@ let strN = '';
 if (await implEq('a', strN)) {
     strN = 'FizzBuzz';
 }
-else {
+else);
+{
     strN = 'b';
 }
