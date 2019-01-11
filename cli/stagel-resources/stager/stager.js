@@ -1,5 +1,32 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
+async function isByte(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isByte:type-tools'); await assertIsInt(intIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await intIsBetween(intIn, 0, 255);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isChar(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await isCharByte(await byteFromChar(strIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharByte(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isCharByte:type-tools'); await assertIsInt(intIn); let boolReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    let boolRes = false;
+    boolRes = await intIsBetween(intIn, 32, 126);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
 async function asciiIsDigit(intN) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
 
@@ -36,6 +63,34 @@ async function asciiIsNewline(intN) {
     boolT2 = await or(boolT1, await implEq(intN, 13));
 
     boolReturn = boolT2; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetterUpper(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetterUpper:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 65, 90);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetterLower(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetterLower:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 97, 122);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetter(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetter:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await asciiIsLetterLower(intN);
+    boolTemp = await or(boolTemp, await asciiIsLetterUpper(intN));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 /* 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p */
 /* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
@@ -137,6 +192,26 @@ async function strToLower(strStr) {
     }
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strContainsOnlyInt(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('strContainsOnlyInt:strings'); await assertIsStr(strIn); let boolReturn;
+
+    /* Positive int, specifically. Only digits allowed. */
+    let intTemp = 0;
+    intTemp = await len(strIn);
+    let intI = 0;
+    intI = 0;
+    let boolRes = false;
+    boolRes = true;
+    while (await implLt(intI, intTemp)) {
+        if (await implNot(await asciiIsDigit(await byteFromChar(await strCharAtPos(strIn, intI))))) {
+            boolRes = false;
+        }
+        intI = await implAdd(intI, 1);
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
@@ -252,7 +327,7 @@ async function xnor(boolA, boolB) {
 async function assertIsByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn);
 
-    await assertIsTrue(await intIsBetween(intIn, 0, 255));
+    await assertIsTrue(await isByte(intIn));
     await internalDebugStackExit();
 }
 
@@ -267,44 +342,14 @@ async function assertIsArray(genericArrayIn) {
 async function assertIsChar(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn);
 
-    await assertIsCharByte(await byteFromChar(strIn));
+    await assertIsTrue(await isChar(strIn));
     await internalDebugStackExit();
 }
 
 async function assertIsCharByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn);
 
-    /* Bear in mind that StageL doesn't attempt to support Unicode. */
-    await assertIsTrue(await intIsBetween(intIn, 32, 126));
-    await internalDebugStackExit();
-}
-
-async function assertStrContainsOnlyInt(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertStrContainsOnlyInt:assertions'); await assertIsStr(strIn);
-
-    /* Positive int, specifically. Only digits allowed. */
-    let intTemp = 0;
-    intTemp = await len(strIn);
-    let intI = 0;
-    intI = 0;
-    while (await implLt(intI, intTemp)) {
-        if (await implNot(await asciiIsDigit(await byteFromChar(await strCharAtPos(strIn, intI))))) {
-            await assertionFailed(await implCat(strIn, ' does not only contain an integer.'));
-        }
-        intI = await implAdd(intI, 1);
-    }
-    await internalDebugStackExit();
-}
-
-async function assertIsNonnegative(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsNonnegative:assertions'); await assertIsInt(intIn);
-
-    if (await implLt(intIn, 0)) {
-        let strTemp = '';
-        strTemp = await strFrom(intIn);
-        await implLog(strTemp);
-        await assertionFailed(await implCat(strTemp, ' is negative.'));
-    }
+    await assertIsTrue(await isCharByte(intIn));
     await internalDebugStackExit();
 }
 
@@ -312,6 +357,47 @@ async function assertIsDc(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsDc:assertions'); await assertIsInt(intIn);
 
     await assertIsNonnegative(intIn);
+    await internalDebugStackExit();
+}
+
+async function assertStrContainsOnlyInt(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertStrContainsOnlyInt:assertions'); await assertIsStr(strIn);
+
+    if (await implNot(await strContainsOnlyInt(strIn))) {
+        await assertionFailed(await implCat(strIn, ' does not only contain an integer.'));
+    }
+    await internalDebugStackExit();
+}
+
+async function assertIsNonnegative(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsNonnegative:assertions'); await assertIsInt(intIn);
+
+    if (await implNot(await isNonnegative(intIn))) {
+        let strTemp = '';
+        strTemp = await strFrom(intIn);
+        await assertionFailed(await implCat(strTemp, ' is negative.'));
+    }
+    await internalDebugStackExit();
+}
+
+async function assertIsSupportedBase(intB) {
+    await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsSupportedBase:assertions'); await assertIsInt(intB);
+
+    await assertIsTrue(await isSupportedBase(intB));
+    await internalDebugStackExit();
+}
+
+async function assertIsBaseDigit(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsBaseDigit:assertions'); await assertIsStr(strIn);await assertIsInt(intB);
+
+    await assertIsTrue(await isBaseDigit(strIn, intB));
+    await internalDebugStackExit();
+}
+
+async function assertIsBaseStr(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsBaseStr:assertions'); await assertIsStr(strIn);await assertIsInt(intB);
+
+    await assertIsTrue(await isBaseStr(strIn, intB));
     await internalDebugStackExit();
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
@@ -380,6 +466,24 @@ async function nle(intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+async function isDc(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsInt(intIn); let boolReturn;
+
+
+    boolReturn = ; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    await isNonnegative(intIn);
+}
+async function isNonnegative(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonnegative:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await implLt(intIn, 0)) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function intIsBetween(intN, intA, intB) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intIsBetween:math'); await assertIsInt(intN);await assertIsInt(intA);await assertIsInt(intB); let boolReturn;
 
@@ -421,11 +525,13 @@ async function intFromBaseNChar(strN) {
 
     /* Returns an int given the nth digit in base 36 or less (using capitalized digits). */
     await assertIsChar(strN);
+    let strUc = '';
+    strUc = await strToUpper(strN);
     let intRes = 0;
-    intRes = await byteFromChar(strN);
+    intRes = await byteFromChar(strUc);
     if (await ge(intRes, 65)) {
         if (await implGt(intRes, 90)) {
-            await implDie(await implCat(strN, ' is not within the supported range of digits between 0 and Z (36).'));
+            await implDie(await implCat(strUc, ' is not within the supported range of digits between 0 and Z (36).'));
         }
         intRes = await implSub(intRes, 55);
     }
@@ -446,6 +552,7 @@ async function intFromBaseStr(strN, intB) {
     await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
 
     /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    await assertIsBaseStr(strN, intB);
     let strUc = '';
     strUc = await strToUpper(strN);
     let intRes = 0;
@@ -477,8 +584,50 @@ async function intToBaseStr(intN, intB) {
         intN = await implDiv(intN, intB);
     }
     strRes = await reverseStr(strRes);
+    await assertIsBaseStr(strRes, intB);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function isSupportedBase(intB) {
+    await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isSupportedBase:math'); await assertIsInt(intB); let boolReturn;
+
+    /* StageL base conversion routines support base 1 to base 36. */
+    let boolRes = false;
+    boolRes = await intIsBetween(intB, 1, 36);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseDigit(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseDigit:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
+
+    await assertIsChar(strIn);
+    await assertIsSupportedBase(intB);
+    let intDigitVal = 0;
+    intDigitVal = await intFromBaseStr(strIn);
+    let boolRes = false;
+    boolRes = await implLt(intDigitVal, intB);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseStr(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseStr:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
+
+    let intLen = 0;
+    intLen = await len(strIn);
+    intLen = await implSub(intLen, 1);
+    await assertIsNonnegative(intLen);
+    let strChr = '';
+    let boolRes = false;
+    boolRes = true;
+    while (await ge(intLen, 0)) {
+        strChr = await strCharAtPos(strIn, intLen);
+        boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
@@ -497,12 +646,12 @@ async function strPrintArr(genericArrayInput) {
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-async function charFromHexByte(strCharacter) {
-    await internalDebugCollect('str Character = ' + strCharacter + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strCharacter); let strReturn;
+async function charFromHexByte(strHexByte) {
+    await internalDebugCollect('str HexByte = ' + strHexByte + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strHexByte); let strReturn;
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
     let strRes = '';
-    strRes = await charFromByte(await intFromBaseStr(strCharacter, 16));
+    strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
