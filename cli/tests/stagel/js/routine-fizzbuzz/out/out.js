@@ -24,7 +24,7 @@ async function fbSwitcher(intNum) {
 
 /* A string is an array of 8-bit bytes. */
 async function fizzBuzz() {
-    await internalDebugStackEnter('fizzBuzz:in');  let strReturn;
+    await internalDebugStackEnter('fizzBuzz:in'); let strReturn;
 
     /* return-assert -n # the output should be non-empty. */
     let intCounter = 1;
