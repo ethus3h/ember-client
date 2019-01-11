@@ -1037,7 +1037,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     blockStack+=("plain-block" "")
                     ;;
                 dedent)
-                    [[ "${blockStack[-2]}" == ident-r-v ]] && codegenRoutineDefinitionPreEnd # This gets generated before the return for non-void routines
+                    [[ "${blockStack[-2]}" == "ident-r-v" ]] && codegenRoutineDefinitionPreEnd # This gets generated before the return for non-void routines
                     codegenDedent
                     unset 'stateStack[-1]'
                     blockStackRemoveLast
