@@ -340,7 +340,7 @@ async function intToBaseNChar(intN) {
     if (await implNot(await intIsBetween(intN, 0, 36))) {
         let strTemp = '';
         strTemp = await strFrom(intN);
-        await implDie(await implCat(await strFrom(strTemp, ' is not between the supported range of numbers between 0 and 36 (Z).')));
+        await implDie(await implCat(await strFrom(strTemp, ' is not within the supported range of numbers between 0 and 36 (Z).')));
     }
     let strRes = '';
     if (await le(intN, 9)) {
@@ -362,17 +362,16 @@ async function intFromBaseNChar(strN) {
     intRes = await byteFromChar(strN);
     if (await ge(intRes, 65)) {
         if (await implGt(intRes, 90)) {
-            await implDie(await implCat(strN, ' is not between the supported range of digits between 0 and Z (36).'));
+            await implDie(await implCat(strN, ' is not within the supported range of digits between 0 and Z (36).'));
         }
         intRes = await implSub(intRes, 55);
     }
     else {
         if (await implNot(await intIsBetween(intRes, 48, 57))) {
-            await implDie(await implCat(strN, ' is not between the supported range of digits between 0 and Z (36).'));
+            await implDie(await implCat(strN, ' is not within the supported range of digits between 0 and Z (36).'));
         }
         intRes = await implSub(intRes, 48);
     }
-    await implLog(await strFrom(intRes));
     if (await implNot(await intIsBetween(intRes, 0, 36))) {
         await implDie(await implCat('Internal error in intFromBaseNChar called with n=', await implCat(strN, '.')));
     }
