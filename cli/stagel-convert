@@ -841,7 +841,7 @@ codegenRoutineDefinitionStart() {
             fi
         done
         codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
-        if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
+        if [[ "$argumentCount" != 0 ]] || [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
         for (( k=0; k<argumentCount; k++ )); do
@@ -853,14 +853,15 @@ codegenRoutineDefinitionStart() {
                 codegenOutput "${codegenArgList[$k]^});"
             fi
         done
-        if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
+        if [[ "$argumentCount" != 0 ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
         if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput "let "
             codegenType "$codegenRoutineType"
-            codegenOutput "Return;"$'\n\n'
+            codegenOutput "Return;"
         fi
+        codegenOutput $'\n\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
