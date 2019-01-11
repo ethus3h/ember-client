@@ -87,7 +87,7 @@ async function charToUpper(strChar) {
         intTemp = await implSub(intTemp, 32);
     }
     let strRes = '';
-    strRes = await charFromByte(strChar);
+    strRes = await charFromByte(intTemp);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -118,7 +118,7 @@ async function charToLower(strChar) {
         intTemp = await implAdd(intTemp, 32);
     }
     let strRes = '';
-    strRes = await charFromByte(strChar);
+    strRes = await charFromByte(intTemp);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
