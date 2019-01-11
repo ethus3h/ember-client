@@ -497,12 +497,12 @@ async function strPrintArr(genericArrayInput) {
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-async function strFromHex(strCharacter) {
-    await internalDebugCollect('str Character = ' + strCharacter + '; '); await internalDebugStackEnter('strFromHex:type-conversion'); await assertIsStr(strCharacter); let strReturn;
+async function charFromHexByte(strCharacter) {
+    await internalDebugCollect('str Character = ' + strCharacter + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strCharacter); let strReturn;
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
     let strRes = '';
-    strRes = await strFromByte(await intFromBaseStr(strCharacter, 16));
+    strRes = await charFromByte(await intFromBaseStr(strCharacter, 16));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
