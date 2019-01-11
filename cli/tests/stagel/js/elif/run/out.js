@@ -2,9 +2,10 @@ let strN = '';
 if (await implEq('a', strN)) {
     strN = 'FizzBuzz';
 }
-else if (await implEq('b', strN)) {
+elif (await implEq('b', strN));
+{
     strN = 'c';
 }
-else {
+else  {
     strN = 'b';
 }
