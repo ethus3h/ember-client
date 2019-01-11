@@ -13,12 +13,23 @@ r/s/reverseStr s/str
         set s/res cat s/res strCharAtPos s/str sub n/l n/c
     return s/res
 
+r/s/charToUpper s/char
+    assertIsChar s/char
+    new n/temp
+    set n/temp byteFromChar s/char
+    if intIsBetween n/temp 97 122
+        set n/temp sub n/temp 32
+    new s/res
+    set s/res charFromByte s/char
+    return s/res
+
 r/s/strToUpper s/str
     new s/res
+    new n/i
+    set n/i 0
     new n/count
     set n/count len s/str
-    set n/count sub n/count 1
-    while ge n/count 0
-        set s/res cat s/res charToUpper strCharAtPos s/str n/count
-        set n/count sub n/count 1
+    while lt n/i n/count
+        set s/res cat s/res charToUpper strCharAtPos s/str n/i
+        set n/i add n/i 1
     return s/res

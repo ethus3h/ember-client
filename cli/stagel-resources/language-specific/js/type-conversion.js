@@ -10,18 +10,18 @@ async function intFromStr(str) {
     intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
 }
 
-async function strFromByte(intInput) {
+async function strFrom(input) {
+    await assertIsGeneric(input); let strReturn;
+
+    strReturn = String(input); await assertIsStr(strReturn); return strReturn;
+}
+
+async function charFromByte(intInput) {
     await assertIsInt(intInput); let strReturn;
 
     // Expects a decimal byte as input. Bear in mind that StageL doesn't attempt to support Unicode.
 
     strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
-}
-
-async function strFrom(input) {
-    await assertIsGeneric(input); let strReturn;
-
-    strReturn = String(input); await assertIsStr(strReturn); return strReturn;
 }
 
 async function byteFromChar(strInput) {
