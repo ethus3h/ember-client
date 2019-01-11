@@ -4,8 +4,6 @@
 
 async function strPrintableDcToChar(dc, strCharacterEncoding) {
     await assertIsDc(dc); await assertIsStr(strCharacterEncoding); let strReturn;
-    console.log(dc);
-    console.log(strCharacterEncoding);
     switch (strCharacterEncoding) {
         case "ASCII-safe-subset":
         case "UTF-8":
