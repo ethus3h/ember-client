@@ -501,8 +501,8 @@ async function intIsBetween(intN, intA, intB) {
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function intToBaseNChar(intN) {
-    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('intToBaseNChar:math'); await assertIsInt(intN); let strReturn;
+async function intToBase36Char(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('intToBase36Char:math'); await assertIsInt(intN); let strReturn;
 
     /* Returns the nth digit in base 36 or less (using capitalized digits). */
     if (await implNot(await intIsBetween(intN, 0, 36))) {
@@ -521,8 +521,8 @@ async function intToBaseNChar(intN) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-async function intFromBaseNChar(strN) {
-    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugStackEnter('intFromBaseNChar:math'); await assertIsStr(strN); let intReturn;
+async function intFromBase36Char(strN) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugStackEnter('intFromBase36Char:math'); await assertIsStr(strN); let intReturn;
 
     /* Returns an int given the nth digit in base 36 or less (using capitalized digits). */
     await assertIsChar(strN);
@@ -543,7 +543,7 @@ async function intFromBaseNChar(strN) {
         intRes = await implSub(intRes, 48);
     }
     if (await implNot(await intIsBetween(intRes, 0, 36))) {
-        await implDie(await implCat('Internal error in intFromBaseNChar called with n=', await implCat(strN, '.')));
+        await implDie(await implCat('Internal error in intFromBase36Char called with n=', await implCat(strN, '.')));
     }
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
@@ -566,7 +566,7 @@ async function intFromBaseStr(strN, intB) {
     intPow = 1;
     while (await implGt(intLen, 0)) {
         intLen = await implSub(intLen, 1);
-        intInt = await intFromBaseNChar(await strCharAtPos(strUc, intLen));
+        intInt = await intFromBase36Char(await strCharAtPos(strUc, intLen));
         await assertIsTrue(await implLt(intInt, intB));
         intRes = await implAdd(intRes, await implMul(intInt, intPow));
         intPow = await implMul(intPow, intB);
@@ -581,7 +581,7 @@ async function intToBaseStr(intN, intB) {
     /* Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
     let strRes = '';
     while (await implGt(intN, 0)) {
-        strRes = await implCat(strRes, await intToBaseNChar(await implMod(intN, intB)));
+        strRes = await implCat(strRes, await intToBase36Char(await implMod(intN, intB)));
         intN = await implDiv(intN, intB);
     }
     strRes = await reverseStr(strRes);
@@ -606,7 +606,7 @@ async function isBaseDigit(strIn, intB) {
     await assertIsChar(strIn);
     await assertIsSupportedBase(intB);
     let intDigitVal = 0;
-    intDigitVal = await intFromBaseStr(strIn);
+    intDigitVal = await intFromBase36Char(strIn);
     let boolRes = false;
     boolRes = await implLt(intDigitVal, intB);
 
