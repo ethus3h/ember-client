@@ -29,12 +29,16 @@ r/n/intFromBaseNChar s/n
     new n/res
     set n/res byteFromChar s/n
     if ge n/res 65
+        if gt n/res 90
+            die cat s/n ' is not between the supported range of digits between 0 and Z (36).'
         set n/res sub n/res 55
     else
+        if not intIsBetween n/res 48 57
+            die cat s/n ' is not between the supported range of digits between 0 and Z (36).'
         set n/res sub n/res 48
     implLog strFrom n/res
     if not intIsBetween n/res 0 36
-        die cat s/n ' is not between the supported range of digits between 0 and Z (36).'
+        die cat 'Internal error in intFromBaseNChar called with n=' cat s/n '.'
     return n/res
 
 r/n/intFromBaseStr s/n n/b
