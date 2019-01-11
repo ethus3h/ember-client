@@ -407,10 +407,10 @@ async function intToBaseNChar(intN) {
     }
     let strRes = '';
     if (await le(intN, 9)) {
-        strRes = await strFromByte(await implAdd(intN, 48));
+        strRes = await charFromByte(await implAdd(intN, 48));
     }
     else {
-        strRes = await strFromByte(await implAdd(intN, 55));
+        strRes = await charFromByte(await implAdd(intN, 55));
     }
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;

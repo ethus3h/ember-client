@@ -18,9 +18,9 @@ r/s/intToBaseNChar n/n
         die cat strFrom s/temp ' is not within the supported range of numbers between 0 and 36 (Z).'
     new s/res
     if le n/n 9
-        set s/res strFromByte add n/n 48
+        set s/res charFromByte add n/n 48
     else
-        set s/res strFromByte add n/n 55
+        set s/res charFromByte add n/n 55
     return s/res
 
 r/n/intFromBaseNChar s/n
