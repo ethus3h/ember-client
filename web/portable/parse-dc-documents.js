@@ -29,10 +29,10 @@ async function dcarrParseSems(bytearrayContent) {
         switch (strParserState) {
             case "dc":
                 if (await asciiIsDigit(bytearrayContent[intByteOffset])) {
-                    strCurrentDc = strCurrentDc + await strFromByte(bytearrayContent[intByteOffset]);
+                    strCurrentDc = strCurrentDc + await charFromByte(bytearrayContent[intByteOffset]);
                 }
                 if (await asciiIsSpace(bytearrayContent[intByteOffset])) {
-                    await customTypeDcarrPush(dcarrParseResults, await intFromStr(strCurrentDc));
+                    await customTypeDcarrPush(dcarrParseResults, await intFromIntStr(strCurrentDc));
                     strCurrentDc = "";
                 }
                 if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
