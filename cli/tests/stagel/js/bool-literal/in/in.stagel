@@ -1,2 +1,4 @@
-new b/n
-set b/n true
+new b/t
+set b/t true
+new b/f
+set b/f false
