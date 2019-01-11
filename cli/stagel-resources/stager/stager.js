@@ -188,14 +188,14 @@ async function xnor(boolA, boolB) {
 /*        assertionFailed cat bool ' is not true.' */
 
 async function assertIsByte(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn);
 
     await assertIsTrue(await intIsBetween(intIn, 0, 255));
     await internalDebugStackExit();
 }
 
 async function assertIsArray(genericArrayIn) {
-    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('assertIsArray:assertions'); await assertIsGenericArray(genericArrayIn); let voidReturn;
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('assertIsArray:assertions'); await assertIsGenericArray(genericArrayIn);
 
     /* Just a convenience wrapper */
     await assertIsGenericArray(genericArrayIn);
@@ -203,14 +203,14 @@ async function assertIsArray(genericArrayIn) {
 }
 
 async function assertIsChar(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn); let voidReturn;
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn);
 
     await assertIsCharByte(await byteFromChar(strIn));
     await internalDebugStackExit();
 }
 
 async function assertIsCharByte(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsCharByte:assertions'); await assertIsInt(intIn);
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
     await assertIsTrue(await intIsBetween(intIn, 32, 126));
@@ -218,7 +218,7 @@ async function assertIsCharByte(intIn) {
 }
 
 async function assertStrContainsOnlyInt(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertStrContainsOnlyInt:assertions'); await assertIsStr(strIn); let voidReturn;
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertStrContainsOnlyInt:assertions'); await assertIsStr(strIn);
 
     /* Positive int, specifically. Only digits allowed. */
     let intTemp = 0;
@@ -235,7 +235,7 @@ async function assertStrContainsOnlyInt(strIn) {
 }
 
 async function assertIsNonnegative(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsNonnegative:assertions'); await assertIsInt(intIn); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsNonnegative:assertions'); await assertIsInt(intIn);
 
     if (await implLt(intIn, 0)) {
         let strTemp = '';
@@ -246,7 +246,7 @@ async function assertIsNonnegative(intIn) {
 }
 
 async function assertIsDc(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsDc:assertions'); await assertIsInt(intIn); let voidReturn;
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsDc:assertions'); await assertIsInt(intIn);
 
     await assertIsNonnegative(intIn);
     await internalDebugStackExit();
@@ -342,7 +342,7 @@ async function intToBaseNChar(intN) {
     if (await le(intN, 9)) {
         strRes = await strFromByte(await implAdd(intN, 48));
     }
-    else  {
+    else {
         strRes = await strFromByte(await implAdd(intN, 55));
     }
 
@@ -359,7 +359,7 @@ async function intFromBaseNChar(strN) {
     if (await ge(intRes, 65)) {
         intRes = await implSub(intRes, 55);
     }
-    else  {
+    else {
         intRes = await implSub(intRes, 48);
     }
     await assertIsTrue(await intIsBetween(intRes, 0, 36));
