@@ -42,17 +42,19 @@ r/n/intFromBaseNChar s/n
 
 r/n/intFromBaseStr s/n n/b
     # Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    new s/uc
+    set s/uc strToUpper s/n
     new n/res
     set n/res 0
     new n/len
-    set n/len len s/n
+    set n/len len s/uc
     new n/int
     set n/int 0
     new n/pow
     set n/pow 1
     while gt n/len 0
         set n/len sub n/len 1
-        set n/int intFromBaseNChar strCharAtPos s/n n/len
+        set n/int intFromBaseNChar strCharAtPos s/uc n/len
         assertIsTrue lt n/int n/b
         set n/res add n/res mul n/int n/pow
         set n/pow mul n/pow n/b
