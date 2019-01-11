@@ -15,7 +15,7 @@ r/b/isChar s/in
     return b/res
 
 r/v/assertIsChar s/in
-    assertIsCharByte byteFromChar s/in
+    assertIsTrue isChar s/in
 
 r/b/isCharByte n/in
     # Bear in mind that StageL doesn't attempt to support Unicode.
@@ -24,18 +24,25 @@ r/b/isCharByte n/in
     return b/res
 
 r/v/assertIsCharByte n/in
-    assertIsTrue intIsBetween n/in 32 126
+    assertIsTrue isCharByte n/in
 
-r/v/assertStrContainsOnlyInt s/in
+r/b/strContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
     new n/temp
     set n/temp len s/in
     new n/i
     set n/i 0
+    new b/res
+    set b/res true
     while lt n/i n/temp
         if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
-            assertionFailed cat s/in ' does not only contain an integer.'
+            set b/res false
         set n/i add n/i 1
+    return b/res
+
+r/v/assertStrContainsOnlyInt s/in
+    if not strContainsOnlyInt s/in
+        assertionFailed cat s/in ' does not only contain an integer.'
 
 r/b/isNonnegative n/in
     if lt n/in 0
@@ -47,6 +54,9 @@ r/v/assertIsNonnegative n/in
         new s/temp
         set s/temp strFrom n/in
         assertionFailed cat s/temp ' is negative.'
+
+r/b/isDc n/in
+    return isNonnegative n/in
 
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
@@ -69,9 +79,13 @@ r/b/isBaseDigit s/in n/b
     new b/res
     set b/res asciiIsLetterUpper n/digitByte
     set b/res or asciiIsDigit n/digitByte
+    if intIsBetween n/digitByte 48 add 48 n/b
+        set b/res and b/res true
+        return b/res
     if le n/b 10
         set b/res and b/res lt add 48 n/b # 48 = ascii 0, so e.g. 48+5=53=ascii 5, which is the first non-digit in base 5
     else
+        set b/res and b/res lt add 
     set b/res and b/res b/inRange
 
 r/v/assertIsBaseDigit s/in n/b
