@@ -37,10 +37,14 @@ r/v/assertIsNonnegative n/in
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
 
-r/v/assertIsBase 
+r/v/assertIsBase n/b
+    assertIsTrue intIsBetween n/b 1 36
+
 r/v/assertIsBaseChar s/in n/b
     assertIsChar s/in
     assertIsBase n/b
+    new n/val
+    set n/val 
 
 r/v/assertIsBaseStr s/in n/b
     new n/len
