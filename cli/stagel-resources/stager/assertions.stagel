@@ -70,12 +70,14 @@ r/v/assertIsBase n/b
     assertIsTrue isBase n/b
 
 r/b/isBaseDigit s/in n/b
+    #base 1 allows 0; base 10 allows 0-9; base 11 allows A; base 12 allows B
+    # 0 = 48; 9 = 57; A = 65; Z=90
     assertIsChar s/in
     assertIsBase n/b
     new s/chr
     set s/chr charToUpper s/in
     new n/digitByte
-    set n/digitByte byteFromChar s/in
+    set n/digitByte byteFromChar s/chr
     new b/res
     set b/res asciiIsLetterUpper n/digitByte
     set b/res or asciiIsDigit n/digitByte
