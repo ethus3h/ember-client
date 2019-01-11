@@ -90,7 +90,14 @@ r/v/assertIsBaseStr s/in n/b
     new n/len
     set n/len len s/in
     set n/len sub n/len 1
+    assertIsNonnegative n/len
     new s/chr
+    new b/res
+    set b/res true
     while ge n/len 0
         set s/chr strCharAtPos s/in n/len
-        assertIsBaseChar s/chr n/b
+        set b/res and b/res isBaseDigit s/chr n/b
+    return b/res
+
+r/v/assertIsBaseStr s/in n/b
+    assertIsTrue isBaseStr s/in n/b
