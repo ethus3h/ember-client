@@ -26,11 +26,13 @@ r/s/intToBaseNChar n/n
 r/n/intFromBaseNChar s/n
     # Returns an int given the nth digit in base 36 or less (using capitalized digits).
     assertIsChar s/n
+    new s/uc
+    set s/uc strToUpper s/n
     new n/res
-    set n/res byteFromChar s/n
+    set n/res byteFromChar s/uc
     if ge n/res 65
         if gt n/res 90
-            die cat s/n ' is not within the supported range of digits between 0 and Z (36).'
+            die cat s/uc ' is not within the supported range of digits between 0 and Z (36).'
         set n/res sub n/res 55
     else
         if not intIsBetween n/res 48 57
