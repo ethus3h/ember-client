@@ -302,6 +302,7 @@ async function assertIsNonnegative(intIn) {
     if (await implLt(intIn, 0)) {
         let strTemp = '';
         strTemp = await strFrom(intIn);
+        await implLog(strTemp);
         await assertionFailed(await implCat(strTemp, ' is negative.'));
     }
     await internalDebugStackExit();
