@@ -286,8 +286,12 @@ for (( i=0; i<tokenCount; i++ )); do
                     tokens[$i]="${tokens[$i]# 103 105 47}"
                     ;;
                 " 116 114 117 101")
+                    tokens[$i - 1]="literal-b"
+                    tokens[$i]="true"
                     ;;
-                " 116 114 117 101")
+                " 102 97 108 115 101")
+                    tokens[$i - 1]="literal-b"
+                    tokens[$i]="true"
                     ;;
                 *)
                     tokens[$i - 1]="command"
