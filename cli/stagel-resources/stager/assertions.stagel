@@ -58,7 +58,7 @@ r/b/isBaseChar s/in n/b
     new b/inRange
     set b/inRange asciiIsLetter n/byte
     set b/inRange or asciiIsDigit n/byte
-    set b/inRange 
+    set b/res and b/res b/inRange
 
 r/v/assertIsBaseChar s/in n/b
     assertIsChar s/in
