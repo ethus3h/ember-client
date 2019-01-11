@@ -76,6 +76,37 @@ async function reverseStr(strStr) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
+async function charToUpper(strChar) {
+    await internalDebugCollect('str Char = ' + strChar + '; '); await internalDebugStackEnter('charToUpper:strings'); await assertIsStr(strChar); let strReturn;
+
+    await assertIsChar(strChar);
+    let intTemp = 0;
+    intTemp = await byteFromChar(strChar);
+    if (await intIsBetween(intTemp, 97, 122)) {
+        intTemp = await implSub(intTemp, 32);
+    }
+    let strRes = '';
+    strRes = await charFromByte(strChar);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strToUpper(strStr) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('strToUpper:strings'); await assertIsStr(strStr); let strReturn;
+
+    let strRes = '';
+    let intI = 0;
+    intI = 0;
+    let intCount = 0;
+    intCount = await len(strStr);
+    while (await implLt(intI, intCount)) {
+        strRes = await implCat(strRes, await charToUpper(await strCharAtPos(strStr, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
@@ -383,17 +414,19 @@ async function intFromBaseStr(strN, intB) {
     await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
 
     /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    let strUc = '';
+    strUc = await strToUpper(strN);
     let intRes = 0;
     intRes = 0;
     let intLen = 0;
-    intLen = await len(strN);
+    intLen = await len(strUc);
     let intInt = 0;
     intInt = 0;
     let intPow = 0;
     intPow = 1;
     while (await implGt(intLen, 0)) {
         intLen = await implSub(intLen, 1);
-        intInt = await intFromBaseNChar(await strCharAtPos(strN, intLen));
+        intInt = await intFromBaseNChar(await strCharAtPos(strUc, intLen));
         await assertIsTrue(await implLt(intInt, intB));
         intRes = await implAdd(intRes, await implMul(intInt, intPow));
         intPow = await implMul(intPow, intB);
