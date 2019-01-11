@@ -121,7 +121,7 @@ async function internalDebugStackExit() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(stagelDebugCallstack).length;
+    i = await Object.keys(stagelDebugCallstack).length - 1;
     let result="";
     while (i>0) {
         /* FIXME: This could probably be optimized if it's problematically slow. */
