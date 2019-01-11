@@ -36,3 +36,17 @@ r/v/assertIsNonnegative n/in
 
 r/v/assertIsDc n/in
     assertIsNonnegative n/in
+
+r/v/assertIsBase 
+r/v/assertIsBaseChar s/in n/b
+    assertIsChar s/in
+    assertIsBase n/b
+
+r/v/assertIsBaseStr s/in n/b
+    new n/len
+    set n/len len s/in
+    set n/len sub n/len 1
+    new s/chr
+    while ge n/len 0
+        set s/chr strCharAtPos s/in n/len
+        assertIsBaseChar s/chr n/b

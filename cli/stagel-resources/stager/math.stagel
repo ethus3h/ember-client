@@ -42,6 +42,7 @@ r/n/intFromBaseNChar s/n
 
 r/n/intFromBaseStr s/n n/b
     # Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    assertIsBaseStr s/n n/b
     new s/uc
     set s/uc strToUpper s/n
     new n/res
@@ -67,4 +68,5 @@ r/s/intToBaseStr n/n n/b
         set s/res cat s/res intToBaseNChar mod n/n n/b
         set n/n div n/n n/b
     set s/res reverseStr s/res
+    assertIsBaseStr s/res n/b
     return s/res
