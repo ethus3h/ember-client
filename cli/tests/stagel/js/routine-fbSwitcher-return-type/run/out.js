@@ -1,8 +1,8 @@
 async function fbSwitcher(intNum) {
-    await assertIsInt(intNum); let strReturn;
+    await internalDebugCollect('int Num = ' + intNum + '; '); await internalDebugStackEnter('fbSwitcher:in'); await assertIsInt(intNum); let strReturn;
 
     if (await implEq(0, await implMod(intNum, 15))) {
 
-        strReturn = 'Buzz'; await assertIsStr(strReturn); return strReturn;
+        strReturn = 'Buzz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
 }
