@@ -1,4 +1,11 @@
-if (await implEq(0, await implMod(intNum, 15))) {
-    let strN = '';
+let strN = '';
+if (await implEq('a', strN)) {
     strN = 'FizzBuzz';
+}
+elif (await implEq('b', strN));
+{
+    strN = 'c';
+}
+else  {
+    strN = 'b';
 }
