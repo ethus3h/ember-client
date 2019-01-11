@@ -2,8 +2,13 @@
 #    if ne b/in true
 #        assertionFailed cat bool ' is not true.'
 
+r/b/isByte n/in
+    new b/res
+    set b/res intIsBetween n/in 0 255
+    return b/res
+
 r/v/assertIsByte n/in
-    assertIsTrue intIsBetween n/in 0 255
+    assertIsTrue isByte n/in
 
 r/v/assertIsArray ga/in
     # Just a convenience wrapper
@@ -70,8 +75,6 @@ r/v/assertIsBase n/b
     assertIsTrue isBase n/b
 
 r/b/isBaseDigit s/in n/b
-    #base 1 allows 0; base 10 allows 0-9; base 11 allows A; base 12 allows B
-    # 0 = 48; 9 = 57; A = 65; Z=90
     assertIsChar s/in
     assertIsBase n/b
     new n/digitVal
