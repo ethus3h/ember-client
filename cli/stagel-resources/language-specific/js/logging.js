@@ -45,6 +45,7 @@ async function implWarn(strMessage) {
 
     await implLog(strMessage);
 }
+    alert("Lurerurerreouoeuurer");
 
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
