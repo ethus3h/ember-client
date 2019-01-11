@@ -184,7 +184,7 @@ while read -r byte; do
         elif asciiIsPrintable "$byte"; then
             tokens[-1]="${tokens[-1]} $byte"
         else
-            die "Non-printable byte $byte in a comment."
+            die "Non-printable byte $byte in a string literal."
         fi
         ;;
     *)
@@ -284,6 +284,10 @@ for (( i=0; i<tokenCount; i++ )); do
                 " 103 105 47 "*)
                     tokens[$i - 1]="ident-gi"
                     tokens[$i]="${tokens[$i]# 103 105 47}"
+                    ;;
+                " 116 114 117 101")
+                    ;;
+                " 116 114 117 101")
                     ;;
                 *)
                     tokens[$i - 1]="command"
