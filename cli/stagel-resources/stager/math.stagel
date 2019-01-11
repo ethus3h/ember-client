@@ -15,7 +15,7 @@ r/b/intIsBetween n/n n/a n/b
     set b/temp le n/t3 0
     return b/temp
 
-r/s/intToBaseNChar n/n
+r/s/intToBase36Char n/n
     # Returns the nth digit in base 36 or less (using capitalized digits).
     if not intIsBetween n/n 0 36
         new s/temp
@@ -28,7 +28,7 @@ r/s/intToBaseNChar n/n
         set s/res charFromByte add n/n 55
     return s/res
 
-r/n/intFromBaseNChar s/n
+r/n/intFromBase36Char s/n
     # Returns an int given the nth digit in base 36 or less (using capitalized digits).
     assertIsChar s/n
     new s/uc
@@ -44,7 +44,7 @@ r/n/intFromBaseNChar s/n
             die cat s/n ' is not within the supported range of digits between 0 and Z (36).'
         set n/res sub n/res 48
     if not intIsBetween n/res 0 36
-        die cat 'Internal error in intFromBaseNChar called with n=' cat s/n '.'
+        die cat 'Internal error in intFromBase36Char called with n=' cat s/n '.'
     return n/res
 
 r/n/intFromBaseStr s/n n/b
@@ -62,7 +62,7 @@ r/n/intFromBaseStr s/n n/b
     set n/pow 1
     while gt n/len 0
         set n/len sub n/len 1
-        set n/int intFromBaseNChar strCharAtPos s/uc n/len
+        set n/int intFromBase36Char strCharAtPos s/uc n/len
         assertIsTrue lt n/int n/b
         set n/res add n/res mul n/int n/pow
         set n/pow mul n/pow n/b
@@ -72,7 +72,7 @@ r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
     new s/res
     while gt n/n 0
-        set s/res cat s/res intToBaseNChar mod n/n n/b
+        set s/res cat s/res intToBase36Char mod n/n n/b
         set n/n div n/n n/b
     set s/res reverseStr s/res
     assertIsBaseStr s/res n/b
@@ -88,7 +88,7 @@ r/b/isBaseDigit s/in n/b
     assertIsChar s/in
     assertIsSupportedBase n/b
     new n/digitVal
-    set n/digitVal intFromBaseStr s/in
+    set n/digitVal intFromBase36Char s/in
     new b/res
     set b/res lt n/digitVal n/b
     return b/res
