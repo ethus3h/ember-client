@@ -49,18 +49,21 @@ r/b/isBase n/b
 r/v/assertIsBase n/b
     assertIsTrue isBase n/b
 
-r/b/isBaseChar s/in n/b
+r/b/isBaseDigit s/in n/b
     new b/res
     set b/res isChar s/in
     set b/res and b/res isBase n/b
     new n/byte
     set n/byte byteFromChar s/in
-    new b/inRange
-    set b/inRange asciiIsLetter n/byte
-    set b/inRange or asciiIsDigit n/byte
+    new b/isDigit
+    set b/isDigit asciiIsLetter n/byte
+    set b/isDigit or asciiIsDigit n/byte
+    set b/res and b/res b/isDigit
+    if le n/b 10
+        set b/res and b/res lt add 
     set b/res and b/res b/inRange
 
-r/v/assertIsBaseChar s/in n/b
+r/v/assertIsBaseDigit s/in n/b
     assertIsChar s/in
     assertIsBase n/b
     new n/val
