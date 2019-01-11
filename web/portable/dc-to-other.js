@@ -7,13 +7,13 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
     switch (strCharacterEncoding) {
         case "ASCII-safe-subset":
         case "UTF-8":
-            strReturn = await strFromHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            strReturn = await charFromHexByte(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             assertIsStr(strReturn); return strReturn;
             break;
         case "HTML":
-            await console.log(await strFromHex('48'));
+            await console.log(await charFromHexByte('48'));
             try {/* FIXME THE BUG IS HERE */
-                strReturn = await strFromHex(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+                strReturn = await charFromHexByte(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             }
             catch {
                 if (strReturn === "\u0000") {

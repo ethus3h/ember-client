@@ -10,8 +10,8 @@ r/s/strPrintArr ga/input
         set n/i add n/i 1
     return s/out
 
-r/s/strFromHex s/character
+r/s/charFromHexByte s/character
     # Bear in mind that StageL doesn't attempt to support Unicode.
     new s/res
-    set s/res strFromByte intFromBaseStr s/character 16
+    set s/res charFromByte intFromBaseStr s/character 16
     return s/res
