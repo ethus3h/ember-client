@@ -35,8 +35,8 @@ runTest stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
 runTest stagel/js/generic-parameter
 runTest stagel/js/array-s
+runTest -v stagel/js/bool-literal
 runTest stagel/js/else
 runTest stagel/js/elif
-runTest stagel/js/bool-literal
 
 reportTests
