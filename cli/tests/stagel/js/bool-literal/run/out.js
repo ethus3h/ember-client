@@ -1,4 +1,4 @@
 let boolT = false;
-boolT = ;
+boolT = true;
 let boolF = false;
-boolF = ;
+boolF = false;
