@@ -2,11 +2,6 @@
 #    if ne b/in true
 #        assertionFailed cat bool ' is not true.'
 
-r/b/isByte n/in
-    new b/res
-    set b/res intIsBetween n/in 0 255
-    return b/res
-
 r/v/assertIsByte n/in
     assertIsTrue isByte n/in
 
@@ -45,14 +40,15 @@ r/b/strContainsOnlyInt s/in
         set n/i add n/i 1
     return b/res
 
+r/b/isDc n/in
+    return isNonnegative n/in
+
+r/v/assertIsDc n/in
+    assertIsNonnegative n/in
+
 r/v/assertStrContainsOnlyInt s/in
     if not strContainsOnlyInt s/in
         assertionFailed cat s/in ' does not only contain an integer.'
-
-r/b/isNonnegative n/in
-    if lt n/in 0
-        return false
-    return true
 
 r/v/assertIsNonnegative n/in
     if not isNonnegative n/in
@@ -60,44 +56,11 @@ r/v/assertIsNonnegative n/in
         set s/temp strFrom n/in
         assertionFailed cat s/temp ' is negative.'
 
-r/b/isDc n/in
-    return isNonnegative n/in
-
-r/v/assertIsDc n/in
-    assertIsNonnegative n/in
-
-r/b/isBase n/b
-    new b/res
-    set b/res intIsBetween n/b 1 36
-    return b/res
-
-r/v/assertIsBase n/b
-    assertIsTrue isBase n/b
-
-r/b/isBaseDigit s/in n/b
-    assertIsChar s/in
-    assertIsBase n/b
-    new n/digitVal
-    set n/digitVal intFromBaseStr s/in
-    new b/res
-    set b/res lt n/digitVal n/b
-    return b/res
+r/v/assertIsSupportedBase n/b
+    assertIsTrue isSupportedBase n/b
 
 r/v/assertIsBaseDigit s/in n/b
     assertIsTrue isBaseDigit s/in n/b
-
-r/v/assertIsBaseStr s/in n/b
-    new n/len
-    set n/len len s/in
-    set n/len sub n/len 1
-    assertIsNonnegative n/len
-    new s/chr
-    new b/res
-    set b/res true
-    while ge n/len 0
-        set s/chr strCharAtPos s/in n/len
-        set b/res and b/res isBaseDigit s/chr n/b
-    return b/res
 
 r/v/assertIsBaseStr s/in n/b
     assertIsTrue isBaseStr s/in n/b

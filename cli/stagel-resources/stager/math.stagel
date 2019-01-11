@@ -1,3 +1,8 @@
+r/b/isNonnegative n/in
+    if lt n/in 0
+        return false
+    return true
+
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
     new n/t1
@@ -72,3 +77,30 @@ r/s/intToBaseStr n/n n/b
     set s/res reverseStr s/res
     assertIsBaseStr s/res n/b
     return s/res
+
+r/b/isSupportedBase n/b
+    new b/res
+    set b/res intIsBetween n/b 1 36
+    return b/res
+
+r/b/isBaseDigit s/in n/b
+    assertIsChar s/in
+    assertIsSupportedBase n/b
+    new n/digitVal
+    set n/digitVal intFromBaseStr s/in
+    new b/res
+    set b/res lt n/digitVal n/b
+    return b/res
+
+r/b/isBaseStr s/in n/b
+    new n/len
+    set n/len len s/in
+    set n/len sub n/len 1
+    assertIsNonnegative n/len
+    new s/chr
+    new b/res
+    set b/res true
+    while ge n/len 0
+        set s/chr strCharAtPos s/in n/len
+        set b/res and b/res isBaseDigit s/chr n/b
+    return b/res

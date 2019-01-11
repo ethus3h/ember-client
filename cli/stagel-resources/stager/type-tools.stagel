@@ -1,0 +1,5 @@
+r/b/isByte n/in
+    new b/res
+    set b/res intIsBetween n/in 0 255
+    return b/res
+
