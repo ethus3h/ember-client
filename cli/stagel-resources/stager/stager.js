@@ -469,9 +469,10 @@ async function nle(intA, intB) {
 async function isDc(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsInt(intIn); let boolReturn;
 
+    let boolRes = false;
+    boolRes = await isNonnegative(intIn);
 
-    boolReturn = ; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-    await isNonnegative(intIn);
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function isNonnegative(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonnegative:math'); await assertIsInt(intIn); let boolReturn;
