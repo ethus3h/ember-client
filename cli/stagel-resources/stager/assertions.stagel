@@ -30,7 +30,7 @@ r/v/assertStrContainsOnlyInt s/in
 r/v/assertIsNonnegative n/in
     if lt n/in 0
         new s/temp
-        set s/temp strFromInt n/in
+        set s/temp strFrom n/in
         assertionFailed cat s/temp ' is negative.'
 
 r/v/assertIsDc n/in

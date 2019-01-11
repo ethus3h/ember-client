@@ -33,3 +33,24 @@ r/s/strToUpper s/str
         set s/res cat s/res charToUpper strCharAtPos s/str n/i
         set n/i add n/i 1
     return s/res
+
+r/s/charToLower s/char
+    assertIsChar s/char
+    new n/temp
+    set n/temp byteFromChar s/char
+    if intIsBetween n/temp 65 90
+        set n/temp add n/temp 32
+    new s/res
+    set s/res charFromByte s/char
+    return s/res
+
+r/s/strToLower s/str
+    new s/res
+    new n/i
+    set n/i 0
+    new n/count
+    set n/count len s/str
+    while lt n/i n/count
+        set s/res cat s/res charToLower strCharAtPos s/str n/i
+        set n/i add n/i 1
+    return s/res
