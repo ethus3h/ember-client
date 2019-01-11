@@ -337,7 +337,9 @@ async function intToBaseNChar(intN) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('intToBaseNChar:math'); await assertIsInt(intN); let strReturn;
 
     /* Returns the nth digit in base 36 or less (using capitalized digits). */
-    await assertIsTrue(await intIsBetween(intN, 0, 36));
+    if (await implNot(await intIsBetween(intN, 0, 36))) {
+        await implDie(await implCat(intN, ' is not between the supported range of numbers between 0 and 36 (Z).'));
+    }
     let strRes = '';
     if (await le(intN, 9)) {
         strRes = await strFromByte(await implAdd(intN, 48));
@@ -363,7 +365,9 @@ async function intFromBaseNChar(strN) {
         intRes = await implSub(intRes, 48);
     }
     await implLog(await strFrom(intRes));
-    await assertIsTrue(await intIsBetween(intRes, 0, 36));
+    if (await implNot(await intIsBetween(intRes, 0, 36))) {
+        await implDie(await implCat(strN, ' is not between the supported range of digits between 0 and Z (36).'));
+    }
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
