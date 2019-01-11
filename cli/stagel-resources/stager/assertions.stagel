@@ -53,12 +53,12 @@ r/b/isBaseChar s/in n/b
     new b/res
     set b/res isChar s/in
     set b/res and b/res isBase n/b
-    new n/val
-    set n/val byteFromChar strToUpper s/in
+    new n/byte
+    set n/byte byteFromChar s/in
     new b/inRange
-    set b/inRange intIsBetween 65 90
-    set b/inRange or asciiIsDigit s/in
-    
+    set b/inRange asciiIsLetter n/byte
+    set b/inRange or asciiIsDigit n/byte
+    set b/inRange 
 
 r/v/assertIsBaseChar s/in n/b
     assertIsChar s/in

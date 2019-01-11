@@ -22,12 +22,12 @@ r/b/asciiIsNewline n/n
 
 r/b/asciiIsUpperLetter n/n
     new b/temp
-    set b/temp intIsBetween n/n 48 57
+    set b/temp intIsBetween n/n 65 90
     return b/temp
 
 r/b/asciiIsLowerLetter n/n
     new b/temp
-    set b/temp intIsBetween n/n 48 57
+    set b/temp intIsBetween n/n 97 122
     return b/temp
 
 r/b/asciiIsLetter n/n
