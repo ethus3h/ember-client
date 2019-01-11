@@ -691,7 +691,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         codegenOutput "while !("
         ;;
-    and|not|eq|gt|lt|add|sub|mul|div|mod|cat|die|warn|log)
+    and|not|eq|gt|lt|add|sub|mul|div|mod|cat|die|error|warn|log|debug)
         codegenPrintIndentationSpaces
         # These commands are implemented with impl* calls
         # The only purpose of using "impl" now is to prevent collisions with things that are likely to be reserved words in target languages; so, e.g. "implFIXMEUnimplemented" is unnecessary since it can just be "FIXMEUnimplemented" and be unlikely to collide.

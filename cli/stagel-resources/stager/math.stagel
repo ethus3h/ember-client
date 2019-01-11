@@ -29,6 +29,7 @@ r/n/intFromBaseNChar s/n
         set n/res sub n/res 55
     else
         set n/res sub n/res 48
+    implLog n/res
     assertIsTrue intIsBetween n/res 0 36
     return n/res
 
