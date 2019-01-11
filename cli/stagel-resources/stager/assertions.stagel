@@ -81,6 +81,8 @@ r/b/isBaseDigit s/in n/b
     new b/res
     set b/res asciiIsLetterUpper n/digitByte
     set b/res or asciiIsDigit n/digitByte
+    if ge n/digitByte 65
+        set n/digitByte sub n/digitByte 8
     if intIsBetween n/digitByte 48 add 47 n/b
         # The base is decimal or less, and the 
         set b/res and b/res true
