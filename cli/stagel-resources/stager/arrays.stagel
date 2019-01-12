@@ -31,6 +31,17 @@ r/b/isBoolArray ga/in
             return false
     return true
 
+r/b/isGenericArray ga/in
+    new n/count
+    set n/count count an/in
+    new g/elem
+    while ge n/count 0
+        set n/count sub n/count 1
+        set g/elem get ga/in n/count
+        if not isGeneric g/elem
+            return false
+    return true
+
 r/b/isCharArray ga/in
     new n/count
     set n/count count an/in
