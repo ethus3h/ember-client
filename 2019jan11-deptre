@@ -1,7 +1,30 @@
 dependency tree for intFromBase36Char:
     internalDebugCollect
+    
+
+async function internalDebugCollect(strMessageFragment) {
+    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
+}
+
     internalDebugStackEnter
+    
+async function internalDebugStackEnter(strBlockName) {
+    //alert("DbugStackEtner");
+    if (strBlockName === undefined) {
+        await implDie("Block entry specified but no block name given");
+    }
+
+    await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
+
+    await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
+}
     assertIsStr
+    
+async function assertIsStr(str) {
+    if (typeof str !== "string" || typeof str === "undefined" || str === null) {
+        await assertionFailed(str+" is not a string.");
+    }
+}
     assertIsChar
     strToUpper
     byteFromChar
@@ -14,4 +37,11 @@ dependency tree for intFromBase36Char:
     intIsBetween
     implNot
     assertIsInt
+    
+async function assertIsInt(int) {
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+        await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
+    }
+}
+
     internalDebugStackExit
