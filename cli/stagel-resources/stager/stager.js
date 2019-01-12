@@ -552,6 +552,7 @@ async function intFromBase36Char(strN) {
 async function intFromBaseStr(strN, intB) {
     await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
 
+    debugger;
     /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
     await assertIsBaseStr(strN, intB);
     let strUc = '';
@@ -626,6 +627,7 @@ async function isBaseStr(strIn, intB) {
     while (await ge(intLen, 0)) {
         strChr = await strCharAtPos(strIn, intLen);
         boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
+        intLen = await implSub(intLen, 1);
     }
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
