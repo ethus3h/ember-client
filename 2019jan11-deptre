@@ -69,8 +69,8 @@ dependency tree for intFromBase36Char:
                             implAnd
                                 assertIsBool*
                             internalDebugStackExit*
-        implDie
-        internalDebugQuiet
+                                implDie*
+                                internalDebugQuiet*
                         implLt
                             assertIsInt*
                             assertIsBool*
