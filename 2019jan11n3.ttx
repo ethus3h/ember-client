@@ -9,3 +9,4 @@ charFromHexByte
 
 isbasedigit:
     intFromBase36Char
+        strToUpper, assertischar
