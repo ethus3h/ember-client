@@ -9,6 +9,7 @@ dependency tree for intFromBase36Char:
                 implWarn
                     assertIsStr
                         assertionFailed
+                            implDie!
                     FIXMEUnimplemented
                     implLog
         internalDebugFlush
