@@ -87,6 +87,10 @@ r/b/isSupportedBase n/b
 r/b/isBaseDigit s/in n/b
     assertIsChar s/in
     assertIsSupportedBase n/b
+    new b/temp
+    set b/temp asciiIsLetter s/in
+    if not or b/temp asciiIsDigit s/in
+        return false
     new n/digitVal
     set n/digitVal intFromBase36Char s/in
     new b/res
