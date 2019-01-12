@@ -70,12 +70,6 @@ async function assertIsStr(str) {
     }
 }
 
-async function assertIsGenericItem(arr) {
-    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed(arr+" is not a generic item.");
-    }
-}
-
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
