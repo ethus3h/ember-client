@@ -20,7 +20,6 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
                     strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
                 }
             }
-            alert("Hi"+dc);
             assertIsStr(strReturn); return strReturn;
             break;
         default:
