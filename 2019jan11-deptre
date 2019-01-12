@@ -58,6 +58,13 @@ dependency tree for intFromBase36Char:
                         assertIsInt*
                         implEq
                             assertIsGeneric
+                            
+async function assertIsGeneric(val) {
+    if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
+        await assertionFailed(val+" cannot be used as a generic.");
+    }
+}
+
                             assertIsBool
                         or
                             internalDebugCollect
