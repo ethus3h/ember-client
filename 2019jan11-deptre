@@ -7,12 +7,12 @@ dependency tree for intFromBase36Char:
             implError
                 FIXMEUnimplemented
                     assertIsStr
-                    implLog
-                implWarn
-                    assertIsStr
                         assertionFailed
                             implDie!
-                    FIXMEUnimplemented
+                    implLog
+                implWarn
+                    assertIsStr*
+                    FIXMEUnimplemented*
                     implLog
         internalDebugFlush
         internalDebugQuiet
