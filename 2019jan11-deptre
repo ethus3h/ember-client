@@ -6,12 +6,8 @@ dependency tree for intFromBase36Char:
         implDie
             implError
                 FIXMEUnimplemented
-                
-async function FIXMEUnimplemented(strLocation) {
-    await assertIsStr(strLocation);
-
-    await implLog("FIXME: Unimplemented in " + strLocation);
-}
+                    assertIsStr
+                    implLog
                 implWarn
                     assertIsStr
                         assertionFailed
