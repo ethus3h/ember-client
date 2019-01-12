@@ -149,11 +149,11 @@ async function len(str) {
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
-alert("Setting up logging");
+//alert("Setting up logging");
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
