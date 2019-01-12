@@ -70,9 +70,17 @@ async function assertIsStr(str) {
     }
 }
 
+async function isGeneric(val) {
+    // We have to do isGeneric in JavaScript because otherwise the assertion at the start of the function would call this.
+    if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
+        return false;
+    }
+    return true;
+}
+
 async function assertIsGeneric(val) {
     // We have to do assertIsGeneric in JavaScript because otherwise the assertion at the start of the function would call this.
-    if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
+    if (!await isGeneric(val)) {
         await assertionFailed(val+" cannot be used as a generic.");
     }
 }
