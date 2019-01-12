@@ -131,8 +131,8 @@ dependency tree for intFromBase36Char:
         internalDebugCollect*
         internalDebugStackEnter*
         assertIsInt*
-        implEq
-        or
+        implEq*
+        or*
         implGt
         assertIsBool*
         internalDebugStackExit*
