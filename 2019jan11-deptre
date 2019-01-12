@@ -97,13 +97,13 @@ dependency tree for intFromBase36Char:
         implCat
             assertIsStr*
         charToUpper
-            internalDebugCollect
-            internalDebugStackEnter
-            assertIsStr
-            assertIsChar
-            byteFromChar
-            intIsBetween
-            implSub
+            internalDebugCollect*
+            internalDebugStackEnter*
+            assertIsStr*
+            assertIsChar*
+            byteFromChar*
+            intIsBetween*
+            implSub*
             charFromByte
             internalDebugStackExit
         strCharAtPos
