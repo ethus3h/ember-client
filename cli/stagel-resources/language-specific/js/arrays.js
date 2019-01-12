@@ -10,6 +10,10 @@ async function append(array1, array2) {
     arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
 }
 
+async function push(array1, array2) {
+    return append(array1, array2);
+}
+
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
