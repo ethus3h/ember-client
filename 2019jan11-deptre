@@ -35,14 +35,18 @@ dependency tree for intFromBase36Char:
         assertIsStr*
         assertIsTrue
             assertIsBool
-                
-async function assertIsBool(bool) {
-    if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
-        await assertionFailed(bool+" is not a boolean.");
-    }
-}
+                assertionFailed*
             assertionFailed*
         isChar
+        
+async function isChar(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await isCharByte(await byteFromChar(strIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
         internalDebugStackExit
 
     strToUpper
