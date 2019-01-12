@@ -25,12 +25,21 @@ r/an/dcarrParseSems an/content
     new n/currentByte
     while lt n/byteOffset n/contentLength
         # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
-        set n/currentByte 
+        set n/currentByte get an/content n/byteOffset
         if eq s/parserState 'dc'
-            if asciiIsDigit get an/content n/byteOffset
-                
+            if asciiIsDigit n/currentByte
+                set s/currentDc cat s/currentDc charFromByte n/currentByte
+            elif asciiIsSpace n/currentByte
+                push an/dcarrParseResults intFromIntStr s/currentDc
+                set s/currentDc ''
+            elif eq 35 n/currentByte
+                # pound sign: start comment
+                set s/parserState 'comment'
+            else
+                die 'Unexpected parser state in SEMS document.'
         elif eq s/parserState 'comment'
-            
+            if asciiIsNewline n/currentByte
+                set s/parserState 'dc'
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
