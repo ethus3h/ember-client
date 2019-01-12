@@ -79,6 +79,19 @@ dependency tree for intFromBase36Char:
                 assertIsBool*
                 internalDebugStackExit*
             byteFromChar
+            
+async function byteFromChar(strInput) {
+    await assertIsStr(strInput);
+    // Bear in mind that StageL doesn't attempt to support Unicode.
+    // We can't use assertIsChar here, because it depends on byteFromChar.
+    let intReturn;
+    intReturn = strInput.charCodeAt(0);
+
+    await assertIsTrue(intReturn > 31);
+    await assertIsTrue(intReturn < 127);
+
+    await assertIsInt(intReturn); return intReturn;
+}
             assertIsBool
             internalDebugStackExit
         internalDebugStackExit
