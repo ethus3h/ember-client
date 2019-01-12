@@ -7,13 +7,20 @@ r/an/dcarrParseDocument s/format an/Content
         error cat 'Unimplemented document parsing format: ' s/format
     assertIsDcarr an/ret
     return an/ret
-/*
 
-async function dcarrParseSems(bytearrayContent) {
-    await assertIsBytearray(bytearrayContent); let dcarrReturn;
+r/an/dcarrParseSems an/Content
+    assertIsBytearray an/Content
+    new an/ret
 
-    // Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
-    let dcarrParseResults = await newDcarr();
+    # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
+
+    new an/dcarrParseResults
+    new s/parserState
+    set s/parserState 'dc'
+    new s/currentDc
+    set s/currentDc ''
+    new n/contentLength
+    set n/contentLength 
     let strParserState = "dc";
     let strCurrentDc = "";
     let intContentLength = await intBytearrayLength(bytearrayContent);
@@ -39,8 +46,5 @@ async function dcarrParseSems(bytearrayContent) {
                 break;
         }
     }
-    dcarrReturn = dcarrParseResults; await assertIsDcarr(dcarrReturn); return dcarrReturn;
-}
-
-// @license-end
-*/
+    assertIsDcarr an/ret
+    return an/ret
