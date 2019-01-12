@@ -40,27 +40,10 @@ r/an/dcarrParseSems an/content
         elif eq s/parserState 'comment'
             if asciiIsNewline n/currentByte
                 set s/parserState 'dc'
+            else
+                # Do nothing: comments are ignored
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
-        
-                if (await asciiIsDigit(bytearrayContent[intByteOffset])) {
-                    strCurrentDc = strCurrentDc + await charFromByte(bytearrayContent[intByteOffset]);
-                }
-                if (await asciiIsSpace(bytearrayContent[intByteOffset])) {
-                    await customTypeDcarrPush(dcarrParseResults, await intFromIntStr(strCurrentDc));
-                    strCurrentDc = "";
-                }
-                if (bytearrayContent[intByteOffset] == 35) { // pound sign: start comment
-                    strParserState = "comment";
-                }
-                break;
-            case "comment":
-                if (await asciiIsNewline(bytearrayContent[intByteOffset])) {
-                    strParserState = "dc";
-                }
-                break;
-        }
-    }
     assertIsDcarr an/ret
     return an/ret
