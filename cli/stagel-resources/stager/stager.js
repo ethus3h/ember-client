@@ -554,7 +554,6 @@ async function intFromBaseStr(strN, intB) {
 
     /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
     await assertIsBaseStr(strN, intB);
-    await alert('hi'+strN+intB);
     let strUc = '';
     strUc = await strToUpper(strN);
     let intRes = 0;

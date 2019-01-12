@@ -1,1 +1,1 @@
-assertIsBaseStr
+assertIsBaseStr called in intFromBaseStr loops. dep strCharAtPos, isBaseDigit
