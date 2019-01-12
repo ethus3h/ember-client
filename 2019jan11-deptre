@@ -97,22 +97,15 @@ dependency tree for intFromBase36Char:
         implCat
             assertIsStr*
         charToUpper
-        
-async function charToUpper(strChar) {
-    await internalDebugCollect('str Char = ' + strChar + '; '); await internalDebugStackEnter('charToUpper:strings'); await assertIsStr(strChar); let strReturn;
-
-    await assertIsChar(strChar);
-    let intTemp = 0;
-    intTemp = await byteFromChar(strChar);
-    if (await intIsBetween(intTemp, 97, 122)) {
-        intTemp = await implSub(intTemp, 32);
-    }
-    let strRes = '';
-    strRes = await charFromByte(intTemp);
-
-    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-}
-
+            internalDebugCollect
+            internalDebugStackEnter
+            assertIsStr
+            assertIsChar
+            byteFromChar
+            intIsBetween
+            implSub
+            charFromByte
+            internalDebugStackExit
         strCharAtPos
         implAdd
         assertIsStr
