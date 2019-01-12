@@ -635,7 +635,7 @@ codegenCommandInvocationStart() {
                     codegenOutput ' = '
                     tokenLookahead=""
                 else
-                    codegenInitializeType "${codegenArgList[-2]}"
+                    [[ "${codegenArgList[-2]}" =~ ^(generic|genericItem)$ ]] || codegenInitializeType "${codegenArgList[-2]}"
                 fi
                 #set +x
             fi
