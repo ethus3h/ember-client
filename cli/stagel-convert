@@ -564,8 +564,8 @@ codegenInitializeType() {
         "strArray")
             codegenOutput "[]"
             ;;
-        "generic"|"genericArray"|"genericItem")
-            codegenOutput ""
+        "genericArray")
+            codegenOutput "[]"
             ;;
         *)
             die "Initialize requested for unexpected type of $1."
