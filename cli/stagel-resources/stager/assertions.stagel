@@ -16,6 +16,7 @@ r/v/assertIsCharByte n/in
     assertIsTrue isCharByte n/in
 
 r/v/assertIsDc n/in
+    assertIsTrue isDc g/in
     assertIsNonnegative n/in
 
 r/v/assertStrContainsOnlyInt s/in
