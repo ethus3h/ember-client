@@ -38,9 +38,10 @@ dependency tree for intFromBase36Char:
                 assertionFailed
                     implDie
         isChar
-            assertIsStr*
             isCharByte
-                assertIsInt*
+                assertIsInt
+                    assertionFailed
+                        implDie
                 intIsBetween
                     assertIsInt*
                     implSub
