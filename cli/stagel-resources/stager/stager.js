@@ -246,7 +246,127 @@ async function isIntArray(genericArrayIn) {
 
     let intCount = 0;
     intCount = await count(intArrayIn);
-    let genericElem = async function bitOr(intByte1, intByte2) {
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isInt(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isStrArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isStr(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBoolArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isBoolArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isBool(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isGenericArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isGenericArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isGeneric(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isCharArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isChar(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isByteArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isByteArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isByte(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isDcArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isDc(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
@@ -434,45 +554,45 @@ async function assertIsBaseStr(strIn, intB) {
     await internalDebugStackExit();
 }
 
-async function assertIsIntArray(genericItemsIn) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugStackEnter('assertIsIntArray:assertions'); await assertIsGenericItems(genericItemsIn);
+async function assertIsIntArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsIntArray:assertions'); await assertIsGenericItem(genericItemIn);
 
-    await assertIsTrue(await isIntArray(genericItemsIn));
+    await assertIsTrue(await isIntArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsBoolArray(genericItemsIn) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugStackEnter('assertIsBoolArray:assertions'); await assertIsGenericItems(genericItemsIn);
+async function assertIsBoolArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsBoolArray:assertions'); await assertIsGenericItem(genericItemIn);
 
-    await assertIsTrue(await isBoolArray(genericItemsIn));
+    await assertIsTrue(await isBoolArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsStrArray(genericItemsIn) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugStackEnter('assertIsStrArray:assertions'); await assertIsGenericItems(genericItemsIn);
+async function assertIsStrArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsStrArray:assertions'); await assertIsGenericItem(genericItemIn);
 
-    await assertIsTrue(await isStrArray(genericItemsIn));
+    await assertIsTrue(await isStrArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsCharArray(genericItemsIn) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugStackEnter('assertIsCharArray:assertions'); await assertIsGenericItems(genericItemsIn);
+async function assertIsCharArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsCharArray:assertions'); await assertIsGenericItem(genericItemIn);
 
-    await assertIsTrue(await isCharArray(genericItemsIn));
+    await assertIsTrue(await isCharArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsByteArray(genericItemsIn, intB) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsByteArray:assertions'); await assertIsGenericItems(genericItemsIn);await assertIsInt(intB);
+async function assertIsByteArray(genericItemIn, intB) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsByteArray:assertions'); await assertIsGenericItem(genericItemIn);await assertIsInt(intB);
 
-    await assertIsTrue(await isByteArray(genericItemsIn));
+    await assertIsTrue(await isByteArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsDcArray(genericItemsIn, intB) {
-    await internalDebugCollect('genericItems In = ' + genericItemsIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsDcArray:assertions'); await assertIsGenericItems(genericItemsIn);await assertIsInt(intB);
+async function assertIsDcArray(genericItemIn, intB) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsDcArray:assertions'); await assertIsGenericItem(genericItemIn);await assertIsInt(intB);
 
-    await assertIsTrue(await isDcArray(genericItemsIn));
+    await assertIsTrue(await isDcArray(genericItemIn));
     await internalDebugStackExit();
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
