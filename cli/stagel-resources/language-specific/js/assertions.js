@@ -71,7 +71,7 @@ async function assertIsStr(str) {
 }
 
 async function isGeneric(val) {
-    // We have to do isGeneric in JavaScript because otherwise the assertion at the start of the function would call this.
+    // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
     if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
         return false;
     }
@@ -79,18 +79,10 @@ async function isGeneric(val) {
 }
 
 async function assertIsGeneric(val) {
-    // We have to do assertIsGeneric in JavaScript because otherwise the assertion at the start of the function would call this.
     if (!await isGeneric(val)) {
         await assertionFailed(val+" cannot be used as a generic.");
     }
 }
-
-async function assertIsGenericArray(arr) {
-    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
-        await assertionFailed(arr+" is not an array.");
-    }
-}
-
 
 async function assertIsGenericItem
 

@@ -37,7 +37,27 @@ r/v/assertIsBaseDigit s/in n/b
 r/v/assertIsBaseStr s/in n/b
     assertIsTrue isBaseStr s/in n/b
 
-    
+r/v/assertIsGenericArray gi/in
+    assertIsTrue isGenericArray s/in
+
+r/v/assertIsIntArray gi/in
+    assertIsTrue isIntArray s/in
+
+r/v/assertIsBoolArray gi/in
+    assertIsTrue isBoolArray s/in
+
+r/v/assertIsStrArray gi/in
+    assertIsTrue isStrArray s/in
+
+r/v/assertIsCharArray gi/in
+    assertIsTrue isBaseStr s/in
+
+r/v/assertIsByteArray s/in n/b
+    assertIsTrue isBaseStr s/in n/b
+
+r/v/assertIsDcArray s/in n/b
+    assertIsTrue isBaseStr s/in n/b
+
 async function assertIsGenericArray(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
         await assertionFailed(arr+" is not an array.");
