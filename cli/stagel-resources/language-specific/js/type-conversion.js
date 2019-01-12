@@ -1,7 +1,8 @@
 /* type-conversion, provides:
-    intFromStr
-    strFromByte
-    strFromUnicodeHex
+    intFromIntStr
+    strFrom
+    charFromByte
+    byteFromChar
 */
 
 async function intFromIntStr(str) {
