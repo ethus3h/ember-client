@@ -1,6 +1,10 @@
+charFromHexByte
+    intFromBaseStr
+        >OK
+        assertIsBaseStr
+        >Not reached
 assertIsBaseStr called in intFromBaseStr (called by charFromHexByte) loops. dep strCharAtPos, isBaseDigit
 isbasedigit:
-    ischar,issupportedbase
+    ischar
+    issupportedbase
     intFromBase36Char
-strCharAtPos:
-    
