@@ -5,6 +5,29 @@ dependency tree for intFromBase36Char:
     internalDebugStackEnter
         implDie
             implError
+            
+
+async function implError(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+    await FIXMEUnimplemented("implError");
+    await implWarn(strMessage);
+}
+async function implError(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
+    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+    await FIXMEUnimplemented("implError");
+    await implWarn(strMessage);
+
+    await console.trace();
+    alert("EITE reported error!: " + strMessage);
+}
         internalDebugFlush
         internalDebugQuiet
 
