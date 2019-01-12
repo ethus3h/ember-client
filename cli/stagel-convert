@@ -545,7 +545,7 @@ codegenInitializeType() {
     case "$targetLang" in
     "js")
         codegenOutput " = "
-        case "$(codegenType "$1")" in
+        case "$1" in
         "bool")
             codegenOutput 'false'
             ;;
@@ -635,7 +635,9 @@ codegenCommandInvocationStart() {
                     codegenOutput ' = '
                     tokenLookahead=""
                 else
-                    [[ "${codegenArgList[-2]}" =~ ^(generic|genericItem)$ ]] || codegenInitializeType "${codegenArgList[-2]}"
+                    local type
+                    type="$(codegenType "${codegenArgList[-2]}")"
+                    [[ "$type" =~ ^(generic|genericItem)$ ]] || codegenInitializeType "$type"
                 fi
                 #set +x
             fi
