@@ -1,1 +1,4 @@
-assertIsBaseStr called in intFromBaseStr loops. dep strCharAtPos, isBaseDigit
+assertIsBaseStr called in intFromBaseStr (called by charFromHexByte) loops. dep strCharAtPos, isBaseDigit
+isbasedigit:
+    ischar,issupportedbase
+    intFromBase36Char
