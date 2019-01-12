@@ -38,15 +38,13 @@ dependency tree for intFromBase36Char:
                 assertionFailed*
             assertionFailed*
         isChar
-        
-async function isChar(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsStr(strIn); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await isCharByte(await byteFromChar(strIn));
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
+            internalDebugCollect
+            internalDebugStackEnter
+            assertIsStr
+            isCharByte
+            byteFromChar
+            assertIsBool
+            internalDebugStackExit
         internalDebugStackExit
 
     strToUpper
