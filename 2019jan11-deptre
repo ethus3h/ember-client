@@ -38,10 +38,20 @@ dependency tree for intFromBase36Char:
                 assertionFailed*
             assertionFailed*
         isChar
-            internalDebugCollect
-            internalDebugStackEnter
-            assertIsStr
+            internalDebugCollect*
+            internalDebugStackEnter*
+            assertIsStr*
             isCharByte
+            
+async function isCharByte(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isCharByte:type-tools'); await assertIsInt(intIn); let boolReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    let boolRes = false;
+    boolRes = await intIsBetween(intIn, 32, 126);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
             byteFromChar
             assertIsBool
             internalDebugStackExit
