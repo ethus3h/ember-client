@@ -23,7 +23,15 @@ r/an/dcarrParseSems an/Content
     set n/contentLength count an/Content
     new n/byteOffset
     while lt n/byteOffset n/contentLength
-        #do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        # do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        if eq s/parserState 'dc'
+            
+        elif eq s/parserState 'comment'
+            
+        else
+            die 'Internal error: unexpected parser state while parsing SEMS document'
+        set n/byteOffset add n/byteOffset 1
+        
     let strParserState = "dc";
     let strCurrentDc = "";
     let intContentLength = await intBytearrayLength(bytearrayContent);
