@@ -53,9 +53,9 @@ dependency tree for intFromBase36Char:
             assertionFailed
                 implDie
         len
-                assertIsInt
-                    assertionFailed
-                        implDie
+            assertIsInt
+                assertionFailed
+                    implDie
         implLt*
         implCat
             assertIsStr*
