@@ -38,25 +38,25 @@ r/v/assertIsBaseStr s/in n/b
     assertIsTrue isBaseStr s/in n/b
 
 r/v/assertIsGenericArray gi/in
-    assertIsTrue isGenericArray s/in
+    assertIsTrue isGenericArray gi/in
 
 r/v/assertIsIntArray gi/in
-    assertIsTrue isIntArray s/in
+    assertIsTrue isIntArray gi/in
 
 r/v/assertIsBoolArray gi/in
-    assertIsTrue isBoolArray s/in
+    assertIsTrue isBoolArray gi/in
 
 r/v/assertIsStrArray gi/in
-    assertIsTrue isStrArray s/in
+    assertIsTrue isStrArray gi/in
 
 r/v/assertIsCharArray gi/in
-    assertIsTrue isBaseStr s/in
+    assertIsTrue isCharArray gi/in
 
-r/v/assertIsByteArray s/in n/b
-    assertIsTrue isBaseStr s/in n/b
+r/v/assertIsByteArray gi/in n/b
+    assertIsTrue isByteArray gi/in
 
-r/v/assertIsDcArray s/in n/b
-    assertIsTrue isBaseStr s/in n/b
+r/v/assertIsDcArray gi/in n/b
+    assertIsTrue isDcArray gi/in
 
 async function assertIsGenericArray(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
