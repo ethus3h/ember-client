@@ -42,32 +42,6 @@ dependency tree for intFromBase36Char:
                 assertIsInt
                     assertionFailed
                         implDie
-                intIsBetween
-                    assertIsInt*
-                    implSub
-                        assertIsInt*
-                    implMul
-                    le
-                        assertIsInt*
-                        implEq
-                            assertIsGeneric
-                                assertionFailed*
-                            assertIsBool*
-                        or
-                            assertIsBool*
-                            implNot
-                                assertIsBool*
-                            implAnd
-                                assertIsBool*
-                            internalDebugStackExit
-                                implDie*
-                                internalDebugQuiet*
-                        implLt
-                            assertIsInt*
-                            assertIsBool*
-                        assertIsBool*
-                    assertIsBool*
-                assertIsBool*
             byteFromChar
                 assertIsStr*
                 assertIsTrue*
