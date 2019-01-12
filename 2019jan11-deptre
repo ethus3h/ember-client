@@ -70,13 +70,8 @@ dependency tree for intFromBase36Char:
                                 assertIsBool*
                             internalDebugStackExit*
                         implLt
-                        
-async function implLt(intA, intB) {
-    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
-
-    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
-}
-
+                            assertIsInt*
+                            assertIsBool*
                         assertIsBool*
                         internalDebugStackExit*
                     assertIsBool*
