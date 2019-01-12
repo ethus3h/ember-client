@@ -30,30 +30,5 @@ r/s/printableDcToChar n/dc s/targetFormat
         return s/res
     else
         die cat 'Unimplemented target format: ' s/targetFormat
-    async function strPrintableDcToChar(dc, strCharacterEncoding) {
-    await assertIsDc(dc); await assertIsStr(strCharacterEncoding); let strReturn;
-    switch (strCharacterEncoding) {
-        case "ASCII-safe-subset":
-        case "UTF-8":
-            strReturn = await charFromHexByte(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
-            assertIsStr(strReturn); return strReturn;
-            break;
-        case "HTML":
-            strReturn = await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0);
-            if (await isBaseStr(strReturn, 16)) {
-                strReturn = await charFromHexByte(strReturn);
-            }
-            else {
-                /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
-                strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
-            }
-            assertIsStr(strReturn); return strReturn;
-            break;
-        default:
-            await eiteError("Unimplemented character encoding: " + strCharacterEncoding);
-            break;
-    }
-    assertIsStr(strReturn); return strReturn;
-}
-
-// @license-end
+    # Return an empty string if the Dc isn't printable. I don't think it should be an error probably to call this for a nonprintable Dc, although the name might imply otherwise? (possible FIXME)
+    return s/res
