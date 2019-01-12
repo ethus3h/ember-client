@@ -84,6 +84,18 @@ async function assertIsGeneric(val) {
     }
 }
 
+async function isGenericArray(val) {
+    if (!await isGenericItem(val)) {
+        await assertionFailed(val+" cannot be used as a generic item.");
+    }
+}
+
+async function assertIsGenericArray(val) {
+    if (!await isGenericArray(val)) {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+}
+
 async function isGenericItem(val) {
     if (! (await isGeneric(val) || await isGenericArray(val))) {
         return false;
@@ -91,8 +103,11 @@ async function isGenericItem(val) {
     return true;
 }
 
-
-async function assertIsGenericItem
+async function assertIsGenericItem(val) {
+    if (!await isGenericItem(val)) {
+        await assertionFailed(val+" cannot be used as a generic item.");
+    }
+}
 
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);

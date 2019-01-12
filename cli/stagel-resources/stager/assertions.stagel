@@ -37,9 +37,6 @@ r/v/assertIsBaseDigit s/in n/b
 r/v/assertIsBaseStr s/in n/b
     assertIsTrue isBaseStr s/in n/b
 
-r/v/assertIsGenericArray gi/in
-    assertIsTrue isGenericArray gi/in
-
 r/v/assertIsIntArray gi/in
     assertIsTrue isIntArray gi/in
 
@@ -57,10 +54,3 @@ r/v/assertIsByteArray gi/in n/b
 
 r/v/assertIsDcArray gi/in n/b
     assertIsTrue isDcArray gi/in
-
-
-async function assertIsGenericItem(arr) {
-    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed(arr+" is not a generic item.");
-    }
-}
