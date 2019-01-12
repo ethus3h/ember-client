@@ -109,12 +109,17 @@ dependency tree for intFromBase36Char:
                 assertIsStr*
             internalDebugStackExit*
         strCharAtPos
-            internalDebugCollect
-            internalDebugStackEnter
-            assertIsStr
-            assertIsInt
+            internalDebugCollect*
+            internalDebugStackEnter*
+            assertIsStr*
+            assertIsInt*
             substring
-            internalDebugStackExit
+async function substring(str, intStart, intLength) {
+    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+
+    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
+}
+            internalDebugStackExit*
         implAdd
         assertIsStr
         internalDebugStackExit
