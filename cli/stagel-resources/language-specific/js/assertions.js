@@ -14,8 +14,15 @@
 
 // Assertions that something is a given type
 
-async function assertIsBool(bool) {
+async function isBool(bool) {
     if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
+        return false;
+    }
+    return true;
+}
+
+async function assertIsBool(bool) {
+    if (!await isBool(bool)) {
         await assertionFailed(bool+" is not a boolean.");
     }
 }

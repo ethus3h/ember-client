@@ -4,7 +4,7 @@ r/b/isByte g/in
     new n/val
     set n/val g/in
     new b/res
-    set b/res intIsBetween n/in 0 255
+    set b/res intIsBetween n/val 0 255
     return b/res
 
 r/b/isChar g/in
