@@ -10,14 +10,8 @@ dependency tree for intFromBase36Char:
     implDie
     implCat
     implSub
-    implNot(await intIsBetween(intRes, 48, 57))) {
-            await implDie(await implCat(strN, ' is not within the supported range of digits between 0 and Z (36).'));
-        }
-        intRes = await implSub(intRes, 48);
-    }
-    if (await implNot(await intIsBetween(intRes, 0, 36))) {
-        await implDie(await implCat('Internal error in intFromBase36Char called with n=', await implCat(strN, '.')));
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
+    implNot
+    intIsBetween
+    implNot
+    assertIsInt
+    internalDebugStackExit
