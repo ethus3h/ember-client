@@ -50,18 +50,17 @@ dependency tree for intFromBase36Char:
                     internalDebugStackEnter*
                     assertIsInt*
                     implSub
-                    assertIsInt
+                        assertIsInt
                     implMul
                     le
-async function le(intA, intB) {
-    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('le:comparison'); await assertIsInt(intA);await assertIsInt(intB); let boolReturn;
-
-    let boolTemp = false;
-    boolTemp = await implEq(intA, intB);
-    boolTemp = await or(boolTemp, await implLt(intA, intB));
-
-    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
+                        internalDebugCollect*
+                        internalDebugStackEnter*
+                        assertIsInt
+                        implEq
+                        or
+                        implLt
+                        assertIsBool*
+                        internalDebugStackExit*
                     assertIsBool*
                     internalDebugStackExit*
                 assertIsBool*
