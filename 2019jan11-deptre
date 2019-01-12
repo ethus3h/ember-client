@@ -44,17 +44,27 @@ dependency tree for intFromBase36Char:
             isCharByte
                 internalDebugCollect*
                 internalDebugStackEnter*
-                assertIsInt
+                assertIsInt*
                 intIsBetween
-                    internalDebugCollect
-                    internalDebugStackEnter
-                    assertIsInt
+                    internalDebugCollect*
+                    internalDebugStackEnter*
+                    assertIsInt*
                     implSub
+                    assertIsInt
                     implMul
                     le
-                    assertIsBool
-                    internalDebugStackExit
-                assertIsBool
+async function le(intA, intB) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('le:comparison'); await assertIsInt(intA);await assertIsInt(intB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implEq(intA, intB);
+    boolTemp = await or(boolTemp, await implLt(intA, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+                    assertIsBool*
+                    internalDebugStackExit*
+                assertIsBool*
                 internalDebugStackExit*
             byteFromChar
             assertIsBool
