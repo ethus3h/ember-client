@@ -42,12 +42,20 @@ dependency tree for intFromBase36Char:
             internalDebugStackEnter*
             assertIsStr*
             isCharByte
-                internalDebugCollect
-                internalDebugStackEnter
+                internalDebugCollect*
+                internalDebugStackEnter*
                 assertIsInt
                 intIsBetween
+                    internalDebugCollect
+                    internalDebugStackEnter
+                    assertIsInt
+                    implSub
+                    implMul
+                    le
+                    assertIsBool
+                    internalDebugStackExit
                 assertIsBool
-                internalDebugStackExit
+                internalDebugStackExit*
             byteFromChar
             assertIsBool
             internalDebugStackExit
@@ -95,16 +103,6 @@ dependency tree for intFromBase36Char:
 
     implNot
         assertIsBool
-
-    intIsBetween
-        internalDebugCollect
-        internalDebugStackEnter
-        assertIsInt
-        implSub
-        implMul
-        le
-        assertIsBool
-        internalDebugStackExit
 
     internalDebugStackExit
         implDie
