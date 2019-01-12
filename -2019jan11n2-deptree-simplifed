@@ -30,39 +30,27 @@ dependency tree for intFromBase36Char:
     assertIsInt*
 
     assertIsChar
-        internalDebugCollect*
-        internalDebugStackEnter*
         assertIsStr*
         assertIsTrue
             assertIsBool
                 assertionFailed*
             assertionFailed*
         isChar
-            internalDebugCollect*
-            internalDebugStackEnter*
             assertIsStr*
             isCharByte
-                internalDebugCollect*
-                internalDebugStackEnter*
                 assertIsInt*
                 intIsBetween
-                    internalDebugCollect*
-                    internalDebugStackEnter*
                     assertIsInt*
                     implSub
                         assertIsInt*
                     implMul
                     le
-                        internalDebugCollect*
-                        internalDebugStackEnter*
                         assertIsInt*
                         implEq
                             assertIsGeneric
                                 assertionFailed*
                             assertIsBool*
                         or
-                            internalDebugCollect*
-                            internalDebugStackEnter*
                             assertIsBool*
                             implNot
                                 assertIsBool*
