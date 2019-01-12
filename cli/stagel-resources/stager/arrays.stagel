@@ -1,1 +1,10 @@
- 
+r/b/isIntArray ga/in
+    new n/count
+    set n/count count an/in
+    new g/elem
+    while ge n/count 0
+        set n/count sub n/count 1
+        set g/elem get ga/in n/count
+        if not isInt g/elem
+            return false
+    return true
