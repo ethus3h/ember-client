@@ -84,6 +84,14 @@ async function assertIsGeneric(val) {
     }
 }
 
+async function isGenericItem(val) {
+    if (! (await isGeneric(val) || await isGenericArray(val))) {
+        return false;
+    }
+    return true;
+}
+
+
 async function assertIsGenericItem
 
 async function assertIsDcarr(dcarr) {
