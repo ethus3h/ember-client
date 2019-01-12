@@ -9,7 +9,7 @@
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 3;
+    STAGEL_DEBUG = 2;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
@@ -41,12 +41,10 @@ async function implWarn(strMessage) {
     await implLog(strMessage);
 }
 
-alert("Lurerurerreouoeuurer");
-
 async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
-    console.log(strMessage);
+    await console.log(strMessage);
     if(await Object.keys(stagelDebugCallstack).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
@@ -104,7 +102,7 @@ async function internalDebugFlush() {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    alert("DbugStackEtner");
+    //alert("DbugStackEtner");
     if (strBlockName === undefined) {
         await implDie("Block entry specified but no block name given");
     }
@@ -115,7 +113,7 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackExit() {
-    alert("Dbgstackext");
+    //alert("Dbgstackext");
     if (await stagelDebugCallstack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
