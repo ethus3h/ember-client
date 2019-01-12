@@ -84,12 +84,17 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
+    
     let intCount = 0;
-    intCount = await count(val);
-    let genericElem = async function bitOr(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
-    if (!await isGenericItem(val)) {
-        await assertionFailed(val+" cannot be used as a generic item.");
+    intCount = await count(intArrayIn);
+    let genericElem = ;
+    while (await ge(intCount, 0)) {
+        intCount = await implSub(intCount, 1);
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isInt(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
     }
 }
 
