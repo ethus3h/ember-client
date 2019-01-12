@@ -11,14 +11,13 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             assertIsStr(strReturn); return strReturn;
             break;
         case "HTML":
-            try {/* FIXME THE BUG IS HERE */
-                strReturn = await charFromHexByte(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
+            strReturn = await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0);
+            if (await isBaseStr(strReturn)) {
+                strReturn = await charFromHexByte(strReturn);
             }
-            catch {
-                if (strReturn === "\u0000") {
-                    /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
-                    strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
-                }
+            else {
+                /* No mapping was found by reversing Unicode, so look for a simple character mapping from the HTML mappings */
+                strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
             }
             assertIsStr(strReturn); return strReturn;
             break;
