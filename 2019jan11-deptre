@@ -134,12 +134,12 @@ dependency tree for intFromBase36Char:
         implEq*
         or*
         implGt
+            assertIsInt*
+            assertIsBool*
         assertIsBool*
         internalDebugStackExit*
 
-    implGt
-        assertIsInt
-        assertIsBool
+    implGt*
 
     implDie*
 
