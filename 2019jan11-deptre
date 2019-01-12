@@ -68,7 +68,7 @@ dependency tree for intFromBase36Char:
                                 assertIsBool*
                             implAnd
                                 assertIsBool*
-                            internalDebugStackExit*
+                            internalDebugStackExit
                                 implDie*
                                 internalDebugQuiet*
                         implLt
@@ -151,4 +151,4 @@ dependency tree for intFromBase36Char:
 
     implNot*
 
-    internalDebugStackExit
+    internalDebugStackExit*
