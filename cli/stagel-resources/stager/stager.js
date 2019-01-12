@@ -605,6 +605,12 @@ async function isBaseDigit(strIn, intB) {
 
     await assertIsChar(strIn);
     await assertIsSupportedBase(intB);
+    let boolTemp = false;
+    boolTemp = await asciiIsLetter(strIn);
+    if (await implNot(await or(boolTemp, await asciiIsDigit(strIn)))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
     let intDigitVal = 0;
     intDigitVal = await intFromBase36Char(strIn);
     let boolRes = false;
