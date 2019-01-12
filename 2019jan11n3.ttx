@@ -9,5 +9,7 @@ charFromHexByte
 
 isbasedigit:
     ischar
+        just math
     issupportedbase
+        more math
     intFromBase36Char
