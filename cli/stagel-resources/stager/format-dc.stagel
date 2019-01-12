@@ -2,3 +2,13 @@ r/b/isDc n/in
     new b/res
     set b/res isNonnegative n/in
     return b/res
+
+r/an/dcarrParseDocument s/format an/Content
+    assertIsBytearray an/Content
+    new an/ret
+    if eq s/format 'sems'
+        set an/ret dcarrParseSems an/content
+    else
+        error cat 'Unimplemented document parsing format: ' s/format
+    assertIsDcarr an/ret
+    return an/ret
