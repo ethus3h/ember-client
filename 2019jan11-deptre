@@ -27,14 +27,22 @@ dependency tree for intFromBase36Char:
 
     assertIsStr*
 
-    assertIsInt
-        assertionFailed
+    assertIsInt*
 
     assertIsChar
-        internalDebugCollect
-        internalDebugStackEnter
-        assertIsStr
+        internalDebugCollect*
+        internalDebugStackEnter*
+        assertIsStr*
         assertIsTrue
+            
+async function assertIsTrue(bool) {
+    await assertIsBool(bool);
+
+    if (bool !== true) {
+        await assertionFailed(bool+" is not true.");
+    }
+}
+
         isChar
         internalDebugStackExit
 
