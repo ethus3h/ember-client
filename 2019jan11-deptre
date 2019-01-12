@@ -58,20 +58,20 @@ dependency tree for intFromBase36Char:
                         assertIsInt*
                         implEq
                             assertIsGeneric
-                            
-async function assertIsGeneric(val) {
-    if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed(val+" cannot be used as a generic.");
-    }
-}
-
-                            assertIsBool
+                                assertionFailed*
+                            assertIsBool*
                         or
-                            internalDebugCollect
-                            internalDebugStackEnter
-                            assertIsBool
+                            internalDebugCollect*
+                            internalDebugStackEnter*
+                            assertIsBool*
                             implNot
+                                assertIsBool*
                             implAnd
+                            on implAnd(boolA, boolB) {
+    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
+
+    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+}
                             internalDebugStackExit
                         implLt
                         assertIsBool*
@@ -124,8 +124,7 @@ async function assertIsGeneric(val) {
 
     implSub*
 
-    implNot
-        assertIsBool
+    implNot*
 
     internalDebugStackExit
         implDie
