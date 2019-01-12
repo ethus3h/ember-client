@@ -66,5 +66,29 @@ dependency tree for intFromBase36Char:
         assertIsBool
 
     intIsBetween
-    implNot
+    
+async function intIsBetween(intN, intA, intB) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intIsBetween:math'); await assertIsInt(intN);await assertIsInt(intA);await assertIsInt(intB); let boolReturn;
+
+    /* Checks whether N is within the range A and B, including endpoints */
+    let intT1 = 0;
+    intT1 = await implSub(intN, intA);
+    let intT2 = 0;
+    intT2 = await implSub(intN, intB);
+    let intT3 = 0;
+    intT3 = await implMul(intT1, intT2);
+    let boolTemp = false;
+    boolTemp = await le(intT3, 0);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
     internalDebugStackExit
+
+async function internalDebugStackExit() {
+    //alert("Dbgstackext");
+    if (await stagelDebugCallstack.slice(-1)[0] === undefined) {
+        await implDie("Exited block, but no block on stack");
+    }
+    await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);
+}
