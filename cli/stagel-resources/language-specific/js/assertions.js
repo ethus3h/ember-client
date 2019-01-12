@@ -70,18 +70,6 @@ async function assertIsStr(str) {
     }
 }
 
-async function assertIsGeneric(val) {
-    if ((typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
-        await assertionFailed(val+" cannot be used as a generic.");
-    }
-}
-
-async function assertIsGenericArray(arr) {
-    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
-        await assertionFailed(arr+" is not an array.");
-    }
-}
-
 async function assertIsGenericItem(arr) {
     if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null || (typeof val !== "string" && typeof val !== "boolean" && ! Number.isInteger(val)) || typeof val === "undefined" || val === null) {
         await assertionFailed(arr+" is not a generic item.");
