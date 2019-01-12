@@ -57,8 +57,28 @@ dependency tree for intFromBase36Char:
         implError
 
     implCat
+    
+async function implCat(strA, strB) {
+    assertIsStr(strA); assertIsStr(strB); let strReturn;
+
+    strReturn = strA + "" + strB; await assertIsStr(strReturn); return strReturn;
+}
+
     implSub
+    
+async function implSub(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
+
+    intReturn = intA - intB; await assertIsInt(intReturn); return intReturn;
+}
+
     implNot
+    
+async function implNot(boolA) {
+    assertIsBool(boolA); let boolReturn;
+
+    boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
+}
     intIsBetween
     implNot
     internalDebugStackExit
