@@ -652,7 +652,7 @@ async function charFromHexByte(strHexByte) {
     await internalDebugCollect('str HexByte = ' + strHexByte + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strHexByte); let strReturn;
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
-    let strRes = '';            alert("Hi"+dc);
+    let strRes = '';            alert("Hi"+strHexByte);
 
     strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
 
