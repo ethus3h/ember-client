@@ -105,15 +105,8 @@ dependency tree for intFromBase36Char:
             intIsBetween*
             implSub*
             charFromByte
-            
-async function charFromByte(intInput) {
-    await assertIsInt(intInput); let strReturn;
-
-    // Expects a decimal byte as input. Bear in mind that StageL doesn't attempt to support Unicode.
-
-    strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
-}
-
+                assertIsInt
+                assertIsStr
             internalDebugStackExit
         strCharAtPos
         implAdd
