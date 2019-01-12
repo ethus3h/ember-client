@@ -95,13 +95,7 @@ dependency tree for intFromBase36Char:
             assertIsInt*
         implLt*
         implCat
-        
-async function implCat(strA, strB) {
-    assertIsStr(strA); assertIsStr(strB); let strReturn;
-
-    strReturn = strA + "" + strB; await assertIsStr(strReturn); return strReturn;
-}
-
+            assertIsStr*
         charToUpper
         strCharAtPos
         implAdd
