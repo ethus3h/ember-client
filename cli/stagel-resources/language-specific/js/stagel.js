@@ -48,9 +48,10 @@ async function implMod(intA, intB) {
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
 /* type-conversion, provides:
-    intFromStr
-    strFromByte
-    strFromUnicodeHex
+    intFromIntStr
+    strFrom
+    charFromByte
+    byteFromChar
 */
 
 async function intFromIntStr(str) {
