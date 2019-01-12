@@ -49,12 +49,13 @@ dependency tree for intFromBase36Char:
             assertIsBool*
 
     strToUpper
-        internalDebugCollect*
-        internalDebugStackEnter*
-        assertIsStr*
+        assertIsStr
+            assertionFailed
+                implDie
         len
-            assertIsStr*
-            assertIsInt*
+                assertIsInt
+                    assertionFailed
+                        implDie
         implLt*
         implCat
             assertIsStr*
