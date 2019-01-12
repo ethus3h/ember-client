@@ -84,18 +84,16 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    
-    let intCount = 0;
-    intCount = await count(intArrayIn);
-    let genericElem = ;
-    while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
-        genericElem = await get(genericArrayIn, intCount);
-        if (await implNot(await isInt(genericElem))) {
-
-            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    let intCount = await count(val);
+    let genericElem;
+    while (intCount > 0) {
+        intCount = intCount - 1;
+        genericElem = val.slice(intCount)[0];
+        if (!await isGeneric(genericElem)) {
+            return false;
         }
     }
+    return true;
 }
 
 async function assertIsGenericArray(val) {
