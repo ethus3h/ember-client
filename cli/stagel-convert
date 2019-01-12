@@ -564,6 +564,9 @@ codegenInitializeType() {
         "strArray")
             codegenOutput "[]"
             ;;
+        "generic"|"genericArray"|"genericItem")
+            codegenOutput ""
+            ;;
         *)
             die "Initialize requested for unexpected type of $1."
         esac
