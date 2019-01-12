@@ -12,7 +12,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             break;
         case "HTML":
             strReturn = await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0);
-            if (await isBaseStr(strReturn)) {
+            if (await isBaseStr(strReturn, 16)) {
                 strReturn = await charFromHexByte(strReturn);
             }
             else {
