@@ -118,6 +118,12 @@ dependency tree for intFromBase36Char:
                 assertIsInt*
             internalDebugStackExit*
         implAdd
+        
+async function implAdd(intA, intB) {
+    assertIsInt(intA); assertIsInt(intB); let intReturn;
+
+    intReturn = intA + intB; await assertIsInt(intReturn); return intReturn;
+}
         assertIsStr
         internalDebugStackExit
 
