@@ -118,6 +118,7 @@ async function implLoadCsv(url, lineLoadedCallback, documentLoadedCallback, erro
 }
 
 async function implDoRenderIo(renderBuffer, targetFormat) {
+    alert('Rundoc,');
     switch (targetFormat) {
         case "integerList":
         case "immutableCharacterCells":
@@ -134,7 +135,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
                 if (await boolDcIsPrintable(renderBuffer[i]) || await boolDcIsNewline(renderBuffer[i]) || await boolDcIsSpace(renderBuffer[i])) {
-                    strOutputHtml = strOutputHtml + await strPrintableDcToChar(renderBuffer[i], "HTML");
+                    strOutputHtml = strOutputHtml + await printableDcToChar(renderBuffer[i], "HTML");
                 }
             }
             htmlOutputRootElement.innerHTML += strOutputHtml;
