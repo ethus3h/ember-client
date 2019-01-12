@@ -9,15 +9,14 @@ r/v/assertIsArray ga/in
     # Just a convenience wrapper
     assertIsGenericArray ga/in
 
-r/v/assertIsChar s/in
-    assertIsTrue isChar s/in
+r/v/assertIsChar g/in
+    assertIsTrue isChar g/in
 
 r/v/assertIsCharByte n/in
     assertIsTrue isCharByte n/in
 
-r/v/assertIsDc n/in
+r/v/assertIsDc g/in
     assertIsTrue isDc g/in
-    assertIsNonnegative n/in
 
 r/v/assertStrContainsOnlyInt s/in
     if not strContainsOnlyInt s/in

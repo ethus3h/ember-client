@@ -1,6 +1,9 @@
-r/b/isDc n/in
+r/b/isDc g/in
+    if not isInt g/in
+        return false
+    new n/num
     new b/res
-    set b/res isNonnegative n/in
+    set b/res isNonnegative n/num
     return b/res
 
 r/an/dcarrParseDocument s/format an/Content

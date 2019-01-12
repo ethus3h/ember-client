@@ -3,9 +3,13 @@ r/b/isByte n/in
     set b/res intIsBetween n/in 0 255
     return b/res
 
-r/b/isChar s/in
+r/b/isChar g/in
+    if not isStr g/in
+        return false
+    new s/val
+    set s/val strFrom g/in
     new b/res
-    set b/res isCharByte byteFromChar s/in
+    set b/res isCharByte byteFromChar s/val
     return b/res
 
 r/b/isCharByte n/in
