@@ -77,6 +77,15 @@ async function assertIsGeneric(val) {
     }
 }
 
+async function assertIsGenericArray(arr) {
+    if ((! Array.isArray(arr)) || typeof arr === "undefined" || arr === null) {
+        await assertionFailed(arr+" is not an array.");
+    }
+}
+
+
+async function assertIsGenericItem
+
 async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
