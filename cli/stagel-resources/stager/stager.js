@@ -552,7 +552,7 @@ async function intFromBase36Char(strN) {
 async function intFromBaseStr(strN, intB) {
     await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
 
-    debugger;
+    alert('hi'+strN+intB);
     /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
     await assertIsBaseStr(strN, intB);
     let strUc = '';
@@ -653,7 +653,7 @@ async function charFromHexByte(strHexByte) {
 
     /* Bear in mind that StageL doesn't attempt to support Unicode. */
     let strRes = '';
-    strRes = await charFromByte(48);
+    strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
