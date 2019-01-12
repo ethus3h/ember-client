@@ -615,7 +615,6 @@ async function isBaseDigit(strIn, intB) {
 
 async function isBaseStr(strIn, intB) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseStr:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
-    await alert('bulawrk');
 
     let intLen = 0;
     intLen = await len(strIn);
@@ -624,6 +623,7 @@ async function isBaseStr(strIn, intB) {
     let strChr = '';
     let boolRes = false;
     boolRes = true;
+    await alert('bulawrk');
     while (await ge(intLen, 0)) {
         strChr = await strCharAtPos(strIn, intLen);
         boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
