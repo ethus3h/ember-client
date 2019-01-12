@@ -14,47 +14,31 @@ dependency tree for intFromBase36Char:
         assertionFailed
 
     assertIsChar
-    
-
-async function assertIsChar(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsChar:assertions'); await assertIsStr(strIn);
-
-    await assertIsTrue(await isChar(strIn));
-    await internalDebugStackExit();
-}
+        internalDebugCollect
+        internalDebugStackEnter
+        assertIsStr
+        assertIsTrue
+        isChar
+        internalDebugStackExit
 
     strToUpper
-    
-async function strToUpper(strStr) {
-    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('strToUpper:strings'); await assertIsStr(strStr); let strReturn;
-
-    let strRes = '';
-    let intI = 0;
-    intI = 0;
-    let intCount = 0;
-    intCount = await len(strStr);
-    while (await implLt(intI, intCount)) {
-        strRes = await implCat(strRes, await charToUpper(await strCharAtPos(strStr, intI)));
-        intI = await implAdd(intI, 1);
-    }
-
-    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-}
+        internalDebugCollect
+        internalDebugStackEnter
+        assertIsStr
+        len
+        implLt
+        implCat
+        charToUpper
+        strCharAtPos
+        implAdd
+        assertIsStr
+        internalDebugStackExit
 
     byteFromChar
-    
-async function byteFromChar(strInput) {
-    await assertIsStr(strInput);
-    // Bear in mind that StageL doesn't attempt to support Unicode.
-    // We can't use assertIsChar here, because it depends on byteFromChar.
-    let intReturn;
-    intReturn = strInput.charCodeAt(0);
+        assertIsStr
+        assertIsTrue
+        assertIsInt
 
-    await assertIsTrue(intReturn > 31);
-    await assertIsTrue(intReturn < 127);
-
-    await assertIsInt(intReturn); return intReturn;
-}
     ge
     implGt
     implDie
