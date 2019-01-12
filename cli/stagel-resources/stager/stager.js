@@ -295,24 +295,6 @@ async function isBoolArray(genericArrayIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function isGenericArray(genericArrayIn) {
-    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isGenericArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
-
-    let intCount = 0;
-    intCount = await count(intArrayIn);
-    let genericElem;
-    while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
-        genericElem = await get(genericArrayIn, intCount);
-        if (await implNot(await isGeneric(genericElem))) {
-
-            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-        }
-    }
-
-    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
 async function isCharArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isCharArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
