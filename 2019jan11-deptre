@@ -40,40 +40,21 @@ dependency tree for intFromBase36Char:
         assertIsInt
 
     ge
-    
-async function ge(intA, intB) {
-    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('ge:comparison'); await assertIsInt(intA);await assertIsInt(intB); let boolReturn;
-
-    let boolTemp = false;
-    boolTemp = await implEq(intA, intB);
-    boolTemp = await or(boolTemp, await implGt(intA, intB));
-
-    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
+        internalDebugCollect
+        internalDebugStackEnter
+        assertIsInt
+        implEq
+        or
+        implGt
+        assertIsBool
+        internalDebugStackExit
 
     implGt
-    
-async function implGt(intA, intB) {
-    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+        assertIsInt
+        assertIsBool
 
-    boolReturn = intA > intB; await assertIsBool(boolReturn); return boolReturn;
-}
     implDie
-    
-async function implDie(strMessage) {
-    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
-
-    await implError(strMessage);
-
-    throw strMessage;
-}
-async function implDie(strMessage) {
-    // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
-
-    await implError(strMessage);
-
-    throw strMessage;
-}
+        implError
 
     implCat
     implSub
