@@ -105,4 +105,5 @@ r/b/isBaseStr s/in n/b
     while ge n/len 0
         set s/chr strCharAtPos s/in n/len
         set b/res and b/res isBaseDigit s/chr n/b
+        set n/len sub n/len 1
     return b/res
