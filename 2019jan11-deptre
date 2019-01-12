@@ -105,10 +105,19 @@ dependency tree for intFromBase36Char:
             intIsBetween*
             implSub*
             charFromByte
-                assertIsInt
-                assertIsStr
-            internalDebugStackExit
+                assertIsInt*
+                assertIsStr*
+            internalDebugStackExit*
         strCharAtPos
+        
+async function strCharAtPos(strStr, intIndex) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strCharAtPos:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
+
+    let strTemp = '';
+    strTemp = await substring(strStr, intIndex, 1);
+
+    strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
         implAdd
         assertIsStr
         internalDebugStackExit
