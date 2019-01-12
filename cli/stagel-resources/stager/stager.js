@@ -623,7 +623,6 @@ async function isBaseStr(strIn, intB) {
     let strChr = '';
     let boolRes = false;
     boolRes = true;
-    await alert('bulawrk');
     while (await ge(intLen, 0)) {
         strChr = await strCharAtPos(strIn, intLen);
         boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
