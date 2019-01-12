@@ -119,8 +119,8 @@ dependency tree for intFromBase36Char:
             internalDebugStackExit*
         implAdd
             assertIsInt*
-        assertIsStr
-        internalDebugStackExit
+        assertIsStr*
+        internalDebugStackExit*
 
     byteFromChar
         assertIsStr
