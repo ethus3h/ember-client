@@ -67,13 +67,16 @@ dependency tree for intFromBase36Char:
                             implNot
                                 assertIsBool*
                             implAnd
-                            on implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
-
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
-}
-                            internalDebugStackExit
+                                assertIsBool*
+                            internalDebugStackExit*
                         implLt
+                        
+async function implLt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
+}
+
                         assertIsBool*
                         internalDebugStackExit*
                     assertIsBool*
