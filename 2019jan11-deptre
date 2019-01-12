@@ -10,6 +10,19 @@ dependency tree for intFromBase36Char:
                         assertionFailed
                             implDie!
                     implLog
+async function implLog(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+    await console.log(strMessage);
+    if(await Object.keys(stagelDebugCallstack).length > 0) {
+        await console.log("Previous message sent at: " + await internalDebugPrintStack());
+    }
+    else {
+        if (2 <= STAGEL_DEBUG) {
+            await console.log("(Previous message sent from non-StageL code.)");
+        }
+    }
+}
                 implWarn
                     assertIsStr*
                     FIXMEUnimplemented*
