@@ -2,6 +2,12 @@
 /* Depends: (none)
 */
 
+r/an/dcarrParseDocument s/format an/Content
+    assertIsBytearray an/Content
+    new an/return
+    if eq s/format 'sems'
+        set an/return 
+
 async function dcarrParseDocument(strFormat, bytearrayContent) {
     await assertIsStr(strFormat); await assertIsBytearray(bytearrayContent); let dcarrReturn;
 
