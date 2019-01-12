@@ -174,6 +174,9 @@ async function implError(strMessage) {
 }
 
 async function implWarn(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
     await assertIsStr(strMessage);
     // Log the provided message
 
@@ -183,6 +186,9 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
     await assertIsStr(strMessage);
     // Log the provided message
     await console.log(strMessage);
@@ -197,6 +203,12 @@ async function implLog(strMessage) {
 }
 
 async function implDebug(strMessage, intLevel) {
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
+    }
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+        throw "Non-integer debug level";
+    }
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
