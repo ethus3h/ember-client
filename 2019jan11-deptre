@@ -123,19 +123,19 @@ dependency tree for intFromBase36Char:
         internalDebugStackExit*
 
     byteFromChar
-        assertIsStr
-        assertIsTrue
-        assertIsInt
+        assertIsStr*
+        assertIsTrue*
+        assertIsInt*
 
     ge
-        internalDebugCollect
-        internalDebugStackEnter
-        assertIsInt
+        internalDebugCollect*
+        internalDebugStackEnter*
+        assertIsInt*
         implEq
         or
         implGt
-        assertIsBool
-        internalDebugStackExit
+        assertIsBool*
+        internalDebugStackExit*
 
     implGt
         assertIsInt
