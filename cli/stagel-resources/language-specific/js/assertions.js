@@ -8,7 +8,6 @@
     assertIsGenericArray
     assertIsGenericItem
     assertIsDcarr
-    assertIsBytearray
     assertionFailed
 */
 
@@ -113,10 +112,6 @@ async function assertIsDcarr(dcarr) {
     await assertIsInt(dcarr);
     await assertIsTrue(dcarr >= 0);
     await assertIsTrue(dcarr < Dcarrs.length);
-}
-
-async function assertIsBytearray(bytearray) {
-    await FIXMEUnimplemented("implAssertIsBytearray");
 }
 
 async function assertionFailed(message) {
