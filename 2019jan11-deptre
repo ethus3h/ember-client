@@ -7,6 +7,24 @@ dependency tree for intFromBase36Char:
             implError
                 FIXMEUnimplemented
                 implWarn
+                
+async function implWarn(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    await FIXMEUnimplemented("implWarn");
+
+    await implLog(strMessage);
+}
+async function implWarn(strMessage) {
+    await assertIsStr(strMessage);
+    // Log the provided message
+
+    await FIXMEUnimplemented("implWarn");
+    await implLog(strMessage);
+
+    await console.trace();
+}
         internalDebugFlush
         internalDebugQuiet
 
