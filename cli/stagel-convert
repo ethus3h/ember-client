@@ -803,6 +803,17 @@ codegenCommandInvocationEnd() {
             ;;
         esac
         ;;
+    debugger)
+        # not a StageL command, just hacking it in for debugging in Firefox js
+        case "$targetLang" in
+        "js")
+            # nothing needed
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
+        ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
