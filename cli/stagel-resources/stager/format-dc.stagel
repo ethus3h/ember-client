@@ -2,6 +2,7 @@ r/b/isDc g/in
     if not isInt g/in
         return false
     new n/num
+    set n/num g/in
     new b/res
     set b/res isNonnegative n/num
     return b/res

@@ -11,16 +11,6 @@ async function intFromIntStr(str) {
     intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
 }
 
-async function intFrom(input) {
-    await assertIsGeneric(input); let intReturn;
-    
-    if(await isStr(input)) {
-        intReturn
-    }
-
-    intReturn = String(input); await assertIsStr(strReturn); return strReturn;
-}
-
 async function strFrom(input) {
     await assertIsGeneric(input); let strReturn;
 
