@@ -11,7 +11,6 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
             assertIsStr(strReturn); return strReturn;
             break;
         case "HTML":
-            alert("Hi"+dc);
             try {/* FIXME THE BUG IS HERE */
                 strReturn = await charFromHexByte(await strDcDataLookupByValue("mappings/from/unicode", 1, dc, 0));
             }
@@ -21,6 +20,7 @@ async function strPrintableDcToChar(dc, strCharacterEncoding) {
                     strReturn = await strDcDataLookupByValue("mappings/to/html", 0, dc, 1);
                 }
             }
+            alert("Hi"+dc);
             assertIsStr(strReturn); return strReturn;
             break;
         default:
