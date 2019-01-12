@@ -8,8 +8,8 @@ r/an/dcarrParseDocument s/format an/Content
     assertIsDcarr an/ret
     return an/ret
 
-r/an/dcarrParseSems an/Content
-    assertIsBytearray an/Content
+r/an/dcarrParseSems an/content
+    assertIsBytearray an/content
     new an/ret
 
     # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
@@ -20,25 +20,21 @@ r/an/dcarrParseSems an/Content
     new s/currentDc
     set s/currentDc ''
     new n/contentLength
-    set n/contentLength count an/Content
+    set n/contentLength count an/content
     new n/byteOffset
+    new n/currentByte
     while lt n/byteOffset n/contentLength
-        # do something with each byte in the array. bytearrayContent[intByteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        set n/currentByte 
         if eq s/parserState 'dc'
-            
+            if asciiIsDigit get an/content n/byteOffset
+                
         elif eq s/parserState 'comment'
             
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
         
-    let strParserState = "dc";
-    let strCurrentDc = "";
-    let intContentLength = await intBytearrayLength(bytearrayContent);
-    for (let intByteOffset = 0; intByteOffset < await intBytearrayLength(bytearrayContent); intByteOffset++) {
-        // 
-        switch (strParserState) {
-            case "dc":
                 if (await asciiIsDigit(bytearrayContent[intByteOffset])) {
                     strCurrentDc = strCurrentDc + await charFromByte(bytearrayContent[intByteOffset]);
                 }
