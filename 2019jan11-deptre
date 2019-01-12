@@ -50,12 +50,12 @@ dependency tree for intFromBase36Char:
                     internalDebugStackEnter*
                     assertIsInt*
                     implSub
-                        assertIsInt
+                        assertIsInt*
                     implMul
                     le
                         internalDebugCollect*
                         internalDebugStackEnter*
-                        assertIsInt
+                        assertIsInt*
                         implEq
                         or
                         implLt
@@ -107,8 +107,7 @@ dependency tree for intFromBase36Char:
     implCat
         assertIsStr
 
-    implSub
-        assertIsInt
+    implSub*
 
     implNot
         assertIsBool
