@@ -389,7 +389,7 @@ codegenType() {
         [[ "$1" == "ident-an" ]] && result='intArray'
         [[ "$1" == "ident-as" ]] && result='strArray'
         [[ "$1" == "ident-ga" ]] && result='genericArray'
-        [[ "$1" == "ident-gi" ]] && result='genericItems'
+        [[ "$1" == "ident-gi" ]] && result='genericItem'
         [[ "$1" == "ident-r-b" ]] && result='bool'
         [[ "$1" == "ident-r-n" ]] && result='int'
         [[ "$1" == "ident-r-s" ]] && result='str'
