@@ -87,10 +87,18 @@ dependency tree for intFromBase36Char:
         internalDebugStackExit*
 
     strToUpper
-        internalDebugCollect
-        internalDebugStackEnter
-        assertIsStr
+        internalDebugCollect*
+        internalDebugStackEnter*
+        assertIsStr*
         len
+        
+async function len(str) {
+    assertIsStr(str); let intReturn;
+
+    intReturn = str.length; await assertIsInt(intReturn); return intReturn;
+}
+
+
         implLt
         implCat
         charToUpper
