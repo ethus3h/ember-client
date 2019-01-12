@@ -4,6 +4,7 @@ dependency tree for intFromBase36Char:
 
     internalDebugStackEnter
         implDie
+            implError
         internalDebugFlush
         internalDebugQuiet
 
@@ -53,8 +54,7 @@ dependency tree for intFromBase36Char:
         assertIsInt
         assertIsBool
 
-    implDie
-        implError
+    implDie*
 
     implCat
         assertIsStr
