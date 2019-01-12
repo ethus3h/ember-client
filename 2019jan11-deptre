@@ -143,8 +143,7 @@ dependency tree for intFromBase36Char:
 
     implDie*
 
-    implCat
-        assertIsStr
+    implCat*
 
     implSub*
 
