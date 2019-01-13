@@ -898,7 +898,6 @@ async function dcarrParseSems(intArrayContent) {
     await assertIsByteArray(intArrayContent);
     let intArrayRet = [];
     /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
-    let intArrayRet = [];
     let strParserState = '';
     strParserState = 'dc';
     let strCurrentDc = '';
