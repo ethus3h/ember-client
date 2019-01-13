@@ -564,15 +564,15 @@ async function assertIsCharArray(genericItemIn) {
     await internalDebugStackExit();
 }
 
-async function assertIsByteArray(genericItemIn, intB) {
-    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsByteArray:assertions'); await assertIsGenericItem(genericItemIn);await assertIsInt(intB);
+async function assertIsByteArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsByteArray:assertions'); await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isByteArray(genericItemIn));
     await internalDebugStackExit();
 }
 
-async function assertIsDcArray(genericItemIn, intB) {
-    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('assertIsDcArray:assertions'); await assertIsGenericItem(genericItemIn);await assertIsInt(intB);
+async function assertIsDcArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsDcArray:assertions'); await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isDcArray(genericItemIn));
     await internalDebugStackExit();
