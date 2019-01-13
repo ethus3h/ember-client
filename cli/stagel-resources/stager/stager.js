@@ -348,6 +348,15 @@ async function isDcArray(genericArrayIn) {
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
+async function intDcarrLength(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('intDcarrLength:arrays'); await assertIsIntArray(intArrayIn); let intReturn;
+
+    let intRes = 0;
+    intRes = await count(intArrayIn);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
 async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
