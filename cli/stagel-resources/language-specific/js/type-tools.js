@@ -10,7 +10,7 @@ async function intBytearrayLength(bytearray) {
 }
 
 async function intDcarrLength(dcarr) {
-    assertIsDcarr(dcarr); let intReturn;
+    assertIsDcArray(dcarr); let intReturn;
 
     intReturn = Dcarrs[await dcarr].length; await assertIsInt(intReturn); return intReturn;
 }

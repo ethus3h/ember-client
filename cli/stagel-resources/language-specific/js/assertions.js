@@ -7,7 +7,6 @@
     assertIsGeneric
     assertIsGenericArray
     assertIsGenericItem
-    assertIsDcarr
     assertionFailed
 */
 
