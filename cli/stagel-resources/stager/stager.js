@@ -669,7 +669,7 @@ async function dcarrParseDocument(strFormat, intArrayContent) {
     else {
         await implError(await implCat('Unimplemented document parsing format: ', strFormat));
     }
-    await assertIsDcarr(intArrayRet);
+    await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }

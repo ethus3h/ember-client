@@ -14,7 +14,7 @@ r/an/dcarrParseDocument s/format an/Content
         set an/ret dcarrParseSems an/content
     else
         error cat 'Unimplemented document parsing format: ' s/format
-    assertIsDcarr an/ret
+    assertIsDcArray an/ret
     return an/ret
 
 r/s/printableDcToChar n/dc s/targetFormat
