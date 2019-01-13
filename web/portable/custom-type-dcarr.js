@@ -9,9 +9,9 @@
 async function newDcarr() {
     let dcarrReturn;
 
-    dcarrReturn = await implNewDcarr(); await assertIsDcArray(dcarrReturn); return dcarrReturn;
+    dcarrReturn = []; await assertIsDcArray(dcarrReturn); return dcarrReturn;
 }
-
+/*
 async function dcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
     await assertIsDcArray(dcarr); await assertIsInt(intIndex); let dcReturn;
 
@@ -29,5 +29,5 @@ async function customTypeDcarrPush(dcarr, dcToAdd) {
 
     await implVoidCustomTypeDcarrPush(dcarr, dcToAdd);
 }
-
+*/
 // @license-end
