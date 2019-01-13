@@ -537,7 +537,8 @@ async function assertIsBaseStr(strIn, intB) {
 }
 
 async function assertIsIntArray(genericItemIn) {
-    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsIntArray:assertions'); await assertIsGenericItem(genericItemIn);
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsIntArray:assertions');     alert('Ok, about to run assertIsGenericItem,');
+await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isIntArray(genericItemIn));
     await internalDebugStackExit();
