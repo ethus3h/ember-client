@@ -1,5 +1,5 @@
 r/an/dcarrParseSems an/content
-    assertIsBytearray an/content
+    assertIsByteArray an/content
     new an/ret
 
     # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
