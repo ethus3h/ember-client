@@ -659,6 +659,7 @@ async function isDc(genericIn) {
 }
 
 async function dcarrParseDocument(strFormat, intArrayContent) {
+    alert('Rundoc,');
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseDocument:format-dc'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     await assertIsBytearray(intArrayContent);

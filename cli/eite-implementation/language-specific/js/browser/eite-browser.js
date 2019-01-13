@@ -118,7 +118,6 @@ async function implLoadCsv(url, lineLoadedCallback, documentLoadedCallback, erro
 }
 
 async function implDoRenderIo(renderBuffer, targetFormat) {
-    alert('Rundoc,');
     switch (targetFormat) {
         case "integerList":
         case "immutableCharacterCells":
