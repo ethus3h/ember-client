@@ -12,7 +12,7 @@ async function implNewDcarr() {
     let dcarrReturn;
 
     Dcarrs[Dcarrs.length] = [];
-    dcarrReturn = Dcarrs.length - 1; await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    dcarrReturn = Dcarrs.length - 1; await assertIsDcArray(dcarrReturn); return dcarrReturn;
 }
 
 async function implDcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
@@ -22,13 +22,13 @@ async function implDcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
 }
 
 async function implVoidCustomTypeDcarrPut(dcarr, intIndex, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex); await assertIsDc(dcToAdd);
+    await assertIsDcArray(dcarr); await assertIsInt(intIndex); await assertIsDc(dcToAdd);
 
     Dcarrs[await dcarr][intIndex] = dcToAdd;
 }
 
 async function implVoidCustomTypeDcarrPush(dcarr, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
+    await assertIsDcArray(dcarr); await assertIsDc(dcToAdd);
 
     await Dcarrs[await dcarr].push(dcToAdd);
 }

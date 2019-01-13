@@ -9,23 +9,23 @@
 async function newDcarr() {
     let dcarrReturn;
 
-    dcarrReturn = await implNewDcarr(); await assertIsDcarr(dcarrReturn); return dcarrReturn;
+    dcarrReturn = await implNewDcarr(); await assertIsDcArray(dcarrReturn); return dcarrReturn;
 }
 
 async function dcCustomTypeDcarrDcAtPos(dcarr, intIndex) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex); let dcReturn;
+    await assertIsDcArray(dcarr); await assertIsInt(intIndex); let dcReturn;
 
     dcReturn = await implDcCustomTypeDcarrDcAtPos(dcarr, intIndex); await assertIsDc(dcReturn); return dcReturn;
 }
 
 async function customTypeDcarrPut(dcarr, intIndex, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsInt(intIndex); await assertIsDc(dcToAdd);
+    await assertIsDcArray(dcarr); await assertIsInt(intIndex); await assertIsDc(dcToAdd);
 
     await implVoidCustomTypeDcarrPut(dcarr, dcToAdd);
 }
 
 async function customTypeDcarrPush(dcarr, dcToAdd) {
-    await assertIsDcarr(dcarr); await assertIsDc(dcToAdd);
+    await assertIsDcArray(dcarr); await assertIsDc(dcToAdd);
 
     await implVoidCustomTypeDcarrPush(dcarr, dcToAdd);
 }

@@ -116,12 +116,6 @@ async function assertIsGenericItem(val) {
     }
 }
 
-async function assertIsDcarr(dcarr) {
-    await assertIsInt(dcarr);
-    await assertIsTrue(dcarr >= 0);
-    await assertIsTrue(dcarr < Dcarrs.length);
-}
-
 async function assertionFailed(message) {
     await implDie("Assertion failed: "+message);
 }
