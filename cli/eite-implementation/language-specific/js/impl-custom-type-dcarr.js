@@ -5,7 +5,7 @@
     implVoidCustomTypeDcarrPut
     implVoidCustomTypeDcarrPush
 */
-
+/*
 Dcarrs = [];
 
 async function implNewDcarr() {
@@ -32,5 +32,5 @@ async function implVoidCustomTypeDcarrPush(dcarr, dcToAdd) {
 
     await Dcarrs[await dcarr].push(dcToAdd);
 }
-
+*/
 // @license-end
