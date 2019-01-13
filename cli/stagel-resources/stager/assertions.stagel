@@ -49,8 +49,8 @@ r/v/assertIsStrArray gi/in
 r/v/assertIsCharArray gi/in
     assertIsTrue isCharArray gi/in
 
-r/v/assertIsByteArray gi/in n/b
+r/v/assertIsByteArray gi/in
     assertIsTrue isByteArray gi/in
 
-r/v/assertIsDcArray gi/in n/b
+r/v/assertIsDcArray gi/in
     assertIsTrue isDcArray gi/in
