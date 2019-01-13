@@ -1,6 +1,6 @@
 r/b/isIntArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1
@@ -11,7 +11,7 @@ r/b/isIntArray ga/in
 
 r/b/isStrArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1
@@ -22,7 +22,7 @@ r/b/isStrArray ga/in
 
 r/b/isBoolArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1
@@ -33,7 +33,7 @@ r/b/isBoolArray ga/in
 
 r/b/isCharArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1
@@ -44,7 +44,7 @@ r/b/isCharArray ga/in
 
 r/b/isByteArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1
@@ -55,7 +55,7 @@ r/b/isByteArray ga/in
 
 r/b/isDcArray ga/in
     new n/count
-    set n/count count an/in
+    set n/count count ga/in
     new g/elem
     while ge n/count 0
         set n/count sub n/count 1

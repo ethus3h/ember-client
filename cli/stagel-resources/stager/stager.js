@@ -245,7 +245,7 @@ async function isIntArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -263,7 +263,7 @@ async function isStrArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -281,7 +281,7 @@ async function isBoolArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isBoolArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -299,7 +299,7 @@ async function isCharArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isCharArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -317,7 +317,7 @@ async function isByteArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isByteArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -335,7 +335,7 @@ async function isDcArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(intArrayIn);
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
