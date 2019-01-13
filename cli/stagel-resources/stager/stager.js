@@ -661,7 +661,7 @@ async function isDc(genericIn) {
 async function dcarrParseDocument(strFormat, intArrayContent) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseDocument:format-dc'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContent); let intArrayReturn;
 
-    await assertIsBytearray(intArrayContent);
+    await assertIsByteArray(intArrayContent);
     let intArrayRet = [];
     if (await implEq(strFormat, 'sems')) {
         intArrayRet = await dcarrParseSems(intArrayContent);
@@ -895,7 +895,7 @@ async function charFromHexByte(strHexByte) {
 async function dcarrParseSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
-    await assertIsBytearray(intArrayContent);
+    await assertIsByteArray(intArrayContent);
     let intArrayRet = [];
     /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
     let intArrayDcarrParseResults = [];
