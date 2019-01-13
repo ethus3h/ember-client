@@ -63,3 +63,8 @@ r/b/isDcArray ga/in
         if not isDc g/elem
             return false
     return true
+
+r/n/intDcarrLength an/in
+    new n/res
+    set n/res count an/in
+    return n/res
