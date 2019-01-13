@@ -896,7 +896,6 @@ async function dcarrParseSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     await assertIsByteArray(intArrayContent);
-    alert("Got here");
     let intArrayRet = [];
     /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
     let intArrayDcarrParseResults = [];
