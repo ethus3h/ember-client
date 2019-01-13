@@ -405,9 +405,6 @@ async function assertIsStr(str) {
 
 async function isGeneric(val) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
-    //alert('got isgeneric');
-    //await console.log(val);
-    //await console.log(await isStr(val), await isInt(val), await isBool(val));
     if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
         return false;
     }
@@ -421,13 +418,10 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    alert('got here1');
+    // Can't use count() here because it depends on this function.
     let intCount = Object.keys(val).length;
-    alert('got here2');
     let genericElem;
-    alert(intCount);
     while (intCount > 0) {
-    alert(intCount);
         intCount = intCount - 1;
         genericElem = val.slice(intCount)[0];
         if (!await isGeneric(genericElem)) {
