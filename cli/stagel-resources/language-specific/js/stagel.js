@@ -422,7 +422,7 @@ async function assertIsGeneric(val) {
 
 async function isGenericArray(val) {
     alert('got here1');
-    let intCount = await count(val);
+    let intCount = Object.keys(val).length;
     alert('got here2');
     let genericElem;
     alert(intCount);
