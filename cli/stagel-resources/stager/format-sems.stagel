@@ -4,7 +4,7 @@ r/an/dcarrParseSems an/content
 
     # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
 
-    new an/dcarrParseResults
+    new an/ret
     new s/parserState
     set s/parserState 'dc'
     new s/currentDc
@@ -20,7 +20,7 @@ r/an/dcarrParseSems an/content
             if asciiIsDigit n/currentByte
                 set s/currentDc cat s/currentDc charFromByte n/currentByte
             elif asciiIsSpace n/currentByte
-                set an/dcarrParseResults push an/dcarrParseResults intFromIntStr s/currentDc
+                set an/ret push an/ret intFromIntStr s/currentDc
                 set s/currentDc ''
             elif eq 35 n/currentByte
                 # pound sign: start comment
