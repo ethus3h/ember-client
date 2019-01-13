@@ -405,6 +405,10 @@ async function assertIsStr(str) {
 
 async function isGeneric(val) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
+    alert('got isgeneric');
+    await console.log(val);
+    await console.log(await isStr(val), await isInt(val), await isBool(val));
+    alert('got here');
     if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
         return false;
     }
@@ -444,7 +448,6 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
-    alert('got here');
     if (!await isGenericItem(val)) {
         await assertionFailed(val+" cannot be used as a generic item.");
     }
