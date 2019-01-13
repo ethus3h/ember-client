@@ -423,7 +423,9 @@ async function assertIsGeneric(val) {
 async function isGenericArray(val) {
     let intCount = await count(val);
     let genericElem;
+    alert(intCount);
     while (intCount > 0) {
+    alert(intCount);
         intCount = intCount - 1;
         genericElem = val.slice(intCount)[0];
         if (!await isGeneric(genericElem)) {
