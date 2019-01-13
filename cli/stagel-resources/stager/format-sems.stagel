@@ -35,5 +35,5 @@ r/an/dcarrParseSems an/content
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
-    assertIsDcarr an/ret
+    assertIsDcArray an/ret
     return an/ret

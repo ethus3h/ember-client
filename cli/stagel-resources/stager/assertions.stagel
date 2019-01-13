@@ -54,3 +54,7 @@ r/v/assertIsByteArray gi/in
 
 r/v/assertIsDcArray gi/in
     assertIsTrue isDcArray gi/in
+
+r/v/assertIsDcarr gi/in
+    # Just a convenience helper.
+    assertIsDcArray gi/in
