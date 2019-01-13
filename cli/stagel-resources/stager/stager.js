@@ -939,7 +939,7 @@ async function dcarrParseSems(intArrayContent) {
         }
         intByteOffset = await implAdd(intByteOffset, 1);
     }
-    await assertIsDcarr(intArrayRet);
+    await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
