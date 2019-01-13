@@ -110,9 +110,6 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
-        alert('Rundoc,');
-return true
-    
     if (!await isGenericItem(val)) {
         await assertionFailed(val+" cannot be used as a generic item.");
     }
