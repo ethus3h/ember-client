@@ -417,7 +417,7 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    if (typeof v !== array) {
+    if (typeof v !== 'array') {
         return false;
     }
     function isGenericSync(v){
