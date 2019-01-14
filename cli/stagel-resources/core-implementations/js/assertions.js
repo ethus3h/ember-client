@@ -83,7 +83,7 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    if (typeof val !== 'array' && val !instanceof Uint8Array) {
+    if (typeof val !== 'array' && ! val instanceof Uint8Array) {
         alert(val);
         alert('retun flse'+typeof val);
         return false;
