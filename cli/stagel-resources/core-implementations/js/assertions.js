@@ -83,7 +83,10 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    if ((typeof val !== 'array') && (! val instanceof Uint8Array)) {
+    if(val instanceof Uint8Array) {
+        return true;
+    }
+    if (typeof val !== 'array') {
         return false;
     }
     function isGenericSync(v){
