@@ -45,3 +45,11 @@ async function isCharByte(genericIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+async function asciiIsDigit(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 48, 57);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
