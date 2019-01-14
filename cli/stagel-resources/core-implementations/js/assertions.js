@@ -84,7 +84,7 @@ async function assertIsGeneric(val) {
 
 async function isGenericArray(val) {
     if (typeof val !== 'array') {
-        alert('retun flse');
+        alert('retun flse'+typeof val);
         return false;
     }
     function isGenericSync(v){
