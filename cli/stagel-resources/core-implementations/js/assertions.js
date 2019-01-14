@@ -84,11 +84,13 @@ async function assertIsGeneric(val) {
 
 async function isGenericArray(val) {
     if (typeof v !== 'array') {
+        alert('retun flse');
         return false;
     }
     function isGenericSync(v){
         return (typeof v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
     }
+    alert('return val');
     return val.every(isGenericSync);
 }
 
@@ -99,6 +101,8 @@ async function assertIsGenericArray(val) {
 }
 
 async function isGenericItem(val) {
+    alert(await isGeneric(val));
+    alert(await isGenericArray(val));
     if (! (await isGeneric(val) || await isGenericArray(val))) {
         return false;
     }
