@@ -26,3 +26,22 @@ async function isChar(genericIn) {
     strVal = genericIn;
     let boolRes = false;
     boolRes = await isCharByte(await byteFromChar(strVal));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharByte(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isCharByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 32, 126);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
