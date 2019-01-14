@@ -418,6 +418,7 @@ async function assertIsGeneric(val) {
 
 async function isGenericArray(val) {
     if (typeof val !== 'array') {
+        alert(val);
         alert('retun flse'+typeof val);
         return false;
     }
@@ -435,8 +436,6 @@ async function assertIsGenericArray(val) {
 }
 
 async function isGenericItem(val) {
-    alert(await isGeneric(val));
-    alert(await isGenericArray(val));
     if (! (await isGeneric(val) || await isGenericArray(val))) {
         return false;
     }
