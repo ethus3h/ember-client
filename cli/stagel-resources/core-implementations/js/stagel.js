@@ -355,7 +355,7 @@ async function isBool(bool) {
 
 async function assertIsBool(bool) {
     if (!await isBool(bool)) {
-        await assertionFailed(bool+" is not a boolean.");
+        await assertionFailed(bool+' is not a boolean.');
     }
 }
 
@@ -364,7 +364,7 @@ async function assertIsTrue(bool) {
     await assertIsBool(bool);
 
     if (bool !== true) {
-        await assertionFailed(bool+" is not true.");
+        await assertionFailed(bool+' is not true.');
     }
 }
 
@@ -372,12 +372,12 @@ async function assertIsFalse(bool) {
     await assertIsBool(bool);
 
     if (bool !== false) {
-        await assertionFailed(bool+" is not false.");
+        await assertionFailed(bool+' is not false.');
     }
 }
 
 async function isInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+    if ((! Number.isInteger(int)) || typeof int === 'undefined' || int === null || int < -2147483648 || int > 2147483647) {
         return false;
     }
     return true;
@@ -390,7 +390,7 @@ async function assertIsInt(int) {
 }
 
 async function isStr(str) {
-    if (typeof str !== "string" || typeof str === "undefined" || str === null) {
+    if (typeof str !== 'string' || typeof str === 'undefined' || str === null) {
         return false;
     }
     return true;
@@ -417,17 +417,10 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    // Can't use count() here because it depends on this function.
-    let intCount = Object.keys(val).length;
-    let genericElem;
-    while (intCount > 0) {
-        intCount = intCount - 1;
-        genericElem = val.slice(intCount)[0];
-        if (!await isGeneric(genericElem)) {
-            return false;
-        }
+    function isGenericSync(v){
+        return (typeof v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
     }
-    return true;
+    return val.every(isGenericSync);
 }
 
 async function assertIsGenericArray(val) {
