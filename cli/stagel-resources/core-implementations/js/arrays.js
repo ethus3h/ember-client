@@ -11,7 +11,7 @@ async function append(array1, array2) {
 }
 
 async function push(array1, array2) {
-    return append(array1, array2);
+    return await append(array1, array2);
 }
 
 async function get(array, index) {
