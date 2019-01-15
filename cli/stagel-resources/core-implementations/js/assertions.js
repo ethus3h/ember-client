@@ -43,16 +43,17 @@ async function assertIsFalse(bool) {
 }
 
 async function isInt(int) {
-    if (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
         return true;
     }
     return false;
 }
 
 async function assertIsInt(int) {
-    if (!await isInt(int)) {
-        await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return true;
     }
+    await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
 }
 
 async function isStr(str) {
