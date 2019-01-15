@@ -5,12 +5,15 @@
 */
 
 async function append(array1, array2) {
-    await assertIsArray(array1); await assertIsArray(array2); let arrayReturn;
+    await assertIsArray(array1); await assertIsGenericItem(array2); let arrayReturn;
 
     arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
 }
 
 async function push(array1, array2) {
+    if(await isGeneric(array2)) {
+        return array1.concat(array2);
+    }
     return await append(array1, array2);
 }
 
