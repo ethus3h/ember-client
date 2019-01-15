@@ -1218,6 +1218,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 inline-arglist-end)
                     codegenCommandInvocationArglist
                     codegenCommandInvocationEnd
+                    codegenCommandInvocationArgSeparator
                     unset 'stateStack[-1]' # remove latest "arglist" state
                     ;;
                 dedent|end-document|*)
