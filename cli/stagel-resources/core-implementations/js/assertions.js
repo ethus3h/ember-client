@@ -21,7 +21,7 @@ async function isBool(bool) {
 
 async function assertIsBool(bool) {
     if (typeof bool === 'boolean') {
-        return true;
+        return;
     }
     await assertionFailed(bool+' is not a boolean.');
 }
@@ -35,7 +35,7 @@ async function isInt(int) {
 
 async function assertIsInt(int) {
     if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
-        return true;
+        return;
     }
     await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
 }
@@ -49,7 +49,7 @@ async function isStr(str) {
 
 async function assertIsStr(str) {
     if (typeof str === 'string' && str !== null) {
-        return true;
+        return;
     }
     await assertionFailed(str+" is not a string.");
 }
