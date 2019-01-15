@@ -25,34 +25,11 @@ r/b/dcIsPrintable n/dc
     set s/type dcGetType n/dc
     new s/generalType
     set s/generalType charAtPos s/type 0
-    if or eq 'Zp' s/type } eq 'Zl' s/type
-        return true
-    return false
-
-
-async function boolDcIsPrintable(dc) {
-    await assertIsDc(dc); let boolReturn;
-
-    let strType = await strDcGetType(dc);
-    let strGeneralType = await strCharAtPos(strType, 0);
-    switch(strType) {
-        case "Zl":
-        case "Zp":
-            boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
-            break;
-        default:
-            break;
-    }
-    switch(strGeneralType) {
-        case "!":
-        case "C":
-            boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
-            break;
-        default:
-            break;
-    }
-    boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
-}
+    if or eq 'Zl' s/type } eq 'Zp' s/type
+        return false
+    if or eq '!' s/generalType eq 'C' s/generalType
+        return false
+    return true
 
 r/an/dcarrParseDocument s/format an/Content
     assertIsByteArray an/Content
