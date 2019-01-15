@@ -22,7 +22,6 @@ async function assertIsTrue(bool) {
 
 async function isFalse(bool) {
     if (bool === false) {
-        // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
         return true;
     }
     return false;
