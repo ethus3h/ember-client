@@ -13,16 +13,17 @@
 // Assertions that something is a given type
 
 async function isBool(bool) {
-    if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
-        return false;
+    if (typeof bool === 'boolean') {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsBool(bool) {
-    if (!await isBool(bool)) {
-        await assertionFailed(bool+' is not a boolean.');
+    if (typeof bool === 'boolean') {
+        return true;
     }
+    await assertionFailed(bool+' is not a boolean.');
 }
 
 /* TODO: move assertIsTrue/assertIsFalse to StageR once bool literals are available */
