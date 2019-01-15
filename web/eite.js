@@ -423,7 +423,7 @@ async function isGenericArray(val) {
     if (typeof val !== 'array') {
         return false;
     }
-    function isGenericSync(v){
+    function isGenericSync(v) {
         return (typeof v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
     }
     return val.every(isGenericSync);
@@ -431,6 +431,7 @@ async function isGenericArray(val) {
 
 async function assertIsGenericArray(val) {
     if (!await isGenericArray(val)) {
+        console.log(val);
         await assertionFailed(val+" cannot be used as a generic array.");
     }
 }
