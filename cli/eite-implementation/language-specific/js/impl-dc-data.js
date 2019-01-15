@@ -1,8 +1,8 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 /* Provides:
     implIntDcDataDatasetLength
-    implStrDcDataLookupById
-    implStrDcDataLookupByValue
+    implDcDataLookupById
+    implDcDataLookupByValue
 */
 
 async function implIntDcDataDatasetLength(strDataset) {
@@ -11,13 +11,13 @@ async function implIntDcDataDatasetLength(strDataset) {
     intReturn = await dcData[strDataset].length; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implStrDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
+async function implDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
     await assertIsStr(strDataset); await assertIsInt(intRowNumber); await assertIsInt(intFieldNumber); let strReturn;
 
     strReturn = dcData[strDataset][intRowNumber].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
 }
 
-async function implStrDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
+async function implDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
     await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsGeneric(genericFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
     //await console.log(strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
