@@ -4,7 +4,7 @@ r/v/assertIsTrue b/in
 
 r/b/isFalse b/in
     new b/res
-    set b/res ne b/in false
+    set b/res eq b/in false
     return b/res
 
 r/v/assertIsFalse b/in
