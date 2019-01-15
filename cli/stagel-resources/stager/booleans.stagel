@@ -26,11 +26,9 @@ r/b/xnor b/a b/b
     return b/temp
 
 r/b/isTrue b/in
-    new b/res
-    set b/res eq b/in true
-    return b/res
+    return b/in
 
 r/b/isFalse b/in
     new b/res
-    set b/res eq b/in false
+    set b/res not b/in
     return b/res
