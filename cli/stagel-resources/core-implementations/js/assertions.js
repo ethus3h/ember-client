@@ -26,23 +26,6 @@ async function assertIsBool(bool) {
     await assertionFailed(bool+' is not a boolean.');
 }
 
-/* TODO: move assertIsTrue/assertIsFalse to StageR once bool literals are available */
-async function assertIsTrue(bool) {
-    await assertIsBool(bool);
-
-    if (bool !== true) {
-        await assertionFailed(bool+' is not true.');
-    }
-}
-
-async function assertIsFalse(bool) {
-    await assertIsBool(bool);
-
-    if (bool !== false) {
-        await assertionFailed(bool+' is not false.');
-    }
-}
-
 async function isInt(int) {
     if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
         return true;
