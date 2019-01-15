@@ -24,7 +24,7 @@ r/b/dcIsPrintable n/dc
     new s/type
     set s/type dcGetType n/dc
     new s/generalType
-    set s/generalType charAtPos s/type 0
+    set s/generalType strChar s/type 0
     if or eq 'Zl' s/type } eq 'Zp' s/type
         return false
     if or eq '!' s/generalType } eq 'C' s/generalType

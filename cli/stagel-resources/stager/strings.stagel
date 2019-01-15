@@ -1,11 +1,18 @@
+r/s/strChar s/str n/index
+    new s/temp
+    set s/temp substring s/str n/index 1
+    return s/temp
+
 r/s/strCharAtPos s/str n/index
+    # helper alias
     new s/temp
     set s/temp strChar s/str n/index
     return s/temp
 
-r/s/strChar s/str n/index
+r/s/charAtPos s/str n/index
+    # helper alias
     new s/temp
-    set s/temp substring s/str n/index 1
+    set s/temp strChar s/str n/index
     return s/temp
 
 r/s/reverseStr s/str
