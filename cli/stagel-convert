@@ -1216,7 +1216,11 @@ for (( i=0; i<tokenCount; i++ )); do
                     fi
                     ;;
                 inline-arglist-end)
-                    
+                    codegenCommandInvocationArglist
+                    codegenCommandInvocationEnd
+                    #unset 'stateStack[-1]'
+                    #[[ "${stateStack[-1]}" == "test" ]] && testParameterFound="false"
+                    #stateStack+=("code")
                     ;;
                 dedent|end-document|*)
                     # The arglist or test parameter is ended, so do codegen for the command invocation, drop back and continue parsing.
