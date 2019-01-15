@@ -7,7 +7,7 @@
 async function implEq(genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA === genericB; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function implGt(intA, intB) {

@@ -1,6 +1,10 @@
-#r/v/assertIsTrue b/in
-#    if ne b/in true
-#        assertionFailed cat bool ' is not true.'
+r/v/assertIsTrue b/in
+    if ne b/in true
+        assertionFailed cat bool ' is not true.'
+
+r/v/assertIsFalse b/in
+    if ne b/in true
+        assertionFailed cat bool ' is not true.'
 
 r/v/assertIsByte n/in
     assertIsTrue isByte n/in
