@@ -175,7 +175,10 @@ async function implRunEiteTest(strTestFormat, strTestName) {
 }
 
 // Set up dcData
+
+datasets=await listDcDatasets();
 dcData = [];
+
 async function implDcDataAppendDataset(dataset) {
     dcData[dataset] = [];
 }
@@ -204,11 +207,4 @@ async function implLoadDatasets(callback) {
         await callback();
     }
 }
-
-datasets=[
-    "DcData",
-    "mappings/from/ascii",
-    "mappings/from/unicode",
-    "mappings/to/html"
-];
 // @license-end

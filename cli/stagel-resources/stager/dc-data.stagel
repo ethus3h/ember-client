@@ -1,3 +1,4 @@
 r/as/listDcDatasets
     new as/res
-    set as/res 
+    set as/res [ 'DcData' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' ]
+    return as/res
