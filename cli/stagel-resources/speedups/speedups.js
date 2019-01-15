@@ -1,3 +1,17 @@
+async function assertIsFalse(bool) {
+    if (bool === false) {
+        return;
+    }
+    await assertionFailed(bool+' is true, but should be false.');
+}
+
+async function assertIsTrue(bool) {
+    if (bool === true) {
+        return;
+    }
+    await assertionFailed(bool+' is not true.');
+}
+
 async function or(a,b) {
     if(typeof a === 'boolean' && typeof b === 'boolean') {
         return a || b;
@@ -13,23 +27,9 @@ async function isTrue(bool) {
     return false;
 }
 
-async function assertIsTrue(bool) {
-    if (bool === true) {
-        return;
-    }
-    await assertionFailed(bool+' is not true.');
-}
-
 async function isFalse(bool) {
     if (bool === false) {
         return true;
     }
     return false;
-}
-
-async function assertIsFalse(bool) {
-    if (bool === false) {
-        return;
-    }
-    await assertionFailed(bool+' is true, but should be false.');
 }
