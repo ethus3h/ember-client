@@ -11,9 +11,6 @@ async function append(array1, array2) {
 }
 
 async function push(array1, array2) {
-    if(await isGeneric(array2)) {
-        return array1.concat(array2);
-    }
     return await append(array1, array2);
 }
 
