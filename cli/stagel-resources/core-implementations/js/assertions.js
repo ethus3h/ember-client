@@ -92,7 +92,7 @@ async function assertIsGenericArray(val) {
     function isGenericSync(v) {
         return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
-    if val.every(isGenericSync) {
+    if (val.every(isGenericSync)) {
         return;
     }
     else {
@@ -111,7 +111,7 @@ async function isGenericItem(val) {
     function isGenericSync(v) {
         return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
-    if val.every(isGenericSync) {
+    if (val.every(isGenericSync)) {
         return true;
     }
     else {
@@ -129,7 +129,7 @@ async function assertIsGenericItem(val) {
     function isGenericSync(v) {
         return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
-    if val.every(isGenericSync) {
+    if (val.every(isGenericSync)) {
         return true;
     }
     else {
