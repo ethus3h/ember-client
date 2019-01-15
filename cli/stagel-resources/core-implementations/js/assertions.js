@@ -83,7 +83,19 @@ async function isGenericArray(val) {
 }
 
 async function assertIsGenericArray(val) {
-    if (!await isGenericArray(val)) {
+    if (val.constructor.name === 'Uint8Array') {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if val.every(isGenericSync) {
+        return;
+    }
+    else {
         await assertionFailed(val+" cannot be used as a generic array.");
     }
 }
