@@ -133,7 +133,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
            let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
-                if (await boolDcIsPrintable(renderBuffer[i]) || await boolDcIsNewline(renderBuffer[i]) || await boolDcIsSpace(renderBuffer[i])) {
+                if (await dcIsPrintable(renderBuffer[i]) || await dcIsNewline(renderBuffer[i]) || await dcIsSpace(renderBuffer[i])) {
                     strOutputHtml = strOutputHtml + await printableDcToChar(renderBuffer[i], "HTML");
                 }
             }
