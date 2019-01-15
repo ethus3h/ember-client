@@ -43,10 +43,10 @@ async function assertIsFalse(bool) {
 }
 
 async function isInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === 'undefined' || int === null || int < -2147483648 || int > 2147483647) {
-        return false;
+    if (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsInt(int) {
@@ -66,9 +66,7 @@ async function assertIsStr(str) {
     if (typeof str === 'string' && str !== null) {
         return true;
     }
-    else {
-        await assertionFailed(str+" is not a string.");
-    }
+    await assertionFailed(str+" is not a string.");
 }
 
 async function isGeneric(val) {
@@ -93,7 +91,7 @@ async function isGenericArray(val) {
         return false;
     }
     function isGenericSync(v) {
-        return (typeof v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
+        return (v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
     }
     return val.every(isGenericSync);
 }
