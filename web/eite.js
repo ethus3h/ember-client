@@ -298,16 +298,18 @@ async function internalDebugPrintStack() {
     implNot
 */
 
-async function implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
-
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+async function implAnd(a,b) {
+    if (typeof a === 'boolean' && typeof b === 'boolean') {
+        return a && b;
+    }
+    await assertIsBool(a); await assertIsBool(b);
 }
 
-async function implNot(boolA) {
-    assertIsBool(boolA); let boolReturn;
-
-    boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
+async function implNot(a) {
+    if (typeof a === 'boolean') {
+        return !a;
+    }
+    await assertIsBool(a);
 }
 /* comparison, provides:
     implEq
@@ -318,7 +320,7 @@ async function implNot(boolA) {
 async function implEq(genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = genericA == genericB; await assertIsBool(boolReturn); return boolReturn;
+    boolReturn = genericA === genericB; await assertIsBool(boolReturn); return boolReturn;
 }
 
 async function implGt(intA, intB) {
@@ -347,73 +349,60 @@ async function implLt(intA, intB) {
 // Assertions that something is a given type
 
 async function isBool(bool) {
-    if (typeof bool !== "boolean" || typeof bool === "undefined" || bool === null) {
-        return false;
+    if (typeof bool === 'boolean') {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsBool(bool) {
-    if (!await isBool(bool)) {
-        await assertionFailed(bool+' is not a boolean.');
+    if (typeof bool === 'boolean') {
+        return;
     }
-}
-
-/* TODO: move assertIsTrue/assertIsFalse to StageR once bool literals are available */
-async function assertIsTrue(bool) {
-    await assertIsBool(bool);
-
-    if (bool !== true) {
-        await assertionFailed(bool+' is not true.');
-    }
-}
-
-async function assertIsFalse(bool) {
-    await assertIsBool(bool);
-
-    if (bool !== false) {
-        await assertionFailed(bool+' is not false.');
-    }
+    await assertionFailed(bool+' is not a boolean.');
 }
 
 async function isInt(int) {
-    if ((! Number.isInteger(int)) || typeof int === 'undefined' || int === null || int < -2147483648 || int > 2147483647) {
-        return false;
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsInt(int) {
-    if (!await isInt(int)) {
-        await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return;
     }
+    await assertionFailed(int+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
 }
 
 async function isStr(str) {
-    if (typeof str !== 'string' || typeof str === 'undefined' || str === null) {
-        return false;
+    if (typeof str === 'string') {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsStr(str) {
-    if (!await isStr(str)) {
-        await assertionFailed(str+" is not a string.");
+    if (typeof str === 'string') {
+        return;
     }
+    await assertionFailed(str+" is not a string.");
 }
 
 async function isGeneric(val) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
-    if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
-        return false;
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsGeneric(val) {
-    if (!await isGeneric(val)) {
-        await assertionFailed(val+" cannot be used as a generic.");
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
     }
+    await assertionFailed(val+" cannot be used as a generic.");
 }
 
 async function isGenericArray(val) {
@@ -424,27 +413,63 @@ async function isGenericArray(val) {
         return false;
     }
     function isGenericSync(v) {
-        return (typeof v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
     return val.every(isGenericSync);
 }
 
 async function assertIsGenericArray(val) {
-    if (!await isGenericArray(val)) {
+    if (val.constructor.name === 'Uint8Array') {
+        return;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if val.every(isGenericSync) {
+        return;
+    }
+    else {
         await assertionFailed(val+" cannot be used as a generic array.");
     }
 }
 
 async function isGenericItem(val) {
-    if (! (await isGeneric(val) || await isGenericArray(val))) {
-        return false;
+     /* Should this support returning false for non-StageL-supported items? Otherwise it always returns true. I think probably not, since that wouldn't be consistent across languages; giving an assertion failure seems more sensible. */
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) || val.constructor.name === 'Uint8Array') {
+        return true;
     }
-    return true;
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if val.every(isGenericSync) {
+        return true;
+    }
+    else {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
 }
 
 async function assertIsGenericItem(val) {
-    if (!await isGenericItem(val)) {
-        await assertionFailed(val+" cannot be used as a generic item.");
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) || val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if val.every(isGenericSync) {
+        return true;
+    }
+    else {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
     }
 }
 
@@ -456,7 +481,7 @@ async function assertionFailed(message) {
     bitNot
 */
 
-// Note that bitwise operations in StageL operate on bytes rather than int32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation.
+// Note that bitwise operations in StageL operate on bytes rather than int32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation. That said, C-style bitwise operators depend on the types being operated upon. So, there should probably be a set of functions like bitLshift8, bitLshift32, etc. maybe. Do these really make much sense in StageL, which is mostly higher-level? How would one implement these in languages that don't provide them natively? Mmh.
 
 async function bitAnd(byteA, byteB) {
     await assertIsByte(byteA); await assertIsByte(byteB); let byteReturn;
@@ -980,9 +1005,39 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
-/*r/v/assertIsTrue b/in */
-/*    if ne b/in true */
-/*        assertionFailed cat bool ' is not true.' */
+
+async function isTrue(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isTrue:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+
+    boolReturn = boolIn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isFalse(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isFalse:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(boolIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+async function assertIsTrue(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsTrue:assertions'); await assertIsBool(boolIn);
+
+    if (await isFalse(boolIn)) {
+        await assertionFailed(await implCat(await bool(' is not true.')));
+    }
+    await internalDebugStackExit();
+}
+
+async function assertIsFalse(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsFalse:assertions'); await assertIsBool(boolIn);
+
+    if (await isTrue(boolIn)) {
+        await assertionFailed(await implCat(await bool(' is true, but should be false.')));
+    }
+    await internalDebugStackExit();
+}
 
 async function assertIsByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn);
@@ -1469,4 +1524,38 @@ async function dcarrParseSems(intArrayContent) {
 }
 
 // @license-end
- 
+async function assertIsFalse(bool) {
+    if (bool === false) {
+        return;
+    }
+    await assertionFailed(bool+' is true, but should be false.');
+}
+
+async function assertIsTrue(bool) {
+    if (bool === true) {
+        return;
+    }
+    await assertionFailed(bool+' is not true.');
+}
+
+async function or(a,b) {
+    if (typeof a === 'boolean' && typeof b === 'boolean') {
+        return a || b;
+    }
+    await assertIsBool(a); await assertIsBool(b);
+}
+
+async function isTrue(bool) {
+    if (bool === true) {
+        // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
+        return true;
+    }
+    return false;
+}
+
+async function isFalse(bool) {
+    if (bool === false) {
+        return true;
+    }
+    return false;
+}

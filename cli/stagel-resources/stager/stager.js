@@ -464,9 +464,39 @@ async function xnor(boolA, boolB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
-/*r/v/assertIsTrue b/in */
-/*    if ne b/in true */
-/*        assertionFailed cat bool ' is not true.' */
+
+async function isTrue(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isTrue:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+
+    boolReturn = boolIn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isFalse(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isFalse:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(boolIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+async function assertIsTrue(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsTrue:assertions'); await assertIsBool(boolIn);
+
+    if (await isFalse(boolIn)) {
+        await assertionFailed(await implCat(await bool(' is not true.')));
+    }
+    await internalDebugStackExit();
+}
+
+async function assertIsFalse(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsFalse:assertions'); await assertIsBool(boolIn);
+
+    if (await isTrue(boolIn)) {
+        await assertionFailed(await implCat(await bool(' is true, but should be false.')));
+    }
+    await internalDebugStackExit();
+}
 
 async function assertIsByte(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsByte:assertions'); await assertIsInt(intIn);
