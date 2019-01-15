@@ -61,3 +61,6 @@ r/v/assertIsByteArray gi/in
 
 r/v/assertIsDcArray gi/in
     assertIsTrue isDcArray gi/in
+
+r/v/assertIsDcDataset s/in
+    assertIsTrue isDcDataset s/in
