@@ -1326,17 +1326,17 @@ async function printableDcToChar(intDc, strTargetFormat) {
     let boolTemp = false;
     boolTemp = await implEq(strTargetFormat, 'ASCII-safe-subset');
     if (await or(boolTemp, await implEq(strTargetFormat, 'UTF-8'))) {
-        strRes = await charFromHexByte(await strDcDataLookupByValue('mappings/from/unicode', 1, intDc, 0));
+        strRes = await charFromHexByte(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0));
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else if (await implEq(strTargetFormat, 'HTML')) {
-        strRes = await strDcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+        strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
             strRes = await charFromHexByte(strRes);
         }
         else {
-            strRes = await strDcDataLookupByValue('mappings/to/html', 0, intDc, 1);
+            strRes = await DcDataLookupByValue('mappings/to/html', 0, intDc, 1);
         }
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
