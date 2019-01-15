@@ -5,6 +5,13 @@ async function or(a,b) {
     await assertIsBool(a); await assertIsBool(b);
 }
 
+async function isTrue(bool) {
+    if (bool === true) {
+        return true;
+    }
+    await assertionFailed(bool+' is not true.');
+}
+
 async function assertIsTrue(bool) {
     if (bool === true) {
         return;

@@ -24,3 +24,13 @@ r/b/xnor b/a b/b
     new b/temp
     set b/temp not xor b/a b/b
     return b/temp
+
+r/b/isTrue b/in
+    new b/res
+    set b/res eq b/in true
+    return b/res
+
+r/b/isFalse b/in
+    new b/res
+    set b/res eq b/in false
+    return b/res
