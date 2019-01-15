@@ -41,7 +41,7 @@ async function strDcGetCombiningClass(dc) {
     strReturn = await strDcGetField(dc, 2); await assertIsStr(strReturn); return strReturn;
 }
 
-async function strDcGetBidiClass(dc) {
+async function dcGetBidiClass(dc) {
     await assertIsDc(dc); let strReturn;
 
     strReturn = await strDcGetField(dc, 3); await assertIsStr(strReturn); return strReturn;
