@@ -1,19 +1,18 @@
-async function implIntDcDataDatasetLength(strDataset) {
+async function dcDatasetLength(strDataset) {
     assertIsStr(strDataset); let intReturn;
 
     intReturn = await dcData[strDataset].length; await assertIsInt(intReturn); return intReturn;
 }
 
-async function implDcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
+async function dcDataLookupById(strDataset, intRowNumber, intFieldNumber) {
     await assertIsStr(strDataset); await assertIsInt(intRowNumber); await assertIsInt(intFieldNumber); let strReturn;
 
     strReturn = dcData[strDataset][intRowNumber].data[0][intFieldNumber]; await assertIsStr(strReturn); return strReturn;
 }
 
-async function implDcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
+async function dcDataLookupByValue(strDataset, intFilterField, genericFilterValue, intDesiredField) {
     await assertIsStr(strDataset); await assertIsInt(intFilterField); await assertIsGeneric(genericFilterValue); await assertIsInt(intDesiredField); let strReturn;
 
-    //await console.log(strDataset, intFilterField, genericFilterValue, intDesiredField, dcData);
     let intLength = await intDcDataDatasetLength(strDataset);
     // start at 1 to skip header row
     let strFilterValue = await strFrom(genericFilterValue);
