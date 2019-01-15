@@ -38,5 +38,6 @@ runTest stagel/js/array-s
 runTest stagel/js/bool-literal
 runTest stagel/js/else
 runTest stagel/js/elif
+runTest stagel/js/arglist-inline-end
 
 reportTests
