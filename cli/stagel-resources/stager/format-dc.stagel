@@ -13,14 +13,22 @@ r/b/dcIsNewline n/dc
         return true
     return false
 
-async function boolDcIsSpace(dc) {
-    await assertIsDc(dc); let boolReturn;
+r/b/dcIsSpace n/dc
+    assertIsDc n/dc
+    if eq 'Zs' dcGetType n/dc
+        return true
+    return false
 
-    if(await strDcGetType(dc) === "Zs") {
-        boolReturn = true; await assertIsBool(boolReturn); return boolReturn;
-    }
-    boolReturn = false; await assertIsBool(boolReturn); return boolReturn;
-}
+r/b/dcIsPrintable n/dc
+    assertIsDc n/dc
+    new s/type
+    set s/type dcGetType n/dc
+    new s/generalType
+    set s/generalType charAtPos s/type 0
+    if or eq 'Zp' s/type ) eq 'Zl' s/type
+        return true
+    return false
+
 
 async function boolDcIsPrintable(dc) {
     await assertIsDc(dc); let boolReturn;
