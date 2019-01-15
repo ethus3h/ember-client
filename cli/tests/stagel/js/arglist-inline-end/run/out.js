@@ -1,1 +1,1 @@
-if (await or(await implEq('Zp', strType)
+if (await or(await implEq('Zp', strType)await implEq('Zl', strType))))
