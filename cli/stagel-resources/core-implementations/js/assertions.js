@@ -97,6 +97,7 @@ async function isGenericArray(val) {
 
 async function assertIsGenericArray(val) {
     if (!await isGenericArray(val)) {
+        console.log(val);
         await assertionFailed(val+" cannot be used as a generic array.");
     }
 }
