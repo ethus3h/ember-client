@@ -135,6 +135,8 @@ while read -r byte; do
                 tokens+=("")
                 tokens+=("")
             fi
+        elif [[ "$byte" == 125 ]]; then
+            pushToken inline-arglist-end ""
         elif [[ "$byte" == 39 ]]; then
             parserState="literal-s"
             tokens[-3]="$lineNumber:$columnNumber:$currentIndentLevel"
