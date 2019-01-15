@@ -1215,7 +1215,10 @@ for (( i=0; i<tokenCount; i++ )); do
                         codegenTestIndentDeferred="indent-deferred"
                     fi
                     ;;
-                dedent|end-document|inline-arglist-end|*)
+                inline-arglist-end)
+                    
+                    ;;
+                dedent|end-document|*)
                     # The arglist or test parameter is ended, so do codegen for the command invocation, drop back and continue parsing.
                     # * matches e.g. routine definitions
                     codegenCommandInvocationArglist
