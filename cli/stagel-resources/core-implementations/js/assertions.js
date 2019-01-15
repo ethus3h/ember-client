@@ -56,14 +56,17 @@ async function assertIsInt(int) {
 }
 
 async function isStr(str) {
-    if (typeof str !== 'string' || typeof str === 'undefined' || str === null) {
-        return false;
+    if (typeof str === 'string' && str !== null) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsStr(str) {
-    if (!await isStr(str)) {
+    if (typeof str === 'string' && str !== null) {
+        return true;
+    }
+    else {
         await assertionFailed(str+" is not a string.");
     }
 }
