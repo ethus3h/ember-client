@@ -1220,7 +1220,6 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenCommandInvocationEnd
                     unset 'stateStack[-1]' # remove latest "arglist" state
                     unset 'blockStack[-1]' # remove latest command block
-                    unset 'blockStack[-1]' # remove latest "arglist-command" block
                     ;;
                 dedent|end-document|*)
                     # The arglist or test parameter is ended, so do codegen for the command invocation, drop back and continue parsing.
