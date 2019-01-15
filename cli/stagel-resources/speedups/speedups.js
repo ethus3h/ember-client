@@ -7,9 +7,10 @@ async function or(a,b) {
 
 async function isTrue(bool) {
     if (bool === true) {
+        // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
         return true;
     }
-    await assertionFailed(bool+' is not true.');
+    return false;
 }
 
 async function assertIsTrue(bool) {
@@ -17,6 +18,14 @@ async function assertIsTrue(bool) {
         return;
     }
     await assertionFailed(bool+' is not true.');
+}
+
+async function isFalse(bool) {
+    if (bool === false) {
+        // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
+        return true;
+    }
+    return false;
 }
 
 async function assertIsFalse(bool) {
