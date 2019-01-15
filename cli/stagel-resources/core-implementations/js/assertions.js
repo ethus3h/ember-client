@@ -48,7 +48,7 @@ async function isStr(str) {
 }
 
 async function assertIsStr(str) {
-    if (typeof str === 'string' && str !== null) {
+    if (typeof str === 'string') {
         return;
     }
     await assertionFailed(str+" is not a string.");
