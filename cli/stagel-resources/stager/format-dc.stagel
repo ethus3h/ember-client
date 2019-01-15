@@ -27,7 +27,7 @@ r/b/dcIsPrintable n/dc
     set s/generalType charAtPos s/type 0
     if or eq 'Zl' s/type } eq 'Zp' s/type
         return false
-    if or eq '!' s/generalType eq 'C' s/generalType
+    if or eq '!' s/generalType } eq 'C' s/generalType
         return false
     return true
 
