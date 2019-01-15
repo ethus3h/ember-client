@@ -47,14 +47,14 @@ r/s/printableDcToChar n/dc s/targetFormat
     new b/temp
     set b/temp eq s/targetFormat 'ASCII-safe-subset'
     if or b/temp eq s/targetFormat 'UTF-8'
-        set s/res charFromHexByte strDcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        set s/res charFromHexByte dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         return s/res
     elif eq s/targetFormat 'HTML'
-        set s/res strDcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if isBaseStr s/res 16
             set s/res charFromHexByte s/res
         else
-            set s/res strDcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+            set s/res DcDataLookupByValue 'mappings/to/html' 0 n/dc 1
         return s/res
     else
         die cat 'Unimplemented target format: ' s/targetFormat
