@@ -83,10 +83,14 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
+        console.log(val);
+        console.log(typeof val);
     if (val instanceof Uint8Array) {
+        alert('Uint8');
         return true;
     }
     if (typeof val !== 'array') {
+        alert('Not an array');
         return false;
     }
     function isGenericSync(v) {
@@ -97,7 +101,6 @@ async function isGenericArray(val) {
 
 async function assertIsGenericArray(val) {
     if (!await isGenericArray(val)) {
-        console.log(val);
         await assertionFailed(val+" cannot be used as a generic array.");
     }
 }
