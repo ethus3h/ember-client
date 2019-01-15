@@ -1,5 +1,10 @@
+r/b/isTrue b/in
+    new b/res
+    set b/res eq b/in true
+    return b/res
+
 r/v/assertIsTrue b/in
-    if ne b/in true
+    if isFalse b/in
         assertionFailed cat bool ' is not true.'
 
 r/b/isFalse b/in
@@ -8,7 +13,7 @@ r/b/isFalse b/in
     return b/res
 
 r/v/assertIsFalse b/in
-    if ne b/in false
+    if isTrue b/in
         assertionFailed cat bool ' is true, but should be false.'
 
 r/v/assertIsByte n/in
