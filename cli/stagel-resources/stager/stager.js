@@ -697,6 +697,50 @@ async function isDc(genericIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function dcIsNewline(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsNewline:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    if (await implEq('b', await dcGetBidiClass(intDc))) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function dcIsSpace(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsSpace:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    if (await implEq('Zs', await dcGetType(intDc))) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function dcIsPrintable(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsPrintable:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    let strType = '';
+    strType = await dcGetType(intDc);
+    let strGeneralType = '';
+    strGeneralType = await charAtPos(strType, 0);
+    if (await or(await implEq('Zl', strType), await implEq('Zp', strType))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    if (await or(await implEq('!', strGeneralType), await implEq('C', strGeneralType))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function dcarrParseDocument(strFormat, intArrayContent) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseDocument:format-dc'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContent); let intArrayReturn;
 
