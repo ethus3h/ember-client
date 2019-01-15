@@ -6,6 +6,9 @@ r/v/assertIsFalse b/in
     if isTrue b/in
         assertionFailed cat bool ' is true, but should be false.'
 
+r/v/assertContains ga/in g/value
+    assertIsTrue contains ga/in g/value
+
 r/v/assertIsByte n/in
     assertIsTrue isByte n/in
 
