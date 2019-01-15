@@ -1336,7 +1336,7 @@ async function printableDcToChar(intDc, strTargetFormat) {
             strRes = await charFromHexByte(strRes);
         }
         else {
-            strRes = await DcDataLookupByValue('mappings/to/html', 0, intDc, 1);
+            strRes = await dcDataLookupByValue('mappings/to/html', 0, intDc, 1);
         }
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;

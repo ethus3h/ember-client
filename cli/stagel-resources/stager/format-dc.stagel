@@ -54,7 +54,7 @@ r/s/printableDcToChar n/dc s/targetFormat
         if isBaseStr s/res 16
             set s/res charFromHexByte s/res
         else
-            set s/res DcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+            set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
         return s/res
     else
         die cat 'Unimplemented target format: ' s/targetFormat
