@@ -2,9 +2,14 @@ r/v/assertIsTrue b/in
     if ne b/in true
         assertionFailed cat bool ' is not true.'
 
+r/b/isFalse b/in
+    new b/res
+    set b/res ne b/in false
+    return b/res
+
 r/v/assertIsFalse b/in
-    if ne b/in true
-        assertionFailed cat bool ' is not true.'
+    if ne b/in false
+        assertionFailed cat bool ' is true, but should be false.'
 
 r/v/assertIsByte n/in
     assertIsTrue isByte n/in
