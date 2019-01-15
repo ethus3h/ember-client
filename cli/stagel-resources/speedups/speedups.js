@@ -1,6 +1,8 @@
 async function or(a,b) {
+    if(typeof a === 'boolean' && typeof b === 'boolean') {
+        return a || b;
+    }
     await assertIsBool(a); await assertIsBool(b);
-    return a || b;
 }
 
 async function assertIsTrue(bool) {
