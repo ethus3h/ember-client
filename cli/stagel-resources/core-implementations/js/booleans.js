@@ -3,14 +3,16 @@
     implNot
 */
 
-async function implAnd(boolA, boolB) {
-    assertIsBool(boolA); assertIsBool(boolB); let boolReturn;
-
-    boolReturn = boolA && boolB; await assertIsBool(boolReturn); return boolReturn;
+async function implAnd(a,b) {
+    if (typeof a === 'boolean' && typeof b === 'boolean') {
+        return a || b;
+    }
+    await assertIsBool(a); await assertIsBool(b);
 }
 
-async function implNot(boolA) {
-    assertIsBool(boolA); let boolReturn;
-
-    boolReturn = !boolA; await assertIsBool(boolReturn); return boolReturn;
+async function implNot(a) {
+    if (typeof a === 'boolean') {
+        return a || b;
+    }
+    await assertIsBool(a); await assertIsBool(b);
 }

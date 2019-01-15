@@ -120,8 +120,20 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
-    if (!await isGenericItem(val)) {
-        await assertionFailed(val+" cannot be used as a generic item.");
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) || val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if val.every(isGenericSync) {
+        return true;
+    }
+    else {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
     }
 }
 
