@@ -136,11 +136,31 @@ async function asciiIsAlphanum(intN) {
 /* 13 CR     29 GS     45 -    61 =    77 M    93 ]    109 m    125 } */
 /* 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~ */
 /* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
-async function strCharAtPos(strStr, intIndex) {
-    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strCharAtPos:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
+async function strChar(strStr, intIndex) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strChar:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
 
     let strTemp = '';
     strTemp = await substring(strStr, intIndex, 1);
+
+    strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strCharAtPos(strStr, intIndex) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strCharAtPos:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
+
+    /* helper alias */
+    let strTemp = '';
+    strTemp = await strChar(strStr, intIndex);
+
+    strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function charAtPos(strStr, intIndex) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('charAtPos:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
+
+    /* helper alias */
+    let strTemp = '';
+    strTemp = await strChar(strStr, intIndex);
 
     strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -728,7 +748,7 @@ async function dcIsPrintable(intDc) {
     let strType = '';
     strType = await dcGetType(intDc);
     let strGeneralType = '';
-    strGeneralType = await charAtPos(strType, 0);
+    strGeneralType = await strChar(strType, 0);
     if (await or(await implEq('Zl', strType), await implEq('Zp', strType))) {
 
         boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
