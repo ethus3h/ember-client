@@ -83,15 +83,10 @@ async function assertIsGeneric(val) {
 }
 
 async function isGenericArray(val) {
-    //console.log('Starting');
-    //console.log(val);
-    //console.log(typeof val);
     if (val.constructor.name === 'Uint8Array') {
-        console.log('Uint8');
         return true;
     }
     if (val.constructor.name !== 'Array') {
-        console.log('Not an array');
         return false;
     }
     function isGenericSync(v) {
