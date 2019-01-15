@@ -56,16 +56,17 @@ async function assertIsStr(str) {
 
 async function isGeneric(val) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
-    if (! (await isStr(val) || await isInt(val) || await isBool(val))) {
-        return false;
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 async function assertIsGeneric(val) {
-    if (!await isGeneric(val)) {
-        await assertionFailed(val+" cannot be used as a generic.");
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
     }
+    await assertionFailed(val+" cannot be used as a generic.");
 }
 
 async function isGenericArray(val) {
@@ -76,7 +77,7 @@ async function isGenericArray(val) {
         return false;
     }
     function isGenericSync(v) {
-        return (v !== null && (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && typeof v === 'number' && v >= -2147483648 && v <= 2147483647)));
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
     return val.every(isGenericSync);
 }
