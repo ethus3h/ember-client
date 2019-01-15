@@ -57,7 +57,7 @@ async function assertIsInt(int) {
 }
 
 async function isStr(str) {
-    if (typeof str === 'string' && str !== null) {
+    if (typeof str === 'string') {
         return true;
     }
     return false;
