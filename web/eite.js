@@ -1776,10 +1776,6 @@ async function assertIsDc(v) {
 }
 
 async function assertIsDcDataset(str) {
-    console.log(str);
-    alert(str);
-    console.log(datasets);
-    alert(datasets);
     if (datasets.includes(str)) {
         return;
     }
