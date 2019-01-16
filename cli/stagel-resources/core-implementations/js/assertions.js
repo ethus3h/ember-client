@@ -70,6 +70,9 @@ async function assertIsGeneric(v) {
 }
 
 async function isGenericArray(val) {
+    if (val === undefined) {
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.');
+    }
     if (val.constructor.name === 'Uint8Array') {
         return true;
     }
@@ -83,6 +86,9 @@ async function isGenericArray(val) {
 }
 
 async function assertIsGenericArray(val) {
+    if (val === undefined) {
+        await assertionFailed('assertIsGenericArray called with non-StageL-supported argument type.');
+    }
     if (val.constructor.name === 'Uint8Array') {
         return;
     }
@@ -123,6 +129,9 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
+    if (val === undefined) {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
     if (typeof val === 'boolean' || typeof val === 'string' || (Number.isInteger(val) && val >= -2147483648 && val <= 2147483647) || val.constructor.name === 'Uint8Array') {
         return true;
     }
