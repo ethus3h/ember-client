@@ -12,7 +12,11 @@ r/v/loadAndRun s/format s/path
     # Load and run the specified document. Does not return while the document is still running.
     runDocument loadDocument s/format s/path
 
-# If you want to convert a document, you can call loadAndConvert with the format of the document, its location, and the 
+# If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
+
+r/v/loadAndConvert s/inputFormat s/path s/outputFormat
+    # Load the specified document, and return it converted to the specified outputFormat.
+    convertDocument loadDocument s/inputFormat s/path
 
 r/an/loadDocument s/format s/path
     assertIsSupportedInputFormat s/format
