@@ -57,11 +57,6 @@ async function implLog(strMessage) {
 
 // Fully platform-specific code
 
-async function implGetEnvironmentBestFormat() {
-    return "HTML";
-    /* return "immutableCharacterCells"; */
-}
-
 async function implGetEnvironmentRenderTraits(targetFormat) {
     if ( targetFormat === undefined ) {
         await eiteError("implGetEnvironmentRenderTraits was called without any targetFormat!");
