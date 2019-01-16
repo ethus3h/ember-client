@@ -1663,6 +1663,41 @@ async function nle(intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+async function listInputFormats() {
+    await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = [ 'sems' ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedInputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInputFormat:formats'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listInputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listOutputFormats() {
+    await internalDebugStackEnter('listOutputFormats:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = [ 'integerList', 'immutableCharacterCells', 'HTML' ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedOutputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedOutputFormat:formats'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listOutputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
 async function isDc(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
 
