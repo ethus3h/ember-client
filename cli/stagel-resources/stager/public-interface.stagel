@@ -25,5 +25,6 @@ r/an/getDocumentFrame as/documentId s/format
 r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running.
 
-r/v/runDocument an/contents
-    # Run the specified document. Does not return while the document is still running.
+r/v/loadAndRun s/format s/path
+    # Load and run the specified document. Does not return while the document is still running.
+    runDocument loadDocument s/format s/path
