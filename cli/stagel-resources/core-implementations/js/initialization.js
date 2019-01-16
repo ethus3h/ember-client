@@ -10,6 +10,8 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+
+    // Set up datasets
     datasets = await listDcDatasets();
     let datasetLoadCounter = 0;
     let datasetLoadCurrent = '';
