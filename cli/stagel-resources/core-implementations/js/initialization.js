@@ -10,12 +10,14 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+    datasets = await listDcDatasets();
+    datasetCount = Object.keys(datasets).length;
     await internalLoadDatasets();
 }
 
 async function internalLoadDatasets() {
     if (!datasetsLoadStarted) {
-        datasets = await listDcDatasets();
+        
         datasetsWorkingCopy = await datasets.slice();
         datasetsLoadStarted = true;
     }
