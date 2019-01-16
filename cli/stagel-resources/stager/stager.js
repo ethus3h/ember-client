@@ -775,6 +775,20 @@ async function assertIsDcDataset(strIn) {
     await assertIsTrue(await isDcDataset(strIn));
     await internalDebugStackExit();
 }
+
+async function assertIsSupportedInputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedInputFormat:assertions'); await assertIsStr(strIn);
+
+    await assertIsTrue(await isSupportedInputFormat(strIn));
+    await internalDebugStackExit();
+}
+
+async function assertIsSupportedOutputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedOutputFormat:assertions'); await assertIsStr(strIn);
+
+    await assertIsTrue(await isSupportedOutputFormat(strIn));
+    await internalDebugStackExit();
+}
 /* This file contains the public interface for EITE. */
 /* If you just want to run EITE, use the following function. */
 
