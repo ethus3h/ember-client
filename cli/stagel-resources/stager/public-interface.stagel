@@ -6,17 +6,20 @@ r/v/startEite
     # Start EITE, using the default startup document. Does not return while EITE is still running.
     # loadAndRun ...
 
+
 # If you want to run a different document, you can call loadAndRun with the format of the document to open and its location.
 
 r/v/loadAndRun s/format s/path
     # Load and run the specified document. Does not return while the document is still running.
     runDocument loadStoredDocument s/format s/path
 
+
 # If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
 
 r/v/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat.
     convertDocument loadStoredDocument s/inputFormat s/path
+
 
 # To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it.
 
@@ -28,6 +31,7 @@ r/an/convertDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
     # Convert a document to the specified format, and return it as an array of bytes.
     setupIfNeeded
+
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
