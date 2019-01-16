@@ -11,10 +11,6 @@ async function internalSetup() {
         haveDom = true;
     }
     datasets = await listDcDatasets();
-    await internalLoadDatasets();
-}
-
-async function internalLoadDatasets() {
     let datasetLoadCounter = 0;
     let datasetLoadCurrent = '';
     while (datasetLoadCounter < Object.keys(datasets).length) {
