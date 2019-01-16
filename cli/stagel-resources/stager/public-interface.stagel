@@ -18,13 +18,13 @@ r/v/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat.
     convertDocument loadDocument s/inputFormat s/path
 
-# To operate on a document you already have as a 
+# To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it.
 
 r/an/loadStoredDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
-    internalLoadDocument s/format s/path
+    loadDocument s/format internalGetStoredDocument s/path
 
 r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
