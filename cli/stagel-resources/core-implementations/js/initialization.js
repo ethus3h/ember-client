@@ -2,8 +2,8 @@
 
 let haveDom = false;
 let datasets = [];
+let datasetsLoaded = 0;
 let dcData = [];
-let datasetCount = 0;
 
 async function internalSetup() {
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal)
@@ -11,11 +11,12 @@ async function internalSetup() {
         haveDom = true;
     }
     datasets = await listDcDatasets();
-    datasetCount = Object.keys(datasets).length;
+    datasetsLoaded = Object.keys(datasets).length;
     await internalLoadDatasets();
 }
 
 async function internalLoadDatasets() {
+    while (datasetsLoaded < )
     if (!datasetsLoadStarted) {
         
         datasetsWorkingCopy = await datasets.slice();
