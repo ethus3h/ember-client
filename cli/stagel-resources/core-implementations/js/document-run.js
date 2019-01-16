@@ -5,7 +5,7 @@
 async function internalRunDocument(document) {
     await assertIsDcArray(document);
     let doc = '';
-    doc = await startDocument(await loadDocument('sems', 'idiomatic-hello-world.sems'));
+    doc = await startDocument(document);
     let events = [];
     events = await getDesiredEventNotifications(doc);
         
