@@ -1,5 +1,6 @@
 async function implGetEnvironmentBestFormat() {
-    return "HTML";
+    if (haveDom) {
+        return 'HTML';
     /* return "immutableCharacterCells"; */
 }
 
