@@ -2,7 +2,6 @@ r/an/loadDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
-    
 
 r/an/outputConvertedDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
@@ -22,3 +21,6 @@ r/an/sendEvent as/documentId an/eventData
 r/an/getDocumentFrame as/documentId s/format
     assertIsSupportedOutputFormat s/format
     # Return the most recently available output for the given document in the requested format.
+
+r/v/runDocument s/format s/path
+    # Run the specified document. Does not return while the document is still running.
