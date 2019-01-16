@@ -29,7 +29,7 @@ async function internalRunDocument(document) {
     events = await getDesiredEventNotifications(doc);
 }
 
-async function internalLoadDocument(format, contents) {
+async function internalConvertToDcArray(format, contents) {
     return await dcarrParseDocument(format, contents);
 }
 
