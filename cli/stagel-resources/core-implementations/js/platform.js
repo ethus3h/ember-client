@@ -1,1 +1,3 @@
- 
+function isSetupFinished() {
+    return setupFinished;
+}
