@@ -18,22 +18,30 @@ r/v/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat.
     convertDocument loadDocument s/inputFormat s/path
 
+# To operate on a document you already have as a 
+
 r/an/loadDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
     internalLoadDocument s/format s/path
 
+r/v/runDocument an/contents
+    # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
+    internalRunDocument an/contents
+
 r/an/convertDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
     # Convert a document to the specified format, and return it as an array of bytes.
     setupIfNeeded
 
-r/v/runDocument an/contents
-    # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
-    internalRunDocument an/contents
+# If you want more control over the document loading and execution, you can use these lower-level functions.
 
-# If you want more control over the document execution, you can use these lower-level functions.
+r/an/loadDocument s/format s/path
+    assertIsSupportedInputFormat s/format
+    # Load and return the specified document as a Dc array.
+    setupIfNeeded
+    internalLoadDocument s/format s/path
 
 r/s/startDocument an/contents
     # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
