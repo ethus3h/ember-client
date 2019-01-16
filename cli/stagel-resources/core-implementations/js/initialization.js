@@ -2,7 +2,7 @@
 
 let haveDom = false;
 let datasets = [];
-let datasetsLoaded = [];
+let datasetsLoaded = false;
 let dcData = [];
 
 async function internalSetup() {
@@ -33,30 +33,5 @@ async function internalLoadDatasets() {
                 await eiteError("Error reported while parsing "+dataset+"!");
             }
         );
-    }
-    if (!datasetsLoadStarted) {
-        
-        datasetsWorkingCopy = await datasets.slice();
-        datasetsLoadStarted = true;
-    }
-    if (datasetsWorkingCopy.length > 0) {
-        let dataset = datasetsWorkingCopy[0];
-        await implDcDataAppendDataset(dataset);
-        await implLoadCsv(
-            "../data/" + dataset + ".csv",
-            async function(results,parser){
-                await implDcDataAppendLine(dataset, results);
-            },
-            async function(){
-                datasetsWorkingCopy.shift();
-                await implLoadDatasets(callback);
-            },
-            async function(){
-                await eiteError("Error reported while parsing "+dataset+"!");
-            }
-        );
-    }
-    else {
-        await callback();
     }
 }
