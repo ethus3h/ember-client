@@ -846,6 +846,96 @@ async function isDcDataset(strIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
+async function dcGetField(intDc, intFieldNumber) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('int FieldNumber = ' + intFieldNumber + '; '); await internalDebugStackEnter('dcGetField:dc-data'); await assertIsInt(intDc);await assertIsInt(intFieldNumber); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcDataLookupById('DcData', await implAdd(intDc, 1), intFieldNumber);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetName(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetName:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 1);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetCombiningClass(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetCombiningClass:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 2);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetBidiClass(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetBidiClass:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 3);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetCasing(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetCasing:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 4);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetType(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetType:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 5);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetScript(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetScript:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 6);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetComplexTraits(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetComplexTraits:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 7);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcGetDescription(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcGetDescription:dc-data'); await assertIsInt(intDc); let strReturn;
+
+    await assertIsDc(intDc);
+    let strRes = '';
+    strRes = await dcGetField(intDc, 8);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 async function contains(genericArrayIn, genericValue) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('contains:arrays'); await assertIsGenericArray(genericArrayIn);await assertIsGeneric(genericValue); let boolReturn;
 
