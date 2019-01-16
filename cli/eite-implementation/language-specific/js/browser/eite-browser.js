@@ -98,25 +98,6 @@ async function implGetEnvironmentRenderTraits(targetFormat) {
     return traits;
 }
 
-async function implLoadCsv(url, lineLoadedCallback, documentLoadedCallback, errorCallback) {
-    await Papa.parse(url, {
-        download: true,
-        encoding: "UTF-8",
-        newline: "\n",
-        delimiter: ",",
-        quoteChar: "\"",
-        step: async function(results, parser) {
-            await lineLoadedCallback(results, parser);
-        },
-        complete: async function(results, file) {
-            await documentLoadedCallback(results, file);
-        },
-        error: async function(results, file) {
-            await errorCallback(results, file);
-        }
-    });
-}
-
 async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case "integerList":
