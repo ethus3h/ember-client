@@ -37,18 +37,6 @@ async function internalLoadDatasets() {
                 await implError("Error reported while parsing "+dataset+"!");
             }
         });
-        await implLoadCsv(
-            ,
-            async function(results, parser) {
-                await implDcDataAppendLine(dataset, results);
-            },
-            async function() {
-                return;
-            },
-            async function() {
-                
-            }
-        );
     }
     datasetsLoaded = true;
 }
