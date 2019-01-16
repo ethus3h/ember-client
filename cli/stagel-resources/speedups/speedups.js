@@ -13,10 +13,10 @@ async function assertIsTrue(bool) {
 }
 
 async function assertIsDcDataset(str) {
-    if (bool === true) {
+    if (datasets.includes(str)) {
         return;
     }
-    await assertionFailed(bool+' is not true.');
+    await assertIsTrue(await isDcDataset(strIn));
 }
 
 async function or(a,b) {
