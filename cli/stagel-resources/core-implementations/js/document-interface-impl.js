@@ -7,8 +7,7 @@ async function internalRunDocument(document) {
     events = await getDesiredEventNotifications(doc);
 }
 
-
-async function implUrlLoadForCallback(url, callback) {
+async function internalLoadDocument(format, path) {
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
