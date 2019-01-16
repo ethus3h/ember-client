@@ -4,13 +4,12 @@
 
 window.onload = function() {
     async function() {
-        await startDocument(await loadDocument('sems', 'idiomatic-hello-world.sems'));
+        let doc = '';
+        doc = await startDocument(await loadDocument('sems', 'idiomatic-hello-world.sems'));
+        let events = [];
+        events = await getDesiredEventNotifications(doc);
+        
     }();
-    startDocument(async function() { return await loadDocument('sems', 'idiomatic-hello-world.sems'); });
-    implLoadDatasets(function() {
-        // This is where the actual commands to run (entry points) should go
-        implOperateOnDocFromUrl("sems", "idiomatic-hello-world.sems", async function (doc) { await runDocument(doc); } );
-    });
 };
 
 // @license-end
