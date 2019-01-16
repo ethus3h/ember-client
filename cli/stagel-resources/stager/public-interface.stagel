@@ -2,6 +2,7 @@ r/an/loadDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
+    internalLoadDocument s/format s/path
 
 r/an/outputConvertedDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
