@@ -2,7 +2,7 @@ async function getFileFromPath(path) {
     // Returns an array of bytes.
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
-        oReq.open('GET', url, true);
+        oReq.open('GET', path, true);
         oReq.responseType = 'arraybuffer';
         oReq.onload = function(oEvent) {
             resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
