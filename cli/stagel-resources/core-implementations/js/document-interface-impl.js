@@ -10,13 +10,20 @@ async function internalRunDocument(document) {
 async function internalLoadDocument(format, path) {
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
-        oReq.open("GET", url, true);
-        oReq.responseType = "arraybuffer";
+        oReq.open('GET', url, true);
+        oReq.responseType = 'arraybuffer';
         oReq.onload = function(oEvent) {
             resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
         };
+        oReq.onerror = function() {
+            resolve(undefined);
+        }
         oReq.send(null);
     }
+    if (response === undefined) {
+        await assertFailed('An error was encountered loading the requested document.');
+    }
+    return response;
 }
 
 async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
