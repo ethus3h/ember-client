@@ -176,7 +176,7 @@ async function implRunEiteTest(strTestFormat, strTestName) {
 
 // Set up dcData
 
-let datasets = [];
+datasets = [];
 let datasetsLoadStarted = false;
 let dcData = [];
 
