@@ -22,16 +22,16 @@ async function internalLoadDatasets() {
         dcData[dataset] = [];
         await implLoadCsv(
             "../data/" + dataset + ".csv",
-            async function(results,parser){
+            async function(results, parser) {
                 await implDcDataAppendLine(dataset, results);
             },
-            async function(){
-                datasetsWorkingCopy.shift();
-                await implLoadDatasets(callback);
+            async function() {
+                return;
             },
-            async function(){
-                await eiteError("Error reported while parsing "+dataset+"!");
+            async function() {
+                await implError("Error reported while parsing "+dataset+"!");
             }
         );
     }
+    datasetsLoaded = true;
 }
