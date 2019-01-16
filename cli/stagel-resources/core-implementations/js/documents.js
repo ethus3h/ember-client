@@ -18,6 +18,8 @@ async function getFileFromPath(path) {
     await assertFailed('An error was encountered loading the requested document.');
 }
 
+// Implementations of routines provided in public-interface.stagel.
+
 async function internalRunDocument(document) {
     await assertIsDcArray(document);
 
