@@ -8,8 +8,6 @@ async function internalRunDocument(document) {
     doc = await startDocument(document);
     let events = [];
     events = await getDesiredEventNotifications(doc);
-        
-    }();
 };
 
 // @license-end
