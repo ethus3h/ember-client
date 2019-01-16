@@ -20,7 +20,7 @@ r/v/loadAndConvert s/inputFormat s/path s/outputFormat
 
 # To operate on a document you already have as a 
 
-r/an/loadDocument s/format s/path
+r/an/loadStoredDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
