@@ -718,7 +718,6 @@ async function getEnvironmentPreferredFormat() {
 }
 /* type-tools, provides:
     implIntBytearrayLength
-    implIntDcarrLength
 */
 
 async function intBytearrayLength(bytearray) {

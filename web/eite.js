@@ -718,7 +718,6 @@ async function getEnvironmentPreferredFormat() {
 }
 /* type-tools, provides:
     implIntBytearrayLength
-    implIntDcarrLength
 */
 
 async function intBytearrayLength(bytearray) {
@@ -1572,7 +1571,10 @@ async function loadStoredDocument(strFormat, strPath) {
     await assertIsSupportedInputFormat(strFormat);
     /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
-    await convertToDcArray(strFormat, await getFileFromPath(strPath));
+    let intArrayRes = [];
+    intArrayRes = await convertToDcArray(strFormat, await getFileFromPath(strPath));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function convertToDcArray(strFormat, intArrayContents) {
@@ -1581,7 +1583,10 @@ async function convertToDcArray(strFormat, intArrayContents) {
     await assertIsSupportedInputFormat(strFormat);
     /* Parse and return the specified document as a Dc array. */
     await setupIfNeeded();
-    await dcarrParseDocument(strFormat, intArrayContents);
+    let intArrayRes = [];
+    intArrayRes = await dcarrParseDocument(strFormat, intArrayContents);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function startDocument(intArrayContents) {
