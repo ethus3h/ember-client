@@ -64,3 +64,9 @@ r/v/assertIsDcArray gi/in
 
 r/v/assertIsDcDataset s/in
     assertIsTrue isDcDataset s/in
+
+r/v/assertIsDcDataset s/in
+    assertIsTrue isDcDataset s/in
+
+r/v/assertIsDcDataset s/in
+    assertIsTrue isDcDataset s/in
