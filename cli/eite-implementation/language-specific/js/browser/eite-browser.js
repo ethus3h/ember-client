@@ -190,7 +190,7 @@ async function implDcDataAppendLine(dataset, line) {
 async function implLoadDatasets(callback) {
     if (!datasetsLoadStarted) {
         datasets = await listDcDatasets();
-        datasetsWorkingCopy = datasets.slice();
+        datasetsWorkingCopy = await datasets.slice();
         datasetsLoadStarted = true;
     }
     if (datasetsWorkingCopy.length > 0) {
