@@ -176,8 +176,7 @@ async function implRunEiteTest(strTestFormat, strTestName) {
 
 // Set up dcData
 
-datasets = [];
-datasetsWorkingCopy = [];
+let datasets = [];
 let datasetsLoadStarted = false;
 let dcData = [];
 
@@ -190,11 +189,11 @@ async function implDcDataAppendLine(dataset, line) {
 async function implLoadDatasets(callback) {
     if (!datasetsLoadStarted) {
         datasets = await listDcDatasets();
-        datasetsWorkingCopy = datasets;
+        let datasetsWorkingCopy = datasets.slice();
         datasetsLoadStarted = true;
     }
-    if (datasets.length > 0) {
-        let dataset = datasets[0];
+    if (datasetsWorkingCopy.length > 0) {
+        let dataset = datasetsWorkingCopy[0];
         await implDcDataAppendDataset(dataset);
         await implLoadCsv(
             "../data/" + dataset + ".csv",
@@ -202,7 +201,7 @@ async function implLoadDatasets(callback) {
                 await implDcDataAppendLine(dataset, results);
             },
             async function(){
-                datasets.shift();
+                datasetsWorkingCopy.shift();
                 await implLoadDatasets(callback);
             },
             async function(){
