@@ -1768,11 +1768,18 @@ async function assertIsTrue(bool) {
     await assertionFailed(bool+' is not true.');
 }
 
+async function assertIsDc(dc) {
+    if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
+        return true;
+    }
+    await assertIsDc(dc);
+}
+
 async function assertIsDcDataset(str) {
     if (datasets.includes(str)) {
         return;
     }
-    await assertIsTrue(await isDcDataset(str));
+    await assertIsDcDataset(str);
 }
 
 async function or(a,b) {
