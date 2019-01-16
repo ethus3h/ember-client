@@ -10,14 +10,17 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
-
-    // Set up datasets
     datasets = await listDcDatasets();
-    let datasetLoadCounter = 0;
-    let datasetLoadCurrent = '';
-    while (datasetLoadCounter < Object.keys(datasets).length) {
-        datasetLoadCounter = datasetLoadCounter + 1;
-        dataset = datasets[datasetLoadCounter];
+    await internalLoadDatasets();
+}
+
+async function internalLoadDatasets() {
+    // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
+    let count = 0;
+    let dataset = '';
+    while (count < Object.keys(datasets).length) {
+        count = count + 1;
+        dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         await Papa.parse('../data/' + dataset + '.csv', {
