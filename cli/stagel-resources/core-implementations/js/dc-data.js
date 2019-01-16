@@ -10,8 +10,8 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     strReturn = dcData[dataset][rowNum].data[0][fieldNum]; await assertIsStr(strReturn); return strReturn;
 }
 
-async function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
-    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(filterValue); await assertIsInt(desiredField); let strReturn;
+async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
     let intLength = await dcDatasetLength(dataset);
     // start at 1 to skip header row
