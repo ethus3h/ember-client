@@ -187,6 +187,7 @@ async function implDcDataAppendLine(dataset, line) {
     dcData[dataset].push(line);
 }
 async function implLoadDatasets(callback) {
+    datasets = await listDcDatasets();
     if (datasets.length > 0) {
         let dataset = datasets[0];
         await implDcDataAppendDataset(dataset);
