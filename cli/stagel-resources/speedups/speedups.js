@@ -12,11 +12,11 @@ async function assertIsTrue(bool) {
     await assertionFailed(bool+' is not true.');
 }
 
-async function assertIsDc(dc) {
+async function assertIsDc(v) {
     if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
         return true;
     }
-    await assertIsDc(dc);
+    await assertIsDc(v);
 }
 
 async function assertIsDcDataset(str) {
