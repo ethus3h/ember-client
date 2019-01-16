@@ -32,7 +32,3 @@ async function internalRunDocument(document) {
 async function internalConvertToDcArray(format, contents) {
     return await dcarrParseDocument(format, contents);
 }
-
-async function internalGetStoredDocument(path) {
-    return await getFileFromPath(path);
-}

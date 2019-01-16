@@ -35,7 +35,7 @@ r/an/loadStoredDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
-    convertToDcArray s/format internalGetStoredDocument s/path
+    convertToDcArray s/format getFileFromPath s/path
 
 r/an/convertToDcArray s/format an/contents
     assertIsSupportedInputFormat s/format
