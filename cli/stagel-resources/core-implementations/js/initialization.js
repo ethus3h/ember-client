@@ -15,9 +15,24 @@ async function internalSetup() {
 }
 
 async function internalLoadDatasets() {
-    let count=0;
+    let count = 0;
+    let dataset = '';
     while (count < Object.keys(datasets).length) {
-        let dataset = 
+        dataset = datasets[count];
+        dcData[dataset] = [];
+        await implLoadCsv(
+            "../data/" + dataset + ".csv",
+            async function(results,parser){
+                await implDcDataAppendLine(dataset, results);
+            },
+            async function(){
+                datasetsWorkingCopy.shift();
+                await implLoadDatasets(callback);
+            },
+            async function(){
+                await eiteError("Error reported while parsing "+dataset+"!");
+            }
+        );
     }
     if (!datasetsLoadStarted) {
         
