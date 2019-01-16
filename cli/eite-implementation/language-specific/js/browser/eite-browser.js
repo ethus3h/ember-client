@@ -176,10 +176,9 @@ async function implRunEiteTest(strTestFormat, strTestName) {
 
 // Set up dcData
 
-datasets = [];
+let datasets = [];
 let datasetsLoadStarted = false;
-//    datasets = await listDcDatasets();
-dcData = [];
+let dcData = [];
 
 async function implDcDataAppendDataset(dataset) {
     dcData[dataset] = [];
