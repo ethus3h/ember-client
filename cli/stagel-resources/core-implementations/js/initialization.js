@@ -9,5 +9,5 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
-    
+    await internalLoadDatasets();
 }
