@@ -101,7 +101,10 @@ async function assertIsGenericArray(val) {
 }
 
 async function isGenericItem(val) {
-     /* Should this support returning false for non-StageL-supported items? Otherwise it always returns true. I think probably not, since that wouldn't be consistent across languages; giving an assertion failure seems more sensible. */
+    /* Should this support returning false for non-StageL-supported items? Otherwise it always returns true. I think probably not, since that wouldn't be consistent across languages; giving an assertion failure seems more sensible. */
+    if (val === undefined) {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
     if (typeof val === 'boolean' || typeof val === 'string' || (Number.isInteger(val) && val >= -2147483648 && val <= 2147483647) || val.constructor.name === 'Uint8Array') {
         return true;
     }
