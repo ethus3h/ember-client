@@ -32,3 +32,7 @@ async function internalRunDocument(document) {
 async function internalLoadDocument(format, path) {
     return await dcarrParseDocument(format, await getFileFromPath(path));
 }
+
+async function internalGetStoredDocument(path) {
+    return await getFileFromPath(path);
+}

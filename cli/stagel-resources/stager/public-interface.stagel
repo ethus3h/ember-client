@@ -37,9 +37,9 @@ r/an/convertDocument an/contents s/format
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
-r/an/loadDocument s/format s/path
+r/an/loadDocument s/format an/contents
     assertIsSupportedInputFormat s/format
-    # Load and return the specified document as a Dc array.
+    # Parse and return the specified document as a Dc array.
     setupIfNeeded
     internalLoadDocument s/format s/path
 
