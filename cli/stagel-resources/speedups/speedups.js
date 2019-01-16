@@ -13,10 +13,10 @@ async function assertIsTrue(bool) {
 }
 
 async function assertIsDc(dc) {
-    if (bool === true) {
-        return;
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return true;
     }
-    await assertionFailed(bool+' is not true.');
+    return false;
 }
 
 async function assertIsDcDataset(str) {
