@@ -10,13 +10,13 @@ r/v/startEite
 
 r/v/loadAndRun s/format s/path
     # Load and run the specified document. Does not return while the document is still running.
-    runDocument loadDocument s/format s/path
+    runDocument loadStoredDocument s/format s/path
 
 # If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
 
 r/v/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat.
-    convertDocument loadDocument s/inputFormat s/path
+    convertDocument loadStoredDocument s/inputFormat s/path
 
 # To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it.
 
@@ -41,7 +41,7 @@ r/an/loadDocument s/format an/contents
     assertIsSupportedInputFormat s/format
     # Parse and return the specified document as a Dc array.
     setupIfNeeded
-    internalLoadDocument s/format s/path
+    internalLoadDocument s/format an/contents
 
 r/s/startDocument an/contents
     # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
