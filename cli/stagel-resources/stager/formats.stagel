@@ -1,1 +1,9 @@
-r/b/isSupportedFormat 
+r/as/listInputFormats
+    new as/res
+    set as/res [ 'sems' ]
+    return as/res
+
+r/b/isSupportedInputFormat s/in
+    new b/res
+    set b/res contains listInputFormats } s/in
+    return b/res
