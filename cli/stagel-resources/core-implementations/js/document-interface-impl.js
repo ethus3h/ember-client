@@ -27,8 +27,6 @@ async function internalRunDocument(document) {
     events = await getDesiredEventNotifications(doc);
 }
 
-async function getFileFromPath(format, path) {
-
-async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
-    await implUrlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); });
+async function internalLoadDocument(format, path) {
+    return await dcarrParseDocument(format, await getFileFromPath(path));
 }
