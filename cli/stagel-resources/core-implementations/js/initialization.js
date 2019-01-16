@@ -24,6 +24,9 @@ async function internalSetup() {
     }
     datasets = await listDcDatasets();
     await internalLoadDatasets();
+    if (haveDom) {
+        
+    }
     setupFinished = true;
 }
 
