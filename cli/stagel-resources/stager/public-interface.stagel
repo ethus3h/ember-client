@@ -1,15 +1,17 @@
 r/an/loadDocument s/format s/path
     assertIsSupportedInputFormat s/format
-    # Return the specified document as a Dc array.
+    # Load and return the specified document as a Dc array.
 
 r/an/outputConvertedDocument an/contents s/format
-    # Convert a document to the specified format.
+    assertIsSupportedOutputFormat s/format
+    # Convert a document to the specified format, and return it as an array of bytes.
+
 r/s/startDocument an/contents
     # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
 
 r/as/getDesiredEventNotifications as/documentId
     # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
 
-r/an/sendEvent as/documentId an/events
-    # Send the provided events to the specified document.
+r/an/sendEvent as/documentId an/eventData
+    # Send the provided event or events data to the specified document.
 
