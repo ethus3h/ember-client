@@ -155,44 +155,4 @@ async function implRunEiteTest(strTestFormat, strTestName) {
     }
 }
 
-// Set up dcData
-
-let datasets = [];
-let datasetsWorkingCopy = [];
-let datasetsLoadStarted = false;
-let dcData = [];
-
-async function implDcDataAppendDataset(dataset) {
-    dcData[dataset] = [];
-}
-async function implDcDataAppendLine(dataset, line) {
-    dcData[dataset].push(line);
-}
-async function implLoadDatasets(callback) {
-    if (!datasetsLoadStarted) {
-        datasets = await listDcDatasets();
-        datasetsWorkingCopy = await datasets.slice();
-        datasetsLoadStarted = true;
-    }
-    if (datasetsWorkingCopy.length > 0) {
-        let dataset = datasetsWorkingCopy[0];
-        await implDcDataAppendDataset(dataset);
-        await implLoadCsv(
-            "../data/" + dataset + ".csv",
-            async function(results,parser){
-                await implDcDataAppendLine(dataset, results);
-            },
-            async function(){
-                datasetsWorkingCopy.shift();
-                await implLoadDatasets(callback);
-            },
-            async function(){
-                await eiteError("Error reported while parsing "+dataset+"!");
-            }
-        );
-    }
-    else {
-        await callback();
-    }
-}
 // @license-end
