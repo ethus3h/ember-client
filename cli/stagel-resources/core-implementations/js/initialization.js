@@ -24,6 +24,7 @@ async function internalSetup() {
     }
     datasets = await listDcDatasets();
     await internalLoadDatasets();
+
     if (haveDom) {
         // Override error reporting method to show alert
         // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
@@ -78,6 +79,7 @@ async function internalSetup() {
             }
         }
     }
+
     setupFinished = true;
 }
 
