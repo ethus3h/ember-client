@@ -1,4 +1,4 @@
-async function getFileFromPath(format, path) {
+async function getFileFromPath(path) {
     // Returns an array of bytes.
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
@@ -26,6 +26,8 @@ async function internalRunDocument(document) {
     let events = [];
     events = await getDesiredEventNotifications(doc);
 }
+
+async function getFileFromPath(format, path) {
 
 async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
     await implUrlLoadForCallback(strUrl, async function(bytearrayContent) { await callback(await dcarrParseDocument(strFormat, bytearrayContent)); });
