@@ -20,22 +20,22 @@ async function internalLoadDatasets() {
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         dcData[dataset] = [];
-        Papa.parse(url, {
-        download: true,
-        encoding: "UTF-8",
-        newline: "\n",
-        delimiter: ",",
-        quoteChar: "\"",
-        step: async function(results, parser) {
-            await lineLoadedCallback(results, parser);
-        },
-        complete: async function(results, file) {
-            await documentLoadedCallback(results, file);
-        },
-        error: async function(results, file) {
-            await errorCallback(results, file);
-        }
-    });
+        await Papa.parse(url, {
+            download: true,
+            encoding: "UTF-8",
+            newline: "\n",
+            delimiter: ",",
+            quoteChar: "\"",
+            step: async function(results, parser) {
+                await implDcDataAppendLine(dataset, results);
+            },
+            complete: async function(results, file) {
+                return;
+            },
+            error: async function(results, file) {
+                await implError("Error reported while parsing "+dataset+"!");
+            }
+        });
         await implLoadCsv(
             "../data/" + dataset + ".csv",
             async function(results, parser) {
@@ -45,7 +45,7 @@ async function internalLoadDatasets() {
                 return;
             },
             async function() {
-                await implError("Error reported while parsing "+dataset+"!");
+                
             }
         );
     }
