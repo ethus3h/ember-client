@@ -15,3 +15,6 @@ r/as/getDesiredEventNotifications as/documentId
 r/an/sendEvent as/documentId an/eventData
     # Send the provided event or events data to the specified document.
 
+r/an/getDocumentFrame as/documentId s/format
+    assertIsSupportedOutputFormat s/format
+    # Return the most recently available output for the given document in the requested format.
