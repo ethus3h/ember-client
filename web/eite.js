@@ -217,7 +217,7 @@ async function internalLoadDatasets() {
             delimiter: ",",
             quoteChar: "\"",
             step: async function(results, parser) {
-                await implDcDataAppendLine(dataset, results);
+                dcData[dataset].push(results);
             },
             complete: async function(results, file) {
                 return;
