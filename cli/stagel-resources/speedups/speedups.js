@@ -13,17 +13,17 @@ async function assertIsTrue(bool) {
 }
 
 async function assertIsDc(dc) {
-    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+    if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
         return true;
     }
-    return false;
+    await assertIsDc(dc);
 }
 
 async function assertIsDcDataset(str) {
     if (datasets.includes(str)) {
         return;
     }
-    await assertIsTrue(await isDcDataset(str));
+    await assertIsDcDataset(str);
 }
 
 async function or(a,b) {
