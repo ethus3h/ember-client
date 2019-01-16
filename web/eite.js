@@ -1682,7 +1682,7 @@ async function assertIsDcDataset(str) {
     if (datasets.includes(str)) {
         return;
     }
-    await assertIsTrue(await isDcDataset(strIn));
+    await assertIsTrue(await isDcDataset(str));
 }
 
 async function or(a,b) {
