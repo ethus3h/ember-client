@@ -29,8 +29,8 @@ async function internalRunDocument(document) {
     events = await getDesiredEventNotifications(doc);
 }
 
-async function internalLoadDocument(format, path) {
-    return await dcarrParseDocument(format, await getFileFromPath(path));
+async function internalLoadDocument(format, contents) {
+    return await dcarrParseDocument(format, contents);
 }
 
 async function internalGetStoredDocument(path) {
