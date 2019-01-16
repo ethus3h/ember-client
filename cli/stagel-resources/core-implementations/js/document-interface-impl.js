@@ -20,10 +20,10 @@ async function internalLoadDocument(format, path) {
         }
         oReq.send(null);
     }
-    if (response === undefined) {
-        await assertFailed('An error was encountered loading the requested document.');
+    if (response !== undefined) {
+        return response;
     }
-    return response;
+    await assertFailed('An error was encountered loading the requested document.');
 }
 
 async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
