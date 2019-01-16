@@ -8,14 +8,12 @@ async function internalRunDocument(document) {
 }
 
 async function internalLoadDocument(format, path) {
-    https://stackoverflow.com/questions/48969495/in-javascript-how-do-i-should-i-use-async-await-with-xmlhttprequest
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
         oReq.open("GET", url, true);
         oReq.responseType = "arraybuffer";
-        oReq.onload = async function(oEvent) {
-            resolve(undefined);
-            callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        oReq.onload = function(oEvent) {
+            resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
         };
         oReq.send(null);
     }
