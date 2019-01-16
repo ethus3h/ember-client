@@ -47,6 +47,36 @@ async function implMod(intA, intB) {
 
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
+async function getFileFromPath(path) {
+    // Returns an array of bytes.
+    let response = await new Promise(resolve => {
+        var oReq = new XMLHttpRequest();
+        oReq.open('GET', url, true);
+        oReq.responseType = 'arraybuffer';
+        oReq.onload = function(oEvent) {
+            resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        };
+        oReq.onerror = function() {
+            resolve(undefined);
+        }
+        oReq.send(null);
+    }
+    if (response !== undefined) {
+        return response;
+    }
+    await assertFailed('An error was encountered loading the requested document.');
+}
+
+// Implementations of routines provided in public-interface.stagel.
+
+async function internalRunDocument(document) {
+    await assertIsDcArray(document);
+
+    let doc = '';
+    doc = await startDocument(document);
+    let events = [];
+    events = await getDesiredEventNotifications(doc);
+}
 /* type-conversion, provides:
     intFromIntStr
     strFrom
@@ -85,6 +115,119 @@ async function byteFromChar(strInput) {
     await assertIsTrue(intReturn < 127);
 
     await assertIsInt(intReturn); return intReturn;
+}
+// Global variables
+
+let haveDom = false;
+let datasets = [];
+let datasetsLoaded = false;
+let dcData = [];
+let setupFinished = false;
+
+async function isSetupFinished() {
+    return setupFinished;
+}
+
+async function setupIfNeeded() {
+    if (setupFinished) {
+        return;
+    }
+    await internalSetup();
+}
+
+async function internalSetup() {
+    // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
+    if (typeof window !== 'undefined') {
+        haveDom = true;
+    }
+    datasets = await listDcDatasets();
+    await internalLoadDatasets();
+
+    if (haveDom) {
+        // Override error reporting method to show alert
+        // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
+        async function implDie(strMessage) {
+            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
+
+            await implError(strMessage);
+
+            throw strMessage;
+        }
+
+        async function implError(strMessage) {
+            if(typeof strMessage !== "string") {
+                throw "Nonstring error message";
+            }
+            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+            //await FIXMEUnimplemented("implError");
+            await implWarn(strMessage);
+
+            await console.trace();
+            alert("EITE reported error!: " + strMessage);
+        }
+
+        async function implWarn(strMessage) {
+            await assertIsStr(strMessage);
+            // Log the provided message
+
+            await FIXMEUnimplemented("implWarn");
+            await implLog(strMessage);
+
+            await console.trace();
+        }
+
+        async function implLog(strMessage) {
+            await assertIsStr(strMessage);
+            // Log the provided message
+
+            await console.log(strMessage);
+            //await console.trace();
+            if(await Object.keys(stagelDebugCallstack).length > 0) {
+                await console.log("Previous message sent at: " + await internalDebugPrintStack());
+            }
+            else {
+                if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
+                    await console.log("(Previous message sent from non-StageL code.)");
+                    await console.trace();
+                }
+            }
+            if (3 <= STAGEL_DEBUG) {
+                await console.trace();
+            }
+        }
+    }
+
+    setupFinished = true;
+}
+
+async function internalLoadDatasets() {
+    // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
+    let count = 0;
+    let dataset = '';
+    while (count < Object.keys(datasets).length) {
+        count = count + 1;
+        dataset = datasets[count];
+        dcData[dataset] = [];
+        // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
+        await Papa.parse('../data/' + dataset + '.csv', {
+            download: true,
+            encoding: "UTF-8",
+            newline: "\n",
+            delimiter: ",",
+            quoteChar: "\"",
+            step: async function(results, parser) {
+                await implDcDataAppendLine(dataset, results);
+            },
+            complete: async function(results, file) {
+                return;
+            },
+            error: async function(results, file) {
+                await implError("Error reported while parsing "+dataset+"!");
+            }
+        });
+    }
+    datasetsLoaded = true;
 }
 /* arrays, provides:
     append
@@ -553,6 +696,13 @@ async function internalBitwiseMask(int32input) {
     byteMask = 255;
     byteReturn = int32input & byteMask; /* zero out all but the least significant bits, which are what we want */
     return byteReturn;
+}
+async function getEnvironmentPreferredFormat() {
+    // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
+    if (haveDom) {
+        return 'HTML';
+    }
+    return 'immutableCharacterCells';
 }
 /* type-tools, provides:
     implIntBytearrayLength

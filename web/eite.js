@@ -47,6 +47,36 @@ async function implMod(intA, intB) {
 
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
+async function getFileFromPath(path) {
+    // Returns an array of bytes.
+    let response = await new Promise(resolve => {
+        var oReq = new XMLHttpRequest();
+        oReq.open('GET', url, true);
+        oReq.responseType = 'arraybuffer';
+        oReq.onload = function(oEvent) {
+            resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        };
+        oReq.onerror = function() {
+            resolve(undefined);
+        }
+        oReq.send(null);
+    }
+    if (response !== undefined) {
+        return response;
+    }
+    await assertFailed('An error was encountered loading the requested document.');
+}
+
+// Implementations of routines provided in public-interface.stagel.
+
+async function internalRunDocument(document) {
+    await assertIsDcArray(document);
+
+    let doc = '';
+    doc = await startDocument(document);
+    let events = [];
+    events = await getDesiredEventNotifications(doc);
+}
 /* type-conversion, provides:
     intFromIntStr
     strFrom
@@ -85,6 +115,119 @@ async function byteFromChar(strInput) {
     await assertIsTrue(intReturn < 127);
 
     await assertIsInt(intReturn); return intReturn;
+}
+// Global variables
+
+let haveDom = false;
+let datasets = [];
+let datasetsLoaded = false;
+let dcData = [];
+let setupFinished = false;
+
+async function isSetupFinished() {
+    return setupFinished;
+}
+
+async function setupIfNeeded() {
+    if (setupFinished) {
+        return;
+    }
+    await internalSetup();
+}
+
+async function internalSetup() {
+    // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
+    if (typeof window !== 'undefined') {
+        haveDom = true;
+    }
+    datasets = await listDcDatasets();
+    await internalLoadDatasets();
+
+    if (haveDom) {
+        // Override error reporting method to show alert
+        // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
+        async function implDie(strMessage) {
+            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
+
+            await implError(strMessage);
+
+            throw strMessage;
+        }
+
+        async function implError(strMessage) {
+            if(typeof strMessage !== "string") {
+                throw "Nonstring error message";
+            }
+            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
+
+            //await FIXMEUnimplemented("implError");
+            await implWarn(strMessage);
+
+            await console.trace();
+            alert("EITE reported error!: " + strMessage);
+        }
+
+        async function implWarn(strMessage) {
+            await assertIsStr(strMessage);
+            // Log the provided message
+
+            await FIXMEUnimplemented("implWarn");
+            await implLog(strMessage);
+
+            await console.trace();
+        }
+
+        async function implLog(strMessage) {
+            await assertIsStr(strMessage);
+            // Log the provided message
+
+            await console.log(strMessage);
+            //await console.trace();
+            if(await Object.keys(stagelDebugCallstack).length > 0) {
+                await console.log("Previous message sent at: " + await internalDebugPrintStack());
+            }
+            else {
+                if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
+                    await console.log("(Previous message sent from non-StageL code.)");
+                    await console.trace();
+                }
+            }
+            if (3 <= STAGEL_DEBUG) {
+                await console.trace();
+            }
+        }
+    }
+
+    setupFinished = true;
+}
+
+async function internalLoadDatasets() {
+    // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
+    let count = 0;
+    let dataset = '';
+    while (count < Object.keys(datasets).length) {
+        count = count + 1;
+        dataset = datasets[count];
+        dcData[dataset] = [];
+        // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
+        await Papa.parse('../data/' + dataset + '.csv', {
+            download: true,
+            encoding: "UTF-8",
+            newline: "\n",
+            delimiter: ",",
+            quoteChar: "\"",
+            step: async function(results, parser) {
+                await implDcDataAppendLine(dataset, results);
+            },
+            complete: async function(results, file) {
+                return;
+            },
+            error: async function(results, file) {
+                await implError("Error reported while parsing "+dataset+"!");
+            }
+        });
+    }
+    datasetsLoaded = true;
 }
 /* arrays, provides:
     append
@@ -553,6 +696,13 @@ async function internalBitwiseMask(int32input) {
     byteMask = 255;
     byteReturn = int32input & byteMask; /* zero out all but the least significant bits, which are what we want */
     return byteReturn;
+}
+async function getEnvironmentPreferredFormat() {
+    // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
+    if (haveDom) {
+        return 'HTML';
+    }
+    return 'immutableCharacterCells';
 }
 /* type-tools, provides:
     implIntBytearrayLength
@@ -1342,6 +1492,96 @@ async function assertIsDcDataset(strIn) {
 
     await assertIsTrue(await isDcDataset(strIn));
     await internalDebugStackExit();
+}
+/* This file contains the public interface for EITE. */
+/* If you just want to run EITE, use the following function. */
+
+async function startEite() {
+    await internalDebugStackEnter('startEite:public-interface');
+
+    /* Start EITE, using the default startup document. Does not return while EITE is still running. */
+    /* loadAndRun ... */
+    await internalDebugStackExit();
+}
+/* If you want to run a different document, you can call loadAndRun with the format of the document to open and its location. */
+
+async function loadAndRun(strFormat, strPath) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadAndRun:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath);
+
+    /* Load and run the specified document. Does not return while the document is still running. */
+    await runDocument(await loadStoredDocument(strFormat, strPath));
+    await internalDebugStackExit();
+}
+/* If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in. */
+
+async function loadAndConvert(strInputFormat, strPath, strOutputFormat) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugStackEnter('loadAndConvert:public-interface'); await assertIsStr(strInputFormat);await assertIsStr(strPath);await assertIsStr(strOutputFormat);
+
+    /* Load the specified document, and return it converted to the specified outputFormat. */
+    await convertDocument(await loadStoredDocument(strInputFormat, strPath));
+    await internalDebugStackExit();
+}
+/* To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. */
+
+async function runDocument(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
+
+    /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
+    await internalRunDocument(intArrayContents);
+    await internalDebugStackExit();
+}
+
+async function convertDocument(intArrayContents, strFormat) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('convertDocument:public-interface'); await assertIsIntArray(intArrayContents);await assertIsStr(strFormat); let intArrayReturn;
+
+    await assertIsSupportedOutputFormat(strFormat);
+    /* Convert a document to the specified format, and return it as an array of bytes. */
+    await setupIfNeeded();
+}
+/* If you want more control over the document loading and execution, you can use these lower-level functions. */
+
+async function loadStoredDocument(strFormat, strPath) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strFormat);
+    /* Load and return the specified document as a Dc array. */
+    await setupIfNeeded();
+    await convertToDcArray(strFormat, await getFileFromPath(strPath));
+}
+
+async function convertToDcArray(strFormat, intArrayContents) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('convertToDcArray:public-interface'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strFormat);
+    /* Parse and return the specified document as a Dc array. */
+    await setupIfNeeded();
+    await dcarrParseDocument(strFormat, intArrayContents);
+}
+
+async function startDocument(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocument:public-interface'); await assertIsIntArray(intArrayContents); let strReturn;
+
+    /* Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num? */
+    await setupIfNeeded();
+}
+
+async function getDesiredEventNotifications(strArrayDocumentId) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsStrArray(strArrayDocumentId); let strArrayReturn;
+
+    /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
+}
+
+async function sendEvent(strArrayDocumentId, intArrayEventData) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('intArray EventData = ' + intArrayEventData + '; '); await internalDebugStackEnter('sendEvent:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsIntArray(intArrayEventData); let intArrayReturn;
+
+    /* Send the provided event or events data to the specified document. */
+}
+
+async function getDocumentFrame(strArrayDocumentId, strFormat) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getDocumentFrame:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsStr(strFormat); let intArrayReturn;
+
+    await assertIsSupportedOutputFormat(strFormat);
+    /* Return the most recently available output for the given document in the requested format. */
 }
 /* Calling a comparison with different types is an error. All types must be same type. */
 

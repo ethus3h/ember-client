@@ -775,6 +775,96 @@ async function assertIsDcDataset(strIn) {
     await assertIsTrue(await isDcDataset(strIn));
     await internalDebugStackExit();
 }
+/* This file contains the public interface for EITE. */
+/* If you just want to run EITE, use the following function. */
+
+async function startEite() {
+    await internalDebugStackEnter('startEite:public-interface');
+
+    /* Start EITE, using the default startup document. Does not return while EITE is still running. */
+    /* loadAndRun ... */
+    await internalDebugStackExit();
+}
+/* If you want to run a different document, you can call loadAndRun with the format of the document to open and its location. */
+
+async function loadAndRun(strFormat, strPath) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadAndRun:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath);
+
+    /* Load and run the specified document. Does not return while the document is still running. */
+    await runDocument(await loadStoredDocument(strFormat, strPath));
+    await internalDebugStackExit();
+}
+/* If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in. */
+
+async function loadAndConvert(strInputFormat, strPath, strOutputFormat) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugStackEnter('loadAndConvert:public-interface'); await assertIsStr(strInputFormat);await assertIsStr(strPath);await assertIsStr(strOutputFormat);
+
+    /* Load the specified document, and return it converted to the specified outputFormat. */
+    await convertDocument(await loadStoredDocument(strInputFormat, strPath));
+    await internalDebugStackExit();
+}
+/* To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. */
+
+async function runDocument(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
+
+    /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
+    await internalRunDocument(intArrayContents);
+    await internalDebugStackExit();
+}
+
+async function convertDocument(intArrayContents, strFormat) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('convertDocument:public-interface'); await assertIsIntArray(intArrayContents);await assertIsStr(strFormat); let intArrayReturn;
+
+    await assertIsSupportedOutputFormat(strFormat);
+    /* Convert a document to the specified format, and return it as an array of bytes. */
+    await setupIfNeeded();
+}
+/* If you want more control over the document loading and execution, you can use these lower-level functions. */
+
+async function loadStoredDocument(strFormat, strPath) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strFormat);
+    /* Load and return the specified document as a Dc array. */
+    await setupIfNeeded();
+    await convertToDcArray(strFormat, await getFileFromPath(strPath));
+}
+
+async function convertToDcArray(strFormat, intArrayContents) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('convertToDcArray:public-interface'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strFormat);
+    /* Parse and return the specified document as a Dc array. */
+    await setupIfNeeded();
+    await dcarrParseDocument(strFormat, intArrayContents);
+}
+
+async function startDocument(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocument:public-interface'); await assertIsIntArray(intArrayContents); let strReturn;
+
+    /* Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num? */
+    await setupIfNeeded();
+}
+
+async function getDesiredEventNotifications(strArrayDocumentId) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsStrArray(strArrayDocumentId); let strArrayReturn;
+
+    /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
+}
+
+async function sendEvent(strArrayDocumentId, intArrayEventData) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('intArray EventData = ' + intArrayEventData + '; '); await internalDebugStackEnter('sendEvent:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsIntArray(intArrayEventData); let intArrayReturn;
+
+    /* Send the provided event or events data to the specified document. */
+}
+
+async function getDocumentFrame(strArrayDocumentId, strFormat) {
+    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getDocumentFrame:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsStr(strFormat); let intArrayReturn;
+
+    await assertIsSupportedOutputFormat(strFormat);
+    /* Return the most recently available output for the given document in the requested format. */
+}
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
