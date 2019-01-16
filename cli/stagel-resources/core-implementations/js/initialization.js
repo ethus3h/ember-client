@@ -2,7 +2,7 @@
 
 let haveDom = false;
 let datasets = [];
-let datasetsLoaded = 0;
+let datasetsLoaded = [];
 let dcData = [];
 
 async function internalSetup() {
@@ -11,12 +11,14 @@ async function internalSetup() {
         haveDom = true;
     }
     datasets = await listDcDatasets();
-    datasetsLoaded = Object.keys(datasets).length;
     await internalLoadDatasets();
 }
 
 async function internalLoadDatasets() {
-    while (datasetsLoaded < )
+    let count=0;
+    while (count < Object.keys(datasets).length) {
+        let dataset = 
+    }
     if (!datasetsLoadStarted) {
         
         datasetsWorkingCopy = await datasets.slice();
