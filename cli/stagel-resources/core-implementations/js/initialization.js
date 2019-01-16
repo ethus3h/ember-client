@@ -20,6 +20,7 @@ async function internalLoadDatasets() {
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         dcData[dataset] = [];
+        // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         await Papa.parse(url, {
             download: true,
             encoding: "UTF-8",
