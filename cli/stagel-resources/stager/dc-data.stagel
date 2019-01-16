@@ -14,53 +14,50 @@ r/s/dcGetField n/dc n/fieldNumber
     set s/res dcDataLookupById 'DcData' add n/dc 1 } n/fieldNumber
     return s/res
 
+r/s/dcGetName n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 1
+    return s/res
 
-async function dcGetName(dc) {
-    await assertIsDc(dc); let strReturn;
+r/s/dcGetCombiningClass n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 2
+    return s/res
 
-    strReturn = await dcGetField(dc, 1); await assertIsStr(strReturn); return strReturn;
-}
+r/s/dcGetBidiClass n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 3
+    return s/res
 
-async function dcGetCombiningClass(dc) {
-    await assertIsDc(dc); let strReturn;
+r/s/dcGetCasing n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 4
+    return s/res
 
-    strReturn = await dcGetField(dc, 2); await assertIsStr(strReturn); return strReturn;
-}
+r/s/dcGetType n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 5
+    return s/res
 
-async function dcGetBidiClass(dc) {
-    await assertIsDc(dc); let strReturn;
+r/s/dcGetScript n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 6
+    return s/res
 
-    strReturn = await dcGetField(dc, 3); await assertIsStr(strReturn); return strReturn;
-}
+r/s/dcGetComplexTraits n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 7
+    return s/res
 
-async function dcGetCasing(dc) {
-    await assertIsDc(dc); let strReturn;
-
-    strReturn = await dcGetField(dc, 4); await assertIsStr(strReturn); return strReturn;
-}
-
-async function dcGetType(dc) {
-    await assertIsDc(dc); let strReturn;
-
-    strReturn = await dcGetField(dc, 5); await assertIsStr(strReturn); return strReturn;
-}
-
-async function dcGetScript(dc) {
-    await assertIsDc(dc); let strReturn;
-
-    strReturn = await dcGetField(dc, 6); await assertIsStr(strReturn); return strReturn;
-}
-
-async function dcGetComplexTraits(dc) {
-    await assertIsDc(dc); let strReturn;
-
-    strReturn = await dcGetField(dc, 7); await assertIsStr(strReturn); return strReturn;
-}
-
-async function dcGetDescription(dc) {
-    await assertIsDc(dc); let strReturn;
-
-    strReturn = await dcGetField(dc, 8); await assertIsStr(strReturn); return strReturn;
-}
-
-// @license-end
+r/s/dcGetDescription n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 8
+    return s/res
