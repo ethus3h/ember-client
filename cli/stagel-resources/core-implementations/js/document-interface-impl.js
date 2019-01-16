@@ -8,13 +8,16 @@ async function internalRunDocument(document) {
 }
 
 async function internalLoadDocument(format, path) {
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url, true);
-    oReq.responseType = "arraybuffer";
-    oReq.onload = async function(oEvent) {
-        callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
-    };
-    oReq.send(null);
+    let response = await new Promise(resolve => {
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", url, true);
+        oReq.responseType = "arraybuffer";
+        oReq.onload = async function(oEvent) {
+            resolve(undefined);
+            callback(new Uint8Array(oReq.response)); // Note: not oReq.responseText
+        };
+        oReq.send(null);
+    }
 }
 
 async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
