@@ -2,12 +2,12 @@
 
 //        implRunEiteTest("ept", "idiomatic-hello-world-sems");
 
-window.onload = function() {
-    async function() {
-        let doc = '';
-        doc = await startDocument(await loadDocument('sems', 'idiomatic-hello-world.sems'));
-        let events = [];
-        events = await getDesiredEventNotifications(doc);
+async function internalRunDocument(document) {
+    await assertIsDcArray(document);
+    let doc = '';
+    doc = await startDocument(await loadDocument('sems', 'idiomatic-hello-world.sems'));
+    let events = [];
+    events = await getDesiredEventNotifications(doc);
         
     }();
 };
