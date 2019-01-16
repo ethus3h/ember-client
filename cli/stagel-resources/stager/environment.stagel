@@ -1,5 +1,5 @@
-r/s/getEnvironmentPreferredFormat
-    
-    return 'HTML'
+async function implGetEnvironmentBestFormat() {
+    return "HTML";
     /* return "immutableCharacterCells"; */
 }
+
