@@ -6,6 +6,10 @@ let datasetsLoaded = false;
 let dcData = [];
 let setupFinished = false;
 
+async function isSetupFinished() {
+    return setupFinished;
+}
+
 async function internalSetup() {
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (typeof window !== 'undefined') {
