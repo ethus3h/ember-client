@@ -16,7 +16,7 @@ async function internalSetup() {
 
 async function internalLoadDatasets() {
     let datasetLoadCounter = 0;
-    let dataset = '';
+    let datasetLoadCurrent = '';
     while (datasetLoadCounter < Object.keys(datasets).length) {
         datasetLoadCounter = datasetLoadCounter + 1;
         dataset = datasets[datasetLoadCounter];
