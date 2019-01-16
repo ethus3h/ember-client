@@ -6,7 +6,7 @@ let datasetsLoaded = false;
 let dcData = [];
 
 async function internalSetup() {
-    // Detect if we can create DOM nodes (otherwise we'll output to a terminal)
+    // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
