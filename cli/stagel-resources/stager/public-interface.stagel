@@ -1,2 +1,4 @@
-r/an/getDocumentFromUrl s/url
-    
+r/an/runDocument s/format s/path
+    assertIsSupportedFormat s/format
+
+r/an/
