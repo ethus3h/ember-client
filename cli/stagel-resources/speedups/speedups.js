@@ -12,6 +12,13 @@ async function assertIsTrue(bool) {
     await assertionFailed(bool+' is not true.');
 }
 
+async function assertIsDcDataset(str) {
+    if (bool === true) {
+        return;
+    }
+    await assertionFailed(bool+' is not true.');
+}
+
 async function or(a,b) {
     if (typeof a === 'boolean' && typeof b === 'boolean') {
         return a || b;
