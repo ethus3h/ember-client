@@ -12,6 +12,13 @@ async function assertIsTrue(bool) {
     await assertionFailed(bool+' is not true.');
 }
 
+async function assertIsDc(dc) {
+    if (bool === true) {
+        return;
+    }
+    await assertionFailed(bool+' is not true.');
+}
+
 async function assertIsDcDataset(str) {
     if (datasets.includes(str)) {
         return;
