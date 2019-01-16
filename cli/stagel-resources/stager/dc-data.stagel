@@ -8,11 +8,12 @@ r/b/isDcDataset s/in
     set b/res contains listDcDatasets } s/in
     return b/res
 
-    async function dcGetField(dc, intFieldNumber) {
-    await assertIsDc(dc); await assertIsInt(intFieldNumber); let strReturn;
+r/s/dcGetField n/dc n/fieldNumber
+    assertIsDc n/dc
+    new s/res
+    set s/res dcDataLookupById 'DcData' add n/dc 1 } n/fieldNumber
+    return s/res
 
-    strReturn = await dcDataLookupById("DcData", dc + 1, intFieldNumber); await assertIsStr(strReturn); return strReturn;
-}
 
 async function dcGetName(dc) {
     await assertIsDc(dc); let strReturn;
