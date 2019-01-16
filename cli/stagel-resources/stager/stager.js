@@ -267,7 +267,7 @@ async function listDcDatasets() {
     let strArrayRes = [];
     strArrayRes = [ 'DcData', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html' ];
 
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); console.log(strArrayReturn);return strArrayReturn;
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function isDcDataset(strIn) {
