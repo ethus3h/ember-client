@@ -1,13 +1,5 @@
-async function internalRunDocument(document) {
-    await assertIsDcArray(document);
-
-    let doc = '';
-    doc = await startDocument(document);
-    let events = [];
-    events = await getDesiredEventNotifications(doc);
-}
-
-async function internalLoadDocument(format, path) {
+async function getFileFromPath(format, path) {
+    // Returns an array of bytes.
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
         oReq.open('GET', url, true);
@@ -24,6 +16,15 @@ async function internalLoadDocument(format, path) {
         return response;
     }
     await assertFailed('An error was encountered loading the requested document.');
+}
+
+async function internalRunDocument(document) {
+    await assertIsDcArray(document);
+
+    let doc = '';
+    doc = await startDocument(document);
+    let events = [];
+    events = await getDesiredEventNotifications(doc);
 }
 
 async function implOperateOnDocFromUrl(strFormat, strUrl, callback) {
