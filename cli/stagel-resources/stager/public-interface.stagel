@@ -22,5 +22,8 @@ r/an/getDocumentFrame as/documentId s/format
     assertIsSupportedOutputFormat s/format
     # Return the most recently available output for the given document in the requested format.
 
-r/v/runDocument s/format s/path
+r/v/runDocument an/contents
+    # Run the specified document. Does not return while the document is still running.
+
+r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running.
