@@ -8,12 +8,12 @@ r/b/isSupportedInputFormat s/in
     set b/res contains listInputFormats } s/in
     return b/res
 
-    r/as/listInputFormats
+r/as/listOutputFormats
     new as/res
-    set as/res [ 'sems' ]
+    set as/res [ 'integerList' 'immutableCharacterCells' 'HTML ]
     return as/res
 
-r/b/isSupportedInputFormat s/in
+r/b/isSupportedOutputFormat s/in
     new b/res
-    set b/res contains listInputFormats } s/in
+    set b/res contains listOutputFormats } s/in
     return b/res
