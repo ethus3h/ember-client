@@ -177,6 +177,7 @@ async function implRunEiteTest(strTestFormat, strTestName) {
 // Set up dcData
 
 let datasets = [];
+let datasetsWorkingCopy = [];
 let datasetsLoadStarted = false;
 let dcData = [];
 
@@ -189,7 +190,7 @@ async function implDcDataAppendLine(dataset, line) {
 async function implLoadDatasets(callback) {
     if (!datasetsLoadStarted) {
         datasets = await listDcDatasets();
-        let datasetsWorkingCopy = datasets.slice();
+        datasetsWorkingCopy = datasets.slice();
         datasetsLoadStarted = true;
     }
     if (datasetsWorkingCopy.length > 0) {
