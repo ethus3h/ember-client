@@ -35,13 +35,13 @@ r/an/loadStoredDocument s/format s/path
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
     setupIfNeeded
-    loadDocument s/format internalGetStoredDocument s/path
+    convertToDcArray s/format internalGetStoredDocument s/path
 
-r/an/loadDocument s/format an/contents
+r/an/convertToDcArray s/format an/contents
     assertIsSupportedInputFormat s/format
     # Parse and return the specified document as a Dc array.
     setupIfNeeded
-    internalLoadDocument s/format an/contents
+    internalConvertToDcArray s/format an/contents
 
 r/s/startDocument an/contents
     # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
