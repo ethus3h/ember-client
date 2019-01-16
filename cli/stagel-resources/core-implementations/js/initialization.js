@@ -10,6 +10,13 @@ async function isSetupFinished() {
     return setupFinished;
 }
 
+async function setupIfNeeded() {
+    if (setupFinished) {
+        return;
+    }
+    await internalSetup();
+}
+
 async function internalSetup() {
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (typeof window !== 'undefined') {
