@@ -15,10 +15,11 @@ async function internalSetup() {
 }
 
 async function internalLoadDatasets() {
-    let count = 0;
+    let datasetLoadCounter = 0;
     let dataset = '';
-    while (count < Object.keys(datasets).length) {
-        dataset = datasets[count];
+    while (datasetLoadCounter < Object.keys(datasets).length) {
+        datasetLoadCounter = datasetLoadCounter + 1;
+        dataset = datasets[datasetLoadCounter];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         await Papa.parse('../data/' + dataset + '.csv', {
