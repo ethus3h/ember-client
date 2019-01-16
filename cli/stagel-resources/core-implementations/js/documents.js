@@ -11,7 +11,7 @@ async function getFileFromPath(path) {
             resolve(undefined);
         }
         oReq.send(null);
-    }
+    });
     if (response !== undefined) {
         return response;
     }
