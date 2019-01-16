@@ -20,6 +20,22 @@ async function internalLoadDatasets() {
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         dcData[dataset] = [];
+        Papa.parse(url, {
+        download: true,
+        encoding: "UTF-8",
+        newline: "\n",
+        delimiter: ",",
+        quoteChar: "\"",
+        step: async function(results, parser) {
+            await lineLoadedCallback(results, parser);
+        },
+        complete: async function(results, file) {
+            await documentLoadedCallback(results, file);
+        },
+        error: async function(results, file) {
+            await errorCallback(results, file);
+        }
+    });
         await implLoadCsv(
             "../data/" + dataset + ".csv",
             async function(results, parser) {
