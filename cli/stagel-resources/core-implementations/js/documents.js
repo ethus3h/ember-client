@@ -28,7 +28,3 @@ async function internalRunDocument(document) {
     let events = [];
     events = await getDesiredEventNotifications(doc);
 }
-
-async function internalConvertToDcArray(format, contents) {
-    return await dcarrParseDocument(format, contents);
-}

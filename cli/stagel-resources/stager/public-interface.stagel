@@ -41,7 +41,7 @@ r/an/convertToDcArray s/format an/contents
     assertIsSupportedInputFormat s/format
     # Parse and return the specified document as a Dc array.
     setupIfNeeded
-    internalConvertToDcArray s/format an/contents
+    dcarrParseDocument s/format an/contents
 
 r/s/startDocument an/contents
     # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
