@@ -13,15 +13,15 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, filterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(filterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = await intDcDataDatasetLength(dataset);
+    let intLength = await dcDatasetLength(dataset);
     // start at 1 to skip header row
-    let strFilterValue = await strFrom(genericFilterValue);
-    for (let intRow = 1; intRow < intLength; intRow++) {
-        if(dcData[dataset][intRow].data[0][intFilterField] === strFilterValue) {
-            strReturn = dcData[dataset][intRow].data[0][intDesiredField]; await assertIsStr(strReturn); return strReturn;
+    let filterValue = await strFrom(genericFilterValue);
+    for (let row = 1; row < intLength; row++) {
+        if(dcData[dataset][row].data[0][filterField] === filterValue) {
+            strReturn = dcData[dataset][row].data[0][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
-    //await console.log("SEARCHING", dataset, intFilterField, genericFilterValue, intDesiredField, dcData);
+    //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
     // If nothing was found, return this UUID.
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
