@@ -1,4 +1,5 @@
+r/an/loadDocument s/format s/path
+    # Return the specified document as a Dc array.
 r/an/runDocument s/format s/path
     assertIsSupportedFormat s/format
 
-r/an/
