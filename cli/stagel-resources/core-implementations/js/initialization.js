@@ -85,15 +85,14 @@ async function internalSetup() {
     setupFinished = true;
 }
 
-function internalDatasetAppendRow(results) {
-    // If these are inlined in the Papa.parse call's step and complete functions, it seems to not give the value in the main scope.
-    dcData[dataset].push(results);
-}
-
 async function internalLoadDatasets() {
     // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
     let count = 0;
     let dataset = '';
+    function internalDatasetAppendRow(results) {
+        // If these are inlined in the Papa.parse call's step and complete functions, it seems to not give the value in the main scope.
+        dcData[dataset].push(results);
+    }
     while (count < Object.keys(datasets).length) {
         count = count + 1;
         dataset = datasets[count];
