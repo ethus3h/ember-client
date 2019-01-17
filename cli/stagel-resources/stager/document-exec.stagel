@@ -1,4 +1,5 @@
-r/n/    new n/docId
+r/n/startDocumentExec an/contents
+    new n/docId
     set n/docId -1
-    set n/docId startDocument an/contents
+    set n/docId  an/contents
     new as/

@@ -1,9 +1,10 @@
 // Global variables
 
 let haveDom = false;
-let datasets = [];
+let datasets = []; // as
 let datasetsLoaded = false;
-let dcData = [];
+let dcData = []; // an
+let documentExecData = []; // as
 let setupFinished = false;
 
 async function isSetupFinished() {
