@@ -4,6 +4,6 @@ r/n/startDocumentExec an/contents
     # documentExecData is a global, created during initialization. It holds the current document state for any documents being executed.
     set n/execId count as/documentExecPtrs
     push as/documentExecData strPrintArr an/contents
-    # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating .
+    # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the .
     push an/documentExecPtrs 0
     

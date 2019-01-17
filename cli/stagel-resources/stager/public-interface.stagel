@@ -62,12 +62,12 @@ r/n/startDocument an/contents
     set n/execId startDocumentExec an/contents
     return n/execId
 
-r/as/getDesiredEventNotifications as/documentId
+r/as/getDesiredEventNotifications as/execId
     # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
 
-r/an/sendEvent as/documentId an/eventData
+r/an/sendEvent as/execId an/eventData
     # Send the provided event or events data to the specified document.
 
-r/an/getDocumentFrame as/documentId s/format
+r/an/getDocumentFrame as/execId s/format
     assertIsSupportedOutputFormat s/format
     # Return the most recently available output for the given document in the requested format.
