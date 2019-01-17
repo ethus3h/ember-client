@@ -26,6 +26,7 @@ async function internalRunDocument(execId) {
     let events = [];
     events = await getDesiredEventNotifications(execId);
 
+    // FIXME: Make this not just be converting the document and dumping it out.
     let strTargetFormat;
     strTargetFormat = await getEnvironmentPreferredFormat();
     await implDoRenderIo(await dcarrConvertDocument(dcarrContent, strTargetFormat, await implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
