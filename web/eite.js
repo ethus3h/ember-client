@@ -221,7 +221,6 @@ async function internalLoadDatasets() {
         dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
-    await alert('wtf 2');
         await Papa.parse('../data/' + dataset + '.csv', {
             download: true,
             encoding: "UTF-8",
@@ -233,10 +232,10 @@ async function internalLoadDatasets() {
             },
             complete: async function(results, file) {
                 return;
-            },
+            }/*,
             error: async function(results, file) {
                 await implError("Error reported while parsing "+dataset+"!");
-            }
+            }*/
         });
     }
     datasetsLoaded = true;
