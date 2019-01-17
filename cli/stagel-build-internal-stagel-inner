@@ -8,3 +8,4 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 cat "$1" >> "./stagel-resources/core-implementations/$2/stagel.$2"
+echo >> "./stagel-resources/core-implementations/$2/stagel.$2"

@@ -12,3 +12,4 @@ if [[ -f "./stagel-convert" ]]; then
 else
     stagel-convert "$1" "$2" >> ./stagel-resources/stager/stager."$2"
 fi
+echo >> ./stagel-resources/stager/stager."$2"
