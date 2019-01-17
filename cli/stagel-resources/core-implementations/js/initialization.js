@@ -112,5 +112,7 @@ async function internalLoadDatasets() {
         });
         count = count + 1;
     }
+    console.log(dcData);
+    alert('loaded');
     datasetsLoaded = true;
 }
