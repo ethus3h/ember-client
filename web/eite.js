@@ -1174,7 +1174,9 @@ async function isStrArray(genericArrayIn) {
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
     }
-
+    await alert('wtf 4');
+    await console.log('aou');
+    await console.log(genericArrayIn);
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
