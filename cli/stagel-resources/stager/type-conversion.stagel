@@ -16,3 +16,6 @@ r/s/charFromHexByte s/hexByte
     new s/res
     set s/res charFromByte intFromBaseStr s/hexByte 16
     return s/res
+
+r/s/strToByteArray s/input
+    
