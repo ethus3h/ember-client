@@ -103,7 +103,7 @@ async function internalLoadDatasets() {
                 quoteChar: "\"",
                 complete: async function(results, file) {
                     console.log(results);
-                    resolve(results[data]);
+                    resolve(results.data);
                 },
                 error: async function(results, file) {
                     await implError("Error reported while parsing "+dataset+"!");
