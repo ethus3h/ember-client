@@ -47,6 +47,7 @@ async function implMod(intA, intB) {
 
     intReturn = intA % intB; await assertIsInt(intReturn); return intReturn;
 }
+
 async function getFileFromPath(path) {
     // Returns an array of bytes.
     let response = await new Promise(resolve => {
@@ -75,6 +76,7 @@ async function internalRunDocument(execId) {
     let events = [];
     events = await getDesiredEventNotifications(doc);
 }
+
 /* type-conversion, provides:
     intFromIntStr
     strFrom
@@ -114,6 +116,7 @@ async function byteFromChar(strInput) {
 
     await assertIsInt(intReturn); return intReturn;
 }
+
 // Global variables
 
 let haveDom = false;
@@ -229,6 +232,7 @@ async function internalLoadDatasets() {
     }
     datasetsLoaded = true;
 }
+
 /* arrays, provides:
     append
     get
@@ -263,6 +267,7 @@ async function count(array) {
 
     intReturn=Object.keys(array).length; await assertIsInt(intReturn); return intReturn;
 }
+
 /* strings, provides:
     implCat
     substring
@@ -285,6 +290,7 @@ async function len(str) {
 
     intReturn = str.length; await assertIsInt(intReturn); return intReturn;
 }
+
 
 /* logging, provides:
     implDie
@@ -436,6 +442,7 @@ async function internalDebugPrintStack() {
     }
     return result;
 }
+
 /* booleans, provides:
     implAnd
     implNot
@@ -454,6 +461,7 @@ async function implNot(a) {
     }
     await assertIsBool(a);
 }
+
 /* comparison, provides:
     implEq
     implGt
@@ -477,6 +485,7 @@ async function implLt(intA, intB) {
 
     boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
 }
+
 async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
@@ -504,6 +513,7 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
     // If nothing was found, return this UUID.
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
+
 /* assertions, provides:
     assertIsBool
     assertIsTrue
@@ -658,6 +668,7 @@ async function assertIsGenericItem(val) {
 async function assertionFailed(message) {
     await implDie("Assertion failed: "+message);
 }
+
 /* bits, provides:
     bitAnd
     bitNot
@@ -709,6 +720,7 @@ async function internalBitwiseMask(int32input) {
     byteReturn = int32input & byteMask; /* zero out all but the least significant bits, which are what we want */
     return byteReturn;
 }
+
 async function getEnvironmentPreferredFormat() {
     // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
     if (haveDom) {
@@ -716,6 +728,7 @@ async function getEnvironmentPreferredFormat() {
     }
     return 'immutableCharacterCells';
 }
+
 /* type-tools, provides:
     implIntBytearrayLength
 */
@@ -725,5 +738,6 @@ async function intBytearrayLength(bytearray) {
 
     intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
 }
+
 
 // @license-end

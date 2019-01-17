@@ -45,6 +45,7 @@ async function isCharByte(genericIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function asciiIsDigit(intN) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
 
@@ -136,6 +137,8 @@ async function asciiIsAlphanum(intN) {
 /* 13 CR     29 GS     45 -    61 =    77 M    93 ]    109 m    125 } */
 /* 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~ */
 /* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
+
+
 async function strChar(strStr, intIndex) {
     await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strChar:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
 
@@ -261,6 +264,7 @@ async function strContainsOnlyInt(strIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
 
@@ -368,6 +372,7 @@ async function dcGetDescription(intDc) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
 async function contains(genericArrayIn, genericValue) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('contains:arrays'); await assertIsGenericArray(genericArrayIn);await assertIsGeneric(genericValue); let boolReturn;
 
@@ -502,6 +507,7 @@ async function intDcarrLength(intArrayIn) {
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
+
 async function bitOr(intByte1, intByte2) {
     await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
@@ -563,6 +569,8 @@ async function bitXnor(intByte1, intByte2) {
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
+
+
 async function or(boolA, boolB) {
     await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:booleans'); await assertIsBool(boolA);await assertIsBool(boolB); let boolReturn;
 
@@ -625,6 +633,7 @@ async function isFalse(boolIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function assertIsTrue(boolIn) {
     await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsTrue:assertions'); await assertIsBool(boolIn);
 
@@ -796,6 +805,7 @@ async function assertIsExecId(intIn) {
     await assertIsTrue(await isExecId(intIn));
     await internalDebugStackExit();
 }
+
 /* This file contains the public interface for EITE. */
 /* If you just want to run EITE, use the following function. */
 
@@ -900,6 +910,7 @@ async function getDocumentFrame(strArrayExecId, strFormat) {
     await assertIsSupportedOutputFormat(strFormat);
     /* Return the most recently available output for the given document in the requested format. */
 }
+
 /* Calling a comparison with different types is an error. All types must be same type. */
 
 async function ne(genericA, genericB) {
@@ -966,6 +977,7 @@ async function nle(intA, intB) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function startDocumentExec(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsIntArray(intArrayContents); let intReturn;
 
@@ -973,9 +985,9 @@ async function startDocumentExec(intArrayContents) {
     intExecId = -1;
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
     intExecId = await count(intArrayDocumentExecPtrs);
-    await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
+    strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
     /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is. */
-    await push(intArrayDocumentExecPtrs, 0);
+    intArrayDocumentExecPtrs = await push(intArrayDocumentExecPtrs, 0);
     await assertIsExecId(intExecId);
 
     intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
@@ -991,6 +1003,7 @@ async function isExecId(intExecId) {
 
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
@@ -1026,6 +1039,7 @@ async function isSupportedOutputFormat(strIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function isDc(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
 
@@ -1131,6 +1145,7 @@ async function printableDcToChar(intDc, strTargetFormat) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
 async function isNonnegative(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonnegative:math'); await assertIsInt(intIn); let boolReturn;
 
@@ -1292,6 +1307,7 @@ async function isBaseStr(strIn, intB) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
@@ -1319,6 +1335,7 @@ async function charFromHexByte(strHexByte) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
 async function dcarrParseSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
@@ -1369,5 +1386,6 @@ async function dcarrParseSems(intArrayContent) {
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
+
 
 // @license-end
