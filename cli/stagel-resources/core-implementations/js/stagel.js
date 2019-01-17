@@ -235,7 +235,9 @@ async function internalLoadDatasets() {
                 await implError("Error reported while parsing "+dataset+"!");
             }*/
         });
+        console.log(dcData);
     }
+    console.log(dcData);
     datasetsLoaded = true;
 }
 
