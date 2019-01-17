@@ -85,7 +85,8 @@ async function internalSetup() {
     setupFinished = true;
 }
 
-async function internalLoadDatasets() {
+async function internalDatasetAppendRow() {
+    // If these are inlined in the Papa.parse call's step and complete functions, it seems to not give the value in the main scope.
     
 }
 
