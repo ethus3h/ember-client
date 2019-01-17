@@ -18,7 +18,7 @@ r/s/charFromHexByte s/hexByte
     set s/res charFromByte intFromBaseStr s/hexByte 16
     return s/res
 
-r/s/strToByteArray s/input
+r/an/strToByteArray s/input
     new n/count
     set n/count len s/input
     new n/i
