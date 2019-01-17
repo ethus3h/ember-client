@@ -20,7 +20,7 @@ r/s/charFromHexByte s/hexByte
 
 r/s/strToByteArray s/input
     new n/count
-    set n/count len ga/input
+    set n/count len s/input
     new n/i
     set n/i 0
     new an/out
