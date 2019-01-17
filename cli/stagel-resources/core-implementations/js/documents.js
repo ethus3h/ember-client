@@ -24,5 +24,9 @@ async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
     let events = [];
-    events = await getDesiredEventNotifications(doc);
+    events = await getDesiredEventNotifications(doc);  startDocument(async function() { return await loadDocument('sems', 'idiomatic-hello-world.sems'); });
+    implLoadDatasets(function() {
+        // This is where the actual commands to run (entry points) should go
+        implOperateOnDocFromUrl("sems", "idiomatic-hello-world.sems", async function (doc) { await runDocument(doc); } );
+    });
 }
