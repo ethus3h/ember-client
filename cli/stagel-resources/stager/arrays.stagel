@@ -69,10 +69,10 @@ r/b/isDcArray ga/in
     set n/count sub count ga/in } 1
     new g/elem
     while ge n/count 0
-        set n/count sub n/count 1
         set g/elem get ga/in n/count
         if not isDc g/elem
             return false
+        set n/count sub n/count 1
     return true
 
 r/n/intDcarrLength an/in
