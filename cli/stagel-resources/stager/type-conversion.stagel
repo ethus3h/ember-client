@@ -18,4 +18,14 @@ r/s/charFromHexByte s/hexByte
     return s/res
 
 r/s/strToByteArray s/input
-    
+    new n/count
+    set n/count len ga/input
+    new n/i
+    set n/i 0
+    new s/out
+    while lt n/i n/count
+        set 
+        set s/out cat s/out strFrom strChar ga/input n/i
+        set s/out cat s/out ' '
+        set n/i add n/i 1
+    return s/out
