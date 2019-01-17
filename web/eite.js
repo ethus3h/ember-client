@@ -2091,7 +2091,7 @@ async function charFromHexByte(strHexByte) {
 }
 
 async function strToByteArray(strInput) {
-    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let strReturn;
+    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
 
     let intCount = 0;
     intCount = await len(strInput);
@@ -2103,7 +2103,7 @@ async function strToByteArray(strInput) {
         intI = await implAdd(intI, 1);
     }
 
-    strReturn = intArrayOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcarrParseSems(intArrayContent) {
