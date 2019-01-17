@@ -1158,7 +1158,10 @@ async function isIntArray(genericArrayIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function isStrArray(genericArrayIn) {
+async function isStrArray(genericArrayIn) {    await alert('wtf 3'+genericItemIn);
+    await console.log('fuck');
+    await console.log(genericItemIn);
+
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
@@ -1500,9 +1503,6 @@ async function assertIsBoolArray(genericItemIn) {
 
 async function assertIsStrArray(genericItemIn) {
     await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsStrArray:assertions'); await assertIsGenericItem(genericItemIn);
-    await alert('wtf 3'+genericItemIn);
-    await console.log('fuck');
-    await console.log(genericItemIn);
 
     await assertIsTrue(await isStrArray(genericItemIn));
     await internalDebugStackExit();
