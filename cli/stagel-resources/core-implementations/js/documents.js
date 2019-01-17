@@ -23,7 +23,16 @@ async function getFileFromPath(path) {
 async function internalRunDocument(document) {
     await assertIsDcArray(document);
 
-    let doc = '';
+    let doc = -1;
+    doc = await startDocument(document);
+    let events = [];
+    events = await getDesiredEventNotifications(doc);
+}
+
+async function internalStartDocument(document) {
+    await assertIsDcArray(document);
+
+    let doc = -1;
     doc = await startDocument(document);
     let events = [];
     events = await getDesiredEventNotifications(doc);

@@ -52,9 +52,12 @@ r/an/convertToDcArray s/format an/contents
     set an/res dcarrParseDocument s/format an/contents
     return an/res
 
-r/s/startDocument an/contents
-    # Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num?
+r/n/startDocument an/contents
+    # Start execution of the provided document and return an ID for it.
     setupIfNeeded
+    new n/id
+    set n/id internalStartDocument an/contents
+    return n/id
 
 r/as/getDesiredEventNotifications as/documentId
     # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
