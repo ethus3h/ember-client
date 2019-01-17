@@ -226,6 +226,7 @@ async function internalLoadDatasets() {
                 delimiter: ",",
                 quoteChar: "\"",
                 complete: async function(results, file) {
+                    console.log(results);
                     resolve(results[data]);
                 },
                 error: async function(results, file) {
