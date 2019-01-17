@@ -25,6 +25,7 @@ r/v/loadAndConvert s/inputFormat s/path s/outputFormat
 
 r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
+    setupIfNeeded
     internalRunDocument an/contents
 
 r/an/convertDocument an/contents s/format
