@@ -74,7 +74,12 @@ async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
     let events = [];
-    events = await getDesiredEventNotifications(doc);
+    events = await getDesiredEventNotifications(execId);
+
+    // FIXME: Make this not just be converting the document and dumping it out.
+    let strTargetFormat;
+    strTargetFormat = await getEnvironmentPreferredFormat();
+    await implDoRenderIo(await dcarrConvertDocument(await dcarrParseSems(await strToByteArray(strArrayDocumentExecData[execId])), strTargetFormat, await implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
 }
 
 /* type-conversion, provides:
@@ -2055,6 +2060,7 @@ async function isBaseStr(strIn, intB) {
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
+    /* Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :) */
     let intCount = 0;
     intCount = await count(genericArrayInput);
     let intI = 0;
@@ -2078,6 +2084,22 @@ async function charFromHexByte(strHexByte) {
     strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strToByteArray(strInput) {
+    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let strReturn;
+
+    let intCount = 0;
+    intCount = await len(genericArrayInput);
+    let intI = 0;
+    intI = 0;
+    let intArrayOut = [];
+    while (await implLt(intI, intCount)) {
+        intArrayOut = await push(intArrayOut, await strChar(strInput, intI));
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = intArrayOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function dcarrParseSems(intArrayContent) {
