@@ -1647,7 +1647,9 @@ async function getDesiredEventNotifications(intExecId) {
     /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
     let strArrayRes = [];
 
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn);     await alert('wtf 2');
+    strArrayReturn = strArrayRes; 
+    console.log(strArrayReturn);
+    await assertIsStrArray(strArrayReturn);     await alert('wtf 2');
 await internalDebugStackExit(); return strArrayReturn;
 }
 
