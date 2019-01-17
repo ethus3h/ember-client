@@ -5,6 +5,7 @@ let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
 let documentExecData = []; // as
+let documentExecPtrs = []; // an
 let setupFinished = false;
 
 async function isSetupFinished() {
