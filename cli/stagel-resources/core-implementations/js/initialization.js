@@ -108,9 +108,9 @@ async function internalLoadDatasets() {
                 quoteChar: "\"",
                 step: async function(results, parser) {
                     //internalDatasetAppendRow(results);
-                    console.log(results);
-                    await alert(dataset+' results redy');
-                    dcData[dataset].push(results);
+                    //console.log(results);
+                    //await alert(dataset+' results redy');
+                    //dcData[dataset].push(results);
                 },
                 complete: async function(results, file) {
                     resolve(results);
