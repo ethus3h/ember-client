@@ -28,9 +28,7 @@ r/v/runDocument an/contents
     setupIfNeeded
     assertIsDcArray an/contents
     new n/docId
-    set n/docId -1
-    set n/docId startDocument an/contents
-    new as/
+    set n/docId startDocumentExec an/contents
     let events = [];
     events = await getDesiredEventNotifications(doc);
 
