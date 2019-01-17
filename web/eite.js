@@ -1642,7 +1642,7 @@ async function startDocument(intArrayContents) {
 
 async function getDesiredEventNotifications(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsInt(intExecId); let strArrayReturn;
-    await alert('wtf 2');
+    await alert('wtf');
 
     /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
     let strArrayRes = [];
