@@ -8,8 +8,9 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     if (dcData[dataset] === undefined) {
-        await implDie('dcDataLookupById called, but dataset '+dataset+'does not appear to be available.');
         console.log(dcData);
+        console.log(setupFinished);
+        await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
 
     strReturn = dcData[dataset][rowNum].data[0][fieldNum]; await assertIsStr(strReturn); return strReturn;
