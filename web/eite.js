@@ -1612,7 +1612,7 @@ async function loadStoredDocument(strFormat, strPath) {
     /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
     let intArrayRes = [];
-    alert(await getFileFromPath(strPath));
+    await alert(await getFileFromPath(strPath));
     intArrayRes = await convertToDcArray(strFormat, await getFileFromPath(strPath));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
