@@ -120,8 +120,8 @@ let haveDom = false;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
-let documentExecData = []; // as
-let documentExecPtrs = []; // an
+let strArrayDocumentExecData = []; // as
+let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
 
 async function isSetupFinished() {
@@ -1694,7 +1694,7 @@ async function startDocumentExec(intArrayContents) {
     let intExecId = 0;
     intExecId = -1;
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
-    intExecId = await count(strArrayDocumentExecPtrs);
+    intExecId = await count(intArrayDocumentExecPtrs);
     await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
     /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is. */
     await push(intArrayDocumentExecPtrs, 0);

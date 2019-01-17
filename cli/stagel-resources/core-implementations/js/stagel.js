@@ -120,8 +120,8 @@ let haveDom = false;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
-let documentExecData = []; // as
-let documentExecPtrs = []; // an
+let strArrayDocumentExecData = []; // as
+let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
 
 async function isSetupFinished() {
