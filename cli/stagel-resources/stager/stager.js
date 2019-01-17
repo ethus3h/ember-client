@@ -976,6 +976,7 @@ async function startDocumentExec(intArrayContents) {
     await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
     /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is. */
     await push(intArrayDocumentExecPtrs, 0);
+    await assertIsExecId(intExecId);
 
     intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
