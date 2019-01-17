@@ -218,6 +218,7 @@ async function internalLoadDatasets() {
         dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
+        //FIXME: When the error reporting function is defined here, it gets called when getFileFromPath() is called, even though this code isn't even running. WTF??!!‽⸘
         await Papa.parse('../data/' + dataset + '.csv', {
             download: true,
             encoding: "UTF-8",
@@ -229,7 +230,7 @@ async function internalLoadDatasets() {
             },
             complete: async function(results, file) {
                 return;
-            }/*,
+            }/* ,
             error: async function(results, file) {
                 await implError("Error reported while parsing "+dataset+"!");
             }*/
@@ -1162,6 +1163,7 @@ async function isStrArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
+    intCount = await count(genericArrayIn);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
@@ -1642,15 +1644,11 @@ async function startDocument(intArrayContents) {
 
 async function getDesiredEventNotifications(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsInt(intExecId); let strArrayReturn;
-    await alert('wtf');
 
     /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
     let strArrayRes = [];
 
-    strArrayReturn = strArrayRes; 
-    console.log(strArrayReturn);
-    await assertIsStrArray(strArrayReturn);     await alert('wtf 2');
-await internalDebugStackExit(); return strArrayReturn;
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function sendEvent(intExecId, intArrayEventData) {
