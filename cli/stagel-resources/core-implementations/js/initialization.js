@@ -106,7 +106,7 @@ async function internalLoadDatasets() {
                 delimiter: ",",
                 quoteChar: "\"",
                 complete: async function(results, file) {
-                    resolve(results);
+                    resolve(results[data]);
                 },
                 error: async function(results, file) {
                     await implError("Error reported while parsing "+dataset+"!");
