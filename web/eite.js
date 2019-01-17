@@ -63,6 +63,8 @@ async function getFileFromPath(path) {
         }
         oReq.send(null);
     });
+    await alert(path);
+    await alert(response);
     if (response !== undefined) {
         return response;
     }
