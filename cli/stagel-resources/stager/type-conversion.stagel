@@ -1,4 +1,5 @@
 r/s/strPrintArr ga/input
+    # Hint: running this on a DcArray produces a sems document that can be turned back into an array with dcarrParseSems strToByteArray s/str :)
     new n/count
     set n/count count ga/input
     new n/i
@@ -22,10 +23,8 @@ r/s/strToByteArray s/input
     set n/count len ga/input
     new n/i
     set n/i 0
-    new s/out
+    new an/out
     while lt n/i n/count
-        set 
-        set s/out cat s/out strFrom strChar ga/input n/i
-        set s/out cat s/out ' '
+        set an/out push an/out strChar s/input n/i
         set n/i add n/i 1
     return s/out
