@@ -226,7 +226,6 @@ async function internalLoadDatasets() {
                 delimiter: ",",
                 quoteChar: "\"",
                 complete: async function(results, file) {
-                    console.log(results);
                     resolve(results.data);
                 },
                 error: async function(results, file) {
@@ -237,6 +236,8 @@ async function internalLoadDatasets() {
         });
         count = count + 1;
     }
+    console.log(dcData);
+    alert('loaded');
     datasetsLoaded = true;
 }
 
