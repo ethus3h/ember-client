@@ -85,9 +85,9 @@ async function internalSetup() {
     setupFinished = true;
 }
 
-async function internalDatasetAppendRow() {
+function internalDatasetAppendRow(results) {
     // If these are inlined in the Papa.parse call's step and complete functions, it seems to not give the value in the main scope.
-    
+    dcData[dataset].push(results);
 }
 
 async function internalLoadDatasets() {
@@ -107,7 +107,7 @@ async function internalLoadDatasets() {
             delimiter: ",",
             quoteChar: "\"",
             step: async function(results, parser) {
-                dcData[dataset].push(results);
+                internalDatasetAppendRow(results);
             },
             complete: async function(results, file) {
                 return;
