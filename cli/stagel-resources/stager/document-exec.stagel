@@ -1,5 +1,6 @@
 r/n/startDocumentExec an/contents
     new n/docId
     set n/docId -1
-    set n/docId  an/contents
+    # documentExecData is a global, created during initialization. It holds state for any documents being executed.
+    set n/docId count as/documentExecData
     new as/
