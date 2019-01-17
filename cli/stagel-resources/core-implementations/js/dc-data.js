@@ -9,7 +9,7 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 
     if (dcData[dataset] === undefined) {
         console.log(dcData);
-        assertFailed('DcData for the dataset '+dataset+' does not seem to be available. Setup finished: '+setupFinished);
+        assertionFailed('DcData for the dataset '+dataset+' does not seem to be available. Setup finished: '+setupFinished);
     }
 
     strReturn = dcData[dataset][rowNum].data[0][fieldNum]; await assertIsStr(strReturn); return strReturn;
