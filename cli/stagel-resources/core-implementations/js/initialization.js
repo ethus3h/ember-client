@@ -113,12 +113,11 @@ async function internalLoadDatasets() {
                     dcData[dataset].push(results);
                 },
                 complete: async function(results, file) {
-                    console.log(results);
-                    alert('complete');
-                    return;
+                    resolve(results);
                 },
                 error: async function(results, file) {
                     await implError("Error reported while parsing "+dataset+"!");
+                    resolve(undefined);
                 }
             });
         }
