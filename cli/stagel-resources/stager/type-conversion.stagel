@@ -25,6 +25,6 @@ r/an/strToByteArray s/input
     set n/i 0
     new an/out
     while lt n/i n/count
-        set an/out push an/out charFromByte strChar s/input n/i
+        set an/out push an/out byteFromChar strChar s/input n/i
         set n/i add n/i 1
     return an/out
