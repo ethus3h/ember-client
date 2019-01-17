@@ -27,12 +27,9 @@ r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
     setupIfNeeded
     assertIsDcArray an/contents
-    new n/docId
-    set n/docId startDocumentExec an/contents
-    let events = [];
-    events = await getDesiredEventNotifications(doc);
-
-    internalRunDocument an/contents
+    new n/execId
+    set n/execId startDocument an/contents
+    internalRunDocument n/execId
 
 r/an/convertDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
