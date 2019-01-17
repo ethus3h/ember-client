@@ -377,15 +377,15 @@ async function contains(genericArrayIn, genericValue) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('contains:arrays'); await assertIsGenericArray(genericArrayIn);await assertIsGeneric(genericValue); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implEq(genericElem, genericValue)) {
 
             boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -395,15 +395,15 @@ async function isIntArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isInt(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -413,15 +413,15 @@ async function isStrArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isStr(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -431,15 +431,15 @@ async function isBoolArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isBoolArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isBool(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -449,15 +449,15 @@ async function isCharArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isCharArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isChar(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -467,15 +467,15 @@ async function isByteArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isByteArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isByte(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -485,15 +485,15 @@ async function isDcArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
+    intCount = await implSub(await count(genericArrayIn), 1);
     let genericElem;
     while (await ge(intCount, 0)) {
-        intCount = await implSub(intCount, 1);
         genericElem = await get(genericArrayIn, intCount);
         if (await implNot(await isDc(genericElem))) {
 
             boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
         }
+        intCount = await implSub(intCount, 1);
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
