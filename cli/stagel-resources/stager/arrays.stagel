@@ -14,10 +14,10 @@ r/b/isIntArray ga/in
     set n/count sub count ga/in } 1
     new g/elem
     while ge n/count 0
-        set n/count sub n/count 1
         set g/elem get ga/in n/count
         if not isInt g/elem
             return false
+        set n/count sub n/count 1
     return true
 
 r/b/isStrArray ga/in
@@ -25,10 +25,10 @@ r/b/isStrArray ga/in
     set n/count sub count ga/in } 1
     new g/elem
     while ge n/count 0
-        set n/count sub n/count 1
         set g/elem get ga/in n/count
         if not isStr g/elem
             return false
+        set n/count sub n/count 1
     return true
 
 r/b/isBoolArray ga/in
