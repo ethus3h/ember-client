@@ -20,20 +20,9 @@ async function getFileFromPath(path) {
 
 // Implementations of routines provided in public-interface.stagel.
 
-async function internalRunDocument(document) {
-    await assertIsDcArray(document);
+async function internalRunDocument(execId) {
+    await assertIsExecId(execId);
 
-    let doc = -1;
-    doc = await startDocument(document);
-    let events = [];
-    events = await getDesiredEventNotifications(doc);
-}
-
-async function internalStartDocument(document) {
-    await assertIsDcArray(document);
-
-    let doc = -1;
-    doc = await startDocument(document);
     let events = [];
     events = await getDesiredEventNotifications(doc);
 }
