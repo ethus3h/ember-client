@@ -99,7 +99,7 @@ async function internalLoadDatasets() {
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         //FIXME: When the error reporting function is defined here, it gets called when getFileFromPath() is called, even though this code isn't even running. WTF??!!‽⸘
         alert(dataset);
-        await new Promise(resolve => {
+        dcData[dataset] = await new Promise(resolve => {
             Papa.parse('../data/' + dataset + '.csv', {
                 download: true,
                 encoding: "UTF-8",
@@ -120,7 +120,7 @@ async function internalLoadDatasets() {
                     resolve(undefined);
                 }
             });
-        }
+        });
         count = count + 1;
         console.log(dcData);
         alert('done loop for'+dataset);
