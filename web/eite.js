@@ -49,6 +49,7 @@ async function implMod(intA, intB) {
 }
 
 async function getFileFromPath(path) {
+    await alert(response);
     // Returns an array of bytes.
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
@@ -62,7 +63,6 @@ async function getFileFromPath(path) {
         }
         oReq.send(null);
     });
-    alert(response);
     if (response !== undefined) {
         return response;
     }
