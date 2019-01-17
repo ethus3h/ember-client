@@ -12,9 +12,12 @@ async function isSetupFinished() {
 
 async function setupIfNeeded() {
     if (setupFinished) {
+        alert('Setup finished');
         return;
     }
+    alert('Starting seutp');
     await internalSetup();
+    alert('Done setup...');
 }
 
 async function internalSetup() {
