@@ -5,7 +5,7 @@ async function dcDatasetLength(dataset) {
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
-    await assertIsStr(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
+    await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     strReturn = dcData[dataset][rowNum].data[0][fieldNum]; await assertIsStr(strReturn); return strReturn;
 }
