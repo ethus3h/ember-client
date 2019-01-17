@@ -58,9 +58,9 @@ r/an/convertToDcArray s/format an/contents
 r/n/startDocument an/contents
     # Start execution of the provided document and return an ID for it.
     setupIfNeeded
-    new n/id
-    set n/id internalStartDocument an/contents
-    return n/id
+    new n/execId
+    set n/execId startDocumentExec an/contents
+    return n/execId
 
 r/as/getDesiredEventNotifications as/documentId
     # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
