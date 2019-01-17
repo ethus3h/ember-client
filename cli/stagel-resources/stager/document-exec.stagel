@@ -7,3 +7,8 @@ r/n/startDocumentExec an/contents
     # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is.
     push an/documentExecPtrs 0
     return n/execId
+
+r/b/isExecId n/execId
+    if lt n/execId count an/documentExecPtrs
+        return true
+    return false
