@@ -1609,11 +1609,10 @@ async function loadStoredDocument(strFormat, strPath) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath); let intArrayReturn;
 
     await assertIsSupportedInputFormat(strFormat);
-    alert(strFormat);
-    alert(strPath);
     /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
     let intArrayRes = [];
+    alert(await getFileFromPath(strPath));
     intArrayRes = await convertToDcArray(strFormat, await getFileFromPath(strPath));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
