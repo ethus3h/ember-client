@@ -218,7 +218,6 @@ async function internalLoadDatasets() {
         dcData[dataset].push(results);
     }
     while (count < Object.keys(datasets).length) {
-        count = count + 1;
         dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
@@ -230,7 +229,8 @@ async function internalLoadDatasets() {
             delimiter: ",",
             quoteChar: "\"",
             step: async function(results, parser) {
-                internalDatasetAppendRow(results);
+                //internalDatasetAppendRow(results);
+                dcData[dataset].push(results);
             },
             complete: async function(results, file) {
                 return;
@@ -239,6 +239,7 @@ async function internalLoadDatasets() {
                 await implError("Error reported while parsing "+dataset+"!");
             }*/
         });
+        count = count + 1;
         console.log(dcData);
     }
     console.log(dcData);
