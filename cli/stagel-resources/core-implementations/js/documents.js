@@ -1,5 +1,6 @@
 async function getFileFromPath(path) {
     // Returns an array of bytes.
+    alert(path);
     let response = await new Promise(resolve => {
         var oReq = new XMLHttpRequest();
         oReq.open('GET', path, true);
