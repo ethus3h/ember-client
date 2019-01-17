@@ -3,4 +3,4 @@ r/n/startDocumentExec an/contents
     set n/docId -1
     # documentExecData is a global, created during initialization. It holds the current document state for any documents being executed.
     set n/docId count as/documentExecData
-    
+    push as/documentExecData strPrintArr an/contents
