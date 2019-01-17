@@ -1163,6 +1163,7 @@ async function isStrArray(genericArrayIn) {
 
     let intCount = 0;
     intCount = await count(genericArrayIn);
+    alert(intCount);
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
