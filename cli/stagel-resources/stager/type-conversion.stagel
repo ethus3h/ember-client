@@ -1,5 +1,5 @@
 r/s/strPrintArr ga/input
-    # Hint: running this on a DcArray produces a sems document that can be turned back into an array with dcarrParseSems strToByteArray s/str :)
+    # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
     new n/count
     set n/count count ga/input
     new n/i
