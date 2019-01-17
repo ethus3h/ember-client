@@ -24,7 +24,12 @@ async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
     let events = [];
-    events = await getDesiredEventNotifications(doc);  startDocument(async function() { return await loadDocument('sems', 'idiomatic-hello-world.sems'); });
+    events = await getDesiredEventNotifications(execId);
+    async function runDocument(dcarrContent) {
+    strTargetFormat = await getEnvironmentPreferredFormat();
+    await implDoRenderIo(await dcarrConvertDocument(dcarrContent, strTargetFormat, await implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
+}
+startDocument(async function() { return await loadDocument('sems', 'idiomatic-hello-world.sems'); });
     implLoadDatasets(function() {
         // This is where the actual commands to run (entry points) should go
         implOperateOnDocFromUrl("sems", "idiomatic-hello-world.sems", async function (doc) { await runDocument(doc); } );
