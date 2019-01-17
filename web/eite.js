@@ -233,10 +233,10 @@ async function internalLoadDatasets() {
             },
             complete: async function(results, file) {
                 return;
-            },
+            }/*,
             error: async function(results, file) {
                 await implError("Error reported while parsing "+dataset+"!");
-            }
+            }*/
         });
     }
     datasetsLoaded = true;
