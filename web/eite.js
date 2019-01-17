@@ -1552,6 +1552,7 @@ async function runDocument(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
 
     /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
+    await setupIfNeeded();
     await internalRunDocument(intArrayContents);
     await internalDebugStackExit();
 }
