@@ -1162,7 +1162,6 @@ async function isStrArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    intCount = await count(genericArrayIn);
     alert(intCount);
     let genericElem;
     while (await ge(intCount, 0)) {
@@ -1611,6 +1610,8 @@ async function loadStoredDocument(strFormat, strPath) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat);await assertIsStr(strPath); let intArrayReturn;
 
     await assertIsSupportedInputFormat(strFormat);
+    alert(strFormat);
+    alert(strPath);
     /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
     let intArrayRes = [];
