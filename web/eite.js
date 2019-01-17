@@ -1518,6 +1518,13 @@ async function assertIsSupportedOutputFormat(strIn) {
     await assertIsTrue(await isSupportedOutputFormat(strIn));
     await internalDebugStackExit();
 }
+
+async function assertIsExecId(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsExecId:assertions'); await assertIsInt(intIn);
+
+    await assertIsTrue(await isExecId(intIn));
+    await internalDebugStackExit();
+}
 /* This file contains the public interface for EITE. */
 /* If you just want to run EITE, use the following function. */
 
@@ -1700,6 +1707,17 @@ async function startDocumentExec(intArrayContents) {
     await push(intArrayDocumentExecPtrs, 0);
 
     intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function isExecId(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
+
+    if (await implLt(intExecId, await count(intArrayDocumentExecPtrs))) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
