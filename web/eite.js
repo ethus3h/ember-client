@@ -2094,7 +2094,7 @@ async function strToByteArray(strInput) {
     await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let strReturn;
 
     let intCount = 0;
-    intCount = await len(genericArrayInput);
+    intCount = await len(strInput);
     let intI = 0;
     intI = 0;
     let intArrayOut = [];
