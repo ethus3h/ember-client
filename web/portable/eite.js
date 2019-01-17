@@ -61,8 +61,4 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
     return dcarrOutput;
 }
 
-async function runDocument(dcarrContent) {
-    strTargetFormat = await getEnvironmentPreferredFormat();
-    await implDoRenderIo(await dcarrConvertDocument(dcarrContent, strTargetFormat, await implGetEnvironmentRenderTraits(strTargetFormat)), strTargetFormat);
-}
 // @license-end
