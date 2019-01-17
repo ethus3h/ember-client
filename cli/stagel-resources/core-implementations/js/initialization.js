@@ -106,12 +106,6 @@ async function internalLoadDatasets() {
                 newline: "\n",
                 delimiter: ",",
                 quoteChar: "\"",
-                step: async function(results, parser) {
-                    //internalDatasetAppendRow(results);
-                    //console.log(results);
-                    //await alert(dataset+' results redy');
-                    //dcData[dataset].push(results);
-                },
                 complete: async function(results, file) {
                     resolve(results);
                 },
