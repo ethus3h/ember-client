@@ -1311,3 +1311,101 @@ async function isBaseStr(strIn, intB) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function strPrintArr(genericArrayInput) {
+    await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
+
+    /* Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :) */
+    let intCount = 0;
+    intCount = await count(genericArrayInput);
+    let intI = 0;
+    intI = 0;
+    let strOut = '';
+    while (await implLt(intI, intCount)) {
+        strOut = await implCat(strOut, await strFrom(await get(genericArrayInput, intI)));
+        strOut = await implCat(strOut, ' ');
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function charFromHexByte(strHexByte) {
+    await internalDebugCollect('str HexByte = ' + strHexByte + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strHexByte); let strReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    await assertIsBaseStr(strHexByte, 16);
+    let strRes = '';
+    strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strToByteArray(strInput) {
+    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
+
+    let intCount = 0;
+    intCount = await len(strInput);
+    let intI = 0;
+    intI = 0;
+    let intArrayOut = [];
+    while (await implLt(intI, intCount)) {
+        intArrayOut = await push(intArrayOut, await byteFromChar(await strChar(strInput, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcarrParseSems(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcarrParseSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    await assertIsByteArray(intArrayContent);
+    let intArrayRet = [];
+    /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
+    let strParserState = '';
+    strParserState = 'dc';
+    let strCurrentDc = '';
+    strCurrentDc = '';
+    let intContentLength = 0;
+    intContentLength = await count(intArrayContent);
+    let intByteOffset = 0;
+    let intCurrentByte = 0;
+    while (await implLt(intByteOffset, intContentLength)) {
+        /* do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
+        intCurrentByte = await get(intArrayContent, intByteOffset);
+        if (await implEq(strParserState, 'dc')) {
+            if (await asciiIsDigit(intCurrentByte)) {
+                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
+            }
+            else if (await asciiIsSpace(intCurrentByte)) {
+                intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+                strCurrentDc = '';
+            }
+            else if (await implEq(35, intCurrentByte)) {
+                /* pound sign: start comment */
+                strParserState = 'comment';
+            }
+            else {
+                await implDie('Unexpected parser state in SEMS document.');
+            }
+        }
+        else if (await implEq(strParserState, 'comment')) {
+            if (await asciiIsNewline(intCurrentByte)) {
+                strParserState = 'dc';
+            }
+            else {
+                /* Do nothing: comments are ignored */
+            }
+        }
+        else {
+            await implDie('Internal error: unexpected parser state while parsing SEMS document');
+        }
+        intByteOffset = await implAdd(intByteOffset, 1);
+    }
+    await assertIsDcArray(intArrayRet);
+
+    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+
+// @license-end
