@@ -824,7 +824,10 @@ async function runDocument(intArrayContents) {
 
     /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
     await setupIfNeeded();
-    await internalRunDocument(intArrayContents);
+    await assertIsDcArray(intArrayContents);
+    let intExecId = 0;
+    intExecId = await startDocument(intArrayContents);
+    await internalRunDocument(intExecId);
     await internalDebugStackExit();
 }
 
@@ -862,26 +865,30 @@ async function convertToDcArray(strFormat, intArrayContents) {
 }
 
 async function startDocument(intArrayContents) {
-    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocument:public-interface'); await assertIsIntArray(intArrayContents); let strReturn;
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocument:public-interface'); await assertIsIntArray(intArrayContents); let intReturn;
 
-    /* Start execution of the provided document and return an ID for it. FIXME: should that ID be string or be num? */
+    /* Start execution of the provided document and return an ID for it. */
     await setupIfNeeded();
+    let intExecId = 0;
+    intExecId = await startDocumentExec(intArrayContents);
+
+    intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function getDesiredEventNotifications(strArrayDocumentId) {
-    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsStrArray(strArrayDocumentId); let strArrayReturn;
+async function getDesiredEventNotifications(strArrayExecId) {
+    await internalDebugCollect('strArray ExecId = ' + strArrayExecId + '; '); await internalDebugStackEnter('getDesiredEventNotifications:public-interface'); await assertIsStrArray(strArrayExecId); let strArrayReturn;
 
     /* Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of. */
 }
 
-async function sendEvent(strArrayDocumentId, intArrayEventData) {
-    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('intArray EventData = ' + intArrayEventData + '; '); await internalDebugStackEnter('sendEvent:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsIntArray(intArrayEventData); let intArrayReturn;
+async function sendEvent(strArrayExecId, intArrayEventData) {
+    await internalDebugCollect('strArray ExecId = ' + strArrayExecId + '; '); await internalDebugCollect('intArray EventData = ' + intArrayEventData + '; '); await internalDebugStackEnter('sendEvent:public-interface'); await assertIsStrArray(strArrayExecId);await assertIsIntArray(intArrayEventData); let intArrayReturn;
 
     /* Send the provided event or events data to the specified document. */
 }
 
-async function getDocumentFrame(strArrayDocumentId, strFormat) {
-    await internalDebugCollect('strArray DocumentId = ' + strArrayDocumentId + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getDocumentFrame:public-interface'); await assertIsStrArray(strArrayDocumentId);await assertIsStr(strFormat); let intArrayReturn;
+async function getDocumentFrame(strArrayExecId, strFormat) {
+    await internalDebugCollect('strArray ExecId = ' + strArrayExecId + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getDocumentFrame:public-interface'); await assertIsStrArray(strArrayExecId);await assertIsStr(strFormat); let intArrayReturn;
 
     await assertIsSupportedOutputFormat(strFormat);
     /* Return the most recently available output for the given document in the requested format. */
@@ -951,6 +958,19 @@ async function nle(intA, intB) {
     boolTemp = await implNot(await le(intA, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+async function startDocumentExec(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsIntArray(intArrayContents); let intReturn;
+
+    let intExecId = 0;
+    intExecId = -1;
+    /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
+    intExecId = await count(strArrayDocumentExecPtrs);
+    await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
+    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is. */
+    await push(intArrayDocumentExecPtrs, 0);
+
+    intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;

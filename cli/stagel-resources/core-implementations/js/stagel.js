@@ -69,11 +69,9 @@ async function getFileFromPath(path) {
 
 // Implementations of routines provided in public-interface.stagel.
 
-async function internalRunDocument(document) {
-    await assertIsDcArray(document);
+async function internalRunDocument(execId) {
+    await assertIsExecId(execId);
 
-    let doc = '';
-    doc = await startDocument(document);
     let events = [];
     events = await getDesiredEventNotifications(doc);
 }
@@ -119,9 +117,11 @@ async function byteFromChar(strInput) {
 // Global variables
 
 let haveDom = false;
-let datasets = [];
+let datasets = []; // as
 let datasetsLoaded = false;
-let dcData = [];
+let dcData = []; // an
+let documentExecData = []; // as
+let documentExecPtrs = []; // an
 let setupFinished = false;
 
 async function isSetupFinished() {
@@ -130,13 +130,9 @@ async function isSetupFinished() {
 
 async function setupIfNeeded() {
     if (setupFinished) {
-        alert('Setup already finished');
-        alert('Datasets loaded'+datasetsLoaded);
         return;
     }
-    alert('Starting setup');
     await internalSetup();
-    alert('Done setup...');
 }
 
 async function internalSetup() {
@@ -489,11 +485,6 @@ async function dcDatasetLength(dataset) {
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
-
-    if (dcData[dataset] === undefined) {
-        console.log(dcData);
-        die('DcData for the dataset '+dataset+' does not seem to be available. Setup finished: '+setupFinished);
-    }
 
     strReturn = dcData[dataset][rowNum].data[0][fieldNum]; await assertIsStr(strReturn); return strReturn;
 }
