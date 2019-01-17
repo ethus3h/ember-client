@@ -1499,9 +1499,9 @@ async function assertIsBoolArray(genericItemIn) {
 }
 
 async function assertIsStrArray(genericItemIn) {
-    alert('wtf 3'+genericItemIn);
-    console.log('fuck');
-    console.log(genericItemIn);
+    await alert('wtf 3'+genericItemIn);
+    await console.log('fuck');
+    await console.log(genericItemIn);
     await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsStrArray:assertions'); await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isStrArray(genericItemIn));
