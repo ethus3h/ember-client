@@ -1163,9 +1163,8 @@ async function isStrArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
     let intCount = 0;
-    await alert('1');
     intCount = await count(genericArrayIn);
-    await alert('2');
+    await alert('1');
     let genericElem;
     while (await ge(intCount, 0)) {
         intCount = await implSub(intCount, 1);
