@@ -1227,3 +1227,55 @@ async function intFromBase36Char(strN) {
 async function intFromBaseStr(strN, intB) {
     await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN);await assertIsInt(intB); let intReturn;
 
+    /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    await assertIsBaseStr(strN, intB);
+    let strUc = '';
+    strUc = await strToUpper(strN);
+    let intRes = 0;
+    intRes = 0;
+    let intLen = 0;
+    intLen = await len(strUc);
+    let intInt = 0;
+    intInt = 0;
+    let intPow = 0;
+    intPow = 1;
+    while (await implGt(intLen, 0)) {
+        intLen = await implSub(intLen, 1);
+        intInt = await intFromBase36Char(await strCharAtPos(strUc, intLen));
+        await assertIsTrue(await implLt(intInt, intB));
+        intRes = await implAdd(intRes, await implMul(intInt, intPow));
+        intPow = await implMul(intPow, intB);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function intToBaseStr(intN, intB) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intToBaseStr:math'); await assertIsInt(intN);await assertIsInt(intB); let strReturn;
+
+    /* Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    let strRes = '';
+    while (await implGt(intN, 0)) {
+        strRes = await implCat(strRes, await intToBase36Char(await implMod(intN, intB)));
+        intN = await implDiv(intN, intB);
+    }
+    strRes = await reverseStr(strRes);
+    await assertIsBaseStr(strRes, intB);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function isSupportedBase(intB) {
+    await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isSupportedBase:math'); await assertIsInt(intB); let boolReturn;
+
+    /* StageL base conversion routines support base 1 to base 36. */
+    let boolRes = false;
+    boolRes = await intIsBetween(intB, 1, 36);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseDigit(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseDigit:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
+
+    await assertIsChar(
