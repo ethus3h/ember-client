@@ -55,7 +55,6 @@ async function getFileFromPath(path) {
         oReq.open('GET', path, true);
         oReq.responseType = 'arraybuffer';
         oReq.onload = function(oEvent) {
-    alert(oReq.response);
             resolve(new Uint8Array(oReq.response)); // Note: not oReq.responseText
         };
         oReq.onerror = function() {
@@ -63,6 +62,7 @@ async function getFileFromPath(path) {
         }
         oReq.send(null);
     });
+    alert(response);
     if (response !== undefined) {
         return response;
     }
