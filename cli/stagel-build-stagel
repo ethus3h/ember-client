@@ -20,5 +20,7 @@ else
 fi
 
 cp ./stagel-resources/core-implementations/js/stagel.js ../web/eite.js
+echo >> ../web/eite.js
 cat ./stagel-resources/stager/stager.js >> ../web/eite.js
+echo >> ../web/eite.js
 cat ./stagel-resources/speedups/speedups.js >> ../web/eite.js
