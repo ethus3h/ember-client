@@ -1278,4 +1278,36 @@ async function isSupportedBase(intB) {
 async function isBaseDigit(strIn, intB) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseDigit:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
 
-    await assertIsChar(
+    await assertIsChar(strIn);
+    await assertIsSupportedBase(intB);
+    if (await implNot(await asciiIsAlphanum(await byteFromChar(strIn)))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intDigitVal = 0;
+    intDigitVal = await intFromBase36Char(strIn);
+    let boolRes = false;
+    boolRes = await implLt(intDigitVal, intB);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseStr(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseStr:math'); await assertIsStr(strIn);await assertIsInt(intB); let boolReturn;
+
+    let intLen = 0;
+    intLen = await len(strIn);
+    intLen = await implSub(intLen, 1);
+    await assertIsNonnegative(intLen);
+    let strChr = '';
+    let boolRes = false;
+    boolRes = true;
+    while (await ge(intLen, 0)) {
+        strChr = await strCharAtPos(strIn, intLen);
+        boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
+        intLen = await implSub(intLen, 1);
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
