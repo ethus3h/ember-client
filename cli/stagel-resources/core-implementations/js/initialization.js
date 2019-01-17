@@ -106,6 +106,7 @@ async function internalLoadDatasets() {
             quoteChar: "\"",
             step: async function(results, parser) {
                 //internalDatasetAppendRow(results);
+                await alert(dataset);
                 dcData[dataset].push(results);
             },
             complete: async function(results, file) {
