@@ -12,13 +12,9 @@ async function isSetupFinished() {
 
 async function setupIfNeeded() {
     if (setupFinished) {
-        alert('Setup already finished');
-        alert('Datasets loaded'+datasetsLoaded);
         return;
     }
-    alert('Starting setup');
     await internalSetup();
-    alert('Done setup...');
 }
 
 async function internalSetup() {
