@@ -1349,7 +1349,7 @@ async function strToByteArray(strInput) {
     intI = 0;
     let intArrayOut = [];
     while (await implLt(intI, intCount)) {
-        intArrayOut = await push(intArrayOut, await charFromByte(await strChar(strInput, intI)));
+        intArrayOut = await push(intArrayOut, await byteFromChar(await strChar(strInput, intI)));
         intI = await implAdd(intI, 1);
     }
 
