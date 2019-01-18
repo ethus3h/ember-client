@@ -1,9 +1,5 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 // This file contains portable code for all JavaScript implementations of EITE.
-// This is a library file, and should only initialize functions/variables, so that it can be loaded and run in parallel with other library files, and work regardless of the order they are loaded.
-// It also serves as an example implementation that should be written in a way that is easily ported to other platforms.
-// To serve these two goals, it should not use I/O, objects, first-class functions, JavaScript-specific libraries, or null/undefined values.
-// TODO: It should probably also declare all array sizes? Or else, put array operations into the non-portable categories, and have a set of impl* functions as an API for them instead.
 
 async function dcarrConvertDocument(dcarrInput, strTargetFormat) {
     dcarrOutput=[];
