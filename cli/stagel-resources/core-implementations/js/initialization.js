@@ -57,8 +57,8 @@ async function internalSetup() {
             envResolutionH = 1;
         }
     }
-    if (envResolutionW == 0 || envResolutionH == 0) {
-        await implWarn('The resolution detected was zero in at least one dimension. Width = '+environmentResolutionW+'; height = '+environmentResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
+    if (envResolutionW === 0 || envResolutionH === 0 || envResolutionW === undefined || envResolutionH === undefined) {
+        await implWarn('The resolution detected was zero in at least one dimension. Width = '+envResolutionW+'; height = '+envResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
 
     // Set up data sets.
