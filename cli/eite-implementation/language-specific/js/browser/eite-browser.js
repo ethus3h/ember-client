@@ -4,42 +4,6 @@
 
 // Fully platform-specific code
 
-async function implGetEnvironmentRenderTraits(targetFormat) {
-    if ( targetFormat === undefined ) {
-        await eiteError("implGetEnvironmentRenderTraits was called without any targetFormat!");
-    }
-    var traits = {};
-    let cs = document.characterSet.toLowerCase();
-    switch (targetFormat) {
-        case "HTML":
-            switch(cs) {
-                case "utf-8":
-                    traits.characterEncoding = "UTF-8";
-                    break;
-                default:
-                    await implWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
-                    traits.characterEncoding = "ASCII-safe-subset";
-                    break;
-            }
-            break;
-        case "integerList":
-        case "immutableCharacterCells":
-            traits.cellTableWidth = -1; // unlimited
-            traits.cellTableHeight = -1; // unlimited
-            switch(cs) {
-                case "utf-8":
-                    traits.characterEncoding = "UTF-8";
-                    break;
-                default:
-                    await implWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.");
-                    traits.characterEncoding = "ASCII-safe-subset";
-                    break;
-            }
-            break;
-    }
-    return traits;
-}
-
 async function implDoRenderIo(renderBuffer, targetFormat) {
     switch (targetFormat) {
         case "integerList":
