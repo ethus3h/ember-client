@@ -10,7 +10,6 @@
 // Special types: dc = a string, but with an int as its contents
 // Assert functions return nothing, and should call eiteError if they fail.
 // "eite" functions (logging) return nothing.
-// TODO: DcData and renderTraits shouldn't be used here, since they're JS-specific, complex objects. They should be provided by APIs and/or simple data types instead. This will also allow the "dc" ad-hoc data type to actually be an int, instead of a string containing an int (which is kind of stupid ­— it should just be an int).
 // TODO: Function parameters and return values should be type-checked to ensure their validity. Similarly, the string types that correspond to a set of possible values (format names, encoding names, etc.) should be checked against the set (this could also be reflected in more specific/meaningful identifier prefixes).
 
 async function dcarrConvertDocument(dcarrInput, strTargetFormat) {
