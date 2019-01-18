@@ -37,7 +37,7 @@ async function internalSetup() {
         envCharEncoding = 'UTF-8';
     }
     else {
-        await implWarn("Unimplemented character set: " + cs + ". Falling back to ASCII-safe-subset.")
+        await implWarn("Unimplemented character set: " + charset + ". Falling back to ASCII-safe-subset.");
     }
     if (haveDom) {
         // Web browsers, etc.
