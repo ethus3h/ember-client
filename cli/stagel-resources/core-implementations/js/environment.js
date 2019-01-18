@@ -5,8 +5,5 @@ async function getEnvironmentPreferredFormat() {
 
 async function getEnvironmentResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, and says 1 line available.
-    if (haveDom) {
-        return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    }
-    return 'immutableCharacterCells';
+    return environmentResolutionW;
 }
