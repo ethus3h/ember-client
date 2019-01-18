@@ -28,8 +28,13 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+    if (haveDom) {
+        environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    }
     datasets = await listDcDatasets();
-    await internalLoadDatasets();
+    if (!datasetsLoaded) {
+        await internalLoadDatasets();
+    }
 
     if (haveDom) {
         // Override error reporting method to show alert
