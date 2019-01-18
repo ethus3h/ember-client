@@ -1,13 +1,17 @@
-async function getEnvironmentPreferredFormat() {
+async function getEnvPreferredFormat() {
     // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
-    return environmentPreferredFormat;
+    return envPreferredFormat;
 }
 
-async function getEnvironmentResolutionW() {
+async function getEnvResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available.
-    return environmentResolutionW;
+    return envResolutionW;
 }
 
-async function getEnvironmentResolutionH() {
-    return environmentResolutionH;
+async function getEnvResolutionH() {
+    return envResolutionH;
+}
+
+async function getEnvCharEncoding() {
+    return envCharEncoding;
 }
