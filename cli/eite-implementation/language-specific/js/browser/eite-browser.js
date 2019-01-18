@@ -28,7 +28,7 @@ async function implDoRenderIo(renderBuffer, targetFormat) {
             htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
             break;
         default:
-            await eiteError("Unimplemented render I/O format: " + targetFormat);
+            await implError("Unimplemented render I/O format: " + targetFormat);
             break;
     }
 }
@@ -42,7 +42,7 @@ async function implRunEiteTest(strTestFormat, strTestName) {
             await implUrlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
             break;
         default:
-            await eiteError("Unimplemented test format: " + strTestFormat);
+            await implError("Unimplemented test format: " + strTestFormat);
             break;
     }
 }
