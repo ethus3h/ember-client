@@ -7,3 +7,7 @@ async function getEnvironmentResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, and says 1 line available.
     return environmentResolutionW;
 }
+async function getEnvironmentResolutionW() {
+    // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, and says 1 line available.
+    return environmentResolutionW;
+}
