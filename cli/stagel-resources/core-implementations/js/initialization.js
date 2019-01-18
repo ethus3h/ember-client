@@ -32,6 +32,10 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+    let charset = document.characterSet.toLowerCase();
+    if (charset === 'utf-8') {
+        
+    }
     if (haveDom) {
         // Web browsers, etc.
         environmentPreferredFormat = 'HTML';
