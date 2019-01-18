@@ -37,13 +37,15 @@ async function internalSetup() {
         // Command-line, e.g. Node.js
         environmentResolutionW = process.stdout.columns;
         environmentResolutionH = process.stdout.rows;
-        if (environmentResolutionH == 0 || environmentResolutionW == 0) {
+        if (environmentResolutionW == 0 || environmentResolutionH == 0) {
             // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
             environmentResolutionW = 80;
             environmentResolutionH = 1;
         }
     }
-    if (environmentResolutionH == 0 || environmentResolutionW == 0) {
+    if (environmentResolutionW == 0 || environmentResolutionH == 0) {
+        await implWarn('The resolution detected was zero in at least one dimension. Width = '+environmentResolutionW+'; height = '+environmentResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
+    }
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
         await internalLoadDatasets();
