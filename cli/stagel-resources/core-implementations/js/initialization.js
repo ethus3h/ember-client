@@ -10,6 +10,7 @@ let setupFinished = false;
 // Global environment
 let haveDom = false;
 let environmentResolutionW = 0;
+let environmentResolutionH = 0;
 
 async function isSetupFinished() {
     return setupFinished;
