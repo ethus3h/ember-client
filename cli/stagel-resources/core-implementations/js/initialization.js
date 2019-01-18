@@ -12,6 +12,7 @@ let haveDom = false;
 let environmentPreferredFormat = '';
 let environmentResolutionW = 0;
 let environmentResolutionH = 0;
+let environmentCharEncoding = 'ASCII-safe-subset';
 
 async function isSetupFinished() {
     return setupFinished;
