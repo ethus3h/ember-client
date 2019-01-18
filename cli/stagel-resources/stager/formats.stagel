@@ -25,5 +25,5 @@ r/as/listEnvironmentCharsets
 
 r/b/isSupportedEnvironmentCharset s/in
     new b/res
-    set b/res contains listOutputFormats } s/in
+    set b/res contains listEnvironmentCharsets } s/in
     return b/res
