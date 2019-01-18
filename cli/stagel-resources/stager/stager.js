@@ -799,10 +799,10 @@ async function assertIsSupportedOutputFormat(strIn) {
     await internalDebugStackExit();
 }
 
-async function assertIsSupportedEnvironmentCharset(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedEnvironmentCharset:assertions'); await assertIsStr(strIn);
+async function assertIsSupportedEnvironmentCharEncoding(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedEnvironmentCharEncoding:assertions'); await assertIsStr(strIn);
 
-    await assertIsTrue(await isSupportedEnvironmentCharset(strIn));
+    await assertIsTrue(await isSupportedEnvironmentCharEncoding(strIn));
     await internalDebugStackExit();
 }
 
@@ -1050,8 +1050,8 @@ async function isSupportedOutputFormat(strIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function listEnvironmentCharsets() {
-    await internalDebugStackEnter('listEnvironmentCharsets:formats'); let strArrayReturn;
+async function listEnvironmentCharEncodings() {
+    await internalDebugStackEnter('listEnvironmentCharEncodings:formats'); let strArrayReturn;
 
     let strArrayRes = [];
     strArrayRes = [ 'ASCII-safe-subset', 'UTF-8' ];
@@ -1059,11 +1059,11 @@ async function listEnvironmentCharsets() {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
-async function isSupportedEnvironmentCharset(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedEnvironmentCharset:formats'); await assertIsStr(strIn); let boolReturn;
+async function isSupportedEnvironmentCharEncoding(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedEnvironmentCharEncoding:formats'); await assertIsStr(strIn); let boolReturn;
 
     let boolRes = false;
-    boolRes = await contains(await listEnvironmentCharsets(), strIn);
+    boolRes = await contains(await listEnvironmentCharEncodings(), strIn);
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
