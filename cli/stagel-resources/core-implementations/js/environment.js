@@ -9,7 +9,7 @@ async function getEnvironmentPreferredFormat() {
 async function getEnvironmentResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the line width, and 
     if (haveDom) {
-        return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);https://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
+        return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     }
     return 'immutableCharacterCells';
 }
