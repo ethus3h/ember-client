@@ -1,12 +1,15 @@
 // Global variables
 
-let haveDom = false;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
 let strArrayDocumentExecData = []; // as
 let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
+
+// Global environment
+let haveDom = false;
+let environmentResolutionW = 0;
 
 async function isSetupFinished() {
     return setupFinished;
