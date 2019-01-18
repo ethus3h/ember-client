@@ -36,7 +36,7 @@ async function dcarrConvertDocument(dcarrInput, strTargetFormat, renderTraits) {
                     dcarrOutput[intLine] = -1;
                 }
                 if (await dcIsPrintable(dcAtInputIndex) || await dcIsSpace(dcAtInputIndex) ) {
-                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, renderTraits.characterEncoding);
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, await getEnvCharset());
                     //await implLog(await strPrintArr(dcarrOutput));
                 }
             }
