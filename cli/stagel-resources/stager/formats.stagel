@@ -10,7 +10,7 @@ r/b/isSupportedInputFormat s/in
 
 r/as/listOutputFormats
     new as/res
-    set as/res [ 'integerList' 'immutableCharacterCells' 'HTML' ]
+    set as/res [ 'characterCells' 'HTML' 'integerList' 'immutableCharacterCells' ]
     return as/res
 
 r/b/isSupportedOutputFormat s/in
