@@ -26,6 +26,8 @@ async function setupIfNeeded() {
 }
 
 async function internalSetup() {
+    // Set up environment variables.
+
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (typeof window !== 'undefined') {
         haveDom = true;
@@ -51,10 +53,15 @@ async function internalSetup() {
     if (environmentResolutionW == 0 || environmentResolutionH == 0) {
         await implWarn('The resolution detected was zero in at least one dimension. Width = '+environmentResolutionW+'; height = '+environmentResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
+
+    // Set up data sets.
+
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
         await internalLoadDatasets();
     }
+
+    // Other startup stuff.
 
     if (haveDom) {
         // Override error reporting method to show alert
