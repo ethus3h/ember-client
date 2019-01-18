@@ -17,3 +17,13 @@ r/b/isSupportedOutputFormat s/in
     new b/res
     set b/res contains listOutputFormats } s/in
     return b/res
+
+r/as/listEnvironmentCharsets
+    new as/res
+    set as/res [ 'ASCII-safe-subset' 'UTF-8' ]
+    return as/res
+
+r/b/isSupportedEnvironmentCharset s/in
+    new b/res
+    set b/res contains listOutputFormats } s/in
+    return b/res
