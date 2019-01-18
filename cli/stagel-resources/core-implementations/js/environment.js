@@ -4,7 +4,7 @@ async function getEnvironmentPreferredFormat() {
 }
 
 async function getEnvironmentResolutionW() {
-    // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, and says 1 line available.
+    // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available.
     return environmentResolutionW;
 }
 
