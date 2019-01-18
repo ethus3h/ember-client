@@ -30,6 +30,7 @@ async function internalSetup() {
     }
     if (haveDom) {
         environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        environmentResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
