@@ -37,10 +37,11 @@ async function internalSetup() {
     }
     else {
         // Command-line, e.g. Node.js
-        environmentPreferredFormat = 'immutableCharacterCells';
+        environmentPreferredFormat = 'characterCells';
         environmentResolutionW = process.stdout.columns;
         environmentResolutionH = process.stdout.rows;
         if (environmentResolutionW == 0 || environmentResolutionH == 0) {
+            environmentPreferredFormat = 'immutableCharacterCells';
             // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
             environmentResolutionW = 80;
             environmentResolutionH = 1;
