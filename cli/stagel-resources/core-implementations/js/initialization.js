@@ -9,6 +9,7 @@ let setupFinished = false;
 
 // Global environment
 let haveDom = false;
+let environmentPreferredFormat = '';
 let environmentResolutionW = 0;
 let environmentResolutionH = 0;
 
@@ -30,11 +31,13 @@ async function internalSetup() {
     }
     if (haveDom) {
         // Web browsers, etc.
+        environmentPreferredFormat = 'HTML';
         environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         environmentResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
     else {
         // Command-line, e.g. Node.js
+        environmentPreferredFormat = 'immutableCharacterCells';
         environmentResolutionW = process.stdout.columns;
         environmentResolutionH = process.stdout.rows;
         if (environmentResolutionW == 0 || environmentResolutionH == 0) {
