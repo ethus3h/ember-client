@@ -41,23 +41,23 @@ async function internalSetup() {
     }
     if (haveDom) {
         // Web browsers, etc.
-        environmentPreferredFormat = 'HTML';
-        environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        environmentResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        envPreferredFormat = 'HTML';
+        envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
     else {
         // Command-line, e.g. Node.js
-        environmentPreferredFormat = 'characterCells';
-        environmentResolutionW = process.stdout.columns;
-        environmentResolutionH = process.stdout.rows;
-        if (environmentResolutionW == 0 || environmentResolutionH == 0) {
-            environmentPreferredFormat = 'immutableCharacterCells';
+        envPreferredFormat = 'characterCells';
+        envResolutionW = process.stdout.columns;
+        envResolutionH = process.stdout.rows;
+        if (envResolutionW === 0 || envResolutionH === 0 || envResolutionW === undefined || envResolutionH === undefined) {
+            envPreferredFormat = 'immutableCharacterCells';
             // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
-            environmentResolutionW = 80;
-            environmentResolutionH = 1;
+            envResolutionW = 80;
+            envResolutionH = 1;
         }
     }
-    if (environmentResolutionW == 0 || environmentResolutionH == 0) {
+    if (envResolutionW == 0 || envResolutionH == 0) {
         await implWarn('The resolution detected was zero in at least one dimension. Width = '+environmentResolutionW+'; height = '+environmentResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
 
