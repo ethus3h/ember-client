@@ -9,6 +9,7 @@ async function getEnvResolutionW() {
 }
 
 async function getEnvResolutionH() {
+    // See getEnvResolutionW description.
     return envResolutionH;
 }
 
