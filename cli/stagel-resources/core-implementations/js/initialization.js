@@ -9,10 +9,10 @@ let setupFinished = false;
 
 // Global environment
 let haveDom = false;
-let environmentPreferredFormat = '';
-let environmentResolutionW = 0;
-let environmentResolutionH = 0;
-let environmentCharEncoding = 'ASCII-safe-subset';
+let envPreferredFormat = '';
+let envResolutionW = 0;
+let envResolutionH = 0;
+let envCharEncoding = 'ASCII-safe-subset';
 
 async function isSetupFinished() {
     return setupFinished;
