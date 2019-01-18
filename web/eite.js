@@ -124,13 +124,19 @@ async function byteFromChar(strInput) {
 
 // Global variables
 
-let haveDom = false;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
 let strArrayDocumentExecData = []; // as
 let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
+
+// Global environment
+let haveDom = false;
+let envPreferredFormat = '';
+let envResolutionW = 0;
+let envResolutionH = 0;
+let envCharEncoding = 'ASCII-safe-subset';
 
 async function isSetupFinished() {
     return setupFinished;
@@ -144,12 +150,49 @@ async function setupIfNeeded() {
 }
 
 async function internalSetup() {
+    // Set up environment variables.
+
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+    let charset = document.characterSet.toLowerCase();
+    if (charset === 'utf-8') {
+        envCharEncoding = 'UTF-8';
+    }
+    else {
+        await implWarn("Unimplemented character set: " + charset + ". Falling back to ASCII-safe-subset.");
+    }
+    if (haveDom) {
+        // Web browsers, etc.
+        environmentPreferredFormat = 'HTML';
+        environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        environmentResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    }
+    else {
+        // Command-line, e.g. Node.js
+        environmentPreferredFormat = 'characterCells';
+        environmentResolutionW = process.stdout.columns;
+        environmentResolutionH = process.stdout.rows;
+        if (environmentResolutionW == 0 || environmentResolutionH == 0) {
+            environmentPreferredFormat = 'immutableCharacterCells';
+            // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
+            environmentResolutionW = 80;
+            environmentResolutionH = 1;
+        }
+    }
+    if (environmentResolutionW == 0 || environmentResolutionH == 0) {
+        await implWarn('The resolution detected was zero in at least one dimension. Width = '+environmentResolutionW+'; height = '+environmentResolutionH+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
+    }
+
+    // Set up data sets.
+
     datasets = await listDcDatasets();
-    await internalLoadDatasets();
+    if (!datasetsLoaded) {
+        await internalLoadDatasets();
+    }
+
+    // Other startup stuff.
 
     if (haveDom) {
         // Override error reporting method to show alert
@@ -732,12 +775,23 @@ async function internalBitwiseMask(int32input) {
     return byteReturn;
 }
 
-async function getEnvironmentPreferredFormat() {
+async function getEnvPreferredFormat() {
     // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
-    if (haveDom) {
-        return 'HTML';
-    }
-    return 'immutableCharacterCells';
+    return envPreferredFormat;
+}
+
+async function getEnvResolutionW() {
+    // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available. If it's -1, it's unlimited (probably this would only occur if explicitly configured as such).
+    return envResolutionW;
+}
+
+async function getEnvResolutionH() {
+    // See getEnvResolutionW description.
+    return envResolutionH;
+}
+
+async function getEnvCharEncoding() {
+    return envCharEncoding;
 }
 
 /* type-tools, provides:
@@ -1554,6 +1608,13 @@ async function assertIsSupportedOutputFormat(strIn) {
     await internalDebugStackExit();
 }
 
+async function assertIsSupportedEnvironmentCharset(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedEnvironmentCharset:assertions'); await assertIsStr(strIn);
+
+    await assertIsTrue(await isSupportedEnvironmentCharset(strIn));
+    await internalDebugStackExit();
+}
+
 async function assertIsExecId(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsExecId:assertions'); await assertIsInt(intIn);
 
@@ -1784,7 +1845,7 @@ async function listOutputFormats() {
     await internalDebugStackEnter('listOutputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'integerList', 'immutableCharacterCells', 'HTML' ];
+    strArrayRes = [ 'characterCells', 'HTML', 'integerList', 'immutableCharacterCells' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -1794,6 +1855,24 @@ async function isSupportedOutputFormat(strIn) {
 
     let boolRes = false;
     boolRes = await contains(await listOutputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listEnvironmentCharsets() {
+    await internalDebugStackEnter('listEnvironmentCharsets:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = [ 'ASCII-safe-subset', 'UTF-8' ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedEnvironmentCharset(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedEnvironmentCharset:formats'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listEnvironmentCharsets(), strIn);
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }

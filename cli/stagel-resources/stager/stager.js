@@ -799,6 +799,13 @@ async function assertIsSupportedOutputFormat(strIn) {
     await internalDebugStackExit();
 }
 
+async function assertIsSupportedEnvironmentCharset(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedEnvironmentCharset:assertions'); await assertIsStr(strIn);
+
+    await assertIsTrue(await isSupportedEnvironmentCharset(strIn));
+    await internalDebugStackExit();
+}
+
 async function assertIsExecId(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('assertIsExecId:assertions'); await assertIsInt(intIn);
 
@@ -1029,7 +1036,7 @@ async function listOutputFormats() {
     await internalDebugStackEnter('listOutputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'integerList', 'immutableCharacterCells', 'HTML' ];
+    strArrayRes = [ 'characterCells', 'HTML', 'integerList', 'immutableCharacterCells' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -1039,6 +1046,24 @@ async function isSupportedOutputFormat(strIn) {
 
     let boolRes = false;
     boolRes = await contains(await listOutputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listEnvironmentCharsets() {
+    await internalDebugStackEnter('listEnvironmentCharsets:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = [ 'ASCII-safe-subset', 'UTF-8' ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedEnvironmentCharset(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedEnvironmentCharset:formats'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listEnvironmentCharsets(), strIn);
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
