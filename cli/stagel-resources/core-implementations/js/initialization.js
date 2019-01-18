@@ -29,13 +29,21 @@ async function internalSetup() {
         haveDom = true;
     }
     if (haveDom) {
+        // Web browsers, etc.
         environmentResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         environmentResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
     else {
-        environmentResolutionH = 1;
-        environmentResolutionW = 80;
+        // Command-line, e.g. Node.js
+        environmentResolutionW = process.stdout.columns;
+        environmentResolutionH = process.stdout.rows;
+        if (environmentResolutionH == 0 || environmentResolutionW == 0) {
+            // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with.
+            environmentResolutionW = 80;
+            environmentResolutionH = 1;
+        }
     }
+    if (environmentResolutionH == 0 || environmentResolutionW == 0) {
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
         await internalLoadDatasets();
