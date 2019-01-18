@@ -71,8 +71,8 @@ r/v/assertIsSupportedInputFormat s/in
 r/v/assertIsSupportedOutputFormat s/in
     assertIsTrue isSupportedOutputFormat s/in
 
-r/v/assertIsSupportedEnvironmentCharset s/in
-    assertIsTrue isSupportedEnvironmentCharset s/in
+r/v/assertIsSupportedEnvironmentCharEncoding s/in
+    assertIsTrue isSupportedEnvironmentCharEncoding s/in
 
 r/v/assertIsExecId n/in
     assertIsTrue isExecId n/in
