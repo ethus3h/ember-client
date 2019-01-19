@@ -4,7 +4,7 @@
 
 // Fully platform-specific code
 
-async function implDoRenderIo(renderBuffer, targetFormat) {
+async function implDoRenderIo(targetFormat, renderBuffer) {
     switch (targetFormat) {
         case "integerList":
         case "immutableCharacterCells":
