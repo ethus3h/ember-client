@@ -1985,10 +1985,10 @@ async function dcToFormat(strOutFormat, intDc) {
     else if (await implEq(strOutFormat, 'HTML')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
-            intArrayRes = await hexToDec(strRes);
+            intArrayRes = await push(intArrayRes, await hexToDec(strRes));
         }
         else {
-            intArrayRes = await dcDataLookupByValue('mappings/to/html', 0, intDc, 1);
+            intArrayRes = await push(intArrayRes, await dcDataLookupByValue('mappings/to/html', 0, intDc, 1));
         }
     }
     else {
