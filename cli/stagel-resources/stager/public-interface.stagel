@@ -52,7 +52,7 @@ r/an/convertToDcArray s/format an/contents
     # Parse and return the specified document as a Dc array.
     setupIfNeeded
     new an/res
-    set an/res dcFromFormat s/format an/contents
+    set an/res dcFromFormat an/contents s/format
     return an/res
 
 r/n/startDocument an/contents

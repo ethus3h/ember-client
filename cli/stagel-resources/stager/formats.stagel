@@ -1,3 +1,10 @@
+r/an/convertFormats an/in s/inFormat s/outFormat
+    assertIsByteArray an/in
+    new an/out
+    set an/out dcToFormat dcFromFormat an/in s/inFormat } s/outFormat
+    assertIsByteArray an/out
+    return an/out
+
 r/an/dcToFormat an/dcArrayIn s/outputFormat
     new an/res
     if eq s/outputFormat 'sems'
