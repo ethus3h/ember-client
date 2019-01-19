@@ -38,7 +38,7 @@ async function byteFromChar(strInput) {
     await assertIsInt(intReturn); return intReturn;
 }
 
-async function utf8BytesFromChar(intArrayInput) {
-    // Returns a Uint8 array
-    let str = await 
+async function utf8BytesFromDecimalChar(intInput) {
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    return TextEncoder().encode(String.fromCodePoint(intInput));
 }
