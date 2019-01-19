@@ -16,3 +16,10 @@ async function getEnvResolutionH() {
 async function getEnvCharEncoding() {
     return envCharEncoding;
 }
+
+async function renderDrawContents(renderBuffer) {
+    // Whether it appends or replaces the frame would depend on the environment.
+    if(haveDom) {
+        htmlString 
+    }
+}

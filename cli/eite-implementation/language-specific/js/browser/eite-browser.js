@@ -9,6 +9,32 @@ async function renderDrawContents(renderBuffer) {
     if(haveDom) {
         
     }
+    switch (targetFormat) {
+        case "integerList":
+        case "immutableCharacterCells":
+            let immutableCharCellOutput = await document.getElementById("eiteDocumentRoot");
+            for (let i = 0; i < renderBuffer.length; i++) {
+                immutableCharCellOutput.innerHTML += renderBuffer[i] + "<br />";
+                immutableCharCellOutput.scrollTop = immutableCharCellOutput.scrollHeight;
+            }
+            break;
+        case "HTML":
+            /* Should we return a new tree on every content change, or return a series of transformations in some manner? For now, just dump out the document, since we don't have update ticks implemented yet. */
+            /* This shouldn't actually do I/O; that should be handled somewhere else I think. This function (implDoRenderIo) is currently handling both doc rendering and I/O. TODO: Split them. */
+           let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
+            let strOutputHtml = "";
+            for (let i = 0; i < renderBuffer.length; i++) {
+                if (await dcIsPrintable(renderBuffer[i]) || await dcIsNewline(renderBuffer[i]) || await dcIsSpace(renderBuffer[i])) {
+                    strOutputHtml = strOutputHtml + await dcToFormat('HTML', renderBuffer[i]);
+                }
+            }
+            htmlOutputRootElement.innerHTML += strOutputHtml;
+            htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+            break;
+        default:
+            await implError("Unimplemented render I/O format: " + targetFormat);
+            break;
+    }
 }
 
 async function implRunEiteTest(strTestFormat, strTestName) {
