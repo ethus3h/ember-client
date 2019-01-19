@@ -33,11 +33,12 @@ r/v/runDocument an/contents
     set n/execId startDocument an/contents
     internalRunDocument n/execId
 
-r/an/convertDocument an/contents s/format
+r/an/exportDocument an/contents s/format
     assertIsSupportedOutputFormat s/format
-    # Convert a document to the specified format, and return it as an array of bytes.
+    # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
     setupIfNeeded
-
+    new an/out
+    set an/out 
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
@@ -46,15 +47,7 @@ r/an/loadStoredDocument s/format s/path
     # Load and return the specified document as a Dc array.
     setupIfNeeded
     new an/res
-    set an/res convertToDcArray s/format getFileFromPath s/path
-    return an/res
-
-r/an/convertToDcArray s/format an/contents
-    assertIsSupportedInputFormat s/format
-    # Parse and return the specified document as a Dc array.
-    setupIfNeeded
-    new an/res
-    set an/res dcFromFormat an/contents s/format
+    set an/res dcFromFormat s/format getFileFromPath s/path
     return an/res
 
 r/n/startDocument an/contents
