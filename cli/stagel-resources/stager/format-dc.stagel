@@ -32,6 +32,10 @@ r/b/dcIsPrintable n/dc
     return true
 
 r/s/printableDcToChar n/dc s/targetFormat
+    assertIsTrue dcIsPrintable n/dc
+    return dcToChar n/dc s/targetFormat
+
+r/s/printableDcToChar n/dc s/targetFormat
     assertIsDc n/dc
     new s/res
     new b/temp
