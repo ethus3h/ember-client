@@ -37,7 +37,7 @@ r/an/exportDocument s/format an/contents
     # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
     setupIfNeeded
     new an/out
-    set an/out dcToFormat s/format an/contents
+    set an/out dcaToFormat s/format an/contents
     return an/out
 
 r/an/importDocument s/format an/contents
@@ -45,7 +45,7 @@ r/an/importDocument s/format an/contents
     # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
     setupIfNeeded
     new an/out
-    set an/out dcFromFormat s/format an/contents
+    set an/out dcaFromFormat s/format an/contents
     return an/out
 
 r/an/importAndExport s/inputFormat s/outputFormat an/contents

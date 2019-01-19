@@ -1,4 +1,5 @@
 r/an/dcaToHTML an/dcIn
+    assertIsDcArray an/dcIn
     new an/out
     new n/len
     set n/len count an/dcIn
@@ -11,5 +12,5 @@ r/an/dcaToHTML an/dcIn
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out n/dcAtIndex
         set n/inputIndex add n/inputIndex 1
-    assertIsDcArray an/out
+    #assertIsByteArray an/out
     return an/out

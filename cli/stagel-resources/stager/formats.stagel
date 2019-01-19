@@ -1,4 +1,4 @@
-r/an/dcFromFormat s/inFormat an/contentBytes
+r/an/dcaFromFormat s/inFormat an/contentBytes
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
@@ -9,7 +9,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     assertIsDcArray an/ret
     return an/ret
 
-r/an/dcToFormat s/outFormat an/dcArrayIn
+r/an/dcaToFormat s/outFormat an/dcArrayIn
     assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
     new an/res
@@ -29,7 +29,7 @@ r/an/convertFormats s/inFormat s/outFormat an/in
     assertIsSupportedOutputFormat s/outFormat
     assertIsByteArray an/in
     new an/out
-    set an/out dcToFormat dcFromFormat an/in s/inFormat } s/outFormat
+    set an/out dcaToFormat dcaFromFormat an/in s/inFormat } s/outFormat
     assertIsByteArray an/out
     return an/out
 
