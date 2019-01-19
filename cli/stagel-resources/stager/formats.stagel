@@ -64,6 +64,7 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     return b/res
 
 r/an/dcToFormat n/dc s/targetFormat
+    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
     assertIsDc n/dc
     new s/res
     if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
@@ -77,7 +78,7 @@ r/an/dcToFormat n/dc s/targetFormat
             set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
         return s/res
     else
-        die cat 'Unimplemented target format: ' s/targetFormat
+        error cat 'Unimplemented character return format: ' s/inFormat
     # Return an empty string if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
     return s/res
 
@@ -89,12 +90,10 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     if eq s/inFormat 'nothing-yet'
         # there isn't anything that uses this yet
     else
-        error cat 'Unimplemented character return format: ' s/inFormat
     assertIsDcArray an/ret
     return an/ret
 
 r/an/dcToFormat s/outFormat an/dcArrayIn
-    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
     new an/res
