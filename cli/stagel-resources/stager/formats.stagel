@@ -8,6 +8,7 @@ r/an/convertFormats s/inFormat s/outFormat an/in
     return an/out
 
 r/an/dcToFormat s/outputFormat an/dcArrayIn
+    assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
     new an/res
     if eq s/outputFormat 'sems'
@@ -22,6 +23,7 @@ r/an/dcToFormat s/outputFormat an/dcArrayIn
     return an/res
 
 r/an/dcFromFormat s/inputFormat an/contentBytes
+    assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
     if eq s/inputFormat 'sems'
