@@ -1,4 +1,4 @@
-r/an/dcarrParseSems an/content
+r/an/dcaFromSems an/content
     assertIsByteArray an/content
     new an/ret
 

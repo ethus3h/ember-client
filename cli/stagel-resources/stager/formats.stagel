@@ -1,4 +1,4 @@
-r/an/dcarrConvertDocument an/dcarrInput s/outputFormat
+r/an/dcToFormat an/input s/outputFormat
     new an/res
     if eq s/outputFormat 'integerList'
         set an/res dcToIntegerList an/dcarrInput
