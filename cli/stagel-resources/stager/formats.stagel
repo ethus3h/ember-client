@@ -73,7 +73,7 @@ r/an/dcToFormat s/outFormat n/dc
     elif eq s/outFormat 'HTML'
         set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if isBaseStr s/res 16
-            set an/res push an/res hexToDec s/res
+            set an/res push an/res utf8BytesFromDecimalChar hexToDec s/res
         else
             set an/res push an/res strToByteArray dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
     else
