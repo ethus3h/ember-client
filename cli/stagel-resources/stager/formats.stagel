@@ -1,11 +1,13 @@
-r/an/convertFormats s/inFormat s/outFormat an/in
+r/an/dcFromFormat s/inputFormat an/contentBytes
     assertIsSupportedInputFormat s/inFormat
-    assertIsSupportedOutputFormat s/outFormat
-    assertIsByteArray an/in
-    new an/out
-    set an/out dcToFormat dcFromFormat an/in s/inFormat } s/outFormat
-    assertIsByteArray an/out
-    return an/out
+    assertIsByteArray an/contentBytes
+    new an/ret
+    if eq s/inputFormat 'sems'
+        set an/ret dcFromSems an/contentBytes
+    else
+        error cat 'Unimplemented document parsing format: ' s/inputFormat
+    assertIsDcArray an/ret
+    return an/ret
 
 r/an/dcToFormat s/outputFormat an/dcArrayIn
     assertIsSupportedOutputFormat s/outFormat
@@ -22,16 +24,14 @@ r/an/dcToFormat s/outputFormat an/dcArrayIn
     assertIsByteArray an/res
     return an/res
 
-r/an/dcFromFormat s/inputFormat an/contentBytes
+r/an/convertFormats s/inFormat s/outFormat an/in
     assertIsSupportedInputFormat s/inFormat
-    assertIsByteArray an/contentBytes
-    new an/ret
-    if eq s/inputFormat 'sems'
-        set an/ret dcFromSems an/contentBytes
-    else
-        error cat 'Unimplemented document parsing format: ' s/inputFormat
-    assertIsDcArray an/ret
-    return an/ret
+    assertIsSupportedOutputFormat s/outFormat
+    assertIsByteArray an/in
+    new an/out
+    set an/out dcToFormat dcFromFormat an/in s/inFormat } s/outFormat
+    assertIsByteArray an/out
+    return an/out
 
 r/as/listInputFormats
     new as/res
