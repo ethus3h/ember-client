@@ -31,16 +31,6 @@ r/b/dcIsPrintable n/dc
         return false
     return true
 
-r/an/dcarrParseDocument s/format an/Content
-    assertIsByteArray an/Content
-    new an/ret
-    if eq s/format 'sems'
-        set an/ret dcarrParseSems an/content
-    else
-        error cat 'Unimplemented document parsing format: ' s/format
-    assertIsDcArray an/ret
-    return an/ret
-
 r/s/printableDcToChar n/dc s/targetFormat
     assertIsDc n/dc
     new s/res

@@ -9,6 +9,16 @@ r/an/dcToFormat an/dcArrayIn s/outputFormat
     else
         die cat 'Unimplemented document render target format: ' s/outputFormat
 
+r/an/dcarrParseDocument s/format an/Content
+    assertIsByteArray an/Content
+    new an/ret
+    if eq s/format 'sems'
+        set an/ret dcarrParseSems an/content
+    else
+        error cat 'Unimplemented document parsing format: ' s/format
+    assertIsDcArray an/ret
+    return an/ret
+
 r/as/listInputFormats
     new as/res
     set as/res [ 'sems' ]
