@@ -64,19 +64,19 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     return b/res
 
 r/an/internalDcFromFormat s/inFormat an/contentBytes
-    # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time.
+    # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
     if eq s/inFormat 'sems'
         set an/ret dcaFromSems an/contentBytes
     else
-        error cat 'Unimplemented document parsing format: ' s/inFormat
+        error cat 'Unimplemented character return format: ' s/inFormat
     assertIsDcArray an/ret
     return an/ret
 
 r/an/internalDcToFormat s/outFormat an/dcArrayIn
-    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time.
+    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
     new an/res
@@ -87,6 +87,6 @@ r/an/internalDcToFormat s/outFormat an/dcArrayIn
     elif eq s/outFormat 'HTML'
         set an/res dcaToHTML an/dcArrayIn
     else
-        die cat 'Unimplemented document render target format: ' s/outFormat
+        die cat 'Unimplemented character output format: ' s/outFormat
     assertIsByteArray an/res
     return an/res
