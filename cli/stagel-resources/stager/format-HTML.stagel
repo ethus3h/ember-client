@@ -14,13 +14,3 @@ r/an/dcaToHTML an/dcIn
         set n/inputIndex add n/inputIndex 1
     #assertIsByteArray an/out
     return an/out
-
-r/an/dcToHTML an/dcIn
-    # Single dc only
-    new an/res
-        set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
-        if isBaseStr s/res 16
-            set s/res charFromHexByte s/res
-        else
-            set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
-        return s/res
