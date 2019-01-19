@@ -1292,9 +1292,10 @@ async function printableDcToChar(intDc, strTargetFormat) {
     await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('str TargetFormat = ' + strTargetFormat + '; '); await internalDebugStackEnter('printableDcToChar:format-dc'); await assertIsInt(intDc);await assertIsStr(strTargetFormat); let strReturn;
 
     await assertIsTrue(await dcIsPrintable(intDc));
+    let strRes = '';
+    strRes = await dcToChar(intDc, strTargetFormat);
 
-    strReturn = ; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    await dcToChar(intDc, strTargetFormat);
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function isNonnegative(intIn) {
