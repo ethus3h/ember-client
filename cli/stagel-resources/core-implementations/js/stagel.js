@@ -79,7 +79,7 @@ async function internalRunDocument(execId) {
     // FIXME: Make this not just be converting the document and dumping it out.
     let outFormat;
     outFormat = await getEnvPreferredFormat();
-    await implDoRenderIo(outFormat, await dcToFormat(outFormat, await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    await implDoRenderIo(outFormat, await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
 
 /* type-conversion, provides:
