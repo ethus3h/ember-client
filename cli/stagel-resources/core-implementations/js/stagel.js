@@ -311,7 +311,7 @@ async function get(array, index) {
 }
 
 async function count(array) {
-    if (val.constructor.name === 'Uint8Array') {
+    if (array.constructor.name === 'Uint8Array') {
         return array.byteLength;
     }
     await assertIsArray(array);

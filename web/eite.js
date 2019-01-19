@@ -1207,7 +1207,7 @@ async function isArray(genericItemIn) {
 
     /* Just a convenience wrapper */
     let boolRes = false;
-    boolRes = await isGenericArray(genericArrayIn);
+    boolRes = await isGenericArray(genericItemIn);
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
