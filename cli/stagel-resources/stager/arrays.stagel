@@ -12,7 +12,7 @@ r/b/contains ga/in g/value
 r/b/isArray gi/in
     # Just a convenience wrapper
     new b/res
-    set b/res isGenericArray ga/in
+    set b/res isGenericArray gi/in
     return b/res
 
 r/b/isIntArray ga/in
