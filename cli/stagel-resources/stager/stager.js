@@ -1177,7 +1177,7 @@ async function dcToFormat(strOutFormat, intDc) {
             intArrayRes = await push(intArrayRes, await hexToDec(strRes));
         }
         else {
-            intArrayRes = await push(intArrayRes, await dcDataLookupByValue('mappings/to/html', 0, intDc, 1));
+            intArrayRes = await push(intArrayRes, await strToBytearray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
         }
     }
     else {
