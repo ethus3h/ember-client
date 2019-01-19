@@ -68,6 +68,16 @@ r/n/intFromBaseStr s/n n/b
         set n/pow mul n/pow n/b
     return n/res
 
+r/n/hexToDec s/n
+    new n/res
+    set n/res intFromBaseStr s/n 16
+    return n/res
+
+r/s/decToHex s/n
+    new s/res
+    set s/res intToBaseStr n/n 10
+    return s/res
+
 r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
     new s/res
