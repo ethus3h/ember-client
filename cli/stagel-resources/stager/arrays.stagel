@@ -9,6 +9,12 @@ r/b/contains ga/in g/value
         set n/count sub n/count 1
     return false
 
+r/b/isArray gi/in
+    # Just a convenience wrapper
+    new b/res
+    set b/res isGenericArray ga/in
+    return b/res
+
 r/b/isIntArray ga/in
     new n/count
     set n/count sub count ga/in } 1
