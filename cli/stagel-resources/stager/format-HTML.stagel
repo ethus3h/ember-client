@@ -11,5 +11,5 @@ r/an/dcToHTML an/dcIn
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out n/dcAtIndex
         set n/InputIndex add n/inputIndex 1
-    assertIsDcarr an/out
+    assertIsDcArray an/out
     return an/out
