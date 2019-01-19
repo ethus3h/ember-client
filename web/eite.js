@@ -1400,7 +1400,7 @@ async function dcToHTML(intArrayDcIn) {
         }
         intInputIndex = await implAdd(intInputIndex, 1);
     }
-    await assertIsDcarr(intArrayOut);
+    await assertIsDcArray(intArrayOut);
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -1864,20 +1864,28 @@ async function isExecId(intExecId) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
-    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('convertFormats:formats'); await assertIsStr(strInFormat);await assertIsStr(strOutFormat);await assertIsIntArray(intArrayIn); let intArrayReturn;
+async function dcFromFormat(strInputFormat, intArrayContentBytes) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInputFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
 
-    await assertIsByteArray(intArrayIn);
-    let intArrayOut = [];
-    intArrayOut = await dcToFormat(await dcFromFormat(intArrayIn, strInFormat), strOutFormat);
-    await assertIsByteArray(intArrayOut);
+    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsByteArray(intArrayContentBytes);
+    let intArrayRet = [];
+    if (await implEq(strInputFormat, 'sems')) {
+        intArrayRet = await dcFromSems(intArrayContentBytes);
+    }
+    else {
+        await implError(await implCat('Unimplemented document parsing format: ', strInputFormat));
+    }
+    await assertIsDcArray(intArrayRet);
 
-    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcToFormat(strOutputFormat, intArrayDcArrayIn) {
     await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('intArray DcArrayIn = ' + intArrayDcArrayIn + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutputFormat);await assertIsIntArray(intArrayDcArrayIn); let intArrayReturn;
 
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsDcArray(intArrayDcArrayIn);
     let intArrayRes = [];
     if (await implEq(strOutputFormat, 'sems')) {
         intArrayRes = await dcToSems(intArrayDcArrayIn);
@@ -1891,22 +1899,22 @@ async function dcToFormat(strOutputFormat, intArrayDcArrayIn) {
     else {
         await implDie(await implCat('Unimplemented document render target format: ', strOutputFormat));
     }
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function dcFromFormat(strInputFormat, intArrayContentBytes) {
-    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInputFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
+async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('convertFormats:formats'); await assertIsStr(strInFormat);await assertIsStr(strOutFormat);await assertIsIntArray(intArrayIn); let intArrayReturn;
 
-    await assertIsByteArray(intArrayContentBytes);
-    let intArrayRet = [];
-    if (await implEq(strInputFormat, 'sems')) {
-        intArrayRet = await dcFromSems(intArrayContentBytes);
-    }
-    else {
-        await implError(await implCat('Unimplemented document parsing format: ', strInputFormat));
-    }
-    await assertIsDcArray(intArrayRet);
+    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsByteArray(intArrayIn);
+    let intArrayOut = [];
+    intArrayOut = await dcToFormat(await dcFromFormat(intArrayIn, strInFormat), strOutFormat);
+    await assertIsByteArray(intArrayOut);
 
-    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function listInputFormats() {
