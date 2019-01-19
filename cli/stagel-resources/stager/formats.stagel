@@ -63,7 +63,7 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     set b/res contains listEnvironmentCharEncodings } s/in
     return b/res
 
-r/an/internalDcFromFormat s/inFormat an/contentBytes
+r/an/dcFromFormat s/inFormat an/contentBytes
     # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
@@ -75,7 +75,7 @@ r/an/internalDcFromFormat s/inFormat an/contentBytes
     assertIsDcArray an/ret
     return an/ret
 
-r/an/internalDcToFormat s/outFormat an/dcArrayIn
+r/an/dcToFormat s/outFormat an/dcArrayIn
     # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
