@@ -1,4 +1,6 @@
 r/an/convertFormats s/inFormat s/outFormat an/in
+    assertIsSupportedInputFormat s/inFormat
+    assertIsSupportedOutputFormat s/outFormat
     assertIsByteArray an/in
     new an/out
     set an/out dcToFormat dcFromFormat an/in s/inFormat } s/outFormat
@@ -17,6 +19,7 @@ r/an/dcToFormat s/outputFormat an/dcArrayIn
     else
         die cat 'Unimplemented document render target format: ' s/outputFormat
     assertIsByteArray an/res
+    return an/res
 
 r/an/dcFromFormat s/inputFormat an/contentBytes
     assertIsByteArray an/contentBytes
