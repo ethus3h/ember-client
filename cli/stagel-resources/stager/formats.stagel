@@ -70,17 +70,16 @@ r/an/dcToFormat s/targetFormat n/dc
     new an/res
     if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
         set an/res push an/res hexToDec dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
-        return an/res
     elif eq s/targetFormat 'HTML'
         set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if isBaseStr s/res 16
             set an/res hexToDec s/res
         else
             set an/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
-        return an/res
     else
-        error cat 'Unimplemented character return format: ' s/targetFormat
-    # Return an empty string if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
+        error cat 'Unimplemented character output format: ' s/targetFormat
+    # Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
+    assertIsByteArray an/res
     return an/res
 
 r/an/dcFromFormat s/inFormat an/contentBytes
@@ -91,6 +90,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     if eq s/inFormat 'nothing-yet'
         # there isn't anything that uses this yet
     else
+        die cat 'Unimplemented character source format: ' s/targetFormat
     assertIsDcArray an/ret
     return an/ret
 
