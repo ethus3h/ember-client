@@ -9,28 +9,8 @@ r/an/dcToImmutableCharacterCells an/dcIn
     new n/dcAtIndex
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
-        if dcIsNewline n/dcAtIndex
-            set n/line add n/line 1
-            set an/out push an/out 10
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
-            set an/out push an/out n/dcAtIndex
+            set an/out push an/out printableDcToChar n/dcAtIndex getEnvCharset
         set n/inputIndex add n/inputIndex 1
     assertIsDcArray an/out
     return an/out
-
-        case "immutableCharacterCells":
-            let intLine = 0;
-            dcarrOutput[0] = -1;
-            intInputLength = await intDcarrLength(dcarrInput);
-            for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
-                //await implLog(await strFrom(dcAtInputIndex));
-                if (await dcIsNewline(dcAtInputIndex)) {
-                    intLine = intLine + 1;
-                    dcarrOutput[intLine] = -1;
-                }
-                if (await dcIsPrintable(dcAtInputIndex) || await dcIsSpace(dcAtInputIndex) ) {
-                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, await getEnvCharset());
-                    //await implLog(await strPrintArr(dcarrOutput));
-                }
-            }
