@@ -31,7 +31,6 @@ async function count(array) {
     if (val.constructor.name === 'Uint8Array') {
         return array.byteLength;
     }
-    await assertIsArray(array); let intReturn;
-
-    intReturn=Object.keys(array).length; await assertIsInt(intReturn); return intReturn;
+    await assertIsArray(array);
+    return Object.keys(array).length;
 }
