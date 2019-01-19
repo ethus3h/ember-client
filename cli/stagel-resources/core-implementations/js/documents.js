@@ -29,5 +29,5 @@ async function internalRunDocument(execId) {
     // FIXME: Make this not just be converting the document and dumping it out.
     let strTargetFormat;
     strTargetFormat = await getEnvPreferredFormat();
-    await implDoRenderIo(await dcarrConvertDocument(await dcarrParseSems(await strToByteArray(strArrayDocumentExecData[execId])), strTargetFormat), strTargetFormat);
+    await implDoRenderIo(await dcToFormat(await dcarrParseSems(await strToByteArray(strArrayDocumentExecData[execId])), strTargetFormat), strTargetFormat);
 }
