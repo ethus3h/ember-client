@@ -1177,7 +1177,7 @@ async function dcToFormat(strOutFormat, intDc) {
             intArrayRes = await push(intArrayRes, await hexToDec(strRes));
         }
         else {
-            intArrayRes = await push(intArrayRes, await strToBytearray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
+            intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
         }
     }
     else {
@@ -1286,16 +1286,6 @@ async function dcIsPrintable(intDc) {
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function printableDcToChar(intDc, strOutFormat) {
-    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugStackEnter('printableDcToChar:format-dc'); await assertIsInt(intDc);await assertIsStr(strOutFormat); let strReturn;
-
-    await assertIsTrue(await dcIsPrintable(intDc));
-    let strRes = '';
-    strRes = await dcToChar(intDc, strOutFormat);
-
-    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function isNonnegative(intIn) {
