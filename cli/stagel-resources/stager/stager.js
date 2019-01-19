@@ -856,14 +856,14 @@ async function loadAndRun(strFormat, strPath) {
 }
 /* If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in. */
 
-async function loadAndConvert(strInputFormat, strPath, strOutputFormat) {
-    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugStackEnter('loadAndConvert:public-interface'); await assertIsStr(strInputFormat);await assertIsStr(strPath);await assertIsStr(strOutputFormat);
+async function loadAndConvert(strInputFormat, strOutputFormat, strPath) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadAndConvert:public-interface'); await assertIsStr(strInputFormat);await assertIsStr(strOutputFormat);await assertIsStr(strPath); let intArrayReturn;
 
-    /* Load the specified document, and return it converted to the specified outputFormat. */
-    await convertDocument(await loadStoredDocument(strInputFormat, strPath));
-    await internalDebugStackExit();
+    /* Load the specified document, and return it converted to the specified outputFormat as an array of bytes. */
+    let intArrayOut = [];
+    intArrayOut = await exportDocument(strOutputFormat, await loadStoredDocument(strInputFormat, strPath), );
 }
-/* To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. */
+/* To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. Or, if you already have it as a byte array, you can call importDocument or importAndExport on it. */
 
 async function runDocument(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
@@ -877,12 +877,41 @@ async function runDocument(intArrayContents) {
     await internalDebugStackExit();
 }
 
-async function convertDocument(intArrayContents, strFormat) {
-    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('convertDocument:public-interface'); await assertIsIntArray(intArrayContents);await assertIsStr(strFormat); let intArrayReturn;
+async function exportDocument(strFormat, intArrayContents) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('exportDocument:public-interface'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
 
     await assertIsSupportedOutputFormat(strFormat);
-    /* Convert a document to the specified format, and return it as an array of bytes. */
+    /* Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes. */
     await setupIfNeeded();
+    let intArrayOut = [];
+    intArrayOut = await dcToFormat(strFormat, intArrayContents);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function importDocument(strFormat, intArrayContents) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('importDocument:public-interface'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strFormat);
+    /* Convert a document stored as an array of bytes in the specified format, and return it as an array of dc. */
+    await setupIfNeeded();
+    let intArrayOut = [];
+    intArrayOut = await dcFromFormat(strFormat, intArrayContents);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function importAndExport(strInputFormat, strOutputFormat, intArrayContents) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('importAndExport:public-interface'); await assertIsStr(strInputFormat);await assertIsStr(strOutputFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strInputFormat);
+    await assertIsSupportedOutputFormat(strOutputFormat);
+    /* Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format. */
+    await setupIfNeeded();
+    let intArrayOut = [];
+    intArrayOut = await convertFormats(strInputFormat, strOutputFormat, intArrayContents);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 /* If you want more control over the document loading and execution, you can use these lower-level functions. */
 
@@ -893,19 +922,7 @@ async function loadStoredDocument(strFormat, strPath) {
     /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
     let intArrayRes = [];
-    intArrayRes = await convertToDcArray(strFormat, await getFileFromPath(strPath));
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function convertToDcArray(strFormat, intArrayContents) {
-    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('convertToDcArray:public-interface'); await assertIsStr(strFormat);await assertIsIntArray(intArrayContents); let intArrayReturn;
-
-    await assertIsSupportedInputFormat(strFormat);
-    /* Parse and return the specified document as a Dc array. */
-    await setupIfNeeded();
-    let intArrayRes = [];
-    intArrayRes = await dcarrParseDocument(strFormat, intArrayContents);
+    intArrayRes = await dcFromFormat(strFormat, await getFileFromPath(strPath));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -1036,8 +1053,19 @@ async function isExecId(intExecId) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function dcToFormat(intArrayDcArrayIn, strOutputFormat) {
-    await internalDebugCollect('intArray DcArrayIn = ' + intArrayDcArrayIn + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsIntArray(intArrayDcArrayIn);await assertIsStr(strOutputFormat); let intArrayReturn;
+async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('convertFormats:formats'); await assertIsStr(strInFormat);await assertIsStr(strOutFormat);await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayOut = [];
+    intArrayOut = await dcToFormat(await dcFromFormat(intArrayIn, strInFormat), strOutFormat);
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcToFormat(strOutputFormat, intArrayDcArrayIn) {
+    await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('intArray DcArrayIn = ' + intArrayDcArrayIn + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutputFormat);await assertIsIntArray(intArrayDcArrayIn); let intArrayReturn;
 
     let intArrayRes = [];
     if (await implEq(strOutputFormat, 'sems')) {
@@ -1054,8 +1082,8 @@ async function dcToFormat(intArrayDcArrayIn, strOutputFormat) {
     }
 }
 
-async function dcFromFormat(intArrayContentBytes, strInputFormat) {
-    await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsIntArray(intArrayContentBytes);await assertIsStr(strInputFormat); let intArrayReturn;
+async function dcFromFormat(strInputFormat, intArrayContentBytes) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInputFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
 
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
