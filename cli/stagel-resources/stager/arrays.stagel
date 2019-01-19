@@ -74,8 +74,3 @@ r/b/isDcArray ga/in
             return false
         set n/count sub n/count 1
     return true
-
-r/n/dcArrayLength an/in
-    new n/res
-    set n/res count an/in
-    return n/res
