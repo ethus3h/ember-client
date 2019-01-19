@@ -63,6 +63,24 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     set b/res contains listEnvironmentCharEncodings } s/in
     return b/res
 
+r/an/dcToFormat n/dc s/targetFormat
+    assertIsDc n/dc
+    new s/res
+    if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
+        set s/res charFromHexByte dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        return s/res
+    elif eq s/targetFormat 'HTML'
+        set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        if isBaseStr s/res 16
+            set s/res charFromHexByte s/res
+        else
+            set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+        return s/res
+    else
+        die cat 'Unimplemented target format: ' s/targetFormat
+    # Return an empty string if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
+    return s/res
+
 r/an/dcFromFormat s/inFormat an/contentBytes
     # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsSupportedInputFormat s/inFormat
