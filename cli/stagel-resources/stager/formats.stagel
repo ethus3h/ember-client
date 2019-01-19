@@ -1,3 +1,9 @@
+r/an/dcarrConvertDocument an/dcarrInput s/outputFormat
+    new an/res
+    if eq s/outputFormat 'integerList'
+        set an/res dcToIntegerList
+    elif eq s/outputFormat 
+
 r/as/listInputFormats
     new as/res
     set as/res [ 'sems' ]
