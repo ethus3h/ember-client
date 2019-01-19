@@ -9,7 +9,7 @@ r/an/dcToFormat an/dcArrayIn s/outputFormat
     else
         die cat 'Unimplemented document render target format: ' s/outputFormat
 
-r/an/dcarrParseDocument s/format an/Content
+r/an/dcFromFormat an/contentBytes s/inputFormat
     assertIsByteArray an/Content
     new an/ret
     if eq s/format 'sems'
