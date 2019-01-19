@@ -77,9 +77,9 @@ async function internalRunDocument(execId) {
     events = await getDesiredEventNotifications(execId);
 
     // FIXME: Make this not just be converting the document and dumping it out.
-    let strTargetFormat;
-    strTargetFormat = await getEnvPreferredFormat();
-    await implDoRenderIo(strTargetFormat, await dcToFormat(strTargetFormat, await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    let outFormat;
+    outFormat = await getEnvPreferredFormat();
+    await implDoRenderIo(outFormat, await dcToFormat(outFormat, await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
 
 /* type-conversion, provides:

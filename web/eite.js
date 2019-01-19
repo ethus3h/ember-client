@@ -77,9 +77,9 @@ async function internalRunDocument(execId) {
     events = await getDesiredEventNotifications(execId);
 
     // FIXME: Make this not just be converting the document and dumping it out.
-    let strTargetFormat;
-    strTargetFormat = await getEnvPreferredFormat();
-    await implDoRenderIo(strTargetFormat, await dcToFormat(strTargetFormat, await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    let outFormat;
+    outFormat = await getEnvPreferredFormat();
+    await implDoRenderIo(outFormat, await dcToFormat(outFormat, await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
 
 /* type-conversion, provides:
@@ -1898,7 +1898,7 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
         intArrayRes = await dcaToHTML(intArrayDcArrayIn);
     }
     else {
-        await implDie(await implCat('Unimplemented document render target format: ', strOutFormat));
+        await implDie(await implCat('Unimplemented document render output format: ', strOutFormat));
     }
     await assertIsByteArray(intArrayRes);
 
@@ -2011,7 +2011,7 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
         /* there isn't anything that uses this yet */
     }
     else {
-        await implDie(await implCat('Unimplemented character source format: ', strTargetFormat));
+        await implDie(await implCat('Unimplemented character source format: ', strInFormat));
     }
     await assertIsDcArray(intArrayRet);
 
@@ -2099,12 +2099,12 @@ async function dcIsPrintable(intDc) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function printableDcToChar(intDc, strTargetFormat) {
-    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('str TargetFormat = ' + strTargetFormat + '; '); await internalDebugStackEnter('printableDcToChar:format-dc'); await assertIsInt(intDc);await assertIsStr(strTargetFormat); let strReturn;
+async function printableDcToChar(intDc, strOutFormat) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugStackEnter('printableDcToChar:format-dc'); await assertIsInt(intDc);await assertIsStr(strOutFormat); let strReturn;
 
     await assertIsTrue(await dcIsPrintable(intDc));
     let strRes = '';
-    strRes = await dcToChar(intDc, strTargetFormat);
+    strRes = await dcToChar(intDc, strOutFormat);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
