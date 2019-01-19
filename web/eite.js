@@ -1899,7 +1899,7 @@ async function dcFromFormat(strInputFormat, intArrayContentBytes) {
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
     if (await implEq(strInputFormat, 'sems')) {
-        intArrayRet = await dcarrFromSems(intArrayContentBytes);
+        intArrayRet = await dcFromSems(intArrayContentBytes);
     }
     else {
         await implError(await implCat('Unimplemented document parsing format: ', strInputFormat));
