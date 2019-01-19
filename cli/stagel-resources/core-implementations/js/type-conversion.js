@@ -37,3 +37,8 @@ async function byteFromChar(strInput) {
 
     await assertIsInt(intReturn); return intReturn;
 }
+
+async function utf8BytesFromChar(intArrayInput) {
+    // Returns a Uint8 array
+    let str = await 
+}
