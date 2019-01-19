@@ -1,1 +1,16 @@
- 
+        case "immutableCharacterCells":
+            let intLine = 0;
+            dcarrOutput[0] = -1;
+            intInputLength = await intDcarrLength(dcarrInput);
+            for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
+                let dcAtInputIndex = await dcCustomTypeDcarrDcAtPos(dcarrInput, intInputIndex);
+                //await implLog(await strFrom(dcAtInputIndex));
+                if (await dcIsNewline(dcAtInputIndex)) {
+                    intLine = intLine + 1;
+                    dcarrOutput[intLine] = -1;
+                }
+                if (await dcIsPrintable(dcAtInputIndex) || await dcIsSpace(dcAtInputIndex) ) {
+                    dcarrOutput[intLine] = dcarrOutput[intLine] + await strPrintableDcToChar(dcAtInputIndex, await getEnvCharset());
+                    //await implLog(await strPrintArr(dcarrOutput));
+                }
+            }
