@@ -93,18 +93,3 @@ r/an/dcFromFormat s/inFormat an/contentBytes
         die cat 'Unimplemented character source format: ' s/targetFormat
     assertIsDcArray an/ret
     return an/ret
-
-r/an/dcToFormat s/outFormat an/dcArrayIn
-    assertIsSupportedOutputFormat s/outFormat
-    assertIsDcArray an/dcArrayIn
-    new an/res
-    if eq s/outFormat 'sems'
-        set an/res dcaToSems an/dcArrayIn
-    elif eq s/outFormat 'immutableCharacterCells'
-        set an/res dcaToImmutableCharacterCells an/dcArrayIn
-    elif eq s/outFormat 'HTML'
-        set an/res dcaToHTML an/dcArrayIn
-    else
-        die cat 'Unimplemented character output format: ' s/outFormat
-    assertIsByteArray an/res
-    return an/res
