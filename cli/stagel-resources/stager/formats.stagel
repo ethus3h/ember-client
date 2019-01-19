@@ -15,7 +15,7 @@ r/an/dcFromFormat an/contentBytes s/inputFormat
     if eq s/format 'sems'
         set an/ret dcarrParseSems an/content
     else
-        error cat 'Unimplemented document parsing format: ' s/format
+        error cat 'Unimplemented document parsing format: ' s/inputFormat
     assertIsDcArray an/ret
     return an/ret
 
