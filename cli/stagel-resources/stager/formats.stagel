@@ -63,8 +63,9 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     set b/res contains listEnvironmentCharEncodings } s/in
     return b/res
 
-r/an/dcToFormat n/dc s/targetFormat
+r/an/dcToFormat s/targetFormat n/dc
     # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
+    assertIsSupportedOutputFormat s/targetFormat
     assertIsDc n/dc
     new an/res
     if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
