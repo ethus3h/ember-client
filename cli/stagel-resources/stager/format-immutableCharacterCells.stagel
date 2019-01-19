@@ -9,7 +9,7 @@ r/an/dcaToImmutableCharacterCells an/dcIn
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
-            set an/out push an/out printableDcToChar n/dcAtIndex getEnvCharset
+            set an/out push an/out dcToChar n/dcAtIndex getEnvCharset
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
     return an/out
