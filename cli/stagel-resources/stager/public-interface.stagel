@@ -38,7 +38,26 @@ r/an/exportDocument an/contents s/format
     # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
     setupIfNeeded
     new an/out
-    set an/out 
+    set an/out dcToFormat an/contents s/format
+    return an/out
+
+r/an/importDocument an/contents s/format
+    assertIsSupportedInputFormat s/format
+    # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
+    setupIfNeeded
+    new an/out
+    set an/out dcFromFormat an/contents s/format
+    return an/out
+
+r/an/importAndExport an/contents s/inputFormat s/outputFormat
+    assertIsSupportedInputFormat s/inputFormat
+    assertIsSupportedOutputFormat s/outputFormat
+    # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
+    setupIfNeeded
+    new an/out
+    set an/out convertFormats an/contents s/inputFormat s/outputFormat
+    return an/out
+
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
