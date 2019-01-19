@@ -1,4 +1,4 @@
-r/an/dcToImmutableCharacterCells an/dcIn
+r/an/dcaToImmutableCharacterCells an/dcIn
     new an/out
     new n/len
     set n/len count an/dcIn

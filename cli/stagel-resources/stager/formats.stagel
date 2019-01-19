@@ -3,7 +3,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     assertIsByteArray an/contentBytes
     new an/ret
     if eq s/inFormat 'sems'
-        set an/ret dcFromSems an/contentBytes
+        set an/ret dcaFromSems an/contentBytes
     else
         error cat 'Unimplemented document parsing format: ' s/inFormat
     assertIsDcArray an/ret
@@ -14,11 +14,11 @@ r/an/dcToFormat s/outFormat an/dcArrayIn
     assertIsDcArray an/dcArrayIn
     new an/res
     if eq s/outFormat 'sems'
-        set an/res dcToSems an/dcArrayIn
+        set an/res dcaToSems an/dcArrayIn
     elif eq s/outFormat 'immutableCharacterCells'
-        set an/res dcToImmutableCharacterCells an/dcArrayIn
+        set an/res dcaToImmutableCharacterCells an/dcArrayIn
     elif eq s/outFormat 'HTML'
-        set an/res dcToHTML an/dcArrayIn
+        set an/res dcaToHTML an/dcArrayIn
     else
         die cat 'Unimplemented document render target format: ' s/outFormat
     assertIsByteArray an/res
