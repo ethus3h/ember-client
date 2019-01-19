@@ -16,8 +16,10 @@ r/v/loadAndRun s/format s/path
 
 # If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
 
-r/v/loadAndConvert s/inputFormat s/path s/outputFormat
-    # Load the specified document, and return it converted to the specified outputFormat.
+r/an/loadAndConvert s/inputFormat s/path s/outputFormat
+    # Load the specified document, and return it converted to the specified outputFormat as an array of bytes.
+    new an/out
+    set an/out convertDocument 
     convertDocument loadStoredDocument s/inputFormat s/path
 
 
