@@ -19,8 +19,7 @@ r/v/loadAndRun s/format s/path
 r/an/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat as an array of bytes.
     new an/out
-    set an/out convertDocument 
-    convertDocument loadStoredDocument s/inputFormat s/path
+    set an/out importAndExport loadStoredDocument s/inputFormat s/path
 
 
 # To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it.
