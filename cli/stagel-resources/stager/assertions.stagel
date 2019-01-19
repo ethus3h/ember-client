@@ -12,9 +12,8 @@ r/v/assertContains ga/in g/value
 r/v/assertIsByte n/in
     assertIsTrue isByte n/in
 
-r/v/assertIsArray ga/in
-    # Just a convenience wrapper
-    assertIsGenericArray ga/in
+r/v/assertIsArray gi/in
+    assertIsTrue isArray ga/in
 
 r/v/assertIsChar g/in
     assertIsTrue isChar g/in
