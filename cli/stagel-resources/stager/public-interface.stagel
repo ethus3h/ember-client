@@ -19,7 +19,7 @@ r/v/loadAndRun s/format s/path
 r/an/loadAndConvert s/inputFormat s/path s/outputFormat
     # Load the specified document, and return it converted to the specified outputFormat as an array of bytes.
     new an/out
-    set an/out importAndExport loadStoredDocument s/inputFormat s/path
+    set an/out exportDocument s/outputFormat loadStoredDocument s/inputFormat s/path }
 
 
 # To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it.
@@ -32,7 +32,7 @@ r/v/runDocument an/contents
     set n/execId startDocument an/contents
     internalRunDocument n/execId
 
-r/an/exportDocument an/contents s/format
+r/an/exportDocument s/format an/contents
     assertIsSupportedOutputFormat s/format
     # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
     setupIfNeeded
@@ -40,7 +40,7 @@ r/an/exportDocument an/contents s/format
     set an/out dcToFormat an/contents s/format
     return an/out
 
-r/an/importDocument an/contents s/format
+r/an/importDocument s/format an/contents
     assertIsSupportedInputFormat s/format
     # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
     setupIfNeeded
@@ -48,13 +48,13 @@ r/an/importDocument an/contents s/format
     set an/out dcFromFormat an/contents s/format
     return an/out
 
-r/an/importAndExport an/contents s/inputFormat s/outputFormat
+r/an/importAndExport s/inputFormat s/outputFormat an/contents
     assertIsSupportedInputFormat s/inputFormat
     assertIsSupportedOutputFormat s/outputFormat
     # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
     setupIfNeeded
     new an/out
-    set an/out convertFormats an/contents s/inputFormat s/outputFormat
+    set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
 
 
