@@ -13,14 +13,3 @@ r/an/dcToHTML an/dcIn
         set n/InputIndex add n/inputIndex 1
     assertIsDcarr an/out
     return an/out
-        case "HTML":
-            dcarrOutput = [];
-            intInputLength = await intDcarrLength(dcarrInput);
-            for (let intInputIndex = 0; intInputIndex < intInputLength; intInputIndex++) {
-                let dcAtInputIndex = await get(dcarrInput, intInputIndex);
-                //await implLog(await strFrom(dcAtInputIndex));
-                if (await dcIsNewline(dcAtInputIndex) || await dcIsPrintable(dcAtInputIndex) || await dcIsSpace(dcAtInputIndex)) {
-                    await dcarrOutput.push(dcAtInputIndex);
-                    //await implLog(await strPrintArr(dcarrOutput));
-                }
-            }
