@@ -35,7 +35,7 @@ r/s/printableDcToChar n/dc s/targetFormat
     assertIsTrue dcIsPrintable n/dc
     return dcToChar n/dc s/targetFormat
 
-r/s/dcToChar n/dc s/targetFormat
+r/an/dcToBytes n/dc s/targetFormat
     assertIsDc n/dc
     new s/res
     if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
