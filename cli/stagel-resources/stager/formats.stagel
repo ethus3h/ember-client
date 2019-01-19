@@ -7,7 +7,7 @@ r/an/dcarrConvertDocument an/dcarrInput s/outputFormat
     elif eq s/outputFormat 'HTML'
         set an/res dcToHTML
     else
-        mplError("Unimplemented document render target format: " + strTargetFormat);
+        die cat 'Unimplemented document render target format: ' s/outputFormat
 
 r/as/listInputFormats
     new as/res
