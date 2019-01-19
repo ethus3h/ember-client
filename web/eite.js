@@ -1716,7 +1716,7 @@ async function convertToDcArray(strFormat, intArrayContents) {
     /* Parse and return the specified document as a Dc array. */
     await setupIfNeeded();
     let intArrayRes = [];
-    intArrayRes = await dcarrParseDocument(strFormat, intArrayContents);
+    intArrayRes = await dcFromFormat(strFormat, intArrayContents);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
