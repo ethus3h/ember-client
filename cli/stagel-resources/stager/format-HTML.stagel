@@ -10,7 +10,11 @@ r/an/dcaToHTML an/dcIn
         set n/dcAtIndex get an/dcIn n/inputIndex
         # FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!)
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
-            set an/out push an/out dcToChar n/dcAtIndex 'HTML'
+            set an/out push an/out internalDcToFormat n/dcAtIndex 'HTML'
         set n/inputIndex add n/inputIndex 1
     #assertIsByteArray an/out
     return an/out
+
+r/an/dcToHTML an/dcIn
+    # Single dc only
+    

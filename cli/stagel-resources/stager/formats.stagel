@@ -69,7 +69,7 @@ r/an/internalDcFromFormat s/inFormat an/contentBytes
     assertIsByteArray an/contentBytes
     new an/ret
     if eq s/inFormat 'nothing-yet'
-        # there isn't anything that causes this yet
+        # there isn't anything that uses this yet
     else
         error cat 'Unimplemented character return format: ' s/inFormat
     assertIsDcArray an/ret
