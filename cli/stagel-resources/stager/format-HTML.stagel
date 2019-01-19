@@ -1,3 +1,9 @@
+r/an/dcToHTML an/dcIn
+    new an/out
+    new n/len
+    set n/len count an/dcIn
+    assertIsDcarr an/out
+    return an/out
         case "HTML":
             dcarrOutput = [];
             intInputLength = await intDcarrLength(dcarrInput);
