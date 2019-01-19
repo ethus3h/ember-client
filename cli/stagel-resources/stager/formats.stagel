@@ -20,7 +20,7 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     elif eq s/outFormat 'HTML'
         set an/res dcaToHTML an/dcArrayIn
     else
-        die cat 'Unimplemented document render target format: ' s/outFormat
+        die cat 'Unimplemented document render output format: ' s/outFormat
     assertIsByteArray an/res
     return an/res
 
@@ -90,6 +90,6 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     if eq s/inFormat 'nothing-yet'
         # there isn't anything that uses this yet
     else
-        die cat 'Unimplemented character source format: ' s/targetFormat
+        die cat 'Unimplemented character source format: ' s/inFormat
     assertIsDcArray an/ret
     return an/ret

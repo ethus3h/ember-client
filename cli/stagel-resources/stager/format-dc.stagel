@@ -31,8 +31,8 @@ r/b/dcIsPrintable n/dc
         return false
     return true
 
-r/s/printableDcToChar n/dc s/targetFormat
+r/s/printableDcToChar n/dc s/outFormat
     assertIsTrue dcIsPrintable n/dc
     new s/res
-    set s/res dcToChar n/dc s/targetFormat
+    set s/res dcToChar n/dc s/outFormat
     return s/res
