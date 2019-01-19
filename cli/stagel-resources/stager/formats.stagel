@@ -1,5 +1,5 @@
 r/an/dcFromFormat s/inFormat an/contentBytes
-    # Output byte array for a single dc
+    # Retrieve dc corresponding to the input byte array
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
