@@ -38,9 +38,7 @@ r/s/printableDcToChar n/dc s/targetFormat
 r/s/printableDcToChar n/dc s/targetFormat
     assertIsDc n/dc
     new s/res
-    new b/temp
-    set b/temp eq s/targetFormat 'ASCII-safe-subset'
-    if or b/temp eq s/targetFormat 'UTF-8'
+    if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
         set s/res charFromHexByte dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         return s/res
     elif eq s/targetFormat 'HTML'
