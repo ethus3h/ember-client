@@ -10,6 +10,6 @@ r/an/dcToHTML an/dcIn
         # FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!)
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out n/dcAtIndex
-        set n/InputIndex add n/inputIndex 1
+        set n/inputIndex add n/inputIndex 1
     assertIsDcArray an/out
     return an/out

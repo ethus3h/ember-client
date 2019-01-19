@@ -9,10 +9,11 @@ r/an/dcToImmutableCharacterCells an/dcIn
     new n/dcAtIndex
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
-        # FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!)
+        if dcIsNewline n/dcAtIndex
+            set n/line add n/line 1
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out n/dcAtIndex
-        set n/InputIndex add n/inputIndex 1
+        set n/inputIndex add n/inputIndex 1
     assertIsDcArray an/out
     return an/out
 
