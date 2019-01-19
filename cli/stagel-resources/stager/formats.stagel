@@ -2,7 +2,12 @@ r/an/dcarrConvertDocument an/dcarrInput s/outputFormat
     new an/res
     if eq s/outputFormat 'integerList'
         set an/res dcToIntegerList
-    elif eq s/outputFormat 
+    elif eq s/outputFormat 'immutableCharacterCells'
+        set an/res dcToImmutableCharacterCells
+    elif eq s/outputFormat 'HTML'
+        set an/res dcToHTML
+    else
+        mplError("Unimplemented document render target format: " + strTargetFormat);
 
 r/as/listInputFormats
     new as/res
