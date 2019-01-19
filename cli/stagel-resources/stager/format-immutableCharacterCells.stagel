@@ -11,6 +11,7 @@ r/an/dcToImmutableCharacterCells an/dcIn
         set n/dcAtIndex get an/dcIn n/inputIndex
         if dcIsNewline n/dcAtIndex
             set n/line add n/line 1
+            set an/out push an/out 10
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out n/dcAtIndex
         set n/inputIndex add n/inputIndex 1
