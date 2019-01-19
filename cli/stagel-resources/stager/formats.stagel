@@ -1,7 +1,7 @@
 r/an/dcToFormat an/dcArrayIn s/outputFormat
     new an/res
-    if eq s/outputFormat 'integerList'
-        set an/res dcToIntegerList an/dcArrayIn
+    if eq s/outputFormat 'sems'
+        set an/res dcToSems an/dcArrayIn
     elif eq s/outputFormat 'immutableCharacterCells'
         set an/res dcToImmutableCharacterCells an/dcArrayIn
     elif eq s/outputFormat 'HTML'
