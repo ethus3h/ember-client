@@ -75,7 +75,7 @@ r/an/dcToFormat s/outFormat n/dc
         if isBaseStr s/res 16
             set an/res push an/res hexToDec s/res
         else
-            set an/res push an/res strToBytearray dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+            set an/res push an/res strToByteArray dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
     else
         error cat 'Unimplemented character output format: ' s/outFormat
     # Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
