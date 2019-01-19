@@ -1,11 +1,11 @@
-r/an/dcToFormat an/input s/outputFormat
+r/an/dcToFormat an/dcArrayIn s/outputFormat
     new an/res
     if eq s/outputFormat 'integerList'
-        set an/res dcToIntegerList an/dcarrInput
+        set an/res dcToIntegerList an/dcArrayIn
     elif eq s/outputFormat 'immutableCharacterCells'
-        set an/res dcToImmutableCharacterCells an/dcarrInput
+        set an/res dcToImmutableCharacterCells an/dcArrayIn
     elif eq s/outputFormat 'HTML'
-        set an/res dcToHTML an/dcarrInput
+        set an/res dcToHTML an/dcArrayIn
     else
         die cat 'Unimplemented document render target format: ' s/outputFormat
 
