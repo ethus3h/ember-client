@@ -79,7 +79,7 @@ async function internalRunDocument(execId) {
     // FIXME: Make this not just be converting the document and dumping it out.
     let strTargetFormat;
     strTargetFormat = await getEnvPreferredFormat();
-    await implDoRenderIo(await dcarrConvertDocument(await dcarrParseSems(await strToByteArray(strArrayDocumentExecData[execId])), strTargetFormat), strTargetFormat);
+    await implDoRenderIo(await dcToFormat(await dcFromSems(await strToByteArray(strArrayDocumentExecData[execId])), strTargetFormat), strTargetFormat);
 }
 
 /* type-conversion, provides:
@@ -311,9 +311,11 @@ async function get(array, index) {
 }
 
 async function count(array) {
-    await assertIsArray(array); let intReturn;
-
-    intReturn=Object.keys(array).length; await assertIsInt(intReturn); return intReturn;
+    if (val.constructor.name === 'Uint8Array') {
+        return array.byteLength;
+    }
+    await assertIsArray(array);
+    return Object.keys(array).length;
 }
 
 /* strings, provides:
