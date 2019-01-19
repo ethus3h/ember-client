@@ -64,7 +64,7 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     return b/res
 
 r/an/internalDcFromFormat s/inFormat an/contentBytes
-    # Retrieve dc corresponding to the input byte array, or an empty array if no match
+    # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time.
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
@@ -76,7 +76,7 @@ r/an/internalDcFromFormat s/inFormat an/contentBytes
     return an/ret
 
 r/an/internalDcToFormat s/outFormat an/dcArrayIn
-    # Output byte array for a single dc, or empty if no match
+    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time.
     assertIsSupportedOutputFormat s/outFormat
     assertIsDcArray an/dcArrayIn
     new an/res
