@@ -66,16 +66,16 @@ r/b/isSupportedEnvironmentCharEncoding s/in
 r/an/dcToFormat n/dc s/targetFormat
     # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
     assertIsDc n/dc
-    new s/res
+    new an/res
     if or eq s/targetFormat 'UTF-8' } eq s/targetFormat 'ASCII-safe-subset'
-        set s/res charFromHexByte dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
-        return s/res
+        set an/res push an/res charFromHexByte dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        return an/res
     elif eq s/targetFormat 'HTML'
         set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if isBaseStr s/res 16
-            set s/res charFromHexByte s/res
+            set an/res charFromHexByte s/res
         else
-            set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+            set an/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
         return s/res
     else
         error cat 'Unimplemented character return format: ' s/inFormat
