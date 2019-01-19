@@ -30,9 +30,3 @@ r/b/dcIsPrintable n/dc
     if or eq '!' s/generalType } eq 'C' s/generalType
         return false
     return true
-
-r/s/printableDcToChar n/dc s/outFormat
-    assertIsTrue dcIsPrintable n/dc
-    new s/res
-    set s/res dcToChar n/dc s/outFormat
-    return s/res

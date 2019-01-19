@@ -21,7 +21,7 @@ async function implDoRenderIo(targetFormat, renderBuffer) {
             let strOutputHtml = "";
             for (let i = 0; i < renderBuffer.length; i++) {
                 if (await dcIsPrintable(renderBuffer[i]) || await dcIsNewline(renderBuffer[i]) || await dcIsSpace(renderBuffer[i])) {
-                    strOutputHtml = strOutputHtml + await printableDcToChar(renderBuffer[i], "HTML");
+                    strOutputHtml = strOutputHtml + await dcToFormat(renderBuffer[i], "HTML");
                 }
             }
             htmlOutputRootElement.innerHTML += strOutputHtml;
