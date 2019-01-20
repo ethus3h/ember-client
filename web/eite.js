@@ -358,7 +358,7 @@ async function len(str) {
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
@@ -1585,6 +1585,7 @@ async function assertIsBaseStr(strIn, intB) {
 
 async function assertIsArray(genericItemIn) {
     await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsArray:assertions'); await assertIsGenericItem(genericItemIn);
+    console.log(genericItemIn);
 
     await assertIsTrue(await isArray(genericItemIn));
     await internalDebugStackExit();
