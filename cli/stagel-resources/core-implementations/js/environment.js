@@ -23,9 +23,8 @@ async function renderDrawContents(renderBuffer) {
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if(haveDom) {
-        let htmlOutputRootElement = await document.getElementById("eiteDocumentRoot");
-            htmlOutputRootElement.innerHTML += strOutputHtml;
-            htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
-
+        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+        htmlOutputRootElement.innerHTML += strOutputHtml;
+        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
     }
 }
