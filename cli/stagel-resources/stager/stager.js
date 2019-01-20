@@ -1470,3 +1470,45 @@ async function isBaseStr(strIn, intB) {
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
+    /* Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :) */
+    let intCount = 0;
+    intCount = await count(genericArrayInput);
+    let intI = 0;
+    intI = 0;
+    let strOut = '';
+    while (await implLt(intI, intCount)) {
+        strOut = await implCat(strOut, await strFrom(await get(genericArrayInput, intI)));
+        strOut = await implCat(strOut, ' ');
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function charFromHexByte(strHexByte) {
+    await internalDebugCollect('str HexByte = ' + strHexByte + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strHexByte); let strReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    await assertIsBaseStr(strHexByte, 16);
+    let strRes = '';
+    strRes = await charFromByte(await intFromBaseStr(strHexByte, 16));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strToByteArray(strInput) {
+    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('strToByteArray:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
+
+    let intCount = 0;
+    intCount = await len(strInput);
+    let intI = 0;
+    intI = 0;
+    let intArrayOut = [];
+    while (await implLt(intI, intCount)) {
+        intArrayOut = await push(intArrayOut, await byteFromChar(await strChar(strInput, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
