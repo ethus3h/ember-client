@@ -712,6 +712,7 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
+    console.log(val);
     if (val === undefined) {
         await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
     }
