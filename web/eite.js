@@ -124,7 +124,8 @@ async function byteFromChar(strInput) {
 
 async function utf8BytesFromDecimalChar(intInput) {
     // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
-    return new TextEncoder().encode(String.fromCodePoint(intInput));
+    let utf8Encoder = new TextEncoder();
+    return utf8Encoder.encode(String.fromCodePoint(intInput));
 }
 
 // Global variables
@@ -2005,24 +2006,15 @@ async function dcToFormat(strOutFormat, intDc) {
     else if (await implEq(strOutFormat, 'HTML')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
-    alert('u');
-    console.log(await hexToDec(strRes));
-    console.log(await utf8BytesFromDecimalChar(await hexToDec(strRes)));
-    alert('v');
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
-    alert('uu');
         }
         else {
-    alert('y');
             intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
-    alert('yy');
         }
-    alert('e');
     }
     else {
         await implError(await implCat('Unimplemented character output format: ', strOutFormat));
     }
-    alert('o');
     /* Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc. */
     await assertIsByteArray(intArrayRes);
 
