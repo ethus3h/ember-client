@@ -40,6 +40,6 @@ async function byteFromChar(strInput) {
 
 async function utf8BytesFromDecimalChar(intInput) {
     // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
-    let utf8Encoder = new TextEncoder();
-    return utf8Encoder.encode(String.fromCodePoint(intInput));
+    let utf8encoder = new TextEncoder();
+    return utf8encoder.encode(String.fromCodePoint(intInput));
 }

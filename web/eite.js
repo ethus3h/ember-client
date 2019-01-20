@@ -125,6 +125,10 @@ async function byteFromChar(strInput) {
 async function utf8BytesFromDecimalChar(intInput) {
     // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
     let utf8Encoder = new TextEncoder();
+    console.log(utf8Encoder);
+    console.log(intInput);
+    console.log(String.fromCodePoint(intInput));
+    console.log(utf8Encoder.encode('a'));
     return utf8Encoder.encode(String.fromCodePoint(intInput));
 }
 
