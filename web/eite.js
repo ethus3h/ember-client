@@ -1994,6 +1994,7 @@ async function isSupportedEnvironmentCharEncoding(strIn) {
 }
 
 async function dcToFormat(strOutFormat, intDc) {
+        alert('e');
     await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutFormat);await assertIsInt(intDc); let intArrayReturn;
 
     /* Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure. */
@@ -2001,7 +2002,6 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
-        alert('e');
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
