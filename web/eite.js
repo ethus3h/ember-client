@@ -2001,6 +2001,7 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
+        alert('e');
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
@@ -2015,6 +2016,7 @@ async function dcToFormat(strOutFormat, intDc) {
     else {
         await implError(await implCat('Unimplemented character output format: ', strOutFormat));
     }
+    alert('o');
     /* Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc. */
     await assertIsByteArray(intArrayRes);
 
