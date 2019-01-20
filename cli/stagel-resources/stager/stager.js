@@ -509,3 +509,28 @@ async function isDcArray(genericArrayIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function bitOr(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(intByte1);
+    intTemp = await bitNot(await bitAnd(intTemp, await bitNot(intByte2)));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitNor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitOr(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
