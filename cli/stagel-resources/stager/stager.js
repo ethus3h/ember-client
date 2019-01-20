@@ -534,3 +534,41 @@ async function bitNor(intByte1, intByte2) {
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
+async function bitNand(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNand:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitAnd(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitXor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNand(intByte1, intByte2);
+    intTemp = await bitAnd(intTemp, await bitOr(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitXnor(intByte1, intByte2) {
+    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXnor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    await assertIsByte(intByte1);
+    await assertIsByte(intByte2);
+    let intTemp = 0;
+    intTemp = await bitNot(await bitXor(intByte1, intByte2));
+    await assertIsByte(intTemp);
+
+    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+
