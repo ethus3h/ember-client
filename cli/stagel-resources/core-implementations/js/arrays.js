@@ -7,6 +7,7 @@
 async function append(array1, array2) {
     await assertIsArray(array1); await assertIsGenericItem(array2); let arrayReturn;
 
+    if (val.constructor.name === 'Uint8Array') {
     arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
 }
 
