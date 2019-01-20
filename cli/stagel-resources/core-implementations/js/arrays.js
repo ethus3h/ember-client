@@ -11,9 +11,19 @@ async function append(array1, array2) {
         arrayReturn=array1.concat(array2);
     }
     else {
-        arrayReturn=
+        if (array1.constructor.name !== 'Uint8Array') {
+            arrayReturn=array1.concat(Array.from(array2));
+        }
+        else {
+            if(array2.constructor.name !== 'Uint8Array') {
+                arrayReturn=Array.from(array1).concat(array2);
+            }
+            else {
+                arrayReturn=Array.from(array1).concat(Array.from(array2));
+            }
+        }
     }
-        await assertIsArray(arrayReturn); return arrayReturn;
+    await assertIsArray(arrayReturn); return arrayReturn;
 }
 
 async function push(array1, array2) {
