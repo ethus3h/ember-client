@@ -1995,16 +1995,17 @@ async function isSupportedEnvironmentCharEncoding(strIn) {
 async function dcToFormat(strOutFormat, intDc) {
     await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutFormat);await assertIsInt(intDc); let intArrayReturn;
 
-    alert('e');
     /* Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure. */
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
     alert('u');
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
+    alert('e');
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
+    alert('a');
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
