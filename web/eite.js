@@ -821,6 +821,7 @@ async function getEnvCharEncoding() {
 async function renderDrawContents(renderBuffer) {
     // Whether it appends or replaces the frame would depend on the environment.
     // The input is an array of bytes of the rendered document, either of HTML or text.
+    await assertIsByteArray(renderBuffer);
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if(haveDom) {
@@ -1418,7 +1419,6 @@ async function bitXnor(intByte1, intByte2) {
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
-
 
 async function dcaToHTML(intArrayDcIn) {
     await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHTML:format-HTML'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;

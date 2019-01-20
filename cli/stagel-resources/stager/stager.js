@@ -1527,3 +1527,41 @@ async function dcaFromSems(intArrayContent) {
     let intByteOffset = 0;
     let intCurrentByte = 0;
     while (await implLt(intByteOffset, intContentLength)) {
+        /* do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
+        intCurrentByte = await get(intArrayContent, intByteOffset);
+        if (await implEq(strParserState, 'dc')) {
+            if (await asciiIsDigit(intCurrentByte)) {
+                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
+            }
+            else if (await asciiIsSpace(intCurrentByte)) {
+                intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+                strCurrentDc = '';
+            }
+            else if (await implEq(35, intCurrentByte)) {
+                /* pound sign: start comment */
+                strParserState = 'comment';
+            }
+            else {
+                await implDie('Unexpected parser state in SEMS document.');
+            }
+        }
+        else if (await implEq(strParserState, 'comment')) {
+            if (await asciiIsNewline(intCurrentByte)) {
+                strParserState = 'dc';
+            }
+            else {
+                /* Do nothing: comments are ignored */
+            }
+        }
+        else {
+            await implDie('Internal error: unexpected parser state while parsing SEMS document');
+        }
+        intByteOffset = await implAdd(intByteOffset, 1);
+    }
+    await assertIsDcArray(intArrayRet);
+
+    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+
+// @license-end
