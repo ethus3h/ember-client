@@ -124,13 +124,8 @@ async function byteFromChar(strInput) {
 
 async function utf8BytesFromDecimalChar(intInput) {
     // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
-    let utf8Encoder = new TextEncoder();
-    console.log(utf8Encoder);
-    console.log(intInput);
-    console.log(String.fromCodePoint(intInput));
-    console.log(utf8Encoder.encode('H'));
-    console.log(utf8Encoder.encode(String.fromCodePoint(intInput)));
-    return utf8Encoder.encode(String.fromCodePoint(intInput));
+    let utf8encoder = new TextEncoder();
+    return utf8encoder.encode(String.fromCodePoint(intInput));
 }
 
 // Global variables
@@ -301,7 +296,23 @@ async function internalLoadDatasets() {
 async function append(array1, array2) {
     await assertIsArray(array1); await assertIsGenericItem(array2); let arrayReturn;
 
-    arrayReturn=array1.concat(array2); await assertIsArray(arrayReturn); return arrayReturn;
+    if (array1.constructor.name !== 'Uint8Array' && array2.constructor.name !== 'Uint8Array') {
+        arrayReturn=array1.concat(array2);
+    }
+    else {
+        if (array1.constructor.name !== 'Uint8Array') {
+            arrayReturn=array1.concat(Array.from(array2));
+        }
+        else {
+            if(array2.constructor.name !== 'Uint8Array') {
+                arrayReturn=Array.from(array1).concat(array2);
+            }
+            else {
+                arrayReturn=Array.from(array1).concat(Array.from(array2));
+            }
+        }
+    }
+    await assertIsArray(arrayReturn); return arrayReturn;
 }
 
 async function push(array1, array2) {
@@ -712,7 +723,6 @@ async function isGenericItem(val) {
 }
 
 async function assertIsGenericItem(val) {
-    console.log(val);
     if (val === undefined) {
         await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
     }
