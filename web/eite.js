@@ -129,6 +129,7 @@ async function utf8BytesFromDecimalChar(intInput) {
     console.log(intInput);
     console.log(String.fromCodePoint(intInput));
     console.log(utf8Encoder.encode('H'));
+    console.log(utf8Encoder.encode(String.fromCodePoint(intInput)));
     return utf8Encoder.encode(String.fromCodePoint(intInput));
 }
 
