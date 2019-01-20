@@ -20,7 +20,6 @@ async function getEnvCharEncoding() {
 async function renderDrawContents(renderBuffer) {
     // Whether it appends or replaces the frame would depend on the environment.
     // The input is an array of bytes of the rendered document, either of HTML or text.
-    console.log(renderBu)
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if(haveDom) {
