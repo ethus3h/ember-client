@@ -1512,3 +1512,18 @@ async function strToByteArray(strInput) {
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function dcaFromSems(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    await assertIsByteArray(intArrayContent);
+    let intArrayRet = [];
+    /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
+    let strParserState = '';
+    strParserState = 'dc';
+    let strCurrentDc = '';
+    strCurrentDc = '';
+    let intContentLength = 0;
+    intContentLength = await count(intArrayContent);
+    let intByteOffset = 0;
+    let intCurrentByte = 0;
+    while (await implLt(intByteOffset, intContentLength)) {
