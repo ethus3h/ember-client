@@ -79,7 +79,7 @@ async function internalRunDocument(execId) {
     // FIXME: Make this not just be converting the document and dumping it out.
     let outFormat;
     outFormat = await getEnvPreferredFormat();
-    await renderDrawContents(outFormat, await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    await renderDrawContents(await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
 
 /* type-conversion, provides:
@@ -819,9 +819,6 @@ async function getEnvCharEncoding() {
 }
 
 async function renderDrawContents(renderBuffer) {
-    console.log('bucec');
-    console.log(renderBuffer);
-    console.log('boebcuceu');
     // Whether it appends or replaces the frame would depend on the environment.
     // The input is an array of bytes of the rendered document, either of HTML or text.
     let utf8decoder = new TextDecoder('utf-8');
