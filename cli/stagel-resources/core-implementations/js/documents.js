@@ -29,5 +29,5 @@ async function internalRunDocument(execId) {
     // FIXME: Make this not just be converting the document and dumping it out.
     let outFormat;
     outFormat = await getEnvPreferredFormat();
-    await renderDrawContents(outFormat, await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    await renderDrawContents(await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
