@@ -24,7 +24,10 @@ async function renderDrawContents(renderBuffer) {
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if(haveDom) {
         let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-        htmlOutputRootElement.innerHTML += strOutputHtml;
+        htmlOutputRootElement.innerHTML += string;
         htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+    }
+    else {
+        console.log(string);
     }
 }
