@@ -122,6 +122,11 @@ async function byteFromChar(strInput) {
     await assertIsInt(intReturn); return intReturn;
 }
 
+async function utf8BytesFromDecimalChar(intInput) {
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    return TextEncoder().encode(String.fromCodePoint(intInput));
+}
+
 // Global variables
 
 let datasets = []; // as
@@ -794,6 +799,21 @@ async function getEnvResolutionH() {
 
 async function getEnvCharEncoding() {
     return envCharEncoding;
+}
+
+async function renderDrawContents(renderBuffer) {
+    // Whether it appends or replaces the frame would depend on the environment.
+    // The input is an array of bytes of the rendered document, either of HTML or text.
+    let utf8decoder = new TextDecoder('utf-8');
+    let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
+    if(haveDom) {
+        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+        htmlOutputRootElement.innerHTML += string;
+        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+    }
+    else {
+        console.log(string);
+    }
 }
 
 /* type-tools, provides:
@@ -1980,12 +2000,12 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
-        intArrayRes = await push(intArrayRes, await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0)));
+        intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
-            intArrayRes = await push(intArrayRes, await hexToDec(strRes));
+            intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
         }
         else {
             intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));

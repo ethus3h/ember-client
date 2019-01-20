@@ -1169,12 +1169,12 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
-        intArrayRes = await push(intArrayRes, await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0)));
+        intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
-            intArrayRes = await push(intArrayRes, await hexToDec(strRes));
+            intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
         }
         else {
             intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));

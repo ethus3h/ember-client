@@ -122,6 +122,11 @@ async function byteFromChar(strInput) {
     await assertIsInt(intReturn); return intReturn;
 }
 
+async function utf8BytesFromDecimalChar(intInput) {
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    return TextEncoder().encode(String.fromCodePoint(intInput));
+}
+
 // Global variables
 
 let datasets = []; // as
@@ -794,6 +799,21 @@ async function getEnvResolutionH() {
 
 async function getEnvCharEncoding() {
     return envCharEncoding;
+}
+
+async function renderDrawContents(renderBuffer) {
+    // Whether it appends or replaces the frame would depend on the environment.
+    // The input is an array of bytes of the rendered document, either of HTML or text.
+    let utf8decoder = new TextDecoder('utf-8');
+    let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
+    if(haveDom) {
+        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+        htmlOutputRootElement.innerHTML += string;
+        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+    }
+    else {
+        console.log(string);
+    }
 }
 
 /* type-tools, provides:
