@@ -1999,20 +1999,23 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
-    alert('u');
     if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
-    alert('e');
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'HTML')) {
-    alert('a');
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+    alert('a');
         if (await isBaseStr(strRes, 16)) {
+    alert('u');
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+    alert('uu');
         }
         else {
+    alert('y');
             intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
+    alert('yy');
         }
+    alert('e');
     }
     else {
         await implError(await implCat('Unimplemented character output format: ', strOutFormat));
