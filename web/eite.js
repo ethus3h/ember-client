@@ -2004,9 +2004,11 @@ async function dcToFormat(strOutFormat, intDc) {
     }
     else if (await implEq(strOutFormat, 'HTML')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
-    alert('a');
         if (await isBaseStr(strRes, 16)) {
     alert('u');
+    console.log(await hexToDec(strRes));
+    console.log(await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+    alert('v');
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
     alert('uu');
         }
