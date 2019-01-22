@@ -7,10 +7,10 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library. Also build StageR while we're at it.
 
-slcmd="stagel-build-internal-stagel-inner"
-[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
+slcmd="build-stagel-inner"
+#[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
 srcmd="stagel-build-internal-stager-inner"
-[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
+#[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
 targets=(js sh)
 
