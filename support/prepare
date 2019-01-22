@@ -62,3 +62,5 @@ fi
 # Any extra installation prep logic (compilation, etc.) goes here.
 
 support/build-scripts/build
+tests/stagel-run-tests
+tests/eite-run-tests
