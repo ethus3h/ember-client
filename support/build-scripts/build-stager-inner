@@ -7,8 +7,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 [[ -z "$2" ]] && die "No target language given."
 
-if [[ -f "./stagel-convert" ]]; then
-    ./stagel-convert "$1" "$2" >> ./implementation/portable/portable."$2"
+if [[ -f "./scripts/stagel-convert" ]]; then
+    ./scripts/stagel-convert "$1" "$2" >> ./implementation/portable/portable."$2"
 else
     stagel-convert "$1" "$2" >> ./implementation/portable/portable."$2"
 fi
