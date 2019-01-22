@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd): The required dependency ember-shared could not be found (or ember_bash_setup could not be sourced for some other reason)." >&2; printf '%b' '\033[0m' >&2; exit 1; }
+#set -x
+
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+
+# Build the StageL library. Also build StageR while we're at it.
+
+slcmd="./support/build-scripts/build-stagel-inner"
+#[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
+srcmd="./support/build-scripts/build-stager-inner"
+#[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
+
+targets=(js sh)
+
+# FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
+
+targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
+    [[ -d "./implementation/core-implementations/${targets[$i]}" ]] || continue
+
+    #StageL
+
+    rm -f ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+
+    find ./implementation/core-implementations/"${targets[$i]}"/ -not -name "stagel.${targets[$i]}" -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+
+    echo $'\n''// @license-end' >> ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+
+    #StageR
+
+    rm -f ./implementation/stager/stager."${targets[$i]}"
+
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/stager/stager."${targets[$i]}"
+
+    find ./implementation/stager/ -name '*.stagel' -exec "$srcmd" {} "${targets[$i]}" \;
+
+    echo $'\n''// @license-end' >> ./implementation/stager/stager."${targets[$i]}"
+done
