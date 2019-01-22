@@ -5,6 +5,7 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+(
 cd tests || die
 
 runTest stagel/no-codegen/routine-minimal
@@ -41,3 +42,4 @@ runTest stagel/js/elif
 runTest stagel/js/arglist-inline-end
 
 reportTests
+)
