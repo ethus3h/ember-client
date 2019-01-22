@@ -61,6 +61,6 @@ fi
 
 # Any extra installation prep logic (compilation, etc.) goes here.
 
-tests/stagel-run-tests
-support/build-scripts/build
-tests/eite-run-tests
+tests/stagel-run-tests || die "StageL tests failed!"
+support/build-scripts/build || die "StageL build failed!"
+tests/eite-run-tests || die "EITE tests failed!"
