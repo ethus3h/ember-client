@@ -7,8 +7,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library. Also build StageR while we're at it.
 
-sicmd="stagel-build-internal-wrapped"
-[[ -f "./stagel-build-internal-wrapped" ]] && sicmd=./"$sicmd"
+sicmd="build-wrapped"
+[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
 if [[ "$1" == "-v" ]]; then
     shift
