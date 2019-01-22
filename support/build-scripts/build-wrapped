@@ -9,7 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 slcmd="./support/build-scripts/build-stagel-inner"
 #[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
-srcmd="stagel-build-internal-stager-inner"
+srcmd="./support/build-scripts/build-stager-inner"
 #[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
 targets=(js sh)
