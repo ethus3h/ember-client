@@ -1,6 +1,0 @@
-@Overview:
-    This file describes lang.types.String.
-
-@Type:
-    String inherits List[Character]
-    A String is a shorthand notation for a List of Characters.
