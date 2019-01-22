@@ -22,21 +22,21 @@ for (( i=0; i<targetCount; i++ )); do
 
     #StageL
 
-    rm -f ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+    rm -f ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
-    find ./implementation/core-implementations/"${targets[$i]}"/ -not -name "stagel.${targets[$i]}" -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+    find ./implementation/core-implementations/"${targets[$i]}"/ -not -name "core.${targets[$i]}" -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
 
-    echo $'\n''// @license-end' >> ./implementation/core-implementations/"${targets[$i]}"/stagel."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
     #StageR
 
-    rm -f ./implementation/stager/stager."${targets[$i]}"
+    rm -f ./implementation/portable/portable."${targets[$i]}"
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/stager/stager."${targets[$i]}"
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/portable/portable."${targets[$i]}"
 
-    find ./implementation/stager/ -name '*.stagel' -exec "$srcmd" {} "${targets[$i]}" \;
+    find ./implementation/portable/ -name '*.stagel' -exec "$srcmd" {} "${targets[$i]}" \;
 
-    echo $'\n''// @license-end' >> ./implementation/stager/stager."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./implementation/portable/portable."${targets[$i]}"
 done
