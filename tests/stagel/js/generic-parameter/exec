@@ -9,6 +9,6 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 mkdir run
 
-../../../../stagel-convert "in/in.stagel" "js" > "run/out.js"
+../../../../scripts/stagel-convert "in/in.stagel" "js" > "run/out.js"
 
 assert directoryEquals "out" "run"
