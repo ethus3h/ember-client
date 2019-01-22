@@ -7,8 +7,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library. Also build StageR while we're at it.
 
-sicmd="build-wrapped"
-[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
+sicmd="./support/build-scripts/build-wrapped"
+#[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
 if [[ "$1" == "-v" ]]; then
     shift
@@ -19,8 +19,8 @@ else
     echo "Done."
 fi
 
-cp ./stagel-resources/core-implementations/js/stagel.js ../web/eite.js
-echo >> ../web/eite.js
-cat ./stagel-resources/stager/stager.js >> ../web/eite.js
-echo >> ../web/eite.js
-cat ./stagel-resources/speedups/speedups.js >> ../web/eite.js
+cp ./implementation/core-implementations/js/stagel.js ../web/eite.js
+echo >> ./web/eite.js
+cat ./implementation/portable/portable.js >> ../web/eite.js
+echo >> ./web/eite.js
+cat ./implementation/speedups/speedups.js >> ../web/eite.js
