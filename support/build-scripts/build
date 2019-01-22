@@ -19,8 +19,8 @@ else
     echo "Done."
 fi
 
-cp ./implementation/core-implementations/js/core.js ../web/eite.js
+cp ./implementation/core-implementations/js/core.js ./web/eite.js
 echo >> ./web/eite.js
-cat ./implementation/portable/portable.js >> ../web/eite.js
+cat ./implementation/portable/portable.js >> ./web/eite.js
 echo >> ./web/eite.js
-cat ./implementation/speedups/speedups.js >> ../web/eite.js
+cat ./implementation/speedups/speedups.js >> ./web/eite.js
