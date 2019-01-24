@@ -86,3 +86,12 @@ r/an/sendEvent n/execId an/eventData
 r/an/getDocumentFrame n/execId s/format
     assertIsSupportedOutputFormat s/format
     # Return the most recently available output for the given document in the requested format.
+
+
+# To run the tests, you can use runTests or runPrintTests.
+
+r/b/runTests
+    # Returns true if all tests pass; false otherwise.
+
+r/b/runPrintTests
+    # Returns true if all tests pass; false otherwise, displaying report of the tests.
