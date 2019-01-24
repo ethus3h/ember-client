@@ -90,8 +90,9 @@ r/an/getDocumentFrame n/execId s/format
 
 # To run the tests, you can use runTests or runPrintTests.
 
-r/b/runTests
-    # Returns true if all tests pass; false otherwise.
 
-r/b/runPrintTests
+r/b/runTests
     # Returns true if all tests pass; false otherwise, displaying report of the tests.
+
+r/b/quietRunTests
+    # Returns true if all tests pass; false otherwise.
