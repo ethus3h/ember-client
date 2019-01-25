@@ -959,6 +959,19 @@ async function getDocumentFrame(intExecId, strFormat) {
     await assertIsSupportedOutputFormat(strFormat);
     /* Return the most recently available output for the given document in the requested format. */
 }
+/* To run the tests, you can use runTests or runPrintTests. */
+
+async function runTests() {
+    await internalDebugStackEnter('runTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise, displaying report of the tests. */
+}
+
+async function quietRunTests() {
+    await internalDebugStackEnter('quietRunTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise. */
+}
 
 /* Calling a comparison with different types is an error. All types must be same type. */
 

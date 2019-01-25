@@ -1808,6 +1808,19 @@ async function getDocumentFrame(intExecId, strFormat) {
     await assertIsSupportedOutputFormat(strFormat);
     /* Return the most recently available output for the given document in the requested format. */
 }
+/* To run the tests, you can use runTests or runPrintTests. */
+
+async function runTests() {
+    await internalDebugStackEnter('runTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise, displaying report of the tests. */
+}
+
+async function quietRunTests() {
+    await internalDebugStackEnter('quietRunTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise. */
+}
 
 /* Calling a comparison with different types is an error. All types must be same type. */
 
@@ -2415,6 +2428,8 @@ async function dcaFromSems(intArrayContent) {
 
 // @license-end
 
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+
 async function assertIsFalse(bool) {
     if (bool === false) {
         return;
@@ -2464,3 +2479,5 @@ async function isFalse(bool) {
     }
     return false;
 }
+
+// @license-end
