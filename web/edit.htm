@@ -49,6 +49,12 @@
         #editorColumn {
             display:flex;flex-direction:column;
         }
+        #editorButtons {
+            display:flex;flex-direction:row;
+        }
+        #editorButtons > button {
+            width: 100%;
+        }
         #mainBox > div, #mainBox > p, #inputarea {
             height: 100%;
             width: 100%;
@@ -68,9 +74,11 @@
     <div id="DcSelection"></div>
     <div id="editorColumn">
         <textarea id="inputarea"></textarea>
-        <button id="RunDocument" onClick="RunDocumentHandler();">Run</button>
-        <button id="UploadDocument" onClick="UploadDocument();">Upload</button>
-        <button id="DownloadDocument" onClick="DownloadDocument();">Download</button>
+        <div id="editorButtons">
+            <button id="RunDocument" onClick="RunDocumentHandler();">Run</button>
+            <button id="UploadDocument" onClick="UploadDocument();">Upload</button>
+            <button id="DownloadDocument" onClick="DownloadDocument();">Download</button>
+        </div>
     </div>
     <p id="eiteDocumentRoot"></p>
 </section>
