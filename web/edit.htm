@@ -46,7 +46,7 @@
             document.getElementById('DownloadDocument').disabled='true';
             document.getElementById('RunDocument').disabled='true';
             document.getElementById('ioFormat').disabled='true';
-            document.getElementById('eiteDocumentRoot').innerHTML='<div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>';
+            document.getElementById('eiteDocumentRoot').innerHTML='';
             setTimeout(async function(){
                 await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
                 document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
@@ -219,5 +219,6 @@
     </defs>
 </svg>
 <div id="background"></div>
+<template id="documentRootLoadingSpinnerTemplate"><div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div></template>
 </body>
 </html>
