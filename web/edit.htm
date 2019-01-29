@@ -22,6 +22,7 @@
         };
 
         async function RunDocumentHandler() {
+            await document.getElementById('eiteDocumentRoot').innerHTML='<div class="loading"></div>';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
         };
 
@@ -33,6 +34,10 @@
 
         // @license-end
     </script>
+    <style>
+        .loading {
+        }
+    </style>
 </head>
 <body>
 <h1>IT environment: edit document tool</h1>
