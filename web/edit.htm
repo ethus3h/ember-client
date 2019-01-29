@@ -51,9 +51,10 @@
         }
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').contents.firstChild;
-            let observer=new MutationObserver(function(mutations) {
+            let observer=new MutationObserver(function(mutations) {//https://stackoverflow.com/questions/15875128/how-to-tell-when-a-dynamically-created-element-has-rendered
                 if(document.contains(waitElem)) {
                     documentRunReady();
+                    observer.disconnect();
                 }
             });
             document.getElementById('inputarea').disabled='true';
