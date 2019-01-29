@@ -23,7 +23,7 @@
                 let dcNames=[];
                 await setupIfNeeded();
                 //dcNames=await dcGetColumn('DcData', 1);
-                console.log(dcNames);
+                //console.log(dcNames);
                 document.getElementById('inputarea').disabled=false;
                 document.getElementById('UploadDocument').disabled=false;
                 document.getElementById('DownloadDocument').disabled=false;
@@ -46,6 +46,8 @@
             document.getElementById('RunDocument').disabled=true;
             document.getElementById('ioFormat').disabled=true;
             document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
+            console.log(document.getElementById('eiteDocumentRoot'));
+            document.getElementById('eiteDocumentRoot').style.display='none';
             document.getElementById('eiteDocumentRoot').style.backgroundColor='#e3cdab';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
             document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
