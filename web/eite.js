@@ -1128,14 +1128,14 @@ async function dcGetColumn(strDataset, intColumn) {
 
     let intArrayRes = [];
     let intCount = 0;
-        alert('ok');
 
     intCount = await dcDatasetLength(strDataset);
-        alert('ol');
 
     let intI = 0;
     while (await implLt(intI, intCount)) {
-        intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));
+    alert('om');
+        intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));    alert('on');
+
         intI = await implAdd(intI, 1);
     }
 
