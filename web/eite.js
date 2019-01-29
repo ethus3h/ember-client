@@ -1131,8 +1131,8 @@ async function dcGetColumn(strDataset, intColumn) {
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
     console.log(intCount);
-    console.log(dcData[intCount]);
-    console.log(dcData[intCount-1]);
+    console.log(dcData['DcData'][intCount]);
+    console.log(dcData['DcData'][intCount-1]);
     while (await implLt(intI, intCount)) {
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
         intI = await implAdd(intI, 1);
