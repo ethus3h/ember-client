@@ -52,7 +52,9 @@
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').content.firstChild;
             let observer=new MutationObserver(function(mutations) {
-                if(document.contains(waitElem)) {
+            for(var mutation of mutationsList) {for(var mutation of mutationsList) {
+        if (mutation.type == 'childList') {https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+                if(mutations.contains(waitElem)) {
                     documentRunReady();
                     observer.disconnect();
                 }
