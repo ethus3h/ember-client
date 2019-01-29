@@ -3,6 +3,10 @@ r/as/listDcDatasets
     set as/res [ 'DcData' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' ]
     return as/res
 
+r/n/getDcCount
+    new n/res
+    set n/res count dcGetColumn 'DcData' 1
+
 r/b/isDcDataset s/in
     new b/res
     set b/res contains listDcDatasets } s/in
