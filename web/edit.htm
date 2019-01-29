@@ -154,6 +154,7 @@
             z-index: 100;
         }
         #overlay::before {
+            content: ' ';
             width: 100vw;
             height: 100vh;
             top: 0;
@@ -170,7 +171,7 @@
 <p class="breadcrumbs">Page location:
     <span><a href="/">Home</a></span>
 </p>
-<div id="overlay"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>
+<div id="overlay"><div style="background-color:#e3cdab; z-index: 101;"></div></div>
 <section id="mainBox">
     <div id="DcSelection">
         <span>Click to insert</span>
