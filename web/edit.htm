@@ -41,17 +41,12 @@
         };
 
         async function RunDocumentHandler() {
-        //alert('blob');
             document.getElementById('inputarea').disabled=true;
             document.getElementById('UploadDocument').disabled=true;
             document.getElementById('DownloadDocument').disabled=true;
             document.getElementById('RunDocument').disabled=true;
             document.getElementById('ioFormat').disabled=true;
-            //document.getElementById('eiteDocumentRoot').style.display='none';
-            //document.getElementById('eiteDocumentRoot').innerHTML='<div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>';
-            document.getElementById('eiteDocumentRoot').style.backgroundColor="#e3cdab";
-            //document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
-            //console.log(document.getElementById('eiteDocumentRoot'));
+            document.getElementById('eiteDocumentRoot').innerHTML='<div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>';
             setTimeout(async function(){
                 await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
                 document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
