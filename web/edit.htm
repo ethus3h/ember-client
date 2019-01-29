@@ -58,11 +58,7 @@
             })();
         };
 
-        function prepSpinner() {
-        }
-        function removeSpinner() {
-        }
-        async function RunDocumentHandler() {
+        function startSpinner() {
             // Display loading spinner
             document.getElementById('inputarea').disabled='true';
             document.getElementById('UploadDocument').disabled='true';
@@ -71,19 +67,25 @@
             document.getElementById('ioFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
+        }
 
+        function removeSpinner() {
+            // Remove the loading spinner
+            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
+            document.getElementById('inputarea').disabled=false;
+            document.getElementById('UploadDocument').disabled=false;
+            document.getElementById('DownloadDocument').disabled=false;
+            document.getElementById('RunDocument').disabled=false;
+            document.getElementById('ioFormat').disabled=false;
+        }
+
+        async function RunDocumentHandler() {
+            startSpinner();
             // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
             window.setTimeout(async function(){
                 // Do the computation-heavy work
                 await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
-
-                // Remove the loading spinner
-                document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
-                document.getElementById('inputarea').disabled=false;
-                document.getElementById('UploadDocument').disabled=false;
-                document.getElementById('DownloadDocument').disabled=false;
-                document.getElementById('RunDocument').disabled=false;
-                document.getElementById('ioFormat').disabled=false;
+                removeSpinner();
             }, 200);
         };
 
