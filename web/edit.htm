@@ -20,6 +20,8 @@
 
         window.onload = function() {
             (async function(){
+                document.getElementById('overlay').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
+                document.getElementById('overlay').style.display='block';
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
