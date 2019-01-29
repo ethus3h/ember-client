@@ -277,16 +277,16 @@ async function listDcDatasets() {
 async function dcGetColumn(strDataset, intColumn) {
     await internalDebugCollect('str Dataset = ' + strDataset + '; '); await internalDebugCollect('int Column = ' + intColumn + '; '); await internalDebugStackEnter('dcGetColumn:dc-data'); await assertIsStr(strDataset);await assertIsInt(intColumn); let strArrayReturn;
 
-    let intArrayRes = [];
+    let strArrayRes = [];
     let intCount = 0;
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
     while (await implLt(intI, intCount)) {
-        intArrayRes = await push(intArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
+        strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
         intI = await implAdd(intI, 1);
     }
 
-    strArrayReturn = intArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function getDcCount() {

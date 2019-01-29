@@ -4,14 +4,14 @@ r/as/listDcDatasets
     return as/res
 
 r/as/dcGetColumn s/dataset n/column
-    new an/res
+    new as/res
     new n/count
     set n/count dcDatasetLength s/dataset
     new n/i
     while lt n/i n/count
-        set an/res push an/res dcDataLookupById s/dataset n/i n/column
+        set as/res push as/res dcDataLookupById s/dataset n/i n/column
         set n/i add n/i 1
-    return an/res
+    return as/res
 
 r/n/getDcCount
     new n/res
