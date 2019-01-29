@@ -559,8 +559,9 @@ async function implLt(intA, intB) {
 }
 
 async function dcDatasetLength(dataset) {
+    alert('ok');
     assertIsDcDataset(dataset); let intReturn;
-
+alert('blah');
     intReturn = await dcData[dataset].length; await assertIsInt(intReturn); return intReturn;
 }
 
