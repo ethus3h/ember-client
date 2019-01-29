@@ -21,8 +21,8 @@
         window.onload = function() {
         };
 
-        function RunDocument() {
-        alert('run');
+        async function RunDocument() {
+            await RunDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
         };
 
         function UploadDocument() {
