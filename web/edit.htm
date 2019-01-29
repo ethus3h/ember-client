@@ -33,6 +33,8 @@
                 let overlay=document.getElementById('overlay');
                 overlay.style.opacity=0;
                 overlay.style.transform='scale(3)';
+                let overlayLoadingSpinner=document.getElementById('overlayLoadingSpinner');
+                overlayLoadingSpinner.opacity=0;
                 window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
                 }, 500);
             })();
@@ -167,7 +169,7 @@
             position: fixed;
             background-color:rgb(227,205,171);
             z-index: 100;
-            transition: all 1s ease;
+            transition: all 0.7s ease;
         }
         #overlay::after {
             content: ' ';
@@ -189,7 +191,7 @@
 <p class="breadcrumbs">Page location:
     <span><a href="/">Home</a></span>
 </p>
-<div id="overlay"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>
+<div id="overlay"><div id="overlayLoadingSpinner" class="loadingSpinner" style="background-color:#e3cdab;transform:0.2s all;"></div></div>
 <section id="mainBox">
     <div id="DcSelection">
         <span>Click to insert</span>
