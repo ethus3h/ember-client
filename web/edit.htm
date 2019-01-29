@@ -20,6 +20,8 @@
 
         window.onload = function() {
             (async function(){
+            document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
+            document.getElementById('eiteDocumentRoot').style.backgroundColor='#e3cdab';
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
@@ -157,14 +159,14 @@
         <span>Click to insert</span>
     </div>
     <div id="editorColumn">
-        <textarea id="inputarea"></textarea>
-        <select id="ioFormat">
+        <textarea id="inputarea" disabled="true"></textarea>
+        <select id="ioFormat" disabled="true">
             <option value="">Unimplemented</option>
         </select>
         <div id="editorButtons">
-            <button id="UploadDocument" onClick="UploadDocument();">Upload</button>
-            <button id="DownloadDocument" onClick="DownloadDocument();">Download</button>
-            <button id="RunDocument" onClick="RunDocumentHandler();">Run</button>
+            <button disabled="true" id="UploadDocument" onClick="UploadDocument();">Upload</button>
+            <button disabled="true" id="DownloadDocument" onClick="DownloadDocument();">Download</button>
+            <button disabled="true" id="RunDocument" onClick="RunDocumentHandler();">Run</button>
         </div>
     </div>
     <p id="eiteDocumentRoot"></p>
