@@ -42,13 +42,14 @@
 
         async function RunDocumentHandler() {
         //alert('blob');
-            await new Promise(resolve => (function () {
+            await new Promise(resolve => (async function () {
                 document.getElementById('inputarea').disabled=true;
                 document.getElementById('UploadDocument').disabled=true;
                 document.getElementById('DownloadDocument').disabled=true;
                 document.getElementById('RunDocument').disabled=true;
                 document.getElementById('ioFormat').disabled=true;
                 document.getElementById('eiteDocumentRoot').innerHTML='<div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>';
+                await void(document.getElementById('eiteDocumentRoot').offsetHeight);
                 resolve(undefined);
             })).then(await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value))));
             
