@@ -40,7 +40,15 @@
             })();
         };
 
+        async function documentRunReady() {
+        }
         async function RunDocumentHandler() {
+            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').contents.firstChild;
+            let observer=new MutationObserver(function(mutations) {
+                if(document.contains(waitElem)) {
+                    documentRunReady();
+                }
+            });
             document.getElementById('inputarea').disabled='true';
             document.getElementById('UploadDocument').disabled='true';
             document.getElementById('DownloadDocument').disabled='true';
