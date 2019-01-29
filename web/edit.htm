@@ -24,19 +24,27 @@
                 await setupIfNeeded();
                 //dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
-                /*let overlay=document.getElementById('overlay');
+                document.getElementById('inputarea').disabled=false;
+                document.getElementById('UploadDocument').disabled=false;
+                document.getElementById('DownloadDocument').disabled=false;
+                document.getElementById('RunDocument').disabled=false;
+                document.getElementById('ioFormat').disabled=false;
+                window.setTimeout(function(){
+                let overlay=document.getElementById('overlay');
                 overlay.style.opacity=0;
                 overlay.style.transform='scale(3)';
-                window.setTimeout(function(){document.getElementById('overlay').remove()},1500);*/
+                window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
+                }, 500);
             })();
         };
 
         async function RunDocumentHandler() {
-        alert('blob');
+        //alert('blob');
             document.getElementById('inputarea').disabled=true;
             document.getElementById('UploadDocument').disabled=true;
             document.getElementById('DownloadDocument').disabled=true;
             document.getElementById('RunDocument').disabled=true;
+            document.getElementById('ioFormat').disabled=true;
             document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
             document.getElementById('eiteDocumentRoot').style.backgroundColor='#e3cdab';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
@@ -45,6 +53,7 @@
             document.getElementById('UploadDocument').disabled=false;
             document.getElementById('DownloadDocument').disabled=false;
             document.getElementById('RunDocument').disabled=false;
+            document.getElementById('ioFormat').disabled=false;
         };
 
         function UploadDocument() {
