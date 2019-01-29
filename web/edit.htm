@@ -22,7 +22,7 @@
         };
 
         async function RunDocumentHandler() {
-            document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner"></div>';
+            document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
         };
 
