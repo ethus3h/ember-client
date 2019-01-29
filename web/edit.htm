@@ -64,7 +64,8 @@
             document.getElementById('UploadDocument').disabled='true';
             document.getElementById('DownloadDocument').disabled='true';
             document.getElementById('RunDocument').disabled='true';
-            document.getElementById('ioFormat').disabled='true';
+            document.getElementById('inFormat').disabled='true';
+            document.getElementById('outFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
         }
@@ -76,7 +77,8 @@
             document.getElementById('UploadDocument').disabled=false;
             document.getElementById('DownloadDocument').disabled=false;
             document.getElementById('RunDocument').disabled=false;
-            document.getElementById('ioFormat').disabled=false;
+            document.getElementById('inFormat').disabled=false;
+            document.getElementById('outFormat').disabled=false;
         }
 
         async function RunDocumentHandler() {
@@ -93,7 +95,10 @@
         };
 
         async function DownloadDocument() {
-            if(await )
+            outFormat=document.getElementById('outFormat').value;
+            if (!await isOutputFormat(outFormat)) {
+                await die(outFormat+' is not an output format!');
+            }
         };
 
         // @license-end
