@@ -40,26 +40,8 @@
             })();
         };
 
-        async function documentRunReady() {
-            await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
-            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
-            document.getElementById('inputarea').disabled=false;
-            document.getElementById('UploadDocument').disabled=false;
-            document.getElementById('DownloadDocument').disabled=false;
-            document.getElementById('RunDocument').disabled=false;
-            document.getElementById('ioFormat').disabled=false;
-        }
         async function RunDocumentHandler() {
-            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate');
-            let observer=new MutationObserver(function(mutations) {
-                for (var mutation of mutations) {
-                    if (mutation.type == 'childList') {
-                        documentRunReady();
-                        observer.disconnect();
-                    }
-                }
-            });
-            observer.observe(document.getElementById('eiteDocumentRoot'), {attributes: false, childList: true, characterData: false, subtree:false});
+            // Display loading spinner
             document.getElementById('inputarea').disabled='true';
             document.getElementById('UploadDocument').disabled='true';
             document.getElementById('DownloadDocument').disabled='true';
@@ -67,6 +49,17 @@
             document.getElementById('ioFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(waitElem.content, true));
+
+            // Do the computation-heavy work
+            await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
+
+            // Remove the loading spinner
+            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
+            document.getElementById('inputarea').disabled=false;
+            document.getElementById('UploadDocument').disabled=false;
+            document.getElementById('DownloadDocument').disabled=false;
+            document.getElementById('RunDocument').disabled=false;
+            document.getElementById('ioFormat').disabled=false;
         };
 
         function UploadDocument() {
