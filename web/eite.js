@@ -1123,6 +1123,27 @@ async function listDcDatasets() {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
+async function dcGetColumn(strDataset, intColumn) {
+    await internalDebugCollect('str Dataset = ' + strDataset + '; '); await internalDebugCollect('int Column = ' + intColumn + '; '); await internalDebugStackEnter('dcGetColumn:dc-data'); await assertIsStr(strDataset);await assertIsInt(intColumn); let strArrayReturn;
+
+    let intArrayRes = [];
+    let intCount = 0;
+    intCount = await dcDatasetLength(strDataset);
+    while (await implGt(intCount, 0)) {
+        intArrayRes = await push(intArrayRes, await dcDataLookupById(intCount, intColumn));
+        intCount = await implSub(intCount, 1);
+    }
+
+    strArrayReturn = intArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getDcCount() {
+    await internalDebugStackEnter('getDcCount:dc-data'); let intReturn;
+
+    let intRes = 0;
+    intRes = await dcDatasetLength('DcData');
+}
+
 async function isDcDataset(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isDcDataset:dc-data'); await assertIsStr(strIn); let boolReturn;
 
