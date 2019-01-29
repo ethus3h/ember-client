@@ -22,7 +22,7 @@
             (async function(){
                 let dcNames=[];
                 await setupIfNeeded();
-                //dcNames=await dcGetColumn('DcData', 1);
+                dcNames=await dcGetColumn('DcData', 1);
                 //console.log(dcNames);
                 document.getElementById('inputarea').disabled=false;
                 document.getElementById('UploadDocument').disabled=false;
@@ -32,7 +32,6 @@
                 ioFormat.innerHTML='';
                 let formats=[];
                 formats = await listInputFormats();
-                console.log(formats);
                 for (i=0;i<Object.keys(formats).length;i++) {
                     let elem=document.createElement('option');
                     elem.innerHTML=formats[i];
