@@ -22,7 +22,7 @@
         };
 
         async function RunDocumentHandler() {
-            await document.getElementById('eiteDocumentRoot').innerHTML='<div class="loading"></div>';
+            document.getElementById('eiteDocumentRoot').innerHTML='<div class="loading"></div>';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
         };
 
