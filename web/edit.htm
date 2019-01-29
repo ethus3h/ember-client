@@ -50,7 +50,7 @@
             document.getElementById('ioFormat').disabled=false;
         }
         async function RunDocumentHandler() {
-            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').contents.firstChild;
+            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').content.firstChild;
             let observer=new MutationObserver(function(mutations) {
                 if(document.contains(waitElem)) {
                     documentRunReady();
