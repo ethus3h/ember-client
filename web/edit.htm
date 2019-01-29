@@ -51,18 +51,20 @@
         }
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').contents.firstChild;
-            let observer=new MutationObserver(function(mutations) {//https://stackoverflow.com/questions/15875128/how-to-tell-when-a-dynamically-created-element-has-rendered
+            let observer=new MutationObserver(function(mutations) {
                 if(document.contains(waitElem)) {
                     documentRunReady();
                     observer.disconnect();
                 }
             });
+            observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
             document.getElementById('inputarea').disabled='true';
             document.getElementById('UploadDocument').disabled='true';
             document.getElementById('DownloadDocument').disabled='true';
             document.getElementById('RunDocument').disabled='true';
             document.getElementById('ioFormat').disabled='true';
-            document.getElementById('eiteDocumentRoot').innerHTML='';
+            document.getElementById('eiteDocumentRoot').innerHTML = '';
+            document.getElementById('eiteDocumentRoot').appendChild(waitElem);
         };
 
         function UploadDocument() {
