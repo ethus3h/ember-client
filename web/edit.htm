@@ -57,7 +57,7 @@
                     observer.disconnect();
                 }
             });
-            observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+            observer.observe(document.getElementById('eiteDocumentRoot'), {attributes: false, childList: true, characterData: false, subtree:false});
             document.getElementById('inputarea').disabled='true';
             document.getElementById('UploadDocument').disabled='true';
             document.getElementById('DownloadDocument').disabled='true';
