@@ -52,11 +52,11 @@
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').content.firstChild;
             let observer=new MutationObserver(function(mutations) {
-            for(var mutation of mutationsList) {for(var mutation of mutationsList) {
-        if (mutation.type == 'childList') {https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-                if(mutations.contains(waitElem)) {
-                    documentRunReady();
-                    observer.disconnect();
+                for (var mutation of mutationsList) {
+                    if (mutation.type == 'childList') {
+                        documentRunReady();
+                        observer.disconnect();
+                    }
                 }
             });
             observer.observe(document.getElementById('eiteDocumentRoot'), {attributes: false, childList: true, characterData: false, subtree:false});
