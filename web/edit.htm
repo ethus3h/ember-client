@@ -48,7 +48,7 @@
             document.getElementById('RunDocument').disabled='true';
             document.getElementById('ioFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
-            document.getElementById('eiteDocumentRoot').appendChild(document.importNode(waitElem.content, true));
+            document.getElementById('eiteDocumentRoot').appendChild(document.importNode(Document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
 
             // Do the computation-heavy work
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
