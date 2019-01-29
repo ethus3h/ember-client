@@ -40,10 +40,17 @@
         .loadingSpinner {
             position: relative;
         }
+        #mainBox {
+        display:flex;height:100vh;width:100vw;position:fixed;top:0;left:0;
+        }
+        #DcSelection {background:antiquewhite;}
+        #editorColumn {display:flex;flex-direction:column;}
         #mainBox > div, #mainBox > p, #inputarea {
             height: 100%;
             width: 100%;
         }
+        #eiteDocumentRoot {
+        border: 0.5rem solid black;background-color:white;font-size: 3rem;}
     </style>
 </head>
 <body>
@@ -52,15 +59,15 @@
 <p class="breadcrumbs">Page location:
     <span><a href="/">Home</a></span>
 </p>
-<section id="mainBox" style="display:flex;height:100vh;width:100vw;position:fixed;top:0;left:0;">
-    <div id="DcSelection" style="background:antiquewhite;"></div>
-    <div id="editorColumn" style="display:flex;flex-direction:column;">
+<section id="mainBox">
+    <div id="DcSelection"></div>
+    <div id="editorColumn">
         <textarea id="inputarea"></textarea>
         <button id="RunDocument" onClick="RunDocumentHandler();">Run</button>
         <button id="UploadDocument" onClick="UploadDocument();">Upload</button>
         <button id="DownloadDocument" onClick="DownloadDocument();">Download</button>
     </div>
-    <p id="eiteDocumentRoot" style="border: 0.5rem solid black;background-color:white;font-size: 3rem;"></p>
+    <p id="eiteDocumentRoot" style=""></p>
 </section>
 </body>
 </html>
