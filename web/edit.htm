@@ -21,6 +21,7 @@
         window.onload = function() {
             (async function(){
                 let dcNames=[];
+                await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
             })();
