@@ -51,7 +51,7 @@
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
 
             // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
-            document.setTimeout(async function(){
+            window.setTimeout(async function(){
                 // Do the computation-heavy work
                 await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
 
