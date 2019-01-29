@@ -52,7 +52,7 @@
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').content.firstChild;
             let observer=new MutationObserver(function(mutations) {
-                for (var mutation of mutationsList) {
+                for (var mutation of mutations) {
                     if (mutation.type == 'childList') {
                         documentRunReady();
                         observer.disconnect();
