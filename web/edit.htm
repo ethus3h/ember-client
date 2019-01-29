@@ -50,16 +50,18 @@
             document.getElementById('eiteDocumentRoot').innerHTML = '';
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
 
-            // Do the computation-heavy work
-            await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
+            document.setTimeout(async function(){
+                // Do the computation-heavy work
+                await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
 
-            // Remove the loading spinner
-            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
-            document.getElementById('inputarea').disabled=false;
-            document.getElementById('UploadDocument').disabled=false;
-            document.getElementById('DownloadDocument').disabled=false;
-            document.getElementById('RunDocument').disabled=false;
-            document.getElementById('ioFormat').disabled=false;
+                // Remove the loading spinner
+                document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
+                document.getElementById('inputarea').disabled=false;
+                document.getElementById('UploadDocument').disabled=false;
+                document.getElementById('DownloadDocument').disabled=false;
+                document.getElementById('RunDocument').disabled=false;
+                document.getElementById('ioFormat').disabled=false;
+            }, 200);
         };
 
         function UploadDocument() {
