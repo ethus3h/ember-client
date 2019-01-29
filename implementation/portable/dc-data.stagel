@@ -6,7 +6,7 @@ r/as/listDcDatasets
 r/as/dcGetColumn s/dataset n/column
     new as/res
     new n/count
-    set n/count dcDatasetLength s/dataset
+    set n/count sub dcDatasetLength s/dataset } 1
     new n/i
     while lt n/i n/count
         set as/res push as/res dcDataLookupById s/dataset n/i n/column
