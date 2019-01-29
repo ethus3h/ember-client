@@ -24,9 +24,12 @@
                 await setupIfNeeded();
                 //dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
-                let main=document.getElementById('#mainBox');
+                let mainBox=document.getElementById('mainBox');
                 mainBox.style.opacity=1;
                 mainBox.style.transform='scale(1)';
+                let background=document.getElementById('background');
+                background.style.opacity=1;
+                background.style.transform='scale(1)';
                 window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
             })();
         };
@@ -120,6 +123,7 @@
             z-index: -1;
             width: 100vw;
             height: 100vh;
+            transition: all 1s ease;
         }
         button {
             background-color: rgba(255,255,255,0.7);
@@ -169,7 +173,6 @@
 </p>
 <div id="overlay"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>
 <section id="mainBox">
-<div id="background"></div>
     <div id="DcSelection">
         <span>Click to insert</span>
     </div>
@@ -196,5 +199,6 @@
         </filter>
     </defs>
 </svg>
+<div id="background"></div>
 </body>
 </html>
