@@ -41,6 +41,13 @@
         };
 
         async function documentRunReady() {
+            await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
+            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
+            document.getElementById('inputarea').disabled=false;
+            document.getElementById('UploadDocument').disabled=false;
+            document.getElementById('DownloadDocument').disabled=false;
+            document.getElementById('RunDocument').disabled=false;
+            document.getElementById('ioFormat').disabled=false;
         }
         async function RunDocumentHandler() {
             let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').contents.firstChild;
@@ -55,15 +62,6 @@
             document.getElementById('RunDocument').disabled='true';
             document.getElementById('ioFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML='';
-            setTimeout(async function(){
-                await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
-                document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
-                document.getElementById('inputarea').disabled=false;
-                document.getElementById('UploadDocument').disabled=false;
-                document.getElementById('DownloadDocument').disabled=false;
-                document.getElementById('RunDocument').disabled=false;
-                document.getElementById('ioFormat').disabled=false;
-            }, 200)
         };
 
         function UploadDocument() {
