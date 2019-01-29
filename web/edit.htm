@@ -50,7 +50,7 @@
             document.getElementById('ioFormat').disabled=false;
         }
         async function RunDocumentHandler() {
-            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate').content.firstChild;
+            let waitElem=document.getElementById('documentRootLoadingSpinnerTemplate');
             let observer=new MutationObserver(function(mutations) {
                 for (var mutation of mutations) {
                     if (mutation.type == 'childList') {
@@ -66,7 +66,7 @@
             document.getElementById('RunDocument').disabled='true';
             document.getElementById('ioFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
-            document.getElementById('eiteDocumentRoot').appendChild(waitElem);
+            document.getElementById('eiteDocumentRoot').appendChild(document.importNode(waitElem.content, true));
         };
 
         function UploadDocument() {
