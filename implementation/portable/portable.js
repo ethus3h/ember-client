@@ -280,9 +280,10 @@ async function dcGetColumn(strDataset, intColumn) {
     let intArrayRes = [];
     let intCount = 0;
     intCount = await dcDatasetLength(strDataset);
-    while (await implGt(intCount, 0)) {
-        intArrayRes = await push(intArrayRes, await dcDataLookupById(intCount, intColumn));
-        intCount = await implSub(intCount, 1);
+    let intI = 0;
+    while (await implLt(intI, intCount)) {
+        intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));
+        intI = await implAdd(intI, 1);
     }
 
     strArrayReturn = intArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
