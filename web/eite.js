@@ -375,7 +375,7 @@ async function len(str) {
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
@@ -1131,7 +1131,9 @@ async function dcGetColumn(strDataset, intColumn) {
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
     while (await implLt(intI, intCount)) {
+        alert('a');
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
+        alert('b');
         intI = await implAdd(intI, 1);
     }
 
