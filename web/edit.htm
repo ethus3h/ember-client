@@ -24,6 +24,7 @@
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
+                document.getElementById('overlay').remove();
             })();
         };
 
