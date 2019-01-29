@@ -38,6 +38,15 @@
                     inFormat.appendChild(elem);
                 }
                 inFormat.disabled=false;
+                outFormat=document.getElementById('inFormat');
+                outFormat.innerHTML='';
+                formats = await listOutputFormats();
+                for (i=0;i<Object.keys(formats).length;i++) {
+                    let elem=document.createElement('option');
+                    elem.innerHTML=formats[i];
+                    outFormat.appendChild(elem);
+                }
+                outFormat.disabled=false;
                 window.setTimeout(function(){
                     let overlay=document.getElementById('overlay');
                     overlay.style.opacity=0;
