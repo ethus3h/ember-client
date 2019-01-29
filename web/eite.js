@@ -560,9 +560,8 @@ async function implLt(intA, intB) {
 
 async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
-alert('blah');
-    intReturn = await dcData[dataset].length; await assertIsInt(intReturn);     alert('ok');
-return intReturn;
+
+    intReturn = await dcData[dataset].length; await assertIsInt(intReturn); return intReturn;
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
@@ -1129,7 +1128,11 @@ async function dcGetColumn(strDataset, intColumn) {
 
     let intArrayRes = [];
     let intCount = 0;
+        alert('ok');
+
     intCount = await dcDatasetLength(strDataset);
+        alert('ol');
+
     let intI = 0;
     while (await implLt(intI, intCount)) {
         intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));
