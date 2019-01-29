@@ -24,7 +24,10 @@
                 await setupIfNeeded();
                 //dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
-                document.getElementById('overlay').remove();
+                let overlay=document.getElementById('overlay');
+                overlay.style.opacity=0;
+                overlay.style.transform='scale(2)';
+                overlay.remove();
             })();
         };
 
@@ -153,6 +156,7 @@
             position: fixed;
             z-index: 100;
             background-color:#e3cdab;
+            transition: all 1s ease;
         }
     </style>
 </head>
