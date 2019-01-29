@@ -1133,8 +1133,7 @@ async function dcGetColumn(strDataset, intColumn) {
 
     let intI = 0;
     while (await implLt(intI, intCount)) {
-    alert('om');
-        intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));    alert('on');
+        intArrayRes = await push(intArrayRes, await dcDataLookupById(intI, intColumn));
 
         intI = await implAdd(intI, 1);
     }

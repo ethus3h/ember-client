@@ -9,7 +9,7 @@ r/as/dcGetColumn s/dataset n/column
     set n/count dcDatasetLength s/dataset
     new n/i
     while lt n/i n/count
-        set an/res push an/res dcDataLookupById n/i n/column
+        set an/res push an/res dcDataLookupById s/dataset n/i n/column
         set n/i add n/i 1
     return an/res
 
