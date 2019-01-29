@@ -20,8 +20,6 @@
 
         window.onload = function() {
             (async function(){
-            document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
-            document.getElementById('eiteDocumentRoot').style.backgroundColor='#e3cdab';
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
@@ -154,6 +152,7 @@
 <p class="breadcrumbs">Page location:
     <span><a href="/">Home</a></span>
 </p>
+<div id="overlay"></div>
 <section id="mainBox">
     <div id="DcSelection">
         <span>Click to insert</span>
