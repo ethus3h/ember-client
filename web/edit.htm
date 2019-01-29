@@ -25,7 +25,7 @@
             document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
             document.getElementById('eiteDocumentRoot').style.backgroundColor='#e3cdab';
             await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
-            document.getElementById('eiteDocumentRoot').style.backgroundColor=null;
+            document.getElementById('eiteDocumentRoot').style.backgroundColor=white;
         };
 
         function UploadDocument() {
