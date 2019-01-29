@@ -1130,10 +1130,11 @@ async function dcGetColumn(strDataset, intColumn) {
     let intCount = 0;
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
+    console.log(intCount);
+    console.log(dcData[intCount]);
+    console.log(dcData[intCount-1]);
     while (await implLt(intI, intCount)) {
-        alert('a');
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
-        alert('b');
         intI = await implAdd(intI, 1);
     }
 
