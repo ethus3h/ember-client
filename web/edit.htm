@@ -152,6 +152,15 @@
             left: 0;
             position: fixed;
             z-index: 100;
+        }
+        #overlay::after {
+            content: ' ';
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            position: fixed;
+            z-index: 99;
             background-color: #e3cdab;
         }
         #overlay::before {
@@ -161,7 +170,7 @@
             top: 0;
             left: 0;
             position: fixed;
-            z-index: 99;
+            z-index: 98;
             background:-moz-element(#background) no-repeat fixed;
         }
     </style>
