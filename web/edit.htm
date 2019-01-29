@@ -71,6 +71,31 @@
         #eiteDocumentRoot {
             border: 0.5rem solid black;background-color:white;font-size: 3rem;
         }
+        button {
+            background-color: rgba(255,255,255,0.7);
+            border-width: 0 0 0.1rem 0;
+            border-color: white;
+            border-style: solid;
+            transition: 0.1s all;
+            position: relative;
+        }
+        button::before:not(:first-of-type) {
+            content: ' ';
+            display: block;
+            height: 100%;
+            float: left;
+            position: absolute;
+            width: 0.1rem;
+            background-color: white;
+            top: 0;
+            left: 0;
+        }
+        button:hover {
+            background-color: rgba(255,255,255,0.8);
+        }
+        button:active {
+            background-color: rgba(200,200,200,0.7);
+        }
     </style>
 </head>
 <body>
