@@ -109,6 +109,9 @@
         button:active {
             background-color: rgba(200,200,200,0.7);
         }
+        #svgFilter {
+            height: 0;
+        }
     </style>
 </head>
 <body>
@@ -130,7 +133,7 @@
     <p id="eiteDocumentRoot"></p>
 </section>
 <div id="background"></div>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svgFilter">
     <defs>
         <filter id="f1" x="0" y="0">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
