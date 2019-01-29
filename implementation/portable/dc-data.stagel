@@ -7,11 +7,14 @@ r/as/dcGetColumn s/dataset n/column
     new an/res
     new n/count
     set n/count dcDatasetLength s/dataset
+    while gt n/count 0
+        set an/res push an/res dcDataLookupById n/count n/column
+        set n/count sub n/count 1
     return an/res
 
 r/n/getDcCount
     new n/res
-    set n/res dcDatasetLength 'DcData' 1
+    set n/res dcDatasetLength 'DcData'
 
 r/b/isDcDataset s/in
     new b/res
