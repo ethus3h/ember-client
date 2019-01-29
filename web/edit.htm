@@ -28,14 +28,23 @@
                 document.getElementById('UploadDocument').disabled=false;
                 document.getElementById('DownloadDocument').disabled=false;
                 document.getElementById('RunDocument').disabled=false;
-                document.getElementById('ioFormat').disabled=false;
+                ioFormat=document.getElementById('ioFormat');
+                ioFormat.innerHTML='';
+                let formats=[];
+                formats = await listInputFormats();
+                for (i=0;i<formats.count;i++) {
+                    let elem=document.createElement('option');
+                    elem.innerHTML=formats[i];
+                    ioFormat.appendChild(elem);
+                }
+                ioFormat.disabled=false;
                 window.setTimeout(function(){
-                let overlay=document.getElementById('overlay');
-                overlay.style.opacity=0;
-                overlay.style.transform='scale(3)';
-                let overlayLoadingSpinner=document.getElementById('overlayLoadingSpinner');
-                overlayLoadingSpinner.style.opacity=0;
-                window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
+                    let overlay=document.getElementById('overlay');
+                    overlay.style.opacity=0;
+                    overlay.style.transform='scale(3)';
+                    let overlayLoadingSpinner=document.getElementById('overlayLoadingSpinner');
+                    overlayLoadingSpinner.style.opacity=0;
+                    window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
                 }, 500);
             })();
         };
