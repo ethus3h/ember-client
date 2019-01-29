@@ -27,7 +27,7 @@
                 let main=document.getElementById('#mainBox');
                 mainBox.style.opacity=1;
                 mainBox.style.transform='scale(1)';
-                //document.getElementById('overlay').remove();
+                window.setTimeout(function(){document.getElementById('overlay').remove()},1000);
             })();
         };
 
