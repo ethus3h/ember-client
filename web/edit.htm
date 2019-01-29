@@ -52,13 +52,15 @@
             document.getElementById('eiteDocumentRoot').style.backgroundColor="#e3cdab";
             //document.getElementById('eiteDocumentRoot').innerHTML='<div class="loadingSpinner" style="background-color:#e3cdab;"></div>';
             //console.log(document.getElementById('eiteDocumentRoot'));
-            await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
-            document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
-            document.getElementById('inputarea').disabled=false;
-            document.getElementById('UploadDocument').disabled=false;
-            document.getElementById('DownloadDocument').disabled=false;
-            document.getElementById('RunDocument').disabled=false;
-            document.getElementById('ioFormat').disabled=false;
+            setTimeout(async function(){
+                await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
+                document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
+                document.getElementById('inputarea').disabled=false;
+                document.getElementById('UploadDocument').disabled=false;
+                document.getElementById('DownloadDocument').disabled=false;
+                document.getElementById('RunDocument').disabled=false;
+                document.getElementById('ioFormat').disabled=false;
+            }, 0)
         };
 
         function UploadDocument() {
