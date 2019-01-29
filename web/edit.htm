@@ -24,12 +24,9 @@
                 await setupIfNeeded();
                 //dcNames=await dcGetColumn('DcData', 1);
                 console.log(dcNames);
-                let mainBox=document.getElementById('mainBox');
-                mainBox.style.opacity=1;
-                mainBox.style.transform='scale(1)';
-                let background=document.getElementById('background');
-                background.style.opacity=1;
-                background.style.transform='scale(1)';
+                let overlay=document.getElementById('overlay');
+                overlay.style.opacity=0;
+                overlay.style.transform='scale(3)';
                 window.setTimeout(function(){document.getElementById('overlay').remove()},1500);
             })();
         };
@@ -65,8 +62,6 @@
         #mainBox {
             display:flex;height:100vh;width:100vw;position:fixed;top:0;left:0;
             transform:scale(0.5);
-            transition: all 1s ease;
-            opacity: 0;
         }
         #DcSelection {
             background:rgba(0,0,0,0.3);
@@ -123,8 +118,6 @@
             z-index: -1;
             width: 100vw;
             height: 100vh;
-            transform:scale(0.5);
-            transition: all 1s ease;
         }
         button {
             background-color: rgba(255,255,255,0.7);
@@ -163,6 +156,8 @@
             left: 0;
             position: fixed;
             background-color:#e3cdab;
+            z-index: 100;
+            transition: all 1s ease;
         }
     </style>
 </head>
