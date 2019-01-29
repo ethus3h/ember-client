@@ -40,7 +40,7 @@
         .loadingSpinner {
             position: relative;
         }
-        #mainBox > div, #mainBox > p {
+        #mainBox > div, #mainBox > p, #inputarea {
             height: 100%;
             width: 100%;
         }
@@ -53,13 +53,13 @@
     <span><a href="/">Home</a></span>
 </p>
 <section id="mainBox" style="display:flex;height:100vh;width:100vw;position:fixed;top:0;left:0;">
+    <div id="DcSelection" style="background:antiquewhite;"></div>
     <div id="editorColumn">
         <textarea id="inputarea"></textarea>
         <button id="RunDocument" onClick="RunDocumentHandler();" style="position:absolute;top:90vh;right:35vw;">Run</button>
         <button id="UploadDocument" onClick="UploadDocument();" style="position:absolute;top:90vh;right:43vw;">Upload</button>
         <button id="DownloadDocument" onClick="DownloadDocument();" style="position:absolute;top:90vh;right:55vw;">Download</button>
     </div>
-    <div id="DcSelection" style="background:antiquewhite;"></div>
     <p id="eiteDocumentRoot" style="border: 0.5rem solid black;background-color:white;font-size: 3rem;"></p>
 </section>
 </body>
