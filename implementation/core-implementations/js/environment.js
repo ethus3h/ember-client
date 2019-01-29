@@ -18,14 +18,14 @@ async function getEnvCharEncoding() {
 }
 
 async function renderDrawContents(renderBuffer) {
-    // Whether it appends or replaces the frame would depend on the environment.
+    // Whether it appends to or replaces the frame would depend on the environment. In this implementation, HTML replaces, and terminal appends.
     // The input is an array of bytes of the rendered document, either of HTML or text.
     await assertIsByteArray(renderBuffer);
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if(haveDom) {
         let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-        htmlOutputRootElement.innerHTML += string;
+        htmlOutputRootElement.innerHTML = string;
         htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
     }
     else {
