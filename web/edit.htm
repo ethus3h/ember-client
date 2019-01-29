@@ -144,6 +144,13 @@
         #svgFilter {
             height: 0;
         }
+        #overlay {
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            position: fixed;
+        }
     </style>
 </head>
 <body>
@@ -152,7 +159,7 @@
 <p class="breadcrumbs">Page location:
     <span><a href="/">Home</a></span>
 </p>
-<div id="overlay"></div>
+<div id="overlay"><div class="loadingSpinner" style="background-color:#e3cdab;"></div></div>
 <section id="mainBox">
     <div id="DcSelection">
         <span>Click to insert</span>
