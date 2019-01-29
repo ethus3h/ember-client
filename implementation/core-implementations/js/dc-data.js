@@ -4,6 +4,13 @@ async function dcDatasetLength(dataset) {
     intReturn = await dcData[dataset].length; await assertIsInt(intReturn); return intReturn;
 }
 
+async function dcGetColumn(dataset, column) {
+    await assertIsDcDataset(dataset); await assertIsInt(column); let arrReturn;
+
+    let i;
+    assertIsIntArray(arrReturn);
+}
+
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
