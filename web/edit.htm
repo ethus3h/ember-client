@@ -33,7 +33,7 @@
                 let formats=[];
                 formats = await listInputFormats();
                 console.log(formats);
-                for (i=0;i<formats.count;i++) {
+                for (i=0;i<Object.keys(formats).length;i++) {
                     let elem=document.createElement('option');
                     elem.innerHTML=formats[i];
                     ioFormat.appendChild(elem);
