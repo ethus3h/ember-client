@@ -38,6 +38,9 @@
                 inputarea.addEventListener('input', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
+                inputarea.addEventListener('click', function() {
+                    updateNearestDcLabel(inputarea);
+                }, false);
                 document.getElementById('UploadDocument').disabled=false;
                 document.getElementById('DownloadDocument').disabled=false;
                 document.getElementById('RunDocument').disabled=false;
