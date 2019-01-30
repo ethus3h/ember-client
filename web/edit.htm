@@ -91,7 +91,7 @@
             // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
             window.setTimeout(async function(){
                 // Do the computation-heavy work
-                await runDocument(await importDocument('sems', await getInputDoc());
+                await runDocument(await importDocument('sems', await getInputDoc()));
                 removeSpinner();
             }, 200);
         };
