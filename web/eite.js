@@ -2006,7 +2006,6 @@ async function formatToExtension(strFormat) {
         strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else if (await implEq(strFormat, 'UTF-8')) {
-alert('blah;');
         strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else if (await or(await implEq(strFormat, 'characterCells'), await implEq(strFormat, 'immutableCharacterCells'))) {
@@ -2020,7 +2019,7 @@ alert('blah;');
         strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.htm');
         alert('bluh');
 
-        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit();alert('blueh'+strRes); return strReturn;
     }
     else {
         await implDie(await implCat('Format not supported: ', strFormat));
