@@ -1984,7 +1984,7 @@ async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsByteArray(intArrayIn);
     let intArrayOut = [];
-    intArrayOut = await dcaToFormat(await dcaFromFormat(intArrayIn, strInFormat), strOutFormat);
+    intArrayOut = await dcaToFormat(strOutFormat, await dcaFromFormat(strInFormat, intArrayIn));
     await assertIsByteArray(intArrayOut);
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
