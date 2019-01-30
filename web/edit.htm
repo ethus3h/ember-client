@@ -110,8 +110,8 @@
                 picker.click();
                 let file=picker.files[0];
                 if (file !== undefined) {
+                    let fr=new FileReader();
                     await new Promise(resolve => {
-                        let fr=new FileReader();
                         fr.onload=function (){
                             resolve(undefined);
                         };
