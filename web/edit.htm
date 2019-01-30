@@ -128,7 +128,7 @@
                 while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
                     notificationOverlay.style.opacity=0;
                     e[0].style.opacity=0;
-                    e[0].style.transform='scale(0.65) translate(-77%, -77%)';
+                    e[0].style.transform='translate(-50%, -50%) scale(0.65)';
                     i=i+1;
                 };
                 setTimeout(function(){
@@ -197,7 +197,7 @@
             top: 50%;
             left: 50%;
             margin-right: -50%;
-            transform: scale(1) translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1);
             box-shadow: 0 0 15px cornflowerblue;
             transition: 0.5s all;
             z-index: 4;
