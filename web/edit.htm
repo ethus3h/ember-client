@@ -122,7 +122,7 @@
             else {
                 el.value = (before + ' ' + newText + after);
             }
-            el.selectionStart = el.selectionEnd = start + newText.length;
+            el.selectionStart = el.selectionEnd = start + newText.length + 1;
             el.focus();
         }
         async function getInputDoc() {
