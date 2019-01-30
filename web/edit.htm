@@ -113,11 +113,15 @@
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.innerHTML=name;
+            elem.id='downloadNotifyTempId';
             console.log(elem);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem);
+            let elemAppended=document.getElementById('downloadNotifyTempId');
+            elemAppended.removeAttribute('id');
+            console.log(elemAppended);
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
                 i=0;
