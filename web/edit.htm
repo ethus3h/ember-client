@@ -112,6 +112,7 @@
                 if (file !== undefined) {
                 let fr=new FileReader();
                     fr.readAsArrayBuffer(file);
+                    console.log(new Uint8Array(fr.result));
                     document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
                 }
                 removeSpinner(true);
