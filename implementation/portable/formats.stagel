@@ -33,6 +33,16 @@ r/an/convertFormats s/inFormat s/outFormat an/in
     assertIsByteArray an/out
     return an/out
 
+r/s/formatToExtension s/format
+    if eq s/format 'sems'
+        return 'sems'
+    elif eq s/format 'characterCells'
+        new s/res
+        set s/res cat formatToExtension getEnvCharEncoding } '.txt'
+        return s/res
+    elif eq s/format 'HTML'
+        set s/res 
+
 r/as/listInputFormats
     new as/res
     set as/res [ 'sems' ]
