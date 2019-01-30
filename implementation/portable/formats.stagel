@@ -47,7 +47,7 @@ r/s/formatToExtension s/format
     elif eq s/format 'integerList'
         return 'dcil'
     else
-        die 'Format not supported.'
+        die cat 'Format not supported: ' s/format
 
 r/as/listInputFormats
     new as/res
