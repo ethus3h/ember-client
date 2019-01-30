@@ -114,6 +114,8 @@
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.innerHTML=name;
             notificationOverlay=document.getElementById('notificationOverlay');
+            notificationOverlay.style.display='block';
+            notificationOverlay.style.opacity=1;
             document.body.appendChild(elem);
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
