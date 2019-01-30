@@ -118,6 +118,7 @@
                     await implDie(outFormat+' is not a supported output format!');
                 }
                 let blob=await new Blob([await exportDocument(outFormat, await getInputDoc())], { type: 'application/octet-stream' });
+                console.log(blob);
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
