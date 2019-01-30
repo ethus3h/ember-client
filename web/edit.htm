@@ -25,7 +25,7 @@
                 dcNames=await dcGetColumn('DcData', 1);
                 for (i=1;i<Object.keys(dcNames).length;i++) {
                     let elem=document.createElement('button');
-                    elem.onClick=function(){
+                    elem.onclick=function(){
                         editAreaInsert(i + ' ');
                     }
                     elem.innerHTML=dcNames[i];
