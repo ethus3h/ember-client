@@ -154,7 +154,7 @@
             let text = el.value;
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
-            if (before.substr(-1) === ' ' || (before.substr(-1 === '')) {
+            if (before.substr(-1) === ' ' || before.substr(-1) === '') {
                 el.value = (before + newText + ' ' + after);
             }
             else {
