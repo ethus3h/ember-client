@@ -113,14 +113,12 @@
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.innerHTML=name;
-            //console.log(elem);
             document.getElementById('mainBox').appendChild(elem);
-            //console.log(document.getElementsByClassName('downloadNotification'));
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
                 i=0;
                 while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
-                    e[0].style.opacity=0.5;
+                    e[0].style.opacity=0;
                     i=i+1;
                 };
                 setTimeout(function(){
@@ -128,8 +126,8 @@
                     while (Object.keys(e).length > 0) {
                         e[0].parentNode.removeChild(e[0]);
                     };
-                }, 2500);
-            }, 1500);
+                }, 2000);
+            }, 1000);
         }
 
         async function DownloadDocument() {
