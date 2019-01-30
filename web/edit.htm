@@ -103,6 +103,7 @@
             typeInTextareaSpaced(document.getElementById('inputarea'), text);
         }
         function updateNearestDcLabel(el) {
+            let start = el.selectionStart;
             let end = el.selectionEnd;
             let text = el.value;
             let before = text.substring(0, start);
