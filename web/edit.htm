@@ -134,7 +134,7 @@
                 downloadNotify(outName);
                 link.download=outName;
                 console.log(link);
-                link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+                //link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
                 removeSpinner(true);
             }, 200);
         };
