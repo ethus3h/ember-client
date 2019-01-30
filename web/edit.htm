@@ -35,16 +35,16 @@
                 //console.log(dcNames);
                 inputarea=document.getElementById('inputarea');
                 inputarea.disabled=false;
-                inputarea.addEventListener('input', function() {
+                document.addEventListener('input', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                inputarea.addEventListener('keydown', function() {
+                document.addEventListener('keydown', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                inputarea.addEventListener('keyup', function() {
+                document.addEventListener('keyup', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                inputarea.addEventListener('click', function() {
+                document.addEventListener('click', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
                 document.getElementById('UploadDocument').disabled=false;
