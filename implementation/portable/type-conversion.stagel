@@ -31,3 +31,12 @@ r/an/strToByteArray s/input
 
 r/s/strFromByteArray an/input
     # Remember this will break if there are non-string bytes in it.
+    new n/count
+    set n/count count ga/input
+    new n/i
+    set n/i 0
+    new s/out
+    while lt n/i n/count
+        set s/out cat s/out charFromByte get ga/input n/i
+        set n/i add n/i 1
+    return s/out
