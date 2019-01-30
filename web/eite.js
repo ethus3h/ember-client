@@ -2230,6 +2230,30 @@ async function isDc(genericIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function isKnownDc(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isKnownDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isDc(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    if (await implGt(genericIn, await maximumKnownDc())) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function maximumKnownDc() {
+    await internalDebugStackEnter('maximumKnownDc:format-dc'); let intReturn;
+
+    let strRes = '';
+    strRes = await dcDatasetLength('DcData');
+
+    intReturn = strRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
 async function dcIsNewline(intDc) {
     await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsNewline:format-dc'); await assertIsInt(intDc); let boolReturn;
 
