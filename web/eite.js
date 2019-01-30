@@ -2016,8 +2016,9 @@ alert('blah;');
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else if (await implEq(strFormat, 'HTML')) {
-        let strRes = '';alert('bleh');
+        let strRes = '';
         strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.htm');
+        alert('bluh');
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
