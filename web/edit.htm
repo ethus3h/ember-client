@@ -26,7 +26,7 @@
                 for (i=1;i<Object.keys(dcNames).length;i++) {
                     let elem=document.createElement('button');
                     elem.onClick=function(){
-                        
+                        editAreaInsert(i + ' ');
                     }
                     elem.innerHTML=dcNames[i];
                     document.getElementById('DcSelection').appendChild(elem);
