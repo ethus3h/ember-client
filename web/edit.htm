@@ -105,6 +105,7 @@
                 let picker=document.getElementById('filepicker');
                 picker.click();
                 let file=picker.files[0];
+                console.log(file);
                 let fr=new FileReader();
                 fr.readAsArrayBuffer(file);
                 console.log(fr);
