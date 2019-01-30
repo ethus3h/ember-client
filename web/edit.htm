@@ -102,6 +102,12 @@
         function UploadDocument() {
             startSpinner();
             window.setTimeout(async function(){
+                let picker=document.getElementById('filepicker');
+                picker.click();
+                let file=picker.files[0];
+                let fr=new FileReader();
+                fr.readAsArrayBuffer(file);
+                console.log(fr);
                 inFormat=document.getElementById('inFormat').value;
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
@@ -229,6 +235,9 @@
         #DcSelection, #editorColumn, #eiteDocumentRoot, #inputarea {
             height: 100%;
             width: 100%;
+        }
+        #filepicker {
+            display: none;
         }
         #eiteDocumentRoot {
             border: 0.5rem solid rgba(255,255,255,0.9);background-color:white;background-clip:content-box;font-size: 3rem;
@@ -382,5 +391,6 @@
 <div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="downloadNotifyTemplate"><div class="downloadNotification"></div></template>
+<input type="file" id="filepicker"></input>
 </body>
 </html>
