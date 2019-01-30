@@ -92,18 +92,25 @@
         };
 
         function UploadDocument() {
-            inFormat=document.getElementById('inFormat').value;
-            if (!await isSupportedInputFormat(inFormat)) {
-                await implDie(inFormat+' is not a supported input format!');
-            }
+            startSpinner();
+            window.setTimeout(async function(){
+                inFormat=document.getElementById('inFormat').value;
+                if (!await isSupportedInputFormat(inFormat)) {
+                    await implDie(inFormat+' is not a supported input format!');
+                }
+                removeSpinner();
+            }, 200);
         };
 
         async function DownloadDocument() {
-            outFormat=document.getElementById('outFormat').value;
-            if (!await isSupportedOutputFormat(outFormat)) {
-                await implDie(outFormat+' is not a supported output format!');
-            }
-            alert('ok');
+            startSpinner();
+            window.setTimeout(async function(){
+                outFormat=document.getElementById('outFormat').value;
+                if (!await isSupportedOutputFormat(outFormat)) {
+                    await implDie(outFormat+' is not a supported output format!');
+                }
+                removeSpinner();
+            }, 200);
         };
 
         // @license-end
