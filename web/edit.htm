@@ -126,12 +126,10 @@
             before=before+after;
             currentDc=before.trim().split(' ').slice(-1);
             if (! await isDc(currentDc)) {
-            let name=await dcGetName(parseInt(currentDc));
-            if (name === undefined) {
                 document.getElementById('currentDcLabel').innerHTML='';
                 return;
             }
-            document.getElementById('currentDcLabel').innerHTML=currentDc+': '+name;
+            document.getElementById('currentDcLabel').innerHTML=currentDc+': '+await dcGetName(parseInt(currentDc));
         }
         function typeInTextarea(el, newText) {
             // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
