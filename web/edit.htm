@@ -87,11 +87,12 @@
             }
             document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
             document.getElementById('inputarea').disabled=false;
-            document.getElementById('UploadDocument').disabled=false;
-            document.getElementById('DownloadDocument').disabled=false;
-            document.getElementById('RunDocument').disabled=false;
-            document.getElementById('inFormat').disabled=false;
-            document.getElementById('outFormat').disabled=false;
+            document.getElementsByTagName('select').forEach(elem => {
+                elem.disabled = true;
+            });
+            document.getElementsByTagName('button').forEach(elem => {
+                elem.disabled = true;
+            });
         }
         function editAreaInsert(text) {
             typeInTextarea(document.getElementById('inputarea'), text);
