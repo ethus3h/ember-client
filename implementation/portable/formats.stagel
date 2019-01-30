@@ -36,6 +36,12 @@ r/an/convertFormats s/inFormat s/outFormat an/in
 r/s/formatToExtension s/format
     if eq s/format 'sems'
         return 'sems'
+    elif eq s/format 'integerList'
+        return 'dcil'
+    elif eq s/format 'ASCII-safe-subset'
+        return 'ascii'
+    elif eq s/format 'UTF-8'
+        return 'utf8'
     elif or eq s/format 'characterCells' } eq s/format 'immutableCharacterCells'
         new s/res
         set s/res cat formatToExtension getEnvCharEncoding } '.txt'
@@ -44,8 +50,6 @@ r/s/formatToExtension s/format
         new s/res
         set s/res cat formatToExtension getEnvCharEncoding } '.htm'
         return s/res
-    elif eq s/format 'integerList'
-        return 'dcil'
     else
         die cat 'Format not supported: ' s/format
 
