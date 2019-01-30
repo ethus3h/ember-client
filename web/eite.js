@@ -375,7 +375,7 @@ async function len(str) {
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
@@ -2011,13 +2011,13 @@ async function formatToExtension(strFormat) {
     }
     else if (await or(await implEq(strFormat, 'characterCells'), await implEq(strFormat, 'immutableCharacterCells'))) {
         let strRes = '';
-        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), '.txt'));
+        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.txt');
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else if (await implEq(strFormat, 'HTML')) {
         let strRes = '';
-        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), '.htm'));
+        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.htm');
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
