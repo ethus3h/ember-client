@@ -120,7 +120,7 @@
             let start = el.selectionStart;
             let end = el.selectionEnd;
             if (start !== end) {
-                document.getElementById('currentDcLabel').innerHTML='';
+                setNearestDcLabel('');
                 return;
             }
             let text = el.value;
@@ -131,9 +131,10 @@
             before=before+after;
             currentDc=parseInt(before.trim().split(' ').slice(-1));
             if (! await isKnownDc(currentDc)) {
-                document.getElementById('currentDcLabel').innerHTML='';
+                setNearestDcLabel('');
                 return;
             }
+                setNearestDcLabel('');
             document.getElementById('currentDcLabel').innerHTML=currentDc+': '+await dcGetName(currentDc);
         }
         function typeInTextarea(el, newText) {
