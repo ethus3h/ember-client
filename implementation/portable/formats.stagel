@@ -36,12 +36,18 @@ r/an/convertFormats s/inFormat s/outFormat an/in
 r/s/formatToExtension s/format
     if eq s/format 'sems'
         return 'sems'
-    elif eq s/format 'characterCells'
+    elif or eq s/format 'characterCells' } eq s/format 'immutableCharacterCells'
         new s/res
         set s/res cat formatToExtension getEnvCharEncoding } '.txt'
         return s/res
     elif eq s/format 'HTML'
-        set s/res 
+        new s/res
+        set s/res cat formatToExtension getEnvCharEncoding } '.htm'
+        return s/res
+    elif eq s/format 'integerList'
+        return 'dcil'
+    else
+        die 'Format not supported.'
 
 r/as/listInputFormats
     new as/res
