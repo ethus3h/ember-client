@@ -375,7 +375,7 @@ async function len(str) {
 
 var STAGEL_DEBUG;
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 0;
+    STAGEL_DEBUG = 2;
 }
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
