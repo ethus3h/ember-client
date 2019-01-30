@@ -70,8 +70,11 @@
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
         }
 
-        function removeSpinner() {
+        function removeSpinner(clear=false) {
             // Remove the loading spinner
+            if(clear) {
+                document.getElementById('eiteDocumentRoot').innerHTML='';
+            }
             document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
             document.getElementById('inputarea').disabled=false;
             document.getElementById('UploadDocument').disabled=false;
@@ -103,7 +106,7 @@
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
                 }
-                removeSpinner();
+                removeSpinner(true);
             }, 200);
         };
 
@@ -115,7 +118,7 @@
                     await implDie(outFormat+' is not a supported output format!');
                 }
                 alert(await getInputDoc());
-                removeSpinner();
+                removeSpinner(true);
             }, 200);
         };
 
