@@ -125,6 +125,7 @@
             after=after.substring(0, after.indexOf(' '));
             before=before+after;
             currentDc=before.trim().split(' ').slice(-1);
+            if (! await isDc(currentDc)) {
             let name=await dcGetName(parseInt(currentDc));
             if (name === undefined) {
                 document.getElementById('currentDcLabel').innerHTML='';
