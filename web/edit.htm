@@ -113,7 +113,7 @@
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.innerHTML=name;
-            document.getElementById('mainBox').appendChild(elem);
+            document.body.appendChild(elem);
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
                 i=0;
@@ -221,6 +221,18 @@
         }
         #mainBox::before {
             background:-moz-element(#background) no-repeat fixed;
+            filter:url(#f1);
+            content: ' ';
+            width: calc(100% + 6rem);
+            height: calc(100% + 6rem);
+            position: absolute;
+            top: -3rem;
+            left: -3rem;
+            clip-path: inset(3rem 3rem 3rem 3rem);
+            z-index: -1;
+        }
+        .downloadNotification::before {
+            background:-moz-element(#mainBox) no-repeat fixed;
             filter:url(#f1);
             content: ' ';
             width: calc(100% + 6rem);
