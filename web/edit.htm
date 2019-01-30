@@ -102,17 +102,17 @@
         function UploadDocument() {
             startSpinner();
             window.setTimeout(async function(){
-                let picker=document.getElementById('filepicker');
-                picker.click();
-                let file=picker.files[0];
-                console.log(file);
-                let fr=new FileReader();
-                fr.readAsArrayBuffer(file);
-                console.log(fr);
                 inFormat=document.getElementById('inFormat').value;
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
                 }
+                let picker=document.getElementById('filepicker');
+                picker.click();
+                let file=picker.files[0];
+                let fr=new FileReader();
+                fr.readAsArrayBuffer(file);
+                console.log(new Uint8Array(fr.result));
+                document.getElementById('inputarea').value = importAndExport(inFormat, 'sems')
                 removeSpinner(true);
             }, 200);
         };
