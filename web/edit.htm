@@ -231,13 +231,13 @@
             clip-path: inset(3rem 3rem 3rem 3rem);
             z-index: -1;
         }
-        .downloadNotification::before {
+        #notificationOverlay {
             background:-moz-element(#mainBox) no-repeat fixed;
             filter:url(#f1);
             content: ' ';
             width: calc(100vw + 6rem);
             height: calc(100vh + 6rem);
-            position: fixed;
+            position: absolute;
             top: -3rem;
             left: -3rem;
             clip-path: inset(3rem 3rem 3rem 3rem);
@@ -348,6 +348,7 @@
     </defs>
 </svg>
 <div id="background"></div>
+<div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="downloadNotifyTemplate"><div class="downloadNotification"></div></template>
 </body>
