@@ -96,7 +96,7 @@
             });
         }
         function editAreaInsert(text) {
-            typeInTextarea(document.getElementById('inputarea'), text);
+            typeInTextareaSpaced(document.getElementById('inputarea'), text);
         }
         function typeInTextarea(el, newText) {
             // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
@@ -106,6 +106,22 @@
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
             el.value = (before + newText + after);
+            el.selectionStart = el.selectionEnd = start + newText.length;
+            el.focus();
+        }
+        function typeInTextareaSpaced(el, newText) {
+            // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
+            let start = el.selectionStart;
+            let end = el.selectionEnd;
+            let text = el.value;
+            let before = text.substring(0, start);
+            let after  = text.substring(end, text.length);
+            if(before.substr(-1) === ' ') {
+                el.value = (before + newText ' ' + after);
+            }
+            eles{
+                el.value = (before + newText ' ' + after);
+            }
             el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
         }
