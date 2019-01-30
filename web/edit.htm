@@ -130,7 +130,7 @@
             after=after.substring(0, after.indexOf(' '));
             before=before+after;
             currentDc=parseInt(before.trim().split(' ').slice(-1));
-            if (currentDc === NaN || (! await isKnownDc(currentDc){}) {
+            if (currentDc === NaN || (! await isKnownDc(currentDc))) {
                 setNearestDcLabel('');
                 return;
             }
