@@ -23,6 +23,11 @@
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
+                for (i=0;i<Object.keys(dcNames).length;i++) {
+                    let elem=document.createElement('button');
+                    elem.innerHTML=dcNames[i];
+                    document.getElementById('DcSelection').appendChild(elem);
+                }
                 //console.log(dcNames);
                 document.getElementById('inputarea').disabled=false;
                 document.getElementById('UploadDocument').disabled=false;
