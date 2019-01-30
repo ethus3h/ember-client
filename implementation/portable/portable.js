@@ -1592,6 +1592,23 @@ async function strToByteArray(strInput) {
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function strFromByteArray(intArrayInput) {
+    await internalDebugCollect('intArray Input = ' + intArrayInput + '; '); await internalDebugStackEnter('strFromByteArray:type-conversion'); await assertIsIntArray(intArrayInput); let strReturn;
+
+    /* Remember this will break if there are non-string bytes in it. */
+    let intCount = 0;
+    intCount = await count(intArrayInput);
+    let intI = 0;
+    intI = 0;
+    let strOut = '';
+    while (await implLt(intI, intCount)) {
+        strOut = await implCat(strOut, await charFromByte(await get(intArrayInput, intI)));
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
 async function dcaFromSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
