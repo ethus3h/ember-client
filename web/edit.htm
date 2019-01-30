@@ -146,7 +146,7 @@
                 if (!await isSupportedOutputFormat(outFormat)) {
                     await implDie(outFormat+' is not a supported output format!');
                 }
-                let exported=Uint8Array.from(await exportDocument(outFormat, await getInputDoc()));
+                let exported=Uint8Array.from(await importAndExport('sems', outFormat, await getInputDoc()));
                 let blob=await new Blob([exported], { type: 'application/octet-stream' });
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
