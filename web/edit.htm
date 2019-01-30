@@ -29,6 +29,7 @@
                         editAreaInsert(i + ' ');
                     }
                     elem.innerHTML=dcNames[i];
+                    elem.class='dcInsertButton';
                     document.getElementById('DcSelection').appendChild(elem);
                 }
                 //console.log(dcNames);
@@ -75,7 +76,9 @@
             document.getElementById('inFormat').disabled='true';
             document.getElementById('outFormat').disabled='true';
             document.getElementById('eiteDocumentRoot').innerHTML = '';
-            document.getElementsByClassName('')
+            document.getElementsByClassName('dcInsertButton').forEach(elem => {
+                elem.disabled = true;
+            });
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
         }
 
