@@ -28,3 +28,6 @@ r/an/strToByteArray s/input
         set an/out push an/out byteFromChar strChar s/input n/i
         set n/i add n/i 1
     return an/out
+
+r/s/strFromByteArray an/input
+    # Remember this will break if there are non-string bytes in it.

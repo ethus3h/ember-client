@@ -111,8 +111,7 @@
                 let file=picker.files[0];
                 let fr=new FileReader();
                 fr.readAsArrayBuffer(file);
-                console.log(new Uint8Array(fr.result));
-                document.getElementById('inputarea').value = importAndExport(inFormat, 'sems')
+                document.getElementById('inputarea').value = importAndExport(inFormat, 'sems', new Uint8Array(fr.result))
                 removeSpinner(true);
             }, 200);
         };
