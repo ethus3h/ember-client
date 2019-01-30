@@ -112,13 +112,13 @@
 
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
-            elem.innerHTML=name;
-            elem.id='downloadNotifyTempId';
+            elem.firstChild.innerHTML=name;
+            elem.firstChild.id='downloadNotifyTempId';
             console.log(elem);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
-            document.body.appendChild(elem.content);
+            document.body.appendChild(elem.firstChild);
             let elemAppended=document.getElementById('downloadNotifyTempId');
             elemAppended.removeAttribute('id');
             console.log(elemAppended);
