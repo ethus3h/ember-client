@@ -36,7 +36,7 @@
                 inputarea=document.getElementById('inputarea');
                 inputarea.disabled=false;
                 inputarea.addEventListener('input', function() {
-                    updateNearestDcLabel();
+                    updateNearestDcLabel(inputarea);
                 }, false);
                 document.getElementById('UploadDocument').disabled=false;
                 document.getElementById('DownloadDocument').disabled=false;
@@ -102,7 +102,7 @@
         function editAreaInsert(text) {
             typeInTextareaSpaced(document.getElementById('inputarea'), text);
         }
-        function updateNearestDcLabel() {
+        function updateNearestDcLabel(el) {
             let end = el.selectionEnd;
             let text = el.value;
             let before = text.substring(0, start);
