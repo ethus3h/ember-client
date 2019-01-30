@@ -7,6 +7,18 @@ r/b/isDc g/in
     set b/res isNonnegative n/num
     return b/res
 
+r/b/isKnownDc g/in
+    if not isDc g/in
+        return false
+    if gt g/in maximumKnownDc
+        return false
+    return true
+
+r/n/maximumKnownDc
+    new s/res
+    set s/res dcDatasetLength 'DcData'
+    return s/res
+
 r/b/dcIsNewline n/dc
     assertIsDc n/dc
     if eq 'b' dcGetBidiClass n/dc
