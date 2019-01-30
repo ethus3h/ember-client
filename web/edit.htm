@@ -92,12 +92,16 @@
         };
 
         function UploadDocument() {
+            inFormat=document.getElementById('inFormat').value;
+            if (!await isSupportedInputFormat(inFormat)) {
+                await implDie(inFormat+' is not a supported input format!');
+            }
         };
 
         async function DownloadDocument() {
             outFormat=document.getElementById('outFormat').value;
-            if (!await isOutputFormat(outFormat)) {
-                await die(outFormat+' is not an output format!');
+            if (!await isSupportedOutputFormat(outFormat)) {
+                await implDie(outFormat+' is not a supported output format!');
             }
             alert('ok');
         };
