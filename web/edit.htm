@@ -113,6 +113,7 @@
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.innerHTML=name;
+            console.log(elem.innerHTML);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
@@ -202,7 +203,6 @@
             float: left;
             height: 100%;
             padding: 1rem;
-            vertical-align: middle;
             font-size: 4rem;
             color: cornflowerblue;
             text-shadow: 0 0 2px cornflowerblue;
