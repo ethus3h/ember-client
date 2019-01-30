@@ -96,7 +96,7 @@
                 // Do the computation-heavy work
                 await runDocument(await importDocument('sems', await getInputDoc()));
                 removeSpinner();
-            }, 200);
+            }, 500);
         };
 
         function UploadDocument() {
@@ -120,7 +120,7 @@
                     document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
                 }
                 removeSpinner(true);
-            }, 200);
+            }, 500);
         };
 
         function downloadNotify(name) {
@@ -169,7 +169,7 @@
                 link.download=outName;
                 link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
                 removeSpinner(true);
-            }, 200);
+            }, 500);
         };
 
         // @license-end
