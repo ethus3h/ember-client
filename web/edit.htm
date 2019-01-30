@@ -114,14 +114,12 @@
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             elem.firstChild.innerHTML=name;
             elem.firstChild.id='downloadNotifyTempId';
-            console.log(elem);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
             let elemAppended=document.getElementById('downloadNotifyTempId');
             elemAppended.removeAttribute('id');
-            console.log(elemAppended);
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
                 i=0;
@@ -149,15 +147,13 @@
                     await implDie(outFormat+' is not a supported output format!');
                 }
                 let blob=await new Blob([await exportDocument(outFormat, await getInputDoc())], { type: 'application/octet-stream' });
-                console.log(blob);
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
                 let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await formatToExtension(outFormat);
                 downloadNotify(outName);
                 link.download=outName;
-                console.log(link);
-                //link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+                link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
                 removeSpinner(true);
             }, 200);
         };
@@ -239,7 +235,6 @@
             position: relative;
         }
         #inputarea {
-            /* background-color: rgba(255,255,255,0.9);*/
             background-color: white;
             border: 0;
         }
