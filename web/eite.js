@@ -1943,7 +1943,8 @@ async function dcaFromFormat(strInFormat, intArrayContentBytes) {
     await assertIsSupportedInputFormat(strInFormat);
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
-    if (await implEq(strInFormat, 'sems')) {
+    if (await or(await implEq(strInFormat, 'sems'), await implEq(strInFormat, 'integerList'))) {
+        /* TODO: The sems parser can handle integerList format too, but perhaps a dedicated parser should be provided so it isn't too permissive. */
         intArrayRet = await dcaFromSems(intArrayContentBytes);
     }
     else {
@@ -1960,8 +1961,8 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDcArray(intArrayDcArrayIn);
     let intArrayRes = [];
-    if (await implEq(strOutFormat, 'sems')) {
-        intArrayRes = await dcaToSems(intArrayDcArrayIn);
+    if (await implEq(strOutFormat, 'integerList')) {
+        intArrayRes = await dcaToIntegerList(intArrayDcArrayIn);
     }
     else if (await implEq(strOutFormat, 'immutableCharacterCells')) {
         intArrayRes = await dcaToImmutableCharacterCells(intArrayDcArrayIn);
@@ -2030,7 +2031,7 @@ async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'sems' ];
+    strArrayRes = [ 'integerList', 'sems' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -2048,7 +2049,8 @@ async function listOutputFormats() {
     await internalDebugStackEnter('listOutputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'characterCells', 'HTML', 'integerList', 'immutableCharacterCells' ];
+    strArrayRes = [ 'HTML', 'integerList', 'immutableCharacterCells' ];
+    /* 'characterCells' and 'sems' not yet implemented */
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
