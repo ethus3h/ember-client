@@ -1990,6 +1990,42 @@ async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function formatToExtension(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('formatToExtension:formats'); await assertIsStr(strFormat); let strReturn;
+
+    if (await implEq(strFormat, 'sems')) {
+
+        strReturn = 'sems'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else if (await implEq(strFormat, 'integerList')) {
+
+        strReturn = 'dcil'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else if (await implEq(strFormat, 'ASCII-safe-subset')) {
+
+        strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else if (await implEq(strFormat, 'UTF-8')) {
+
+        strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else if (await or(await implEq(strFormat, 'characterCells'), await implEq(strFormat, 'immutableCharacterCells'))) {
+        let strRes = '';
+        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), '.txt'));
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else if (await implEq(strFormat, 'HTML')) {
+        let strRes = '';
+        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), '.htm'));
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    else {
+        await implDie(await implCat('Format not supported: ', strFormat));
+    }
+}
+
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
@@ -2349,6 +2385,15 @@ async function isBaseStr(strIn, intB) {
     }
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+/* Can check for exception as result like: if eq s/res dcDataNoResultException */
+
+async function dcDataNoResultException() {
+    await internalDebugStackEnter('dcDataNoResultException:exceptions'); let strReturn;
+
+
+    strReturn = '89315802-d53d-4d11-ba5d-bf505e8ed454'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function strPrintArr(genericArrayInput) {
