@@ -121,9 +121,10 @@
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
-                let outName='Export-'+date.getUTCFullYear()+'m'+date.getUTCMonth()+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'.'+await formatToExtension(outFormat);
+                let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'.'+await formatToExtension(outFormat);
                 alert(outName);
                 link.download=outName;
+                console.log(link);
                 link.click();
                 removeSpinner(true);
             }, 200);
