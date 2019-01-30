@@ -111,7 +111,7 @@
         };
 
         function downloadNotify(name) {
-            let elem=document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true);
+            let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             document.getElementById('eiteDocumentRoot').appendChild(elem);
             setTimeout(elem.remove(), 2500);
         }
@@ -306,5 +306,6 @@
 </svg>
 <div id="background"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div id="documentRootOverlay" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
+<template id="downloadNotifyTemplate"><div id="downloadNotification" style="width:100%;height:100%;position:absolute;top:0;left:0;background-color:#e3cdab;"></div></template>
 </body>
 </html>
