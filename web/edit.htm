@@ -116,7 +116,14 @@
             //console.log(elem);
             document.getElementById('mainBox').appendChild(elem);
             //console.log(document.getElementsByClassName('downloadNotification'));
-            setTimeout(function(){let e=document.getElementsByClassName('downloadNotification');while(Object.keys(e).length > 0){e[0].parentNode.removeChild(e[0]);};}, 2500);
+            setTimeout(function() {
+                setTimeout(function(){
+                    let e=document.getElementsByClassName('downloadNotification');
+                    while (Object.keys(e).length > 0) {
+                        e[0].parentNode.removeChild(e[0]);
+                    };
+                }, 2500);
+            }, 1500);
         }
 
         async function DownloadDocument() {
