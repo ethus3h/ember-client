@@ -305,10 +305,13 @@
             text-shadow: 0 0 2px cornflowerblue;
         }
         #editorColumn {
-            display:flex;flex-direction:column;
+            display: flex;
+            flex-direction: column;
+            min-width: 0; /* needed to clip text with white-space: nowrap in #currentDcLabel */
         }
         #editorButtons, #formatOptions {
-            display:flex;flex-direction:row;
+            display: flex;
+            flex-direction: row;
         }
         #formatOptions > div {
             padding:0.2rem;
