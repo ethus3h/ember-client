@@ -81,12 +81,16 @@
             document.getElementById('outFormat').disabled=false;
         }
 
+        async function getInputDoc() {
+            return await strToByteArray(document.getElementById('inputarea').value));
+        }
+
         async function RunDocumentHandler() {
             startSpinner();
             // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
             window.setTimeout(async function(){
                 // Do the computation-heavy work
-                await runDocument(await importDocument('sems', await strToByteArray(document.getElementById('inputarea').value)));
+                await runDocument(await importDocument('sems', await getInputDoc());
                 removeSpinner();
             }, 200);
         };
@@ -109,6 +113,7 @@
                 if (!await isSupportedOutputFormat(outFormat)) {
                     await implDie(outFormat+' is not a supported output format!');
                 }
+                alert(await getInputDoc());
                 removeSpinner();
             }, 200);
         };
