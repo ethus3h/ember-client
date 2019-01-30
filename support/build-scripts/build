@@ -10,13 +10,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
+echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
     "$sicmd" "$@"
 else
-    echo "Building, please wait..."
     "$sicmd" "$@" &> /dev/null
-    echo "Done."
 fi
 
 cp ./implementation/core-implementations/js/core.js ./web/eite.js
@@ -26,3 +25,6 @@ echo >> ./web/eite.js
 echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./web/eite.js
 cat ./implementation/speedups/speedups.js >> ./web/eite.js
 echo $'\n''// @license-end' >> ./web/eite.js
+rm -r ./web/data
+cp -r ./data ./web/
+echo "Done."
