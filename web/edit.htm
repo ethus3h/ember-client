@@ -26,7 +26,7 @@
                 for (let i=1;i<Object.keys(dcNames).length;i++) {
                     let elem=document.createElement('button');
                     elem.onclick=function(){
-                        editAreaInsert(i + ' ');
+                        editAreaInsert(i);
                     }
                     elem.innerHTML=dcNames[i];
                     elem.class='dcInsertButton';
@@ -116,11 +116,11 @@
             let text = el.value;
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
-            if(before.substr(-1) === ' ') {
-                el.value = (before + newText ' ' + after);
+            if (before.substr(-1) === ' ') {
+                el.value = (before + newText + ' ' + after);
             }
-            eles{
-                el.value = (before + newText ' ' + after);
+            else {
+                el.value = (before + ' ' + newText + after);
             }
             el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
