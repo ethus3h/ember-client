@@ -29,7 +29,7 @@ r/an/convertFormats s/inFormat s/outFormat an/in
     assertIsSupportedOutputFormat s/outFormat
     assertIsByteArray an/in
     new an/out
-    set an/out dcaToFormat dcaFromFormat an/in s/inFormat } s/outFormat
+    set an/out dcaToFormat s/outFormat dcaFromFormat s/inFormat an/in
     assertIsByteArray an/out
     return an/out
 
