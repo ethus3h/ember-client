@@ -112,10 +112,10 @@
 
         function downloadNotify(name) {
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
-            document.getElementById('eiteDocumentRoot').appendChild(elem);
             elem.innerHTML=name;
-            console.log(elem);
-            setTimeout(function(){let e=document.getElementsByClassName('downloadNotification');while(Object.keys(e).length > 0){e[0].parentNode.removeChild(e[0]);};}, 2500);
+            document.getElementById('eiteDocumentRoot').appendChild(elem);
+            console.log(document.getElementsByClassName('downloadNotification'));
+//            setTimeout(function(){let e=document.getElementsByClassName('downloadNotification');while(Object.keys(e).length > 0){e[0].parentNode.removeChild(e[0]);};}, 2500);
         }
 
         async function DownloadDocument() {
