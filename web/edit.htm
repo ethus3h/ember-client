@@ -70,10 +70,10 @@
         function startSpinner() {
             // Display loading spinner
             document.getElementById('inputarea').disabled='true';
-            [document.getElementsByTagName('select')].forEach(elem => {
+            [...document.getElementsByTagName('select')].forEach(elem => {
                 elem.disabled = true;
             });
-            [document.getElementsByTagName('button')].forEach(elem => {
+            [...document.getElementsByTagName('button')].forEach(elem => {
                 elem.disabled = true;
             });
             document.getElementById('eiteDocumentRoot').innerHTML = '';
@@ -87,10 +87,10 @@
             }
             document.getElementById('eiteDocumentRoot').style.backgroundColor="white";
             document.getElementById('inputarea').disabled=false;
-            [document.getElementsByTagName('select')].forEach(elem => {
+            [...document.getElementsByTagName('select')].forEach(elem => {
                 elem.disabled = true;
             });
-            [document.getElementsByTagName('button')].forEach(elem => {
+            [...document.getElementsByTagName('button')].forEach(elem => {
                 elem.disabled = true;
             });
         }
