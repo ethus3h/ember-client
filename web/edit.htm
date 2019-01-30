@@ -118,7 +118,7 @@
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
-            document.body.appendChild(elem);
+            document.body.appendChild(elem.content);
             let elemAppended=document.getElementById('downloadNotifyTempId');
             elemAppended.removeAttribute('id');
             console.log(elemAppended);
