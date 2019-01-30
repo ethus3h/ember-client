@@ -110,6 +110,12 @@
             }, 200);
         };
 
+        function downloadNotify(name) {
+            let elem=document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true);
+            document.getElementById('eiteDocumentRoot').appendChild(elem);
+            setTimeout(elem.remove(), 2500);
+        }
+
         async function DownloadDocument() {
             startSpinner();
             window.setTimeout(async function(){
@@ -123,10 +129,10 @@
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
                 let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'.'+await formatToExtension(outFormat);
-                alert(outName);
+                downloadNotify(outName);
                 link.download=outName;
                 console.log(link);
-                link.click();
+                link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
                 removeSpinner(true);
             }, 200);
         };
