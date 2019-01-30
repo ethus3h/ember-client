@@ -33,7 +33,11 @@
                     document.getElementById('DcSelection').appendChild(elem);
                 }
                 //console.log(dcNames);
-                document.getElementById('inputarea').disabled=false;
+                inputarea=document.getElementById('inputarea');
+                inputarea.disabled=false;
+                inputarea.addEventListener('input', function() {
+                    updateNearestDcLabel();
+                }, false);
                 document.getElementById('UploadDocument').disabled=false;
                 document.getElementById('DownloadDocument').disabled=false;
                 document.getElementById('RunDocument').disabled=false;
