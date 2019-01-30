@@ -23,7 +23,7 @@
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
-                for (i=1;i<Object.keys(dcNames).length;i++) {
+                for (let i=1;i<Object.keys(dcNames).length;i++) {
                     let elem=document.createElement('button');
                     elem.onclick=function(){
                         editAreaInsert(i + ' ');
@@ -40,7 +40,7 @@
                 inFormat.innerHTML='';
                 let formats=[];
                 formats = await listInputFormats();
-                for (i=0;i<Object.keys(formats).length;i++) {
+                for (let i=0;i<Object.keys(formats).length;i++) {
                     let elem=document.createElement('option');
                     elem.innerHTML=formats[i];
                     inFormat.appendChild(elem);
@@ -49,7 +49,7 @@
                 outFormat=document.getElementById('outFormat');
                 outFormat.innerHTML='';
                 formats = await listOutputFormats();
-                for (i=0;i<Object.keys(formats).length;i++) {
+                for (let i=0;i<Object.keys(formats).length;i++) {
                     let elem=document.createElement('option');
                     elem.innerHTML=formats[i];
                     outFormat.appendChild(elem);
