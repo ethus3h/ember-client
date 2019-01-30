@@ -137,7 +137,7 @@ async function internalLoadDatasets() {
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         dcData[dataset] = await new Promise(resolve => {
-            Papa.parse('../data/' + dataset + '.csv', {
+            Papa.parse('data/' + dataset + '.csv', {
                 download: true,
                 encoding: "UTF-8",
                 newline: "\n",
