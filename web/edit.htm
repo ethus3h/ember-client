@@ -114,7 +114,7 @@
             let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
             document.getElementById('eiteDocumentRoot').appendChild(elem);
             elem.innerHTML=name;
-            setTimeout(elem.remove(), 2500);
+            setTimeout(elem.parentNode.removeChild(elem), 2500);
         }
 
         async function DownloadDocument() {
