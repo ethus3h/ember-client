@@ -2,7 +2,7 @@ r/an/dcaFromFormat s/inFormat an/contentBytes
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
-    if eq s/inFormat 'sems'
+    if or eq s/inFormat 'sems' } eq s/inFormat 'integerList'
         set an/ret dcaFromSems an/contentBytes
     else
         error cat 'Unimplemented document parsing format: ' s/inFormat
@@ -15,6 +15,8 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     new an/res
     if eq s/outFormat 'sems'
         set an/res dcaToSems an/dcArrayIn
+    elif eq s/outFormat 'integerList'
+        set an/res dcaToIntegerList an/dcArrayIn
     elif eq s/outFormat 'immutableCharacterCells'
         set an/res dcaToImmutableCharacterCells an/dcArrayIn
     elif eq s/outFormat 'HTML'
@@ -55,7 +57,7 @@ r/s/formatToExtension s/format
 
 r/as/listInputFormats
     new as/res
-    set as/res [ 'sems' ]
+    set as/res [ 'integerList' 'sems' ]
     return as/res
 
 r/b/isSupportedInputFormat s/in
@@ -65,7 +67,7 @@ r/b/isSupportedInputFormat s/in
 
 r/as/listOutputFormats
     new as/res
-    set as/res [ 'characterCells' 'HTML' 'integerList' 'immutableCharacterCells' ]
+    set as/res [ 'characterCells' 'HTML' 'integerList' 'immutableCharacterCells' 'sems' ]
     return as/res
 
 r/b/isSupportedOutputFormat s/in
