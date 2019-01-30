@@ -109,9 +109,11 @@
                 let picker=document.getElementById('filepicker');
                 picker.click();
                 let file=picker.files[0];
+                if (file !== undefined) {
                 let fr=new FileReader();
-                fr.readAsArrayBuffer(file);
-                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
+                    fr.readAsArrayBuffer(file);
+                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
+                }
                 removeSpinner(true);
             }, 200);
         };
