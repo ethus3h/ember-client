@@ -121,7 +121,7 @@
             after=after.substring(0, after.indexOf(' '));
             before=before+after;
             currentDc=before.trim().split(' ').slice(-1);
-            console.log(currentDc);
+            currentDcLabel.innerHTML=currentDc;
         }
         function typeInTextarea(el, newText) {
             // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
@@ -318,7 +318,7 @@
             min-height: 1.5rem;
             background-color: rgba(255,255,255,0.9);
             border-top: 0.1rem solid #EEE;
-            border-bottom: 0.1rem solid rgba(255,255,255,0.8);
+            border-bottom: 0.075rem solid rgba(255,255,255,0.8);
             background-clip: content-box;
         }
         #filepicker {
