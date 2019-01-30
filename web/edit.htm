@@ -117,7 +117,8 @@
                 if (!await isSupportedOutputFormat(outFormat)) {
                     await implDie(outFormat+' is not a supported output format!');
                 }
-                alert(await exportDocument(outFormat, await getInputDoc()));
+                let blob=new Blob([await exportDocument(outFormat, await getInputDoc())], { type: 'application/octet-stream' })https://stackoverflow.com/questions/35038884/download-file-from-bytes-in-javascript
+                alert();
                 removeSpinner(true);
             }, 200);
         };
