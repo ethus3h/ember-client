@@ -12,5 +12,5 @@ r/an/dcaToHTML an/dcIn
         if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
             set an/out push an/out dcToFormat 'HTML' n/dcAtIndex
         set n/inputIndex add n/inputIndex 1
-    #assertIsByteArray an/out
+    assertIsByteArray an/out
     return an/out
