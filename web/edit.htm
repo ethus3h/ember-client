@@ -117,7 +117,7 @@
                 if (!await isSupportedOutputFormat(outFormat)) {
                     await implDie(outFormat+' is not a supported output format!');
                 }
-                alert(await exportDocument(outFormat, getInputDoc());
+                alert(await exportDocument(outFormat, getInputDoc()));
                 removeSpinner(true);
             }, 200);
         };
