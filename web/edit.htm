@@ -121,8 +121,8 @@
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
-                link.download='Export-'+date.getUTCFullYear()+date.getUTCMonth()+date.getUTCDate()+date.getUTCHours()+date.getUTCMinutes()+date.getUTCSeconds()+date.getUTCMilliseconds()+'.'+await formatToExtension(outFormat);
-                alert();
+                link.download='Export-'+date.getUTCFullYear()+'m'+date.getUTCMonth()+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'.'+await formatToExtension(outFormat);
+                link.click();
                 removeSpinner(true);
             }, 200);
         };
