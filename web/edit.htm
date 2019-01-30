@@ -70,15 +70,13 @@
         function startSpinner() {
             // Display loading spinner
             document.getElementById('inputarea').disabled='true';
-            document.getElementById('UploadDocument').disabled='true';
-            document.getElementById('DownloadDocument').disabled='true';
-            document.getElementById('RunDocument').disabled='true';
-            document.getElementById('inFormat').disabled='true';
-            document.getElementById('outFormat').disabled='true';
-            document.getElementById('eiteDocumentRoot').innerHTML = '';
-            document.getElementsByClassName('dcInsertButton').forEach(elem => {
+            document.getElementsByTagName('select').forEach(elem => {
                 elem.disabled = true;
             });
+            document.getElementsByTagName('button').forEach(elem => {
+                elem.disabled = true;
+            });
+            document.getElementById('eiteDocumentRoot').innerHTML = '';
             document.getElementById('eiteDocumentRoot').appendChild(document.importNode(document.getElementById('documentRootLoadingSpinnerTemplate').content, true));
         }
 
