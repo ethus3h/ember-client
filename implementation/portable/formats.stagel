@@ -44,11 +44,11 @@ r/s/formatToExtension s/format
         return 'utf8'
     elif or eq s/format 'characterCells' } eq s/format 'immutableCharacterCells'
         new s/res
-        set s/res cat formatToExtension getEnvCharEncoding } '.txt'
+        set s/res cat formatToExtension getEnvCharEncoding } } '.txt'
         return s/res
     elif eq s/format 'HTML'
         new s/res
-        set s/res cat formatToExtension getEnvCharEncoding } '.htm'
+        set s/res cat formatToExtension getEnvCharEncoding } } '.htm'
         return s/res
     else
         die cat 'Format not supported: ' s/format
