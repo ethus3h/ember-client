@@ -109,7 +109,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     assertIsByteArray an/contentBytes
     new an/ret
     new n/dc
-    if or eq s/inFormat 'ascii' } eq s/inFormat 'utf8'
+    if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
         new n/sum
         set n/sum sumArray an/contentBytes
         if eq s/inFormat 'ascii'
