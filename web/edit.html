@@ -229,6 +229,7 @@
         function openImportDialog() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             elem.addEventListener('keyup', function(event) {
+            alert('b');
                 if (event.key === 'Escape') {
                     closeImportDialog();
                 }
