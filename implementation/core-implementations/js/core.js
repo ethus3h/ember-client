@@ -65,7 +65,7 @@ async function getFileFromPath(path) {
     if (response !== undefined) {
         return response;
     }
-    await assertFailed('An error was encountered loading the requested document.');
+    await implDie('An error was encountered loading the requested document '+path+'.');
 }
 
 // Implementations of routines provided in public-interface.stagel.
@@ -123,9 +123,15 @@ async function byteFromChar(strInput) {
 }
 
 async function utf8BytesFromDecimalChar(intInput) {
-    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input. FIXME: Probably doesn't support unpaired surrogates or byte sequences outside of the range allowed by Unicode characters, but it probably should.
     let utf8encoder = new TextEncoder();
     return utf8encoder.encode(String.fromCodePoint(intInput));
+}
+
+async function firstCharOfUtf8String(intArrayInput) {
+    // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
+    let utf8decoder = new TextDecoder();
+    return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
 
 // Global variables
