@@ -253,6 +253,7 @@ async function internalSetup() {
                 await console.trace();
             }
         }
+        alert('Overrides loaded');
     }
 
     setupFinished = true;
@@ -405,7 +406,7 @@ async function implDie(strMessage) {
 
     throw strMessage;
 }
-
+alert('normal implDie loaded');
 async function implError(strMessage) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
