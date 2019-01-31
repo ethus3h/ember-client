@@ -274,7 +274,7 @@
                 try {
                     document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
                 }
-                catch() {
+                catch(e) {
                     removeSpinner(true);
                 }
                 removeSpinner(true);
