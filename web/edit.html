@@ -271,7 +271,12 @@
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
                 }
-                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+                try {
+                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+                }
+                catch() {
+                    alert('The requested document could not be loaded!')
+                }
                 removeSpinner(true);
             }, 500);
         };
