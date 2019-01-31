@@ -179,6 +179,32 @@
         };
 
         function UploadDocument() {
+            let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
+            elem.firstChild.innerHTML=name;
+            elem.firstChild.id='downloadNotifyTempId';
+            notificationOverlay=document.getElementById('notificationOverlay');
+            notificationOverlay.style.display='block';
+            notificationOverlay.style.opacity=1;
+            document.body.appendChild(elem.firstChild);
+            let elemAppended=document.getElementById('downloadNotifyTempId');
+            elemAppended.removeAttribute('id');
+            setTimeout(function() {
+                let e=document.getElementsByClassName('downloadNotification');
+                i=0;
+                while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
+                    notificationOverlay.style.opacity=0;
+                    e[0].style.opacity=0;
+                    e[0].style.transform='translate(-50%, -50%) scale(0.75)';
+                    i=i+1;
+                };
+                setTimeout(function(){
+                    let e=document.getElementsByClassName('downloadNotification');
+                    while (Object.keys(e).length > 0) {
+                        e[0].parentNode.removeChild(e[0]);
+                    };
+                    notificationOverlay.style.display='none';
+                }, 2000);
+            }, 1250);
             startSpinner();
             window.setTimeout(async function(){
                 inFormat=document.getElementById('inFormat').value;
