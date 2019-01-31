@@ -604,9 +604,9 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
             strReturn = dcData[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
-    await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
+    //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
     await implDie('Could not find required dataset entry by value (parameters: '+dataset+'/'+filterField+'/'+genericFilterValue+'/'+desiredField+').');
-    // Later, this should be available as a "lookupbyvalue" and a "lookupbyvalueForgiving" versions that do and don't die on this; the forgiving would return the exception UUID.
+    // TODO: this should be available as a "lookupbyvalue" and a "lookupbyvalueForgiving" versions that do and don't die on this; the forgiving would return the exception UUID.
     // If nothing was found, return this UUID.
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
