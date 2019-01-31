@@ -202,17 +202,10 @@ async function internalSetup() {
 
     if (haveDom) {
         // Override error reporting method to show alert
-        // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
-        async function implDie(strMessage) {
-            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
-            await implError(strMessage);
-
-            throw strMessage;
-        }
-
-        async function implError(strMessage) {
+        window.implError = async function (strMessage) {
             if(typeof strMessage !== "string") {
+                alert("EITE reported error: Nonstring error message!");
                 throw "Nonstring error message";
             }
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
@@ -224,7 +217,7 @@ async function internalSetup() {
             alert("EITE reported error!: " + strMessage);
         }
 
-        async function implWarn(strMessage) {
+        window.implWarn = async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -234,7 +227,7 @@ async function internalSetup() {
             await console.trace();
         }
 
-        async function implLog(strMessage) {
+        window.implLog = async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
