@@ -45,11 +45,15 @@ async function get(array, index) {
     await assertIsGeneric(returnVal); return returnVal;
 }
 
-async function set-element(array, index, value) {
+async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 
-    if(index < 0)
-    array
+    if (index < 0) {
+        index = await count(array) + index;
+    }
+    array[index] = value;
+
+    await assertIsArray(array); return array;
 }
 
 async function count(array) {
