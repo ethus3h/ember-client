@@ -88,8 +88,8 @@
         if (globalCachedInputState.length === 1) {
             if (globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
-                    (async function(elem, val){
-                        inputarea.value = inputarea.replace(globalCachedInputState, );
+                    (async function(elem, char){
+                        elem.value = elem.value.replace(char, await );
                     }(inputarea, globalCachedInputState));
                 }
             }
