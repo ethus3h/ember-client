@@ -259,7 +259,7 @@
             }, 500);
         };
 
-        function importDocumentFromFile() {
+        function importDocumentFromURL(path) {
             startSpinner();
             closeImportDialog();
             window.setTimeout(async function(){
@@ -267,19 +267,7 @@
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
                 }
-                let picker=document.getElementById('filepicker');
-                picker.click();
-                let file=picker.files[0];
-                if (file !== undefined) {
-                    let fr=new FileReader();
-                    await new Promise(resolve => {
-                        fr.onload=function (){
-                            resolve(undefined);
-                        };
-                        fr.readAsArrayBuffer(file);
-                    });
-                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
-                }
+                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
                 removeSpinner(true);
             }, 500);
         };
