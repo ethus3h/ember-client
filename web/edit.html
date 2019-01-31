@@ -86,8 +86,11 @@
 
         function handleDcEditingKeystroke(event) {
         if (globalCachedInputState.length === 1) {
-            if(globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
+            if (globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
+                    (async function(elem, val){
+                        inputarea.value = inputarea.replace(globalCachedInputState, );
+                    }(inputarea, globalCachedInputState));
                 }
             }
         }
