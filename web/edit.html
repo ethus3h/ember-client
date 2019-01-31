@@ -87,7 +87,7 @@
         function handleDcEditingKeystroke(event) {
             console.log(globalCachedInputState);
             if (globalCachedInputState.length === 1) {
-                if (globalCachedInputState === " " || (!isNaN(parseInt(globalCachedInputState)))) {
+                if (globalCachedInputState !== " " || isNaN(parseInt(globalCachedInputState))) {
                     alert('true');
                     if (inputarea.value.includes(globalCachedInputState)) {
                         (async function(elem, char){
