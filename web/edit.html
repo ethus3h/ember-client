@@ -92,8 +92,8 @@
                             let start = elem.selectionStart;
                             let end = elem.selectionEnd;
                             elem.value = elem.value.replace(char, '');
-                            elem.selectionStart = start;
-                            elem.selectionEnd = end;
+                            elem.selectionStart = start - 1;
+                            elem.selectionEnd = end - 1;
                             typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray(char)));
                         })(inputarea, globalCachedInputState);
                     }
