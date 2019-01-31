@@ -2198,9 +2198,7 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
     if (await implEq(strInFormat, 'ascii')) {
-
-        intArrayReturn = ; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-        await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
+        intArrayRet = await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
