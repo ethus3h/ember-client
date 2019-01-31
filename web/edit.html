@@ -82,8 +82,12 @@
         };
 
         function handleDcEditingKeystroke(kbdEvent) {
-        if(kbdEvent.)
-            alert(kbdEvent.keyCode);
+            alert(kbdEvent.key);
+            if (typeof kbdEvent.key === 'string') {
+                if (kbd.event.length === 1) {
+                    alert(kbdEvent.key);
+                }
+            }
         }
 
         function startSpinner() {
