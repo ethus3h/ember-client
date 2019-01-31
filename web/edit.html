@@ -178,6 +178,25 @@
             }, 500);
         };
 
+        function closeImportDialog() {
+            setTimeout(function() {
+                let e=document.getElementsByClassName('importDialog');
+                i=0;
+                while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
+                    notificationOverlay.style.opacity=0;
+                    e[0].style.opacity=0;
+                    e[0].style.transform='translate(-50%, -50%) scale(0.75)';
+                    i=i+1;
+                };
+                setTimeout(function(){
+                    let e=document.getElementsByClassName('importDialog');
+                    while (Object.keys(e).length > 0) {
+                        e[0].parentNode.removeChild(e[0]);
+                    };
+                    notificationOverlay.style.display='none';
+                }, 2000);
+            }, 1250);
+        }
         function ImportDocument() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             notificationOverlay=document.getElementById('notificationOverlay');
