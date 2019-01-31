@@ -275,7 +275,8 @@
                     document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
                 }
                 catch() {
-                    alert('The requested document could not be loaded!')
+                    removeSpinner(true);
+                    alert('The requested document could not be loaded!');
                 }
                 removeSpinner(true);
             }, 500);
