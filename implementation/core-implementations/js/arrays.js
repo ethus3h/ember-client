@@ -1,6 +1,8 @@
 /* arrays, provides:
     append
+    push
     get
+    set-element
     count
 */
 
@@ -41,6 +43,13 @@ async function get(array, index) {
         returnVal=array[index];
     }
     await assertIsGeneric(returnVal); return returnVal;
+}
+
+async function set-element(array, index, value) {
+    await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
+
+    if(index < 0)
+    array
 }
 
 async function count(array) {
