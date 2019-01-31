@@ -294,7 +294,7 @@ async function dcGetColumn(strDataset, intColumn) {
 
     let strArrayRes = [];
     let intCount = 0;
-    intCount = await implSub(await dcDatasetLength(strDataset), 1);
+    intCount = await dcDatasetLength(strDataset);
     let intI = 0;
     while (await implLt(intI, intCount)) {
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
