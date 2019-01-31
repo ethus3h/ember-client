@@ -599,7 +599,7 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
     let intLength = dcData[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
-    for (let row = 1; row < intLength; row++) {
+    for (let row = 1; row <= intLength; row++) {
         if(dcData[dataset][row][filterField] === filterValue) {
             strReturn = dcData[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
