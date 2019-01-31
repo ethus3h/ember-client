@@ -577,12 +577,16 @@ async function dcDatasetLength(dataset) {
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
+    // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
     if (dcData[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
 
-    if (rowNum >= dcData[dataset].length - 1) {
-        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length - 1+').');
+    // Add 1 to account for header row
+    rowNum = rowNum + 1;
+
+    if (rowNum >= dcData[dataset].length) {
+        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length+').');
     }
 
     strReturn = dcData[dataset][rowNum][fieldNum]; await assertIsStr(strReturn); return strReturn;
@@ -591,7 +595,7 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = dcData[dataset].length;
+    let intLength = dcData[dataset].length - 1;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row < intLength; row++) {
@@ -1186,7 +1190,7 @@ async function dcGetField(intDc, intFieldNumber) {
 
     await assertIsDc(intDc);
     let strRes = '';
-    strRes = await dcDataLookupById('DcData', await implAdd(intDc, 1), intFieldNumber);
+    strRes = await dcDataLookupById('DcData', intFieldNumber);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
