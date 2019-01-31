@@ -24,7 +24,7 @@
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
                 let datasetLength=await dcDatasetLength('DcData');
-                for (let i=0; i<=datasetLength; i++) {
+                for (let i=0; i<datasetLength; i++) {
                     let elem=document.createElement('button');
                     elem.onclick=function(){
                         editAreaInsert(i+'');
