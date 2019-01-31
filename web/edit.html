@@ -41,7 +41,8 @@
                 document.addEventListener('keydown', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                document.addEventListener('keyup', function() {
+                document.addEventListener('keyup', function(key) {
+                    handleDcEditingKeystroke(key);
                     updateNearestDcLabel(inputarea);
                 }, false);
                 document.addEventListener('click', function() {
@@ -79,6 +80,11 @@
                 }, 500);
             })();
         };
+
+        function handleDcEditingKeystroke(kbdEvent) {
+        if(kbdEvent.)
+            alert(kbdEvent.keyCode);
+        }
 
         function startSpinner() {
             // Display loading spinner
