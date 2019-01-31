@@ -3,3 +3,39 @@ elliot10:15 PM
 Next I want to try getting a simple GUI (just HTML forms and JavaScript) for converting between Unicode and "EITE" (the new thing I'm working on) data formats, and for editing EITE data. Since the code is now wrapped up into a rather nicer library, it should be fairly trivial to get something like that working (although these things never seem to turn out as easy as I think they will). After that, I want to get document rendering to be a bit more sophisticated (support variables and function calls inside documents), get rendering through time working (right now it draws the completed document and stops running, rather than keeping it idle and having an event handling system, although I have started on the APIs for that), investigate Web Workers and get everything off the main thread (it runs asynchronously right now, but not in its own worker), provide a way for an EITE document to start a sub-document in its own thread, and get data persistence, an EITE-based GUI, and perhaps EITE-based servers and service discovery. That's quite a lot of things, though, and although it should all be technically possible, I'm not sure how far along in that list I'll get over the semester. I guess just a HTML GUI for people to play with the document format, and some more interesting abilities for the format, would be a nice start.
 Anyway, I just wanted to give a bit of a status update on where this is at. Thanks! I hope your break has gone well; see you all in class!
 WASM
+
+Develop simple editing GUI
+A few days to finish? Mostly just needs search box, Dc cats, and implement URL loading
+Mostly works.
+StageL development and implementation
+A few hundred hours probably; like 4 months? Last semester really
+Done until I need something else (might add C or C++ output soon to be able to take advantage of optimizing compilers)
+StageL rewrite of relevant existing code
+Maybe 2 weeks at maybe 6 hours daily on average??
+Done
+WASM compatibility in StageL
+Maybe 5–10h research so far; probably a couple hundred hours
+Not sure if worth the effort
+Finishing existing input and output formats not completed yet
+A week??
+More of this will probably end up in the next milestone if I don’t finish it for this one
+
+
+Finish existing & simple output formats
+ - plain text, character cells (mutable and immutable — add terminal type as an environment property like encoding), (probably SEMS, if I fix import) especially
+A week? Execution model needs further consideration
+They only support the simplest Dcs
+Add unit tests to StageL routines
+A day or two?
+Will need porting of the unit test code from bash but that shouldn’t be hard
+Implement more output formats
+- extended UTF8; rename HTML to HTML-fragment; add actual HTML output; (possibly raster area output)
+A week?
+Only a couple are available
+Provide more input format(s); start with text & then maybe StageL
+A week?
+
+Implement more Dc abilities, in sync with creating EITE interface and server documents (main loader and other documents)
+Lots of work. This is where most of the remaining effort will be. Probably months.
+Each Dc will need  more work to be implemented in each input and output format, I guess. More work will be desirable for on how Dc data are represented.
+
