@@ -228,6 +228,11 @@
 
         function openImportDialog() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
+            elem.addEventListener('keyup', function(event) {
+                if (event.key === 'Escape') {
+                    closeImportDialog();
+                }
+            });
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
