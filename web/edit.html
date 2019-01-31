@@ -226,13 +226,14 @@
             }, 750);
         }
 
-        function openImportDialog() {
-            let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
-            document.addEventListener('keyup', function(event) {
-            alert('b');
+        function importDialogEscapeListener(event) {
                 if (event.key === 'Escape') {
                     closeImportDialog();
                 }
+        }
+        function openImportDialog() {
+            let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
+            document.addEventListener('keyup', function(event) {
             });
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.addEventListener('click', function(event) {
