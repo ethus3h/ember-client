@@ -209,6 +209,7 @@
         };
 
         function closeImportDialog() {
+            notificationOverlay.removeEventListener('click', importDialogEscapeListener);
             let e=document.getElementsByClassName('importDialog');
             i=0;
             while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
