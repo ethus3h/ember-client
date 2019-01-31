@@ -23,10 +23,10 @@
                 let dcNames=[];
                 await setupIfNeeded();
                 dcNames=await dcGetColumn('DcData', 1);
-                for (let i=1;i<Object.keys(dcNames).length;i++) {
+                for (let i=0;i<=Object.keys(dcNames).length;i++) {
                     let elem=document.createElement('button');
                     elem.onclick=function(){
-                        editAreaInsert((i-1)+'');
+                        editAreaInsert(i+'');
                     }
                     elem.innerHTML=dcNames[i];
                     elem.class='dcInsertButton';
