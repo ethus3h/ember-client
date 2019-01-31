@@ -325,7 +325,7 @@ async function dcGetField(intDc, intFieldNumber) {
 
     await assertIsDc(intDc);
     let strRes = '';
-    strRes = await dcDataLookupById('DcData', intFieldNumber);
+    strRes = await dcDataLookupById('DcData', intDc, intFieldNumber);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
