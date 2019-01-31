@@ -86,7 +86,7 @@
 
         function handleDcEditingKeystroke(event) {
             if (globalCachedInputState.length === 1) {
-                if (globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
+                if (globalCachedInputState === " " || !isNaN(parseInt(globalCachedInputState))) {
                     if (inputarea.value.includes(globalCachedInputState)) {
                         (async function(elem, char){
                             elem.value = elem.value.replace(char, await dcFromFormat('ascii', await strToByteArray(char)));
