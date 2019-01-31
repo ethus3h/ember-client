@@ -245,7 +245,7 @@
                 let picker=document.getElementById('filepicker');
                 picker.click();
                 let file=picker.files[0];
-                if (file !== undefined) {
+                if (file !== undefined && file !== null) {
                     let fr=new FileReader();
                     await new Promise(resolve => {
                         fr.onload=function (){
