@@ -604,7 +604,7 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
             strReturn = dcData[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
-    //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
+    await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
     // If nothing was found, return this UUID.
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
