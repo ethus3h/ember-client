@@ -276,7 +276,7 @@
                 }
                 catch() {
                     removeSpinner(true);
-                    alert('The requested document could not be loaded!');
+                    implDie('An error was encountered loading the requested document '+path+'.')
                 }
                 removeSpinner(true);
             }, 500);
