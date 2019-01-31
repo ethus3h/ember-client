@@ -179,8 +179,7 @@
         };
 
         function UploadDocument() {
-            let elem=document.importNode(document.getElementById('downloadNotifyTemplate').content, true);
-            elem.firstChild.innerHTML=name;
+            let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             elem.firstChild.id='downloadNotifyTempId';
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
