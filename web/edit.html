@@ -234,6 +234,9 @@
                 }
             });
             notificationOverlay=document.getElementById('notificationOverlay');
+            notificationOverlay.addEventListener('click', function(event) {
+                closeImportDialog();
+            });
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
