@@ -205,13 +205,14 @@ async function internalSetup() {
         // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
         async function implDie(strMessage) {
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
-
+alert('blahe');
             await implError(strMessage);
 
             throw strMessage;
         }
 
         async function implError(strMessage) {
+            alert('blah');
             if(typeof strMessage !== "string") {
                 throw "Nonstring error message";
             }
