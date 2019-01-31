@@ -125,14 +125,17 @@
                 elem.disabled = false;
             });
         }
+
         function editAreaInsert(text) {
             typeInTextareaSpaced(document.getElementById('inputarea'), text);
         }
+
         function setNearestDcLabel(text) {
             let nearestDcLabel = document.getElementById('currentDcLabel');
             nearestDcLabel.innerHTML=text;
             nearestDcLabel.title=text;
         }
+
         async function updateNearestDcLabel(el) {
             let start = el.selectionStart;
             let end = el.selectionEnd;
@@ -153,6 +156,7 @@
             }
             setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
         }
+
         function typeInTextarea(el, newText) {
             // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
             let start = el.selectionStart;
