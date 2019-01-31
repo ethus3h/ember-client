@@ -39,13 +39,13 @@ async function byteFromChar(strInput) {
 }
 
 async function utf8BytesFromDecimalChar(intInput) {
-    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input. FIXME: Probably doesn't support unpaired surrogates. Try https://github.com/mathiasbynens/wtf-8 instead?
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input. FIXME: Probably doesn't support unpaired surrogates or byte sequences outside of the range allowed by Unicode characters, but it probably should.
     let utf8encoder = new TextEncoder();
     return utf8encoder.encode(String.fromCodePoint(intInput));
 }
 
 async function firstCharOfUtf8String(intArrayInput) {
-    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
     let utf8encoder = new TextEncoder();
     return utf8encoder.encode(String.fromCodePoint(intInput));
 }
