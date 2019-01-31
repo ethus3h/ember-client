@@ -89,7 +89,7 @@
             if (globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
                     (async function(elem, char){
-                        elem.value = elem.value.replace(char, await );
+                        elem.value = elem.value.replace(char, await dcFromFormat('ascii', await strToByteArray(char)));
                     }(inputarea, globalCachedInputState));
                 }
             }
