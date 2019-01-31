@@ -48,8 +48,12 @@ async function get(array, index) {
 async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 
+    let len = await count(array);
+    if (index > count) {
+        await implDie("Cannot insert to a position greater than appending to the length of the array.");
+    }
     if (index < 0) {
-        index = await count(array) + index;
+        index = len + index;
     }
     array[index] = value;
 
