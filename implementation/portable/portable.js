@@ -1262,7 +1262,7 @@ async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'integerList', 'sems' ];
+    strArrayRes = [ 'ascii', 'integerList', 'sems' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -1348,7 +1348,7 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
     await assertIsSupportedInputFormat(strInFormat);
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
-    if (await implEq(strInFormat, 'ascii')) {
+    if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
         intArrayRet = await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
     }
     else {
