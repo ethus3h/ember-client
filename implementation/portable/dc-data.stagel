@@ -25,7 +25,7 @@ r/b/isDcDataset s/in
 r/s/dcGetField n/dc n/fieldNumber
     assertIsDc n/dc
     new s/res
-    set s/res dcDataLookupById 'DcData' add n/dc 1 } n/fieldNumber
+    set s/res dcDataLookupById 'DcData' n/fieldNumber
     return s/res
 
 r/s/dcGetName n/dc
