@@ -7,13 +7,10 @@ r/ga/subset ga/in n/start n/end
         set n/end add n/count n/end
     set n/count n/end
     new ga/res
-    while lt n/i n/count
-        set ga/res push ga/res 
-        set g/elem get ga/in n/count
-        if eq g/elem g/value
-            return true
-        set n/count sub n/count 1
-    return false
+    while le n/i n/count
+        set ga/res push ga/res get ga/in n/i
+        set n/i add n/i 1
+    return ga/res
 
 r/b/contains ga/in g/value
     new n/count
