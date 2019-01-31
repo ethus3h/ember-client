@@ -38,8 +38,9 @@
                 document.addEventListener('input', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                document.addEventListener('keydown', function() {
+                document.addEventListener('keydown', function(e) {
                     updateNearestDcLabel(inputarea);
+                    globalCachedInputState=e.key;
                 }, false);
                 document.addEventListener('keyup', function() {
                     updateNearestDcLabel(inputarea);
@@ -47,11 +48,8 @@
                 document.addEventListener('click', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                inputarea.addEventListener('beforeinput', function() {
-                    globalCachedInputState=inputarea.value;
-                });
                 inputarea.addEventListener('input', function(event) {
-                    handleDcEditingKeystroke(event);
+                    handleDcEditingKeystroke(event, inputarea);
                 });
                 document.getElementById('ImportDocument').disabled=false;
                 document.getElementById('ExportDocument').disabled=false;
@@ -86,16 +84,10 @@
             })();
         };
 
-        function handleDcEditingKeystrokePreInput(event) {
-            if (typeof kbdEvent.key === 'string') {
-                if(window.event)
-                if (kbdEvent.key.length === 1) {
-                    alert(kbdEvent.key);
-                }
-            }
-        }
-
         function handleDcEditingKeystroke(event) {
+        if (globalCachedInputState.length === 1) {
+                    if (inputarea.value.includes(globalCachedInputState)) {
+            }
             if (typeof kbdEvent.key === 'string') {
                 if(window.event)
                 if (kbdEvent.key.length === 1) {
