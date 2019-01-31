@@ -5,10 +5,10 @@ r/ga/subset ga/in n/start n/end
     set n/i n/start
     if lt n/end 0
         set n/end add n/count n/end
-    
-    new g/elem
+    set n/count n/end
+    new ga/res
     while lt n/i n/count
-        
+        set ga/res push ga/res 
         set g/elem get ga/in n/count
         if eq g/elem g/value
             return true
