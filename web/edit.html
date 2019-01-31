@@ -86,12 +86,8 @@
 
         function handleDcEditingKeystroke(event) {
         if (globalCachedInputState.length === 1) {
-                    if (inputarea.value.includes(globalCachedInputState)) {
-            }
-            if (typeof kbdEvent.key === 'string') {
-                if(window.event)
-                if (kbdEvent.key.length === 1) {
-                    alert(kbdEvent.key);
+            if(globalCachedInputState === " " || !isNan(parseInt(globalCachedInputState))) {
+                if (inputarea.value.includes(globalCachedInputState)) {
                 }
             }
         }
