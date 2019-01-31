@@ -164,6 +164,7 @@
             el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
         }
+
         function typeInTextareaSpaced(el, newText) {
             // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
             let start = el.selectionStart;
@@ -182,6 +183,7 @@
             el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
         }
+
         async function getInputDoc() {
             let res=await strToByteArray(document.getElementById('inputarea').value);
             return res;
@@ -214,6 +216,7 @@
                 notificationOverlay.style.display='none';
             }, 750);
         }
+
         function ImportDocument() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             notificationOverlay=document.getElementById('notificationOverlay');
@@ -221,6 +224,7 @@
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
         }
+
         function importDocumentFromFile() {
             startSpinner();
             closeImportDialog();
