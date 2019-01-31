@@ -110,6 +110,9 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     new an/ret
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
+        new 
+        if eq s/inFormat 'ascii'
+            if not isByte get 
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' sumArray an/contentBytes } 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
