@@ -331,7 +331,7 @@
             z-index: 4;
             font-size: 1.2rem;
         }
-        .importDialog > button {
+        .importDialog > button, .importDialog > div {
             height: 100%;
         }
         .exportNotification {
@@ -548,7 +548,7 @@
 <div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="exportNotifyTemplate"><div class="exportNotification"></div></template>
-<template id="importDialogTemplate"><div class="importDialog"><button onClick="importDocumentFromFile();">Import from file</button><button onClick="importDocumentFromURL();">Import from URL</button><button onClick="closeImportDialog();">Cancel</button></div></template>
+<template id="importDialogTemplate"><div class="importDialog"><div>Imported document will replace current contents of edit field.</div><button onClick="importDocumentFromFile();">Import from file</button><button onClick="importDocumentFromURL();">Import from URL</button><button onClick="closeImportDialog();">Cancel</button></div></template>
 <input type="file" id="filepicker"></input>
 </body>
 </html>
