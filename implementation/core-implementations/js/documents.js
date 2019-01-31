@@ -15,7 +15,7 @@ async function getFileFromPath(path) {
     if (response !== undefined) {
         return response;
     }
-    await assertFailed('An error was encountered loading the requested document.');
+    await implDie('An error was encountered loading the requested document '+path+'.');
 }
 
 // Implementations of routines provided in public-interface.stagel.
