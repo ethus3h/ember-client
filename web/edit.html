@@ -231,14 +231,13 @@
                     closeImportDialog();
                 }
         }
+
         function openImportDialog() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             document.addEventListener('keyup', function(event) {
             });
             notificationOverlay=document.getElementById('notificationOverlay');
-            notificationOverlay.addEventListener('click', function(event) {
-                closeImportDialog();
-            });
+            notificationOverlay.addEventListener('click', importDialogEscapeListener);
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
