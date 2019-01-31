@@ -90,7 +90,7 @@
                 if (inputarea.value.includes(globalCachedInputState)) {
                     (async function(elem, char){
                         elem.value = elem.value.replace(char, await dcFromFormat('ascii', await strToByteArray(char)));
-                    }(inputarea, globalCachedInputState));
+                    })(inputarea, globalCachedInputState);
                 }
             }
         }
