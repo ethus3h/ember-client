@@ -209,7 +209,7 @@
         };
 
         function closeImportDialog() {
-            notificationOverlay.removeEventListener('click', importDialogEscapeListener);
+            notificationOverlay.removeEventListener('keyup', importDialogEscapeListener);
             let e=document.getElementsByClassName('importDialog');
             i=0;
             while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
@@ -235,10 +235,11 @@
 
         function openImportDialog() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
-            document.addEventListener('keyup', function(event) {
-            });
+            document.addEventListener('keyup', importDialogEscapeListener);
             notificationOverlay=document.getElementById('notificationOverlay');
-            notificationOverlay.addEventListener('click', importDialogEscapeListener);
+            notificationOverlay.addEventListener('click', function(event) {
+                closeImportDialog();
+            });
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
