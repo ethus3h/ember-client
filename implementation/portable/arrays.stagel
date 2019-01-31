@@ -1,16 +1,44 @@
-r/ga/subset ga/in n/start n/end
+r/ab/abSubset ab/in n/start n/end
     new n/count
-    set n/count count ga/in
+    set n/count count ab/in
     new n/i
     set n/i n/start
     if lt n/end 0
         set n/end add n/count n/end
     set n/count n/end
-    new ga/res
+    new ab/res
     while le n/i n/count
-        set ga/res push ga/res get ga/in n/i
+        set ab/res push ab/res get ab/in n/i
         set n/i add n/i 1
-    return ga/res
+    return ab/res
+
+r/an/anSubset an/in n/start n/end
+    new n/count
+    set n/count count an/in
+    new n/i
+    set n/i n/start
+    if lt n/end 0
+        set n/end add n/count n/end
+    set n/count n/end
+    new an/res
+    while le n/i n/count
+        set an/res push an/res get an/in n/i
+        set n/i add n/i 1
+    return an/res
+
+r/as/asSubset as/in n/start n/end
+    new n/count
+    set n/count count as/in
+    new n/i
+    set n/i n/start
+    if lt n/end 0
+        set n/end add n/count n/end
+    set n/count n/end
+    new as/res
+    while le n/i n/count
+        set as/res push as/res get as/in n/i
+        set n/i add n/i 1
+    return as/res
 
 r/b/contains ga/in g/value
     new n/count
