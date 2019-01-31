@@ -1,8 +1,14 @@
-r/ga/contains ga/in g/value
+r/ga/subset ga/in n/start n/end
     new n/count
-    set n/count sub count ga/in } 1
+    set n/count count ga/in
+    new n/i
+    set n/i n/start
+    if lt n/end 0
+        set n/end add n/count n/end
+    
     new g/elem
-    while ge n/count 0
+    while lt n/i n/count
+        
         set g/elem get ga/in n/count
         if eq g/elem g/value
             return true
