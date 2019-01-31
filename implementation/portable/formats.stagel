@@ -115,6 +115,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
         if eq s/inFormat 'ascii'
             if not isAsciiByte n/sum
                 die cat 'The character number ' cat strFrom n/sum } ' is not a 7-bit ASCII character.'
+        # Don't worry about checking for negative value of n/sum, because everything in a byteArray is nonnegative.
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/sum } 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
