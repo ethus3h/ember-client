@@ -110,7 +110,7 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     new an/ret
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
-        set n/dc dcDataLookupById 'mappings/from/unicode' get an/contentBytes 0 } 1
+        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' get an/contentBytes 0 } 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/ret setElement an/ret 0 n/dc
