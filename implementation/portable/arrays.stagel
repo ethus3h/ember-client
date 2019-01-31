@@ -1,16 +1,16 @@
-r/ab/abSubset ab/in n/start n/end
+r/ga/subset ga/in n/start n/end
     new n/count
-    set n/count count ab/in
+    set n/count count ga/in
     new n/i
     set n/i n/start
     if lt n/end 0
         set n/end add n/count n/end
     set n/count n/end
-    new ab/res
+    new ga/res
     while le n/i n/count
-        set ab/res push ab/res get ab/in n/i
+        set ga/res push ga/res get ga/in n/i
         set n/i add n/i 1
-    return ab/res
+    return ga/res
 
 r/b/contains ga/in g/value
     new n/count
