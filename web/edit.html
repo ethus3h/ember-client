@@ -301,7 +301,7 @@
             flex-direction: column;
             overflow-x: scroll;
         }
-        #DcSelection > span {
+        #DcSelection > span, .importDialog > div {
             font-size: 1.8rem;
             font-weight: bold;
             text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
@@ -552,7 +552,7 @@
 <div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="exportNotifyTemplate"><div class="exportNotification"></div></template>
-<template id="importDialogTemplate"><div class="importDialog"><div>Imported document will replace current contents of edit field.</div><button onClick="importDocumentFromFile();">Import from file</button><button onClick="importDocumentFromURL();">Import from URL</button><button onClick="closeImportDialog();">Cancel</button></div></template>
+<template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button onClick="importDocumentFromFile();">Import from file</button><button onClick="importDocumentFromURL();">Import from URL</button><button onClick="closeImportDialog();">Cancel</button></div></template>
 <input type="file" id="filepicker"></input>
 </body>
 </html>
