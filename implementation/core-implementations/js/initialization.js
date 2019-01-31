@@ -73,7 +73,7 @@ async function internalSetup() {
     if (haveDom) {
         // Override error reporting method to show alert
         // TODO: Does this always work? Overrides aren't really possible when it's load-order-independent, I wouldn't think...
-        async function implDie(strMessage) {
+        window.implDie = async function (strMessage) {
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
             await implError(strMessage);
