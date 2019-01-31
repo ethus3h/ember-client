@@ -41,13 +41,15 @@
                 document.addEventListener('keydown', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
-                document.addEventListener('keyup', function(key) {
-                    handleDcEditingKeystroke(key);
+                document.addEventListener('keyup', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
                 document.addEventListener('click', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
+                inputarea.addEventListener('input', function(event) {
+                    handleDcEditingKeystroke(event);
+                });
                 document.getElementById('ImportDocument').disabled=false;
                 document.getElementById('ExportDocument').disabled=false;
                 document.getElementById('RunDocument').disabled=false;
