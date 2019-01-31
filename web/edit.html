@@ -204,7 +204,7 @@
         }
         function importDocumentFromFile() {
             startSpinner();
-            window.setTimeout(closeImportDialog, 200);
+            closeImportDialog();
             window.setTimeout(async function(){
                 inFormat=document.getElementById('inFormat').value;
                 if (!await isSupportedInputFormat(inFormat)) {
