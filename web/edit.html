@@ -203,6 +203,7 @@
             document.body.appendChild(elem.firstChild);
         }
         function importDocumentFromFile() {
+            closeImportDialog();
             startSpinner();
             window.setTimeout(async function(){
                 inFormat=document.getElementById('inFormat').value;
