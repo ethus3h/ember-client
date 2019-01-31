@@ -179,7 +179,6 @@
                 newText = ' ' + newText;
                 el.value = (before + newText + after);
             }
-            console.log(newText); console.log(newText.length);
             el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
         }
