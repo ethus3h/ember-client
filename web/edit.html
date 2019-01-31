@@ -89,7 +89,11 @@
                 if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
                     if (inputarea.value.includes(globalCachedInputState)) {
                         (async function(elem, char){
+                            let start = elem.selectionStart;
+                            let end = elem.selectionEnd;
                             elem.value = elem.value.replace(char, '');
+                            elem.selectionStart = start;
+                            elem.selectionEnd = end;
                             typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray(char)));
                         })(inputarea, globalCachedInputState);
                     }
