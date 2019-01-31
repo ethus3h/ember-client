@@ -1,3 +1,15 @@
+r/an/dcaFromAscii an/content
+    new an/res
+        new n/l
+    set n/l len s/str
+    new n/c
+    set n/c 0
+    new s/res
+    while le n/c n/l
+        set s/res cat s/res strCharAtPos s/str sub n/l n/c
+
+    return an/res
+
 r/b/asciiIsDigit n/n
     new b/temp
     set b/temp intIsBetween n/n 48 57
