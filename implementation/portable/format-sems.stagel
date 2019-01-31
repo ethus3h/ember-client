@@ -27,7 +27,9 @@ r/an/dcaFromSems an/content
             else
                 die 'Unexpected parser state in SEMS document.'
         elif eq s/parserState 'comment'
+            set an/ret push an/ret 246
             if asciiIsNewline n/currentByte
+                set an/ret push an/ret 248
                 set s/parserState 'dc'
             else
                 # Do nothing: comments are ignored
