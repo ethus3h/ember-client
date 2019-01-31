@@ -180,13 +180,10 @@
 
         function UploadDocument() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
-            elem.firstChild.id='downloadNotifyTempId';
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
             document.body.appendChild(elem.firstChild);
-            let elemAppended=document.getElementById('downloadNotifyTempId');
-            elemAppended.removeAttribute('id');
             setTimeout(function() {
                 let e=document.getElementsByClassName('downloadNotification');
                 i=0;
