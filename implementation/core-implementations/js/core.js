@@ -205,7 +205,7 @@ async function internalSetup() {
 
         window.implError = async function (strMessage) {
             if(typeof strMessage !== "string") {
-                alert("EITE reported error: Nonstring error message!");
+                alert("EITE reported an error! You may want to reload the page. The error was: Nonstring error message!");
                 throw "Nonstring error message";
             }
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
@@ -214,7 +214,7 @@ async function internalSetup() {
             await implWarn(strMessage);
 
             await console.trace();
-            alert("EITE reported error!: " + strMessage);
+            alert("EITE reported an error! You may want to reload the page. The error was: " + strMessage);
         }
 
         window.implWarn = async function (strMessage) {
