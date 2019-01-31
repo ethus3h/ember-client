@@ -7,12 +7,16 @@ async function dcDatasetLength(dataset) {
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
+    // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed).
     if (dcData[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
 
-    if (rowNum >= dcData[dataset].length - 1) {
-        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length - 1+').');
+    // Add 1 to account for header row
+    rowNum = rowNum + 1;
+
+    if (rowNum >= dcData[dataset].length) {
+        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length+').');
     }
 
     strReturn = dcData[dataset][rowNum][fieldNum]; await assertIsStr(strReturn); return strReturn;
