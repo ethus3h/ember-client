@@ -110,10 +110,12 @@ r/an/dcFromFormat s/inFormat an/contentBytes
     new an/ret
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
-        new 
+        new n/sum
+        set n/sum sumArray an/contentBytes
         if eq s/inFormat 'ascii'
-            if not isByte get 
-        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' sumArray an/contentBytes } 1
+            if not isAsciiByte n/sum
+                die cat 'The character number ' strFrom n/sum } } '
+        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/sum } 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/ret setElement an/ret 0 n/dc

@@ -8,6 +8,11 @@ r/an/dcaFromAscii an/content
         set an/res push an/res dcFromFormat 'ascii' get an/content n/c
     return an/res
 
+r/b/isAsciiByte n/n
+    new b/temp
+    set b/temp intIsBetween n/n 0 127
+    return b/temp
+
 r/b/asciiIsDigit n/n
     new b/temp
     set b/temp intIsBetween n/n 48 57
