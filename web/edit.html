@@ -226,7 +226,7 @@
             }, 750);
         }
 
-        function ImportDocument() {
+        function openImportDialog() {
             let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.style.display='block';
@@ -605,7 +605,7 @@
             </select>
         </div>
         <div id="editorButtons">
-            <button disabled="true" id="ImportDocument" onClick="ImportDocument();">Import</button>
+            <button disabled="true" id="ImportDocument" onClick="openImportDialog();">Import</button>
             <button disabled="true" id="ExportDocument" onClick="ExportDocument();">Export</button>
             <button disabled="true" id="RunDocument" onClick="RunDocumentHandler();">Run</button>
         </div>
