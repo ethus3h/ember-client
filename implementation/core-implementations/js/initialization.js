@@ -83,6 +83,7 @@ async function internalSetup() {
 
         async function implError(strMessage) {
             if(typeof strMessage !== "string") {
+                alert("Nonstring error message!");
                 throw "Nonstring error message";
             }
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
