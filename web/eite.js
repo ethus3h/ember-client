@@ -763,6 +763,8 @@ async function assertIsGenericItem(val) {
 }
 
 async function assertionFailed(message) {
+    alert('bubbubub');
+    console.log(implDie);
     await implDie("Assertion failed: "+message);
 }
 
