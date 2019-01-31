@@ -289,7 +289,9 @@ async function internalLoadDatasets() {
 
 /* arrays, provides:
     append
+    push
     get
+    set-element
     count
 */
 
@@ -330,6 +332,21 @@ async function get(array, index) {
         returnVal=array[index];
     }
     await assertIsGeneric(returnVal); return returnVal;
+}
+
+async function setElement(array, index, value) {
+    await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
+
+    let len = await count(array);
+    if (index > count) {
+        await implDie("Cannot insert to a position greater than appending to the length of the array.");
+    }
+    if (index < 0) {
+        index = len + index;
+    }
+    array[index] = value;
+
+    await assertIsArray(array); return array;
 }
 
 async function count(array) {
@@ -2197,12 +2214,14 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
     await assertIsSupportedInputFormat(strInFormat);
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
+    let intDc = 0;
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
-        intArrayRet = await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
+        intDc = await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
     }
+    intArrayRet = await setElement(intArrayRet, 0, intDc);
     await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
