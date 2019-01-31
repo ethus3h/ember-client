@@ -895,6 +895,21 @@ async function isCharByte(genericIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function dcaFromAscii(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    let intArrayRes = [];
+    let intL = 0;
+    intL = await count(intArrayContent);
+    let intC = 0;
+    intC = 0;
+    while (await le(intC, intL)) {
+        intArrayRes = await push(intArrayRes, await dcFromFormat('ascii', await get(intArrayContent, intC)));
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function asciiIsDigit(intN) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
 
@@ -2182,8 +2197,10 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
     await assertIsSupportedInputFormat(strInFormat);
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
-    if (await implEq(strInFormat, 'nothing-yet')) {
-        /* there isn't anything that uses this yet */
+    if (await implEq(strInFormat, 'ascii')) {
+
+        intArrayReturn = ; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+        await dcDataLookupById('mappings/from/unicode', await get(intArrayContentBytes, 0), 1);
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
