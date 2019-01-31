@@ -267,7 +267,9 @@
                 if (!await isSupportedInputFormat(inFormat)) {
                     await implDie(inFormat+' is not a supported input format!');
                 }
-                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+                if (path !== undefined) {
+                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+                }
                 removeSpinner(true);
             }, 500);
         };
