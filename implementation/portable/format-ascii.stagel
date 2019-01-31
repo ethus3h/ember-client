@@ -1,13 +1,11 @@
 r/an/dcaFromAscii an/content
     new an/res
-        new n/l
+    new n/l
     set n/l len s/str
     new n/c
     set n/c 0
-    new s/res
     while le n/c n/l
-        set s/res cat s/res strCharAtPos s/str sub n/l n/c
-
+        set an/res push an/res dcFromFormat 'ascii' charAtPos 
     return an/res
 
 r/b/asciiIsDigit n/n
