@@ -259,7 +259,7 @@
             }, 500);
         };
 
-        function importDocumentFromURL(path) {
+        function importDocumentFromFile() {
             startSpinner();
             closeImportDialog();
             window.setTimeout(async function(){
@@ -278,7 +278,7 @@
                         };
                         fr.readAsArrayBuffer(file);
                     });
-                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+                    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
                 }
                 removeSpinner(true);
             }, 500);
