@@ -1,7 +1,8 @@
 async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
-    intReturn = await dcData[dataset].length - 1; await assertIsInt(intReturn); return intReturn;
+    // - 2: one for the header; one for the last newline, which is (reasonably, looking at the newlines as separators rather than terminators) included as an extra line of data in the parse results
+    intReturn = await dcData[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
@@ -25,7 +26,7 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = dcData[dataset].length - 1;
+    let intLength = dcData[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row < intLength; row++) {
