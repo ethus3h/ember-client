@@ -92,7 +92,8 @@
                             console.log(elem.value);
                             console.log(char);
                             console.log(await strToByteArray(char));
-                            elem.value = elem.value.replace(char, await dcFromFormat('ascii', await strToByteArray(char)));
+                            elem.value = elem.value.replace(char, '');
+                            typeInTextareaSpaced(await dcFromFormat('ascii', await strToByteArray(char)));
                         })(inputarea, globalCachedInputState);
                     }
                 }
