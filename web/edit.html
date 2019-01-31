@@ -260,7 +260,10 @@
         };
 
         function importDocumentFromURL(path) {
-            if (path === null || path === undefined) {
+            if (path === null) {
+                return;
+            }
+            if (path === undefined) {
                 closeImportDialog();
                 return;
             }
