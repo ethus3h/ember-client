@@ -172,12 +172,15 @@
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
             if (before.substr(-1) === ' ' || before.substr(-1) === '') {
-                el.value = (before + newText + ' ' + after);
+                newText = newText + ' ';
+                el.value = (before + newText + after);
             }
             else {
-                el.value = (before + ' ' + newText + after);
+                newText = ' ' + newText;
+                el.value = (before + newText + after);
             }
-            el.selectionStart = el.selectionEnd = start + newText.length + 1;
+            console.log(newText); console.log(newText.length);
+            el.selectionStart = el.selectionEnd = start + newText.length;
             el.focus();
         }
         async function getInputDoc() {
