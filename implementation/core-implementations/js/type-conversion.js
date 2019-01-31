@@ -43,3 +43,9 @@ async function utf8BytesFromDecimalChar(intInput) {
     let utf8encoder = new TextEncoder();
     return utf8encoder.encode(String.fromCodePoint(intInput));
 }
+
+async function utf8BytesFromDecimalChar(intInput) {
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input.
+    let utf8encoder = new TextEncoder();
+    return utf8encoder.encode(String.fromCodePoint(intInput));
+}
