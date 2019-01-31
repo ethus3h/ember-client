@@ -17,7 +17,7 @@
     <!-- And the code specific to this page -->
     <script>
         // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
-
+        globalCachedInputState="";
         window.onload = function() {
             (async function(){
                 let dcNames=[];
@@ -47,6 +47,9 @@
                 document.addEventListener('click', function() {
                     updateNearestDcLabel(inputarea);
                 }, false);
+                inputarea.addEventListener('beforeinput', function() {
+                    globalCachedInputState=inputarea.value;
+                });
                 inputarea.addEventListener('input', function(event) {
                     handleDcEditingKeystroke(event);
                 });
@@ -82,6 +85,15 @@
                 }, 500);
             })();
         };
+
+        function handleDcEditingKeystrokePreInput(event) {
+            if (typeof kbdEvent.key === 'string') {
+                if(window.event)
+                if (kbdEvent.key.length === 1) {
+                    alert(kbdEvent.key);
+                }
+            }
+        }
 
         function handleDcEditingKeystroke(event) {
             if (typeof kbdEvent.key === 'string') {
