@@ -3,11 +3,6 @@ r/b/isNonnegative n/in
         return false
     return true
 
-r/b/isPositive n/in
-    new b/temp
-    set b/temp isNonnegative n/in
-    return b/temp
-
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
     new n/t1

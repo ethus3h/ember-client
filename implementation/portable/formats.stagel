@@ -115,6 +115,8 @@ r/an/dcFromFormat s/inFormat an/contentBytes
         if eq s/inFormat 'ascii'
             if not isAsciiByte n/sum
                 die cat 'The character number ' cat strFrom n/sum } ' is not a 7-bit ASCII character.'
+        if not isNonnegative n/sum
+            die cat 'The character number ' cat strFrom n/sum } ' is not a Unicode character.'
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/sum } 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
