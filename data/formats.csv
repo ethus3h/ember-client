@@ -2,7 +2,7 @@ ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Descr
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
 2,dc,,-1,-1,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
-3,integerList,,,,,,,
+3,integerList,,,,,,ASCII text with list of integers. ,
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
 6,characterCells,,,,,,,
