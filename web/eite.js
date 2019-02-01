@@ -2344,6 +2344,8 @@ async function dcToFormat(strOutFormat, intDc) {
 }
 
 async function dcFromFormat(strInFormat, intArrayContentBytes) {
+    console.log(strInFormat);
+    console.log(intArrayContentBytes);
     await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
 
     /* Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
