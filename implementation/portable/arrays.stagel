@@ -41,45 +41,18 @@ r/as/asSubset as/in n/start n/end
     return as/res
 
 r/ab/abFromB b/in
-    new n/count
-    set n/count count ab/in
-    new n/i
-    set n/i n/start
-    if lt n/end 0
-        set n/end add n/count n/end
-    set n/count n/end
     new ab/res
-    while le n/i n/count
-        set ab/res push ab/res get ab/in n/i
-        set n/i add n/i 1
+    set ab/res push ab/res b/in
     return ab/res
 
 r/an/anFromN n/in
-    new n/count
-    set n/count count an/in
-    new n/i
-    set n/i n/start
-    if lt n/end 0
-        set n/end add n/count n/end
-    set n/count n/end
     new an/res
-    while le n/i n/count
-        set an/res push an/res get an/in n/i
-        set n/i add n/i 1
+    set an/res push an/res n/in
     return an/res
 
 r/as/asFromS s/in
-    new n/count
-    set n/count count as/in
-    new n/i
-    set n/i n/start
-    if lt n/end 0
-        set n/end add n/count n/end
-    set n/count n/end
     new as/res
-    while le n/i n/count
-        set as/res push as/res get as/in n/i
-        set n/i add n/i 1
+    set as/res push as/res s/in
     return as/res
 
 r/b/contains ga/in g/value
