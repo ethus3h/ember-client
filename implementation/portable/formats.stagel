@@ -120,11 +120,11 @@ r/an/dcFromFormat s/inFormat an/content
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
         new n/c
-        set n/c get an/content 1
+        set n/c get an/content 0
         if eq s/inFormat 'ascii'
             if not isAsciiByte n/c
                 die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
-        # Don't worry about checking for negative value of n/c, because everything in a byteArray is nonnegative.
+        assertIsNonnegative n/c
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
