@@ -130,8 +130,6 @@ async function utf8BytesFromDecimalChar(intInput) {
 
 async function firstCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
-   console.trace(); 
-    console.log(intArrayInput);
     let utf8decoder = new TextDecoder();
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
@@ -1316,7 +1314,6 @@ async function abSubset(boolArrayIn, intStart, intEnd) {
 }
 
 async function anSubset(intArrayIn, intStart, intEnd) {
- //   window.STAGEL_DEBUG=3;
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('anSubset:arrays'); await assertIsIntArray(intArrayIn);await assertIsInt(intStart);await assertIsInt(intEnd); let intArrayReturn;
 
     let intCount = 0;
@@ -2745,7 +2742,7 @@ async function dcaFromSems(intArrayContent) {
     let intByteOffset = 0;
     let intCurrentByte = 0;
     while (await implLt(intByteOffset, intContentLength)) {
-        /* do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
+        /* do something with each byte in the array. an/content[n/byteOffset], which is copied to n/currentByte, holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
         intCurrentByte = await get(intArrayContent, intByteOffset);
         if (await implEq(strParserState, 'dc')) {
             if (await asciiIsDigit(intCurrentByte)) {
@@ -2770,17 +2767,7 @@ async function dcaFromSems(intArrayContent) {
                 strParserState = 'dc';
             }
             else {
-                console.log(intArrayRet);
-                console.log(intCurrentByte);
-                console.log(intByteOffset);
-                console.log(strParserState);
-                console.log(intArrayContent);
-                console.log(await anSubset(intArrayContent, intCurrentByte, -1));
-                intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intCurrentByte, -1)))));
-                console.log(intArrayRet);
-                console.log(intCurrentByte);
-                console.log(intByteOffset);
-                console.log(strParserState);
+                intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intByteOffset, -1)))));
             }
         }
         else {
