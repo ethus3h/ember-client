@@ -1347,7 +1347,7 @@ async function formatToExtension(strFormat) {
 
         strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else if (await implEq(strFormat, 'UTF-8')) {
+    else if (await or(await implEq(strFormat, 'UTF-8'), await or(await implEq(strFormat, 'unicode')))) {
 
         strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
@@ -1372,7 +1372,7 @@ async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'ascii', 'integerList', 'sems' ];
+    strArrayRes = [ 'ascii', 'integerList', 'sems', 'unicode' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
