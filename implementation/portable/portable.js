@@ -1478,13 +1478,13 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     let intDc = 0;
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
         let intC = 0;
-        intC = await get(intArrayContent, 1);
+        intC = await get(intArrayContent, 0);
         if (await implEq(strInFormat, 'ascii')) {
             if (await implNot(await isAsciiByte(intC))) {
                 await implDie(await implCat('The character number ', await implCat(await strFrom(intC), ' is not a 7-bit ASCII character.')));
             }
         }
-        /* Don't worry about checking for negative value of n/c, because everything in a byteArray is nonnegative. */
+        await assertIsNonnegative(intC);
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
     else {
