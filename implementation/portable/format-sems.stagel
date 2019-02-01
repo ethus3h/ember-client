@@ -13,7 +13,7 @@ r/an/dcaFromSems an/content
     new n/byteOffset
     new n/currentByte
     while lt n/byteOffset n/contentLength
-        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        # do something with each byte in the array. an/content[n/byteOffset], which is copied to n/currentByte, holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         set n/currentByte get an/content n/byteOffset
         if eq s/parserState 'dc'
             if asciiIsDigit n/currentByte
