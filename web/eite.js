@@ -2770,10 +2770,15 @@ async function dcaFromSems(intArrayContent) {
                 strParserState = 'dc';
             }
             else {
+                console.log(intArrayRet);
+                console.log(intCurrentByte);
+                console.log(intByteOffset);
+                console.log(strParserState);
                 intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intCurrentByte, -1)))));
                 console.log(intArrayRet);
                 console.log(intCurrentByte);
                 console.log(intByteOffset);
+                console.log(strParserState);
             }
         }
         else {
