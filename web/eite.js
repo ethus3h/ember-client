@@ -2769,6 +2769,7 @@ async function dcaFromSems(intArrayContent) {
             }
             else {
                 console.log(intArrayContent);
+                console.log(await anSubset(intArrayContent, intByteOffset, -1));
                 intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intByteOffset, -1)))));
             }
         }
