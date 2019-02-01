@@ -1314,6 +1314,7 @@ async function abSubset(boolArrayIn, intStart, intEnd) {
 }
 
 async function anSubset(intArrayIn, intStart, intEnd) {
+    window.STAGEL_DEBUG=3;
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('anSubset:arrays'); await assertIsIntArray(intArrayIn);await assertIsInt(intStart);await assertIsInt(intEnd); let intArrayReturn;
 
     let intCount = 0;
