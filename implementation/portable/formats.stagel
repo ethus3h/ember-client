@@ -130,7 +130,8 @@ r/an/dcFromFormat s/inFormat an/contentBytes
         intFromIntStr 
             dcDataLookupById 
                 'mappings/from/unicode' 
-                n/sum } } 1
+                n/sum
+                1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/ret setElement an/ret 0 n/dc
