@@ -126,6 +126,7 @@ r/an/dcFromFormat s/inFormat an/content
                 die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
         assertIsNonnegative n/c
         if ge n/c dcDatasetLength 'mappings/from/unicode'
+            die 'FIXME: save unmapped unicode chars'
             return an/ret
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
     else
