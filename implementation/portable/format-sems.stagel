@@ -32,7 +32,8 @@ r/an/dcaFromSems an/content
                 set an/ret push an/ret 248
                 set s/parserState 'dc'
             else
-                set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/currentByte -1
+                if lt n/byteOffset n/contentLength
+                    set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/currentByte -1
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
