@@ -646,7 +646,7 @@ async function sumArray(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('sumArray:arrays'); await assertIsIntArray(intArrayIn); let intReturn;
 
     let intCount = 0;
-    intCount = await implSub(await count(genericArrayIn), 1);
+    intCount = await implSub(await count(intArrayIn), 1);
     let intRes = 0;
     while (await ge(intCount, 0)) {
         intRes = await implAdd(intRes, await get(intArrayIn, intCount));
@@ -1347,7 +1347,7 @@ async function formatToExtension(strFormat) {
 
         strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else if (await or(await implEq(strFormat, 'UTF-8'), await or(await implEq(strFormat, 'unicode')))) {
+    else if (await implEq(strFormat, 'UTF-8')) {
 
         strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
@@ -1372,7 +1372,7 @@ async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'ascii', 'integerList', 'sems', 'unicode' ];
+    strArrayRes = [ 'ascii', 'integerList', 'sems' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -1382,6 +1382,24 @@ async function isSupportedInputFormat(strIn) {
 
     let boolRes = false;
     boolRes = await contains(await listInputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listInternalInputFormats() {
+    await internalDebugStackEnter('listInternalInputFormats:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = [ 'unicode' ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedInternalInputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInternalInputFormat:formats'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await contains(await listInputFormats(), strIn), await contains(await listInternalInputFormats(), strIn));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -1455,7 +1473,7 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
     await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
 
     /* Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
-    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsTrue(await isSupportedInternalInputFormat(strInFormat));
     await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
     let intDc = 0;
