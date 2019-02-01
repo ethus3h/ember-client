@@ -1474,19 +1474,18 @@ async function dcFromFormat(strInFormat, intArrayContent) {
 
     /* Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
     await assertIsTrue(await isSupportedInternalInputFormat(strInFormat));
-    await assertIsByteArray(intArrayContentBytes);
     let intArrayRet = [];
     let intDc = 0;
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
-        let intSum = 0;
-        intSum = await sumArray(intArrayContentBytes);
+        let intC = 0;
+        intC = await get(intArrayContent, 1);
         if (await implEq(strInFormat, 'ascii')) {
-            if (await implNot(await isAsciiByte(intSum))) {
-                await implDie(await implCat('The character number ', await implCat(await strFrom(intSum), ' is not a 7-bit ASCII character.')));
+            if (await implNot(await isAsciiByte(intC))) {
+                await implDie(await implCat('The character number ', await implCat(await strFrom(intC), ' is not a 7-bit ASCII character.')));
             }
         }
-        /* Don't worry about checking for negative value of n/sum, because everything in a byteArray is nonnegative. */
-        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intSum, 1));
+        /* Don't worry about checking for negative value of n/c, because everything in a byteArray is nonnegative. */
+        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
@@ -1900,6 +1899,10 @@ async function dcaFromSems(intArrayContent) {
             await implDie('Internal error: unexpected parser state while parsing SEMS document');
         }
         intByteOffset = await implAdd(intByteOffset, 1);
+    }
+    if (await implEq(strParserState, 'comment')) {
+        /* Document ended with a comment and no newline at the end */
+        intArrayRet = await push(intArrayRet, 248);
     }
     await assertIsDcArray(intArrayRet);
 
