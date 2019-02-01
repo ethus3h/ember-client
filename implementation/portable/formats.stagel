@@ -125,6 +125,8 @@ r/an/dcFromFormat s/inFormat an/content
             if not isAsciiByte n/c
                 die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
         assertIsNonnegative n/c
+        if ge n/c dcDatasetLength 'mappings/from/unicode'
+            return an/ret
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
