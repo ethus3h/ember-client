@@ -116,17 +116,16 @@ r/an/dcToFormat s/outFormat n/dc
 r/an/dcFromFormat s/inFormat an/content
     # Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsTrue isSupportedInternalInputFormat s/inFormat
-    assertIsByteArray an/contentBytes
     new an/ret
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
-        new n/sum
-        set n/sum sumArray an/contentBytes
+        new n/c
+        set n/c get an/content 1
         if eq s/inFormat 'ascii'
-            if not isAsciiByte n/sum
-                die cat 'The character number ' cat strFrom n/sum } ' is not a 7-bit ASCII character.'
-        # Don't worry about checking for negative value of n/sum, because everything in a byteArray is nonnegative.
-        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/sum 1
+            if not isAsciiByte n/c
+                die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
+        # Don't worry about checking for negative value of n/c, because everything in a byteArray is nonnegative.
+        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/ret setElement an/ret 0 n/dc

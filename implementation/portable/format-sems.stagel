@@ -36,5 +36,8 @@ r/an/dcaFromSems an/content
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
+    if eq s/parserState 'comment'
+        # Document ended with a comment and no newline at the end
+        set an/ret push an/ret 248
     assertIsDcArray an/ret
     return an/ret
