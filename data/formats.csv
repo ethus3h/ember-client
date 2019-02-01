@@ -1,7 +1,7 @@
 ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Description,"Comments. The “Format name” is an ID, and should conform to StageL ident naming. Import/export support: -1=N/A, 0=none, 1=WIP, 2=mostly, 3=lossless and fully implemented, 4=3+optional strict validation. Tests: 0=none, 1=WIP, 2=mostly, 3=thorough for valid inputs, 4=validation."
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
-2,dc,,,,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
+2,dc,,-1,-1,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
 3,integerList,,,,,,,
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
@@ -9,7 +9,7 @@ ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Descr
 7,immutableCharacterCells,,,,,,,
 8,HTML,,,,,,,
 9,sems,,,,,,,
-10,unicode,,,,,y,,
+10,unicode,,-1,-1,,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
 11,,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
