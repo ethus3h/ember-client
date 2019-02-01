@@ -140,7 +140,7 @@ r/b/isDcArray ga/in
 
 r/n/sumArray an/in
     new n/count
-    set n/count sub count ga/in } 1
+    set n/count sub count an/in } 1
     new n/res
     while ge n/count 0
         set n/res add n/res get an/in n/count

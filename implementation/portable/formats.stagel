@@ -41,7 +41,7 @@ r/s/formatToExtension s/format
         return 'dcil'
     elif eq s/format 'ASCII-safe-subset'
         return 'ascii'
-    elif or eq s/format 'UTF-8' } or eq s/format 'unicode'
+    elif eq s/format 'UTF-8'
         return 'utf8'
     elif or eq s/format 'characterCells' } eq s/format 'immutableCharacterCells'
         new s/res
@@ -56,12 +56,22 @@ r/s/formatToExtension s/format
 
 r/as/listInputFormats
     new as/res
-    set as/res [ 'ascii' 'integerList' 'sems' 'unicode' ]
+    set as/res [ 'ascii' 'integerList' 'sems' ]
     return as/res
 
 r/b/isSupportedInputFormat s/in
     new b/res
     set b/res contains listInputFormats } s/in
+    return b/res
+
+r/as/listInternalInputFormats
+    new as/res
+    set as/res [ 'unicode' ]
+    return as/res
+
+r/b/isSupportedInternalInputFormat s/in
+    new b/res
+    set b/res or contains listInputFormats } s/in } contains listInternalInputFormats } s/in
     return b/res
 
 r/as/listOutputFormats
@@ -105,7 +115,7 @@ r/an/dcToFormat s/outFormat n/dc
 
 r/an/dcFromFormat s/inFormat an/contentBytes
     # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
-    assertIsSupportedInputFormat s/inFormat
+    assertIsTrue isSupportedInternalInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
     new n/dc
