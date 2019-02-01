@@ -131,8 +131,6 @@ async function utf8BytesFromDecimalChar(intInput) {
 async function firstCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
     let utf8decoder = new TextDecoder();
-    console.log(intArrayInput);
-    console.log( utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0));
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
 
@@ -2361,6 +2359,10 @@ async function dcFromFormat(strInFormat, intArrayContent) {
             }
         }
         await assertIsNonnegative(intC);
+        if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
+
+            intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+        }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
     else {
@@ -2768,8 +2770,6 @@ async function dcaFromSems(intArrayContent) {
                 strParserState = 'dc';
             }
             else {
-                console.log(intArrayContent);
-                console.log(await anSubset(intArrayContent, intByteOffset, -1));
                 intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intByteOffset, -1)))));
             }
         }

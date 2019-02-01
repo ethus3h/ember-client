@@ -1485,6 +1485,10 @@ async function dcFromFormat(strInFormat, intArrayContent) {
             }
         }
         await assertIsNonnegative(intC);
+        if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
+
+            intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+        }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
     else {
