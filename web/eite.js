@@ -1353,6 +1353,33 @@ async function asSubset(strArrayIn, intStart, intEnd) {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
+async function abFromB(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('abFromB:arrays'); await assertIsBool(boolIn); let boolArrayReturn;
+
+    let boolArrayRes = [];
+    boolArrayRes = await push(boolArrayRes, boolIn);
+
+    boolArrayReturn = boolArrayRes; await assertIsBoolArray(boolArrayReturn); await internalDebugStackExit(); return boolArrayReturn;
+}
+
+async function anFromN(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('anFromN:arrays'); await assertIsInt(intIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await push(intArrayRes, intIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function asFromS(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('asFromS:arrays'); await assertIsStr(strIn); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await push(strArrayRes, strIn);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
 async function contains(genericArrayIn, genericValue) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('contains:arrays'); await assertIsGenericArray(genericArrayIn);await assertIsGeneric(genericValue); let boolReturn;
 
@@ -2717,7 +2744,7 @@ async function dcaFromSems(intArrayContent) {
             }
         }
         else if (await implEq(strParserState, 'comment')) {
-            intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await firstCharOfUtf8String(await anSubset(intArrayContent, intCurrentByte, -1))));
+            intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intCurrentByte, -1)))));
             if (await asciiIsNewline(intCurrentByte)) {
                 intArrayRet = await push(intArrayRet, 248);
                 strParserState = 'dc';
