@@ -1,4 +1,4 @@
-ID,"Format name (ID, should conform to StageL ident naming)",Extension,Import support,Export support,Tests,Internal-only,Description,Comments
+ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Description,"Comments. The “Format name” is an ID, and should conform to StageL ident naming. Import/export support: -1=N/A, 0=none, 1=WIP, 2=mostly, 3=lossless and fully implemented, 4=3+optional strict validation. Tests: 0=none, 1=WIP, 2=mostly, 3=thorough for valid inputs, 4=validation."
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
 2,dc,,,,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
