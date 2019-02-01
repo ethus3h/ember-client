@@ -40,7 +40,7 @@ r/as/asSubset as/in n/start n/end
         set n/i add n/i 1
     return as/res
 
-r/ab/abSubset ab/in n/start n/end
+r/ab/abFromB b/in
     new n/count
     set n/count count ab/in
     new n/i
@@ -54,7 +54,7 @@ r/ab/abSubset ab/in n/start n/end
         set n/i add n/i 1
     return ab/res
 
-r/an/anSubset an/in n/start n/end
+r/an/anFromN n/in
     new n/count
     set n/count count an/in
     new n/i
@@ -68,7 +68,7 @@ r/an/anSubset an/in n/start n/end
         set n/i add n/i 1
     return an/res
 
-r/as/asSubset as/in n/start n/end
+r/as/asFromS s/in
     new n/count
     set n/count count as/in
     new n/i
