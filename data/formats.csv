@@ -1,7 +1,7 @@
 ID,"Format name (ID, should conform to StageL ident naming)",Extension,Import support,Export support,Tests,Internal-only,Description,Comments
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
-2,dc,,,,,,,
+2,dc,,,,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
 3,integerList,,,,,,,
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
