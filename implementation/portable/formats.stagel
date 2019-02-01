@@ -41,7 +41,7 @@ r/s/formatToExtension s/format
         return 'dcil'
     elif eq s/format 'ASCII-safe-subset'
         return 'ascii'
-    elif eq s/format 'UTF-8'
+    elif or eq s/format 'UTF-8' } or eq s/format 'unicode'
         return 'utf8'
     elif or eq s/format 'characterCells' } eq s/format 'immutableCharacterCells'
         new s/res
@@ -56,7 +56,7 @@ r/s/formatToExtension s/format
 
 r/as/listInputFormats
     new as/res
-    set as/res [ 'ascii' 'integerList' 'sems' ]
+    set as/res [ 'ascii' 'integerList' 'sems' 'unicode' ]
     return as/res
 
 r/b/isSupportedInputFormat s/in
