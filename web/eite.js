@@ -2717,7 +2717,7 @@ async function dcaFromSems(intArrayContent) {
             }
         }
         else if (await implEq(strParserState, 'comment')) {
-            intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await firstCharOfUtf8String(await subset(intArrayContent, intCurrentByte, -1))));
+            intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await firstCharOfUtf8String(await anSubset(intArrayContent, intCurrentByte, -1))));
             if (await asciiIsNewline(intCurrentByte)) {
                 intArrayRet = await push(intArrayRet, 248);
                 strParserState = 'dc';
