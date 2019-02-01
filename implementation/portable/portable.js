@@ -1486,7 +1486,7 @@ async function dcFromFormat(strInFormat, intArrayContentBytes) {
             }
         }
         /* Don't worry about checking for negative value of n/sum, because everything in a byteArray is nonnegative. */
-        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intSum), 1);
+        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intSum, 1));
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
