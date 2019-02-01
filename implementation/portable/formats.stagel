@@ -113,8 +113,8 @@ r/an/dcToFormat s/outFormat n/dc
     assertIsByteArray an/res
     return an/res
 
-r/an/dcFromFormat s/inFormat an/contentBytes
-    # Retrieve dc corresponding to the input byte array, or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
+r/an/dcFromFormat s/inFormat an/content
+    # Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsTrue isSupportedInternalInputFormat s/inFormat
     assertIsByteArray an/contentBytes
     new an/ret
