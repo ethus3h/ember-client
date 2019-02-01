@@ -130,6 +130,7 @@ async function utf8BytesFromDecimalChar(intInput) {
 
 async function firstCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
+    console.log(intArrayInput);
     let utf8decoder = new TextDecoder();
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
