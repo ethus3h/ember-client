@@ -28,12 +28,11 @@ r/an/dcaFromSems an/content
             else
                 die 'Unexpected parser state in SEMS document.'
         elif eq s/parserState 'comment'
-            set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/currentByte -1
             if asciiIsNewline n/currentByte
                 set an/ret push an/ret 248
                 set s/parserState 'dc'
             else
-                # Do nothing: comments are ignored
+                set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/currentByte -1
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/byteOffset add n/byteOffset 1
