@@ -42,7 +42,9 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
 }
 
 async function dcDataFilterByValue(dataset, filterField, genericFilterValue, desiredField) {
-    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let asReturn;
+
+    // This routine returns an array of values of the desired column when the filter field matches the filter value.
 
     let intLength = dcData[dataset].length - 2;
     // start at 1 to skip header row
