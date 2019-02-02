@@ -53,14 +53,14 @@ async function dcDataFilterByValue(dataset, filterField, genericFilterValue, des
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
         if(dcData[dataset][row][filterField] === filterValue) {
-            asReturn = asReturn.concat(dcData[dataset][row][desiredField];
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
 }
 
-async function dcDataFilterByValueGreater(dataset, filterField, desiredField) {
-    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let asReturn;
+async function dcDataFilterByValueGreater(dataset, filterField, filterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsInt(filterValue); await assertIsInt(desiredField); let asReturn;
 
     // This routine returns an array of values of the desired column when the filter field is greater than the filter value. (e.g. filter for 1 will return rows with 2 and 3 but not 1 or 0) While dcDataLookupByValue gives a single (the first) result, this returns all matching results.
 
@@ -68,10 +68,9 @@ async function dcDataFilterByValueGreater(dataset, filterField, desiredField) {
 
     let intLength = dcData[dataset].length - 2;
     // start at 1 to skip header row
-    let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(dcData[dataset][row][filterField] === filterValue) {
-            asReturn = asReturn.concat(dcData[dataset][row][desiredField];
+        if(parseInt(dcData[dataset][row][filterField], 10) > filterValue) {
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
