@@ -1,7 +1,7 @@
 ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Label,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
 Import/export/tests support columns meaning:
    -1=N/A
-   0=none
+   Blank/0=none
    1=WIP
    2=mostly
    3=fully implemented for semantic content (and tests for variation in non-semantic details of the structure of the doc being imported)
@@ -15,7 +15,7 @@ Import/export/tests support columns meaning:
 5,ascii,,,,,,ASCII,
 6,characterCells,,,,,,Character cells,
 7,immutableCharacterCells,,,,,,Immutable character cells,
-8,HTML,,,,,,HTML,
+8,HTML,,,1,,,HTML,
 9,sems,,2,,,,SEMS,
 10,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
 11,,,,,,,,
