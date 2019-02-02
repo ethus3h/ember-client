@@ -1,4 +1,4 @@
-r/an/dcaToHTML an/dcIn
+r/an/dcaToHtml an/dcIn
     assertIsDcArray an/dcIn
     new an/out
     new n/len

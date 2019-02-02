@@ -2287,7 +2287,7 @@ async function isExecId(intExecId) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function dcaToHTML(intArrayDcIn) {
+async function dcaToHtml(intArrayDcIn) {
     await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHTML:format-html'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
 
     await assertIsDcArray(intArrayDcIn);
