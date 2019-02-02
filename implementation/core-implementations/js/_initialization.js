@@ -6,6 +6,8 @@ var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
 var envTerminalType;
+let envResolutionW = 0;
+let envResolutionH = 0;
 
 // Global variables
 
@@ -24,6 +26,12 @@ let envResolutionH = 0;
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
     STAGEL_DEBUG = 0;
+}
+if (importSettings === undefined) {
+    importSettings = [];
+}
+if (exportSettings === undefined) {
+    exportSettings = [];
 }
 if (envPreferredFormat === undefined) {
     envPreferredFormat = '';
