@@ -12,7 +12,7 @@ let haveDom = false;
 let envPreferredFormat = '';
 let envResolutionW = 0;
 let envResolutionH = 0;
-let envCharEncoding = 'ASCII-safe-subset';
+let envCharEncoding = 'asciiSafeSubset';
 
 async function isSetupFinished() {
     return setupFinished;
@@ -34,10 +34,10 @@ async function internalSetup() {
     }
     let charset = document.characterSet.toLowerCase();
     if (charset === 'utf-8') {
-        envCharEncoding = 'UTF-8';
+        envCharEncoding = 'utf8';
     }
     else {
-        await implWarn("Unimplemented character set: " + charset + ". Falling back to ASCII-safe-subset.");
+        await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
     if (haveDom) {
         // Web browsers, etc.
