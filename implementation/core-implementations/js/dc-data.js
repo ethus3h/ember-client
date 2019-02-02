@@ -41,7 +41,7 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
 }
 
-async function dcDataFilterById(dataset, rowNum) {
+async function dcDataGetRowById(dataset, rowNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); let asReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
