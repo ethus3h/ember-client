@@ -35,7 +35,7 @@ r/as/listCharEncodings
 
 r/b/isSupportedCharEncoding s/in
     new b/res
-    set b/res contains listEnvironmentCharEncodings } s/in
+    set b/res and contains listEnvironmentCharEncodings } s/in } isSupportedOutputFormat s/in
     return b/res
 
 r/as/listTerminalTypes
@@ -45,5 +45,5 @@ r/as/listTerminalTypes
 
 r/b/isSupportedTerminalType s/in
     new b/res
-    set b/res contains listTerminalTypes } s/in
+    set b/res and contains listTerminalTypes } s/in } isSupportedOutputFormat s/in
     return b/res
