@@ -20,8 +20,6 @@ let setupFinished = false;
 
 // Global environment
 let haveDom = false;
-let envResolutionW = 0;
-let envResolutionH = 0;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
@@ -41,6 +39,12 @@ if (envCharEncoding === undefined) {
 }
 if (envTerminalType === undefined) {
     envTerminalType = 'vt100'
+}
+if (envResolutionW === undefined) {
+    envResolutionW = '0'
+}
+if (envResolutionH === undefined) {
+    envResolutionH = '0'
 }
 
 async function isSetupFinished() {
