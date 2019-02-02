@@ -336,7 +336,7 @@
                 let link=document.createElement('a');
                 link.href=window.URL.createObjectURL(blob);
                 let date=new Date();
-                let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await formatToExtension(outFormat);
+                let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await getExportExtension(outFormat);
                 exportNotify(outName);
                 link.download=outName;
                 link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
