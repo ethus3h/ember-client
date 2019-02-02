@@ -10,7 +10,7 @@ r/b/isSupportedInputFormat s/in
 
 r/as/listInternalFormats
     new as/res
-    set as/res dcDataFilterByValueGreater 'formats' 6 'internal' 1
+    set as/res dcDataFilterByValue 'formats' 6 'internal' 1
     return as/res
 
 r/b/isSupportedInternalFormat s/in
@@ -28,12 +28,22 @@ r/b/isSupportedOutputFormat s/in
     set b/res contains listOutputFormats } s/in
     return b/res
 
-r/as/listEnvironmentCharEncodings
+r/as/listCharEncodings
     new as/res
-    set as/res [ 'asciiSafeSubset' 'utf8' ]
+    set as/res dcDataFilterByValue 'formats' 6 'encoding' 1
     return as/res
 
-r/b/isSupportedEnvironmentCharEncoding s/in
+r/b/isSupportedCharEncoding s/in
     new b/res
     set b/res contains listEnvironmentCharEncodings } s/in
+    return b/res
+
+r/as/listTerminalTypes
+    new as/res
+    set as/res dcDataFilterByValue 'formats' 6 'terminal' 1
+    return as/res
+
+r/b/isSupportedTerminalType s/in
+    new b/res
+    set b/res contains listTerminalTypes } s/in
     return b/res
