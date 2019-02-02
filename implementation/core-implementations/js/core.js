@@ -82,57 +82,16 @@ async function internalRunDocument(execId) {
     await renderDrawContents(await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
 }
 
-/* type-conversion, provides:
-    intFromIntStr
-    strFrom
-    charFromByte
-    byteFromChar
-*/
+// Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
-async function intFromIntStr(str) {
-    await assertStrContainsOnlyInt(str); let intReturn;
-
-    intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
-}
-
-async function strFrom(input) {
-    await assertIsGeneric(input); let strReturn;
-
-    strReturn = String(input); await assertIsStr(strReturn); return strReturn;
-}
-
-async function charFromByte(intInput) {
-    await assertIsInt(intInput); let strReturn;
-
-    // Expects a decimal byte as input. Bear in mind that StageL doesn't attempt to support Unicode.
-
-    strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
-}
-
-async function byteFromChar(strInput) {
-    await assertIsStr(strInput);
-    // Bear in mind that StageL doesn't attempt to support Unicode.
-    // We can't use assertIsChar here, because it depends on byteFromChar.
-    let intReturn;
-    intReturn = strInput.charCodeAt(0);
-
-    await assertIsTrue(intReturn > 31);
-    await assertIsTrue(intReturn < 127);
-
-    await assertIsInt(intReturn); return intReturn;
-}
-
-async function utf8BytesFromDecimalChar(intInput) {
-    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input. FIXME: Probably doesn't support unpaired surrogates or byte sequences outside of the range allowed by Unicode characters, but it probably should.
-    let utf8encoder = new TextEncoder();
-    return utf8encoder.encode(String.fromCodePoint(intInput));
-}
-
-async function firstCharOfUtf8String(intArrayInput) {
-    // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
-    let utf8decoder = new TextDecoder();
-    return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
-}
+var STAGEL_DEBUG;
+var importSettings;
+var exportSettings;
+var envPreferredFormat;
+var envCharEncoding;
+var envTerminalType;
+var envResolutionW;
+var envResolutionH;
 
 // Global variables
 
@@ -145,10 +104,32 @@ let setupFinished = false;
 
 // Global environment
 let haveDom = false;
-let envPreferredFormat = '';
-let envResolutionW = 0;
-let envResolutionH = 0;
-let envCharEncoding = 'ASCII-safe-subset';
+
+// Set defaults for preferences if not set already
+if (STAGEL_DEBUG === undefined) {
+    STAGEL_DEBUG = 0;
+}
+if (importSettings === undefined) {
+    importSettings = [];
+}
+if (exportSettings === undefined) {
+    exportSettings = [];
+}
+if (envPreferredFormat === undefined) {
+    envPreferredFormat = '';
+}
+if (envCharEncoding === undefined) {
+    envCharEncoding = 'asciiSafeSubset'
+}
+if (envTerminalType === undefined) {
+    envTerminalType = 'vt100'
+}
+if (envResolutionW === undefined) {
+    envResolutionW = '0'
+}
+if (envResolutionH === undefined) {
+    envResolutionH = '0'
+}
 
 async function isSetupFinished() {
     return setupFinished;
@@ -170,14 +151,14 @@ async function internalSetup() {
     }
     let charset = document.characterSet.toLowerCase();
     if (charset === 'utf-8') {
-        envCharEncoding = 'UTF-8';
+        envCharEncoding = 'utf8';
     }
     else {
-        await implWarn("Unimplemented character set: " + charset + ". Falling back to ASCII-safe-subset.");
+        await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
     if (haveDom) {
         // Web browsers, etc.
-        envPreferredFormat = 'HTML';
+        envPreferredFormat = 'html';
         envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
@@ -286,6 +267,58 @@ async function internalLoadDatasets() {
     datasetsLoaded = true;
 }
 
+/* type-conversion, provides:
+    intFromIntStr
+    strFrom
+    charFromByte
+    byteFromChar
+*/
+
+async function intFromIntStr(str) {
+    await assertStrContainsOnlyInt(str); let intReturn;
+
+    intReturn = parseInt(str, 10); await assertIsInt(intReturn); return intReturn;
+}
+
+async function strFrom(input) {
+    await assertIsGeneric(input); let strReturn;
+
+    strReturn = String(input); await assertIsStr(strReturn); return strReturn;
+}
+
+async function charFromByte(intInput) {
+    await assertIsInt(intInput); let strReturn;
+
+    // Expects a decimal byte as input. Bear in mind that StageL doesn't attempt to support Unicode.
+
+    strReturn = String.fromCharCode(intInput); await assertIsStr(strReturn); return strReturn;
+}
+
+async function byteFromChar(strInput) {
+    await assertIsStr(strInput);
+    // Bear in mind that StageL doesn't attempt to support Unicode.
+    // We can't use assertIsChar here, because it depends on byteFromChar.
+    let intReturn;
+    intReturn = strInput.charCodeAt(0);
+
+    await assertIsTrue(intReturn > 31);
+    await assertIsTrue(intReturn < 127);
+
+    await assertIsInt(intReturn); return intReturn;
+}
+
+async function utf8BytesFromDecimalChar(intInput) {
+    // Returns a Uint8 array of bytes representing the UTF-8 encoding of the character, given decimal representation of the character as input. FIXME: Probably doesn't support unpaired surrogates or byte sequences outside of the range allowed by Unicode characters, but it probably should.
+    let utf8encoder = new TextEncoder();
+    return utf8encoder.encode(String.fromCodePoint(intInput));
+}
+
+async function firstCharOfUtf8String(intArrayInput) {
+    // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
+    let utf8decoder = new TextDecoder();
+    return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
+}
+
 /* arrays, provides:
     append
     push
@@ -389,10 +422,6 @@ async function len(str) {
     FIXMEUnimplemented
 */
 
-var STAGEL_DEBUG;
-if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 0;
-}
 let stagelDebugCallstack = [];
 let stagelDebugCollection = "";
 //alert("Setting up logging");
@@ -574,6 +603,8 @@ async function implLt(intA, intB) {
     boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
 }
 
+// Note: Both rows and columns are zero-indexed from the perspective of callers of these routines. The header row is not counted for this purpose (the first row after the header is index 0), while the ID column (where present) *is* counted (so it is index 0).
+
 async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
@@ -615,6 +646,41 @@ async function dcDataLookupByValue(dataset, filterField, genericFilterValue, des
     // TODO: this should be available as a "lookupbyvalue" and a "lookupbyvalueForgiving" versions that do and don't die on this; the forgiving would return the exception UUID.
     // If nothing was found, return this UUID.
     strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
+}
+
+async function dcDataFilterByValue(dataset, filterField, genericFilterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let asReturn;
+
+    // This routine returns an array of values of the desired column when the filter field matches the filter value. While dcDataLookupByValue gives a single (the first) result, this returns all matching results.
+
+    asReturn = [];
+
+    let intLength = dcData[dataset].length - 2;
+    // start at 1 to skip header row
+    let filterValue = await strFrom(genericFilterValue);
+    for (let row = 1; row <= intLength; row++) {
+        if(dcData[dataset][row][filterField] === filterValue) {
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
+        }
+    }
+    await assertIsStrArray(asReturn); return asReturn;
+}
+
+async function dcDataFilterByValueGreater(dataset, filterField, filterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsInt(filterValue); await assertIsInt(desiredField); let asReturn;
+
+    // This routine returns an array of values of the desired column when the filter field is greater than the filter value. (e.g. filter for 1 will return rows with 2 and 3 but not 1 or 0) While dcDataLookupByValue gives a single (the first) result, this returns all matching results.
+
+    asReturn = [];
+
+    let intLength = dcData[dataset].length - 2;
+    // start at 1 to skip header row
+    for (let row = 1; row <= intLength; row++) {
+        if(parseInt(dcData[dataset][row][filterField], 10) > filterValue) {
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
+        }
+    }
+    await assertIsStrArray(asReturn); return asReturn;
 }
 
 /* assertions, provides:

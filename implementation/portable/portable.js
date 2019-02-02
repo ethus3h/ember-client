@@ -163,6 +163,98 @@ async function asciiIsAlphanum(intN) {
 /* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
 
 
+async function listInputFormats() {
+    await internalDebugStackEnter('listInputFormats:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValueGreater('formats', 3, 0, 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedInputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInputFormat:formats-data'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listInputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listInternalFormats() {
+    await internalDebugStackEnter('listInternalFormats:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValue('formats', 6, 'internal', 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedInternalFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInternalFormat:formats-data'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await contains(await listInputFormats(), strIn), await contains(await listInternalFormats(), strIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listOutputFormats() {
+    await internalDebugStackEnter('listOutputFormats:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValueGreater('formats', 4, 0, 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedOutputFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedOutputFormat:formats-data'); await assertIsStr(strIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await contains(await listOutputFormats(), strIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listCharEncodings() {
+    await internalDebugStackEnter('listCharEncodings:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValue('formats', 6, 'encoding', 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedCharEncoding(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedCharEncoding:formats-data'); await assertIsStr(strIn); let boolReturn;
+
+    /* Specifically, is it a supported character encoding for the output environment. */
+    let boolRes = false;
+    boolRes = await implAnd(await contains(await listEnvironmentCharEncodings(), strIn), await isSupportedOutputFormat(strIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function listTerminalTypes() {
+    await internalDebugStackEnter('listTerminalTypes:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValue('formats', 6, 'terminal', 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function isSupportedTerminalType(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedTerminalType:formats-data'); await assertIsStr(strIn); let boolReturn;
+
+    /* Specifically, is it a supported terminal type for the output environment. */
+    let boolRes = false;
+    boolRes = await implAnd(await contains(await listTerminalTypes(), strIn), await isSupportedOutputFormat(strIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function strChar(strStr, intIndex) {
     await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strChar:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
 
@@ -293,7 +385,7 @@ async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'DcData', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html' ];
+    strArrayRes = [ 'DcData', 'formats', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -716,29 +808,6 @@ async function bitXnor(intByte1, intByte2) {
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function dcaToHTML(intArrayDcIn) {
-    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHTML:format-HTML'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
-
-    await assertIsDcArray(intArrayDcIn);
-    let intArrayOut = [];
-    let intLen = 0;
-    intLen = await count(intArrayDcIn);
-    let intInputIndex = 0;
-    intInputIndex = 0;
-    let intDcAtIndex = 0;
-    while (await implLt(intInputIndex, intLen)) {
-        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
-        /* FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!) */
-        if (await or(await or(await dcIsNewline(intDcAtIndex), await dcIsPrintable(intDcAtIndex), ), await dcIsSpace(intDcAtIndex))) {
-            intArrayOut = await push(intArrayOut, await dcToFormat('HTML', intDcAtIndex));
-        }
-        intInputIndex = await implAdd(intInputIndex, 1);
-    }
-    await assertIsByteArray(intArrayOut);
-
-    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaFromIntegerList(intArrayContent) {
@@ -1278,6 +1347,29 @@ async function isExecId(intExecId) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function dcaToHTML(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHTML:format-html'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    let intDcAtIndex = 0;
+    while (await implLt(intInputIndex, intLen)) {
+        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        /* FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!) */
+        if (await or(await or(await dcIsNewline(intDcAtIndex), await dcIsPrintable(intDcAtIndex), ), await dcIsSpace(intDcAtIndex))) {
+            intArrayOut = await push(intArrayOut, await dcToFormat('HTML', intDcAtIndex));
+        }
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function dcaFromFormat(strInFormat, intArrayContentBytes) {
     await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcaFromFormat:formats'); await assertIsStr(strInFormat);await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
 
@@ -1308,8 +1400,8 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     else if (await implEq(strOutFormat, 'immutableCharacterCells')) {
         intArrayRes = await dcaToImmutableCharacterCells(intArrayDcArrayIn);
     }
-    else if (await implEq(strOutFormat, 'HTML')) {
-        intArrayRes = await dcaToHTML(intArrayDcArrayIn);
+    else if (await implEq(strOutFormat, 'html')) {
+        intArrayRes = await dcaToHtml(intArrayDcArrayIn);
     }
     else {
         await implDie(await implCat('Unimplemented document render output format: ', strOutFormat));
@@ -1332,9 +1424,10 @@ async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function formatToExtension(strFormat) {
-    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('formatToExtension:formats'); await assertIsStr(strFormat); let strReturn;
+async function getExportExtension(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getExportExtension:formats'); await assertIsStr(strFormat); let strReturn;
 
+    /* Produces the actual file extension to be used for a file exported in the given format, with the current configured format options. */
     if (await implEq(strFormat, 'sems')) {
 
         strReturn = 'sems'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
@@ -1343,102 +1436,23 @@ async function formatToExtension(strFormat) {
 
         strReturn = 'dcil'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else if (await implEq(strFormat, 'ASCII-safe-subset')) {
+    else if (await implEq(strFormat, 'asciiSafeSubset')) {
 
         strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else if (await implEq(strFormat, 'UTF-8')) {
+    else if (await implEq(strFormat, 'utf8')) {
 
         strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else if (await or(await implEq(strFormat, 'characterCells'), await implEq(strFormat, 'immutableCharacterCells'))) {
+    else if (await implEq(strFormat, 'html')) {
         let strRes = '';
-        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.txt');
-
-        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-    else if (await implEq(strFormat, 'HTML')) {
-        let strRes = '';
-        strRes = await implCat(await formatToExtension(await getEnvCharEncoding(), ), '.htm');
+        strRes = await implCat(await buildExportExtension(await getEnvCharEncoding(), ), '.htm');
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     else {
         await implDie(await implCat('Format not supported: ', strFormat));
     }
-}
-
-async function listInputFormats() {
-    await internalDebugStackEnter('listInputFormats:formats'); let strArrayReturn;
-
-    let strArrayRes = [];
-    strArrayRes = [ 'ascii', 'integerList', 'sems' ];
-
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
-}
-
-async function isSupportedInputFormat(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInputFormat:formats'); await assertIsStr(strIn); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await contains(await listInputFormats(), strIn);
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function listInternalInputFormats() {
-    await internalDebugStackEnter('listInternalInputFormats:formats'); let strArrayReturn;
-
-    let strArrayRes = [];
-    strArrayRes = [ 'unicode' ];
-
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
-}
-
-async function isSupportedInternalInputFormat(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedInternalInputFormat:formats'); await assertIsStr(strIn); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await or(await contains(await listInputFormats(), strIn), await contains(await listInternalInputFormats(), strIn));
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function listOutputFormats() {
-    await internalDebugStackEnter('listOutputFormats:formats'); let strArrayReturn;
-
-    let strArrayRes = [];
-    strArrayRes = [ 'HTML', 'integerList', 'immutableCharacterCells' ];
-    /* 'characterCells' and 'sems' not yet implemented */
-
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
-}
-
-async function isSupportedOutputFormat(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedOutputFormat:formats'); await assertIsStr(strIn); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await contains(await listOutputFormats(), strIn);
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function listEnvironmentCharEncodings() {
-    await internalDebugStackEnter('listEnvironmentCharEncodings:formats'); let strArrayReturn;
-
-    let strArrayRes = [];
-    strArrayRes = [ 'ASCII-safe-subset', 'UTF-8' ];
-
-    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
-}
-
-async function isSupportedEnvironmentCharEncoding(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('isSupportedEnvironmentCharEncoding:formats'); await assertIsStr(strIn); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await contains(await listEnvironmentCharEncodings(), strIn);
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function dcToFormat(strOutFormat, intDc) {
@@ -1448,10 +1462,10 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
-    if (await or(await implEq(strOutFormat, 'UTF-8'), await implEq(strOutFormat, 'ASCII-safe-subset'))) {
+    if (await or(await implEq(strOutFormat, 'utf8'), await implEq(strOutFormat, 'asciiSafeSubset'))) {
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
-    else if (await implEq(strOutFormat, 'HTML')) {
+    else if (await implEq(strOutFormat, 'html')) {
         strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
         if (await isBaseStr(strRes, 16)) {
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
@@ -1486,6 +1500,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
+            await implDie('FIXME: save unmapped unicode chars');
 
             intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
         }
@@ -1498,28 +1513,6 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function dcaToImmutableCharacterCells(intArrayDcIn) {
-    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToImmutableCharacterCells:format-immutableCharacterCells'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
-
-    await assertIsDcArray(intArrayDcIn);
-    let intArrayOut = [];
-    let intLen = 0;
-    intLen = await count(intArrayDcIn);
-    let intInputIndex = 0;
-    intInputIndex = 0;
-    let intDcAtIndex = 0;
-    while (await implLt(intInputIndex, intLen)) {
-        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
-        if (await or(await or(await dcIsNewline(intDcAtIndex), await dcIsPrintable(intDcAtIndex), ), await dcIsSpace(intDcAtIndex))) {
-            intArrayOut = await push(intArrayOut, await dcToChar(intDcAtIndex, await getEnvCharset()));
-        }
-        intInputIndex = await implAdd(intInputIndex, 1);
-    }
-    await assertIsByteArray(intArrayOut);
-
-    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function isDc(genericIn) {
