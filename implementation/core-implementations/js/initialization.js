@@ -41,7 +41,7 @@ async function internalSetup() {
     }
     if (haveDom) {
         // Web browsers, etc.
-        envPreferredFormat = 'HTML';
+        envPreferredFormat = 'html';
         envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
