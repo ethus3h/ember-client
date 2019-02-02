@@ -1,23 +1,16 @@
 ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Description,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
-Import/export support:
+Import/export/tests support columns meaning:
    -1=N/A
    0=none
    1=WIP
    2=mostly
-   3=fully implemented for semantic content (but not non-semantic details of the document structure)
+   3=fully implemented for semantic content (and tests for variation in non-semantic details of the structure of the doc being imported)
    4=lossless and roundtrippable (with enough info for unambiguous bit-for-bit reconstruction of any given input)
-   5=4+optional strict validation.
-Tests:
-   0=none
-   1=WIP
-   2=mostly
-   3=thorough for valid inputs
-   4=roundtripping
-   5=validation."
+   5=4+optional strict validation."
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
 2,dc,,-1,-1,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
-3,integerList,dcil,2,,,,ASCII text with list of integers. ,
+3,integerList,dcil,2,3,,,ASCII text with list of integers. ,
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
 6,characterCells,,,,,,,
