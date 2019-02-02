@@ -24,8 +24,12 @@ let envResolutionH = 0;
 if (STAGEL_DEBUG === undefined) {
     STAGEL_DEBUG = 0;
 }
-let envPreferredFormat = '';
-let envCharEncoding = 'asciiSafeSubset';
+if (envPreferredFormat === undefined) {
+    envPreferredFormat = '';
+}
+if (envCharEncoding === undefined) {
+    envCharEncoding = 'asciiSafeSubset'
+}
 
 async function isSetupFinished() {
     return setupFinished;
