@@ -8,7 +8,7 @@ Import/export/tests support columns meaning:
    4=lossless and roundtrippable (with enough info for unambiguous bit-for-bit reconstruction of any given input)
    5=4+optional strict validation."
 0,utf8,utf8.txt,,,,,UTF-8,"Variants: unicode versions, BOM/no BOM"
-1,dc,,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
+1,dc,n/a,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
 2,integerList,dcil,2,3,,,Dc Integer List,"ASCII text containing list of integers representing Dcs. Strictly, one space after every int, and no newlines. Loosely, with newlines or multiple spaces, or no end space."
 3,asciiSafeSubset,ascii.txt,,,,,Printable ASCII,
 4,ascii,ascii.txt,,,,,ASCII,
