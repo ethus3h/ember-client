@@ -1,4 +1,4 @@
-ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Description,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
+ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Label,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
 Import/export/tests support columns meaning:
    -1=N/A
    0=none
@@ -10,7 +10,7 @@ Import/export/tests support columns meaning:
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
 2,dc,,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
-3,integerList,dcil,2,3,,,ASCII text with list of integers. ,
+3,integerList,dcil,2,3,,,,ASCII text with list of integers representing Dcs.
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
 6,characterCells,,,,,,,
