@@ -12,12 +12,12 @@ Import/export/tests support columns meaning:
 2,integerList,dcil,2,3,,,Dc Integer List,ASCII text with list of integers representing Dcs.
 3,asciiSafeSubset,,,,,,Printable ASCII,
 4,ascii,,,,,,ASCII,
-5,characterCells,,,,,,Character cells,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
-6,immutableCharacterCells,,,1,,,Immutable character cells,
-7,HTML,,,1,,,HTML,
-8,sems,,2,,,,SEMS,
-9,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
-10,vt100,,,,,,,
+5,HTML,,,1,,,HTML,
+6,sems,,2,,,,SEMS,
+7,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
+8,vt100,,,,,,,
+9,,,,,,,,
+10,,,,,,,,
 11,,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
