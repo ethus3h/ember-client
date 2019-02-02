@@ -18,8 +18,8 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
         set an/res dcaToIntegerList an/dcArrayIn
     elif eq s/outFormat 'immutableCharacterCells'
         set an/res dcaToImmutableCharacterCells an/dcArrayIn
-    elif eq s/outFormat 'HTML'
-        set an/res dcaToHTML an/dcArrayIn
+    elif eq s/outFormat 'html'
+        set an/res dcaToHtml an/dcArrayIn
     else
         die cat 'Unimplemented document render output format: ' s/outFormat
     assertIsByteArray an/res
@@ -39,11 +39,11 @@ r/s/formatToExtension s/format
         return 'sems'
     elif eq s/format 'integerList'
         return 'dcil'
-    elif eq s/format 'ASCII-safe-subset'
+    elif eq s/format 'asciiSafeSubset'
         return 'ascii'
-    elif eq s/format 'UTF-8'
+    elif eq s/format 'utf8'
         return 'utf8'
-    elif eq s/format 'HTML'
+    elif eq s/format 'html'
         new s/res
         set s/res cat formatToExtension getEnvCharEncoding } } '.htm'
         return s/res
@@ -82,7 +82,7 @@ r/b/isSupportedOutputFormat s/in
 
 r/as/listEnvironmentCharEncodings
     new as/res
-    set as/res [ 'ASCII-safe-subset' 'UTF-8' ]
+    set as/res [ 'asciiSafeSubset' 'utf8' ]
     return as/res
 
 r/b/isSupportedEnvironmentCharEncoding s/in
@@ -95,9 +95,9 @@ r/an/dcToFormat s/outFormat n/dc
     assertIsSupportedOutputFormat s/outFormat
     assertIsDc n/dc
     new an/res
-    if or eq s/outFormat 'UTF-8' } eq s/outFormat 'ASCII-safe-subset'
+    if or eq s/outFormat 'utf8' } eq s/outFormat 'asciiSafeSubset'
         set an/res push an/res utf8BytesFromDecimalChar hexToDec dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
-    elif eq s/outFormat 'HTML'
+    elif eq s/outFormat 'html'
         set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if isBaseStr s/res 16
             set an/res push an/res utf8BytesFromDecimalChar hexToDec s/res
