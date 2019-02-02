@@ -1,6 +1,6 @@
 r/as/listDcDatasets
     new as/res
-    set as/res [ 'DcData' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' ]
+    set as/res [ 'DcData' 'formats' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' ]
     return as/res
 
 r/as/dcGetColumn s/dataset n/column
