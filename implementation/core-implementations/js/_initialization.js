@@ -1,4 +1,4 @@
-// Preferences
+// Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
 var STAGEL_DEBUG;
 var importSettings;
@@ -17,9 +17,11 @@ let setupFinished = false;
 
 // Global environment
 let haveDom = false;
-let envPreferredFormat = '';
 let envResolutionW = 0;
 let envResolutionH = 0;
+
+// Handle overridden settings
+let envPreferredFormat = '';
 let envCharEncoding = 'asciiSafeSubset';
 
 async function isSetupFinished() {
