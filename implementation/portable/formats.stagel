@@ -76,7 +76,7 @@ r/b/isSupportedInternalInputFormat s/in
 
 r/as/listOutputFormats
     new as/res
-    set as/res [ 'HTML' 'integerList' 'immutableCharacterCells' ] # 'characterCells' and 'sems' not yet implemented
+    set as/res [ 'HTML' 'integerList' ]
     return as/res
 
 r/b/isSupportedOutputFormat s/in
