@@ -1,3 +1,8 @@
+// Preferences
+
+var STAGEL_DEBUG;
+
+
 // Global variables
 
 let datasets = []; // as
