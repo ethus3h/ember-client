@@ -18,7 +18,7 @@ Import/export/tests support columns meaning:
 8,HTML,,,1,,,HTML,
 9,sems,,2,,,,SEMS,
 10,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
-11,,,,,,,,
+11,vt100,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
 14,,,,,,,,
