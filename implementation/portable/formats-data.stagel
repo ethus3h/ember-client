@@ -37,4 +37,3 @@ r/b/isSupportedEnvironmentCharEncoding s/in
     new b/res
     set b/res contains listEnvironmentCharEncodings } s/in
     return b/res
-
