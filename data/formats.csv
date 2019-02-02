@@ -1,4 +1,5 @@
-ID,Format name,Extension,Import support,Export support,Tests,Internal-only,Label,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
+ID,Format name,Extension,Import support,Export support,Tests,"Type
+(blank=normal)",Label,"Comments. The “Format name” is an ID, and should conform to StageL ident naming.
 Import/export/tests support columns meaning:
    -1=N/A
    blank/0=none
@@ -8,14 +9,14 @@ Import/export/tests support columns meaning:
    4=lossless and roundtrippable (with enough info for unambiguous bit-for-bit reconstruction of any given input)
    5=4+optional strict validation."
 0,utf8,utf8.txt,,,,,UTF-8,"Variants: unicode versions, BOM/no BOM"
-1,dc,n/a,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
+1,dc,n/a,-1,-1,-1,internal,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
 2,integerList,dcil,2,3,,,Dc Integer List,"ASCII text containing list of integers representing Dcs. Strictly, one space after every int, and no newlines. Loosely, with newlines or multiple spaces, or no end space."
 3,asciiSafeSubset,ascii.txt,,,,,Printable ASCII,
 4,ascii,ascii.txt,,,,,ASCII,
 5,HTML,htm,,1,,,HTML,
 6,sems,sems,2,,,,SEMS,
-7,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
-8,vt100,,,,,,,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
+7,unicode,,-1,-1,-1,internal,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
+8,vt100,,,,,terminal,,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
 9,,,,,,,,
 10,,,,,,,,
 11,,,,,,,,
