@@ -34,6 +34,7 @@ r/as/listCharEncodings
     return as/res
 
 r/b/isSupportedCharEncoding s/in
+    # Specifically, is it a supported character encoding for the output environment.
     new b/res
     set b/res and contains listEnvironmentCharEncodings } s/in } isSupportedOutputFormat s/in
     return b/res
@@ -44,6 +45,7 @@ r/as/listTerminalTypes
     return as/res
 
 r/b/isSupportedTerminalType s/in
+    # Specifically, is it a supported terminal type for the output environment.
     new b/res
     set b/res and contains listTerminalTypes } s/in } isSupportedOutputFormat s/in
     return b/res
