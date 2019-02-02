@@ -14,7 +14,7 @@ Import/export/tests support columns meaning:
 4,asciiSafeSubset,,,,,,Printable ASCII,
 5,ascii,,,,,,ASCII,
 6,characterCells,,,,,,Character cells,
-7,immutableCharacterCells,,,,,,Immutable character cells,
+7,immutableCharacterCells,,,1,,,Immutable character cells,
 8,HTML,,,1,,,HTML,
 9,sems,,2,,,,SEMS,
 10,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
