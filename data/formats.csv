@@ -13,7 +13,7 @@ Import/export/tests support columns meaning:
 3,integerList,dcil,2,3,,,Dc Integer List,ASCII text with list of integers representing Dcs.
 4,asciiSafeSubset,,,,,,Printable ASCII,
 5,ascii,,,,,,ASCII,
-6,characterCells,,,,,,Character cells,
+6,characterCells,,,,,,Character cells,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
 7,immutableCharacterCells,,,1,,,Immutable character cells,
 8,HTML,,,1,,,HTML,
 9,sems,,2,,,,SEMS,
