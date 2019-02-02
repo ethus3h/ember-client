@@ -9,7 +9,7 @@ Import/export/tests support columns meaning:
    5=4+optional strict validation."
 0,utf8,utf8.txt,,,,,UTF-8,
 1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
-2,dc,,-1,-1,,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
+2,dc,,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
 3,integerList,dcil,2,3,,,ASCII text with list of integers. ,
 4,asciiSafeSubset,,,,,,,
 5,ascii,,,,,,,
@@ -17,7 +17,7 @@ Import/export/tests support columns meaning:
 7,immutableCharacterCells,,,,,,,
 8,HTML,,,,,,,
 9,sems,,2,,,,,
-10,unicode,,-1,-1,,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
+10,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
 11,,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
