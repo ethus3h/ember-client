@@ -35,6 +35,7 @@ r/an/convertFormats s/inFormat s/outFormat an/in
     return an/out
 
 r/s/getExportExtension s/format
+    # Produces the actual file extension to be used for a file exported in the given format, with the current configured format options.
     if eq s/format 'sems'
         return 'sems'
     elif eq s/format 'integerList'
