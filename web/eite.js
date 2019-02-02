@@ -2301,7 +2301,7 @@ async function dcaToHtml(intArrayDcIn) {
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
         /* FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!) */
         if (await or(await or(await dcIsNewline(intDcAtIndex), await dcIsPrintable(intDcAtIndex), ), await dcIsSpace(intDcAtIndex))) {
-            intArrayOut = await push(intArrayOut, await dcToFormat('HTML', intDcAtIndex));
+            intArrayOut = await push(intArrayOut, await dcToFormat('html', intDcAtIndex));
         }
         intInputIndex = await implAdd(intInputIndex, 1);
     }
