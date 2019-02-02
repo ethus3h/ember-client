@@ -1,1 +1,40 @@
- 
+r/as/listInputFormats
+    new as/res
+    set as/res [ 'ascii' 'integerList' 'sems' ]
+    return as/res
+
+r/b/isSupportedInputFormat s/in
+    new b/res
+    set b/res contains listInputFormats } s/in
+    return b/res
+
+r/as/listInternalInputFormats
+    new as/res
+    set as/res [ 'unicode' ]
+    return as/res
+
+r/b/isSupportedInternalInputFormat s/in
+    new b/res
+    set b/res or contains listInputFormats } s/in } contains listInternalInputFormats } s/in
+    return b/res
+
+r/as/listOutputFormats
+    new as/res
+    set as/res [ 'html' 'integerList' ]
+    return as/res
+
+r/b/isSupportedOutputFormat s/in
+    new b/res
+    set b/res contains listOutputFormats } s/in
+    return b/res
+
+r/as/listEnvironmentCharEncodings
+    new as/res
+    set as/res [ 'asciiSafeSubset' 'utf8' ]
+    return as/res
+
+r/b/isSupportedEnvironmentCharEncoding s/in
+    new b/res
+    set b/res contains listEnvironmentCharEncodings } s/in
+    return b/res
+
