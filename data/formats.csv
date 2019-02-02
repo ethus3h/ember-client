@@ -18,7 +18,7 @@ Import/export/tests support columns meaning:
 7,unicode,,-1,-1,-1,internal,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
 8,vt100,vt100,,,,terminal,VT100,Terminal format is an option for text files; when exporting would get the extension format: [terminal].[encoding].txt for example: vt100.utf8.txt
 9,characterCells,txt,,,,,Character-mode terminal,"Variants: terminal, encoding"
-10,immutableCharacterCells,txt,,,,,Teleprinter,"Variants: terminal, encoding"
+10,immutableCharacterCells,txt,,,,,Character-mode teleprinter,"Variants: terminal, encoding. (A printer that can overstrike etc. would still be considered immutable; immutable refers to whether it can erase. Raster, postscript, etc. printers would use their respective formats rather than this one.)"
 11,,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
