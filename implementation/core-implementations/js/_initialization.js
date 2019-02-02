@@ -6,8 +6,8 @@ var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
 var envTerminalType;
-let envResolutionW = 0;
-let envResolutionH = 0;
+var envResolutionW;
+var envResolutionH;
 
 // Global variables
 
