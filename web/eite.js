@@ -2427,7 +2427,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInFormat);await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     /* Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
-    await assertIsTrue(await isSupportedInternalInputFormat(strInFormat));
+    await assertIsTrue(await isSupportedInternalFormat(strInFormat));
     let intArrayRet = [];
     let intDc = 0;
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {

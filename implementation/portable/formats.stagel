@@ -72,7 +72,7 @@ r/an/dcToFormat s/outFormat n/dc
 
 r/an/dcFromFormat s/inFormat an/content
     # Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
-    assertIsTrue isSupportedInternalInputFormat s/inFormat
+    assertIsTrue isSupportedInternalFormat s/inFormat
     new an/ret
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
