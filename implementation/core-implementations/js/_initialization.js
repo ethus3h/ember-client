@@ -20,7 +20,7 @@ let haveDom = false;
 let envResolutionW = 0;
 let envResolutionH = 0;
 
-// Handle overridden settings
+// Set defaults for preferences if not set already
 let envPreferredFormat = '';
 let envCharEncoding = 'asciiSafeSubset';
 
