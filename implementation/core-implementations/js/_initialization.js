@@ -5,6 +5,7 @@ var importSettings;
 var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
+var envTerminalType;
 
 // Global variables
 
