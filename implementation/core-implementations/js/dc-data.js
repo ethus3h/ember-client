@@ -1,4 +1,4 @@
-// Note: Both rows and columns are zero-indexed from the perspective of callers of these routines. The header row is not counted for this purpose (the first row after the header is index 0), while the ID column (where present) *is* counted (so is index 0).
+// Note: Both rows and columns are zero-indexed from the perspective of callers of these routines. The header row is not counted for this purpose (the first row after the header is index 0), while the ID column (where present) *is* counted (so it is index 0).
 
 async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;

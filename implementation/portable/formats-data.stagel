@@ -1,6 +1,6 @@
 r/as/listInputFormats
     new as/res
-    set as/res [ 'ascii' 'integerList' 'sems' ]
+    set as/res dcDataFilterByValueGreater 'formats' 3 0 1
     return as/res
 
 r/b/isSupportedInputFormat s/in
@@ -8,19 +8,19 @@ r/b/isSupportedInputFormat s/in
     set b/res contains listInputFormats } s/in
     return b/res
 
-r/as/listInternalInputFormats
+r/as/listInternalFormats
     new as/res
-    set as/res [ 'unicode' ]
+    set as/res dcDataFilterByValueGreater 'formats' 6 'internal' 1
     return as/res
 
-r/b/isSupportedInternalInputFormat s/in
+r/b/isSupportedInternalFormat s/in
     new b/res
-    set b/res or contains listInputFormats } s/in } contains listInternalInputFormats } s/in
+    set b/res or contains listInputFormats } s/in } contains listInternalFormats } s/in
     return b/res
 
 r/as/listOutputFormats
     new as/res
-    set as/res [ 'html' 'integerList' ]
+    set as/res dcDataFilterByValueGreater 'formats' 4 0 1
     return as/res
 
 r/b/isSupportedOutputFormat s/in
