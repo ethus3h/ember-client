@@ -8,17 +8,17 @@ Import/export/tests support columns meaning:
    4=lossless and roundtrippable (with enough info for unambiguous bit-for-bit reconstruction of any given input)
    5=4+optional strict validation."
 0,utf8,utf8.txt,,,,,UTF-8,
-1,utf8BOM,utf8-bom.txt,,,,,UTF-8 with BOM,
-2,dc,,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
-3,integerList,dcil,2,3,,,Dc Integer List,ASCII text with list of integers representing Dcs.
-4,asciiSafeSubset,,,,,,Printable ASCII,
-5,ascii,,,,,,ASCII,
-6,characterCells,,,,,,Character cells,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
-7,immutableCharacterCells,,,1,,,Immutable character cells,
-8,HTML,,,1,,,HTML,
-9,sems,,2,,,,SEMS,
-10,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
-11,vt100,,,,,,,
+1,dc,,-1,-1,-1,y,,Array of Dc ints. There’s no defined representation of these “internal-only” formats outside of StageL language constructs.
+2,integerList,dcil,2,3,,,Dc Integer List,ASCII text with list of integers representing Dcs.
+3,asciiSafeSubset,,,,,,Printable ASCII,
+4,ascii,,,,,,ASCII,
+5,characterCells,,,,,,Character cells,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
+6,immutableCharacterCells,,,1,,,Immutable character cells,
+7,HTML,,,1,,,HTML,
+8,sems,,2,,,,SEMS,
+9,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
+10,vt100,,,,,,,
+11,,,,,,,,
 12,,,,,,,,
 13,,,,,,,,
 14,,,,,,,,
