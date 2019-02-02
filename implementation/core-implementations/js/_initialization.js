@@ -1,7 +1,10 @@
 // Preferences
 
 var STAGEL_DEBUG;
-
+var formatSettings;
+var envPreferredFormat;
+var envCharEncoding;
+var env
 
 // Global variables
 
