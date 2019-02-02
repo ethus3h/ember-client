@@ -15,7 +15,7 @@ Import/export/tests support columns meaning:
 5,HTML,htm,,1,,,HTML,
 6,sems,sems,2,,,,SEMS,
 7,unicode,,-1,-1,-1,y,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
-8,vt100,,,,,,,
+8,vt100,,,,,,,"Extension on export depends on the environment, in the format: [terminal].[encoding].txt for example: vt100.utf8.txt"
 9,,,,,,,,
 10,,,,,,,,
 11,,,,,,,,
