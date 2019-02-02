@@ -31,6 +31,9 @@ if (envPreferredFormat === undefined) {
 if (envCharEncoding === undefined) {
     envCharEncoding = 'asciiSafeSubset'
 }
+if (envTerminalType === undefined) {
+    envTerminalType = 'vt100'
+}
 
 async function isSetupFinished() {
     return setupFinished;
