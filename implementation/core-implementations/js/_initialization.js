@@ -21,6 +21,9 @@ let envResolutionW = 0;
 let envResolutionH = 0;
 
 // Set defaults for preferences if not set already
+if (STAGEL_DEBUG === undefined) {
+    STAGEL_DEBUG = 0;
+}
 let envPreferredFormat = '';
 let envCharEncoding = 'asciiSafeSubset';
 
