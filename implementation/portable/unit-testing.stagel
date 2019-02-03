@@ -1,15 +1,15 @@
 r/an/prepareStrForEcho s/in
     new an/res
-    set an/res convertFormats 'ascii' getEnvPreferredFormat push strToByteArray s/in } ( 13 10 )
+    set an/res convertFormats 'ascii' getEnvPreferredFormat append strToByteArray s/in } ( 13 10 )
     return an/res
 
 r/b/runTestTrue s/testName b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
-        set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
+        set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
         set n/passedTests add n/passedTests 1
     else
-        set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' failed.'
+        set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' failed.'
         set n/failedTests add n/failedTests 1
     renderDrawContents an/frameBuffer
     return b/testReturn
@@ -53,14 +53,14 @@ r/b/reportTests
             set s/failedPercentage cat s/failedPercentage '.'
         set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
-    set an/frameBuffer push an/frameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
+    set an/frameBuffer append an/frameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
     if ne n/failedTests 0
         set s/totalWord 'Some tests'
         if eq n/totalTests 1
             set s/totalWord 'A test'
         new an/temp
         set an/temp prepareStrForEcho cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ' failed!'
-        set an/frameBuffer push an/frameBuffer an/temp
+        set an/frameBuffer append an/frameBuffer an/temp
         warn 
     renderDrawContents an/frameBuffer
     set an/frameBuffer ( )
