@@ -15,6 +15,18 @@ r/b/runTestTrue s/testName b/testReturn
     return b/testReturn
 
 r/b/reportTests
+    new s/passedWord
+    set s/passedWord 'tests'
+    if eq n/passedTests 1
+        set s/passedWord 'test'
+    new s/failedWord
+    set s/failedWord 'tests'
+    if eq n/failedTests 1
+        set s/failedWord 'test'
+    new s/totalWord
+    set s/totalWord 'tests'
+    if eq n/totalTests 1
+        set s/totalWord 'test'
     if b/testReturn
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
