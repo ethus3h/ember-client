@@ -101,6 +101,10 @@ let dcData = []; // an
 let strArrayDocumentExecData = []; // as
 let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
+let intPassedTests = 0;
+let intFailedTests = 0;
+let intTotalTests = 0;
+let intArrayFrameBuffer = []; // an
 
 // Global environment
 let haveDom = false;
@@ -1750,6 +1754,107 @@ async function bitXnor(intByte1, intByte2) {
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
+async function prepareStrForEcho(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('prepareStrForEcho:unit-testing'); await assertIsStr(strIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await convertFormats('ascii', await getEnvPreferredFormat(await append(await strToByteArray(strIn), [ 13, 10 ])));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestTrue(strTestName, boolTestReturn) {
+    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestTrue:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
+
+    intTotalTests = await implAdd(intTotalTests, 1);
+    if (boolTestReturn) {
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test ', await implCat(strTestName, ' passed.'))));
+        intPassedTests = await implAdd(intPassedTests, 1);
+    }
+    else {
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test ', await implCat(strTestName, ' failed.'))));
+        intFailedTests = await implAdd(intFailedTests, 1);
+    }
+    await renderDrawContents(intArrayFrameBuffer);
+
+    boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function reportTests() {
+    await internalDebugStackEnter('reportTests:unit-testing'); let boolReturn;
+
+    let strPassedWord = '';
+    strPassedWord = 'tests';
+    if (await implEq(intPassedTests, 1)) {
+        strPassedWord = 'test';
+    }
+    let strFailedWord = '';
+    strFailedWord = 'tests';
+    if (await implEq(intFailedTests, 1)) {
+        strFailedWord = 'test';
+    }
+    let strTotalWord = '';
+    strTotalWord = 'tests';
+    if (await implEq(intTotalTests, 1)) {
+        strTotalWord = 'test';
+    }
+    let intPassedPercentageN = 0;
+    intPassedPercentageN = await implMul(await implDiv(await implMul(intPassedTests, 100000), intFailedTests), 100);
+    let strPassedPercentageTemp = '';
+    strPassedPercentageTemp = await strFrom(intPassedPercentageN);
+    let intCount = 0;
+    intCount = await len(strPassedPercentageTemp);
+    let intCounter = 0;
+    intCounter = intCount;
+    let strPassedPercentage = '';
+    while (await implGt(intCounter, 0)) {
+        if (await implEq(intCounter, await implSub(intCount, 3))) {
+            strPassedPercentage = await implCat(strPassedPercentage, '.');
+        }
+        strPassedPercentage = await implCat(strPassedPercentage, await strChar(strPassedPercentageTemp, await implSub(intCount, intCounter)));
+        intCounter = await implSub(intCounter, 1);
+    }
+    let intFailedPercentageN = 0;
+    intFailedPercentageN = await implMul(await implDiv(await implMul(intFailedTests, 100000), intPassedTests), 100);
+    let strFailedPercentageTemp = '';
+    strFailedPercentageTemp = await strFrom(intFailedPercentageN);
+    intCount = await len(strFailedPercentageTemp);
+    intCounter = intCount;
+    let strFailedPercentage = '';
+    while (await implGt(intCounter, 0)) {
+        if (await implEq(intCounter, await implSub(intCount, 3))) {
+            strFailedPercentage = await implCat(strFailedPercentage, '.');
+        }
+        strFailedPercentage = await implCat(strFailedPercentage, await strChar(strFailedPercentageTemp, await implSub(intCount, intCounter)));
+        intCounter = await implSub(intCounter, 1);
+    }
+    intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(strTotalWord, '.'))))))))))))))));
+    let strTemp = '';
+    if (await ne(intFailedTests, 0)) {
+        strTotalWord = 'Some tests';
+        if (await implEq(intTotalTests, 1)) {
+            strTotalWord = 'A test';
+        }
+        strTemp = await implCat(strTotalWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%: ', await implCat(await strFrom(intFailedTests), await implCat(' out of ', await implCat(await strFrom(intTotalTests), ' failed!')))))));
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(strTemp));
+        await implError(strTemp);
+    }
+    if (await implEq(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
+        await implDie('There is a problem in the testing framework.');
+    }
+    await renderDrawContents(intArrayFrameBuffer);
+    let boolTestReturn = false;
+    boolTestReturn = false;
+    if (await ne(intFailedTests, 0)) {
+        boolTestReturn = true;
+        intArrayFrameBuffer = [  ];
+        await implDie(strTemp);
+    }
+    intArrayFrameBuffer = [  ];
+
+    boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function dcaFromIntegerList(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromIntegerList:format-integerList'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
@@ -2288,7 +2393,7 @@ async function isExecId(intExecId) {
 }
 
 async function dcaToHtml(intArrayDcIn) {
-    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHTML:format-html'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHtml:format-html'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
 
     await assertIsDcArray(intArrayDcIn);
     let intArrayOut = [];

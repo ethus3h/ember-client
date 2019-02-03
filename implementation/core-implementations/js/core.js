@@ -101,6 +101,10 @@ let dcData = []; // an
 let strArrayDocumentExecData = []; // as
 let intArrayDocumentExecPtrs = []; // an
 let setupFinished = false;
+let intPassedTests = 0;
+let intFailedTests = 0;
+let intTotalTests = 0;
+let intArrayFrameBuffer = []; // an
 
 // Global environment
 let haveDom = false;
