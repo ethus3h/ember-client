@@ -11,6 +11,14 @@ r/b/runTestTrue s/testName b/testReturn
     renderDrawContents an/frameBuffer
     return b/testReturn
 
+r/b/reportTests s/testName b/testReturn
+    if b/testReturn
+        set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
+    else
+        set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' failed.'
+    renderDrawContents an/frameBuffer
+    return b/testReturn
+
     passedTests="0"
     failedTests="0"
     totalTests="0"
