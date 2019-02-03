@@ -4,14 +4,17 @@ r/an/prepareStrForEcho s/in
     return an/res
 
 r/b/runTestTrue s/testName b/testReturn
+    set n/totalTests add n/totalTests 1
     if b/testReturn
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
+        set n/passedTests add n/passedTests 1
     else
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' failed.'
+        set n/failedTests add n/failedTests 1
     renderDrawContents an/frameBuffer
     return b/testReturn
 
-r/b/reportTests s/testName b/testReturn
+r/b/reportTests
     if b/testReturn
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
@@ -23,22 +26,6 @@ r/b/reportTests s/testName b/testReturn
     failedTests="0"
     totalTests="0"
 
-    verboseTests=""
-
-    runTest() {
-        # This assumes that the test is a function, an external program, or a folder containing "exec" script. To force using an external program, use ./
-        local verbose="$verboseTests"
-        if [[ "$1" == "-v" ]]; then
-            verbose="true"
-            shift
-        fi
-        emberSharedAssertInheritVerbose=""
-        if [[ "$1" == "-vv" ]]; then
-            verbose="true"
-            emberSharedAssertInheritVerbose="true"
-            export emberSharedAssertInheritVerbose
-            shift
-        fi
         totalTests=$(( totalTests + 1 ))
         local testName="$1"
         shift
