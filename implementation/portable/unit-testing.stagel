@@ -34,19 +34,6 @@ r/b/reportTests
     renderDrawContents an/frameBuffer
     return b/testReturn
 
-    reportTests() {
-        local passedWord="tests"
-        if [[ "$passedTests" == 1 ]]; then
-            passedWord="test"
-        fi
-        local failedWord="tests"
-        if [[ "$failedTests" == 1 ]]; then
-            failedWord="test"
-        fi
-        local totalWord="tests"
-        if [[ "$totalTests" == 1 ]]; then
-            totalWord="test"
-        fi
         passedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($passedTests / $totalTests) * 100")")"
         failedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($failedTests / $totalTests) * 100")")"
         echo "$passedTests $passedWord ($passedPercentage%) passed and $failedTests $failedWord ($failedPercentage%) failed out of a total of $totalTests $totalWord."
