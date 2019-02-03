@@ -54,14 +54,18 @@ r/b/reportTests
         set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
     set an/frameBuffer append an/frameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
+        new s/temp
     if ne n/failedTests 0
         set s/totalWord 'Some tests'
         if eq n/totalTests 1
             set s/totalWord 'A test'
-        new an/temp
-        set an/temp prepareStrForEcho cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ' failed!'
-        set an/frameBuffer append an/frameBuffer an/temp
-        warn 
+        set s/temp cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ' failed!'
+        set an/frameBuffer append an/frameBuffer prepareStrForEcho s/temp
+        error s/temp
+    if eq n/passedTests sub n/totalTests n/failedTests
+        die 'There is a problem in the testing framework.'
+    if ne n/failedTests 0
+    
     renderDrawContents an/frameBuffer
     set an/frameBuffer ( )
     return b/testReturn
