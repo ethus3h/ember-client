@@ -1,14 +1,15 @@
- 
-async function implRunEiteTest(strTestFormat, strTestName) {
-    // TODO: Unfinished implementation
-    strTestUrlPrefix="../tests/" + strTestName + "." + strTestFormat + "/";
-    strTestInputFormatUrl="../tests/" + strTestName + "." + strTestFormat + "/in-format";
-    switch (strTestFormat) {
-        case "ept": // Parser test
-            await implUrlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
-            break;
-        default:
-            await implError("Unimplemented test format: " + strTestFormat);
-            break;
-    }
-}
+
+
+#async function implRunEiteTest(strTestFormat, strTestName) {
+#    // TODO: Unfinished implementation
+#    strTestUrlPrefix="../tests/" + strTestName + "." + strTestFormat + "/";
+#    strTestInputFormatUrl="../tests/" + strTestName + "." + strTestFormat + "/in-format";
+#    switch (strTestFormat) {
+#        case "ept": // Parser test
+#            await implUrlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
+#            break;
+#        default:
+#            await implError("Unimplemented test format: " + strTestFormat);
+#            break;
+#    }
+#}
