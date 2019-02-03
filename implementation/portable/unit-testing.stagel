@@ -1,6 +1,9 @@
 r/b/runTestTrue s/testName b/testReturn
     if b/testReturn
-        renderDrawContents 
+        set an/frameBuffer push an/frameBuffer convertFormats 'ascii' getEnvPreferredFormat push strToByteArray cat 'Test ' cat s/testName ' passed.' } } } ( 13 10 )
+    else
+        set an/frameBuffer push an/frameBuffer convertFormats 'ascii' getEnvPreferredFormat push strToByteArray cat 'Test ' cat s/testName ' passed.' } } } ( 13 10 )
+        renderDrawContents an/frameBuffer
     return b/testReturn
 
     passedTests="0"
