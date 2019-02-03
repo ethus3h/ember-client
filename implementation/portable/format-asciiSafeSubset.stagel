@@ -19,6 +19,8 @@ r/an/dcaFromAsciiSafeSubset an/content
             if ne n/currentChar 10
                 # Reparse the current character
                 set n/counter sub n/counter 1
+        else
+            set an/prefilter push an/prefilter n/currentChar
         set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
