@@ -3,8 +3,13 @@ r/an/dcaFromAsciiSafeSubset an/content
     set n/len count an/content
     new n/counter
     set n/counter 0
+    new s/state
+    set s/state 'normal'
+    new an/prefilter
+    new n/currentChar
     while lt n/counter n/len
-        
+        assertIsTrue isAsciiSafeSubsetChar get an/content n/counter
+        set an/prefilter push an/prefilter get 
         set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
