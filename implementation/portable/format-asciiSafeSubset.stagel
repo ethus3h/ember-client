@@ -12,9 +12,13 @@ r/an/dcaFromAsciiSafeSubset an/content
         assertIsTrue isAsciiSafeSubsetChar n/currentChar
         if and eq s/state 'normal' } eq n/currentChar 13
             set s/state 'newline'
-        if and eq s/state 'newline' } eq n/currentChar 10
-            set s/state 'newlineFound'
-            set an/prefilter append an/prefilter ( 13 10 )
+        if eq s/state 'newline'
+            set s/state 'normal'
+            if eq n/currentChar 10
+                set an/prefilter append an/prefilter ( 13 10 )
+            else
+                set s/state 'normal'
+                
         if eq s/state 'newlineFound'
             set s/state 'normal'
             set an/prefilter push an/prefilter n/currentChar
