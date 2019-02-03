@@ -5,7 +5,7 @@ r/an/prepareStrForEcho s/in
 
 r/b/runTestTrue s/testName b/testReturn
     if b/testReturn
-        set an/frameBuffer push an/frameBuffer convertFormats 'ascii' getEnvPreferredFormat push strToByteArray cat 'Test ' cat s/testName ' passed.' } } } ( 13 10 )
+        set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
         set an/frameBuffer push an/frameBuffer convertFormats 'ascii' getEnvPreferredFormat push strToByteArray cat 'Test ' cat s/testName ' passed.' } } } ( 13 10 )
         renderDrawContents an/frameBuffer
