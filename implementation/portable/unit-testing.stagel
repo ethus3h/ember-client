@@ -56,6 +56,7 @@ r/b/reportTests
     set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
+    if 
     renderDrawContents an/frameBuffer
     set an/frameBuffer ( )
     return b/testReturn
