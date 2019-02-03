@@ -1,5 +1,195 @@
 
 
+# Test framework
+{
+    assert() {
+        local save_traps
+        save_traps="$(trap)"
+        trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+        local verbose=""
+        if [[ "$1" == "-v" ]]; then
+            verbose="true"
+            shift
+        elif [[ "$emberSharedAssertInheritVerbose" == "true" ]]; then
+            verbose="true"
+        fi
+        local assertionTest="$1"
+        shift
+
+        case $assertionTest in
+        directoryEquals)
+            # trap is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+            trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+            firstDir="$1"
+            secondDir="$2"
+            if [[ -z "$firstDir" ]] || [[ -z "$secondDir" ]]; then
+                die "Both values must be non-empty."
+            fi
+            if [[ "$verbose" == "true" ]]; then
+                # || die is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+                diff -uraN "$firstDir" "$secondDir" || die "Assertion failed: $(join_by ", " "$@") on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."
+            else
+                # || die is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+                diff -uraN "$firstDir" "$secondDir" > /dev/null || die "Assertion failed: $(join_by ", " "$@") on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."
+            fi
+            ;;
+        fileEquals)
+            # trap is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+            trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+            firstFile="$1"
+            secondFile="$2"
+            if [[ -z "$firstFile" ]] || [[ -z "$secondFile" ]]; then
+                die "Both values must be non-empty."
+            fi
+            # || die is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+            assert equals "$(sha512sum "$firstFile" | awk '{print $1;}')" "$(sha512sum "$secondFile" | awk '{print $1;}')" || die "Assertion failed: $(join_by ", " "$@") on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."
+            ;;
+        equals)
+            # trap is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+            trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+            # || die is workaround for what I think is https://lists.gnu.org/archive/html/bug-bash/2016-02/msg00140.html
+            [[ "${1:?}" == "${2:?}" ]] || die "Assertion failed: $(join_by ", " "$@") on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."
+            ;;
+        true)
+            trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+            bash -c 'source ember_bash_setup &> /dev/null; '"$(join_by ' ' "$@")"
+            ;;
+        false)
+            trap 'die "Error during assertion test: $(join_by ", " "$@") '"on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."'"' ERR
+            invertReturnValue bash -c "$(join_by ' ' "$@")"
+            ;;
+        matches_regex)
+            [[ "$1" =~ $2 ]]
+            ;;
+        *)
+            trap 'error-notify "An error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+            die "Unknown test."
+            ;;
+        esac
+        eval "$save_traps"
+    }
+
+    passedTests="0"
+    failedTests="0"
+    totalTests="0"
+
+    verboseTests=""
+
+    runTest() {
+        # This assumes that the test is a function, an external program, or a folder containing "exec" script. To force using an external program, use ./
+        local verbose="$verboseTests"
+        if [[ "$1" == "-v" ]]; then
+            verbose="true"
+            shift
+        fi
+        emberSharedAssertInheritVerbose=""
+        if [[ "$1" == "-vv" ]]; then
+            verbose="true"
+            emberSharedAssertInheritVerbose="true"
+            export emberSharedAssertInheritVerbose
+            shift
+        fi
+        totalTests=$(( totalTests + 1 ))
+        local testName="$1"
+        shift
+        testPass() {
+            echo "Test $testName passed."
+            passedTests=$(( passedTests + 1 ))
+        }
+        testFail() {
+            echo "Test $testName failed."
+            failedTests=$(( failedTests + 1 ))
+        }
+        local digitsRegex='^[0-9]+$'
+        if [[ -d "$testName" ]]; then
+            pushd "$testName" > /dev/null || die
+            chmod +x ./exec
+            if [[ "$verbose" == "true" ]]; then
+                if ./exec "$@"; then
+                    testPass
+                else
+                    testFail
+                fi
+            else
+                if ./exec "$@" &> /dev/null; then
+                    testPass
+                else
+                    testFail
+                fi
+            fi
+            popd > /dev/null || die
+        elif [[ -f "$testName" ]]; then
+            # The test is a file to run. If you want to test a function but its name is also used by a file, wrap it in braces (like: { foo }).
+            chmod +x ./"$testName"
+            if [[ "$verbose" == "true" ]]; then
+                if ./"$testName" "$@"; then
+                    testPass
+                else
+                    testFail
+                fi
+            else
+                if ./"$testName" "$@" &> /dev/null; then
+                    testPass
+                else
+                    testFail
+                fi
+            fi
+        elif type -t "$testName" > /dev/null; then
+            # The test is a function or command name.
+            if [[ "$verbose" == "true" ]]; then
+                if "$testName" "$@"; then
+                    testPass
+                else
+                    testFail
+                fi
+            else
+                if "$testName" "$@" &> /dev/null; then
+                    testPass
+                else
+                    testFail
+                fi
+            fi
+         elif [[ "$testName" =~ $digitsRegex ]]; then
+            # The test is an inline function like runTest { assert blah }, so all we have to do here is check the status code
+            if [[ "$testName" == "0" ]]; then
+                testPass
+            else
+                testFail
+            fi
+        else
+            warn "Could not find the test $testName."
+            testFail
+        fi
+    }
+
+    reportTests() {
+        local passedWord="tests"
+        if [[ "$passedTests" == 1 ]]; then
+            passedWord="test"
+        fi
+        local failedWord="tests"
+        if [[ "$failedTests" == 1 ]]; then
+            failedWord="test"
+        fi
+        local totalWord="tests"
+        if [[ "$totalTests" == 1 ]]; then
+            totalWord="test"
+        fi
+        passedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($passedTests / $totalTests) * 100")")"
+        failedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($failedTests / $totalTests) * 100")")"
+        echo "$passedTests $passedWord ($passedPercentage%) passed and $failedTests $failedWord ($failedPercentage%) failed out of a total of $totalTests $totalWord."
+        if [[ "$failedTests" != "0" ]]; then
+            totalWord="Some tests"
+            if [[ "$totalTests" == 1 ]]; then
+                totalWord="A test"
+            fi
+            error-notify "$totalWord ($failedPercentage%: $failedTests out of $totalTests) failed!"
+        fi
+        [[ $(( totalTests - failedTests )) == "$passedTests" ]] || die "There's a problem in the testing framework."
+    }
+}
+
+
 #async function implRunEiteTest(strTestFormat, strTestName) {
 #    // TODO: Unfinished implementation
 #    strTestUrlPrefix="../tests/" + strTestName + "." + strTestFormat + "/";
