@@ -10,9 +10,15 @@ r/an/dcaFromAsciiSafeSubset an/content
     while lt n/counter n/len
         set n/currentChar get an/content n/counter
         assertIsTrue isAsciiSafeSubsetChar n/currentChar
-        if eq n/currentChar 10
-            
-        set an/prefilter push an/prefilter n/currentChar
+        if and eq s/state 'normal' } eq n/currentChar 13
+            set s/state 'newline'
+        if and eq s/state 'newline' } eq n/currentChar 10
+            set s/state 'newlineFound'
+            set an/prefilter append an/prefilter ( 13 10 )
+        if eq s/state 'newlineFound'
+            set s/state 'normal'
+            set an/prefilter push an/prefilter n/currentChar
+        
         set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
