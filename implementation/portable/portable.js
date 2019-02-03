@@ -814,7 +814,7 @@ async function prepareStrForEcho(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('prepareStrForEcho:unit-testing'); await assertIsStr(strIn); let intArrayReturn;
 
     let intArrayRes = [];
-    intArrayRes = await convertFormats('ascii', await getEnvPreferredFormat(await append(await strToByteArray(strIn), [ 13, 10 ])));
+    intArrayRes = await convertFormats('ascii', await getEnvPreferredFormat(), await append(await strToByteArray(strIn), [ 13, 10 ]));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
