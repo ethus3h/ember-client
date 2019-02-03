@@ -1,6 +1,6 @@
 r/an/prepareStrForEcho s/in
     new an/res
-    set an/res convertFormats 'ascii' getEnvPreferredFormat append strToByteArray s/in } ( 13 10 )
+    set an/res convertFormats 'ascii' getEnvPreferredFormat } append strToByteArray s/in } ( 13 10 )
     return an/res
 
 r/b/runTestTrue s/testName b/testReturn
