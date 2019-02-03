@@ -1,4 +1,7 @@
 r/an/dcaFromAsciiSafeSubset an/content
     
+
 r/b/isAsciiSafeSubsetChar n/char
-    
+    new b/res
+    set b/res or asciiIsPrintable n/char } or asciiIsNewline n/char
+    return b/res
