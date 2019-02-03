@@ -27,6 +27,8 @@ r/b/reportTests
     set s/totalWord 'tests'
     if eq n/totalTests 1
         set s/totalWord 'test'
+    new n/passedPercentage
+    set n/passedPercentage mul div mul n/passedTests 100000 } n/failedTests } 100
     if b/testReturn
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
