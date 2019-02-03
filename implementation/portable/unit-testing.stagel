@@ -14,6 +14,11 @@ r/b/runTestTrue s/testName b/testReturn
     renderDrawContents an/frameBuffer
     return b/testReturn
 
+r/v/clearTestStats
+    set n/totalTests 0
+    set n/passedTests 0
+    set n/failedTests 0
+
 r/b/reportTests
     new s/passedWord
     set s/passedWord 'tests'
