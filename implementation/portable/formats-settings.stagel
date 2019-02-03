@@ -1,1 +1,2 @@
- 
+r/s/getSettingForFormat s/format b/isImport 
+    # isImport is true if the import settings are desired, and false if the export settings are desired.
