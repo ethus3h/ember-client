@@ -1,2 +1,5 @@
-r/s/getSettingForFormat s/format b/isImport 
-    # isImport is true if the import settings are desired, and false if the export settings are desired.
+r/s/getSettingForFormat s/format s/direction s/settingKey
+    # s/direction can be "in" for import settings or "out" for export settings.
+
+r/s/getSettingsForFormat s/format s/direction
+    # Returns an array of setting key/value pairs.
