@@ -1,6 +1,7 @@
 r/s/prepareStrForEcho s/in
     new s/res
-    set s/res push strToByteArray
+    set s/res push strToByteArray s/in } ( 13 10 )
+    return s/res
 
 r/b/runTestTrue s/testName b/testReturn
     if b/testReturn
