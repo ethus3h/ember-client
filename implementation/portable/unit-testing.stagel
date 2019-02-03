@@ -41,6 +41,18 @@ r/b/reportTests
             set s/passedPercentage cat s/passedPercentage '.'
         set s/passedPercentage cat s/passedPercentage strChar s/passedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
+    new n/failedPercentageN
+    set n/failedPercentageN mul div mul n/failedTests 100000 } n/passedTests } 100
+    new s/failedPercentageTemp
+    set s/failedPercentageTemp strFrom n/failedPercentageN
+    set n/count len s/failedPercentageTemp
+    set n/counter n/count
+    new s/failedPercentage
+    while gt n/counter 0
+        if eq n/counter sub n/count 3
+            set s/failedPercentage cat s/failedPercentage '.'
+        set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
+        set n/counter sub n/counter 1
     if b/testReturn
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' passed.'
     else
