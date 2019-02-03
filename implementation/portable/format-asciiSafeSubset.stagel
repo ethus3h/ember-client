@@ -1,5 +1,11 @@
 r/an/dcaFromAsciiSafeSubset an/content
-    
+    new n/len
+    set n/len count an/content
+    new n/counter
+    set n/counter 0
+    while lt n/counter n/len
+        
+        set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
     new b/res
