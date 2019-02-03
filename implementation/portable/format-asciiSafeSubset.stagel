@@ -8,8 +8,9 @@ r/an/dcaFromAsciiSafeSubset an/content
     new an/prefilter
     new n/currentChar
     while lt n/counter n/len
-        assertIsTrue isAsciiSafeSubsetChar get an/content n/counter
-        set an/prefilter push an/prefilter get 
+        set n/currentChar get an/content n/counter
+        assertIsTrue isAsciiSafeSubsetChar n/currentChar
+        set an/prefilter push an/prefilter n/currentChar
         set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
