@@ -893,18 +893,18 @@ async function reportTests() {
         }
         strTemp = await implCat(strTotalWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%: ', await implCat(await strFrom(intFailedTests), await implCat(' out of ', await implCat(await strFrom(intTotalTests), ' failed!')))))));
         intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(strTemp));
-        await implError(strTemp);
+        /*error s/temp */
     }
     if (await implEq(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
         await implDie('There is a problem in the testing framework.');
     }
     await renderDrawContents(intArrayFrameBuffer);
     let boolTestReturn = false;
-    boolTestReturn = false;
+    boolTestReturn = true;
     if (await ne(intFailedTests, 0)) {
-        boolTestReturn = true;
-        intArrayFrameBuffer = [  ];
-        await implDie(strTemp);
+        boolTestReturn = false;
+        /*set an/frameBuffer ( ) */
+        /*die s/temp */
     }
     intArrayFrameBuffer = [  ];
 
