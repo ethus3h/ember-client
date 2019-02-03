@@ -1,3 +1,7 @@
+r/s/prepareStrForEcho s/in
+    new s/res
+    set s/res push strToByteArray
+
 r/b/runTestTrue s/testName b/testReturn
     if b/testReturn
         set an/frameBuffer push an/frameBuffer convertFormats 'ascii' getEnvPreferredFormat push strToByteArray cat 'Test ' cat s/testName ' passed.' } } } ( 13 10 )
