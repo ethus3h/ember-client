@@ -10,6 +10,8 @@ r/an/dcaFromAsciiSafeSubset an/content
     while lt n/counter n/len
         set n/currentChar get an/content n/counter
         assertIsTrue isAsciiSafeSubsetChar n/currentChar
+        if eq n/currentChar 10
+            
         set an/prefilter push an/prefilter n/currentChar
         set n/counter add n/counter 1
 
