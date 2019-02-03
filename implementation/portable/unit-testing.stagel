@@ -1,3 +1,7 @@
+r/b/runTestTrue s/testName b/testReturn
+    if b/testReturn
+        renderDrawContents 
+    return b/testReturn
 
     passedTests="0"
     failedTests="0"
