@@ -11,17 +11,13 @@ r/an/dcaFromAsciiSafeSubset an/content
         set n/currentChar get an/content n/counter
         assertIsTrue isAsciiSafeSubsetChar n/currentChar
         if and eq s/state 'normal' } eq n/currentChar 13
+            # Wait to see if there's a lf after this cr. If so, treat them as a unit.
             set s/state 'crlf'
         elif eq s/state 'crlf'
             set s/state 'normal'
             set an/prefilter append an/prefilter ( 13 10 )
             if ne n/currentChar 10
-                set an/prefilter push an/prefilter n/currentChar
-
-        if eq s/state 'newlineFound'
-            set s/state 'normal'
-            set an/prefilter push an/prefilter n/currentChar
-        
+                set n/counter sub n/counter 1
         set n/counter add n/counter 1
 
 r/b/isAsciiSafeSubsetChar n/char
