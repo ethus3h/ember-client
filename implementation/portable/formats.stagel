@@ -5,6 +5,10 @@ r/an/dcaFromFormat s/inFormat an/contentBytes
     if or eq s/inFormat 'sems' } eq s/inFormat 'integerList'
         # TODO: The sems parser can handle integerList format too, but perhaps a dedicated parser should be provided so it isn't too permissive.
         set an/ret dcaFromSems an/contentBytes
+    elif eq s/inFormat 'ascii'
+        set an/ret dcaFromAscii an/contentBytes
+    elif eq s/inFormat 'asciiSafeSubset'
+        set an/ret dcaFromAscii an/contentBytes
     else
         error cat 'Unimplemented document parsing format: ' s/inFormat
     assertIsDcArray an/ret
