@@ -32,6 +32,7 @@ r/b/reportTests
     else
         set an/frameBuffer push an/frameBuffer prepareStrForEcho cat 'Test ' cat s/testName ' failed.'
     renderDrawContents an/frameBuffer
+    set an/frameBuffer [ ]
     return b/testReturn
 
         passedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($passedTests / $totalTests) * 100")")"
