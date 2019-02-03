@@ -74,31 +74,3 @@ r/b/reportTests
     set an/frameBuffer ( )
     return b/testReturn
 
-        passedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($passedTests / $totalTests) * 100")")"
-        failedPercentage="$(printf "%.3f\\n" "$(bc -l <<< "($failedTests / $totalTests) * 100")")"
-        echo "$passedTests $passedWord ($passedPercentage%) passed and $failedTests $failedWord ($failedPercentage%) failed out of a total of $totalTests $totalWord."
-        if [[ "$failedTests" != "0" ]]; then
-            totalWord="Some tests"
-            if [[ "$totalTests" == 1 ]]; then
-                totalWord="A test"
-            fi
-            error-notify "$totalWord ($failedPercentage%: $failedTests out of $totalTests) failed!"
-        fi
-        [[ $(( totalTests - failedTests )) == "$passedTests" ]] || die "There's a problem in the testing framework."
-    }
-}
-
-
-#async function implRunEiteTest(strTestFormat, strTestName) {
-#    // TODO: Unfinished implementation
-#    strTestUrlPrefix="../tests/" + strTestName + "." + strTestFormat + "/";
-#    strTestInputFormatUrl="../tests/" + strTestName + "." + strTestFormat + "/in-format";
-#    switch (strTestFormat) {
-#        case "ept": // Parser test
-#            await implUrlLoadForCallback(strTestInputFormatUrl, async function(bytearrayContent) {});
-#            break;
-#        default:
-#            await implError("Unimplemented test format: " + strTestFormat);
-#            break;
-#    }
-#}
