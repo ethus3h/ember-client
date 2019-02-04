@@ -8,9 +8,7 @@ r/an/dcaToHtml an/dcIn
     new n/dcAtIndex
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
-        # FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!)
-        if or or dcIsNewline n/dcAtIndex } dcIsPrintable n/dcAtIndex } } dcIsSpace n/dcAtIndex
-            set an/out push an/out dcToFormat 'html' n/dcAtIndex
+        set an/out push an/out dcToFormat 'html' n/dcAtIndex
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
     return an/out
