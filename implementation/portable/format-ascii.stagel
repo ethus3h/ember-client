@@ -21,8 +21,8 @@ r/an/dcaToAscii an/content
     new an/temp
     new n/dcAtIndex
     while lt n/c n/l
-        set n/dcAtIndex
-        set an/temp dcFromFormat 'utf8' anFromN get an/content n/c
+        set n/dcAtIndex get an/content n/c
+        set an/temp dcFromFormat 'utf8' anFromN n/dcAtIndex
         if isAsciiByte get an/temp 0
             set an/res append an/res an/temp
         else
