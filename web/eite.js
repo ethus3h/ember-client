@@ -1039,7 +1039,7 @@ async function dcaFromAscii(intArrayContent) {
     let intC = 0;
     intC = 0;
     while (await le(intC, intL)) {
-        intArrayRes = await push(intArrayRes, await dcFromFormat('ascii', await anFromN(await get(intArrayContent, intC))));
+        intArrayRes = await append(intArrayRes, await dcFromFormat('ascii', await anFromN(await get(intArrayContent, intC))));
         intC = await implAdd(intC, 1);
     }
 
