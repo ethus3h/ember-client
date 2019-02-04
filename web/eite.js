@@ -3303,42 +3303,42 @@ async function dcaFromSems(intArrayContent) {
 
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-async function assertIsFalse(bool) {
+window.assertIsFalse = async function (bool) {
     if (bool === false) {
         return;
     }
     await assertionFailed(bool+' is true, but should be false.');
 }
 
-async function assertIsTrue(bool) {
+window.assertIsTrue = async function (bool) {
     if (bool === true) {
         return;
     }
     await assertionFailed(bool+' is not true.');
 }
 
-async function assertIsDc(v) {
+window.assertIsDc = async function (v) {
     if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
         return true;
     }
     await assertIsTrue(false);
 }
 
-async function assertIsDcDataset(str) {
+window.assertIsDcDataset = async function (str) {
     if (datasets.includes(str)) {
         return;
     }
     await assertIsTrue(false);
 }
 
-async function or(a,b) {
+window.or = async function (a,b) {
     if (typeof a === 'boolean' && typeof b === 'boolean') {
         return a || b;
     }
     await assertIsBool(a); await assertIsBool(b);
 }
 
-async function isTrue(bool) {
+window.isTrue = async function (bool) {
     if (bool === true) {
         // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
         return true;
@@ -3346,7 +3346,7 @@ async function isTrue(bool) {
     return false;
 }
 
-async function isFalse(bool) {
+window.isFalse = async function (bool) {
     if (bool === false) {
         return true;
     }
