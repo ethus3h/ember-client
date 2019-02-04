@@ -31,9 +31,11 @@ r/an/dcaFromAsciiSafeSubset an/content
             set an/prefilter push an/prefilter n/currentChar
         set n/counter add n/counter 1
 
-r/an/dcaToHtml an/dcIn
+r/an/dcaToAsciiSafeSubset an/dcIn
     assertIsDcArray an/dcIn
     new an/out
+    new an/temp
+    set an/temp dcaToAscii an/dcIn
     new n/len
     set n/len count an/dcIn
     new n/inputIndex
