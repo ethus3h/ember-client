@@ -47,6 +47,7 @@ r/s/getExportExtension s/format
         set s/res cat getFormatExtension s/format } '.txt'
         return s/res
     if eq s/format 'html'
+        # FIXME: Seems like this shouldn't be hardcoded for HTML, and there should be a better system for telling from the formats dcdata table what the desired ext format (e.g. name.encoding.format) is. Also, this assumes environment char encoding for the export, rather than using export setting for it. (That needs to be fixed in the HTML export code too.)
         set s/res cat cat buildExportExtension getEnvCharEncoding } } '.htm'
         return s/res
     set s/res getFormatExtension s/format
