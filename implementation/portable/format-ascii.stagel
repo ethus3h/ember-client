@@ -9,6 +9,17 @@ r/an/dcaFromAscii an/content
         set n/c add n/c 1
     return an/res
 
+    r/an/dcaFromAscii an/content
+    new an/res
+    new n/l
+    set n/l count an/content
+    new n/c
+    set n/c 0
+    while lt n/c n/l
+        set an/res append an/res dcFromFormat 'ascii' anFromN get an/content n/c
+        set n/c add n/c 1
+    return an/res
+
 r/b/isAsciiByte n/n
     new b/temp
     set b/temp intIsBetween n/n 0 127
