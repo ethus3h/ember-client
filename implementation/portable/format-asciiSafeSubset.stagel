@@ -23,6 +23,8 @@ r/an/dcaFromAsciiSafeSubset an/content
             set s/state 'normal'
             set an/prefilter append an/prefilter crlf
             if ne n/currentChar 10
+                if b/strict
+                    die 'CR followed by non-LF byte not allowed in asciiSafeSubset strict mode.'
                 # Reparse the current character
                 set n/counter sub n/counter 1
         else
