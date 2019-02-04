@@ -49,6 +49,7 @@ async function isCharByte(genericIn) {
 async function dcaFromAscii(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
+    await assertIsByteArray(intArrayContent);
     let intArrayRes = [];
     let intL = 0;
     intL = await count(intArrayContent);
@@ -58,6 +59,34 @@ async function dcaFromAscii(intArrayContent) {
         intArrayRes = await append(intArrayRes, await dcFromFormat('ascii', await anFromN(await get(intArrayContent, intC))));
         intC = await implAdd(intC, 1);
     }
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToAscii(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    await assertIsDcArray(intArrayContent);
+    let intArrayRes = [];
+    let intL = 0;
+    intL = await count(intArrayContent);
+    let intC = 0;
+    intC = 0;
+    let intArrayTemp = [];
+    let intDcAtIndex = 0;
+    while (await implLt(intC, intL)) {
+        intDcAtIndex = await get(intArrayContent, intC);
+        intArrayTemp = await dcFromFormat('utf8', await anFromN(intDcAtIndex));
+        if (await isAsciiByte(await get(intArrayTemp, 0))) {
+            intArrayRes = await append(intArrayRes, intArrayTemp);
+        }
+        else {
+            await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+        }
+        intC = await implAdd(intC, 1);
+    }
+    await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -306,15 +335,39 @@ async function dcaFromAsciiSafeSubset(intArrayContent) {
     }
 }
 
-async function isAsciiSafeSubsetChar(intChar) {
-    await internalDebugCollect('int Char = ' + intChar + '; '); await internalDebugStackEnter('isAsciiSafeSubsetChar:format-asciiSafeSubset'); await assertIsInt(intChar); let boolReturn;
+async function dcaToAsciiSafeSubset(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
 
-    let boolRes = false;
-    boolRes = await or(await asciiIsPrintable(intChar), await or(await asciiIsNewline(intChar)));
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    let intArrayTemp = [];
+    intArrayTemp = await dcaToAscii(intArrayDcIn);
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    let intDcAtIndex = 0;
+    let strState = '';
+    strState = 'normal';
+    let intArrayTempChar = [];
+    while (await implLt(intInputIndex, intLen)) {
+        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        if (await implEq(intDcAtIndex, 121)) {
+            strState = 'crlf';
+        }
+        if (await implEq(strState, 'normal')) {
+            intArrayTempChar = await dcToFormat('html', intDcAtIndex);
+            if (await dcIsNewline(intDcAtIndex)) {
+                intArrayOut = await append(intArrayOut, await crlf());
+            }
+            else if (await isAsciiSafeSubsetChar(await get(intArrayTempChar, 0))) {
+                intArrayOut = await push(intArrayOut, intArrayTempChar);
+            }
+            else {
+                await exportWarning(intInputIndex, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+            }
+        }
+        else if (await implEq(strState, 'crlf')) {
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats-data'); let strArrayReturn;
 
@@ -1697,10 +1750,7 @@ async function dcaToHtml(intArrayDcIn) {
     let intDcAtIndex = 0;
     while (await implLt(intInputIndex, intLen)) {
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
-        /* FIXME: doesn't accept HTML-renderable Dcs (then how are they getting rendered?!) */
-        if (await or(await or(await dcIsNewline(intDcAtIndex), await dcIsPrintable(intDcAtIndex), ), await dcIsSpace(intDcAtIndex))) {
-            intArrayOut = await push(intArrayOut, await dcToFormat('html', intDcAtIndex));
-        }
+        intArrayOut = await push(intArrayOut, await dcToFormat('html', intDcAtIndex));
         intInputIndex = await implAdd(intInputIndex, 1);
     }
     await assertIsByteArray(intArrayOut);
@@ -1806,7 +1856,7 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
-    if (await or(await implEq(strOutFormat, 'utf8'), await implEq(strOutFormat, 'asciiSafeSubset'))) {
+    if (await or(await implEq(strOutFormat, 'utf8'))) {
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'html')) {
@@ -1857,6 +1907,20 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function exportWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex);await assertIsStr(strProblem);
+
+    await implWarn(await implCat('An error was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await internalDebugStackExit();
+}
+
+async function importWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex);await assertIsStr(strProblem);
+
+    await implWarn(await implCat('An error was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await internalDebugStackExit();
 }
 
 async function isDc(genericIn) {
