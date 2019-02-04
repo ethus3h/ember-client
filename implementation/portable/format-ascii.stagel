@@ -1,4 +1,5 @@
 r/an/dcaFromAscii an/content
+    assertIsByteArray an/content
     new an/res
     new n/l
     set n/l count an/content
@@ -7,9 +8,11 @@ r/an/dcaFromAscii an/content
     while lt n/c n/l
         set an/res append an/res dcFromFormat 'ascii' anFromN get an/content n/c
         set n/c add n/c 1
+    assertIsDcArray an/res
     return an/res
 
-    r/an/dcaFromAscii an/content
+r/an/dcaToAscii an/content
+    assertIsDcArray an/dcIn
     new an/res
     new n/l
     set n/l count an/content
@@ -18,6 +21,7 @@ r/an/dcaFromAscii an/content
     while lt n/c n/l
         set an/res append an/res dcFromFormat 'ascii' anFromN get an/content n/c
         set n/c add n/c 1
+    assertIsByteArray an/res
     return an/res
 
 r/b/isAsciiByte n/n
