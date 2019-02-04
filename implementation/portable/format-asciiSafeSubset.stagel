@@ -43,18 +43,23 @@ r/an/dcaToAsciiSafeSubset an/dcIn
     new n/dcAtIndex
     new s/state
     set s/state 'normal'
+    new an/tempChar
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
         if eq n/dcAtIndex 121
             set s/state 'crlf'
         if eq s/state 'normal'
-            set an/out push an/out dcToFormat 'html' n/dcAtIndex
+            set an/tempChar dcToFormat 'html' n/dcAtIndex
+            if isAsciiSafeSubsetChar get an/tempChar 0
+                set an/out push an/out an/tempChar
+            else
+                eiteWarn 
         elif eq s/state 'crlf'
+            set state 'normal'
             if eq n/dcAtIndex 120
                 # Found ambiguous cr, lf in a row, so only output one crlf
                 set an/out append an/out crlf
             else
-                
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
     return an/out
