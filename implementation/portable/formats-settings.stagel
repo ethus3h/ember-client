@@ -6,7 +6,11 @@ r/s/getSettingsForFormat s/format s/direction
     new n/formatId
     set n/formatId getFormatId s/format
     new s/res
-    set s/res get a
+    if eq s/direction 'in'
+        set s/res get getImportSettings n/formatId
+    else
+        set s/res get getExportSettings n/formatId
+    return s/res
 
 r/as/settingStringToArray s/settings
     new as/res
