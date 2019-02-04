@@ -82,13 +82,16 @@ async function getImportSettings() {
     assertIsStrArray(importSettings);
     return importSettings;
 }
+
 async function getExportSettings() {
     assertIsStrArray(exportSettings);
     return exportSettings;
 }
+
 async function setImportSettings(strArrayNewSettings) {
     assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
 }
+
 async function setExportSettings() {
     assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
 }
