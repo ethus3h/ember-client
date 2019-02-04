@@ -15,6 +15,12 @@ r/s/charAtPos s/str n/index
     set s/temp strChar s/str n/index
     return s/temp
 
+r/s/charAt s/str n/index
+    # helper alias
+    new s/temp
+    set s/temp strChar s/str n/index
+    return s/temp
+
 r/s/reverseStr s/str
     new n/l
     set n/l len s/str
