@@ -19,7 +19,7 @@ r/as/settingStringToArray s/settings
     new as/res
     set n/count len s/settings
     new n/counter
-    set n/counter
+    set n/counter 0
     new s/elem
     new s/state
     set s/state 'key'
