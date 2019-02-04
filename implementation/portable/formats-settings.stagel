@@ -12,11 +12,6 @@ r/s/getSettingsForFormat s/format s/direction
         set s/res get getExportSettings n/formatId
     return s/res
 
-r/n/getFormatId s/format
-    new n/res
-    set n/res indexOf listImportFormats } s/format
-    return n/res
-
 r/as/settingStringToArray s/settings
     new as/res
     set n/count len s/settings
