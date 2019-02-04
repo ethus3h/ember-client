@@ -1352,6 +1352,32 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
             }
         }
         else if (await implEq(strState, 'crlf')) {
+            strState = 'normal';
+            if (await implEq(intDcAtIndex, 120)) {
+                /* Found ambiguous cr, lf in a row, so only output one crlf */
+                intArrayOut = await append(intArrayOut, await crlf());
+            }
+            else {
+                /* Reprocess the current character with 'normal' state */
+                intInputIndex = await implSub(intInputIndex, 1);
+            }
+        }
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function isAsciiSafeSubsetChar(intChar) {
+    await internalDebugCollect('int Char = ' + intChar + '; '); await internalDebugStackEnter('isAsciiSafeSubsetChar:format-asciiSafeSubset'); await assertIsInt(intChar); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await asciiIsPrintable(intChar), await or(await asciiIsNewline(intChar)));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats-data'); let strArrayReturn;
 
