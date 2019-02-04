@@ -504,6 +504,15 @@ async function getExportFormatId(strFormat) {
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
+async function getFormatExtension(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExtension:formats-data'); await assertIsStr(strFormat); let intReturn;
+
+    let intRes = 0;
+    intRes = await indexOf(await listInputFormats(), strFormat);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
 async function strChar(strStr, intIndex) {
     await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugStackEnter('strChar:strings'); await assertIsStr(strStr);await assertIsInt(intIndex); let strReturn;
 
@@ -1851,31 +1860,21 @@ async function getExportExtension(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getExportExtension:formats'); await assertIsStr(strFormat); let strReturn;
 
     /* Produces the actual file extension to be used for a file exported in the given format, with the current configured format options. */
-    if (await implEq(strFormat, 'sems')) {
-
-        strReturn = 'sems'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-    else if (await implEq(strFormat, 'integerList')) {
-
-        strReturn = 'dcil'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-    else if (await implEq(strFormat, 'asciiSafeSubset')) {
-
-        strReturn = 'ascii'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-    else if (await implEq(strFormat, 'utf8')) {
-
-        strReturn = 'utf8'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-    else if (await implEq(strFormat, 'html')) {
-        let strRes = '';
-        strRes = await implCat(await buildExportExtension(await getEnvCharEncoding(), ), '.htm');
+    let strRes = '';
+    if (await isSupportedCharEncoding(strFormat)) {
+        strRes = await implCat(await getFormatExtension(strFormat), '.txt');
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    else {
-        await implDie(await implCat('Format not supported: ', strFormat));
+    if (await implEq(strFormat, 'html')) {
+        /* FIXME: Seems like this shouldn't be hardcoded for HTML, and there should be a better system for telling from the formats dcdata table what the desired ext format (e.g. name.encoding.format) is. Also, this assumes environment char encoding for the export, rather than using export setting for it. (That needs to be fixed in the HTML export code too.) */
+        strRes = await implCat(await implCat(await buildExportExtension(await getEnvCharEncoding(), ), '.htm'));
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
+    strRes = await getFormatExtension(strFormat);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function dcToFormat(strOutFormat, intDc) {
