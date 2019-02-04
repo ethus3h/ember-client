@@ -2801,8 +2801,11 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     if (await implEq(strOutFormat, 'integerList')) {
         intArrayRes = await dcaToIntegerList(intArrayDcArrayIn);
     }
-    else if (await implEq(strOutFormat, 'immutableCharacterCells')) {
-        intArrayRes = await dcaToImmutableCharacterCells(intArrayDcArrayIn);
+    else if (await implEq(strOutFormat, 'ascii')) {
+        intArrayRes = await dcaToAscii(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'asciiSafeSubset')) {
+        intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
     }
     else if (await implEq(strOutFormat, 'html')) {
         intArrayRes = await dcaToHtml(intArrayDcArrayIn);
