@@ -16,8 +16,12 @@ r/as/settingStringToArray s/settings
     while lt n/counter n/count
         set s/char charAt s/settings n/counter
         if eq s/state 'key'
-            
-            set s/elem cat s/elem 
+            if eq s/char ':'
+                set as/res push as/res s/elem
+                set s/elem ''
+                set s/state 'val'
+            else
+                set s/elem cat s/elem s/char
         set n/counter add n/counter 1
 
 r/s/settingArrayToString as/settings
