@@ -57,7 +57,7 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             else
                 exportWarning n/inputIndex cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
         elif eq s/state 'crlf'
-            set state 'normal'
+            set s/state 'normal'
             if eq n/dcAtIndex 120
                 # Found ambiguous cr, lf in a row, so only output one crlf
                 set an/out append an/out crlf
