@@ -6,14 +6,17 @@ r/s/getSettingsForFormat s/format s/direction
 
 r/as/settingStringToArray s/settings
 r/s/settingArrayToString as/settings
-        new s/res
-    set n/count count ga/in
+    new s/res
+    set n/count count as/settings
     new n/counter
     set n/counter 0
-    new g/elem
+    new s/elem
     while lt n/counter n/count
-        set g/elem get ga/in n/count
-        if eq g/elem g/value
-            return n/counter
+        set s/elem get as/settings n/counter
+        assertIsTrue isValidIdent s/elem
+        if eq 0 mod n/counter 2
+            set s/res cat s/res cat s/elem ','
+        else
+            set s/res cat s/res cat s/elem ':'
         set n/counter add n/counter 1
     return s/res

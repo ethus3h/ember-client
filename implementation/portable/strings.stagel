@@ -81,8 +81,8 @@ r/b/strContainsOnlyInt s/in
         set n/i add n/i 1
     return b/res
 
-r/s/strIsValidIdent s/in
-    # Positive int, specifically. Only digits allowed.
+r/s/isValidIdent s/in
+    # Doesn't check for duplicate idents or whatever. Just makes sure the basic form is correct.
     new n/temp
     set n/temp len s/in
     new n/i

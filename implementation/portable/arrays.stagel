@@ -73,7 +73,7 @@ r/n/indexOf ga/in g/value
     set n/counter 0
     new g/elem
     while lt n/counter n/count
-        set g/elem get ga/in n/count
+        set g/elem get ga/in n/counter
         if eq g/elem g/value
             return n/counter
         set n/counter add n/counter 1
