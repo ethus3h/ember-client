@@ -264,10 +264,6 @@
                             resolve(undefined);
                         };
                         fr.readAsArrayBuffer(file);
-                        fr.onload=function (){
-                            resolve(undefined);
-                        };
-                        fr.readAsArrayBuffer(file);
                     });
                     document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
                 }
