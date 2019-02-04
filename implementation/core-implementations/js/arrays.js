@@ -45,6 +45,14 @@ async function get(array, index) {
     await assertIsGeneric(returnVal); return returnVal;
 }
 
+async function getNext(array, index) {
+    await assertIsArray(array); await assertIsInt(index); let returnVal;
+
+    returnVal=array[index + 1];
+
+    await assertIsGeneric(returnVal); return returnVal;
+}
+
 async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 

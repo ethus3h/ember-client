@@ -68,16 +68,16 @@ r/b/contains ga/in g/value
 
 r/n/indexOf ga/in g/value
     new n/count
-    set n/count count
+    set n/count count ga/in
     new n/counter
     set n/counter 0
     new g/elem
-    while ge n/count 0
+    while lt n/counter n/count
         set g/elem get ga/in n/count
         if eq g/elem g/value
             return n/counter
         set n/counter add n/counter 1
-    return false
+    return -1
 
 r/b/isArray gi/in
     # Just a convenience wrapper
