@@ -1,18 +1,18 @@
-async function assertIsFalse(bool) {
+window.assertIsFalse = async function (bool) {
     if (bool === false) {
         return;
     }
     await assertionFailed(bool+' is true, but should be false.');
 }
 
-async function assertIsTrue(bool) {
+async function assertIsTrue = async function (bool) {
     if (bool === true) {
         return;
     }
     await assertionFailed(bool+' is not true.');
 }
 
-async function assertIsDc(v) {
+async function assertIsDc = async function (v) {
     if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
         return true;
     }

@@ -259,7 +259,6 @@
                 if (file !== undefined && file !== null) {
                     let fr=new FileReader();
                     await new Promise(resolve => {
-                        // Apparently need to run this twice, for some reason. I don't know why this works, or what it's doing, but it does seem to work.
                         fr.onload=function (){
                             resolve(undefined);
                         };
