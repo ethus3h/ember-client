@@ -111,7 +111,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 0;
+    STAGEL_DEBUG = 2;
 }
 if (importSettings === undefined) {
     importSettings = [];
