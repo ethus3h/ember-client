@@ -3,6 +3,10 @@ r/s/getSettingForFormat s/format s/direction s/settingKey
 
 r/s/getSettingsForFormat s/format s/direction
     # Returns an array of setting key/value pairs. A format setting string looks like, which should be fairly parseable (keys and vals follow StageL ident naming rules): key1:val1,key2:val2,
+    new n/formatId
+    set n/formatId getFormatId s/format
+    new s/res
+    set s/res get a
 
 r/as/settingStringToArray s/settings
     new as/res
