@@ -1061,7 +1061,7 @@ async function dcaToAscii(intArrayContent) {
     let intDcAtIndex = 0;
     while (await implLt(intC, intL)) {
         intDcAtIndex = await get(intArrayContent, intC);
-        intArrayTemp = await dcToFormat('utf8', await anFromN(intDcAtIndex));
+        intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         if (await isAsciiByte(await get(intArrayTemp, 0))) {
             intArrayRes = await append(intArrayRes, intArrayTemp);
         }
