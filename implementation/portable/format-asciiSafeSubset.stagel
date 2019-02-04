@@ -62,6 +62,8 @@ r/an/dcaToAsciiSafeSubset an/dcIn
                 # Found ambiguous cr, lf in a row, so only output one crlf
                 set an/out append an/out crlf
             else
+                # Reprocess the current character with 'normal' state
+                set n/inputIndex sub n/inputIndex 1
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
     return an/out
