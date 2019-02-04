@@ -82,4 +82,8 @@ r/b/strContainsOnlyInt s/in
     return b/res
 
 r/s/strIsValidIdent s/in
+    while lt n/i n/temp
+        if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
+            set b/res false
+        set n/i add n/i 1
     return true
