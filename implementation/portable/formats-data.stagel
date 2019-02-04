@@ -49,3 +49,8 @@ r/b/isSupportedTerminalType s/in
     new b/res
     set b/res and contains listTerminalTypes } s/in } isSupportedOutputFormat s/in
     return b/res
+
+r/n/getFormatId s/format
+    new n/res
+    set n/res indexOf listImportFormats } s/format
+    return n/res
