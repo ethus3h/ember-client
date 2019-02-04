@@ -92,7 +92,11 @@ r/s/strIsValidIdent s/in
     new n/currentCharByte
     while lt n/i n/temp
         set n/currentCharByte byteFromChar strCharAtPos s/in n/i
-        if not or asciiIsDigit n/currentCharByte } asciiIsLetter n/currentCharByte
+        if eq n/i 0
+            # First character can only be lowercase letter
+            if not asciiIsLetterLower n/currentCharByte
+                set b/res false
+        elif not or asciiIsDigit n/currentCharByte } asciiIsLetter n/currentCharByte
             set b/res false
         set n/i add n/i 1
     return b/res
