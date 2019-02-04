@@ -4,15 +4,15 @@ r/s/getSettingForFormat s/format s/direction s/settingKey
     set s/res getNext indexOf getSettingsForFormat s/format s/direction } s/settingKey
     return s/res
 
-r/s/getSettingsForFormat s/format s/direction
+r/as/getSettingsForFormat s/format s/direction
     # Returns an array of setting key/value pairs. A format setting string looks like, which should be fairly parseable (keys and vals follow StageL ident naming rules): key1:val1,key2:val2,
     new n/formatId
     set n/formatId getFormatId s/format
     new s/res
     if eq s/direction 'in'
-        set s/res get getImportSettings n/formatId
+        set s/res get settingStringToArray getImportSettings n/formatId
     else
-        set s/res get getExportSettings n/formatId
+        set s/res get settingStringToArray getExportSettings n/formatId
     return s/res
 
 r/as/settingStringToArray s/settings
