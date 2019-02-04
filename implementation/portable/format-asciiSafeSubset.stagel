@@ -7,9 +7,15 @@ r/an/dcaFromAsciiSafeSubset an/content
     set s/state 'normal'
     new an/prefilter
     new n/currentChar
+    new b/strict
+    set b/strict false
+    if eq 'true' getSettingForFormat 'asciiSafeSubset' 'in' 'strict'
+        set b/strict true
     while lt n/counter n/len
         set n/currentChar get an/content n/counter
         assertIsTrue isAsciiSafeSubsetChar n/currentChar
+        if and b/strict and eq s/state 'normal' } eq n/currentChar 10
+            die 'LF without preceding CR not allowed in asciiSafeSubset strict mode.'
         if and eq s/state 'normal' } eq n/currentChar 13
             # Wait to see if there's a lf after this cr. If so, treat them as a unit.
             set s/state 'crlf'
