@@ -77,7 +77,7 @@ async function dcaToAscii(intArrayContent) {
     let intDcAtIndex = 0;
     while (await implLt(intC, intL)) {
         intDcAtIndex = await get(intArrayContent, intC);
-        intArrayTemp = await dcToFormat('utf8', await anFromN(intDcAtIndex));
+        intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         if (await isAsciiByte(await get(intArrayTemp, 0))) {
             intArrayRes = await append(intArrayRes, intArrayTemp);
         }
@@ -1885,7 +1885,7 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
-    if (await or(await implEq(strOutFormat, 'utf8'))) {
+    if (await implEq(strOutFormat, 'utf8')) {
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'html')) {
