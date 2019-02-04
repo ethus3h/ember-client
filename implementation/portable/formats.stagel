@@ -95,3 +95,9 @@ r/an/dcFromFormat s/inFormat an/content
     set an/ret setElement an/ret 0 n/dc
     assertIsDcArray an/ret
     return an/ret
+
+r/v/exportWarning n/index s/problem
+    warn cat 'An error was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
+
+r/v/importWarning n/index s/problem
+    warn cat 'An error was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
