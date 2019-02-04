@@ -59,3 +59,8 @@ r/n/getExportFormatId s/format
     new n/res
     set n/res indexOf listInputFormats } s/format
     return n/res
+
+r/n/getFormatExtension s/format
+    new n/res
+    set n/res indexOf listInputFormats } s/format
+    return n/res
