@@ -1129,6 +1129,15 @@ async function asciiIsAlphanum(intN) {
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
+async function crlf() {
+    await internalDebugStackEnter('crlf:format-ascii'); let intArrayReturn;
+
+    let intArrayTemp = [];
+    intArrayTemp = [ 13, 10 ];
+
+    intArrayReturn = intArrayTemp; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
 /* 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p */
 /* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
 /* 2  STX    18 DC2    34 "    50 2    66 B    82 R    98  b    114 r */
@@ -1256,7 +1265,7 @@ async function dcaFromAsciiSafeSubset(intArrayContent) {
         }
         else if (await implEq(strState, 'crlf')) {
             strState = 'normal';
-            intArrayPrefilter = await append([ 13, 10 ]intArrayPrefilter);
+            intArrayPrefilter = await append(intArrayPrefilter, await crlf());
             if (await ne(intCurrentChar, 10)) {
                 /* Reparse the current character */
                 intCounter = await implSub(intCounter, 1);
@@ -1550,6 +1559,15 @@ async function isValidIdent(strIn) {
     }
 
     strReturn = boolRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function prepareStrForEcho(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('prepareStrForEcho:strings'); await assertIsStr(strIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await convertFormats('ascii', await getEnvPreferredFormat(), await append(await strToByteArray(strIn), await crlf()));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function listDcDatasets() {
@@ -1999,15 +2017,6 @@ async function bitXnor(intByte1, intByte2) {
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function prepareStrForEcho(strIn) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('prepareStrForEcho:unit-testing'); await assertIsStr(strIn); let intArrayReturn;
-
-    let intArrayRes = [];
-    intArrayRes = await convertFormats('ascii', await getEnvPreferredFormat(), await append(await strToByteArray(strIn), [ 13, 10 ]));
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function runTestTrue(strTestName, boolTestReturn) {
