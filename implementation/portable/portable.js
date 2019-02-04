@@ -272,9 +272,17 @@ async function dcaFromAsciiSafeSubset(intArrayContent) {
     strState = 'normal';
     let intArrayPrefilter = [];
     let intCurrentChar = 0;
+    let boolStrict = false;
+    boolStrict = false;
+    if (await implEq('true', await getSettingForFormat('asciiSafeSubset', 'in', 'strict'))) {
+        boolStrict = true;
+    }
     while (await implLt(intCounter, intLen)) {
         intCurrentChar = await get(intArrayContent, intCounter);
         await assertIsTrue(await isAsciiSafeSubsetChar(intCurrentChar));
+        if (await implAnd(boolStrict, await implAnd(await implEq(strState, 'normal'), await implEq(intCurrentChar, 10)))) {
+            await implDie('LF without preceding CR not allowed in asciiSafeSubset strict mode.');
+        }
         if (await implAnd(await implEq(strState, 'normal'), await implEq(intCurrentChar, 13))) {
             /* Wait to see if there's a lf after this cr. If so, treat them as a unit. */
             strState = 'crlf';
@@ -283,6 +291,9 @@ async function dcaFromAsciiSafeSubset(intArrayContent) {
             strState = 'normal';
             intArrayPrefilter = await append(intArrayPrefilter, await crlf());
             if (await ne(intCurrentChar, 10)) {
+                if (boolStrict) {
+                    await implDie('CR followed by non-LF byte not allowed in asciiSafeSubset strict mode.');
+                }
                 /* Reparse the current character */
                 intCounter = await implSub(intCounter, 1);
             }
