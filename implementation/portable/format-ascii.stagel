@@ -4,7 +4,7 @@ r/an/dcaFromAscii an/content
     set n/l count an/content
     new n/c
     set n/c 0
-    while le n/c n/l
+    while lt n/c n/l
         set an/res append an/res dcFromFormat 'ascii' anFromN get an/content n/c
         set n/c add n/c 1
     return an/res
