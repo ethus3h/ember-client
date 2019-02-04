@@ -77,3 +77,16 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
     }
     await assertIsStrArray(asReturn); return asReturn;
 }
+
+async function getImportSettings() {
+    
+}
+async function getExportSettings() {
+    
+}
+async function setImportSettings() {
+    
+}
+async function setExportSettings() {
+    
+}
