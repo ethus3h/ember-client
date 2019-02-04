@@ -12,14 +12,16 @@ r/an/dcaFromAscii an/content
     return an/res
 
 r/an/dcaToAscii an/content
-    assertIsDcArray an/dcIn
+    assertIsDcArray an/content
     new an/res
     new n/l
     set n/l count an/content
     new n/c
     set n/c 0
+    new n/currentDc
     while lt n/c n/l
-        set an/res append an/res dcFromFormat 'ascii' anFromN get an/content n/c
+        set n/currentDc n/c
+        set an/res append an/res dcFromFormat 'utf8' anFromN get an/content n/c
         set n/c add n/c 1
     assertIsByteArray an/res
     return an/res

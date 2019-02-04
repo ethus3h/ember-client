@@ -60,7 +60,7 @@ r/an/dcToFormat s/outFormat n/dc
     assertIsSupportedOutputFormat s/outFormat
     assertIsDc n/dc
     new an/res
-    if or eq s/outFormat 'utf8' } eq s/outFormat 'asciiSafeSubset'
+    if or eq s/outFormat 'utf8'
         set an/res push an/res utf8BytesFromDecimalChar hexToDec dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
     elif eq s/outFormat 'html'
         set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
