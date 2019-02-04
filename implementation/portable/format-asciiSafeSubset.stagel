@@ -15,7 +15,7 @@ r/an/dcaFromAsciiSafeSubset an/content
             set s/state 'crlf'
         elif eq s/state 'crlf'
             set s/state 'normal'
-            set an/prefilter append an/prefilter ( 13 10 )
+            set an/prefilter append an/prefilter crlf
             if ne n/currentChar 10
                 # Reparse the current character
                 set n/counter sub n/counter 1
