@@ -82,8 +82,17 @@ r/b/strContainsOnlyInt s/in
     return b/res
 
 r/s/strIsValidIdent s/in
+    # Positive int, specifically. Only digits allowed.
+    new n/temp
+    set n/temp len s/in
+    new n/i
+    set n/i 0
+    new b/res
+    set b/res true
+    new n/currentCharByte
     while lt n/i n/temp
-        if not asciiIsDigit byteFromChar strCharAtPos s/in n/i
+        set n/currentCharByte byteFromChar strCharAtPos s/in n/i
+        if not or asciiIsDigit n/currentCharByte } asciiIsLetter n/currentCharByte
             set b/res false
         set n/i add n/i 1
-    return true
+    return b/res
