@@ -19,8 +19,10 @@ r/an/dcaToAscii an/content
     new n/c
     set n/c 0
     new n/currentDc
+    new an/temp
     while lt n/c n/l
-        set n/currentDc n/c
+        set n/currentDc get an/content n/c
+        set an/temp 
         set an/res append an/res dcFromFormat 'utf8' anFromN get an/content n/c
         set n/c add n/c 1
     assertIsByteArray an/res
