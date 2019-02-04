@@ -53,7 +53,7 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             if isAsciiSafeSubsetChar get an/tempChar 0
                 set an/out push an/out an/tempChar
             else
-                eiteWarn 
+                exportWarning n/inputIndex cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
         elif eq s/state 'crlf'
             set state 'normal'
             if eq n/dcAtIndex 120
