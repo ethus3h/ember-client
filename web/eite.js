@@ -111,7 +111,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -1032,7 +1032,7 @@ async function isCharByte(genericIn) {
 
 async function dcaFromAscii(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-
+STAGEL_DEBUG=2;
     let intArrayRes = [];
     let intL = 0;
     intL = await count(intArrayContent);
@@ -1040,6 +1040,7 @@ async function dcaFromAscii(intArrayContent) {
     intC = 0;
     while (await le(intC, intL)) {
         intArrayRes = await append(intArrayRes, await dcFromFormat('ascii', await anFromN(await get(intArrayContent, intC))));
+        console.log(intArrayRes);
         intC = await implAdd(intC, 1);
     }
 
