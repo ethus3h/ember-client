@@ -6,3 +6,14 @@ r/s/getSettingsForFormat s/format s/direction
 
 r/as/settingStringToArray s/settings
 r/s/settingArrayToString as/settings
+        new s/res
+    set n/count count ga/in
+    new n/counter
+    set n/counter 0
+    new g/elem
+    while lt n/counter n/count
+        set g/elem get ga/in n/count
+        if eq g/elem g/value
+            return n/counter
+        set n/counter add n/counter 1
+    return s/res
