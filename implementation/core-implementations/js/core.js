@@ -189,6 +189,20 @@ async function internalSetup() {
         await internalLoadDatasets();
     }
 
+    // Fill out format settings arrays in case they aren't yet
+    let settingsCount=Object.keys(await listInputFormats()).length;
+    for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
+        if (importSettings[settingsCounter] === undefined) {
+            importSettings[settingsCounter] = '';
+        }
+    }
+    settingsCount=Object.keys(await listOutputFormats()).length;
+    for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
+        if (exportSettings[settingsCounter] === undefined) {
+            exportSettings[settingsCounter] = '';
+        }
+    }
+
     // Other startup stuff.
 
     if (haveDom) {
@@ -367,6 +381,14 @@ async function get(array, index) {
     else {
         returnVal=array[index];
     }
+    await assertIsGeneric(returnVal); return returnVal;
+}
+
+async function getNext(array, index) {
+    await assertIsArray(array); await assertIsInt(index); let returnVal;
+
+    returnVal=array[index + 1];
+
     await assertIsGeneric(returnVal); return returnVal;
 }
 
@@ -685,6 +707,24 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
+}
+
+async function getImportSettings() {
+    assertIsStrArray(importSettings);
+    return importSettings;
+}
+
+async function getExportSettings() {
+    assertIsStrArray(exportSettings);
+    return exportSettings;
+}
+
+async function setImportSettings(strArrayNewSettings) {
+    assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
+}
+
+async function setExportSettings() {
+    assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
 }
 
 /* assertions, provides:
