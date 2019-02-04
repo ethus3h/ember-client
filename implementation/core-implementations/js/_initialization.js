@@ -105,6 +105,12 @@ async function internalSetup() {
         await internalLoadDatasets();
     }
 
+    // Fill out format settings arrays in case they aren't yet
+    let settingsCount=0;
+    for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
+        
+    }
+
     // Other startup stuff.
 
     if (haveDom) {
