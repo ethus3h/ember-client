@@ -196,7 +196,7 @@ async function settingStringToArray(strSettings) {
     let strArrayRes = [];
     intCount = await len(strSettings);
     let intCounter = 0;
-    intCounter = ;
+    intCounter = 0;
     let strElem = '';
     let strState = '';
     strState = 'key';
