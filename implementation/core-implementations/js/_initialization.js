@@ -1,13 +1,13 @@
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
 var STAGEL_DEBUG;
-var strArrayImportSettings;
-var strArrayExportSettings;
-var strEnvPreferredFormat;
-var strEnvCharEncoding;
-var strEnvTerminalType;
-var intEnvResolutionW;
-var intEnvResolutionH;
+var importSettings;
+var exportSettings;
+var envPreferredFormat;
+var envCharEncoding;
+var envTerminalType;
+var envResolutionW;
+var envResolutionH;
 
 // Global variables
 
