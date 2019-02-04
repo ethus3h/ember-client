@@ -80,3 +80,6 @@ r/b/strContainsOnlyInt s/in
             set b/res false
         set n/i add n/i 1
     return b/res
+
+r/s/strIsValidIdent s/in
+    return true
