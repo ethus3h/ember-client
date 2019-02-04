@@ -20,8 +20,10 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     new an/res
     if eq s/outFormat 'integerList'
         set an/res dcaToIntegerList an/dcArrayIn
-    elif eq s/outFormat 'immutableCharacterCells'
-        set an/res dcaToImmutableCharacterCells an/dcArrayIn
+    elif eq s/outFormat 'ascii'
+        set an/res dcaToAscii an/dcArrayIn
+    elif eq s/outFormat 'asciiSafeSubset'
+        set an/res dcaToAsciiSafeSubset an/dcArrayIn
     elif eq s/outFormat 'html'
         set an/res dcaToHtml an/dcArrayIn
     else
