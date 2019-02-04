@@ -50,7 +50,9 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             set s/state 'crlf'
         if eq s/state 'normal'
             set an/tempChar dcToFormat 'html' n/dcAtIndex
-            if isAsciiSafeSubsetChar get an/tempChar 0
+            if dcIsNewline n/dcAtIndex
+                set an/out append an/out crlf
+            elif isAsciiSafeSubsetChar get an/tempChar 0
                 set an/out push an/out an/tempChar
             else
                 exportWarning n/inputIndex cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
