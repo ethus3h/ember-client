@@ -43,24 +43,14 @@ r/an/convertFormats s/inFormat s/outFormat an/in
 r/s/getExportExtension s/format
     # Produces the actual file extension to be used for a file exported in the given format, with the current configured format options.
     new s/res
+    if isSupportedCharEncoding s/format
+        set s/res cat getFormatExtension s/format } '.txt'
+        return s/res
+    if eq s/format 'html'
+        set s/res cat cat buildExportExtension getEnvCharEncoding } } '.htm'
+        return s/res
     set s/res getFormatExtension s/format
     return s/res
-    if eq s/format 'sems'
-        return 'sems'
-    elif eq s/format 'integerList'
-        return 'dcil'
-    elif eq s/format 'asciiSafeSubset'
-        return 'ascii'
-    elif eq s/format 'ascii'
-        return 'ascii'
-    elif eq s/format 'utf8'
-        return 'utf8'
-    elif eq s/format 'html'
-        new s/res
-        set s/res cat buildExportExtension getEnvCharEncoding } } '.htm'
-        return s/res
-    else
-        die cat 'Format not supported: ' s/format
 
 r/an/dcToFormat s/outFormat n/dc
     # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
