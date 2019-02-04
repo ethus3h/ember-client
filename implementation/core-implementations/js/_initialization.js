@@ -106,9 +106,17 @@ async function internalSetup() {
     }
 
     // Fill out format settings arrays in case they aren't yet
-    let settingsCount=0;
+    let settingsCount=Object.keys(await listInputFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
-        
+        if (importSettings[settingsCounter] === undefined) {
+            importSettings[settingsCounter] = '';
+        }
+    }
+    settingsCount=Object.keys(await listOutputFormats()).length;
+    for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
+        if (exportSettings[settingsCounter] === undefined) {
+            exportSettings[settingsCounter] = '';
+        }
     }
 
     // Other startup stuff.
