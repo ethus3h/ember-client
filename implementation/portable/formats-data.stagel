@@ -52,5 +52,5 @@ r/b/isSupportedTerminalType s/in
 
 r/n/getFormatId s/format
     new n/res
-    set n/res indexOf listImportFormats } s/format
+    set n/res dcDataLookupByValue 'formats' 1 s/format 0
     return n/res
