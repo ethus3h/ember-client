@@ -87,8 +87,8 @@ async function getExportSettings() {
     return exportSettings;
 }
 async function setImportSettings(strArrayNewSettings) {
-    assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings
+    assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
 }
 async function setExportSettings() {
-    
+    assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
 }
