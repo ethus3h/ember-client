@@ -141,7 +141,22 @@
             nearestDcLabel.title=text;
         }
 
-        async function updateNearestDcLabel(el) {
+        function autoformatInputArea(el) {
+            // Autoformat input area
+            start = el.selectionStart;
+            end = el.selectionEnd;
+            let len = el.value.length;
+            el.value = el.value.replace(/\s+/g, ' ');
+            len = len - el.value.length;
+            el.selectionStart = el.selectionEnd = start - len;
+        }
+
+        function updateNearestDcLabel(el) {
+            autoformatInputArea(el);
+            updateNearestDcLabelInner(el);
+        }
+
+        async function updateNearestDcLabelInner(el) {
             let start = el.selectionStart;
             let end = el.selectionEnd;
             if (start !== end) {
@@ -160,13 +175,6 @@
                 return;
             }
             setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
-            // Autoformat input area
-            start = el.selectionStart;
-            end = el.selectionEnd;
-            let len = el.value.length;
-            el.value = el.value.replace(/\s+/g, ' ');
-            len = len - el.value.length;
-            el.selectionStart = el.selectionEnd = start - len;
         }
 
         function typeInTextarea(el, newText) {
