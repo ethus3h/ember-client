@@ -1,5 +1,4 @@
 (async function(){
-    alert(',');
     browser.tabs.executeScript(
         { file: "/eite-webextension-get.js" }
     ).then(response=>{
