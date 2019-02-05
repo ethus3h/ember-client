@@ -1,8 +1,4 @@
-(function() {
-    browser.runtime.onMessage.addListener(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderMessage => { b8316ea083754b2e9290591f37d94765EiteWebextensionProvider(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderMessage) });
+let b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=[];
+b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=document.activeElement.innerHTML;
 
-    function b8316ea083754b2e9290591f37d94765EiteWebextensionProvider(message){
-        b8316ea083754b2e9290591f37d94765EiteWebextensionProviderResponse='Bebibeci';
-    }
-})();
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderResponse;
