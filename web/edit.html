@@ -37,7 +37,7 @@
                 inputarea=document.getElementById('inputarea');
                 inputarea.disabled=false;
                 document.addEventListener('input', function() {
-                    updateNearestDcLabel(inputarea);
+                    updateNearestDcLabel(inputarea,false);
                 }, false);
                 document.addEventListener('keydown', function(e) {
                     updateNearestDcLabel(inputarea,false);
