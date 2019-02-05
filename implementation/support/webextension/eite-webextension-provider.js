@@ -1,1 +1,2 @@
-window.b8316ea0-8375-4b2e-9290-591f37d94765
+window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelected="boruhcen";
+window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderReturn="nehcubor";
