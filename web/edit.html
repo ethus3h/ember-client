@@ -161,8 +161,8 @@
             }
             setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
             // Autoformat input area
-            let start = el.selectionStart;
-            let end = el.selectionEnd;
+            start = el.selectionStart;
+            end = el.selectionEnd;
             let len = el.value.length;
             el.value = el.value.replace(/\s+/g, ' ');
             len = len - el.value.length;
