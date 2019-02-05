@@ -1,9 +1,4 @@
 (async function(){
-    tab=await browser.tabs.query({
-        currentWindow: true,
-        active: true
-    });
-
     browser.tabs.executeScript(
         { file: "/eite-webextension-get.js" }
     ).then(response=>{
