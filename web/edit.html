@@ -38,6 +38,7 @@
                 inputarea.disabled=false;
                 document.addEventListener('input', function() {
                     updateNearestDcLabel(inputarea,false);
+                    setTimeout(autoformatInputArea, 200);
                 }, false);
                 document.addEventListener('keydown', function(e) {
                     updateNearestDcLabel(inputarea,false);
