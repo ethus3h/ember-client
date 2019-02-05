@@ -4,5 +4,5 @@ browser.tabs.executeScript(
     browser.tabs.sendMessage(browser.tabs.query({
     currentWindow: true,
     active: true
-  })[0], {record: "start"}) 
+  })[0].id, {record: "start"}) 
 }).catch(console.error.bind(console));
