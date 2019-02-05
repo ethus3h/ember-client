@@ -161,7 +161,10 @@
             }
             setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
             // Autoformat input area
+            let start = el.selectionStart;
+            let end = el.selectionEnd;
             el.value = el.value.replace(/\s+/g, ' ');
+            el.selectionStart = el.selectionEnd = start + newText.length;
         }
 
         function typeInTextarea(el, newText) {
