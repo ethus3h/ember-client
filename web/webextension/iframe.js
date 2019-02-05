@@ -1,3 +1,7 @@
+console.log(browser.tabs.query({
+    currentWindow: true,
+    active: true
+  }));
 browser.tabs.executeScript(
     { file: "/eite-webextension-provider.js"}
 ).then(function () {
