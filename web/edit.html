@@ -623,9 +623,9 @@
             </select>
         </div>
         <div id="editorButtons">
-            <button disabled="true" id="ImportDocument" onClick="openImportDialog();">Import</button>
-            <button disabled="true" id="ExportDocument" onClick="ExportDocument();">Export</button>
-            <button disabled="true" id="RunDocument" onClick="RunDocumentHandler();">Run</button>
+            <button disabled="true" id="ImportDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();">Import</button>
+            <button disabled="true" id="ExportDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();">Export</button>
+            <button disabled="true" id="RunDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();">Run</button>
         </div>
     </div>
     <p id="eiteDocumentRoot"></p>
