@@ -10,6 +10,15 @@
     "48": "icons/eite-text-field-icon-48.svg"
   },
 
+  "permissions": [
+    "activeTab"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/beasts-32.png",
+    "default_title": "Beastify",
+    "default_popup": "popup/choose_beast.html"
+  },
   "content_scripts": [
     {
       "matches": ["*://*/"],
