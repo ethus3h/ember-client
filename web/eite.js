@@ -2871,12 +2871,6 @@ async function getExportExtension(strFormat) {
 
         strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
-    if (await implEq(strFormat, 'html')) {
-        /* FIXME: Seems like this shouldn't be hardcoded for HTML, and there should be a better system for telling from the formats dcdata table what the desired ext format (e.g. name.encoding.format) is. Also, this assumes environment char encoding for the export, rather than using export setting for it. (That needs to be fixed in the HTML export code too.) */
-        strRes = await implCat(await getExportExtension(await getEnvCharEncoding(), ), '.htm');
-
-        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
     strRes = await getFormatExtension(strFormat);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;

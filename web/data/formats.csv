@@ -13,7 +13,7 @@ Import/export/tests support columns meaning:
 2,integerList,dcil,2,3,,,Dc Integer List,"ASCII text containing list of integers representing Dcs. Strictly, one space after every int, and no newlines. Loosely, with newlines or multiple spaces, or no end space."
 3,asciiSafeSubset,ascii,3,3,,encoding,Printable ASCII,"ASCII with no control characters. Variants: Line ending variants allowed for *reading*, but only CR/LF/CRLF, and all of them mean unambiguous CR+LF (=EOL), and should be interpreted as such on import and emitted as such on export, thus preserving line-endings by requiring non-CRLF to be stored using a higher-level protocol (e.g. base64ing the content and using this as an ASCII armor format only). How useful this format is is debateable."
 4,ascii,ascii,3,3,,encoding,ASCII,7-bit ASCII. Variants: Line ending variants
-5,html,htm,,1,,,HTML,"Extension should maybe include encoding and version, like .utf8.html5.htm (or maybe not, because doctypes exist)"
+5,html,htm,,1,,,HTML,
 6,sems,sems,2,,,,SEMS,"Space-separated list of ints representing Dcs, with comments. Comments are UTF-8. Strictly, one space after every int, valid UTF-8 comments only, and a final newline."
 7,unicode,,-1,-1,-1,internal,,Array of ints representing Unicode characters. Might include things that aren’t valid unicode.
 8,vt100,vt100,,,,terminal,VT100,Terminal format is an option for text files; when exporting would get the extension format: [terminal].[encoding].txt for example: vt100.utf8.txt

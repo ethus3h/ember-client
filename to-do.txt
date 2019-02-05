@@ -39,3 +39,4 @@ Implement more Dc abilities, in sync with creating EITE interface and server doc
 Lots of work. This is where most of the remaining effort will be. Probably months.
 Each Dc will need  more work to be implemented in each input and output format, I guess. More work will be desirable for on how Dc data are represented.
 
+Web extension for input into text field and display of selected text
