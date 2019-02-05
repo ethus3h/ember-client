@@ -11,6 +11,6 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
     rm -rf ./web/webextension
     mkdir ./web/webextension
     cp -r ./implementation/support/webextension/* ./web/webextension/
-    GLOBIGNORE="webextension"
+    GLOBIGNORE="./web/webextension"
     cp -r ./web/* ./web/webextension/
 )
