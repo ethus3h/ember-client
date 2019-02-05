@@ -1474,7 +1474,7 @@ async function getFormatId(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatId:formats-data'); await assertIsStr(strFormat); let intReturn;
 
     let intRes = 0;
-    intRes = await dcDataLookupByValue('formats', 1, strFormat, 0);
+    intRes = await intFromIntStr(await dcDataLookupByValue('formats', 1, strFormat, 0));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
