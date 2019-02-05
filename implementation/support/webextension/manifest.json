@@ -31,5 +31,5 @@
     "*"
   ],
 
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'sha256-/61jrvpIDBnrGiIH6q9epixgV6ZJoYJhw0mt5D++2eU='; object-src 'self'"
 }
