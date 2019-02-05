@@ -1851,10 +1851,8 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     else if (await implEq(strOutFormat, 'asciiSafeSubset')) {
         intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
     }
-}
-/*    elif eq s/outFormat 'utf8' */
-/*        set an/ret dcaFromUtf8 an/contentBytes */
-{
+    /*elif eq s/outFormat 'utf8' */
+    /*    set an/ret dcaFromUtf8 an/contentBytes */
     else if (await implEq(strOutFormat, 'html')) {
         intArrayRes = await dcaToHtml(intArrayDcArrayIn);
     }
@@ -1863,7 +1861,118 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     }
     await assertIsByteArray(intArrayRes);
 
-    async function isDc(genericIn) {
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('convertFormats:formats'); await assertIsStr(strInFormat);await assertIsStr(strOutFormat);await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsByteArray(intArrayIn);
+    let intArrayOut = [];
+    intArrayOut = await dcaToFormat(strOutFormat, await dcaFromFormat(strInFormat, intArrayIn));
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getExportExtension(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getExportExtension:formats'); await assertIsStr(strFormat); let strReturn;
+
+    /* Produces the actual file extension to be used for a file exported in the given format, with the current configured format options. */
+    let strRes = '';
+    if (await isSupportedCharEncoding(strFormat)) {
+        strRes = await implCat(await getFormatExtension(strFormat), '.txt');
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    if (await implEq(strFormat, 'html')) {
+        /* FIXME: Seems like this shouldn't be hardcoded for HTML, and there should be a better system for telling from the formats dcdata table what the desired ext format (e.g. name.encoding.format) is. Also, this assumes environment char encoding for the export, rather than using export setting for it. (That needs to be fixed in the HTML export code too.) */
+        strRes = await implCat(await implCat(await getExportExtension(await getEnvCharEncoding(), ), '.htm'));
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    strRes = await getFormatExtension(strFormat);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcToFormat(strOutFormat, intDc) {
+    await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutFormat);await assertIsInt(intDc); let intArrayReturn;
+
+    /* Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure. */
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsDc(intDc);
+    let intArrayRes = [];
+    if (await implEq(strOutFormat, 'utf8')) {
+        intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
+    }
+    else if (await implEq(strOutFormat, 'html')) {
+        strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+        if (await isBaseStr(strRes, 16)) {
+            intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+        }
+        else {
+            intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
+        }
+    }
+    else {
+        await implError(await implCat('Unimplemented character output format: ', strOutFormat));
+    }
+    /* Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc. */
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcFromFormat(strInFormat, intArrayContent) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInFormat);await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
+    await assertIsTrue(await isSupportedInternalFormat(strInFormat));
+    let intArrayRet = [];
+    let intDc = 0;
+    if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
+        let intC = 0;
+        intC = await get(intArrayContent, 0);
+        if (await implEq(strInFormat, 'ascii')) {
+            if (await implNot(await isAsciiByte(intC))) {
+                await implDie(await implCat('The character number ', await implCat(await strFrom(intC), ' is not a 7-bit ASCII character.')));
+            }
+        }
+        await assertIsNonnegative(intC);
+        if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
+            await implDie('FIXME: save unmapped unicode chars');
+
+            intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+        }
+        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
+    }
+    else {
+        await implDie(await implCat('Unimplemented character source format: ', strInFormat));
+    }
+    intArrayRet = await setElement(intArrayRet, 0, intDc);
+    await assertIsDcArray(intArrayRet);
+
+    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function exportWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex);await assertIsStr(strProblem);
+
+    await implWarn(await implCat('An error was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await internalDebugStackExit();
+}
+
+async function importWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex);await assertIsStr(strProblem);
+
+    await implWarn(await implCat('An error was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await internalDebugStackExit();
+}
+
+async function isDc(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
 
     if (await implNot(await isInt(genericIn))) {
