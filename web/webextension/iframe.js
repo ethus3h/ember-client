@@ -4,10 +4,10 @@
   }));
 browser.tabs.executeScript(
     { file: "/eite-webextension-provider.js"}
-).then(function () {
+).then((async function () {
     await browser.tabs.sendMessage(await browser.tabs.query({
     currentWindow: true,
     active: true
   })[0].id, {record: "start"}) 
-}).catch(console.error.bind(console));
+})()).catch(console.error.bind(console));
 })();
