@@ -44,7 +44,7 @@
                     globalCachedInputState=e.key;
                 }, false);
                 document.addEventListener('keyup', function() {
-                    updateNearestDcLabel(inputarea);
+                    updateNearestDcLabel(inputarea,false);
                 }, false);
                 document.addEventListener('click', function() {
                     updateNearestDcLabel(inputarea);
@@ -151,8 +151,10 @@
             el.selectionStart = el.selectionEnd = start - len;
         }
 
-        function updateNearestDcLabel(el) {
-            autoformatInputArea(el);
+        function updateNearestDcLabel(el, autoformat=true) {
+            if (autoformat) {
+                autoformatInputArea(el);
+            }
             updateNearestDcLabelInner(el);
         }
 
