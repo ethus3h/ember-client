@@ -7,7 +7,7 @@
   "description": "Use EITE document in text fields",
 
   "icons": {
-    "48": "icons/border-48.png"
+    "48": "icons/eite-text-field-icon-48.svg"
   },
 
   "content_scripts": [
