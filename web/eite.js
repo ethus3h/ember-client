@@ -111,7 +111,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -1470,31 +1470,22 @@ async function isSupportedTerminalType(strIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function getImportFormatId(strFormat) {
-    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getImportFormatId:formats-data'); await assertIsStr(strFormat); let intReturn;
+async function getFormatId(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatId:formats-data'); await assertIsStr(strFormat); let intReturn;
 
     let intRes = 0;
-    intRes = await indexOf(await listInputFormats(), strFormat);
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function getExportFormatId(strFormat) {
-    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getExportFormatId:formats-data'); await assertIsStr(strFormat); let intReturn;
-
-    let intRes = 0;
-    intRes = await indexOf(await listInputFormats(), strFormat);
+    intRes = await dcDataLookupByValue('formats', 1, strFormat, 0);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function getFormatExtension(strFormat) {
-    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExtension:formats-data'); await assertIsStr(strFormat); let intReturn;
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExtension:formats-data'); await assertIsStr(strFormat); let strReturn;
 
     let intRes = 0;
-    intRes = await indexOf(await listInputFormats(), strFormat);
+    intRes = await dcDataLookupById('formats', await getFormatId(strFormat), 3);
 
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+    strReturn = intRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function strChar(strStr, intIndex) {
