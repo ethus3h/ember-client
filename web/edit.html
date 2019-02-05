@@ -155,6 +155,9 @@
             if (autoformat) {
                 autoformatInputArea(el);
             }
+            else {
+                setTimeout(function(){autoformatInputArea(el)}, 200);
+            }
             updateNearestDcLabelInner(el);
         }
 
