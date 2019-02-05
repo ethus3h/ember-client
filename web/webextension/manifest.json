@@ -17,7 +17,7 @@
   "browser_action": {
     "default_icon": "icons/eite-text-field-icon-48.svg",
     "default_title": "EITE Text-Fields",
-    "default_popup": "edit.html"
+    "default_popup": "iframe.html"
   },
 
   "content_scripts": [
