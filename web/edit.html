@@ -163,6 +163,7 @@
             // Autoformat input area
             text = el.value;
             text = text.replace(/\s+/g, ' ');
+            el.value = el.value.replace(/\s+/g, ' ');
         }
 
         function typeInTextarea(el, newText) {
