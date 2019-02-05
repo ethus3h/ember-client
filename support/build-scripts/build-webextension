@@ -10,4 +10,4 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 rm -rf ./web/webextension
 mkdir ./web/webextension
 cp -r ./web/* ./web/webextension/
-cp ./implementation/support/webextension/manifest.json ./web/webextension/
+cp -r ./implementation/support/webextension/* ./web/webextension/
