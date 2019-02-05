@@ -52,7 +52,7 @@ r/b/isSupportedTerminalType s/in
 
 r/n/getFormatId s/format
     new n/res
-    set n/res dcDataLookupByValue 'formats' 1 s/format 0
+    set n/res intFromIntStr dcDataLookupByValue 'formats' 1 s/format 0
     return n/res
 
 r/s/getFormatExtension s/format
