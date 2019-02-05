@@ -1,4 +1,4 @@
-async function()({await console.log(await browser.tabs.query({
+(async function(){await console.log(await browser.tabs.query({
     currentWindow: true,
     active: true
   }));
@@ -10,4 +10,4 @@ browser.tabs.executeScript(
     active: true
   })[0].id, {record: "start"}) 
 }).catch(console.error.bind(console));
-)}();
+})();
