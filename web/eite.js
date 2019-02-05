@@ -1483,7 +1483,7 @@ async function getFormatExtension(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExtension:formats-data'); await assertIsStr(strFormat); let strReturn;
 
     let strRes = '';
-    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 3);
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 2);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
