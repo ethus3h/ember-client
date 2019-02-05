@@ -36,7 +36,7 @@ r/as/listCharEncodings
 r/b/isSupportedCharEncoding s/in
     # Specifically, is it a supported character encoding for the output environment.
     new b/res
-    set b/res and contains listEnvironmentCharEncodings } s/in } isSupportedOutputFormat s/in
+    set b/res and contains listCharEncodings } s/in } isSupportedOutputFormat s/in
     return b/res
 
 r/as/listTerminalTypes
