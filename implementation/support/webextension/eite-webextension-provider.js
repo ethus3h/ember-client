@@ -8,7 +8,7 @@ window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderReturn="nehcubor"
     }
     window.hasRun = true;
 
-    browser.runTime.onMessage.addListener(notify);
+    browser.runtime.onMessage.addListener(notify);
     function notify(message){
         alert(message.record);
     }
