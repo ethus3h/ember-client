@@ -1,4 +1,4 @@
-r/an/dcaToAscii an/content
+r/an/dcaToUtf8 an/content
     assertIsDcArray an/content
     new an/res
     new n/l
@@ -10,10 +10,9 @@ r/an/dcaToAscii an/content
     while lt n/c n/l
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
-        if isAsciiByte get an/temp 0
-            set an/res append an/res an/temp
-        else
+        if eq 0 count an/temp
             exportWarning n/c cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
+        set an/res append an/res an/temp
         set n/c add n/c 1
     assertIsByteArray an/res
     return an/res
