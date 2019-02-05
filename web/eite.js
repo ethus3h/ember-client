@@ -1482,10 +1482,10 @@ async function getFormatId(strFormat) {
 async function getFormatExtension(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExtension:formats-data'); await assertIsStr(strFormat); let strReturn;
 
-    let intRes = 0;
-    intRes = await dcDataLookupById('formats', await getFormatId(strFormat), 3);
+    let strRes = '';
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 3);
 
-    strReturn = intRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function strChar(strStr, intIndex) {
