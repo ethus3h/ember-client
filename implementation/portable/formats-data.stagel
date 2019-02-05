@@ -50,17 +50,12 @@ r/b/isSupportedTerminalType s/in
     set b/res and contains listTerminalTypes } s/in } isSupportedOutputFormat s/in
     return b/res
 
-r/n/getImportFormatId s/format
+r/n/getFormatId s/format
     new n/res
-    set n/res indexOf listInputFormats } s/format
+    set n/res dcDataLookupByValue 'formats' 1 s/format 0
     return n/res
 
-r/n/getExportFormatId s/format
+r/s/getFormatExtension s/format
     new n/res
-    set n/res indexOf listInputFormats } s/format
-    return n/res
-
-r/n/getFormatExtension s/format
-    new n/res
-    set n/res indexOf listInputFormats } s/format
+    set n/res dcDataLookupById 'formats' getFormatId s/format } 3
     return n/res
