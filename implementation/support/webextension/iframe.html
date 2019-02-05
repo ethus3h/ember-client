@@ -10,7 +10,7 @@
 
 </head>
 <script>browser.tabs.executeScript(tab, {
-        file: "/content_scripts/recorder.js",})
+        file: "eite-webextension-provider.js",})
         .then(function () { browser.tabs.sendMessage(tab, {record: "start"}) })
         .catch(console.error.bind(console));</script>
 <body style="width:600px;height;1000px;">
