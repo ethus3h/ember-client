@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "EITE-text-fields",
+  "name": "EITE Text-Fields",
   "version": "0.1",
 
   "description": "Use EITE document in text fields",
@@ -16,9 +16,10 @@
 
   "browser_action": {
     "default_icon": "icons/beasts-32.png",
-    "default_title": "Beastify",
-    "default_popup": "popup/choose_beast.html"
+    "default_title": "EITE Text-Fields",
+    "default_popup": "edit.html"
   },
+
   "content_scripts": [
     {
       "matches": ["*://*/"],
