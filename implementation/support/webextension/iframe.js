@@ -6,6 +6,7 @@
 
     browser.tabs.executeScript(
         { file: "/eite-webextension-provider.js"}
-    ).then((async function () {tab[0].id, {record: "start"}) 
-    })()).catch(console.error.bind(console));
+    ).then(response=>{
+        // Handle response from content script
+    }).catch(console.error.bind(console));
 })();
