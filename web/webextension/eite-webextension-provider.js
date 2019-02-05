@@ -6,11 +6,11 @@ window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderReturn="nehcubor"
     if (window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderHasRun) {
         return;
     }
-    window.hasRun = true;
+    window.b8316ea083754b2e9290591f37d94765EiteWebextensionProviderHasRun = true;
 
-    browser.runtime.onMessage.addListener(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelected);
+    browser.runtime.onMessage.addListener(b8316ea083754b2e9290591f37d94765EiteWebextensionProvider);
 
-    function b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelected(message){
-        alert('bucbecu');
+    function b8316ea083754b2e9290591f37d94765EiteWebextensionProvider(message){
+        alert(message);
     }
 })();
