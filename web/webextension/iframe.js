@@ -5,10 +5,9 @@
     });
 
     browser.tabs.executeScript(
-        { file: "/eite-webextension-provider.js"}
+        { file: "/eite-webextension-get.js"}
     ).then(response=>{
         // Handle response from content script
-        console.log(response);
-        console.log('bubububub');
+        document.getElementById('test').innerHTML='buteriuro';
     }).catch(console.error.bind(console));
 })();
