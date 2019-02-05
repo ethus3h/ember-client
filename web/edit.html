@@ -163,8 +163,10 @@
             // Autoformat input area
             let start = el.selectionStart;
             let end = el.selectionEnd;
+            let len = el.value.length;
             el.value = el.value.replace(/\s+/g, ' ');
-            el.selectionStart = el.selectionEnd = start + newText.length;
+            len = len - el.value.length;
+            el.selectionStart = el.selectionEnd = start - len;
         }
 
         function typeInTextarea(el, newText) {
