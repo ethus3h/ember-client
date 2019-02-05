@@ -1446,7 +1446,7 @@ async function isSupportedCharEncoding(strIn) {
 
     /* Specifically, is it a supported character encoding for the output environment. */
     let boolRes = false;
-    boolRes = await implAnd(await contains(await listEnvironmentCharEncodings(), strIn), await isSupportedOutputFormat(strIn));
+    boolRes = await implAnd(await contains(await listCharEncodings(), strIn), await isSupportedOutputFormat(strIn));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
