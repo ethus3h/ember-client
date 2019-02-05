@@ -56,6 +56,6 @@ r/n/getFormatId s/format
     return n/res
 
 r/s/getFormatExtension s/format
-    new n/res
-    set n/res dcDataLookupById 'formats' getFormatId s/format } 3
-    return n/res
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 3
+    return s/res
