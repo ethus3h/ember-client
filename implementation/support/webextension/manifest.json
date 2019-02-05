@@ -1,10 +1,10 @@
 {
 
   "manifest_version": 2,
-  "name": "Borderify",
-  "version": "1.0",
+  "name": "EITE-text-fields",
+  "version": "0.1",
 
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "Use EITE document in text fields",
 
   "icons": {
     "48": "icons/border-48.png"
