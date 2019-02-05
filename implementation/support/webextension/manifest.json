@@ -12,7 +12,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*"],
+      "matches": ["*://*/"],
       "js": ["eite-webextension-provider.js"]
     }
   ]
