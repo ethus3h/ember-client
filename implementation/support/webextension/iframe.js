@@ -2,8 +2,8 @@
     browser.tabs.executeScript(
         { file: "/eite-webextension-get.js" }
     ).then(response=>{
-        console.log(response);
         // Handle response from content script
-        document.getElementById('test').innerHTML='buteriuro';
+        canEdit=response[0];
+        contents=response[1];
     }).catch(console.error.bind(console));
 })();
