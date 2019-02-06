@@ -1,4 +1,4 @@
-window.addEventListener('message', function(message) {
+window.addEventListener('message', async function(message) {
     canEdit=message[0];
     contents=message[1];
     if (!canEdit) {
