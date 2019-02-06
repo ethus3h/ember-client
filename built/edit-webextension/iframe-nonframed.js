@@ -5,6 +5,6 @@ window.onload=(function(){
         canEdit=response[0];
         contents=response[1];
         iframe=document.getElementById('eiteEditToolFrame');
-        iframe.contentWindow.postMessage(response, iframe.contentWindow.location.href);
+        iframe.contentWindow.postMessage(response, iframe.src);
     }
 });
