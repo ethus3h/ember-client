@@ -32,7 +32,6 @@ window.addEventListener('message', function(message) {
                 canEdit=message.data[1];
                 contents=message.data[2];
                 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
-                console.log(window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
                 if (!canEdit) {
                     openAlertDialog('Note: The requested content is read-only.');
                 }
@@ -52,7 +51,9 @@ window.addEventListener('message', function(message) {
         startSpinner();
         window.setTimeout(async function() {
                 console.log(window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
-            window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', await importAndExport('integerList', 'ascii', await getInputDoc()), window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+                let res= await importAndExport('integerList', 'ascii', await getInputDoc());
+                console.log(res);
+            window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',res, window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
         }, 500);
     }
 
