@@ -7,14 +7,15 @@ async function framehostMain() {
     }
     else {
         // Running as a WebExtension
-        browser.tabs.executeScript({ file: "/eite-webextension-get.js" });
-        /*.then(function(response){
+        browser.tabs.executeScript(
+            { file: "/eite-webextension-get.js" }
+        ).then(function(response){
             // Handle response from content script
             response[3]=document.getElementById('eiteEditToolFrame').src;
             iframe=Document.getElementById('eiteEditToolFrame');
             console.log(response);
             iframe.contentWindow.postMessage(response);
-        }).catch(console.error.bind(console));*/
+        }).catch(console.error.bind(console));
     }
 }
 
