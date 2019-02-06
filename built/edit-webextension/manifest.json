@@ -20,13 +20,6 @@
     "default_popup": "framehost.html"
   },
 
-  "content_scripts": [
-    {
-      "matches": ["*://*/"],
-      "js": ["eite-webextension-provider.js"]
-    }
-  ],
-
   "web_accessible_resources": [
     "*"
   ],
