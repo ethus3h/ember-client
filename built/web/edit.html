@@ -240,8 +240,8 @@
             i=0;
             while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
                 notificationOverlay.style.opacity=0;
-                e[0].style.opacity=0;
-                e[0].style.transform='translate(-50%, -50%) scale(0.75)';
+                e[i].style.opacity=0;
+                e[i].style.transform='translate(-50%, -50%) scale(0.75)';
                 i=i+1;
             };
             setTimeout(function(){
@@ -255,16 +255,17 @@
 
         function closeAlertDialog() {
             notificationOverlay.removeEventListener('keyup', alertDialogEscapeListener);
-            let e=document.getElementsByClassName('alertDialog');
+            // Alert dialog also shares importDialog class. Maybe it shouldn't, but anyway.
+            let e=document.getElementsByClassName('importDialog');
             i=0;
             while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
                 notificationOverlay.style.opacity=0;
-                e[0].style.opacity=0;
-                e[0].style.transform='translate(-50%, -50%) scale(0.75)';
+                e[i].style.opacity=0;
+                e[i].style.transform='translate(-50%, -50%) scale(0.75)';
                 i=i+1;
             };
             setTimeout(function(){
-                let e=document.getElementsByClassName('alertDialog');
+                let e=document.getElementsByClassName('importDialog');
                 while (Object.keys(e).length > 0) {
                     e[0].parentNode.removeChild(e[0]);
                 };
