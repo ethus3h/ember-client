@@ -248,9 +248,34 @@
             }, 750);
         }
 
+        function closeAlertDialog() {
+            notificationOverlay.removeEventListener('keyup', alertDialogEscapeListener);
+            let e=document.getElementsByClassName('alertDialog');
+            i=0;
+            while (Object.keys(e).length > 0 && i < Object.keys(e).length) {
+                notificationOverlay.style.opacity=0;
+                e[0].style.opacity=0;
+                e[0].style.transform='translate(-50%, -50%) scale(0.75)';
+                i=i+1;
+            };
+            setTimeout(function(){
+                let e=document.getElementsByClassName('alertDialog');
+                while (Object.keys(e).length > 0) {
+                    e[0].parentNode.removeChild(e[0]);
+                };
+                notificationOverlay.style.display='none';
+            }, 750);
+        }
+
         function importDialogEscapeListener(event) {
                 if (event.key === 'Escape') {
                     closeImportDialog();
+                }
+        }
+
+        function alertDialogEscapeListener(event) {
+                if (event.key === 'Escape') {
+                    closeAlertDialog();
                 }
         }
 
@@ -260,6 +285,18 @@
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.addEventListener('click', function(event) {
                 closeImportDialog();
+            });
+            notificationOverlay.style.display='block';
+            notificationOverlay.style.opacity=1;
+            document.body.appendChild(elem.firstChild);
+        }
+
+        function openAlertDialog() {
+            let elem=document.importNode(document.getElementById('alertDialogTemplate').content, true);
+            document.addEventListener('keyup', alertDialogEscapeListener);
+            notificationOverlay=document.getElementById('notificationOverlay');
+            notificationOverlay.addEventListener('click', function(event) {
+                closeAlertDialog();
             });
             notificationOverlay.style.display='block';
             notificationOverlay.style.opacity=1;
