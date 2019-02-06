@@ -11,8 +11,8 @@ async function framehostMain() {
             { file: "/eite-webextension-get.js" }
         ).then(function(response){
             // Handle response from content script
-            response[3]=document.getElementById('eiteEditToolFrame').src;
-            iframe=Document.getElementById('eiteEditToolFrame');
+            iframe=document.getElementById('eiteEditToolFrame');
+            response[3]=iframe.src;
             console.log(response);
             iframe.contentWindow.postMessage(response);
         }).catch(console.error.bind(console));
