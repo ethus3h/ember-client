@@ -1,5 +1,5 @@
 (async function(){
-    if (browser !== undefined) {
+    if (typeof browser !== undefined) {
         // Running as a WebExtension
         browser.tabs.executeScript(
             { file: "/eite-webextension-get.js" }
