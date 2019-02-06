@@ -11,3 +11,11 @@ rm -rf ./built/edit-webextension
 mkdir ./built/edit-webextension
 cp -r ./implementation/platform-support/edit-webextension/* ./built/edit-webextension/
 cp -r ./built/web/* ./built/edit-webextension/
+
+if [[ "$1" == "--xpi" ]]; then
+    (
+        cd ./built/edit-webextension
+        zip -r -FS ../edit-webextension.zip *
+        mv ../edit-webextension.zip ./edit-webextension.xpi
+    )
+fi
