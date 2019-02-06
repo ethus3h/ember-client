@@ -13,7 +13,7 @@ window.addEventListener('message', function(message) {
                     isDetached(el.parentNode);
                 }
             }
-
+console.log('uucutecutucuteriu');
             if (isDetached(element)) {
                 alert('redy);');
                 console.log('bubeiccecuc');
