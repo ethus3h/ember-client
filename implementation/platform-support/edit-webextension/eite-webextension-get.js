@@ -46,7 +46,7 @@ else {
     }
 }
 
-function typeInTextarea(el, newText) {
+function b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTypeInTextarea(el, newText) {
     // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
     let start = el.selectionStart;
     let end = el.selectionEnd;
@@ -62,7 +62,13 @@ browser.runtime.onMessage.addListener(function(message) {
     if (message[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
         // Put the edited content back where it goes
         if ((b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLInputElement && (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'text' || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'search')) || (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLTextAreaElement)) {
-            b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.value = message[1];
+            if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionText().length > 0) {
+                b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTypeInTextarea(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem, message[1]);
+            }
+            else {
+                b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.value = message[1];
+                b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.focus();
+            }
         }
         else {
             // An element that isn't editable has had content sent back to be saved into it. What?!
