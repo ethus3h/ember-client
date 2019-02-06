@@ -1,4 +1,4 @@
-window.addEventListener('message', async function(message) {
+window.addEventListener('message', function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
         const observer = new MutationObserver(function () {
@@ -37,5 +37,8 @@ window.addEventListener('message', async function(message) {
             document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
         }
     };
+
+    console.log(message);
+
     onRemove(document.getElementById('overlay'), (function(){eiteReadyCallback(message);}));
 });
