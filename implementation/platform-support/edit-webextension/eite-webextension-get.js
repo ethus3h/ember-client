@@ -1,3 +1,4 @@
+// Don't use let since it will persist between executions of this script.
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=[];
 function b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionText() {
     /* https://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text */
@@ -16,7 +17,7 @@ function b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionTex
     return text;
 }
 
-let b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionText();
+b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionText();
 
 if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.length > 0) {
     if ((b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLInputElement && (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'text' || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'search')) || (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLTextAreaElement)) {
