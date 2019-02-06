@@ -34,7 +34,8 @@ window.addEventListener('message', function(message) {
                 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
                 let utf8encoder = new TextEncoder();
                 document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
-                window.setTimeout(async function() {
+                removeSpinner();
+                RunDocumentHandler(async function() {
                     if (!canEdit) {
                         openAlertDialog('Note: The requested content is read-only.');
                     }
@@ -43,9 +44,7 @@ window.addEventListener('message', function(message) {
                         elem.disabled=false;
                         document.getElementById('editorButtons').appendChild(elem.firstChild);
                     }
-                }, 500);
-                removeSpinner();
-                RunDocumentHandler();
+                });
             }, 500);
         }
     };

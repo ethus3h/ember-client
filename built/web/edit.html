@@ -226,8 +226,10 @@
                 // Do the computation-heavy work
                 await runDocument(await importDocument('integerList', await getInputDoc()));
                 if (callback !== undefined) {
-                removeSpinner();
-                }
+                window.setTimeout(async function() {
+                    await callback();
+                    await removeSpinner();
+                }, 500);
             }, 500);
         };
 
