@@ -4,8 +4,7 @@ window.addEventListener('message', function(message) {
         function (tabArray) {
             browser.tabs.sendMessage(tabArray[0].id, message).then(response=>{
                 // Handle response from content script
-                iframe=Document.getElementById('eiteEditToolFrame');
-                iframe.contentWindow.postMessage(response);
+                window.close();
             }).catch(console.error.bind(console));
         }
     )}
