@@ -18,9 +18,10 @@ function b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionTex
     }
     return text;
 }
-
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetSelectionText();
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem=document.activeElement;
+b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSavedSelStart=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.selectionStart;
+b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSavedSelEnd=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.selectionEnd;
 
 if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.length > 0) {
     if ((b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLInputElement && (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'text' || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'search')) || (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLTextAreaElement)) {
