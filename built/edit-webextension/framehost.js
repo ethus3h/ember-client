@@ -18,5 +18,5 @@ async function framehostMain() {
         }).catch(console.error.bind(console));
     }
 }
-window.onload=(async function(){
-});
+
+window.onload=framehostMain;
