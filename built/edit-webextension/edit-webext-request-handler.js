@@ -1,6 +1,7 @@
 window.addEventListener('message', function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
+        console.log(element);console.log(onDetachCallback);
         const observer = new MutationObserver(function () {
             function isDetached(el) {
                 if (el.parentNode === document) {
