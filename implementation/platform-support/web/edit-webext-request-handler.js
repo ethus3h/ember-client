@@ -4,6 +4,7 @@ window.addEventListener('message', function(message) {
         console.log(element);console.log(onDetachCallback.toString());
         const observer = new MutationObserver(function () {
             function isDetached(el) {
+                console.log(el);
                 if (el.parentNode === document) {
                     false;
                 } else if (el.parentNode === null) {
