@@ -2,6 +2,7 @@ window.onload=(async function(){
     if (typeof browser !== 'undefined') {
         // Running as a WebExtension
         await setupIfNeeded();
+        console.log('setup');
         browser.tabs.executeScript(
             { file: "/eite-webextension-get.js" }
         ).then(response=>{
