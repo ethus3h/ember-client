@@ -2887,12 +2887,12 @@ async function dcToFormat(strOutFormat, intDc) {
         intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'html')) {
-        strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
-        if (await isBaseStr(strRes, 16)) {
+        strRes = await dcDataLookupByValue('mappings/to/html', 0, intDc, 1);
+        if (await implGt(await len(strRes), 0)) {
             intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
         }
         else {
-            intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/to/html', 0, intDc, 1)));
+            intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0)));
         }
     }
     else {
