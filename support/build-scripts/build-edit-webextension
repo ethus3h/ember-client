@@ -21,7 +21,7 @@ if [[ "$1" == "--xpi" ]]; then
             mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension"
             srsync ./edit-webextension.xpi "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/"
             if [[ "$?" == "0" ]]; then
-                rm ./edit-webextension.xpi
+                sudo rsync -a --checksum ./edit-webextension.xpi "/" && rm ./edit-webextension.xpi
             fi
         fi
     )
