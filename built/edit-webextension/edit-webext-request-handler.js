@@ -28,7 +28,7 @@ window.addEventListener('message', function(message) {
     async function eiteReadyCallback(message) {
         if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
             startSpinner();
-            window.setTimeout(async function(){
+            window.setTimeout(async function() {
                 canEdit=message.data[1];
                 contents=message.data[2];
                 if (!canEdit) {
@@ -45,6 +45,13 @@ window.addEventListener('message', function(message) {
             }, 500);
         }
     };
+
+    async function DoneEditingHandler() {
+        startSpinner();
+        window.setTimeout(async function() {
+            window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', await importAndExport('integerList', 'ascii', await getInputDoc()), iframe.src);
+        }, 500);
+    }
 
     onRemove(document.getElementById('overlay'), function() {
         eiteReadyCallback(message);
