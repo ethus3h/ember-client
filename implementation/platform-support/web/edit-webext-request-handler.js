@@ -1,7 +1,7 @@
 window.addEventListener('message', async function(message) {
-    canEdit=message[0];
-    contents=message[1];
-    console.log(message);
+    canEdit=message.data[0];
+    contents=message.data[1];
+    console.log(message.data);
     if (!canEdit) {
         openAlertDialog('The requested content is read-only.');
     }
