@@ -2884,17 +2884,17 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await implEq(strOutFormat, 'utf8')) {
-        intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
+        intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
     }
     else if (await implEq(strOutFormat, 'html')) {
         strRes = await dcDataLookupByValue('mappings/to/html', 0, intDc, 1);
         if (await implGt(await len(strRes), 0)) {
-            intArrayRes = await push(intArrayRes, await strToByteArray(strRes));
+            intArrayRes = await append(intArrayRes, await strToByteArray(strRes));
         }
         else {
-            strRes = await strToByteArray(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0));
+            strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
             if (await isBaseStr(strRes, 16)) {
-                intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
             }
         }
     }
