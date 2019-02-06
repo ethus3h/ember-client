@@ -7,7 +7,7 @@ window.onload=(function(){
         iframe=document.getElementById('eiteEditToolFrame');
         iframe.contentWindow.postMessage(response, iframe.src);
         if (!canEdit) {
-            
+            openAlertDialog('The requested content is read-only.');
         }
         document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
     }
