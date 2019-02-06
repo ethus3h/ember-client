@@ -1,0 +1,35 @@
+{
+
+  "manifest_version": 2,
+  "name": "EITE Text-Fields",
+  "version": "0.1",
+
+  "description": "Use EITE document in text fields",
+
+  "icons": {
+    "48": "icons/eite-text-field-icon-48.svg"
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/eite-text-field-icon-48.svg",
+    "default_title": "EITE Text-Fields",
+    "default_popup": "iframe.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/"],
+      "js": ["eite-webextension-provider.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    "*"
+  ],
+
+  "content_security_policy": "script-src 'self' 'sha256-/61jrvpIDBnrGiIH6q9epixgV6ZJoYJhw0mt5D++2eU='; object-src 'self'"
+}
