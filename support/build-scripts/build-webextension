@@ -7,11 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Create Web extension version of edit tool
 
-(
-    rm -rf ./web/webextension
-    mkdir ./web/webextension
-    cp -r ./implementation/support/webextension/* ./web/webextension/
-    GLOBIGNORE="./web/webextension"
-    cp -r ./web/* ./web/webextension/
-    cp ./LICENSE* ./web/webextension/
-)
+mkdir ./built/edit-webextension
+cp -r ./implementation/support/edit-webextension/* ./built/edit-webextension/
+cp -r ./built/web/* ./built/edit-webextension/
+cp ./LICENSE* ./built/edit-webextension/
