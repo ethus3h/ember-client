@@ -35,15 +35,9 @@ window.addEventListener('message', function(message) {
                     openAlertDialog('Note: The requested content is read-only.');
                 }
                 else {
-                let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
-            document.addEventListener('keyup', importDialogEscapeListener);
-            notificationOverlay=document.getElementById('notificationOverlay');
-            notificationOverlay.addEventListener('click', function(event) {
-                closeImportDialog();
-            });
-            notificationOverlay.style.display='block';
-            notificationOverlay.style.opacity=1;
-            document.body.appendChild(elem.firstChild);
+                    let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
+                    document.addEventListener('keyup', importDialogEscapeListener);
+                    document.body.appendChild(elem.firstChild);
                 }
                 let utf8encoder = new TextEncoder();
                 document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
