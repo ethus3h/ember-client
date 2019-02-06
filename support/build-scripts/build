@@ -19,6 +19,6 @@ else
 fi
 
 ./support/build-scripts/build-web
-./support/build-scripts/build-webextension
+./support/build-scripts/build-edit-webextension
 
 echo "Done."
