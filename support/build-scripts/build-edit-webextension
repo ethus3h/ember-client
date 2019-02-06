@@ -10,4 +10,3 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 mkdir ./built/edit-webextension
 cp -r ./implementation/platform-support/edit-webextension/* ./built/edit-webextension/
 cp -r ./built/web/* ./built/edit-webextension/
-cp ./LICENSE* ./built/edit-webextension/
