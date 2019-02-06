@@ -18,7 +18,7 @@ else
     "$sicmd" "$@" &> /dev/null
 fi
 
-rm -r ./built
+rm -rf ./built
 mkdir ./built
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
