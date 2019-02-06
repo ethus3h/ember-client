@@ -13,4 +13,5 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
     cp -r ./implementation/support/webextension/* ./web/webextension/
     GLOBIGNORE="./web/webextension"
     cp -r ./web/* ./web/webextension/
+    cp ./LICENSE* ./web/webextension/
 )
