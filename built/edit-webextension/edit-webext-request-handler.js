@@ -36,5 +36,5 @@ window.addEventListener('message', async function(message) {
             document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
         }
     };
-    mutobs.observe(document.getElementById('overlay'))
+    onRemove(document.getElementById('overlay'), eiteReadyCallback);
 });
