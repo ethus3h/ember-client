@@ -414,7 +414,7 @@
             background-color: #e3cdab;
         }
         #mainBox {
-            display:flex;
+            display: flex;
             height: 100vh;
             width: 100vw;
             position: fixed;
@@ -422,6 +422,10 @@
             left: 0;
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
+            flex-direction: column;
+        }
+        #mainRow {
+            display: flex;
         }
         body {
             overflow: hidden;
@@ -660,22 +664,24 @@
 </p>
 <div id="overlay"><div id="overlayLoadingSpinner" class="loadingSpinner" style="background-color:#e3cdab;transform:all 0.2s;"></div></div>
 <section id="mainBox">
-    <div id="DcSelection">
-        <span>Click to insert</span>
-    </div>
-    <div id="editorColumn">
-        <textarea id="inputarea" disabled="true"></textarea>
-        <div id="currentDcLabel"></div>
-        <div id="formatOptions">
-            <div>In: </div><select id="inFormat" disabled="true">
-                <option value="">[not loaded]</option>
-            </select>
-            <div>Out: </div><select id="outFormat" disabled="true">
-                <option value="">[not loaded]</option>
-            </select>
+    <div id="mainRow">
+        <div id="DcSelection">
+            <span>Click to insert</span>
         </div>
+        <div id="editorColumn">
+            <textarea id="inputarea" disabled="true"></textarea>
+            <div id="currentDcLabel"></div>
+            <div id="formatOptions">
+                <div>In: </div><select id="inFormat" disabled="true">
+                    <option value="">[not loaded]</option>
+                </select>
+                <div>Out: </div><select id="outFormat" disabled="true">
+                    <option value="">[not loaded]</option>
+                </select>
+            </div>
+        </div>
+        <p id="eiteDocumentRoot"></p>
     </div>
-    <p id="eiteDocumentRoot"></p>
     <div id="editorButtons">
         <button disabled="true" id="ImportDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();">Import</button>
         <button disabled="true" id="ExportDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();">Export</button>
