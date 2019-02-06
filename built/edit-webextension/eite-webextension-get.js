@@ -68,13 +68,15 @@ browser.runtime.onMessage.addListener(function(message) {
                 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTypeInTextarea(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem, message[1]);
             }
             else {
-                b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.value = message[1];
                 if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSavedSelLength > 0) {
                     // Losing focus by opening the addon clears selection from input element, so restore it before entering the content
                     b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.selectionStart=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSavedSelStart;
                     b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.selectionEnd=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSavedSelEnd;
                     b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.focus();
                     b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTypeInTextarea(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem, message[1]);
+                }
+                else {
+                    b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.value = message[1];
                 }
             }
         }
