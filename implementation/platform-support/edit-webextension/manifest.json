@@ -17,7 +17,7 @@
   "browser_action": {
     "default_icon": "icons/eite-text-field-icon-48.svg",
     "default_title": "EITE Text-Fields",
-    "default_popup": "iframe.html"
+    "default_popup": "framehost.html"
   },
 
   "content_scripts": [
@@ -31,5 +31,5 @@
     "*"
   ],
 
-  "content_security_policy": "script-src 'self' 'sha256-/61jrvpIDBnrGiIH6q9epixgV6ZJoYJhw0mt5D++2eU='; object-src 'self'"
+  "content_security_policy": "script-src 'self'; object-src 'self'"
 }
