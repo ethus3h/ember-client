@@ -1,4 +1,5 @@
 window.addEventListener('message', function(message) {
+    console.log('bureri');
     browser.tabs.query(
         { currentWindow: true, active: true },
         function (tabArray) {
