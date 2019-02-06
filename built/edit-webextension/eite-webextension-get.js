@@ -1,6 +1,6 @@
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=[];
-
 function getSelectionText() {
+    /* https://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text */
     var text = "";
     var activeEl = document.activeElement;
     var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
@@ -16,9 +16,11 @@ function getSelectionText() {
     return text;
 }
 
-document.onmouseup = document.onkeyup = document.onselectionchange = function() {
-  document.getElementById("sel").value = getSelectionText();
-};
+let text=getSelectionText();
+
+if (text.length > 0) {
+    b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', true, document.activeElement.value];
+}
 
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem=document.activeElement;
 
