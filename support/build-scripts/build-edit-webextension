@@ -14,6 +14,7 @@ cp -r ./built/web/* ./built/edit-webextension/
 
 if [[ "$1" == "--xpi" ]]; then
     (
+        # https://web.archive.org/web/20190206082904/https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Package_your_extension_
         cd ./built/edit-webextension
         zip -r -FS ../edit-webextension.zip *
         mv ../edit-webextension.zip ./edit-webextension.xpi
