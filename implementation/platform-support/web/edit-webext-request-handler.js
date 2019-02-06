@@ -35,15 +35,15 @@ window.addEventListener('message', function(message) {
                 let utf8encoder = new TextEncoder();
                 document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
                 window.setTimeout(async function() {
-                if (!canEdit) {
-                    openAlertDialog('Note: The requested content is read-only.');
-                }
-                else {
-                    let elem=document.importNode(document.getElementById('doneButtonTemplate').content, true);
-                    elem.disabled=false;
-                    document.getElementById('editorButtons').appendChild(elem.firstChild);
-                }
-            }, 500);
+                    if (!canEdit) {
+                        openAlertDialog('Note: The requested content is read-only.');
+                    }
+                    else {
+                        let elem=document.importNode(document.getElementById('doneButtonTemplate').content, true);
+                        elem.disabled=false;
+                        document.getElementById('editorButtons').appendChild(elem.firstChild);
+                    }
+                }, 500);
                 removeSpinner();
                 RunDocumentHandler();
             }, 500);
