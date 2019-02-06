@@ -46,6 +46,10 @@ window.addEventListener('message', function(message) {
         }
     };
 
+    async function DoneEditingHandler() {
+        
+    }
+
     onRemove(document.getElementById('overlay'), function() {
         eiteReadyCallback(message);
     });

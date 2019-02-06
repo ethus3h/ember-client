@@ -1,7 +1,7 @@
 r/an/dcaToHtml an/dcIn
     assertIsDcArray an/dcIn
     new an/out
-    set an/out append an/out strToByteArray '<div style="white-space:pre">'
+    set an/out append an/out strToByteArray '<div style="white-space:pre-wrap">'
     new n/len
     set n/len count an/dcIn
     new n/inputIndex
