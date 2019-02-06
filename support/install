@@ -94,7 +94,6 @@ cp scripts/* "$emberBindir/"
 mkdir -p "$emberSysconfdir"
 
 cp -r data "$emberDatadir/eite/"
-cp -r logic "$emberDatadir/eite/"
 cp -r tests "$emberDatadir/eite/"
 cp -r docs/* "$emberDatadir/doc/eite/"
 
