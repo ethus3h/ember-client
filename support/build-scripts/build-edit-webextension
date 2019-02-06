@@ -19,8 +19,10 @@ if [[ "$1" == "--xpi" ]]; then
         zip -r -FS ../edit-webextension.zip *
         mv ../edit-webextension.zip ./edit-webextension.xpi
         if [[ -d "/Ember Library/Ember satellite projects/wreathe-packages" ]]; then
+            date="$(date-uuid)"
             mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension"
-            srsync ./edit-webextension.xpi "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/"
+            mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/$date"
+            srsync ./edit-webextension.xpi "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/$date/"
             if [[ "$?" == "0" ]]; then
                 sudo rsync -a --checksum ./edit-webextension.xpi "/" && rm ./edit-webextension.xpi
             fi
