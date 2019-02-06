@@ -30,18 +30,19 @@ if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.length
         b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', false, b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText];
     }
 }
-
-if ((b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLInputElement && (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'text' || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'search')) || (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLTextAreaElement)) {
-    b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', true, document.activeElement.value];
-}
 else {
-    b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=document.activeElement;
-    b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.innerText || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.textContent;
-    if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.length > 256) {
-        alert('EITE: Not loading the more than 256 characters of contents of the current element to avoid locking up the browser. You can explicitly choose an area to view by selecting it.')
+    if ((b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLInputElement && (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'text' || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem.type == 'search')) || (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderTempElem instanceof HTMLTextAreaElement)) {
+        b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', true, document.activeElement.value];
     }
     else {
-        b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', false, b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText];
+        b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=document.activeElement;
+        b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText=b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.innerText || b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.textContent;
+        if (b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText.length > 256) {
+            alert('EITE: Not loading the more than 256 characters of contents of the current element to avoid locking up the browser. You can explicitly choose an area to view by selecting it.')
+        }
+        else {
+            b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', false, b8316ea083754b2e9290591f37d94765EiteWebextensionProviderSelectionText];
+        }
     }
 }
 
