@@ -89,8 +89,8 @@ fi
 mkdir -p "$emberDatadir/eite"
 mkdir -p "$emberDatadir/doc/eite"
 mkdir -p "$emberBindir"
-chmod +x cli/*
-cp cli/* "$emberBindir/"
+chmod +x scripts/*
+cp scripts/* "$emberBindir/"
 mkdir -p "$emberSysconfdir"
 
 cp -r data "$emberDatadir/eite/"
