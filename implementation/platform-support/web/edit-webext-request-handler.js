@@ -6,9 +6,9 @@ window.addEventListener('message', function(message) {
             function isDetached(el) {
                 console.log(el);
                 if (el.parentNode === document) {
-                    false;
+                    return false;
                 } else if (el.parentNode === null) {
-                    true;
+                    return true;
                 } else {
                     isDetached(el.parentNode);
                 }
