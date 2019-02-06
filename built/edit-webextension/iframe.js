@@ -7,6 +7,5 @@
         contents=response[1];
         iframe=Document.getElementById('eiteEditToolFrame');
         iframe.contentWindow.postMessage(response);
-        console.log(response);
     }).catch(console.error.bind(console));
 })();
