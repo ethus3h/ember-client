@@ -32,6 +32,9 @@ window.addEventListener('message', function(message) {
                 canEdit=message.data[1];
                 contents=message.data[2];
                 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
+                let utf8encoder = new TextEncoder();
+                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
+                window.setTimeout(async function() {
                 if (!canEdit) {
                     openAlertDialog('Note: The requested content is read-only.');
                 }
@@ -40,8 +43,7 @@ window.addEventListener('message', function(message) {
                     elem.disabled=false;
                     document.getElementById('editorButtons').appendChild(elem.firstChild);
                 }
-                let utf8encoder = new TextEncoder();
-                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
+            }, 500);
                 removeSpinner();
                 RunDocumentHandler();
             }, 500);
