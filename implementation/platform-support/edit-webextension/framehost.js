@@ -14,7 +14,7 @@ async function framehostMain() {
             iframe=document.getElementById('eiteEditToolFrame');
             response[3]=iframe.src;
             console.log(response);
-            iframe.contentWindow.postMessage(response);
+            iframe.contentWindow.postMessage(response, iframe.src);
         }).catch(console.error.bind(console));
     }
 }
