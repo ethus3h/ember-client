@@ -17,7 +17,7 @@ window.addEventListener('message', function(message) {
         }
         else {
             // An element that isn't editable has had content sent back to be saved into it. What?!
-            alert("A bug has been encountered in EITE: An element that is not e")
+            alert("A bug has been encountered in EITE: An element that is not editable has had content returned for it.");
         }
     }
 }
