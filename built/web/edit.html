@@ -696,6 +696,7 @@
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="exportNotifyTemplate"><div class="exportNotification"></div></template>
 <template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button onClick="importDocumentFromFile();">Import from file</button><button onClick="importDocumentFromURL(prompt('What URL do you want? Note that the same-origin policy must allow the URL to be fetched. (Dangerous workaround if it does not: do NOT do this unless you know what you are doing: To disable same-origin enforcement, you can use CORS Everywhere add-on for Firefox, but it allows any Web site access to any other, including your current logins.)'));">Import from URL</button><button onClick="closeImportDialog();">Cancel</button></div></template>
+<template id="alertDialogTemplate"><div class="importDialog"><div class="alertDialogMessageRegion"></div><button onClick="closeAlertDialog();">Okay</button></div></template>
 <input type="file" id="filepicker"></input>
 </body>
 </html>
