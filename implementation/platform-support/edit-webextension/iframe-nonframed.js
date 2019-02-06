@@ -6,5 +6,9 @@ window.onload=(function(){
         contents=response[1];
         iframe=document.getElementById('eiteEditToolFrame');
         iframe.contentWindow.postMessage(response, iframe.src);
+        if (!canEdit) {
+            
+        }
+        document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
     }
 });
