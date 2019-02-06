@@ -5,8 +5,8 @@ window.onload=(async function(){
         iframe=document.getElementById('eiteEditToolFrame');
         iframe.contentWindow.postMessage(response, iframe.src);
     }
-else {
-            // Running as a WebExtension
+    else {
+        // Running as a WebExtension
         await setupIfNeeded();
         console.log('setup');
         browser.tabs.executeScript(
@@ -18,5 +18,5 @@ else {
             console.log(response);
             iframe.contentWindow.postMessage(response);
         }).catch(console.error.bind(console));
-
-}});
+    }
+});
