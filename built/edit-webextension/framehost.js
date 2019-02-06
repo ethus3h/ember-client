@@ -1,4 +1,4 @@
-window.onload=(async function(){
+async function framehostMain() {
     if (typeof browser === 'undefined') {
         // Not running as a WebExtension
         response=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', true, " <input class=\"nav-trigger\" id=\"nav-trigmain>  ", document.baseURI]
@@ -17,4 +17,6 @@ window.onload=(async function(){
             iframe.contentWindow.postMessage(response);
         }).catch(console.error.bind(console));
     }
+}
+window.onload=(async function(){
 });
