@@ -20,12 +20,12 @@ window.addEventListener('message', function(message) {
                 observer.disconnect();
                 onDetachCallback();
             }
-        })
+        });
 
         observer.observe(document, {
             childList: true,
             subtree: true
-        })
+        });
     }
 
     async function eiteReadyCallback(message) {
