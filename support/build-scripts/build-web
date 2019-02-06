@@ -7,6 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Create Web extension version of edit tool
 
+rm -rf ./built/web
 mkdir ./built/web
 cp ./implementation/core-implementations/js/core.js ./built/web/eite.js
 echo >> ./built/web/eite.js
