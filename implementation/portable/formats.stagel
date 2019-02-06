@@ -61,11 +61,11 @@ r/an/dcToFormat s/outFormat n/dc
     if eq s/outFormat 'utf8'
         set an/res push an/res utf8BytesFromDecimalChar hexToDec dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
     elif eq s/outFormat 'html'
-        set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
-        if isBaseStr s/res 16
+        set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+        if gt len s/res } 0
             set an/res push an/res utf8BytesFromDecimalChar hexToDec s/res
         else
-            set an/res push an/res strToByteArray dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+            set an/res push an/res strToByteArray dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
     else
         error cat 'Unimplemented character output format: ' s/outFormat
     # Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
