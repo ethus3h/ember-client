@@ -4,5 +4,6 @@ window.addEventListener('message', async function(message) {
     if (!canEdit) {
         openAlertDialog('The requested content is read-only.');
     }
-    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(fr.result)));
+    let utf8encoder = new TextEncoder();
+    document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
 });
