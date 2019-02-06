@@ -4,5 +4,6 @@ if (typeof browser === 'undefined') {
     canEdit=response[0];
     contents=response[1];
     iframe=document.getElementById('eiteEditToolFrame');
+    console.log(iframe);
     iframe.contentWindow.postMessage(response);
 }
