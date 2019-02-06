@@ -52,7 +52,7 @@ window.addEventListener('message', function(message) {
         window.setTimeout(async function() {
             console.log(window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
             let utf8decoder = new TextDecoder();
-            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(await importAndExport('integerList', 'ascii', await getInputDoc()))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(new Uint8Array(await importAndExport('integerList', 'ascii', await getInputDoc())))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
         }, 500);
     }
 
