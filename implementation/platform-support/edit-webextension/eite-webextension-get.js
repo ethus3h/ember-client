@@ -9,4 +9,8 @@ else {
     b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse=['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', false, document.activeElement.innerHTML];
 }
 
+window.addEventListener('message', function(message) {
+    
+}
+
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse;
