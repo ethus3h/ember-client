@@ -20,6 +20,6 @@ window.addEventListener('message', function(message) {
             alert("A bug has been encountered in EITE: An element that is not editable has had content returned for it.");
         }
     }
-}
+});
 console.log(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse);
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse;
