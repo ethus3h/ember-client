@@ -14,6 +14,7 @@ window.addEventListener('message', function(message) {
                 }
             }
 console.log('uucutecutucuteriu');
+console.log(isDetached(element));
             if (isDetached(element)) {
                 alert('redy);');
                 console.log('bubeiccecuc');
