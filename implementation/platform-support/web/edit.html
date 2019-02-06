@@ -291,8 +291,9 @@
             document.body.appendChild(elem.firstChild);
         }
 
-        function openAlertDialog() {
+        function openAlertDialog(message) {
             let elem=document.importNode(document.getElementById('alertDialogTemplate').content, true);
+            elem.querySelector('.alertDialogMessageRegion').innerHTML=message;
             document.addEventListener('keyup', alertDialogEscapeListener);
             notificationOverlay=document.getElementById('notificationOverlay');
             notificationOverlay.addEventListener('click', function(event) {
