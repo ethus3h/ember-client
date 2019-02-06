@@ -24,7 +24,7 @@ window.addEventListener('message', async function(message) {
         })
     }
 
-    async function eiteReadyCallback() {
+    async function eiteReadyCallback(message) {
         if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
             canEdit=message.data[1];
             contents=message.data[2];
@@ -36,5 +36,5 @@ window.addEventListener('message', async function(message) {
             document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
         }
     };
-    onRemove(document.getElementById('overlay'), eiteReadyCallback);
+    onRemove(document.getElementById('overlay'), (function(){eiteReadyCallback(message);}));
 });
