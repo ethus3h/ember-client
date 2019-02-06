@@ -5,5 +5,6 @@
         // Handle response from content script
         canEdit=response[0];
         contents=response[1];
+        Document.getElementById('eiteEditToolFrame').innerHTML=contents;
     }).catch(console.error.bind(console));
 })();
