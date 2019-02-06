@@ -53,7 +53,10 @@ window.addEventListener('message', function(message) {
                 console.log(window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
                 let res= await importAndExport('integerList', 'ascii', await getInputDoc());
                 console.log(res);
-            window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',res, window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+                
+    let utf8decoder = new TextDecoder();
+    return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
+            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',res], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
         }, 500);
     }
 
