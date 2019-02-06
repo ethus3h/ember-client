@@ -46,7 +46,7 @@ window.addEventListener('message', function(message) {
         }
     };
 
-    async function DoneEditingHandler() {
+    window.DoneEditingHandler = async function() {
         startSpinner();
         window.setTimeout(async function() {
             window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', await importAndExport('integerList', 'ascii', await getInputDoc()), iframe.src);
