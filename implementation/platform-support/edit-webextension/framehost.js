@@ -12,7 +12,7 @@ async function framehostMain() {
         ).then(function(response){
             // Handle response from content script
             iframe=document.getElementById('eiteEditToolFrame');
-            response[0][3]=iframe.src;
+            response[0][3]=document.baseURI;
             iframe.contentWindow.postMessage(response[0], iframe.src);
         }).catch(console.error.bind(console));
     }
