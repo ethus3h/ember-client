@@ -1,5 +1,6 @@
         console.log('makewinnonload');
 window.onload=(async function(){
+    console.log('Burecicutittetu');
     if (typeof browser === 'undefined') {
         // Not running as a WebExtension
         console.log('setupnwe');
