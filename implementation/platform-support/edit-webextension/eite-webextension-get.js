@@ -10,7 +10,10 @@ else {
 }
 
 window.addEventListener('message', function(message) {
-    
+    if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
+        // Put the edited content back where it goes
+        
+    }
 }
 
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse;
