@@ -98,7 +98,7 @@ cp -r logic "$emberDatadir/eite/"
 cp -r tests "$emberDatadir/eite/"
 cp -r docs/* "$emberDatadir/doc/eite/"
 
-rm web/papaparse.js
-cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js web/
+rm built/web/papaparse.js
+cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js built/web/
 
-cp -r web "$emberDatadir/eite/"
+cp -r built/* "$emberDatadir/eite/"
