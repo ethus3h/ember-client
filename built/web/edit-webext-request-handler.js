@@ -1,4 +1,5 @@
 window.addEventListener('message', function(message) {
-    canEdit=response[0];
-    contents=response[1];
+    canEdit=message[0];
+    contents=message[1];
+    console.log(message);
 });
