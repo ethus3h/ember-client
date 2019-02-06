@@ -37,6 +37,7 @@ window.addEventListener('message', function(message) {
                 }
                 else {
                     let elem=document.importNode(document.getElementById('doneButtonTemplate').content, true);
+                    elem.disabled=false;
                     document.getElementById('editorButtons').appendChild(elem.firstChild);
                 }
                 let utf8encoder = new TextEncoder();
