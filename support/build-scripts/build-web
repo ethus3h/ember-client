@@ -16,4 +16,4 @@ cat ./implementation/speedups/speedups.js >> ./built/web/eite.js
 echo $'\n''// @license-end' >> ./built/web/eite.js
 rm -rf ./built/web/data
 cp -r ./data ./built/web/
-cp /Ember\ Library/Ember\ satellite\ projects/futuramerlin-web-toolkit/support/assets/*.css ./built/web/
+cp /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
