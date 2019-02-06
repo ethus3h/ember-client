@@ -4,7 +4,6 @@ window.addEventListener('message', function(message) {
         if (element !== null) {
             const observer = new MutationObserver(function () {
                 function isDetached(el) {
-                    console.log(el);
                     if (el.parentNode === document) {
                         return false;
                     } else if (el.parentNode === null) {
@@ -32,7 +31,6 @@ window.addEventListener('message', function(message) {
             window.setTimeout(async function(){
                 canEdit=message.data[1];
                 contents=message.data[2];
-                console.log(message.data);
                 if (!canEdit) {
                     openAlertDialog('The requested content is read-only.');
                 }
