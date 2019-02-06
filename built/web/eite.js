@@ -2778,7 +2778,7 @@ async function dcaToHtml(intArrayDcIn) {
 
     await assertIsDcArray(intArrayDcIn);
     let intArrayOut = [];
-    intArrayOut = await append(intArrayOut, await strToByteArray('<div style="white-space:pre">'));
+    intArrayOut = await append(intArrayOut, await strToByteArray('<div style="white-space:pre-wrap">'));
     let intLen = 0;
     intLen = await count(intArrayDcIn);
     let intInputIndex = 0;
