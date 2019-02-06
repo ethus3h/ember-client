@@ -49,7 +49,7 @@ window.addEventListener('message', function(message) {
     async function DoneEditingHandler() {
         startSpinner();
         window.setTimeout(async function() {
-            window.parent.postMessage(await importAndExport('integerList', 'ascii', await getInputDoc()), iframe.src);
+            window.parent.postMessage('b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', await importAndExport('integerList', 'ascii', await getInputDoc()), iframe.src);
         }, 500);
     }
 
