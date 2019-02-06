@@ -11,4 +11,3 @@ window.onload=(async function(){
         }).catch(console.error.bind(console));
     }
 });
-
