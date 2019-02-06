@@ -1908,7 +1908,7 @@ async function dcToFormat(strOutFormat, intDc) {
             intArrayRes = await push(intArrayRes, await strToByteArray(strRes));
         }
         else {
-            intArrayRes = await push(intArrayRes, await strToByteArray(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0)));
+            strRes = await strToByteArray(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0));
             if (await isBaseStr(strRes, 16)) {
                 intArrayRes = await push(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
             }
