@@ -16,6 +16,7 @@ window.addEventListener('message', function(message) {
 
             if (isDetached(element)) {
                 alert('redy);');
+                console.log('bubeiccecuc');
                 observer.disconnect();
                 onDetachCallback();
             }
