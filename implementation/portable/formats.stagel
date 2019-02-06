@@ -65,7 +65,7 @@ r/an/dcToFormat s/outFormat n/dc
         if gt len s/res } 0
             set an/res push an/res strToByteArray s/res
         else
-            set an/res push an/res strToByteArray dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+            set s/res strToByteArray dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
             if isBaseStr s/res 16
                 set an/res push an/res utf8BytesFromDecimalChar hexToDec s/res
     else
