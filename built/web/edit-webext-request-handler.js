@@ -41,5 +41,5 @@ window.addEventListener('message', function(message) {
 
     console.log(message);
 
-    onRemove(document.getElementById('overlay'), function(){ alert('d');eiteReadyCallback(message); });
+    onRemove(document.getElementById('overlay'), function() {alert('d')}, function(){ alert('d');eiteReadyCallback(message); });
 });
