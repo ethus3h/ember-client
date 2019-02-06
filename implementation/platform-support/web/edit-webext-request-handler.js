@@ -47,7 +47,11 @@ window.addEventListener('message', function(message) {
     };
 
     async function DoneEditingHandler() {
-        
+        startSpinner();
+        window.setTimeout(async function(){
+        iframe=document.getElementById('eiteEditToolFrame');
+        iframe.contentWindow.postMessage(response, iframe.src);
+            }, 500);
     }
 
     onRemove(document.getElementById('overlay'), function() {
