@@ -1,7 +1,6 @@
 window.addEventListener('message', function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
-        console.log(element);console.log(onDetachCallback.toString());
         const observer = new MutationObserver(function () {
             function isDetached(el) {
                 console.log(el);
@@ -13,10 +12,7 @@ window.addEventListener('message', function(message) {
                     isDetached(el.parentNode);
                 }
             }
-console.log('uucutecutucuteriu');
-console.log(isDetached(element));
             if (isDetached(element)) {
-                alert('redy);');
                 console.log('bubeiccecuc');
                 observer.disconnect();
                 onDetachCallback();
@@ -46,7 +42,6 @@ console.log(isDetached(element));
     console.log(message);
 
     onRemove(document.getElementById('overlay'), function() {
-        alert('d');
         eiteReadyCallback(message);
     });
 });
