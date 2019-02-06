@@ -21,5 +21,5 @@ window.addEventListener('message', function(message) {
         }
     }
 }
-
+console.log(b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse);
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse;

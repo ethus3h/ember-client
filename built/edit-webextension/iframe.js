@@ -8,6 +8,7 @@ window.onload=(async function(){
             // Handle response from content script
             response[3]=document.getElementById('eiteEditToolFrame').src;
             iframe=Document.getElementById('eiteEditToolFrame');
+            console.log(response);
             iframe.contentWindow.postMessage(response);
         }).catch(console.error.bind(console));
     }
