@@ -46,6 +46,18 @@ else {
     }
 }
 
+function typeInTextarea(el, newText) {
+    // Based on Jayant Bhawal's post at https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
+    let start = el.selectionStart;
+    let end = el.selectionEnd;
+    let text = el.value;
+    let before = text.substring(0, start);
+    let after  = text.substring(end, text.length);
+    el.value = (before + newText + after);
+    el.selectionStart = el.selectionEnd = start + newText.length;
+    el.focus();
+}
+
 browser.runtime.onMessage.addListener(function(message) {
     if (message[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
         // Put the edited content back where it goes
