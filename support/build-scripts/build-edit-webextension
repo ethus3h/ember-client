@@ -20,7 +20,7 @@ if [[ "$1" == "--xpi" ]]; then
         mv ../edit-webextension.zip ./edit-webextension.xpi
         if [[ -d "/Ember Library/Ember satellite projects/wreathe-packages" ]]; then
             date="$(date-uuid)"
-            mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension"
+            mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension" &>/dev/null || true
             mkdir "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/$date"
             srsync ./edit-webextension.xpi "/Ember Library/Ember satellite projects/wreathe-packages/eite-edit-webextension/$date/"
             if [[ "$?" == "0" ]]; then
