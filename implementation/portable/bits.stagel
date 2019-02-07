@@ -5,7 +5,8 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     # next 8
     set n/res add n/res mul n/c 255
     # and so on
-    set n/res a
+    set n/res add n/res mul n/b 65535
+    set n/res 
     return n/res
 
 r/n/bitAnd32 n/a n/b
