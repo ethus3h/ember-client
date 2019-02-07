@@ -42,7 +42,7 @@ async function bitRshift8(byteA, intPlaces) {
 
 // Internal function
 
-async function lsbFromInt(int32input) {
+async function leastSignificantByte(int32input) {
     let byteReturn;
     let byteMask;
     byteMask = 255;
