@@ -3,9 +3,9 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     new n/res
     # 8 least significant bits
     set n/res n/d
-    # next 8
+    # next 8: n * 2^8
     set n/res add n/res mul n/c 255
-    # and so on
+    # and so on: n * 2^16
     set n/res add n/res mul n/b 65535
     if gt n/a 127
         new n/temp
