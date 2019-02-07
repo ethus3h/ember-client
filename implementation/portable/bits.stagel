@@ -12,8 +12,7 @@ r/n/bytesToInt32 n/a n/b n/c n/d
         set n/temp sub n/a 127
         
     set n/res 
-    #include <stdio.h>
-
+        #include <stdio.h>
 
 void printBits(unsigned int num){
     unsigned int size = sizeof(unsigned int);
@@ -27,14 +26,15 @@ void printBits(unsigned int num){
 }
 int main() {
   unsigned char a;
-  a=255;
+  a=128;
   unsigned long res;
   res=a;
-res=res * 65535 * 8;
-res=res + a;
+res=res * 16843008 - (255 * 65535);
+/*res=res + a;
+res=4294967295 / 255;*/
   printf("a=%d\n", a);
   printf("res=%d\n", res);
-  printBits(res);
+  printBits(a);  printBits(res);
   return 0;
 }
 
