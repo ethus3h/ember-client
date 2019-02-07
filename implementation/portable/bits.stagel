@@ -41,7 +41,7 @@ r/n/bitAnd32 n/a n/b
     set n/res 
     return n/res
 
-r/n/bitOr8 n/byte1 n/byte2
+r/n/bitOr n/width n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
     new n/temp
@@ -50,7 +50,7 @@ r/n/bitOr8 n/byte1 n/byte2
     assertIsByte n/temp
     return n/temp
 
-r/n/bitNor8 n/byte1 n/byte2
+r/n/bitNor n/width n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
     new n/temp
@@ -58,7 +58,7 @@ r/n/bitNor8 n/byte1 n/byte2
     assertIsByte n/temp
     return n/temp
 
-r/n/bitNand8 n/byte1 n/byte2
+r/n/bitNand n/width n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
     new n/temp
@@ -66,7 +66,7 @@ r/n/bitNand8 n/byte1 n/byte2
     assertIsByte n/temp
     return n/temp
 
-r/n/bitXor8 n/byte1 n/byte2
+r/n/bitXor n/width n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
     new n/temp
@@ -75,7 +75,7 @@ r/n/bitXor8 n/byte1 n/byte2
     assertIsByte n/temp
     return n/temp
 
-r/n/bitXnor8 n/byte1 n/byte2
+r/n/bitXnor n/width n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
     new n/temp
