@@ -18,7 +18,9 @@ r/n/bytesToInt32 n/a n/b n/c n/d
 
 r/n/bitAnd32 n/a n/b
     new n/res
-    set n/res 
+    if lt n/res 0
+        set n/res add n/res -2147483648
+    set n/res
     return n/res
 
 r/n/bitAnd n/width n/byte1 n/byte2
