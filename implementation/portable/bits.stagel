@@ -62,6 +62,15 @@ r/n/bitNot n/width n/byte
     return n/res
 
 r/n/bitLshift n/width n/byte1 n/places
+    new n/res
+    if eq n/width 8
+        set n/res bitLshift8 n/byte
+    elif eq n/width 32
+        set n/res bitLshift32 n/byte
+    else
+        die cat 'bitLshift called with unsupported bit width ' strFrom n/width
+    return n/res
+
 r/n/bitRshift n/width n/byte1 n/places
 
 r/n/bitOr n/width n/byte1 n/byte2
