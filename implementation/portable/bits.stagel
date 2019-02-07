@@ -18,6 +18,8 @@ r/n/bytesToInt32 n/a n/b n/c n/d
 
 r/n/bitAnd32 n/a n/b
     new n/res
+    new n/atemp
+    new n/btemp
     if lt n/a 0
         set n/a add n/a 2147483648
         if lt n/b 0
@@ -25,11 +27,16 @@ r/n/bitAnd32 n/a n/b
             set n/res -2147483648
     if lt n/b 0
         set n/b add n/b 2147483648
-    set n/a div n/a 16777216
-    set n/b div n/b 16777216
-    set n/res bytesToInt32 bitAnd8 n/a n/b
+    set n/atemp div n/a 16777216
+    set n/btemp div n/b 16777216
+    set n/res bytesToInt32 mul 16777216 bitAnd8 n/atemp n/btemp
+    set n/atemp div n/a 65536
+    set n/btemp div n/b 65536
+    set n/res bytesToInt32 mul 65536 bitAnd8 n/atemp n/btemp
+    set n/atemp div n/a 256
+    set n/btemp div n/b 256
+    set n/res bytesToInt32 mul 256 bitAnd8 n/atemp n/btemp
     
-    set n/res
     return n/res
 
 r/n/bitAnd n/width n/byte1 n/byte2
