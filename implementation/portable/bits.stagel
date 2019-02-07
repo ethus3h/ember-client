@@ -1,3 +1,8 @@
+r/n/bitAnd32 n/a n/b
+    new n/res
+    
+    return n/res
+
 r/n/bitOr8 n/byte1 n/byte2
     assertIsByte n/byte1
     assertIsByte n/byte2
