@@ -1,3 +1,8 @@
+r/n/bytesToInt32 n/a n/b n/c n/d
+    new n/res
+    
+    return n/res
+
 r/n/bitAnd32 n/a n/b
     new n/res
     set n/res 
