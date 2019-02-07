@@ -43,8 +43,14 @@ r/n/bitAnd32 n/a n/b
 
 r/n/bitAnd n/width n/byte1 n/byte2
     new n/res
-    set n/res
+    if eq n/width 8
+        set n/res bitAnd8 n/byte1 n/byte2
+    elif eq n/width 32
+        set n/res bitAnd32 n/byte1 n/byte2
+    else
+        die cat 'bitAnd called with unsupported bit width ' strFrom n/width
     return n/res
+
 r/n/bitNot n/width n/byte
 r/n/bitLshift n/width n/byte1 n/places
 r/n/bitRshift n/width n/byte1 n/places
