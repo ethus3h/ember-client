@@ -1,4 +1,5 @@
 r/n/bytesToInt32 n/a n/b n/c n/d
+    # Input bytes are 0 to 255
     new n/res
     # 8 least significant bits
     set n/res n/d
@@ -7,6 +8,32 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     # and so on
     set n/res add n/res mul n/b 65535
     set n/res 
+    #include <stdio.h>
+
+
+void printBits(unsigned int num){
+    unsigned int size = sizeof(unsigned int);
+    unsigned int maxPow = 1<<(size*8-1);
+    printf("MAX POW : %u\n",maxPow);
+    int i=0,j;for(;i<size*8;++i){
+    // print last bit and shift left.
+    printf("%u ",num&maxPow ? 1 : 0);
+    num = num<<1;
+}
+}
+int main() {
+  unsigned char a;
+  a=255;
+  unsigned long res;
+  res=a;
+res=res * 65535 * 8;
+res=res + a;
+  printf("a=%d\n", a);
+  printf("res=%d\n", res);
+  printBits(res);
+  return 0;
+}
+
     return n/res
 
 r/n/bitAnd32 n/a n/b
