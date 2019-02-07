@@ -30,7 +30,9 @@ r/n/bitAnd32 n/a n/b
     set n/atemp div n/a 16777216
     set n/btemp div n/b 16777216
     set n/res bytesToInt32 mul 16777216 bitAnd8 n/atemp n/btemp
+    set n/a sub n/a n/atemp
     set n/atemp div n/a 65536
+    set n/a sub n/b n/btemp
     set n/btemp div n/b 65536
     set n/res bytesToInt32 mul 65536 bitAnd8 n/atemp n/btemp
     set n/atemp div n/a 256
