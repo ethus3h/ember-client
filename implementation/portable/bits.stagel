@@ -12,8 +12,10 @@ r/n/bytesToInt32 n/a n/b n/c n/d
         set n/temp sub n/a 127
         
     set n/res 
-        #include <stdio.h>
-
+            #include <stdio.h>
+unsigned long pwrOf2(int n) {
+    return 1 << n;
+}
 void printBits(unsigned int num){
     unsigned int size = sizeof(unsigned int);
     unsigned int maxPow = 1<<(size*8-1);
@@ -26,7 +28,7 @@ void printBits(unsigned int num){
 }
 int main() {
   unsigned char a;
-  a=128;
+  a=127;
   unsigned long res;
   res=a;
 res=res * 16843008 - (255 * 65535);
@@ -34,9 +36,10 @@ res=res * 16843008 - (255 * 65535);
 res=4294967295 / 255;*/
   printf("a=%d\n", a);
   printf("res=%d\n", res);
-  printBits(a);  printBits(res);
+  printBits(a);   printf("\n"); printBits(res);
   return 0;
 }
+
 
     return n/res
 
