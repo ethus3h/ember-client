@@ -25,6 +25,9 @@ r/n/bitAnd32 n/a n/b
             set n/res -2147483648
     if lt n/b 0
         set n/b add n/b 2147483648
+    set n/a div n/a 16777216
+    set n/b div n/b 16777216
+    set n/res bytesToInt32 bitAnd8 n/a n/b
     
     set n/res
     return n/res
