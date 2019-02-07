@@ -1089,63 +1089,191 @@ async function sumArray(intArrayIn) {
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bitOr(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+async function bytesToInt32(intA, intB, intC, intD) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugCollect('int C = ' + intC + '; '); await internalDebugCollect('int D = ' + intD + '; '); await internalDebugStackEnter('bytesToInt32:bits'); await assertIsInt(intA);await assertIsInt(intB);await assertIsInt(intC);await assertIsInt(intD); let intReturn;
+
+    /* Input bytes are 0 to 255 */
+    let intRes = 0;
+    /* 8 least significant bits */
+    intRes = intD;
+    /* next 8: n * 2^8 */
+    intRes = await implAdd(intRes, await implMul(intC, 256));
+    /* and so on: n * 2^16 */
+    intRes = await implAdd(intRes, await implMul(intB, 65536));
+    if (await le(intA, 127)) {
+        intRes = await implAdd(intRes, await implMul(intA, 16777216));
+    }
+    else {
+        let intTemp = 0;
+        intTemp = await implSub(intA, 127);
+        intRes = await implAdd(intRes, await implMul(intTemp, 16777216));
+        intRes = await implAdd(intRes, -2147483648);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitAnd32(intA, intB) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('bitAnd32:bits'); await assertIsInt(intA);await assertIsInt(intB); let intReturn;
+
+    let intRes = 0;
+    let intAtemp = 0;
+    let intBtemp = 0;
+    if (await implLt(intA, 0)) {
+        intA = await implAdd(intA, 2147483648);
+        if (await implLt(intB, 0)) {
+            /* both have msb=1 so result does too */
+            intRes = -2147483648;
+        }
+    }
+    if (await implLt(intB, 0)) {
+        intB = await implAdd(intB, 2147483648);
+    }
+    intAtemp = await implDiv(intA, 16777216);
+    intA = await implSub(intA, intAtemp);
+    intBtemp = await implDiv(intB, 16777216);
+    intB = await implSub(intB, intBtemp);
+    intRes = await implAdd(intRes, await bytesToInt32(await implMul(16777216, await bitAnd8(intAtemp, intBtemp))));
+    intAtemp = await implDiv(intA, 65536);
+    intA = await implSub(intA, intAtemp);
+    intBtemp = await implDiv(intB, 65536);
+    intB = await implSub(intB, intBtemp);
+    intRes = await implAdd(intRes, await bytesToInt32(await implMul(65536, await bitAnd8(intAtemp, intBtemp))));
+    intAtemp = await implDiv(intA, 256);
+    intA = await implSub(intA, intAtemp);
+    intBtemp = await implDiv(intB, 256);
+    intB = await implSub(intB, intBtemp);
+    intRes = await implAdd(intRes, await bytesToInt32(await implMul(256, await bitAnd8(intAtemp, intBtemp))));
+    intRes = await implAdd(intRes, await bytesToInt32(await bitAnd8(intA, intB)));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitAnd(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitAnd:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+
+    let intRes = 0;
+    if (await implEq(intWidth, 8)) {
+        intRes = await bitAnd8(intByte1, intByte2);
+    }
+    else if (await implEq(intWidth, 32)) {
+        intRes = await bitAnd32(intByte1, intByte2);
+    }
+    else {
+        await implDie(await implCat('bitAnd called with unsupported bit width ', await strFrom(intWidth)));
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitNot(intWidth, intByte) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte = ' + intByte + '; '); await internalDebugStackEnter('bitNot:bits'); await assertIsInt(intWidth);await assertIsInt(intByte); let intReturn;
+
+    let intRes = 0;
+    if (await implEq(intWidth, 8)) {
+        intRes = await bitNot8(intByte);
+    }
+    else if (await implEq(intWidth, 32)) {
+        intRes = await bitNot32(intByte);
+    }
+    else {
+        await implDie(await implCat('bitNot called with unsupported bit width ', await strFrom(intWidth)));
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitLshift(intWidth, intByte1, intPlaces) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Places = ' + intPlaces + '; '); await internalDebugStackEnter('bitLshift:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intPlaces); let intReturn;
+
+    let intRes = 0;
+    if (await implEq(intWidth, 8)) {
+        intRes = await bitLshift8(intByte);
+    }
+    else if (await implEq(intWidth, 32)) {
+        intRes = await bitLshift32(intByte);
+    }
+    else {
+        await implDie(await implCat('bitLshift called with unsupported bit width ', await strFrom(intWidth)));
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitRshift(intWidth, intByte1, intPlaces) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Places = ' + intPlaces + '; '); await internalDebugStackEnter('bitRshift:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intPlaces); let intReturn;
+
+    let intRes = 0;
+    if (await implEq(intWidth, 8)) {
+        intRes = await bitRshift8(intByte);
+    }
+    else if (await implEq(intWidth, 32)) {
+        intRes = await bitRshift32(intByte);
+    }
+    else {
+        await implDie(await implCat('bitRshift called with unsupported bit width ', await strFrom(intWidth)));
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitOr(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
     await assertIsByte(intByte2);
     let intTemp = 0;
-    intTemp = await bitNot(intByte1);
-    intTemp = await bitNot(await bitAnd(intTemp, await bitNot(intByte2)));
+    intTemp = await bitNot(intWidth, intByte1);
+    intTemp = await bitNot(intWidth, await bitAnd(intWidth, intTemp, await bitNot8(intByte2)));
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bitNor(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+async function bitNor(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNor:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
     await assertIsByte(intByte2);
     let intTemp = 0;
-    intTemp = await bitNot(await bitOr(intByte1, intByte2));
+    intTemp = await bitNot(intWidth, await bitOr(intWidth, intByte1, intByte2));
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bitNand(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNand:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+async function bitNand(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNand:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
     await assertIsByte(intByte2);
     let intTemp = 0;
-    intTemp = await bitNot(await bitAnd(intByte1, intByte2));
+    intTemp = await bitNot(intWidth, await bitAnd(intWidth, intByte1, intByte2));
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bitXor(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+async function bitXor(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXor:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
     await assertIsByte(intByte2);
     let intTemp = 0;
-    intTemp = await bitNand(intByte1, intByte2);
-    intTemp = await bitAnd(intTemp, await bitOr(intByte1, intByte2));
+    intTemp = await bitNand(intWidth, intByte1, intByte2);
+    intTemp = await bitAnd(intWidth, intTemp, await bitOr(intWidth, intByte1, intByte2));
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bitXnor(intByte1, intByte2) {
-    await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXnor:bits'); await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
+async function bitXnor(intWidth, intByte1, intByte2) {
+    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXnor:bits'); await assertIsInt(intWidth);await assertIsInt(intByte1);await assertIsInt(intByte2); let intReturn;
 
     await assertIsByte(intByte1);
     await assertIsByte(intByte2);
     let intTemp = 0;
-    intTemp = await bitNot(await bitXor(intByte1, intByte2));
+    intTemp = await bitNot(intWidth, await bitXor(intWidth, intByte1, intByte2));
     await assertIsByte(intTemp);
 
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
