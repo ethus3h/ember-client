@@ -1,6 +1,11 @@
 r/n/bytesToInt32 n/a n/b n/c n/d
     new n/res
-    
+    # 8 least significant bits
+    set n/res n/d
+    # next 8
+    set n/res add n/res mul n/c 255
+    # and so on
+    set n/res a
     return n/res
 
 r/n/bitAnd32 n/a n/b
