@@ -2117,18 +2117,18 @@ async function bitAnd32(intA, intB) {
     intA = await implSub(intA, intAtemp);
     intBtemp = await implDiv(intB, 16777216);
     intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(await implMul(16777216, await bitAnd8(intAtemp, intBtemp))));
+    intRes = await implAdd(intRes, await bytesToInt32(await implMul(16777216, await bitAnd8(intAtemp, intBtemp), ), 0, 0, 0));
     intAtemp = await implDiv(intA, 65536);
     intA = await implSub(intA, intAtemp);
     intBtemp = await implDiv(intB, 65536);
     intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(await implMul(65536, await bitAnd8(intAtemp, intBtemp))));
+    intRes = await implAdd(intRes, await bytesToInt32(0, await implMul(65536, await bitAnd8(intAtemp, intBtemp), ), 0, 0));
     intAtemp = await implDiv(intA, 256);
     intA = await implSub(intA, intAtemp);
     intBtemp = await implDiv(intB, 256);
     intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(await implMul(256, await bitAnd8(intAtemp, intBtemp))));
-    intRes = await implAdd(intRes, await bytesToInt32(await bitAnd8(intA, intB)));
+    intRes = await implAdd(intRes, await bytesToInt32(0, 0, await implMul(256, await bitAnd8(intAtemp, intBtemp), ), 0));
+    intRes = await implAdd(intRes, await bytesToInt32(0, 0, 0, await bitAnd8(intA, intB)));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
