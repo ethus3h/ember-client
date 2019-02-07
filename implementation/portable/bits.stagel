@@ -8,6 +8,8 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     # and so on
     set n/res add n/res mul n/b 65535
     if gt n/a 127
+        new n/temp
+        set n/temp sub n/a 127
         
     set n/res 
     #include <stdio.h>
