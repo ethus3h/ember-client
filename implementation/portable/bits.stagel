@@ -17,7 +17,7 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     return n/res
 
 r/n/bitAnd32U n/a n/b
-    # 32-bit bit operations with "U" take and produce signed ints, but the operation affects them as if they were unsigned. E.g. passing a=-1 b=1 is equivalent to 4294967295 << 1 (= 4294967294) , rather than <.
+    # 32-bit bit operations with "U" take and produce signed ints, but the operation affects them as if they were unsigned. E.g. passing a=-1 b=1 is equivalent to unsigned long 4294967295 << 1 (= 4294967294) , rather than long -1 << 1 (= ).
     new n/res
     new n/atemp
     new n/btemp
