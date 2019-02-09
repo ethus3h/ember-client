@@ -1,2 +1,2 @@
 r/v/runTestsBits
-    runTestTrue 
+    runTest eq bitAnd32 
