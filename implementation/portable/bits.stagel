@@ -18,8 +18,6 @@ r/n/bytesToInt32 n/a n/b n/c n/d
 
 r/n/bitAnd32U n/a n/b
     # 32-bit bit operations with "U" take and produce signed ints, but the operation affects them as if they were unsigned. E.g. passing -1 >> 
-
-r/n/bitAnd32 n/a n/b
     new n/res
     new n/atemp
     new n/btemp
@@ -47,6 +45,8 @@ r/n/bitAnd32 n/a n/b
     set n/res add n/res bytesToInt32 0 0 mul 256 bitAnd8 n/atemp n/btemp } } 0
     set n/res add n/res bytesToInt32 0 0 0 bitAnd8 n/a n/b
     return n/res
+
+r/n/bitAnd32 n/a n/b
 
 r/n/bitAnd n/width n/byte1 n/byte2
     new n/res
