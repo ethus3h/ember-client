@@ -1300,6 +1300,16 @@ async function settingArrayToString(strArraySettings) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+/* For now, I'm inclined to skip implementing wasm right now. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later. */
+/* Copies of the current versions as of this writing (latest git commits) of wac, WebAssembly spec, and dependencies are included in work-docs/wasm for easy access, and are covered under their respective licenses. The following repositories are there: */
+/* https://github.com/kanaka/wac */
+/* https://github.com/kanaka/fooboot */
+/* https://github.com/WebAssembly/wabt */
+/* https://github.com/WebAssembly/spec */
+/* https://github.com/WebAssembly/testsuite */
+/* https://github.com/google/googletest */
+/* https://github.com/dabeaz/ply */
+
 async function dcaFromAsciiSafeSubset(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
@@ -1816,6 +1826,13 @@ async function dcGetDescription(intDc) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function runTestsBits() {
+    await internalDebugStackEnter('runTestsBits:bits-tests');
+
+    await runTest(await implEq(4294967294, await bitAnd32(-1, 1)));
+    await internalDebugStackExit();
+}
+
 async function abSubset(boolArrayIn, intStart, intEnd) {
     await internalDebugCollect('boolArray In = ' + boolArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('abSubset:arrays'); await assertIsBoolArray(boolArrayIn);await assertIsInt(intStart);await assertIsInt(intEnd); let boolArrayReturn;
 
@@ -2100,6 +2117,7 @@ async function bytesToInt32(intA, intB, intC, intD) {
 async function bitAnd32(intA, intB) {
     await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('bitAnd32:bits'); await assertIsInt(intA);await assertIsInt(intB); let intReturn;
 
+    /* 32-bit bit operations take and produce signed ints. E.g. passing a=-1 b=1 is equivalent to unsigned long 4294967295 << 1 (= 4294967294) and will return -2. Use unsigned conversion I guess. */
     let intRes = 0;
     let intAtemp = 0;
     let intBtemp = 0;
@@ -2131,6 +2149,14 @@ async function bitAnd32(intA, intB) {
     intRes = await implAdd(intRes, await bytesToInt32(0, 0, 0, await bitAnd8(intA, intB)));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function bitAnd32(intA, intB) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('bitAnd32:bits'); await assertIsInt(intA);await assertIsInt(intB); let intReturn;
+
+    /* FIXME unimplemented */
+
+    intReturn = 1; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function bitAnd(intWidth, intByte1, intByte2) {
@@ -2263,16 +2289,33 @@ async function bitXnor(intWidth, intByte1, intByte2) {
     intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function runTestTrue(strTestName, boolTestReturn) {
-    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestTrue:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
+async function runTest(boolTestReturn) {
+    await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsBool(boolTestReturn); let boolReturn;
 
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test ', await implCat(strTestName, ' passed.'))));
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' passed.'))));
         intPassedTests = await implAdd(intPassedTests, 1);
     }
     else {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test ', await implCat(strTestName, ' failed.'))));
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
+        intFailedTests = await implAdd(intFailedTests, 1);
+    }
+    await renderDrawContents(intArrayFrameBuffer);
+
+    boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function runTest(strTestName, boolTestReturn) {
+    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
+
+    intTotalTests = await implAdd(intTotalTests, 1);
+    if (boolTestReturn) {
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
+        intPassedTests = await implAdd(intPassedTests, 1);
+    }
+    else {
+        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
         intFailedTests = await implAdd(intFailedTests, 1);
     }
     await renderDrawContents(intArrayFrameBuffer);
@@ -2289,9 +2332,40 @@ async function clearTestStats() {
     await internalDebugStackExit();
 }
 
+async function runTestsOnly() {
+    await internalDebugStackEnter('runTestsOnly:unit-testing'); let boolReturn;
+
+    /* Run tests silently */
+    /* This runs each component's test suite */
+    await runTestsBits();
+    /* Did anything fail? */
+    if (await implEq(intFailedTests, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function runTests() {
+    await internalDebugStackEnter('runTests:unit-testing'); let boolReturn;
+
+    /* Run tests and report the results */
+    await clearTestStats();
+    await runTestsOnly();
+    await reportTests();
+    if (await implEq(intFailedTests, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function reportTests() {
     await internalDebugStackEnter('reportTests:unit-testing'); let boolReturn;
 
+    let intArrayTestReportFrameBuffer = [];
     let strPassedWord = '';
     strPassedWord = 'tests';
     if (await implEq(intPassedTests, 1)) {
@@ -2337,7 +2411,7 @@ async function reportTests() {
         strFailedPercentage = await implCat(strFailedPercentage, await strChar(strFailedPercentageTemp, await implSub(intCount, intCounter)));
         intCounter = await implSub(intCounter, 1);
     }
-    intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(strTotalWord, '.'))))))))))))))));
+    intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(strTotalWord, '.'))))))))))))))));
     let strTemp = '';
     if (await ne(intFailedTests, 0)) {
         strTotalWord = 'Some tests';
@@ -2345,21 +2419,20 @@ async function reportTests() {
             strTotalWord = 'A test';
         }
         strTemp = await implCat(strTotalWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%: ', await implCat(await strFrom(intFailedTests), await implCat(' out of ', await implCat(await strFrom(intTotalTests), ' failed!')))))));
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(strTemp));
+        intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(strTemp));
         /*error s/temp */
     }
     if (await implEq(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
         await implDie('There is a problem in the testing framework.');
     }
-    await renderDrawContents(intArrayFrameBuffer);
+    await renderDrawContents(intArrayTestReportFrameBuffer);
+    intArrayTestReportFrameBuffer = [  ];
     let boolTestReturn = false;
     boolTestReturn = true;
     if (await ne(intFailedTests, 0)) {
         boolTestReturn = false;
-        /*set an/frameBuffer ( ) */
         /*die s/temp */
     }
-    intArrayFrameBuffer = [  ];
 
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
