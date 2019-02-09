@@ -28,6 +28,8 @@ int main() {
     res=4294967295 / 255;*/
     printf("a=%d\n", a);
     printf("res=%u\n", res);  printf("wanted=%u\n", wanted);
-    printBits(a);   printf("\n"); printBits(res);printf("\n"); printBits(wanted);
+    printBits(a);printf("\n");
+    printBits(res);printf("\n");
+    printBits(wanted);
     return 0;
 }
