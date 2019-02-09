@@ -23,6 +23,7 @@ int main() {
     res=a;
     res=res * (pwrOf2(24));
     long wanted=-2147483648;
+    res=a
     /*res=res + a;res=res * (pwrOf2(24) - 1) - pwrOf2(16) - pwrOf2(8);
     res=4294967295 / 255;*/
     printf("a=%d\n", a);
