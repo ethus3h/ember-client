@@ -14,6 +14,9 @@ r/v/clearTestStats
     set n/passedTests 0
     set n/failedTests 0
 
+r/b/runTestsOnly
+r/b/runTests
+
 r/b/reportTests
     new s/passedWord
     set s/passedWord 'tests'
