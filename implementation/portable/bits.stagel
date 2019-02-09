@@ -47,6 +47,7 @@ r/n/bitAnd32U n/a n/b
     return n/res
 
 r/n/bitAnd32 n/a n/b
+    return 1
 
 r/n/bitAnd n/width n/byte1 n/byte2
     new n/res
