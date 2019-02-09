@@ -17,16 +17,16 @@ void printBits(unsigned int num) {
 }
 
 int main() {
-  unsigned char a;
-  a=255;
-  unsigned long res;
-  res=a;
-res=res * (pwrOf2(24));
-long wanted=-2147483648;
-/*res=res + a;res=res * (pwrOf2(24) - 1) - pwrOf2(16) - pwrOf2(8);
-res=4294967295 / 255;*/
-  printf("a=%d\n", a);
-  printf("res=%d\n", res);  printf("wanted=%d\n", wanted);
-  printBits(a);   printf("\n"); printBits(res);printf("\n"); printBits(wanted);
-  return 0;
+    unsigned char a;
+    a=255;
+    unsigned long res;
+    res=a;
+    res=res * (pwrOf2(24));
+    long wanted=-2147483648;
+    /*res=res + a;res=res * (pwrOf2(24) - 1) - pwrOf2(16) - pwrOf2(8);
+    res=4294967295 / 255;*/
+    printf("a=%d\n", a);
+    printf("res=%d\n", res);  printf("wanted=%d\n", wanted);
+    printBits(a);   printf("\n"); printBits(res);printf("\n"); printBits(wanted);
+    return 0;
 }
