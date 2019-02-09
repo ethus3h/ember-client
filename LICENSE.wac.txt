@@ -1,3 +1,5 @@
+This file applies to the copy of wac included in work-docs/wac, and to the WebAssembly implementation based on it in portable/wasm.stagel (and the corresponding parts of the built code).
+
 Copyright (C) Joel Martin <github@martintribe.org>
 
 The wac project is licensed under the MPL 2.0 (Mozilla Public License
