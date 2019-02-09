@@ -79,12 +79,11 @@ r/b/reportTests
     if eq n/passedTests sub n/totalTests n/failedTests
         die 'There is a problem in the testing framework.'
     renderDrawContents an/testReportFrameBuffer
+    set an/testReportFrameBuffer ( )
     new b/testReturn
     set b/testReturn true
     if ne n/failedTests 0
         set b/testReturn false
-        #set an/testReportFrameBuffer ( )
         #die s/temp
-    set an/testReportFrameBuffer ( )
     return b/testReturn
 
