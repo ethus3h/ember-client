@@ -27,7 +27,7 @@ int main() {
     /*res=res + a;res=res * (pwrOf2(24) - 1) - pwrOf2(16) - pwrOf2(8);
     res=4294967295 / 255;*/
     printf("a=%d\n", a);
-    printf("res=%d\n", res);  printf("wanted=%d\n", wanted);
+    printf("res=%u\n", res);  printf("wanted=%u\n", wanted);
     printBits(a);   printf("\n"); printBits(res);printf("\n"); printBits(wanted);
     return 0;
 }
