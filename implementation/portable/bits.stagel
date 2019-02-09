@@ -17,7 +17,7 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     return n/res
 
 r/n/bitAnd32 n/a n/b
-    # 32-bit bit operations take and produce signed ints, but the operation affects them as if they were unsigned.
+    # 32-bit bit operations take and produce signed ints, but the operation affects them as if they were unsigned. E.g. passing -1 >> 
     new n/res
     new n/atemp
     new n/btemp
