@@ -1,0 +1,17 @@
+*.o
+*.a
+*.d
+wac
+wace
+*.mem_fs_files.s
+*.syms.c
+examples_c/*.js
+examples_c/*.html
+examples_c/*.wasm
+examples_c/*.wast
+examples_wast/*.wasm
+spec/
+wabt/
+
+boot.iso
+isodir/
