@@ -17,7 +17,7 @@ r/n/bytesToInt32 n/a n/b n/c n/d
     return n/res
 
 r/n/bitAnd32 n/a n/b
-    # 32-bit bit operations take and produce signed ints. E.g. passing a=-1 b=1 is equivalent to unsigned long 4294967295 << 1 (= 4294967294) , rather than long -1 << 1 (= ).
+    # 32-bit bit operations take and produce signed ints. E.g. passing a=-1 b=1 is equivalent to unsigned long 4294967295 << 1 (= 4294967294).
     new n/res
     new n/atemp
     new n/btemp
