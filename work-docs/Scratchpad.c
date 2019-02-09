@@ -19,7 +19,7 @@ void printBits(unsigned int num) {
 int main() {
     unsigned char a;
     a=255;
-    unsigned long res;
+    long res;
     res=a;
     res=res * (pwrOf2(24));
     long wanted=-2147483648;
