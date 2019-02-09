@@ -28,6 +28,7 @@ r/b/runTests
     return false
 
 r/b/reportTests
+    new an/testReportFrameBuffer
     new s/passedWord
     set s/passedWord 'tests'
     if eq n/passedTests 1
@@ -66,24 +67,24 @@ r/b/reportTests
             set s/failedPercentage cat s/failedPercentage '.'
         set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
-    set an/frameBuffer append an/frameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
+    set an/testReportFrameBuffer append an/testReportFrameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
     new s/temp
     if ne n/failedTests 0
         set s/totalWord 'Some tests'
         if eq n/totalTests 1
             set s/totalWord 'A test'
         set s/temp cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ' failed!'
-        set an/frameBuffer append an/frameBuffer prepareStrForEcho s/temp
+        set an/testReportFrameBuffer append an/testReportFrameBuffer prepareStrForEcho s/temp
         #error s/temp
     if eq n/passedTests sub n/totalTests n/failedTests
         die 'There is a problem in the testing framework.'
-    renderDrawContents an/frameBuffer
+    renderDrawContents an/testReportFrameBuffer
     new b/testReturn
     set b/testReturn true
     if ne n/failedTests 0
         set b/testReturn false
-        #set an/frameBuffer ( )
+        #set an/testReportFrameBuffer ( )
         #die s/temp
-    set an/frameBuffer ( )
+    set an/testReportFrameBuffer ( )
     return b/testReturn
 
