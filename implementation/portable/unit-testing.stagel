@@ -25,6 +25,9 @@ r/b/runTestsOnly
 
 r/b/runTests
     # Run tests and report the results
+    clearTestStats
+    runTestsOnly
+    reportTests
     if eq n/failedTests 0
         return true
     return false
