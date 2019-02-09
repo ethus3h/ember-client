@@ -1,2 +1,10 @@
 # For now, I'm inclined to skip implementing wasm right now. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later.
 # Copies of the current versions (latest git commits) of wac, WebAssembly spec, and dependencies are included in work-docs/wasm for easy access, and are covered under their respective licenses.
+# https://github.com/kanaka/wac
+# https://github.com/kanaka/fooboot
+# https://github.com/WebAssembly/wabt
+# https://github.com/WebAssembly/spec
+# https://github.com/WebAssembly/testsuite
+# https://github.com/google/googletest
+# https://github.com/dabeaz/ply
+# 
