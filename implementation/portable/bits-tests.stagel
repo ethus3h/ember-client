@@ -1,2 +1,2 @@
 r/v/runTestsBits
-    runTest eq bitAnd32 
+    runTest eq 4294967294 bitAnd32 -1 1
