@@ -84,5 +84,3 @@ window.assertIsIntArray = async function (val) {
         await assertIsTrue(false);
     }
 }
-
-window.cat = async function()
