@@ -1,4 +1,4 @@
-r/b/runTest b/testReturn
+r/b/runTest b/testReturn b/silent
     set n/totalTests add n/totalTests 1
     if b/testReturn
         set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' passed.'
@@ -9,7 +9,7 @@ r/b/runTest b/testReturn
     renderDrawContents an/frameBuffer
     return b/testReturn
 
-r/b/runTestNamed s/testName b/testReturn
+r/b/runTestNamed s/testName b/testReturn b/silent
     set n/totalTests add n/totalTests 1
     if b/testReturn
         set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } cat s/testName ' passed.'
@@ -28,8 +28,8 @@ r/v/clearTestStats
 r/b/runTestsOnly b/silent
     # Run tests without report
     # This runs each component's test suite
-    #runTestsBits
-    runTestsMath
+    #runTestsBits b/silent
+    runTestsMath b/silent
     # Did anything fail?
     if eq n/failedTests 0
         return true
