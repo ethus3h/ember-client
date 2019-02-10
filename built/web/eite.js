@@ -424,19 +424,19 @@ async function count(array) {
 async function implCat(strA, strB) {
     assertIsStr(strA); assertIsStr(strB); let strReturn;
 
-    strReturn = strA + "" + strB; await assertIsStr(strReturn); return strReturn;
+    strReturn = strA + "" + strB; return strReturn;
 }
 
 async function substring(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
-    strReturn = str.substring(intStart, intStart + intLength); await assertIsStr(strReturn); return strReturn;
+    strReturn = str.substring(intStart, intStart + intLength); return strReturn;
 }
 
 async function len(str) {
     assertIsStr(str); let intReturn;
 
-    intReturn = str.length; await assertIsInt(intReturn); return intReturn;
+    intReturn = str.length; return intReturn;
 }
 
 
@@ -3415,6 +3415,43 @@ window.isFalse = async function (bool) {
         return true;
     }
     return false;
+}
+
+window.isIntArray = async function (val) {
+    if (val === undefined) {
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
+    }
+    if (val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        return false;
+    }
+    function isIntSync(v) {
+        return (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647);
+    }
+    return val.every(isIntSync);
+}
+
+window.assertIsIntArray = async function (val) {
+    if (val === undefined) {
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
+    }
+    if (val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertIsTrue(false);
+    }
+    function isIntSync(v) {
+        return (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647);
+    }
+    if (val.every(isIntSync)) {
+        return;
+    }
+    else {
+        await assertIsTrue(false);
+    }
 }
 
 // @license-end
