@@ -1123,8 +1123,8 @@ async function runTest(boolTestReturn) {
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function runTest(strTestName, boolTestReturn) {
-    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
+async function runTestNamed(strTestName, boolTestReturn) {
+    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestNamed:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
 
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
