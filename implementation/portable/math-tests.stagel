@@ -1,1 +1,3 @@
- 
+r/v/runTestsMath
+    runTest eq 4 add 2 2
+    runTest ne 4 add 2 2
