@@ -66,16 +66,21 @@ window.isIntArray = async function (val) {
 
 window.assertIsIntArray = async function (val) {
     if (val === undefined) {
-        await assertIsTrue(false);
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
     }
     if (val.constructor.name === 'Uint8Array') {
         return true;
     }
     if (val.constructor.name !== 'Array') {
-        return false;
+        await assertIsTrue(false);
     }
     function isIntSync(v) {
         return (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647);
     }
-    return val.every(isIntSync);
+    if (val.every(isIntSync)) {
+        return;
+    }
+    else {
+        await assertIsTrue(false);
+    }
 }
