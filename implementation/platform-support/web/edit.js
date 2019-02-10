@@ -16,6 +16,8 @@ window.onload = function() {
             document.getElementById('DcSelection').appendChild(elem);
         }
         //console.log(dcNames);
+        // Attach click event listeners to elements
+        
         inputarea=document.getElementById('inputarea');
         inputarea.disabled=false;
         document.addEventListener('input', function() {

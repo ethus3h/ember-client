@@ -81,7 +81,7 @@ r/b/reportTests
             set s/failedPercentage cat s/failedPercentage '.'
         set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
-    set an/testReportFrameBuffer append an/testReportFrameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat s/totalWord '.'
+    set an/testReportFrameBuffer append an/testReportFrameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat ' ' cat s/totalWord '.'
     new s/temp
     if ne n/failedTests 0
         set s/totalWord 'Some tests'
