@@ -58,7 +58,7 @@ async function isIntArray(val) {
     if (val.constructor.name !== 'Array') {
         return false;
     }
-    function isGenericSync(v) {
+    function isIntSync(v) {
         return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
     }
     return val.every(isGenericSync);
