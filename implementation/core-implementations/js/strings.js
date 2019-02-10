@@ -1,6 +1,7 @@
 /* strings, provides:
     implCat
     substring
+    len
 */
 
 async function implCat(strA, strB) {

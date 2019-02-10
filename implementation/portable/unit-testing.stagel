@@ -9,7 +9,6 @@ r/b/runTest b/v b/testReturn
             set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' failed.'
         set n/failedTests add n/failedTests 1
     if b/v
-        set an/testFrameBuffer append an/testFrameBuffer an/testFrameBuffer
         renderDrawContents an/testFrameBuffer
     return b/testReturn
 
