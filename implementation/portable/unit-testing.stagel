@@ -1,4 +1,4 @@
-r/b/runTest b/testReturn b/v
+r/b/runTest b/v b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
         if b/v
@@ -12,7 +12,7 @@ r/b/runTest b/testReturn b/v
         renderDrawContents an/frameBuffer
     return b/testReturn
 
-r/b/runTestNamed s/testName b/testReturn b/v
+r/b/runTestNamed b/v s/testName b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
         if b/v
