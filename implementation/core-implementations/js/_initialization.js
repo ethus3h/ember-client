@@ -21,6 +21,7 @@ let intPassedTests = 0;
 let intFailedTests = 0;
 let intTotalTests = 0;
 let intArrayFrameBuffer = []; // an
+let intArrayTestFrameBuffer = []; // an
 
 // Global environment
 let haveDom = false;
