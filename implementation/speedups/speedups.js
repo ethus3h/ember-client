@@ -48,7 +48,7 @@ window.isFalse = async function (bool) {
     return false;
 }
 
-async function isIntArray(val) {
+window.isIntArray = async function (val) {
     if (val === undefined) {
         await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
     }
@@ -59,7 +59,7 @@ async function isIntArray(val) {
         return false;
     }
     function isIntSync(v) {
-        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+        return (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647);
     }
-    return val.every(isGenericSync);
+    return val.every(isIntSync);
 }
