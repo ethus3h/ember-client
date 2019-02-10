@@ -47,3 +47,20 @@ window.isFalse = async function (bool) {
     }
     return false;
 }
+
+
+async function isIntArray(val) {
+    if (val === undefined) {
+        await assertionFailed('isIntArray called with non-StageL-supported argument type.');
+    }
+    if (val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        return false;
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    return val.every(isGenericSync);
+}
