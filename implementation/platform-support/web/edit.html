@@ -50,8 +50,8 @@
     </div>
     <div id="editorButtons">
         <button disabled="true" id="ImportDocument">Import</button>
-        <button disabled="true" id="ExportDocument" onClick="">Export</button>
-        <button disabled="true" id="RunDocument" onClick="">Run</button>
+        <button disabled="true" id="ExportDocument">Export</button>
+        <button disabled="true" id="RunDocument">Run</button>
     </div>
 </section>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svgFilter">
@@ -68,9 +68,9 @@
 <div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="exportNotifyTemplate"><div class="exportNotification"></div></template>
-<template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button id="importFromFileBtn" onClick="">Import from file</button><button id="importFromUrlBtn" onClick="">Import from URL</button><button id="closeImportDiaBtn" onClick="">Cancel</button></div></template>
-<template id="alertDialogTemplate"><div class="importDialog"><div class="alertDialogMessageRegion"></div><button id="closeAlertDiaBtn" onClick="">Okay</button></div></template>
-<template id="doneButtonTemplate"><button disabled="true" id="DoneEditing" onClick="">Done</button></template>
+<template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button id="importFromFileBtn">Import from file</button><button id="importFromUrlBtn">Import from URL</button><button id="closeImportDiaBtn">Cancel</button></div></template>
+<template id="alertDialogTemplate"><div class="importDialog"><div class="alertDialogMessageRegion"></div><button id="closeAlertDiaBtn">Okay</button></div></template>
+<template id="doneButtonTemplate"><button disabled="true" id="DoneEditing">Done</button></template>
 <input type="file" id="filepicker"></input>
 </body>
 </html>
