@@ -66,7 +66,7 @@ window.isIntArray = async function (val) {
 
 window.assertIsIntArray = async function (val) {
     if (val === undefined) {
-        await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
+        await assertIsTrue(false);
     }
     if (val.constructor.name === 'Uint8Array') {
         return true;
