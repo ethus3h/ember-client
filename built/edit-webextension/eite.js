@@ -2672,6 +2672,7 @@ async function runTests() {
     await internalDebugStackEnter('runTests:public-interface'); let boolReturn;
 
     /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
+    await setupIfNeeded();
     await clearTestStats();
     await runTestsOnly(true);
     await reportTests();
@@ -2687,6 +2688,7 @@ async function quietRunTests() {
     await internalDebugStackEnter('quietRunTests:public-interface'); let boolReturn;
 
     /* Returns true if all tests pass; false otherwise. */
+    await setupIfNeeded();
     let boolRes = false;
     boolRes = await runTestsOnly(false);
 
