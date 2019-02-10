@@ -85,10 +85,10 @@ window.assertIsIntArray = async function (val) {
     }
 }
 
-window.ge = async function (genericA, genericB) {
+window.ne = async function (genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    return genericA >= genericB;
+    return genericA !== genericB;
 }
 
 window.le = async function (intA, intB) {
@@ -97,8 +97,8 @@ window.le = async function (intA, intB) {
     return intA <= intB;
 }
 
-window.ne = async function (intA, intB) {
+window.ge = async function (intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    return intA !== intB;
+    return intA >= intB;
 }
