@@ -105,6 +105,7 @@ let intPassedTests = 0;
 let intFailedTests = 0;
 let intTotalTests = 0;
 let intArrayFrameBuffer = []; // an
+let intArrayTestFrameBuffer = []; // an
 
 // Global environment
 let haveDom = false;
@@ -2096,18 +2097,19 @@ async function runTest(boolV, boolTestReturn) {
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
         if (boolV) {
-            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' passed.'))));
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' passed.'))));
         }
         intPassedTests = await implAdd(intPassedTests, 1);
     }
     else {
         if (boolV) {
-            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
         }
         intFailedTests = await implAdd(intFailedTests, 1);
     }
     if (boolV) {
-        await renderDrawContents(intArrayFrameBuffer);
+        intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, intArrayTestFrameBuffer);
+        await renderDrawContents(intArrayTestFrameBuffer);
     }
 
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -2119,18 +2121,18 @@ async function runTestNamed(boolV, strTestName, boolTestReturn) {
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
         if (boolV) {
-            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
         }
         intPassedTests = await implAdd(intPassedTests, 1);
     }
     else {
         if (boolV) {
-            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
         }
         intFailedTests = await implAdd(intFailedTests, 1);
     }
     if (boolV) {
-        await renderDrawContents(intArrayFrameBuffer);
+        await renderDrawContents(intArrayTestFrameBuffer);
     }
 
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -2164,7 +2166,6 @@ async function runTestsOnly(boolV) {
 async function reportTests() {
     await internalDebugStackEnter('reportTests:unit-testing'); let boolReturn;
 
-    let intArrayTestReportFrameBuffer = [];
     let strPassedWord = '';
     strPassedWord = 'tests';
     if (await implEq(intPassedTests, 1)) {
@@ -2210,22 +2211,22 @@ async function reportTests() {
         strFailedPercentage = await implCat(strFailedPercentage, await strChar(strFailedPercentageTemp, await implSub(intCount, intCounter)));
         intCounter = await implSub(intCounter, 1);
     }
-    intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(' ', await implCat(strTotalWord, '.')))))))))))))))));
+    intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(' ', await implCat(strTotalWord, '.')))))))))))))))));
     let strTemp = '';
     if (await ne(intFailedTests, 0)) {
         strTotalWord = 'Some tests';
         if (await implEq(intTotalTests, 1)) {
             strTotalWord = 'A test';
         }
-        strTemp = await implCat(strTotalWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%: ', await implCat(await strFrom(intFailedTests), await implCat(' out of ', await implCat(await strFrom(intTotalTests), ' failed!')))))));
-        intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(strTemp));
+        strTemp = await implCat(strTotalWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%: ', await implCat(await strFrom(intFailedTests), await implCat(' out of ', await implCat(await strFrom(intTotalTests), ') failed!')))))));
+        intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(strTemp));
         /*error s/temp */
     }
     if (await ne(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
         await implDie('There is a problem in the testing framework.');
     }
-    await renderDrawContents(intArrayTestReportFrameBuffer);
-    intArrayTestReportFrameBuffer = [  ];
+    await renderDrawContents(intArrayTestFrameBuffer);
+    intArrayTestFrameBuffer = [  ];
     let boolTestReturn = false;
     boolTestReturn = true;
     if (await ne(intFailedTests, 0)) {
