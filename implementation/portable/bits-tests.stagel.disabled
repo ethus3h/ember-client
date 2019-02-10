@@ -1,2 +1,2 @@
-r/v/runTestsBits
-    runTest eq 4294967294 bitAnd32 -1 1
+r/v/runTestsBits b/v
+    runTest b/v eq 4294967294 bitAnd32 -1 1
