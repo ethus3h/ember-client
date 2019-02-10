@@ -17,6 +17,7 @@ window.onload = function() {
         }
         //console.log(dcNames);
         // Attach click event listeners to elements
+        document.getElementById('ImportDocument').onclick=function(){};
         
         inputarea=document.getElementById('inputarea');
         inputarea.disabled=false;
