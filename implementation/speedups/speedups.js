@@ -48,10 +48,9 @@ window.isFalse = async function (bool) {
     return false;
 }
 
-
 async function isIntArray(val) {
     if (val === undefined) {
-        await assertionFailed('isIntArray called with non-StageL-supported argument type.');
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
     }
     if (val.constructor.name === 'Uint8Array') {
         return true;
