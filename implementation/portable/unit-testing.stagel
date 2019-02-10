@@ -28,7 +28,8 @@ r/v/clearTestStats
 r/b/runTestsOnly
     # Run tests silently
     # This runs each component's test suite
-    runTestsBits
+    #runTestsBits
+    runTestsMath
     # Did anything fail?
     if eq n/failedTests 0
         return true
