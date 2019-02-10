@@ -94,7 +94,7 @@ r/an/getDocumentFrame n/execId s/format
 r/b/runTests
     # Returns true if all tests pass; false otherwise. Displays a report of the tests.
     clearTestStats
-    runTestsOnly
+    runTestsOnly true
     reportTests
     if eq n/failedTests 0
         return true
@@ -103,4 +103,5 @@ r/b/runTests
 r/b/quietRunTests
     # Returns true if all tests pass; false otherwise.
     new b/res
-    set b/res runTestsOnly
+    set b/res runTestsOnly false
+    return b/res
