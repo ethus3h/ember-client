@@ -87,7 +87,7 @@ r/b/reportTests
         set s/totalWord 'Some tests'
         if eq n/totalTests 1
             set s/totalWord 'A test'
-        set s/temp cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ' failed!'
+        set s/temp cat s/totalWord cat ' (' cat s/failedPercentage cat '%: ' cat strFrom n/failedTests } cat ' out of ' cat strFrom n/totalTests } ') failed!'
         set an/testReportFrameBuffer append an/testReportFrameBuffer prepareStrForEcho s/temp
         #error s/temp
     if ne n/passedTests sub n/totalTests n/failedTests
