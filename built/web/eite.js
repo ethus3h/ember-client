@@ -2221,7 +2221,7 @@ async function reportTests() {
         intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(strTemp));
         /*error s/temp */
     }
-    if (await implEq(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
+    if (await ne(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
         await implDie('There is a problem in the testing framework.');
     }
     await renderDrawContents(intArrayTestReportFrameBuffer);
