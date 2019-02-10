@@ -50,8 +50,8 @@
     </div>
     <div id="editorButtons">
         <button disabled="true" id="ImportDocument">Import</button>
-        <button disabled="true" id="ExportDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();">Export</button>
-        <button disabled="true" id="RunDocument" onClick="updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();">Run</button>
+        <button disabled="true" id="ExportDocument" onClick="">Export</button>
+        <button disabled="true" id="RunDocument" onClick="">Run</button>
     </div>
 </section>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svgFilter">
@@ -68,7 +68,7 @@
 <div id="notificationOverlay"></div>
 <template id="documentRootLoadingSpinnerTemplate"><div class="documentRootOverlay"><div class="loadingSpinner docLoadingSpinner"></div></div></template>
 <template id="exportNotifyTemplate"><div class="exportNotification"></div></template>
-<template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button id="importFromFileBtn" onClick="importDocumentFromFile();">Import from file</button><button id="importFromUrlBtn" onClick="importDocumentFromURL(prompt('What URL do you want? Note that the same-origin policy must allow the URL to be fetched. (Dangerous workaround if it does not: do NOT do this unless you know what you are doing: To disable same-origin enforcement, you can use CORS Everywhere add-on for Firefox, but it allows any Web site access to any other, including your current logins.)'));">Import from URL</button><button id="closeImportDiaBtn" onClick="closeImportDialog();">Cancel</button></div></template>
+<template id="importDialogTemplate"><div class="importDialog"><div>(Imported document will replace current contents of edit field.)</div><button id="importFromFileBtn" onClick="">Import from file</button><button id="importFromUrlBtn" onClick="">Import from URL</button><button id="closeImportDiaBtn" onClick="closeImportDialog();">Cancel</button></div></template>
 <template id="alertDialogTemplate"><div class="importDialog"><div class="alertDialogMessageRegion"></div><button id="closeAlertDiaBtn" onClick="closeAlertDialog();">Okay</button></div></template>
 <template id="doneButtonTemplate"><button disabled="true" id="DoneEditing" onClick="updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();">Done</button></template>
 <input type="file" id="filepicker"></input>
