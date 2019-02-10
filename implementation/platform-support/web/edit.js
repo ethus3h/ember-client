@@ -18,8 +18,8 @@ window.onload = function() {
         //console.log(dcNames);
         // Attach click event listeners to elements
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
-        document.getElementById('ImportDocument').onclick=function(){};
-        document.getElementById('ImportDocument').onclick=function(){};
+        document.getElementById('ExportDocument').onclick=function(){};
+        document.getElementById('RunDocument').onclick=function(){};
         document.getElementById('ImportDocument').onclick=function(){};
         document.getElementById('ImportDocument').onclick=function(){};
         document.getElementById('ImportDocument').onclick=function(){};
