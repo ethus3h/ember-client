@@ -290,3 +290,8 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 286,Begin set text color,0,BN,,!Cx,Styling,,,
 287,End set text color,0,BN,,!Cx,Styling,,,
 288,Red,0,BN,,!Cx,Colors,,,
+289,Green,0,BN,,!Cx,Colors,,,
+290,Blue,0,BN,,!Cx,Colors,,,
+291,Yellow,0,BN,,!Cx,Colors,,,
+292,Black,0,BN,,!Cx,Colors,,,
+293,White,0,BN,,!Cx,Colors,,,
