@@ -2210,7 +2210,7 @@ async function reportTests() {
         strFailedPercentage = await implCat(strFailedPercentage, await strChar(strFailedPercentageTemp, await implSub(intCount, intCounter)));
         intCounter = await implSub(intCounter, 1);
     }
-    intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(strTotalWord, '.'))))))))))))))));
+    intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(' ', await implCat(strTotalWord, '.')))))))))))))))));
     let strTemp = '';
     if (await ne(intFailedTests, 0)) {
         strTotalWord = 'Some tests';
@@ -2221,7 +2221,7 @@ async function reportTests() {
         intArrayTestReportFrameBuffer = await append(intArrayTestReportFrameBuffer, await prepareStrForEcho(strTemp));
         /*error s/temp */
     }
-    if (await implEq(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
+    if (await ne(intPassedTests, await implSub(intTotalTests, intFailedTests))) {
         await implDie('There is a problem in the testing framework.');
     }
     await renderDrawContents(intArrayTestReportFrameBuffer);
