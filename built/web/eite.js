@@ -419,24 +419,25 @@ async function count(array) {
 /* strings, provides:
     implCat
     substring
+    len
 */
 
 async function implCat(strA, strB) {
     assertIsStr(strA); assertIsStr(strB); let strReturn;
 
-    strReturn = strA + "" + strB; return strReturn;
+    return strA + "" + strB;
 }
 
 async function substring(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
-    strReturn = str.substring(intStart, intStart + intLength); return strReturn;
+    return str.substring(intStart, intStart + intLength);
 }
 
 async function len(str) {
     assertIsStr(str); let intReturn;
 
-    intReturn = str.length; return intReturn;
+    return str.length;
 }
 
 
@@ -615,19 +616,19 @@ async function implNot(a) {
 async function implEq(genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
-    boolReturn = genericA === genericB; await assertIsBool(boolReturn); return boolReturn;
+    return genericA === genericB;
 }
 
 async function implGt(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    boolReturn = intA > intB; await assertIsBool(boolReturn); return boolReturn;
+    return intA > intB;
 }
 
 async function implLt(intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
-    boolReturn = intA < intB; await assertIsBool(boolReturn); return boolReturn;
+    return intA < intB;
 }
 
 // Note: Both rows and columns are zero-indexed from the perspective of callers of these routines. The header row is not counted for this purpose (the first row after the header is index 0), while the ID column (where present) *is* counted (so it is index 0).
@@ -2108,7 +2109,6 @@ async function runTest(boolV, boolTestReturn) {
         intFailedTests = await implAdd(intFailedTests, 1);
     }
     if (boolV) {
-        intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, intArrayTestFrameBuffer);
         await renderDrawContents(intArrayTestFrameBuffer);
     }
 
@@ -3452,6 +3452,24 @@ window.assertIsIntArray = async function (val) {
     else {
         await assertIsTrue(false);
     }
+}
+
+window.ne = async function (genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
+
+    return genericA !== genericB;
+}
+
+window.le = async function (intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    return intA <= intB;
+}
+
+window.ge = async function (intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    return intA >= intB;
 }
 
 // @license-end

@@ -1123,7 +1123,6 @@ async function runTest(boolV, boolTestReturn) {
         intFailedTests = await implAdd(intFailedTests, 1);
     }
     if (boolV) {
-        intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, intArrayTestFrameBuffer);
         await renderDrawContents(intArrayTestFrameBuffer);
     }
 
