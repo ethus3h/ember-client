@@ -2,29 +2,29 @@ r/b/runTest b/v b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
         if b/v
-            set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' passed.'
+            set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' passed.'
         set n/passedTests add n/passedTests 1
     else
         if b/v
-            set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' failed.'
+            set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } ' failed.'
         set n/failedTests add n/failedTests 1
     if b/v
-        set an/testFrameBuffer append an/testFrameBuffer an/frameBuffer
-        renderDrawContents an/frameBuffer
+        set an/testFrameBuffer append an/testFrameBuffer an/testFrameBuffer
+        renderDrawContents an/testFrameBuffer
     return b/testReturn
 
 r/b/runTestNamed b/v s/testName b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
         if b/v
-            set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } cat s/testName ' passed.'
+            set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } cat s/testName ' passed.'
         set n/passedTests add n/passedTests 1
     else
         if b/v
-            set an/frameBuffer append an/frameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } cat s/testName ' failed.'
+            set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Test #' cat strFrom n/totalTests } cat s/testName ' failed.'
         set n/failedTests add n/failedTests 1
     if b/v
-        renderDrawContents an/frameBuffer
+        renderDrawContents an/testFrameBuffer
     return b/testReturn
 
 r/v/clearTestStats
