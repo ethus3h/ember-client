@@ -201,11 +201,11 @@ async function crlf() {
 /* 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~ */
 /* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
 
-async function runTestsMath() {
-    await internalDebugStackEnter('runTestsMath:math-tests');
+async function runTestsMath(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsMath:math-tests'); await assertIsBool(boolV);
 
-    await runTest(await implEq(4, await implAdd(2, 2)));
-    await runTest(await ne(4, await implAdd(2, 2)));
+    await runTest(boolV, await implEq(4, await implAdd(2, 2)));
+    await runTest(boolV, await ne(4, await implAdd(2, 2)));
     await internalDebugStackExit();
 }
 
@@ -1106,36 +1106,48 @@ async function sumArray(intArrayIn) {
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function runTest(boolTestReturn) {
-    await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsBool(boolTestReturn); let boolReturn;
+async function runTest(boolV, boolTestReturn) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsBool(boolV);await assertIsBool(boolTestReturn); let boolReturn;
 
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' passed.'))));
+        if (boolV) {
+            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' passed.'))));
+        }
         intPassedTests = await implAdd(intPassedTests, 1);
     }
     else {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
+        if (boolV) {
+            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
+        }
         intFailedTests = await implAdd(intFailedTests, 1);
     }
-    await renderDrawContents(intArrayFrameBuffer);
+    if (boolV) {
+        await renderDrawContents(intArrayFrameBuffer);
+    }
 
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function runTestNamed(strTestName, boolTestReturn) {
-    await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestNamed:unit-testing'); await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
+async function runTestNamed(boolV, strTestName, boolTestReturn) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestNamed:unit-testing'); await assertIsBool(boolV);await assertIsStr(strTestName);await assertIsBool(boolTestReturn); let boolReturn;
 
     intTotalTests = await implAdd(intTotalTests, 1);
     if (boolTestReturn) {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
+        if (boolV) {
+            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
+        }
         intPassedTests = await implAdd(intPassedTests, 1);
     }
     else {
-        intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
+        if (boolV) {
+            intArrayFrameBuffer = await append(intArrayFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
+        }
         intFailedTests = await implAdd(intFailedTests, 1);
     }
-    await renderDrawContents(intArrayFrameBuffer);
+    if (boolV) {
+        await renderDrawContents(intArrayFrameBuffer);
+    }
 
     boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -1149,29 +1161,14 @@ async function clearTestStats() {
     await internalDebugStackExit();
 }
 
-async function runTestsOnly() {
-    await internalDebugStackEnter('runTestsOnly:unit-testing'); let boolReturn;
+async function runTestsOnly(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
 
-    /* Run tests silently */
+    /* Run tests without report. b/v=verbose: true=print test result lines; false=return value only */
     /* This runs each component's test suite */
-    /*runTestsBits */
-    await runTestsMath();
+    /*runTestsBits b/v */
+    await runTestsMath(boolV);
     /* Did anything fail? */
-    if (await implEq(intFailedTests, 0)) {
-
-        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-    }
-
-    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function runTests() {
-    await internalDebugStackEnter('runTests:unit-testing'); let boolReturn;
-
-    /* Run tests and report the results */
-    await clearTestStats();
-    await runTestsOnly();
-    await reportTests();
     if (await implEq(intFailedTests, 0)) {
 
         boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
@@ -1690,13 +1687,26 @@ async function getDocumentFrame(intExecId, strFormat) {
 async function runTests() {
     await internalDebugStackEnter('runTests:public-interface'); let boolReturn;
 
-    /* Returns true if all tests pass; false otherwise, displaying report of the tests. */
+    /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
+    await clearTestStats();
+    await runTestsOnly(true);
+    await reportTests();
+    if (await implEq(intFailedTests, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function quietRunTests() {
     await internalDebugStackEnter('quietRunTests:public-interface'); let boolReturn;
 
     /* Returns true if all tests pass; false otherwise. */
+    let boolRes = false;
+    boolRes = await runTestsOnly(false);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 /* Calling a comparison with different types is an error. All types must be same type. */
