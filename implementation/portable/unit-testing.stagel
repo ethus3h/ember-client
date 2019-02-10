@@ -25,8 +25,8 @@ r/v/clearTestStats
     set n/passedTests 0
     set n/failedTests 0
 
-r/b/runTestsOnly
-    # Run tests silently
+r/b/runTestsOnly b/silent
+    # Run tests without report
     # This runs each component's test suite
     #runTestsBits
     runTestsMath
