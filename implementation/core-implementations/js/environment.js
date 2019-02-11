@@ -33,6 +33,6 @@ async function renderDrawContents(renderBuffer) {
 
 async function internalRequestRenderDrawHTMLToDOM(htmlString) {
     let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-    htmlOutputRootElement.innerHTML = string;
+    htmlOutputRootElement.innerHTML = htmlString;
     htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
