@@ -5,7 +5,6 @@
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
     const window.eiteWorkerResolves = {};
-    const window.eiteWorkerRejects = {};
     let window.eiteWorkerCallID = 0;
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
@@ -13,16 +12,13 @@ if (window.Worker) {
         let thisCall={id: thisCallId, args: args};
         return new Promise(function(resolve, reject) {
             window.eiteWorkerResolves[thisCallId]=resolve;
-            window.eiteWorkerRejects[thisCallId]=reject;
             window.eiteWorker.postMessage(thisCall);
         });
     };
     window.eiteWorker.onmessage = function(event) {
         const {id, err, res} = event.data;
-        if (err !== undefined || !res) {
-            if (window.eiteWorkerRejects[id]){
-                if()
-            }
+        if (res) {
+            
         }
     };
 }
