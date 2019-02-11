@@ -293,9 +293,9 @@ async function internalLoadDatasets() {
 // Promise-wrapped worker strategy is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
 
 if (window.Worker) {
-    let window.eiteWorker = new Worker('eite.js');
-    const window.eiteWorkerResolveCallbacks = {};
-    let window.eiteWorkerCallID = 0;
+    window.eiteWorker = new Worker('eite.js');
+    window.eiteWorkerResolveCallbacks = {};
+    window.eiteWorkerCallID = 0;
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
@@ -332,16 +332,19 @@ else {
     }
 }
 
-async function internalOnMessage(message) {
-    const {uuid, msgid, args} = message.data;
-    self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: await self[args[0]]( ...args[1] )});
-}
+if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
+    // Running as a Web worker, so set up accordingly
+    self.internalOnMessage = async function(message) {
+        const {uuid, msgid, args} = message.data;
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: await self[args[0]]( ...args[1] )});
+    }
 
-self.onmessage = function(message) {
-    // Handle requests made to this code when it is running as a Web worker
-    const {uuid, msgid, args} = message.data;
-    if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
-        internalOnMessage(message);
+    self.onmessage = function(message) {
+        // Handle requests made to this code when it is running as a Web worker
+        const {uuid, msgid, args} = message.data;
+        if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
+            self.internalOnMessage(message);
+        }
     }
 }
 
