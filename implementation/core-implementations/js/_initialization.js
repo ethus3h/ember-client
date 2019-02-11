@@ -203,5 +203,6 @@ async function internalLoadDatasets() {
 }
 
 self.onmessage = function(message) {
-    
+    // Handle requests made to this code when it is running as a Web worker
+    const {uuid, msgid, res} = message.data;
 }
