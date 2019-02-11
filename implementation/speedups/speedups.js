@@ -1,3 +1,8 @@
+registerSpeedup(name, func) {
+    if (typeof window !== 'undefined') {
+        window[name] = func;
+}
+
 window.assertIsFalse = async function (bool) {
     if (bool === false) {
         return;
