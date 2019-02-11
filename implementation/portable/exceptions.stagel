@@ -20,7 +20,7 @@ r/b/notExcOrEmpty s/test
     set b/res not notExcep s/test
     return b/res
 
-r/b/notExcOrEmpty s/test
+r/b/excOrEmpty s/test
     new b/res
-    set b/res not notExcep s/test
+    set b/res or excep s/test } strEmpty s/test
     return b/res
