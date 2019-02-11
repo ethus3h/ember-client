@@ -410,7 +410,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         }
         catch(error) {
             console.log('burerererer');
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, val: error});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, val: 'test'});
         }
         if (!res) {
             res = null;
