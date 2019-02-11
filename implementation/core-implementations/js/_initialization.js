@@ -215,6 +215,9 @@ if (typeof window !== 'undefined') {
         window.eiteWorkerResolveCallbacks = {};
         window.eiteWorkerCallID = 0;
         window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
             window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
             let thisCallId=window.eiteWorkerCallID;
             let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
