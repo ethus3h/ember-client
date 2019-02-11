@@ -17,7 +17,7 @@ r/b/excep s/test
 
 r/b/notExcOrEmpty s/test
     new b/res
-    set b/res not notExcep s/test
+    set b/res not excOrEmpty s/test
     return b/res
 
 r/b/excOrEmpty s/test
