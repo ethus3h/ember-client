@@ -81,7 +81,7 @@ r/n/indexOf ga/in g/value
 
 r/b/arrEmpty ga/in
     new b/res
-    set b/res eq 0 len s/str
+    set b/res eq 0 count ga/in
     return b/res
 
 r/b/arrNonempty ga/in
