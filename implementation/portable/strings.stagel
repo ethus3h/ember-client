@@ -80,7 +80,7 @@ r/b/strEmpty s/str
 
 r/b/strNonempty s/str
     new b/res
-    set b/res eq 0 len s/str
+    set b/res not strEmpty s/str
     return b/res
 
 r/b/strContainsOnlyInt s/in
