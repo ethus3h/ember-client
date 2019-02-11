@@ -1236,21 +1236,18 @@ async function dcaToAscii(intArrayContent) {
     let intArrayTemp = [];
     let intDcAtIndex = 0;
     while (await implLt(intC, intL)) {
-        console.log('a');
         intDcAtIndex = await get(intArrayContent, intC);
-        console.log('b');
         intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
-        console.log('c');
-        console.log(intArrayTemp);
-        if (await isAsciiByte(await get(intArrayTemp, 0))) {
-        console.log('g');
-            intArrayRes = await append(intArrayRes, intArrayTemp);
-        console.log('d');
+        if (await arrNonempty(intArrayTemp)) {
+            if (await isAsciiByte(await get(intArrayTemp, 0))) {
+                intArrayRes = await append(intArrayRes, intArrayTemp);
+            }
+            else {
+                await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+            }
         }
         else {
-        console.log('f');
             await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
-        console.log('e');
         }
         intC = await implAdd(intC, 1);
     }
@@ -2158,6 +2155,24 @@ async function indexOf(genericArrayIn, genericValue) {
     }
 
     intReturn = -1; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function arrEmpty(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('arrEmpty:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implEq(0, await count(genericArrayIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function arrNonempty(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('arrNonempty:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await arrEmpty(genericArrayIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function isArray(genericItemIn) {
