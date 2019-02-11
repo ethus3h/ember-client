@@ -190,7 +190,6 @@ async function internalSetup() {
     if (!datasetsLoaded) {
         await internalLoadDatasets();
     }
-console.log('buter');
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listInputFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
