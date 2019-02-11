@@ -69,7 +69,11 @@ function internalEiteReqCharset() {
 }
 
 function internalEiteReqOutputWidth() {
-    return document.documentElement.clientWidth;
+    return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+}
+
+function internalEiteReqOutputHeight() {
+    return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
 // Main setup logic
