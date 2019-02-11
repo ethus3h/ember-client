@@ -822,10 +822,12 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     rowNum = rowNum + 1;
 
     if (rowNum >= dcData[dataset].length) {
-        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length+').');
+        strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
-
-    strReturn = dcData[dataset][rowNum][fieldNum]; await assertIsStr(strReturn); return strReturn;
+    else {
+        strReturn = dcData[dataset][rowNum][fieldNum];
+    }
+    await assertIsStr(strReturn); return strReturn;
 }
 
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
