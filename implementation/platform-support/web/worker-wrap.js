@@ -7,9 +7,9 @@ if (window.Worker) {
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
-        return new Promise(resolve => {
-                thisCallId
-            });
+        return new Promise(function(resolve, reject) {
+            
+        });
         }
     }
     window.eiteWorker.onmessage = function(event) {
