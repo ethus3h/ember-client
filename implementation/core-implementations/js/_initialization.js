@@ -246,7 +246,7 @@ if (typeof window !== 'undefined') {
                     throw 'Web worker encountered an error.';
                 }
             }
-            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 const {uuid, msgid, args} = message.data;
                 let res = await window[args[0]]( ...args[1] );
                 if (!res) {
@@ -293,8 +293,24 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
         }
-        else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
-            
+        else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
+                            if (res || res === null) {
+                    let resolveCallback;
+                    resolveCallback = window.eiteWorkerResolveCallbacks[id];
+                    if (resolveCallback) {
+                        resolveCallback(res);
+                        delete window.eiteWorkerResolveCallbacks[id];
+                    }
+                    else {
+                        implDie('Web worker returned invalid message ID.');
+                        throw 'Web worker returned invalid message ID.';
+                    }
+                }
+                else {
+                    implDie('Web worker encountered an error.');
+                    throw 'Web worker encountered an error.';
+                }
+
         }
     }
 
