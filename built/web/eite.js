@@ -346,6 +346,10 @@ if (typeof window !== 'undefined') {
                 }
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
+        window.eiteWorker.onerror = function(error) {
+            console.log(error);
+            implDie('er');
+        }
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
             console.log(message);
