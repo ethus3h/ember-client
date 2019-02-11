@@ -85,7 +85,7 @@ async function internalSetup() {
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
-    if (typeof window !== 'undefined') {
+    if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
     }
     let charset = await eiteHostCall('internalEiteReqCharset');
