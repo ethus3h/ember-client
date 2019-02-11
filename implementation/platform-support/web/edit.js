@@ -44,7 +44,7 @@ window.onload = function() {
         inFormat=document.getElementById('inFormat');
         inFormat.innerHTML='';
         let formats=[];
-        formats = await listInputFormats();
+        formats = await eiteCall('listInputFormats');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
@@ -53,7 +53,7 @@ window.onload = function() {
         inFormat.disabled=false;
         outFormat=document.getElementById('outFormat');
         outFormat.innerHTML='';
-        formats = await listOutputFormats();
+        formats = await eiteCall('listOutputFormats');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
@@ -81,7 +81,7 @@ function handleDcEditingKeystroke(event) {
                     elem.value = elem.value.replace(char, '');
                     elem.selectionStart = start - 1;
                     elem.selectionEnd = end - 1;
-                    typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray(char)));
+                    typeInTextareaSpaced(elem, await eiteCall('dcFromFormat', ['ascii', await eiteCall('strToByteArray', [char])]));
                 })(inputarea, globalCachedInputState);
             }
         }
@@ -388,12 +388,12 @@ async function ExportDocument() {
         if (!await eiteCall('isSupportedOutputFormat', [outFormat]) {
             await implDie(outFormat+' is not a supported output format!');
         }
-        let exported=Uint8Array.from(await importAndExport('sems', outFormat, await getInputDoc()));
+        let exported=Uint8Array.from(await eiteCall('importAndExport', ['sems', outFormat, await getInputDoc()]));
         let blob=await new Blob([exported], { type: 'application/octet-stream' });
         let link=document.createElement('a');
         link.href=window.URL.createObjectURL(blob);
         let date=new Date();
-        let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await getExportExtension(outFormat);
+        let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await eiteCall('getExportExtension', [outFormat]);
         exportNotify(outName);
         link.download=outName;
         link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
