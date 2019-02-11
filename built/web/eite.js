@@ -340,7 +340,7 @@ if (typeof window !== 'undefined') {
         };
         window.eiteHostRequestInternalOnMessage = async function(message) {
                 const {uuid, msgid, args} = message.data;
-                let res = window[args[0]]( ...args[1] );
+                let res = await window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
                 }
