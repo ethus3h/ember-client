@@ -256,11 +256,11 @@ if (typeof window !== 'undefined') {
     }
 }
 else {
-    window.eiteCall = async function(funcName, args) {
+    self.eiteCall = async function(funcName, args) {
         if (args === undefined) {
             args=[];
         }
-        return await window[funcName]( ...args );
+        return await self[funcName]( ...args );
     }
 }
 
