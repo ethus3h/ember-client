@@ -238,6 +238,13 @@ async function internalLoadDatasets() {
 
 if (typeof window !== 'undefined') {
     // Not running as a Web worker
+    window.eiteCall = async function(funcName, args) {
+        if (args === undefined) {
+            args=[];
+        }
+        return await window[funcName]( ...args );
+    };
+    window.eiteHostCall = window.eiteCall;
     if (window.Worker) {
         window.eiteWorker = new Worker('eite.js');
         window.eiteWorkerResolveCallbacks = {};
@@ -290,15 +297,6 @@ if (typeof window !== 'undefined') {
                 throw 'Web worker encountered an error: '+res+'.';
             }
         };
-    }
-    else {
-        window.eiteCall = async function(funcName, args) {
-            if (args === undefined) {
-                args=[];
-            }
-            return await window[funcName]( ...args );
-        }
-        window.eiteHostCall = window.eiteCall;
     }
 }
 else {
