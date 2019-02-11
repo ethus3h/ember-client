@@ -140,7 +140,7 @@ async function internalSetup() {
             await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
         });
 
-        window.implWarn', async function (strMessage) {
+        registerSpeedup('implWarn', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -150,7 +150,7 @@ async function internalSetup() {
             await console.trace();
         });
 
-        window.implLog', async function (strMessage) {
+        registerSpeedup('implLog', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
