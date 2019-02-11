@@ -154,7 +154,9 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
+    console.log('bub');
     let charset = document.characterSet.toLowerCase();
+    console.log('bab');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
