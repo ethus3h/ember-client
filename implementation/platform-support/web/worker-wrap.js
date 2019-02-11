@@ -2,6 +2,8 @@
 
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
+    const window.eiteWorkerResolves = {};
+    const window.eiteWorkerResolves = {};
     let window.eiteWorkerCallID = 0;
     // Gilad Dayagi has already implemented a pattern like I'm trying to, as it turns out. I'm using it as a model for this. https://codeburst.io/promises-for-the-web-worker-9311b7831733
     window.eiteCall = async function(funcName, args) {
@@ -10,7 +12,6 @@ if (window.Worker) {
         return new Promise(function(resolve, reject) {
             
         });
-        }
     }
     window.eiteWorker.onmessage = function(event) {
         
