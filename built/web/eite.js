@@ -311,12 +311,12 @@ if (typeof window !== 'undefined') {
             });
         };
         window.eiteWorker.onmessage = function(message) {
+                        console.log('d');
             const {uuid, msgid, res} = message.data;
             if (res || res === null) {
                 let resolveCallback;
                 resolveCallback = window.eiteWorkerResolveCallbacks[id];
                 if (resolveCallback) {
-                        alert('d');
                     resolveCallback(res);
                     delete window.eiteWorkerResolveCallbacks[id];
                 }
