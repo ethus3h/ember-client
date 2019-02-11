@@ -147,20 +147,32 @@ async function setupIfNeeded() {
     await internalSetup();
 }
 
+// Routines needed for Web worker requests
 function internalEiteReqCharset() {
     return document.characterSet.toLowerCase();
 }
 
+function internalEiteReqOutputWidth() {
+    return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+}
+
+function internalEiteReqOutputHeight() {
+    return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+}
+
+function internalEiteReqTypeofWindow() {
+    return typeof window;
+}
+
+// Main setup logic
 async function internalSetup() {
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
-    if (typeof window !== 'undefined') {
+    if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
     }
-    console.log('bub');
     let charset = await eiteHostCall('internalEiteReqCharset');
-    console.log('bab');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
@@ -170,8 +182,8 @@ async function internalSetup() {
     if (haveDom) {
         // Web browsers, etc.
         envPreferredFormat = 'html';
-        envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        envResolutionW = await eiteHostCall('internalEiteReqOutputWidth');
+        envResolutionH = await eiteHostCall('internalEiteReqOutputHeight');
     }
     else {
         // Command-line, e.g. Node.js

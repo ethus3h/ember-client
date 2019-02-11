@@ -147,14 +147,32 @@ async function setupIfNeeded() {
     await internalSetup();
 }
 
+// Routines needed for Web worker requests
+function internalEiteReqCharset() {
+    return document.characterSet.toLowerCase();
+}
+
+function internalEiteReqOutputWidth() {
+    return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+}
+
+function internalEiteReqOutputHeight() {
+    return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+}
+
+function internalEiteReqTypeofWindow() {
+    return typeof window;
+}
+
+// Main setup logic
 async function internalSetup() {
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
-    if (typeof window !== 'undefined') {
+    if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
     }
-    let charset = document.characterSet.toLowerCase();
+    let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
@@ -164,8 +182,8 @@ async function internalSetup() {
     if (haveDom) {
         // Web browsers, etc.
         envPreferredFormat = 'html';
-        envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        envResolutionW = await eiteHostCall('internalEiteReqOutputWidth');
+        envResolutionH = await eiteHostCall('internalEiteReqOutputHeight');
     }
     else {
         // Command-line, e.g. Node.js
@@ -315,10 +333,10 @@ if (typeof window !== 'undefined') {
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
                     let resolveCallback;
-                    resolveCallback = window.eiteWorkerResolveCallbacks[id];
+                    resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
                     if (resolveCallback) {
                         resolveCallback(res);
-                        delete window.eiteWorkerResolveCallbacks[id];
+                        delete window.eiteWorkerResolveCallbacks[msgid];
                     }
                     else {
                         implDie('Web worker returned invalid message ID.');
@@ -332,7 +350,7 @@ if (typeof window !== 'undefined') {
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 const {uuid, msgid, args} = message.data;
-                let res = await window[args[0]]( ...args[1] );
+                let res = window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
                 }
@@ -381,10 +399,10 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             const {uuid, msgid, res} = message.data;
             if (res || res === null) {
                 let resolveCallback;
-                resolveCallback = window.eiteWorkerHostResolveCallbacks[id];
+                resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
                 if (resolveCallback) {
                     resolveCallback(res);
-                    delete window.eiteWorkerHostResolveCallbacks[id];
+                    delete self.eiteWorkerHostResolveCallbacks[msgid];
                 }
                 else {
                     implDie('Host returned invalid message ID.');
