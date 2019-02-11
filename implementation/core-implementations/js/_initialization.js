@@ -248,6 +248,9 @@ if (typeof window !== 'undefined') {
     }
     else {
         window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
             return await window[funcName]( ...args );
         }
     }
