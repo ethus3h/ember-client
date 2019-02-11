@@ -3,24 +3,24 @@
 r/s/dcDataNoResultException
     return '89315802-d53d-4d11-ba5d-bf505e8ed454'
 
-r/b/notExcep s/test
+r/b/excep s/test
     new b/res
     set b/res false
     # Test for each exception type in turn (there's only one so far)
     set b/res or b/res eq s/test dcDataNoResultException
     return b/res
 
-r/b/excep s/test
+r/b/notExcep s/test
     new b/res
-    set b/res not notExcep s/test
-    return b/res
-
-r/b/notExcOrEmpty s/test
-    new b/res
-    set b/res not excOrEmpty s/test
+    set b/res not excep s/test
     return b/res
 
 r/b/excOrEmpty s/test
     new b/res
     set b/res or excep s/test } strEmpty s/test
+    return b/res
+
+r/b/notExcOrEmpty s/test
+    new b/res
+    set b/res not excOrEmpty s/test
     return b/res
