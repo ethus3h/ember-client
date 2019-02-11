@@ -345,12 +345,12 @@ if (typeof window !== 'undefined') {
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
-        console.log(message);
         const {uuid, msgid, args} = message.data;
         let res = await self[args[0]]( ...args[1] );
         if (!res) {
             res = null;
         }
+        console.log(res);
         self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
     }
 
