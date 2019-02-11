@@ -3,6 +3,7 @@ globalCachedInputState="";
 window.onload = function() {
     (async function(){
         let dcNames=[];
+        alert('a');
         await eiteCall('setupIfNeeded');
         alert('b');
         dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
