@@ -185,6 +185,7 @@ async function internalSetup() {
     }
 
     // Set up data sets.
+
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
         await internalLoadDatasets();
@@ -342,7 +343,7 @@ if (typeof window !== 'undefined') {
                 let res = window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
-                }console.log(res);
+                }
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
         window.eiteWorker.onmessage = function(message) {
