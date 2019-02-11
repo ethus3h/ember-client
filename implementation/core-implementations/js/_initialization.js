@@ -201,3 +201,7 @@ async function internalLoadDatasets() {
     }
     datasetsLoaded = true;
 }
+
+self.onmessage = function(message) {
+    
+}

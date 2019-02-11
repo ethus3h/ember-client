@@ -17,8 +17,8 @@ if (window.Worker) {
             window.eiteWorker.postMessage(thisCall);
         });
     };
-    window.eiteWorker.onmessage = function(event) {
-        const {uuid, msgid, res} = event.data;
+    window.eiteWorker.onmessage = function(message) {
+        const {uuid, msgid, res} = message.data;
         if (res) {
             let resolveCallback;
             resolveCallback = window.eiteWorkerResolveCallbacks[id];
