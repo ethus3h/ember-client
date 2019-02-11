@@ -86,6 +86,7 @@ function internalEiteReqAlert(msg) {
 }
 
 function internalEiteReqLoadDataset(dataset) {
+    // Papa.parse call has to be run from the main thread because Papa isn't defined in the worker since it was only imported in the main thread.
      new Promise(resolve => {
             Papa.parse('data/' + dataset + '.csv', {
                 download: true,
