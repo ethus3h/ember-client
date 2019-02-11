@@ -366,7 +366,8 @@ if (typeof window !== 'undefined') {
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
-                window.eiteHostRequestInternalOnMessage(message);
+                console.log('buceau');
+window.eiteHostRequestInternalOnMessage(message);
             }
         };
     }
