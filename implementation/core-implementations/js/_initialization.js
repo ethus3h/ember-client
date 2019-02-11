@@ -263,7 +263,7 @@ if (typeof window !== 'undefined') {
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
         window.eiteWorker.onerror = function(err) {
-            await eiteDie('Web worker exited with the error: '+err.message+'.'https://stackoverflow.com/questions/39992417/how-to-bubble-a-web-worker-error-in-a-promise-via-worker-onerror);
+            await eiteDie('Web worker exited with the error: '+err.message+'.');
         }
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
