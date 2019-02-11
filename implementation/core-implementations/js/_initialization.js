@@ -302,10 +302,10 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             const {uuid, msgid, res} = message.data;
             if (res || res === null) {
                 let resolveCallback;
-                resolveCallback = window.eiteWorkerHostResolveCallbacks[id];
+                resolveCallback = self.eiteWorkerHostResolveCallbacks[id];
                 if (resolveCallback) {
                     resolveCallback(res);
-                    delete window.eiteWorkerHostResolveCallbacks[id];
+                    delete self.eiteWorkerHostResolveCallbacks[id];
                 }
                 else {
                     implDie('Host returned invalid message ID.');
