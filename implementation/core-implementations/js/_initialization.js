@@ -94,8 +94,8 @@ async function internalSetup() {
     if (haveDom) {
         // Web browsers, etc.
         envPreferredFormat = 'html';
-        envResolutionW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        envResolutionH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        envResolutionW = await eiteHostCall('internalEiteReqOutputWidth');
+        envResolutionH = await eiteHostCall('internalEiteReqOutputHeight');
     }
     else {
         // Command-line, e.g. Node.js
