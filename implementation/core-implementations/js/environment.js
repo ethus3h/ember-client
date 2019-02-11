@@ -27,7 +27,7 @@ async function renderDrawContents(renderBuffer) {
         await eiteHostCall('internalRequestRenderDrawHTMLToDOM', [string]);
     }
     else {
-        console.log(string);
+        await console.log(string);
     }
 }
 
