@@ -285,7 +285,7 @@ if (typeof window !== 'undefined') {
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 window.eiteHostRequestInternalOnMessage(message);
             }
-            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
                 implDie('Web worker encountered an error: '+res.message+'.');
                 throw 'Web worker encountered an error: '+res.message+'.';
             }
