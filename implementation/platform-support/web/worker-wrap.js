@@ -25,16 +25,19 @@ if (window.Worker) {
                 delete window.eiteWorkerResolveCallbacks[id];
             }
             else {
-                await implDie('Web worker returned invalid message ID.');
+                implDie('Web worker returned invalid message ID.');
+                throw 'Web worker returned invalid message ID.';
             }
         }
         else {
-            await implDie('Web worker encountered an error.');
+            implDie('Web worker encountered an error.');
+            throw 'Web worker encountered an error.';
         }
     };
 }
 else {
-    await implDie('Web worker required.');
+    implDie('Web worker required.');
+    throw 'Web worker required.';
 }
 
 // @license-end
