@@ -279,11 +279,11 @@ async function internalLoadDatasets() {
     // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
     let count = 0;
     let dataset = '';
-    console.log('buses');
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
+    console.log('buses');
         dcData[dataset] = await new Promise(resolve => {
             Papa.parse('data/' + dataset + '.csv', {
                 download: true,
