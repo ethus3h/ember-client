@@ -75,8 +75,8 @@ r/s/strToLower s/str
 
 r/b/strEmpty s/str
     new b/res
-    set b/res         if gt len s/res } 0
-            set an/res strToByteArray s/res
+    set b/res eq 0 len s/str
+    return b/res
 
 r/b/strContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
