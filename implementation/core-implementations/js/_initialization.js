@@ -202,6 +202,8 @@ async function internalLoadDatasets() {
     datasetsLoaded = true;
 }
 
+// Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
+
 // To call a routine from eite, running it as a worker if available, run: await eiteCall('yourRoutineName', [param1, param2, param3...]); (with the brackets around the params)
 
 // Promise-wrapped worker strategy is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
