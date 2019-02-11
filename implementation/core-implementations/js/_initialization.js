@@ -203,8 +203,8 @@ async function internalLoadDatasets() {
 }
 
 async function internalOnMessage(message) {
-        const {uuid, msgid, args} = message.data;
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', self[args[0]]( ...args[1] )};
+    const {uuid, msgid, args} = message.data;
+    self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: await self[args[0]]( ...args[1] )});
 }
 
 self.onmessage = function(message) {
