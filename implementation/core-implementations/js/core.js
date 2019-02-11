@@ -164,6 +164,31 @@ function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
+function internalEiteReqAlert(msg) {
+    await alert(msg);
+    return null;
+}
+
+function internalEiteReqLoadDataset(dataset) {
+    // Papa.parse call has to be run from the main thread because Papa isn't defined in the worker since it was only imported in the main thread.
+    new Promise(resolve => {
+        Papa.parse('data/' + dataset + '.csv', {
+            download: true,
+            encoding: "UTF-8",
+            newline: "\n",
+            delimiter: ",",
+            quoteChar: "\"",
+            complete: async function(results, file) {
+                resolve(results.data);
+            },
+            error: async function(results, file) {
+                await implError("Error reported while parsing "+dataset+"!");
+                resolve(undefined);
+            }
+        });
+    });
+}
+
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
@@ -229,7 +254,7 @@ async function internalSetup() {
 
         window.implError = async function (strMessage) {
             if(typeof strMessage !== "string") {
-                alert("EITE reported an error! You may want to reload the page. The error was: Nonstring error message!");
+                await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
                 throw "Nonstring error message";
             }
             // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
@@ -238,7 +263,7 @@ async function internalSetup() {
             await implWarn(strMessage);
 
             await console.trace();
-            alert("EITE reported an error! You may want to reload the page. The error was: " + strMessage);
+            await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
         }
 
         window.implWarn = async function (strMessage) {
@@ -283,22 +308,7 @@ async function internalLoadDatasets() {
         dataset = datasets[count];
         dcData[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
-        dcData[dataset] = await new Promise(resolve => {
-            Papa.parse('data/' + dataset + '.csv', {
-                download: true,
-                encoding: "UTF-8",
-                newline: "\n",
-                delimiter: ",",
-                quoteChar: "\"",
-                complete: async function(results, file) {
-                    resolve(results.data);
-                },
-                error: async function(results, file) {
-                    await implError("Error reported while parsing "+dataset+"!");
-                    resolve(undefined);
-                }
-            });
-        });
+        dcData[dataset] = await eiteHostCall('internalEiteReqLoadDataset', [dataset]);
         count = count + 1;
     }
     datasetsLoaded = true;
