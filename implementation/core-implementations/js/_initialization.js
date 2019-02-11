@@ -314,7 +314,13 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         const {uuid, msgid, args} = message.data;
-        let res = await self[args[0]]( ...args[1] );
+        let res;
+        try {
+            res = await self[args[0]]( ...args[1] );
+        }
+        catch(error) {
+            new ErrorEvent(error.message);
+        }
         if (!res) {
             res = null;
         }
