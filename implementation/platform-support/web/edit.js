@@ -161,7 +161,7 @@ async function updateNearestDcLabelInner(el) {
     after=after.substring(0, after.indexOf(' '));
     before=before+after;
     currentDc=parseInt(before.trim().split(' ').slice(-1));
-    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc])) {
+    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc]))) {
         setNearestDcLabel('');
         return;
     }
