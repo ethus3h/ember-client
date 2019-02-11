@@ -24,9 +24,7 @@ async function renderDrawContents(renderBuffer) {
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
     if (haveDom) {
-        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-        htmlOutputRootElement.innerHTML = string;
-        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+        await eiteHostCall('internalRequestRenderDrawHTMLToDOM', [string]);
     }
     else {
         console.log(string);
