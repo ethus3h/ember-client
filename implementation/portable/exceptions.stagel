@@ -15,12 +15,12 @@ r/b/excep s/test
     set b/res not notExcep s/test
     return b/res
 
-r/b/excep s/test
+r/b/notExcOrEmpty s/test
     new b/res
     set b/res not notExcep s/test
     return b/res
 
-    r/b/excep s/test
+r/b/notExcOrEmpty s/test
     new b/res
     set b/res not notExcep s/test
     return b/res
