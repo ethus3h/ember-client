@@ -255,6 +255,14 @@ if (typeof window !== 'undefined') {
         }
     }
 }
+    else {
+        window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
+            return await window[funcName]( ...args );
+        }
+    }
 
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
     // Running as a Web worker, so set up accordingly
