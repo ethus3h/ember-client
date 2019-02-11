@@ -319,7 +319,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            new ErrorEvent(error.message);
+            new ErrorEvent(error.message, {bubbles: true, error: error});
         }
         if (!res) {
             res = null;
