@@ -38,6 +38,9 @@ if (window.Worker) {
     };
 }
 else {
+    window.eiteCall = async function(funcName, args) {
+        return await funcName( ...args )
+    }
     implDie('Web worker required.');
     throw 'Web worker required.';
 }
