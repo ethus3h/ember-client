@@ -185,7 +185,7 @@ async function internalSetup() {
     }
 
     // Set up data sets.
-
+console.log('buceau');
     datasets = await listDcDatasets();
     if (!datasetsLoaded) {
         await internalLoadDatasets();
