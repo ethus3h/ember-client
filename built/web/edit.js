@@ -4,6 +4,7 @@ window.onload = function() {
     (async function(){
         let dcNames=[];
         await eiteCall('setupIfNeeded');
+        await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
         dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
@@ -81,7 +82,7 @@ function handleDcEditingKeystroke(event) {
                     elem.value = elem.value.replace(char, '');
                     elem.selectionStart = start - 1;
                     elem.selectionEnd = end - 1;
-                    typeInTextareaSpaced(elem, await eiteCall('dcFromFormat', ['ascii', await eiteCall('strToByteArray', [char])]));
+                    typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
                 })(inputarea, globalCachedInputState);
             }
         }
@@ -161,11 +162,11 @@ async function updateNearestDcLabelInner(el) {
     after=after.substring(0, after.indexOf(' '));
     before=before+after;
     currentDc=parseInt(before.trim().split(' ').slice(-1));
-    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc]))) {
+    if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
         setNearestDcLabel('');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]));
+    setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
 }
 
 function typeInTextarea(el, newText) {
