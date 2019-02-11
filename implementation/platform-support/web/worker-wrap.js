@@ -1,11 +1,12 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
+// Promise-wrapped worker API is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
+
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
     const window.eiteWorkerResolves = {};
-    const window.eiteWorkerResolves = {};
+    const window.eiteWorkerRejects = {};
     let window.eiteWorkerCallID = 0;
-    // Gilad Dayagi has already implemented a pattern like I'm trying to, as it turns out. I'm using it as a model for this. https://codeburst.io/promises-for-the-web-worker-9311b7831733
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
