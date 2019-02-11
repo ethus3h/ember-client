@@ -2,7 +2,10 @@
 
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
+    let window.eiteWorkerCallID = 0;
     window.eiteCall = async function(funcName, args) {
+        window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
+        let thisCallId=window.eiteWorkerCallID;
         return new Promise(resolve => {
                 fr.onload=function (){
                     resolve(undefined);
