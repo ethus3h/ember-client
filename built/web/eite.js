@@ -306,12 +306,12 @@ if (typeof window !== 'undefined') {
             let thisCallId=window.eiteWorkerCallID;
             let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
             return new Promise(function(resolve) {
-                console.log(window);
                 window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
                 window.eiteWorker.postMessage(thisCall);
             });
         };
         window.eiteWorker.onmessage = function(message) {
+            throw 'bub';
                         console.log('d');
             const {uuid, msgid, res} = message.data;
             if (res || res === null) {
@@ -346,6 +346,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         const {uuid, msgid, args} = message.data;
+        console.log(args);
         let res = await self[args[0]]( ...args[1] );
         if (!res) {
             res = null;
