@@ -277,6 +277,9 @@ function alertDialogEscapeListener(event) {
 
 function openImportDialog() {
     let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
+    elem.getElementsByClassName('importFromFileBtn').onclick=function(){importDocumentFromFile();};
+    elem.getElementsByClassName('importFromUrlBtn').onclick=function(){importDocumentFromURL(prompt('What URL do you want? Note that the same-origin policy must allow the URL to be fetched. (Dangerous workaround if it does not: do NOT do this unless you know what you are doing: To disable same-origin enforcement, you can use CORS Everywhere add-on for Firefox, but it allows any Web site access to any other, including your current logins.)'));};
+    elem.getElementsByClassName('closeImportDiaBtn').onclick=function(){closeImportDialog();};
     document.addEventListener('keyup', importDialogEscapeListener);
     notificationOverlay=document.getElementById('notificationOverlay');
     notificationOverlay.addEventListener('click', function(event) {
