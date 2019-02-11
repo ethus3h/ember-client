@@ -19,7 +19,11 @@ if (window.Worker) {
     };
     window.eiteWorker.onmessage = function(event) {
         const {id, err, res} = event.data;
-        
+        if (err !== undefined || !res) {
+            if(window.eiteWorkerRejects[id]){
+                
+            }
+        }
     };
 }
 else {
