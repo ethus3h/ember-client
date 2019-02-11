@@ -12,7 +12,8 @@ if (window.Worker) {
         let thisCallId=window.eiteWorkerCallID;
         let thisCall={id: thisCallId, args: args};
         return new Promise(function(resolve, reject) {
-            window.eiteWorkerResolves[thisCallId];
+            window.eiteWorkerResolves[thisCallId]=resolve;
+            window.eiteWorkerRejects[thisCallId]=reject;
         });
     }
     window.eiteWorker.onmessage = function(event) {
