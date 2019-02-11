@@ -150,7 +150,7 @@ async function setupIfNeeded() {
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
-
+throw new Error('rerere');
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
@@ -350,6 +350,7 @@ if (typeof window !== 'undefined') {
             eiteDie('Web worker exited with the error: '+err.message+'.');
         }
         window.eiteWorker.onmessage = function(message) {
+            console.log(message);
             const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
