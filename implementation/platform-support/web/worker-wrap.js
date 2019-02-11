@@ -11,7 +11,7 @@ if (window.Worker) {
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
-        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: thisCallId, args: [funcName, args]};
+        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
         return new Promise(function(resolve) {
             window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
             window.eiteWorker.postMessage(thisCall);
