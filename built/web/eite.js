@@ -159,7 +159,7 @@ async function internalSetup() {
         haveDom = true;
     }
     console.log('bub');
-    let charset = eiteHostCall('internalEiteReqCharset');
+    let charset = await eiteHostCall('internalEiteReqCharset');
     console.log('bab');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';

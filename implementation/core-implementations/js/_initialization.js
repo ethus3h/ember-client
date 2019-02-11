@@ -75,7 +75,7 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
-    let charset = eiteHostCall('internalEiteReqCharset');
+    let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
