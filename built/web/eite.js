@@ -342,7 +342,7 @@ if (typeof window !== 'undefined') {
                 let res = window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
-                }
+                }console.log(res);
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
         window.eiteWorker.onmessage = function(message) {
@@ -366,8 +366,7 @@ if (typeof window !== 'undefined') {
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
-                console.log('buceau');
-window.eiteHostRequestInternalOnMessage(message);
+                window.eiteHostRequestInternalOnMessage(message);
             }
         };
     }
