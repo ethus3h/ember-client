@@ -172,51 +172,51 @@ async function internalEiteReqLoadDataset(dataset) {
 }
 
 async function internalEiteReqHaveDomSetup() {
-        // Override error reporting method to show alert
+    // Override error reporting method to show alert
 
-        window.implError = async function (strMessage) {
-            if(typeof strMessage !== "string") {
-                await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
-                throw "Nonstring error message";
-            }
-            // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
-
-            //await FIXMEUnimplemented("implError");
-            await implWarn(strMessage);
-
-            await console.trace();
-            await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
+    window.implError = async function (strMessage) {
+        if(typeof strMessage !== "string") {
+            await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
+            throw "Nonstring error message";
         }
+        // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop — maybe??
 
-        window.implWarn = async function (strMessage) {
-            await assertIsStr(strMessage);
-            // Log the provided message
+        //await FIXMEUnimplemented("implError");
+        await implWarn(strMessage);
 
-            await FIXMEUnimplemented("implWarn");
-            await implLog(strMessage);
+        await console.trace();
+        await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
+    }
 
-            await console.trace();
+    window.implWarn = async function (strMessage) {
+        await assertIsStr(strMessage);
+        // Log the provided message
+
+        await FIXMEUnimplemented("implWarn");
+        await implLog(strMessage);
+
+        await console.trace();
+    }
+
+    window.implLog = async function (strMessage) {
+        await assertIsStr(strMessage);
+        // Log the provided message
+
+        await console.log(strMessage);
+        //await console.trace();
+        if(await Object.keys(stagelDebugCallstack).length > 0) {
+            await console.log("Previous message sent at: " + await internalDebugPrintStack());
         }
-
-        window.implLog = async function (strMessage) {
-            await assertIsStr(strMessage);
-            // Log the provided message
-
-            await console.log(strMessage);
-            //await console.trace();
-            if(await Object.keys(stagelDebugCallstack).length > 0) {
-                await console.log("Previous message sent at: " + await internalDebugPrintStack());
-            }
-            else {
-                if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
-                    await console.log("(Previous message sent from non-StageL code.)");
-                    await console.trace();
-                }
-            }
-            if (3 <= STAGEL_DEBUG) {
+        else {
+            if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
+                await console.log("(Previous message sent from non-StageL code.)");
                 await console.trace();
             }
         }
+        if (3 <= STAGEL_DEBUG) {
+            await console.trace();
+        }
+    }
 }
 
 async function internalLoadDatasets() {
