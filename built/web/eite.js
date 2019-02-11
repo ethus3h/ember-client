@@ -155,13 +155,13 @@ async function internalSetup() {
         haveDom = true;
     }
     let charset = document.characterSet.toLowerCase();
+    console.log('setuite');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
     else {
         await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
-    console.log('setuite');
     if (haveDom) {
         // Web browsers, etc.
         envPreferredFormat = 'html';
