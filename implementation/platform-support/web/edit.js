@@ -307,7 +307,7 @@ function importDocumentFromFile() {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await isSupportedInputFormat(inFormat)) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat])) {
             await implDie(inFormat+' is not a supported input format!');
         }
         let picker=document.getElementById('filepicker');
@@ -321,7 +321,7 @@ function importDocumentFromFile() {
                 };
                 fr.readAsArrayBuffer(file);
             });
-            document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
+            document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [inFormat, 'integerList', new Uint8Array(fr.result)])]);
         }
         removeSpinner(true);
     }, 500);
@@ -339,11 +339,11 @@ function importDocumentFromURL(path) {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await isSupportedInputFormat(inFormat)) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat]) {
             await implDie(inFormat+' is not a supported input format!');
         }
         try {
-            document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+            document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [inFormat, 'integerList', await eiteCall('getFileFromPath', [path])])]);
         }
         catch(e) {
             removeSpinner(true);
@@ -385,7 +385,7 @@ async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
         outFormat=document.getElementById('outFormat').value;
-        if (!await isSupportedOutputFormat(outFormat)) {
+        if (!await eiteCall('isSupportedOutputFormat', [outFormat]) {
             await implDie(outFormat+' is not a supported output format!');
         }
         let exported=Uint8Array.from(await importAndExport('sems', outFormat, await getInputDoc()));
