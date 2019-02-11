@@ -1,3 +1,5 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+
 window.addEventListener('message', function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
@@ -62,3 +64,5 @@ window.addEventListener('message', function(message) {
         eiteReadyCallback(message);
     });
 });
+
+// @license-end
