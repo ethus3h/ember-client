@@ -317,7 +317,6 @@ if (typeof window !== 'undefined') {
                 resolveCallback = window.eiteWorkerResolveCallbacks[id];
                 if (resolveCallback) {
                         alert('d');
-
                     resolveCallback(res);
                     delete window.eiteWorkerResolveCallbacks[id];
                 }
