@@ -1,59 +1,63 @@
 registerSpeedup(name, func) {
     if (typeof window !== 'undefined') {
         window[name] = func;
+    }
+    else {
+        self[name] = func;
+    }
 }
 
-window.assertIsFalse = async function (bool) {
+registerSpeedup('assertIsFalse', async function (bool) {
     if (bool === false) {
         return;
     }
     await assertionFailed(bool+' is true, but should be false.');
-}
+});
 
-window.assertIsTrue = async function (bool) {
+window.assertIsTrue', async function (bool) {
     if (bool === true) {
         return;
     }
     await assertionFailed(bool+' is not true.');
-}
+});
 
-window.assertIsDc = async function (v) {
+window.assertIsDc', async function (v) {
     if (await Number.isInteger(v) && v >= 0 && v <= 2147483647) {
         return true;
     }
     await assertIsTrue(false);
-}
+});
 
-window.assertIsDcDataset = async function (str) {
+window.assertIsDcDataset', async function (str) {
     if (datasets.includes(str)) {
         return;
     }
     await assertIsTrue(false);
-}
+});
 
-window.or = async function (a,b) {
+window.or', async function (a,b) {
     if (typeof a === 'boolean' && typeof b === 'boolean') {
         return a || b;
     }
     await assertIsBool(a); await assertIsBool(b);
-}
+});
 
-window.isTrue = async function (bool) {
+window.isTrue', async function (bool) {
     if (bool === true) {
         // Can't simplify to if(bool) because non-bools might evaluate to true and give wrong result
         return true;
     }
     return false;
-}
+});
 
-window.isFalse = async function (bool) {
+window.isFalse', async function (bool) {
     if (bool === false) {
         return true;
     }
     return false;
-}
+});
 
-window.isIntArray = async function (val) {
+window.isIntArray', async function (val) {
     if (val === undefined) {
         await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
     }
@@ -67,9 +71,9 @@ window.isIntArray = async function (val) {
         return (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647);
     }
     return val.every(isIntSync);
-}
+});
 
-window.assertIsIntArray = async function (val) {
+window.assertIsIntArray', async function (val) {
     if (val === undefined) {
         await assertionFailed('isGenericArray called with non-StageL-supported argument type.'); /* Claim to fail the isGenericArray assertion here, because that's what would get called in the portable implementation. */
     }
@@ -88,22 +92,22 @@ window.assertIsIntArray = async function (val) {
     else {
         await assertIsTrue(false);
     }
-}
+});
 
-window.ne = async function (genericA, genericB) {
+window.ne', async function (genericA, genericB) {
     await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
 
     return genericA !== genericB;
-}
+});
 
-window.le = async function (intA, intB) {
+window.le', async function (intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
     return intA <= intB;
-}
+});
 
-window.ge = async function (intA, intB) {
+window.ge', async function (intA, intB) {
     await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
     return intA >= intB;
-}
+});
