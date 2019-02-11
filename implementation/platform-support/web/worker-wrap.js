@@ -22,6 +22,7 @@ if (window.Worker) {
             resolveCallback = window.eiteWorkerResolveCallbacks[id];
             if (resolveCallback) {
                 resolveCallback(res);
+                delete window.eiteWorkerResolveCallbacks[id];
             }
             else {
                 await implDie('Web worker returned invalid message ID.');
