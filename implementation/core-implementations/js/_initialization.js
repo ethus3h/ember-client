@@ -254,6 +254,14 @@ if (typeof window !== 'undefined') {
                 window.eiteWorker.postMessage(thisCall);
             });
         };
+        window.eiteHostRequestInternalOnMessage = async function(message) {
+                const {uuid, msgid, args} = message.data;
+                let res = window[args[0]]( ...args[1] );
+                if (!res) {
+                    res = null;
+                }
+                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
+        }
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
@@ -275,12 +283,6 @@ if (typeof window !== 'undefined') {
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
-                const {uuid, msgid, args} = message.data;
-                let res = window[args[0]]( ...args[1] );
-                if (!res) {
-                    res = null;
-                }
-                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
             }
         };
     }
