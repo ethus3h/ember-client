@@ -79,6 +79,16 @@ r/n/indexOf ga/in g/value
         set n/counter add n/counter 1
     return -1
 
+r/b/arrEmpty ga/in
+    new b/res
+    set b/res eq 0 len s/str
+    return b/res
+
+r/b/arrNonempty ga/in
+    new b/res
+    set b/res not arrEmpty ga/in
+    return b/res
+
 r/b/isArray gi/in
     # Just a convenience wrapper
     new b/res

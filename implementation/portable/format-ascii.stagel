@@ -23,7 +23,7 @@ r/an/dcaToAscii an/content
     while lt n/c n/l
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
-        if lt 0 count an/temp
+        if arrNonempty an/temp
             if isAsciiByte get an/temp 0
                 set an/res append an/res an/temp
             else
