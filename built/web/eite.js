@@ -1241,6 +1241,7 @@ async function dcaToAscii(intArrayContent) {
         console.log('b');
         intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         console.log('c');
+        console.log(intArrayTemp);
         if (await isAsciiByte(await get(intArrayTemp, 0))) {
         console.log('g');
             intArrayRes = await append(intArrayRes, intArrayTemp);
