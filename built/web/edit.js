@@ -209,7 +209,7 @@ async function RunDocumentHandler(callback) {
     // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
     window.setTimeout(async function(){
         // Do the computation-heavy work
-        await eiteCall('runDocument', [await eiteCall('importDocument', ['integerList', await eiteCall('getInputDoc')])]);
+        await eiteCall('runDocument', [await eiteCall('importDocument', ['integerList', await getInputDoc()])]);
         if (callback !== undefined) {
             window.setTimeout(async function() {
                 await callback();
