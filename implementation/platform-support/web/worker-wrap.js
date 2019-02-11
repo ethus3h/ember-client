@@ -10,15 +10,23 @@ if (window.Worker) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
         let thisCall={id: thisCallId, args: args};
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
             window.eiteWorkerResolves[thisCallId]=resolve;
             window.eiteWorker.postMessage(thisCall);
         });
     };
     window.eiteWorker.onmessage = function(event) {
-        const {id, err, res} = event.data;
+        const {id, res} = event.data;
         if (res) {
-            
+            if (window.eiteWorkerRejects[id]) {
+                
+            }
+            else {
+                throw 'Web worker returned invalid message ID.';
+            }
+        }
+        else {
+            throw 'Web worker encountered an error.';
         }
     };
 }
