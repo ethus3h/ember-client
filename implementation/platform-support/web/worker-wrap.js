@@ -9,14 +9,14 @@ if (window.Worker) {
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
-        let thisCall={id: thisCallId, args: args};
+        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage', msgid: thisCallId, args: args};
         return new Promise(function(resolve) {
             window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
             window.eiteWorker.postMessage(thisCall);
         });
     };
     window.eiteWorker.onmessage = function(event) {
-        const {id, res} = event.data;
+        const {uuid, msgid, res} = event.data;
         if (res) {
             let resolveCallback;
             resolveCallback = window.eiteWorkerResolveCallbacks[id];
