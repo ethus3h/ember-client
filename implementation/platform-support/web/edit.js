@@ -385,7 +385,7 @@ async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
         outFormat=document.getElementById('outFormat').value;
-        if (!await eiteCall('isSupportedOutputFormat', [outFormat]) {
+        if (!await eiteCall('isSupportedOutputFormat', [outFormat])) {
             await implDie(outFormat+' is not a supported output format!');
         }
         let exported=Uint8Array.from(await eiteCall('importAndExport', ['sems', outFormat, await getInputDoc()]));
