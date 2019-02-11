@@ -112,7 +112,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -150,7 +150,7 @@ async function setupIfNeeded() {
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
-throw new Error('foo');
+
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
@@ -346,11 +346,7 @@ if (typeof window !== 'undefined') {
                 }
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
-        window.eiteWorker.onerror = function(err) {
-            eiteDie('Web worker exited with the error: '+err.message+'.');
-        }
         window.eiteWorker.onmessage = function(message) {
-            console.log(message);
             const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
@@ -372,6 +368,10 @@ if (typeof window !== 'undefined') {
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 window.eiteHostRequestInternalOnMessage(message);
+            }
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
+                implDie('Web worker encountered an error: '+res.message+'.');
+                throw 'Web worker encountered an error: '+res.message+'.';
             }
         };
     }
@@ -404,7 +404,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            new ErrorEvent(error.message, {bubbles: true, error: error});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, val: error});
         }
         if (!res) {
             res = null;

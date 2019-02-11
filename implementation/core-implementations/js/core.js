@@ -369,6 +369,10 @@ if (typeof window !== 'undefined') {
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 window.eiteHostRequestInternalOnMessage(message);
             }
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
+                implDie('Web worker encountered an error: '+res.message+'.');
+                throw 'Web worker encountered an error: '+res.message+'.';
+            }
         };
     }
     else {
@@ -395,7 +399,13 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         const {uuid, msgid, args} = message.data;
-        let res = await self[args[0]]( ...args[1] );
+        let res;
+        try {
+            res = await self[args[0]]( ...args[1] );
+        }
+        catch(error) {
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, val: error});
+        }
         if (!res) {
             res = null;
         }
