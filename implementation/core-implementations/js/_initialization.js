@@ -209,9 +209,9 @@ async function internalLoadDatasets() {
 // Promise-wrapped worker strategy is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
 
 if (window.Worker) {
-    let window.eiteWorker = new Worker('eite.js');
-    const window.eiteWorkerResolveCallbacks = {};
-    let window.eiteWorkerCallID = 0;
+    window.eiteWorker = new Worker('eite.js');
+    window.eiteWorkerResolveCallbacks = {};
+    window.eiteWorkerCallID = 0;
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
