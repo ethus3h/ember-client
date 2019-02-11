@@ -263,7 +263,7 @@ else {
         }
         return await self[funcName]( ...args );
     }
-    window.eiteHostCall = self.eiteCall;
+    self.eiteHostCall = self.eiteCall;
 }
 
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
