@@ -284,18 +284,19 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.internalOnMessage(message);
         }
     }
-    window.eiteWorkerResolveCallbacks = {};
-    window.eiteWorkerCallID = 0;
-    window.eiteCall = async function(funcName, args) {
+
+    self.eiteWorkerHostResolveCallbacks = {};
+    self.eiteWorkerHostCallID = 0;
+    self.eiteHostCall = async function(funcName, args) {
         if (args === undefined) {
             args=[];
         }
-        window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
-        let thisCallId=window.eiteWorkerCallID;
-        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
+        self.eiteWorkerHostCallID = self.eiteWorkerHostCallID + 1;
+        let thisCallId=self.eiteWorkerCallID;
+        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest', msgid: thisCallId, args: [funcName, args]};
         return new Promise(function(resolve) {
-            window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
-            window.eiteWorker.postMessage(thisCall);
+            self.eiteWorkerResolveCallbacks[thisCallId]=resolve;
+            self.postMessage(thisCall);
         });
     };
 }
