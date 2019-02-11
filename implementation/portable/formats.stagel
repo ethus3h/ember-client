@@ -67,7 +67,7 @@ r/an/dcToFormat s/outFormat n/dc
             set an/res utf8BytesFromDecimalChar hexToDec s/lookup
     elif eq s/outFormat 'html'
         set s/res dcDataLookupById 'mappings/to/html' n/dc 1
-        if gt len s/res } 0
+        if strNonempty s/res
             set an/res strToByteArray s/res
         else
             set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
