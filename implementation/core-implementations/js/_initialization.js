@@ -246,13 +246,13 @@ if (typeof window !== 'undefined') {
                     throw 'Web worker encountered an error.';
                 }
             }
-            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
                 const {uuid, msgid, args} = message.data;
                 let res = await self[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
                 }
-                self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
+                self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
             }
         };
     }
