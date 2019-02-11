@@ -150,7 +150,7 @@ async function setupIfNeeded() {
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
-throw new Error('rerere');
+throw new Error('foo');
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
