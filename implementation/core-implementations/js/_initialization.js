@@ -236,10 +236,10 @@ if (typeof window !== 'undefined') {
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
                     let resolveCallback;
-                    resolveCallback = window.eiteWorkerResolveCallbacks[id];
+                    resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
                     if (resolveCallback) {
                         resolveCallback(res);
-                        delete window.eiteWorkerResolveCallbacks[id];
+                        delete window.eiteWorkerResolveCallbacks[msgid];
                     }
                     else {
                         implDie('Web worker returned invalid message ID.');
@@ -302,10 +302,10 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             const {uuid, msgid, res} = message.data;
             if (res || res === null) {
                 let resolveCallback;
-                resolveCallback = self.eiteWorkerHostResolveCallbacks[id];
+                resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
                 if (resolveCallback) {
                     resolveCallback(res);
-                    delete self.eiteWorkerHostResolveCallbacks[id];
+                    delete self.eiteWorkerHostResolveCallbacks[msgid];
                 }
                 else {
                     implDie('Host returned invalid message ID.');
