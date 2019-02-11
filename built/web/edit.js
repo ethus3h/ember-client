@@ -165,7 +165,7 @@ async function updateNearestDcLabelInner(el) {
         setNearestDcLabel('');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]);
+    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]));
 }
 
 function typeInTextarea(el, newText) {
