@@ -172,7 +172,6 @@ async function internalSetup() {
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
     }
-    console.log('buses');
     let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
@@ -280,6 +279,7 @@ async function internalLoadDatasets() {
     // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
     let count = 0;
     let dataset = '';
+    console.log('buses');
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         dcData[dataset] = [];
