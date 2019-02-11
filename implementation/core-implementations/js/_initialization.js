@@ -288,7 +288,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     }
 
     self.onmessage = function(message) {
-        // Handle requests made to this code when it is running as a Web worker
+        // Handle messages sent to this code when it is running as a Web worker
         const {uuid, msgid, args} = message.data;
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
@@ -296,19 +296,19 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
             if (res || res === null) {
                 let resolveCallback;
-                resolveCallback = window.eiteWorkerResolveCallbacks[id];
+                resolveCallback = window.eiteWorkerHostResolveCallbacks[id];
                 if (resolveCallback) {
                     resolveCallback(res);
-                    delete window.eiteWorkerResolveCallbacks[id];
+                    delete window.eiteWorkerHostResolveCallbacks[id];
                 }
                 else {
-                    implDie('Web worker returned invalid message ID.');
-                    throw 'Web worker returned invalid message ID.';
+                    implDie('Host returned invalid message ID.');
+                    throw 'Host returned invalid message ID.';
                 }
             }
             else {
-                implDie('Web worker encountered an error.');
-                throw 'Web worker encountered an error.';
+                implDie('Host encountered an error.');
+                throw 'Host encountered an error.';
             }
         }
     }
