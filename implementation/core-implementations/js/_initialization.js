@@ -81,7 +81,7 @@ function internalEiteReqTypeofWindow() {
 }
 
 function internalEiteReqAlert(msg) {
-    alert(msg);
+    await alert(msg);
     return null;
 }
 
