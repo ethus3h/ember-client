@@ -293,6 +293,9 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
         }
+        else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
+            
+        }
     }
 
     self.eiteWorkerHostResolveCallbacks = {};
