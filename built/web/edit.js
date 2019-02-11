@@ -339,7 +339,7 @@ function importDocumentFromURL(path) {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await eiteCall('isSupportedInputFormat', [inFormat]) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat])) {
             await implDie(inFormat+' is not a supported input format!');
         }
         try {
