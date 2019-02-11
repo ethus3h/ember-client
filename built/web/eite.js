@@ -147,6 +147,10 @@ async function setupIfNeeded() {
     await internalSetup();
 }
 
+function internalEiteReqCharset() {
+    return document.characterSet.toLowerCase();
+}
+
 async function internalSetup() {
     // Set up environment variables.
 
