@@ -41,7 +41,7 @@ window.addEventListener('message', function(message) {
                     }
                     else {
                         let elem=document.importNode(document.getElementById('doneButtonTemplate').content, true);
-                        elem.getElementByClassName('doneEditingBtn')[0].onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();};
+                        elem.firstChild.getElementByClassName('doneEditingBtn')[0].onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();};
                         elem.disabled=false;
                         document.getElementById('editorButtons').appendChild(elem.firstChild);
                     }
