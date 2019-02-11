@@ -85,6 +85,24 @@ function internalEiteReqAlert(msg) {
     return null;
 }
 
+function internalEiteReqLoadDataset(dataset) {
+     new Promise(resolve => {
+            Papa.parse('data/' + dataset + '.csv', {
+                download: true,
+                encoding: "UTF-8",
+                newline: "\n",
+                delimiter: ",",
+                quoteChar: "\"",
+                complete: async function(results, file) {
+                    resolve(results.data);
+                },
+                error: async function(results, file) {
+                    await implError("Error reported while parsing "+dataset+"!");
+                    resolve(undefined);
+                }
+            });
+}
+
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
