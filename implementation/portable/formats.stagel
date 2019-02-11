@@ -60,13 +60,13 @@ r/an/dcToFormat s/outFormat n/dc
     new an/res
     if eq s/outFormat 'utf8'
         new s/lookup
-            set s/lookup dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        set s/lookup dcDataLookupById 'mappings/to/unicode' n/dc 1
         if excep s/lookup
             set s/lookup dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if notExcep s/lookup
             set an/res utf8BytesFromDecimalChar hexToDec s/lookup
     elif eq s/outFormat 'html'
-        set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
+        set s/res dcDataLookupById 'mappings/to/html' n/dc 1
         if gt len s/res } 0
             set an/res strToByteArray s/res
         else
