@@ -141,6 +141,7 @@ async function isSetupFinished() {
 }
 
 async function setupIfNeeded() {
+    console.log('setuite');
     if (setupFinished) {
         return;
     }
