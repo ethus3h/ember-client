@@ -822,10 +822,12 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     rowNum = rowNum + 1;
 
     if (rowNum >= dcData[dataset].length) {
-        await implDie('The requested row '+rowNum+' is greater than the number of entries in the ' + dataset + ' dataset ('+dcData[dataset].length+').');
+        strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
-
-    strReturn = dcData[dataset][rowNum][fieldNum]; await assertIsStr(strReturn); return strReturn;
+    else {
+        strReturn = dcData[dataset][rowNum][fieldNum];
+    }
+    await assertIsStr(strReturn); return strReturn;
 }
 
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
@@ -1141,7 +1143,7 @@ async function renderDrawContents(renderBuffer) {
 
 async function internalRequestRenderDrawHTMLToDOM(htmlString) {
     let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-    htmlOutputRootElement.innerHTML = string;
+    htmlOutputRootElement.innerHTML = htmlString;
     htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
 
@@ -1822,6 +1824,24 @@ async function strToLower(strStr) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function strEmpty(strStr) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('strEmpty:strings'); await assertIsStr(strStr); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implEq(0, await len(strStr));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function strNonempty(strStr) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('strNonempty:strings'); await assertIsStr(strStr); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await strEmpty(strStr));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function strContainsOnlyInt(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('strContainsOnlyInt:strings'); await assertIsStr(strIn); let boolReturn;
 
@@ -1883,7 +1903,7 @@ async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'DcData', 'formats', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html' ];
+    strArrayRes = [ 'DcData', 'formats', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html', 'mappings/to/unicode' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -3076,12 +3096,19 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsDc(intDc);
     let intArrayRes = [];
     if (await implEq(strOutFormat, 'utf8')) {
-        intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0))));
+        let strLookup = '';
+        strLookup = await dcDataLookupById('mappings/to/unicode', intDc, 1);
+        if (await excOrEmpty(strLookup)) {
+            strLookup = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+        }
+        if (await notExcep(strLookup)) {
+            intArrayRes = await utf8BytesFromDecimalChar(await hexToDec(strLookup));
+        }
     }
     else if (await implEq(strOutFormat, 'html')) {
-        strRes = await dcDataLookupByValue('mappings/to/html', 0, intDc, 1);
-        if (await implGt(await len(strRes), 0)) {
-            intArrayRes = await append(intArrayRes, await strToByteArray(strRes));
+        strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
+        if (await strNonempty(strRes)) {
+            intArrayRes = await strToByteArray(strRes);
         }
         else {
             strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
@@ -3415,6 +3442,44 @@ async function dcDataNoResultException() {
 
 
     strReturn = '89315802-d53d-4d11-ba5d-bf505e8ed454'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function notExcep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcep:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = false;
+    /* Test for each exception type in turn (there's only one so far) */
+    boolRes = await or(boolRes, await implEq(strTest, await dcDataNoResultException()));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function excep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excep:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await notExcep(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function notExcOrEmpty(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await excOrEmpty(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function excOrEmpty(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await excep(strTest), await strEmpty(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function strPrintArr(genericArrayInput) {
