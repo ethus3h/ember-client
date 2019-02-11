@@ -18,6 +18,7 @@ if (window.Worker) {
         });
     };
     window.eiteWorker.onmessage = function(event) {
+        const {id, err, res} = event.data;
         
     };
 }
