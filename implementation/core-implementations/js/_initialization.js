@@ -202,8 +202,13 @@ async function internalLoadDatasets() {
     datasetsLoaded = true;
 }
 
+async function internalOnMessage(message) {
+    
+}
+
 self.onmessage = function(message) {
     // Handle requests made to this code when it is running as a Web worker
+    const {uuid, msgid, args} = message.data;
     if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
         const {uuid, msgid, args} = message.data;
         self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', self[args[0]]( ...args[1] )};
