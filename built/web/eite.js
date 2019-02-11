@@ -305,6 +305,7 @@ if (typeof window !== 'undefined') {
             window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
             let thisCallId=window.eiteWorkerCallID;
             let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
+    alert('d');
             return new Promise(function(resolve) {
                 window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
                 window.eiteWorker.postMessage(thisCall);
