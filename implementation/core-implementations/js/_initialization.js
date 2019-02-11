@@ -70,7 +70,7 @@ async function internalSetup() {
     if (typeof window !== 'undefined') {
         haveDom = true;
     }
-    let charset = document.characterSet.toLowerCase();
+    let charset = eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
     }
