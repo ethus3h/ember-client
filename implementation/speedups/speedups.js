@@ -1,4 +1,4 @@
-registerSpeedup(name, func) {
+function registerSpeedup(name, func) {
     if (typeof window !== 'undefined') {
         window[name] = func;
     }
