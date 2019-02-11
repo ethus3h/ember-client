@@ -294,23 +294,22 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.internalOnMessage(message);
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-                            if (res || res === null) {
-                    let resolveCallback;
-                    resolveCallback = window.eiteWorkerResolveCallbacks[id];
-                    if (resolveCallback) {
-                        resolveCallback(res);
-                        delete window.eiteWorkerResolveCallbacks[id];
-                    }
-                    else {
-                        implDie('Web worker returned invalid message ID.');
-                        throw 'Web worker returned invalid message ID.';
-                    }
+            if (res || res === null) {
+                let resolveCallback;
+                resolveCallback = window.eiteWorkerResolveCallbacks[id];
+                if (resolveCallback) {
+                    resolveCallback(res);
+                    delete window.eiteWorkerResolveCallbacks[id];
                 }
                 else {
-                    implDie('Web worker encountered an error.');
-                    throw 'Web worker encountered an error.';
+                    implDie('Web worker returned invalid message ID.');
+                    throw 'Web worker returned invalid message ID.';
                 }
-
+            }
+            else {
+                implDie('Web worker encountered an error.');
+                throw 'Web worker encountered an error.';
+            }
         }
     }
 
