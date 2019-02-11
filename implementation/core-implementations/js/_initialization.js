@@ -174,7 +174,7 @@ async function internalEiteReqLoadDataset(dataset) {
 async function internalEiteReqHaveDomSetup() {
     // Override error reporting method to show alert
 
-    window.implError = async function (strMessage) {
+    registerSpeedup('implError', = async function (strMessage) {
         if(typeof strMessage !== "string") {
             await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
             throw "Nonstring error message";
