@@ -275,9 +275,9 @@ function alertDialogEscapeListener(event) {
 
 function openImportDialog() {
     let elem=document.importNode(document.getElementById('importDialogTemplate').content, true);
-    elem.getElementsByClassName('importFromFileBtn').onclick=function(){importDocumentFromFile();};
-    elem.getElementsByClassName('importFromUrlBtn').onclick=function(){importDocumentFromURL(prompt('What URL do you want? Note that the same-origin policy must allow the URL to be fetched. (Dangerous workaround if it does not: do NOT do this unless you know what you are doing: To disable same-origin enforcement, you can use CORS Everywhere add-on for Firefox, but it allows any Web site access to any other, including your current logins.)'));};
-    elem.getElementsByClassName('closeImportDiaBtn').onclick=function(){closeImportDialog();};
+    elem.getElementsByClassName('importFromFileBtn')[0].onclick=function(){importDocumentFromFile();};
+    elem.getElementsByClassName('importFromUrlBtn')[0].onclick=function(){importDocumentFromURL(prompt('What URL do you want? Note that the same-origin policy must allow the URL to be fetched. (Dangerous workaround if it does not: do NOT do this unless you know what you are doing: To disable same-origin enforcement, you can use CORS Everywhere add-on for Firefox, but it allows any Web site access to any other, including your current logins.)'));};
+    elem.getElementsByClassName('closeImportDiaBtn')[0].onclick=function(){closeImportDialog();};
     document.addEventListener('keyup', importDialogEscapeListener);
     notificationOverlay=document.getElementById('notificationOverlay');
     notificationOverlay.addEventListener('click', function(event) {
@@ -290,7 +290,7 @@ function openImportDialog() {
 
 function openAlertDialog(message) {
     let elem=document.importNode(document.getElementById('alertDialogTemplate').content, true);
-    elem.getElementsByClassName('closeAlertDiaBtn').onclick=function(){closeAlertDialog();};
+    elem.getElementsByClassName('closeAlertDiaBtn')[0].onclick=function(){closeAlertDialog();};
     elem.querySelector('.alertDialogMessageRegion').innerHTML=message;
     document.addEventListener('keyup', alertDialogEscapeListener);
     notificationOverlay=document.getElementById('notificationOverlay');
