@@ -3,12 +3,13 @@
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
     window.eiteCall = async function(funcName, args) {
-    return new Promise(resolve => {
-            fr.onload=function (){
-                resolve(undefined);
-            };
-            fr.readAsArrayBuffer(file);
-        });
+        return new Promise(resolve => {
+                fr.onload=function (){
+                    resolve(undefined);
+                };
+                fr.readAsArrayBuffer(file);
+            });
+        }
     }
 }
 else {
