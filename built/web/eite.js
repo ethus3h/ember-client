@@ -190,6 +190,7 @@ async function internalSetup() {
     if (!datasetsLoaded) {
         await internalLoadDatasets();
     }
+
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listInputFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
@@ -209,7 +210,7 @@ async function internalSetup() {
     if (haveDom) {
         // Override error reporting method to show alert
 
-        window.implError = async function (strMessage) {
+        registerSpeedup('implError', async function (strMessage) {
             if(typeof strMessage !== "string") {
                 await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
                 throw "Nonstring error message";
@@ -221,9 +222,9 @@ async function internalSetup() {
 
             await console.trace();
             await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
-        }
+        });
 
-        window.implWarn = async function (strMessage) {
+        registerSpeedup('implWarn', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -231,9 +232,9 @@ async function internalSetup() {
             await implLog(strMessage);
 
             await console.trace();
-        }
+        });
 
-        window.implLog = async function (strMessage) {
+        registerSpeedup('implLog', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -251,7 +252,7 @@ async function internalSetup() {
             if (3 <= STAGEL_DEBUG) {
                 await console.trace();
             }
-        }
+        });
     }
 
     setupFinished = true;

@@ -210,7 +210,7 @@ async function internalSetup() {
     if (haveDom) {
         // Override error reporting method to show alert
 
-        window.implError = async function (strMessage) {
+        registerSpeedup('implError', async function (strMessage) {
             if(typeof strMessage !== "string") {
                 await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: Nonstring error message!"]);
                 throw "Nonstring error message";
@@ -222,9 +222,9 @@ async function internalSetup() {
 
             await console.trace();
             await eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
-        }
+        });
 
-        window.implWarn = async function (strMessage) {
+        registerSpeedup('implWarn', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -232,9 +232,9 @@ async function internalSetup() {
             await implLog(strMessage);
 
             await console.trace();
-        }
+        });
 
-        window.implLog = async function (strMessage) {
+        registerSpeedup('implLog', async function (strMessage) {
             await assertIsStr(strMessage);
             // Log the provided message
 
@@ -252,37 +252,37 @@ async function internalSetup() {
             if (3 <= STAGEL_DEBUG) {
                 await console.trace();
             }
-        }
+        });
     }
 
     setupFinished = true;
 }
 
 // Routines needed for Web worker requests
-function internalEiteReqCharset() {
+async function internalEiteReqCharset() {
     return document.characterSet.toLowerCase();
 }
 
-function internalEiteReqOutputWidth() {
+async function internalEiteReqOutputWidth() {
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
-function internalEiteReqOutputHeight() {
+async function internalEiteReqOutputHeight() {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
-function internalEiteReqTypeofWindow() {
+async function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
-function internalEiteReqAlert(msg) {
+async function internalEiteReqAlert(msg) {
     await alert(msg);
     return null;
 }
 
-function internalEiteReqLoadDataset(dataset) {
+async function internalEiteReqLoadDataset(dataset) {
     // Papa.parse call has to be run from the main thread because Papa isn't defined in the worker since it was only imported in the main thread.
-    new Promise(resolve => {
+    return await new Promise(resolve => {
         Papa.parse('data/' + dataset + '.csv', {
             download: true,
             encoding: "UTF-8",
@@ -338,6 +338,14 @@ if (typeof window !== 'undefined') {
                 window.eiteWorker.postMessage(thisCall);
             });
         };
+        window.eiteHostRequestInternalOnMessage = async function(message) {
+                const {uuid, msgid, args} = message.data;
+                let res = await window[args[0]]( ...args[1] );
+                if (!res) {
+                    res = null;
+                }
+                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
+        }
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
@@ -359,12 +367,7 @@ if (typeof window !== 'undefined') {
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
-                const {uuid, msgid, args} = message.data;
-                let res = window[args[0]]( ...args[1] );
-                if (!res) {
-                    res = null;
-                }
-                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
+                window.eiteHostRequestInternalOnMessage(message);
             }
         };
     }
