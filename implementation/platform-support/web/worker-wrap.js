@@ -4,22 +4,24 @@
 
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
-    const window.eiteWorkerResolves = {};
+    const window.eiteWorkerResolveCallbacks = {};
     let window.eiteWorkerCallID = 0;
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
         let thisCall={id: thisCallId, args: args};
         return new Promise(function(resolve) {
-            window.eiteWorkerResolves[thisCallId]=resolve;
+            window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
             window.eiteWorker.postMessage(thisCall);
         });
     };
     window.eiteWorker.onmessage = function(event) {
         const {id, res} = event.data;
         if (res) {
-            if (window.eiteWorkerRejects[id]) {
-                
+            let resolveCallback;
+            resolveCallback = window.eiteWorkerResolveCallbacks[id];
+            if (resolveCallback) {
+                resolveCallback(res);
             }
             else {
                 await implDie('Web worker returned invalid message ID.');
