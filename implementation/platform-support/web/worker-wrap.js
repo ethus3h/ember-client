@@ -7,10 +7,7 @@ if (window.Worker) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
         return new Promise(resolve => {
-                fr.onload=function (){
-                    resolve(undefined);
-                };
-                fr.readAsArrayBuffer(file);
+                thisCallId
             });
         }
     }
