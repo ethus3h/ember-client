@@ -22,17 +22,16 @@ if (window.Worker) {
                 
             }
             else {
-                throw 'Web worker returned invalid message ID.';
+                await implDie('Web worker returned invalid message ID.');
             }
         }
         else {
-            throw 'Web worker encountered an error.';
+            await implDie('Web worker encountered an error.');
         }
     };
 }
 else {
-    console.log('Web worker required.');
-    throw 'Web worker required.';
+    await implDie('Web worker required.');
 }
 
 // @license-end
