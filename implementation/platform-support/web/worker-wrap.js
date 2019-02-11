@@ -11,6 +11,9 @@ if (window.Worker) {
             });
         }
     }
+    window.eiteWorker.onmessage = function(event) {
+        
+    }
 }
 else {
     console.log('Web worker required.');
