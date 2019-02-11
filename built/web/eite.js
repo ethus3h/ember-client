@@ -1131,14 +1131,18 @@ async function renderDrawContents(renderBuffer) {
     await assertIsByteArray(renderBuffer);
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
-    if(haveDom) {
-        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-        htmlOutputRootElement.innerHTML = string;
-        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+    if (haveDom) {
+        await eiteHostCall('internalRequestRenderDrawHTMLToDOM', [string]);
     }
     else {
-        console.log(string);
+        await console.log(string);
     }
+}
+
+async function internalRequestRenderDrawHTMLToDOM(htmlString) {
+    let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+    htmlOutputRootElement.innerHTML = string;
+    htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
 
 /* type-tools, provides:

@@ -404,7 +404,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' args[1].toString() + ')'});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
         if (!res) {
@@ -1131,14 +1131,18 @@ async function renderDrawContents(renderBuffer) {
     await assertIsByteArray(renderBuffer);
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
-    if(haveDom) {
-        let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
-        htmlOutputRootElement.innerHTML = string;
-        htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+    if (haveDom) {
+        await eiteHostCall('internalRequestRenderDrawHTMLToDOM', [string]);
     }
     else {
-        console.log(string);
+        await console.log(string);
     }
+}
+
+async function internalRequestRenderDrawHTMLToDOM(htmlString) {
+    let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+    htmlOutputRootElement.innerHTML = string;
+    htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
 
 /* type-tools, provides:
