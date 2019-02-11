@@ -9,3 +9,8 @@ r/b/notExcep s/test
     # Test for each exception type in turn (there's only one so far)
     set b/res or b/res eq s/test dcDataNoResultException
     return b/res
+
+r/b/excep s/test
+    new b/res
+    set b/res not notExcep s/test
+    return b/res
