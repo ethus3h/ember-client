@@ -2,7 +2,9 @@
 
 if (window.Worker) {
     let eiteWorker = new Worker('eite.js');
-    
+    window.eiteCall = async function() {
+        return;
+    }
 }
 else {
     console.log('Web worker required.');
