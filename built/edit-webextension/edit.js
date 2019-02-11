@@ -161,11 +161,11 @@ async function updateNearestDcLabelInner(el) {
     after=after.substring(0, after.indexOf(' '));
     before=before+after;
     currentDc=parseInt(before.trim().split(' ').slice(-1));
-    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc])) {
+    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc]))) {
         setNearestDcLabel('');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]);
+    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]));
 }
 
 function typeInTextarea(el, newText) {
@@ -339,7 +339,7 @@ function importDocumentFromURL(path) {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await eiteCall('isSupportedInputFormat', [inFormat]) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat])) {
             await implDie(inFormat+' is not a supported input format!');
         }
         try {
@@ -385,7 +385,7 @@ async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
         outFormat=document.getElementById('outFormat').value;
-        if (!await eiteCall('isSupportedOutputFormat', [outFormat]) {
+        if (!await eiteCall('isSupportedOutputFormat', [outFormat])) {
             await implDie(outFormat+' is not a supported output format!');
         }
         let exported=Uint8Array.from(await eiteCall('importAndExport', ['sems', outFormat, await getInputDoc()]));
