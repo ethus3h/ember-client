@@ -41,8 +41,6 @@ else {
     window.eiteCall = async function(funcName, args) {
         return await window[funcName]( ...args );
     }
-    implDie('Web worker required.');
-    throw 'Web worker required.';
 }
 
 // @license-end
