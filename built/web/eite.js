@@ -404,7 +404,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' args[1].toString() + ')'});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
         if (!res) {
