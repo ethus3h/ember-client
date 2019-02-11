@@ -20,7 +20,6 @@ window.onload = function() {
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
-        document.getElementById('closeAlertDiaBtn').onclick=function(){closeAlertDialog();};
         document.getElementById('DoneEditing').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();};
         inputarea=document.getElementById('inputarea');
         inputarea.disabled=false;
@@ -292,6 +291,7 @@ function openImportDialog() {
 
 function openAlertDialog(message) {
     let elem=document.importNode(document.getElementById('alertDialogTemplate').content, true);
+    elem.getElementsByClassName('closeAlertDiaBtn').onclick=function(){closeAlertDialog();};
     elem.querySelector('.alertDialogMessageRegion').innerHTML=message;
     document.addEventListener('keyup', alertDialogEscapeListener);
     notificationOverlay=document.getElementById('notificationOverlay');
