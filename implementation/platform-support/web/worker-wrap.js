@@ -3,7 +3,7 @@
 if (window.Worker) {
     let window.eiteWorker = new Worker('eite.js');
     let window.eiteWorkerCallID = 0;
-    // Gilad Dayagi has already implemented a pattern like I'm trying to, as it turns out. https://codeburst.io/promises-for-the-web-worker-9311b7831733
+    // Gilad Dayagi has already implemented a pattern like I'm trying to, as it turns out. I'm using it as a model for this. https://codeburst.io/promises-for-the-web-worker-9311b7831733
     window.eiteCall = async function(funcName, args) {
         window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
         let thisCallId=window.eiteWorkerCallID;
