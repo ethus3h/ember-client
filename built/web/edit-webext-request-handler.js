@@ -33,7 +33,7 @@ window.addEventListener('message', function(message) {
                 contents=message.data[2];
                 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
                 let utf8encoder = new TextEncoder();
-                document.getElementById('inputarea').value = await strFromByteArray(await importAndExport('ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))));
+                document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', ['ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))])]);
                 removeSpinner();
                 RunDocumentHandler(async function() {
                     if (!canEdit) {
@@ -54,7 +54,7 @@ window.addEventListener('message', function(message) {
         startSpinner();
         window.setTimeout(async function() {
             let utf8decoder = new TextDecoder();
-            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(new Uint8Array(await importAndExport('integerList', 'ascii', await getInputDoc())))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(new Uint8Array(await eiteCall('importAndExport', ['integerList', 'ascii', await getInputDoc()])))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
         }, 500);
     }
 

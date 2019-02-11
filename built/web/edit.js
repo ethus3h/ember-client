@@ -3,9 +3,9 @@ globalCachedInputState="";
 window.onload = function() {
     (async function(){
         let dcNames=[];
-        await eiteCall(setupIfNeeded);
-        dcNames=await dcGetColumn('DcData', 1);
-        let datasetLength=await dcDatasetLength('DcData');
+        await eiteCall('setupIfNeeded');
+        dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
+        let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
             elem.onclick=function(){
@@ -44,7 +44,7 @@ window.onload = function() {
         inFormat=document.getElementById('inFormat');
         inFormat.innerHTML='';
         let formats=[];
-        formats = await listInputFormats();
+        formats = await eiteCall('listInputFormats');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
@@ -53,7 +53,7 @@ window.onload = function() {
         inFormat.disabled=false;
         outFormat=document.getElementById('outFormat');
         outFormat.innerHTML='';
-        formats = await listOutputFormats();
+        formats = await eiteCall('listOutputFormats');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
@@ -81,7 +81,7 @@ function handleDcEditingKeystroke(event) {
                     elem.value = elem.value.replace(char, '');
                     elem.selectionStart = start - 1;
                     elem.selectionEnd = end - 1;
-                    typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray(char)));
+                    typeInTextareaSpaced(elem, await eiteCall('dcFromFormat', ['ascii', await eiteCall('strToByteArray', [char])]));
                 })(inputarea, globalCachedInputState);
             }
         }
@@ -161,11 +161,11 @@ async function updateNearestDcLabelInner(el) {
     after=after.substring(0, after.indexOf(' '));
     before=before+after;
     currentDc=parseInt(before.trim().split(' ').slice(-1));
-    if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
+    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc])) {
         setNearestDcLabel('');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
+    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]);
 }
 
 function typeInTextarea(el, newText) {
@@ -200,7 +200,7 @@ function typeInTextareaSpaced(el, newText) {
 }
 
 async function getInputDoc() {
-    let res=await strToByteArray(document.getElementById('inputarea').value);
+    let res=await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     return res;
 }
 
@@ -209,7 +209,7 @@ async function RunDocumentHandler(callback) {
     // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
     window.setTimeout(async function(){
         // Do the computation-heavy work
-        await runDocument(await importDocument('integerList', await getInputDoc()));
+        await eiteCall('runDocument', [await eiteCall('importDocument', ['integerList', await eiteCall('getInputDoc')])]);
         if (callback !== undefined) {
             window.setTimeout(async function() {
                 await callback();
@@ -307,7 +307,7 @@ function importDocumentFromFile() {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await isSupportedInputFormat(inFormat)) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat])) {
             await implDie(inFormat+' is not a supported input format!');
         }
         let picker=document.getElementById('filepicker');
@@ -321,7 +321,7 @@ function importDocumentFromFile() {
                 };
                 fr.readAsArrayBuffer(file);
             });
-            document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', new Uint8Array(fr.result)));
+            document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [inFormat, 'integerList', new Uint8Array(fr.result)])]);
         }
         removeSpinner(true);
     }, 500);
@@ -339,11 +339,11 @@ function importDocumentFromURL(path) {
     closeImportDialog();
     window.setTimeout(async function(){
         inFormat=document.getElementById('inFormat').value;
-        if (!await isSupportedInputFormat(inFormat)) {
+        if (!await eiteCall('isSupportedInputFormat', [inFormat]) {
             await implDie(inFormat+' is not a supported input format!');
         }
         try {
-            document.getElementById('inputarea').value = await strFromByteArray(await importAndExport(inFormat, 'integerList', await getFileFromPath(path)));
+            document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [inFormat, 'integerList', await eiteCall('getFileFromPath', [path])])]);
         }
         catch(e) {
             removeSpinner(true);
@@ -385,15 +385,15 @@ async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
         outFormat=document.getElementById('outFormat').value;
-        if (!await isSupportedOutputFormat(outFormat)) {
+        if (!await eiteCall('isSupportedOutputFormat', [outFormat]) {
             await implDie(outFormat+' is not a supported output format!');
         }
-        let exported=Uint8Array.from(await importAndExport('sems', outFormat, await getInputDoc()));
+        let exported=Uint8Array.from(await eiteCall('importAndExport', ['sems', outFormat, await getInputDoc()]));
         let blob=await new Blob([exported], { type: 'application/octet-stream' });
         let link=document.createElement('a');
         link.href=window.URL.createObjectURL(blob);
         let date=new Date();
-        let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await getExportExtension(outFormat);
+        let outName='Export-'+date.getUTCFullYear()+'m'+(date.getUTCMonth()+1)+'d'+date.getUTCDate()+'-'+date.getUTCHours()+'-'+date.getUTCMinutes()+'-'+date.getUTCSeconds()+'-'+date.getUTCMilliseconds()+'-'+date.getTimezoneOffset()+'.'+await eiteCall('getExportExtension', [outFormat]);
         exportNotify(outName);
         link.download=outName;
         link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));

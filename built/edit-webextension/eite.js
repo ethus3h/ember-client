@@ -299,6 +299,9 @@ if (typeof window !== 'undefined') {
         window.eiteWorkerResolveCallbacks = {};
         window.eiteWorkerCallID = 0;
         window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
             window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
             let thisCallId=window.eiteWorkerCallID;
             let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
@@ -309,7 +312,7 @@ if (typeof window !== 'undefined') {
         };
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
-            if (res) {
+            if (res || res === null) {
                 let resolveCallback;
                 resolveCallback = window.eiteWorkerResolveCallbacks[id];
                 if (resolveCallback) {
@@ -329,6 +332,9 @@ if (typeof window !== 'undefined') {
     }
     else {
         window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
             return await window[funcName]( ...args );
         }
     }
@@ -338,7 +344,11 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         const {uuid, msgid, args} = message.data;
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: await self[args[0]]( ...args[1] )});
+        let res = await self[args[0]]( ...args[1] );
+        if (!res) {
+            res = null;
+        }
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
     }
 
     self.onmessage = function(message) {
@@ -3431,7 +3441,7 @@ async function dcaFromSems(intArrayContent) {
 
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-registerSpeedup(name, func) {
+function registerSpeedup(name, func) {
     if (typeof window !== 'undefined') {
         window[name] = func;
     }
