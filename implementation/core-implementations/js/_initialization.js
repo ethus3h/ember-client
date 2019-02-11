@@ -216,6 +216,9 @@ async function internalEiteReqLoadDataset(dataset) {
     });
 }
 
+async function internalEiteReqHaveDomSetup() {
+}
+
 async function internalLoadDatasets() {
     // This is a separate function since it may later be desirable to dynamically load datasets while a document is running (so only the needed datasets are loaded).
     let count = 0;
