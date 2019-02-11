@@ -4,7 +4,9 @@ window.onload = function() {
     (async function(){
         let dcNames=[];
         await eiteCall('setupIfNeeded');
+        alert('b');
         dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
+        alert('c');
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
