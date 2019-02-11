@@ -76,6 +76,10 @@ function internalEiteReqOutputHeight() {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
+function internalEiteReqTypeofWindow() {
+    return typeof window;
+}
+
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
