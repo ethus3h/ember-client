@@ -322,6 +322,13 @@ async function internalLoadDatasets() {
 
 if (typeof window !== 'undefined') {
     // Not running as a Web worker
+    window.eiteCall = async function(funcName, args) {
+        if (args === undefined) {
+            args=[];
+        }
+        return await window[funcName]( ...args );
+    };
+    window.eiteHostCall = window.eiteCall;
     if (window.Worker) {
         window.eiteWorker = new Worker('eite.js');
         window.eiteWorkerResolveCallbacks = {};
@@ -374,15 +381,6 @@ if (typeof window !== 'undefined') {
                 throw 'Web worker encountered an error: '+res+'.';
             }
         };
-    }
-    else {
-        window.eiteCall = async function(funcName, args) {
-            if (args === undefined) {
-                args=[];
-            }
-            return await window[funcName]( ...args );
-        }
-        window.eiteHostCall = window.eiteCall;
     }
 }
 else {
@@ -3444,8 +3442,8 @@ async function dcDataNoResultException() {
     strReturn = '89315802-d53d-4d11-ba5d-bf505e8ed454'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-async function notExcep(strTest) {
-    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcep:exceptions'); await assertIsStr(strTest); let boolReturn;
+async function excep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excep:exceptions'); await assertIsStr(strTest); let boolReturn;
 
     let boolRes = false;
     boolRes = false;
@@ -3455,20 +3453,11 @@ async function notExcep(strTest) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function excep(strTest) {
-    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excep:exceptions'); await assertIsStr(strTest); let boolReturn;
+async function notExcep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcep:exceptions'); await assertIsStr(strTest); let boolReturn;
 
     let boolRes = false;
-    boolRes = await implNot(await notExcep(strTest));
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-}
-
-async function notExcOrEmpty(strTest) {
-    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
-
-    let boolRes = false;
-    boolRes = await implNot(await excOrEmpty(strTest));
+    boolRes = await implNot(await excep(strTest));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -3478,6 +3467,15 @@ async function excOrEmpty(strTest) {
 
     let boolRes = false;
     boolRes = await or(await excep(strTest), await strEmpty(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function notExcOrEmpty(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await excOrEmpty(strTest));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
