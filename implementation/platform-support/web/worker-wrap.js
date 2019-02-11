@@ -14,11 +14,12 @@ if (window.Worker) {
         return new Promise(function(resolve, reject) {
             window.eiteWorkerResolves[thisCallId]=resolve;
             window.eiteWorkerRejects[thisCallId]=reject;
+            window.eiteWorker.postMessage(thisCall);
         });
-    }
+    };
     window.eiteWorker.onmessage = function(event) {
         
-    }
+    };
 }
 else {
     console.log('Web worker required.');
