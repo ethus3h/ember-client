@@ -59,11 +59,14 @@ r/an/dcToFormat s/outFormat n/dc
     assertIsDc n/dc
     new an/res
     if eq s/outFormat 'utf8'
-        set an/res append an/res utf8BytesFromDecimalChar hexToDec dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        new s/lookup
+        set s/lookup dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
+        if notExcep s/lookup
+            set an/res utf8BytesFromDecimalChar hexToDec s/lookup
     elif eq s/outFormat 'html'
         set s/res dcDataLookupByValue 'mappings/to/html' 0 n/dc 1
         if gt len s/res } 0
-            set an/res append an/res strToByteArray s/res
+            set an/res strToByteArray s/res
         else
             set s/res dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
             if isBaseStr s/res 16
