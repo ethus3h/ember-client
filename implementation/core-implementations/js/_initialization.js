@@ -63,6 +63,11 @@ async function setupIfNeeded() {
     await internalSetup();
 }
 
+// Functions needed for Web worker requests
+function internalEiteReqCharset() {
+    return document.characterSet.toLowerCase();
+}
+
 async function internalSetup() {
     // Set up environment variables.
 
