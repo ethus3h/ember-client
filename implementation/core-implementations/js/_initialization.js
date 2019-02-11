@@ -248,11 +248,11 @@ if (typeof window !== 'undefined') {
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
                 const {uuid, msgid, args} = message.data;
-                let res = await self[args[0]]( ...args[1] );
+                let res = await window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
                 }
-                self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
+                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
             }
         };
     }
