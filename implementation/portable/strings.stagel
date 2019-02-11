@@ -73,6 +73,9 @@ r/s/strToLower s/str
         set n/i add n/i 1
     return s/res
 
+r/b/strEmpty s/str
+    new b/res
+    set b/res 
 r/b/strContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
     new n/temp
