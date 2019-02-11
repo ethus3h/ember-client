@@ -80,6 +80,11 @@ function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
+function internalEiteReqAlert(msg) {
+    alert(msg);
+    return null;
+}
+
 // Main setup logic
 async function internalSetup() {
     // Set up environment variables.
