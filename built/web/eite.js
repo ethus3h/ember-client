@@ -370,6 +370,7 @@ if (typeof window !== 'undefined') {
                 window.eiteHostRequestInternalOnMessage(message);
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
+                const {uuid, msgid, res} = message.data;
                 console.log(message);
                 implDie('Web worker encountered an error: '+res+'.');
                 throw 'Web worker encountered an error: '+res+'.';
