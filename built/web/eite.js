@@ -141,7 +141,6 @@ async function isSetupFinished() {
 }
 
 async function setupIfNeeded() {
-    console.log('setuite');
     if (setupFinished) {
         return;
     }
@@ -162,6 +161,7 @@ async function internalSetup() {
     else {
         await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
+    console.log('setuite');
     if (haveDom) {
         // Web browsers, etc.
         envPreferredFormat = 'html';
