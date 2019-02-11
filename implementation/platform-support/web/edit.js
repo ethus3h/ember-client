@@ -20,7 +20,6 @@ window.onload = function() {
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
-        document.getElementById('DoneEditing').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();};
         inputarea=document.getElementById('inputarea');
         inputarea.disabled=false;
         document.addEventListener('input', function() {
