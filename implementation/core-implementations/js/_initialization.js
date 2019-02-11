@@ -253,6 +253,7 @@ if (typeof window !== 'undefined') {
             }
             return await window[funcName]( ...args );
         }
+        window.eiteHostCall = window.eiteCall;
     }
 }
 else {
@@ -262,6 +263,7 @@ else {
         }
         return await self[funcName]( ...args );
     }
+    window.eiteHostCall = self.eiteCall;
 }
 
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
