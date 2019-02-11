@@ -175,30 +175,30 @@ async function internalSetup() {
 }
 
 // Routines needed for Web worker requests
-function internalEiteReqCharset() {
+async function internalEiteReqCharset() {
     return document.characterSet.toLowerCase();
 }
 
-function internalEiteReqOutputWidth() {
+async function internalEiteReqOutputWidth() {
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
-function internalEiteReqOutputHeight() {
+async function internalEiteReqOutputHeight() {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
-function internalEiteReqTypeofWindow() {
+async function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
-function internalEiteReqAlert(msg) {
+async function internalEiteReqAlert(msg) {
     await alert(msg);
     return null;
 }
 
-function internalEiteReqLoadDataset(dataset) {
+async function internalEiteReqLoadDataset(dataset) {
     // Papa.parse call has to be run from the main thread because Papa isn't defined in the worker since it was only imported in the main thread.
-    new Promise(resolve => {
+    return await new Promise(resolve => {
         Papa.parse('data/' + dataset + '.csv', {
             download: true,
             encoding: "UTF-8",
