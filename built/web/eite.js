@@ -172,6 +172,7 @@ async function internalSetup() {
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
         haveDom = true;
     }
+    console.log('buses');
     let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
         envCharEncoding = 'utf8';
