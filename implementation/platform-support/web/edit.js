@@ -3,9 +3,9 @@ globalCachedInputState="";
 window.onload = function() {
     (async function(){
         let dcNames=[];
-        await eiteCall(setupIfNeeded);
-        dcNames=await dcGetColumn('DcData', 1);
-        let datasetLength=await dcDatasetLength('DcData');
+        await eiteCall('setupIfNeeded');
+        dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
+        let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
             elem.onclick=function(){
@@ -161,11 +161,11 @@ async function updateNearestDcLabelInner(el) {
     after=after.substring(0, after.indexOf(' '));
     before=before+after;
     currentDc=parseInt(before.trim().split(' ').slice(-1));
-    if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
+    if (isNaN(currentDc) || (! await eiteCall('isKnownDc', [currentDc])) {
         setNearestDcLabel('');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
+    setNearestDcLabel(currentDc + ': ' + await eiteCall('dcGetName', [currentDc]);
 }
 
 function typeInTextarea(el, newText) {
@@ -200,7 +200,7 @@ function typeInTextareaSpaced(el, newText) {
 }
 
 async function getInputDoc() {
-    let res=await strToByteArray(document.getElementById('inputarea').value);
+    let res=await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     return res;
 }
 
@@ -209,7 +209,7 @@ async function RunDocumentHandler(callback) {
     // Timeout is an awful hack to give the browser time to start displaying the loading spinner. There should be a better way to do this, but I don't know what it is. This method would presumably break on slower computers.
     window.setTimeout(async function(){
         // Do the computation-heavy work
-        await runDocument(await importDocument('integerList', await getInputDoc()));
+        await eiteCall('runDocument', [await eiteCall('importDocument', ['integerList', await eiteCall('getInputDoc')])]);
         if (callback !== undefined) {
             window.setTimeout(async function() {
                 await callback();
