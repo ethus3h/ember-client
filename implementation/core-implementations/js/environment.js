@@ -23,7 +23,7 @@ async function renderDrawContents(renderBuffer) {
     await assertIsByteArray(renderBuffer);
     let utf8decoder = new TextDecoder('utf-8');
     let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
-    if(haveDom) {
+    if (haveDom) {
         let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
         htmlOutputRootElement.innerHTML = string;
         htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
@@ -31,4 +31,10 @@ async function renderDrawContents(renderBuffer) {
     else {
         console.log(string);
     }
+}
+
+async function internalRequestRenderDrawHTMLToDOM(htmlString) {
+    let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+    htmlOutputRootElement.innerHTML = string;
+    htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
