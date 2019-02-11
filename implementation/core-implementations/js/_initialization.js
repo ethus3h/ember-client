@@ -228,7 +228,7 @@ if (typeof window !== 'undefined') {
         };
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
-            if (res) {
+            if (res || res === null) {
                 let resolveCallback;
                 resolveCallback = window.eiteWorkerResolveCallbacks[id];
                 if (resolveCallback) {
@@ -257,7 +257,11 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         const {uuid, msgid, args} = message.data;
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: await self[args[0]]( ...args[1] )});
+        let res = await self[args[0]]( ...args[1] );
+        if (!res) {
+            res = null;
+        }
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
     }
 
     self.onmessage = function(message) {
