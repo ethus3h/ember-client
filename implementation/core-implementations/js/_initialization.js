@@ -248,7 +248,7 @@ if (typeof window !== 'undefined') {
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 const {uuid, msgid, args} = message.data;
-                let res = await window[args[0]]( ...args[1] );
+                let res = window[args[0]]( ...args[1] );
                 if (!res) {
                     res = null;
                 }
