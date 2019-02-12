@@ -22,3 +22,6 @@ cp -r ./data ./built/web/
 cp /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp ./LICENSE* ./built/web/
 
+# Build WASM components
+
+cp -r ./implementation/portable/wasm ./built/web/
