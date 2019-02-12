@@ -54,14 +54,6 @@ r/b/reportTests
     set s/totalWord 'tests'
     if eq n/totalTests 1
         set s/totalWord 'test'
-    new n/passedPercentageN
-    set n/passedPercentageN mul div mul n/passedTests 100000 } n/failedTests } 100
-    new s/passedPercentageTemp
-    set s/passedPercentageTemp strFrom n/passedPercentageN
-    new n/count
-    set n/count len s/passedPercentageTemp
-    new n/counter
-    set n/counter n/count
     new s/passedPercentage
     while gt n/counter 0
         if eq n/counter sub n/count 3
