@@ -16,8 +16,8 @@ window.onload = function() {
                 }
                 else {
                     let temp;
-                    temp=[i];
-                    editAreaInsert(await dcaToUtf8(temp));
+                    temp=await dcaToUtf8([i]);
+                    editAreaInsert(temp);
                 }
             }
             elem.innerHTML=dcNames[i];
