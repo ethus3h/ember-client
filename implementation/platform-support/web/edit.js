@@ -11,14 +11,14 @@ window.onload = function() {
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
             elem.onclick=function(){
-                //if (editInts()) {
+                if (editInts()) {
                     editAreaInsert(i+'');
-                /*}
+                }
                 else {
                     let temp;
                     temp=[i];
                     editAreaInsert(await dcaToUtf8(temp));
-                }*/
+                }
             }
             elem.innerHTML=dcNames[i];
             elem.class='dcInsertButton';

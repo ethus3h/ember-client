@@ -16,3 +16,7 @@ r/an/dcaToUtf8 an/content
         set n/c add n/c 1
     assertIsByteArray an/res
     return an/res
+
+r/an/dcaFromUtf8 an/content
+    new an/res
+    return an/res
