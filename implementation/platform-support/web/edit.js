@@ -189,9 +189,12 @@ async function updateNearestDcLabelInner(el) {
         currentDc=parseInt(before.trim().split(' ').slice(-1));
     }
     else {
-        currentDc=after[0];
-        if ()
-        currentDc=await dcaFromUtf8()
+        currentDc=before.slice(-1);
+        if (currentDc.length === 0) {
+            currentDc=after[0];
+        }
+        currentDc=await dcaFromUtf8(currentDc);
+        currentDc=currentDc[0];
     }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
         setNearestDcLabel('');
