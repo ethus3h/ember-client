@@ -189,6 +189,8 @@ async function updateNearestDcLabelInner(el) {
         currentDc=parseInt(before.trim().split(' ').slice(-1));
     }
     else {
+        currentDc=after[0];
+        if ()
         currentDc=await dcaFromUtf8()
     }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
