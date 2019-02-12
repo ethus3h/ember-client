@@ -82,7 +82,12 @@ window.onload = function() {
     })();
 };
 
+function getEditFormat() {
+    return document.getElementById('editFormat').value;
+}
+
 function handleDcEditingKeystroke(event) {
+    if (getEditFormat() === )
     if (globalCachedInputState.length === 1) {
         if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
             if (inputarea.value.includes(globalCachedInputState)) {
