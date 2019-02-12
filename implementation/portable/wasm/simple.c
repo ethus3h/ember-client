@@ -1,1 +1,3 @@
-extern void nativeCall()
+int utf8enc() {
+    return 42;
+}
