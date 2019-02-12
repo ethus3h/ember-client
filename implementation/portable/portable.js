@@ -2274,11 +2274,11 @@ async function formatPercentage(intA, intB) {
     await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('formatPercentage:math'); await assertIsInt(intA);await assertIsInt(intB); let strReturn;
 
     let intPercentageN = 0;
-    intPercentageN = await implMul(await implDiv(await implMul(intA, 100000), intB), 100);
+    intPercentageN = await implMul(100, await implDiv(await implMul(intA, 100000), intB));
     let strPercentageTemp = '';
     strPercentageTemp = await strFrom(intPercentageN);
     let intCount = 0;
-    intCount = await implSub(await len(strPercentageTemp, 2));
+    intCount = await implSub(await len(strPercentageTemp), 2);
     let intCounter = 0;
     intCounter = intCount;
     let strPercentage = '';
