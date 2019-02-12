@@ -121,11 +121,11 @@ r/b/isBaseStr s/in n/b
 
 r/s/formatPercentage n/a n/b
     new n/percentageN
-    set n/percentageN mul div mul n/a 100000 } n/b } 100
+    set n/percentageN mul 100 div mul n/a 100000 } n/b
     new s/percentageTemp
     set s/percentageTemp strFrom n/percentageN
     new n/count
-    set n/count sub len s/percentageTemp 2
+    set n/count sub len s/percentageTemp } 2
     new n/counter
     set n/counter n/count
     new s/percentage
