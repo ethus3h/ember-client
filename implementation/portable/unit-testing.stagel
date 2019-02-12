@@ -55,23 +55,9 @@ r/b/reportTests
     if eq n/totalTests 1
         set s/totalWord 'test'
     new s/passedPercentage
-    while gt n/counter 0
-        if eq n/counter sub n/count 3
-            set s/passedPercentage cat s/passedPercentage '.'
-        set s/passedPercentage cat s/passedPercentage strChar s/passedPercentageTemp sub n/count n/counter
-        set n/counter sub n/counter 1
-    new n/failedPercentageN
-    set n/failedPercentageN mul div mul n/failedTests 100000 } n/passedTests } 100
-    new s/failedPercentageTemp
-    set s/failedPercentageTemp strFrom n/failedPercentageN
-    set n/count len s/failedPercentageTemp
-    set n/counter n/count
+    set s/passedPercentage formatPercentage n/passedTests n/totalTests
     new s/failedPercentage
-    while gt n/counter 0
-        if eq n/counter sub n/count 3
-            set s/failedPercentage cat s/failedPercentage '.'
-        set s/failedPercentage cat s/failedPercentage strChar s/failedPercentageTemp sub n/count n/counter
-        set n/counter sub n/counter 1
+    set s/failedPercentage formatPercentage n/failedTests n/totalTests
     set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat strFrom n/passedTests } cat ' ' cat s/passedWord cat ' (' cat s/passedPercentage cat '%) passed and ' cat strFrom n/failedTests } cat ' ' cat s/failedWord cat ' (' cat s/failedPercentage cat '%) failed out of a total of ' cat strFrom n/totalTests } cat ' ' cat s/totalWord '.'
     new s/temp
     if ne n/failedTests 0
