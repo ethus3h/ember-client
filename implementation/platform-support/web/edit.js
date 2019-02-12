@@ -82,12 +82,12 @@ window.onload = function() {
     })();
 };
 
-function getEditFormat() {
-    return document.getElementById('editFormat').value;
+function editInts() {
+    return 'integerList' === document.getElementById('editFormat').value;
 }
 
 function handleDcEditingKeystroke(event) {
-    if (getEditFormat() === 'integerList') {
+    if (editInts()) {
         if (globalCachedInputState.length === 1) {
             if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
@@ -135,7 +135,12 @@ function removeSpinner(clear=false) {
 }
 
 function editAreaInsert(text) {
-    typeInTextareaSpaced(document.getElementById('inputarea'), text);
+    if(editInts()) {
+        typeInTextareaSpaced(document.getElementById('inputarea'), text);
+    }
+    else {
+        typeInTextarea(document.getElementById('inputarea'), text);
+    }
 }
 
 function setNearestDcLabel(text) {
