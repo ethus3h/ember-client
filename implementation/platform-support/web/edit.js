@@ -62,6 +62,15 @@ window.onload = function() {
             outFormat.appendChild(elem);
         }
         outFormat.disabled=false;
+        editFormat=document.getElementById('editFormat');
+        editFormat.innerHTML='';
+        formats = ['utf8', 'integerList'];
+        for (let i=0;i<Object.keys(formats).length;i++) {
+            let elem=document.createElement('option');
+            elem.innerHTML=formats[i];
+            editFormat.appendChild(elem);
+        }
+        editFormat.disabled=false;
         window.setTimeout(function(){
             let overlay=document.getElementById('overlay');
             overlay.style.opacity=0;
