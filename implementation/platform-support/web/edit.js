@@ -183,9 +183,14 @@ async function updateNearestDcLabelInner(el) {
     let before = text.substring(0, start);
     let after  = text.substring(end, text.length);
     let currentDc = '';
-    after=after.substring(0, after.indexOf(' '));
-    before=before+after;
-    currentDc=parseInt(before.trim().split(' ').slice(-1));
+    if (editInts()) {
+        after=after.substring(0, after.indexOf(' '));
+        before=before+after;
+        currentDc=parseInt(before.trim().split(' ').slice(-1));
+    }
+    else {
+        currentDc=await dcaFromUtf8()
+    }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
         setNearestDcLabel('');
         return;
