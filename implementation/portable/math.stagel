@@ -121,7 +121,7 @@ r/b/isBaseStr s/in n/b
 
 r/s/formatPercentage n/a n/b
     new n/passedPercentageN
-    set n/passedPercentageN mul div mul n/passedTests 100000 } n/failedTests } 100
+    set n/passedPercentageN mul div mul n/a 100000 } n/b } 100
     new s/passedPercentageTemp
     set s/passedPercentageTemp strFrom n/passedPercentageN
     new n/count
@@ -134,3 +134,4 @@ r/s/formatPercentage n/a n/b
             set s/passedPercentage cat s/passedPercentage '.'
         set s/passedPercentage cat s/passedPercentage strChar s/passedPercentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
+    return s/passedPercentage
