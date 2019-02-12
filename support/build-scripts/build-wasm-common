@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd): The required dependency ember-shared could not be found (or ember_bash_setup could not be sourced for some other reason)." >&2; printf '%b' '\033[0m' >&2; exit 1; }
+#set -x
+
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+
+# Create Web extension version of edit tool
+
+rm -rf ./built/web
+mkdir ./built/web
+cp -r ./implementation/platform-support/web/* ./built/web/
+cp ./implementation/core-implementations/js/core.js ./built/web/eite.js
+echo >> ./built/web/eite.js
+cat ./implementation/portable/portable.js >> ./built/web/eite.js
+echo >> ./built/web/eite.js
+echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/web/eite.js
+cat ./implementation/speedups/speedups.js >> ./built/web/eite.js
+echo $'\n''// @license-end' >> ./built/web/eite.js
+rm -rf ./built/web/data
+cp -r ./data ./built/web/
+cp /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
+cp ./LICENSE* ./built/web/
+
+# Build WASM components
+
+cToWasm() {
+    # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
+    clang "$1" -o "$1".o --std=gnu89 -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown-wasm -c -Ofast
+    # Link with libc:
+    #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
+    # Or without a libc (you need to provide one somehow):
+    #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o
+
+    # Or, if you want an assembly file instead:
+    #src/work/wasm-install/bin/clang src/work/gcc/gcc/testsuite/gcc.c-torture/execute/20020227-1.c -o src/work/torture-s/20020227-1.c.s --std=gnu89 -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown -S -O2 --sysroot=src/work/wasm-install/sysroot
+    # And get the binary file:
+    #src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
+}
+cp -r ./implementation/portable/wasm ./built/web/
+cd ./built/web/wasm/
+cToWasm simple.c
