@@ -236,8 +236,9 @@ function typeInTextareaSpaced(el, newText) {
 
 async function getInputDoc() {
     let val;
-    if (editInts()) {
-        val = document.getElementById('inputarea').value
+    val = document.getElementById('inputarea').value;
+    if (!editInts()) {
+        val = await eiteCall('importAndExport', ['utf8', 'integerList', ])
     }
     let res=await eiteCall('strToByteArray', []);
     return res;
