@@ -159,7 +159,6 @@ function autoformatInputArea(el) {
         el.value = el.value.replace(/\s+/g, ' ');
         len = len - el.value.length;
         el.selectionStart = el.selectionEnd = start - len;
-        if (el.value[-1])
     }
 }
 
