@@ -1,1 +1,1 @@
- 
+extern void nativeCall()
