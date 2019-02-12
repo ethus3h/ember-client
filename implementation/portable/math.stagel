@@ -130,7 +130,7 @@ r/s/formatPercentage n/a n/b
     set n/counter n/count
     new s/percentage
     new n/decimLoc
-    set n/decimLoc sub n/count 5
+    set n/decimLoc sub n/count 3
     while gt n/counter 0
         if eq n/counter sub n/count n/decimLoc
             set s/percentage cat s/percentage '.'
