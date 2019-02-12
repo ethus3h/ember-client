@@ -15,7 +15,7 @@ window.onload = function() {
                     editAreaInsert(i+'');
                 }
                 else {
-                    editAreaInsert(i+'');
+                    editAreaInsert(await dcaToUtf8([i]));
                 }
             }
             elem.innerHTML=dcNames[i];
