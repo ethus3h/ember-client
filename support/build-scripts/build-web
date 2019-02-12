@@ -25,3 +25,4 @@ cp ./LICENSE* ./built/web/
 # Build WASM components
 
 cp -r ./implementation/portable/wasm ./built/web/
+cd ./built/web/
