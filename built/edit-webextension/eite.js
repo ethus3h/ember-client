@@ -3443,7 +3443,7 @@ async function formatPercentage(intA, intB) {
     intCounter = intCount;
     let strPercentage = '';
     let intDecimLoc = 0;
-    intDecimLoc = await implSub(intCount, 5);
+    intDecimLoc = await implSub(intCount, 3);
     while (await implGt(intCounter, 0)) {
         if (await implEq(intCounter, await implSub(intCount, intDecimLoc))) {
             strPercentage = await implCat(strPercentage, '.');
