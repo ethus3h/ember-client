@@ -125,7 +125,7 @@ r/s/formatPercentage n/a n/b
     new s/percentageTemp
     set s/percentageTemp strFrom n/percentageN
     new n/count
-    set n/count len s/percentageTemp
+    set n/count sub len s/percentageTemp 2
     new n/counter
     set n/counter n/count
     new s/percentage
