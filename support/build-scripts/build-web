@@ -27,15 +27,16 @@ cp ./LICENSE* ./built/web/
 cToWasm() {
     # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
     clang "$1" -o "$1".o --std=gnu89 -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown-wasm -c -Ofast
-# Link with libc:
-src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
-# Or without a libc (you need to provide one somehow):
-src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o
+    # Link with libc:
+    #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
+    # Or without a libc (you need to provide one somehow):
+    #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o
 
-# Or, if you want an assembly file instead:
-src/work/wasm-install/bin/clang src/work/gcc/gcc/testsuite/gcc.c-torture/execute/20020227-1.c -o src/work/torture-s/20020227-1.c.s --std=gnu89 -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown -S -O2 --sysroot=src/work/wasm-install/sysroot
-# And get the binary file:
-src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
+    # Or, if you want an assembly file instead:
+    #src/work/wasm-install/bin/clang src/work/gcc/gcc/testsuite/gcc.c-torture/execute/20020227-1.c -o src/work/torture-s/20020227-1.c.s --std=gnu89 -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown -S -O2 --sysroot=src/work/wasm-install/sysroot
+    # And get the binary file:
+    #src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
 }
 cp -r ./implementation/portable/wasm ./built/web/
 cd ./built/web/
+cToWasm simple.c
