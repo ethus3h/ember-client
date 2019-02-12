@@ -25,7 +25,7 @@ cp ./LICENSE* ./built/web/
 # Build WASM components
 
 cToWasm() {
-    
+    https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
 }
 cp -r ./implementation/portable/wasm ./built/web/
 cd ./built/web/
