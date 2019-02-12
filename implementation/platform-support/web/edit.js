@@ -10,7 +10,7 @@ window.onload = function() {
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
-            elem.onclick=function(){
+            elem.onclick=async function() {
                 if (editInts()) {
                     editAreaInsert(i+'');
                 }
@@ -19,7 +19,7 @@ window.onload = function() {
                     temp=await dcaToUtf8([i]);
                     editAreaInsert(temp);
                 }
-            }
+            };
             elem.innerHTML=dcNames[i];
             elem.class='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
