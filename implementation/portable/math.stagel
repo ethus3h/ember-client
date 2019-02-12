@@ -120,18 +120,18 @@ r/b/isBaseStr s/in n/b
     return b/res
 
 r/s/formatPercentage n/a n/b
-    new n/passedPercentageN
-    set n/passedPercentageN mul div mul n/a 100000 } n/b } 100
-    new s/passedPercentageTemp
-    set s/passedPercentageTemp strFrom n/passedPercentageN
+    new n/percentageN
+    set n/percentageN mul div mul n/a 100000 } n/b } 100
+    new s/percentageTemp
+    set s/percentageTemp strFrom n/percentageN
     new n/count
-    set n/count len s/passedPercentageTemp
+    set n/count len s/percentageTemp
     new n/counter
     set n/counter n/count
-    new s/passedPercentage
+    new s/percentage
     while gt n/counter 0
         if eq n/counter sub n/count 3
-            set s/passedPercentage cat s/passedPercentage '.'
-        set s/passedPercentage cat s/passedPercentage strChar s/passedPercentageTemp sub n/count n/counter
+            set s/percentage cat s/percentage '.'
+        set s/percentage cat s/percentage strChar s/percentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
-    return s/passedPercentage
+    return s/percentage
