@@ -150,13 +150,15 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    // Autoformat input area
-    start = el.selectionStart;
-    end = el.selectionEnd;
-    let len = el.value.length;
-    el.value = el.value.replace(/\s+/g, ' ');
-    len = len - el.value.length;
-    el.selectionStart = el.selectionEnd = start - len;
+    if (editInts()) {
+        // Autoformat input area
+        start = el.selectionStart;
+        end = el.selectionEnd;
+        let len = el.value.length;
+        el.value = el.value.replace(/\s+/g, ' ');
+        len = len - el.value.length;
+        el.selectionStart = el.selectionEnd = start - len;
+    }
 }
 
 function updateNearestDcLabel(el, autoformat=true) {
