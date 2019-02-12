@@ -1236,36 +1236,10 @@ async function reportTests() {
     if (await implEq(intTotalTests, 1)) {
         strTotalWord = 'test';
     }
-    let intPassedPercentageN = 0;
-    intPassedPercentageN = await implMul(await implDiv(await implMul(intPassedTests, 100000), intFailedTests), 100);
-    let strPassedPercentageTemp = '';
-    strPassedPercentageTemp = await strFrom(intPassedPercentageN);
-    let intCount = 0;
-    intCount = await len(strPassedPercentageTemp);
-    let intCounter = 0;
-    intCounter = intCount;
     let strPassedPercentage = '';
-    while (await implGt(intCounter, 0)) {
-        if (await implEq(intCounter, await implSub(intCount, 3))) {
-            strPassedPercentage = await implCat(strPassedPercentage, '.');
-        }
-        strPassedPercentage = await implCat(strPassedPercentage, await strChar(strPassedPercentageTemp, await implSub(intCount, intCounter)));
-        intCounter = await implSub(intCounter, 1);
-    }
-    let intFailedPercentageN = 0;
-    intFailedPercentageN = await implMul(await implDiv(await implMul(intFailedTests, 100000), intPassedTests), 100);
-    let strFailedPercentageTemp = '';
-    strFailedPercentageTemp = await strFrom(intFailedPercentageN);
-    intCount = await len(strFailedPercentageTemp);
-    intCounter = intCount;
+    strPassedPercentage = await formatPercentage(intPassedTests, intTotalTests);
     let strFailedPercentage = '';
-    while (await implGt(intCounter, 0)) {
-        if (await implEq(intCounter, await implSub(intCount, 3))) {
-            strFailedPercentage = await implCat(strFailedPercentage, '.');
-        }
-        strFailedPercentage = await implCat(strFailedPercentage, await strChar(strFailedPercentageTemp, await implSub(intCount, intCounter)));
-        intCounter = await implSub(intCounter, 1);
-    }
+    strFailedPercentage = await formatPercentage(intFailedTests, intTotalTests);
     intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat(await strFrom(intPassedTests), await implCat(' ', await implCat(strPassedWord, await implCat(' (', await implCat(strPassedPercentage, await implCat('%) passed and ', await implCat(await strFrom(intFailedTests), await implCat(' ', await implCat(strFailedWord, await implCat(' (', await implCat(strFailedPercentage, await implCat('%) failed out of a total of ', await implCat(await strFrom(intTotalTests), await implCat(' ', await implCat(strTotalWord, '.')))))))))))))))));
     let strTemp = '';
     if (await ne(intFailedTests, 0)) {
@@ -2294,6 +2268,29 @@ async function isBaseStr(strIn, intB) {
     }
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function formatPercentage(intA, intB) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('formatPercentage:math'); await assertIsInt(intA);await assertIsInt(intB); let strReturn;
+
+    let intPercentageN = 0;
+    intPercentageN = await implMul(await implDiv(await implMul(intA, 100000), intB), 100);
+    let strPercentageTemp = '';
+    strPercentageTemp = await strFrom(intPercentageN);
+    let intCount = 0;
+    intCount = await implSub(await len(strPercentageTemp, 2));
+    let intCounter = 0;
+    intCounter = intCount;
+    let strPercentage = '';
+    while (await implGt(intCounter, 0)) {
+        if (await implEq(intCounter, await implSub(intCount, 3))) {
+            strPercentage = await implCat(strPercentage, '.');
+        }
+        strPercentage = await implCat(strPercentage, await strChar(strPercentageTemp, await implSub(intCount, intCounter)));
+        intCounter = await implSub(intCounter, 1);
+    }
+
+    strReturn = strPercentage; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 /* Can check for exception as result like: if eq s/res dcDataNoResultException */
