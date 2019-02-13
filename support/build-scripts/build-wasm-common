@@ -14,7 +14,7 @@ cToWasm() {
     #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
     # Or without a libc (you need to provide one somehow):
     # --allow-undefined allows undefined symbols in the linked executable. E.g. "extern" declarations. Should I remove that flag?
-    wasm-ld -entry=main --allow-undefined -o "$1".o.wasm "$1".o
+    wasm-ld --no-entry -o "$1".o.wasm "$1".o #  --allow-undefined
     wasm2wat -o "$1".wat "$1".o.wasm
 
     # Or, if you want an assembly file instead:
