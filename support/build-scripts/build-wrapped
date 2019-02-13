@@ -12,6 +12,8 @@ slcmd="./support/build-scripts/build-stagel-inner"
 srcmd="./support/build-scripts/build-stager-inner"
 #[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
+mkdir ./built/stagel
+
 targets=(js sh)
 
 # FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
@@ -39,4 +41,7 @@ for (( i=0; i<targetCount; i++ )); do
     find ./implementation/portable/ -name '*.stagel' -exec "$srcmd" {} "${targets[$i]}" \;
 
     echo $'\n''// @license-end' >> ./implementation/portable/portable."${targets[$i]}"
+
+    mkdir ./build/stagel-parts/"${targets[$i]}"
+    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel/"${targets[$i]}"
 done
