@@ -68,7 +68,7 @@ async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
     await getFileFromPath('wasm-common/simple.c.wat').then(bytes =>
-        WebAssembly.
+        WebAssembly.instantiate(bytes, importObject)
     );
 
     // Set up environment variables.
