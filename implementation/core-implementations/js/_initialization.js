@@ -66,7 +66,9 @@ async function setupIfNeeded() {
 // Main setup logic
 async function internalSetup() {
     // Load WebAssembly components.
-    
+    await getFileFromPath('wasm-common/simple.c.wat').then(bytes =>
+        WebAssembly.
+    );
 
     // Set up environment variables.
 
