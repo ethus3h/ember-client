@@ -43,5 +43,7 @@ for (( i=0; i<targetCount; i++ )); do
     echo $'\n''// @license-end' >> ./implementation/portable/portable."${targets[$i]}"
 
     mkdir ./build/stagel-parts/"${targets[$i]}"
-    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel/"${targets[$i]}"
+    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
+    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
+    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
 done
