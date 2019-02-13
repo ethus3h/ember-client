@@ -8,9 +8,18 @@
 # https://github.com/google/googletest
 # https://github.com/dabeaz/ply
 
-r/an/wasmCallIntRetAn s/routine n/val
-    
+r/n/wasmCall s/routine n/val
+    new n/res
+    return nan/res
 
-r/an/wasmCallArr s/routine an/vals
+r/n/wasmCallArrIn s/routine an/vals
+    new n/res
+    return nan/res
+
+r/an/wasmCallArrOut s/routine n/val
+    new an/res
+    return an/res
+
+r/an/wasmCallArrInOut s/routine an/vals
     new an/res
     return an/res
