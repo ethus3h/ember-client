@@ -17,11 +17,12 @@ echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
     "$sicmd" "$@"
+    ./support/build-scripts/build-wasm-common
 else
     "$sicmd" "$@" &> /dev/null
+    ./support/build-scripts/build-wasm-common &> /dev/null
 fi
 
-./support/build-scripts/build-wasm-common
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
 
