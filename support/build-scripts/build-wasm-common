@@ -30,6 +30,6 @@ cToWasm() {
 }
 
 cp -r ./implementation/portable/wasm-common ./built/
-cd ./built/wasm-common/
-cToWasm simple.c
-rm -r temp
+#cd ./built/wasm-common/
+#cToWasm simple.c
+#rm -r temp
