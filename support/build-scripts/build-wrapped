@@ -44,6 +44,6 @@ for (( i=0; i<targetCount; i++ )); do
 
     mkdir ./build/stagel-parts/"${targets[$i]}"
     mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
-    mv ./implementation/portable/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
+    mv ./implementation/portable/"${targets[$i]}"/portable."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
     cp ./implementation/speedups/"${targets[$i]}"/speedups."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
 done
