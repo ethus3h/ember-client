@@ -106,6 +106,7 @@ let intFailedTests = 0;
 let intTotalTests = 0;
 let intArrayFrameBuffer = []; // an
 let intArrayTestFrameBuffer = []; // an
+let eiteWasmModule;
 
 // Global environment
 let haveDom = false;
@@ -149,6 +150,21 @@ async function setupIfNeeded() {
 
 // Main setup logic
 async function internalSetup() {
+    // Load WebAssembly components.
+    // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
+    let importObject = {
+        imports: {
+            // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
+            /*
+            imported_func: function(arg) {
+                console.log(arg);
+            }
+            */
+        }
+    };
+    eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject));
+
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
@@ -755,6 +771,8 @@ async function internalDebugPrintStack() {
     }
     return result;
 }
+
+// Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 /* booleans, provides:
     implAnd

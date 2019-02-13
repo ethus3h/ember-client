@@ -336,7 +336,7 @@ async function settingArrayToString(strArraySettings) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-/* For now, I'm inclined to skip implementing wasm right now. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later. */
+/* For now, I'm inclined to skip implementing wasm right now, and just have a stub interface here. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later. */
 /* Copies of the current versions as of this writing (latest git commits) of wac, WebAssembly spec, and dependencies are included in work-docs/wasm for easy access, and are covered under their respective licenses. The following repositories are there: */
 /* https://github.com/kanaka/wac */
 /* https://github.com/kanaka/fooboot */
@@ -345,6 +345,44 @@ async function settingArrayToString(strArraySettings) {
 /* https://github.com/WebAssembly/testsuite */
 /* https://github.com/google/googletest */
 /* https://github.com/dabeaz/ply */
+
+async function wasmCall(strRoutine, intVal) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCall:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intReturn;
+
+    let intRes = 0;
+    intRes = await internalWasmCall(strRoutine, intVal);
+
+    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+    await nan/res();
+}
+
+async function wasmCallArrIn(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
+
+    let intRes = 0;
+    intRes = await internalWasmCallArrIn(strRoutine, intVal);
+
+    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+    await nan/res();
+}
+
+async function wasmCallArrOut(strRoutine, intVal) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function wasmCallArrInOut(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrInOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
 
 async function dcaFromAsciiSafeSubset(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayContent); let intArrayReturn;
