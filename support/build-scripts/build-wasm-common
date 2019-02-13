@@ -21,6 +21,6 @@ cToWasm() {
     #src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
 }
 
-cp -r ./implementation/portable/wasm ./built/wasm-common
+cp -r ./implementation/portable/wasm-common ./built/
 cd ./built/wasm-common/
 cToWasm simple.c
