@@ -66,6 +66,7 @@ async function setupIfNeeded() {
 // Main setup logic
 async function internalSetup() {
     // Load WebAssembly components.
+    // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
     await getFileFromPath('wasm-common/simple.c.wat').then(bytes =>
         WebAssembly.
     );
