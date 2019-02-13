@@ -7,6 +7,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the EITE implementation.
 
+rm -rf ./built
+mkdir ./built
+
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
@@ -18,8 +21,6 @@ else
     "$sicmd" "$@" &> /dev/null
 fi
 
-rm -rf ./built
-mkdir ./built
 ./support/build-scripts/build-wasm-common
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
