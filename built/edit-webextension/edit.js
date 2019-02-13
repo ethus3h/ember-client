@@ -10,9 +10,17 @@ window.onload = function() {
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         for (let i=0; i<datasetLength; i++) {
             let elem=document.createElement('button');
-            elem.onclick=function(){
-                editAreaInsert(i+'');
-            }
+            elem.onclick=async function() {
+                if (editInts()) {
+                    editAreaInsert(i+'');
+                }
+                else {
+                    // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
+                    let temp;
+                    temp=await dcaToUtf8([i]);
+                    editAreaInsert(temp);
+                }
+            };
             elem.innerHTML=dcNames[i];
             elem.class='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
@@ -62,6 +70,15 @@ window.onload = function() {
             outFormat.appendChild(elem);
         }
         outFormat.disabled=false;
+        editFormat=document.getElementById('editFormat');
+        editFormat.innerHTML='';
+        formats = ['utf8', 'integerList'];
+        for (let i=0;i<Object.keys(formats).length;i++) {
+            let elem=document.createElement('option');
+            elem.innerHTML=formats[i];
+            editFormat.appendChild(elem);
+        }
+        editFormat.disabled=false;
         window.setTimeout(function(){
             let overlay=document.getElementById('overlay');
             overlay.style.opacity=0;
@@ -73,18 +90,24 @@ window.onload = function() {
     })();
 };
 
+function editInts() {
+    return 'integerList' === document.getElementById('editFormat').value;
+}
+
 function handleDcEditingKeystroke(event) {
-    if (globalCachedInputState.length === 1) {
-        if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
-            if (inputarea.value.includes(globalCachedInputState)) {
-                (async function(elem, char){
-                    let start = elem.selectionStart;
-                    let end = elem.selectionEnd;
-                    elem.value = elem.value.replace(char, '');
-                    elem.selectionStart = start - 1;
-                    elem.selectionEnd = end - 1;
-                    typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
-                })(inputarea, globalCachedInputState);
+    if (editInts()) {
+        if (globalCachedInputState.length === 1) {
+            if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
+                if (inputarea.value.includes(globalCachedInputState)) {
+                    (async function(elem, char){
+                        let start = elem.selectionStart;
+                        let end = elem.selectionEnd;
+                        elem.value = elem.value.replace(char, '');
+                        elem.selectionStart = start - 1;
+                        elem.selectionEnd = end - 1;
+                        typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
+                    })(inputarea, globalCachedInputState);
+                }
             }
         }
     }
@@ -120,7 +143,12 @@ function removeSpinner(clear=false) {
 }
 
 function editAreaInsert(text) {
-    typeInTextareaSpaced(document.getElementById('inputarea'), text);
+    if(editInts()) {
+        typeInTextareaSpaced(document.getElementById('inputarea'), text);
+    }
+    else {
+        typeInTextarea(document.getElementById('inputarea'), text);
+    }
 }
 
 function setNearestDcLabel(text) {
@@ -130,13 +158,16 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    // Autoformat input area
-    start = el.selectionStart;
-    end = el.selectionEnd;
-    let len = el.value.length;
-    el.value = el.value.replace(/\s+/g, ' ');
-    len = len - el.value.length;
-    el.selectionStart = el.selectionEnd = start - len;
+    if (editInts()) {
+        // Autoformat input area
+        start = el.selectionStart;
+        end = el.selectionEnd;
+        let len = el.value.length;
+        el.value = el.value + ' ';
+        el.value = el.value.replace(/\s+/g, ' ');
+        len = len - el.value.length;
+        el.selectionStart = el.selectionEnd = start - len;
+    }
 }
 
 function updateNearestDcLabel(el, autoformat=true) {
@@ -160,9 +191,19 @@ async function updateNearestDcLabelInner(el) {
     let before = text.substring(0, start);
     let after  = text.substring(end, text.length);
     let currentDc = '';
-    after=after.substring(0, after.indexOf(' '));
-    before=before+after;
-    currentDc=parseInt(before.trim().split(' ').slice(-1));
+    if (editInts()) {
+        after=after.substring(0, after.indexOf(' '));
+        before=before+after;
+        currentDc=parseInt(before.trim().split(' ').slice(-1));
+    }
+    else {
+        currentDc=before.slice(-1);
+        if (currentDc.length === 0) {
+            currentDc=after[0];
+        }
+        currentDc=await dcaFromUtf8(currentDc);
+        currentDc=currentDc[0];
+    }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
         setNearestDcLabel('');
         return;
@@ -202,7 +243,11 @@ function typeInTextareaSpaced(el, newText) {
 }
 
 async function getInputDoc() {
-    let res=await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
+    let res;
+    res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
+    if (!editInts()) {
+        res = await eiteCall('importDocument', ['utf8', res]);
+    }
     return res;
 }
 
