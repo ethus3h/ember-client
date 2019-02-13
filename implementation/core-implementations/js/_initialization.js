@@ -70,7 +70,10 @@ async function internalSetup() {
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
     let importObject = {
         imports: {
-            
+            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
+    imported_func: function(arg) {
+      console.log(arg);
+    }
         }
     };
     eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject));
