@@ -70,7 +70,7 @@ async function internalSetup() {
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
     let importObject = {
         imports: {
-            // If there were JavaScript functions that the C code could call, they would go here.
+            // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
             /*
             imported_func: function(arg) {
                 console.log(arg);
