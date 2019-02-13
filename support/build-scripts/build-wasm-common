@@ -9,7 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 cToWasm() {
     # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
-    clang "$1" -o "$1".o --std=gnu89 -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown-wasm -c -Os
+    clang "$1" -o "$1".o --std=gnu89 -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown-wasm -c -Ofast
     mkdir temp
     mv "$1".o temp/
     (
