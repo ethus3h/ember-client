@@ -65,6 +65,9 @@ async function setupIfNeeded() {
 
 // Main setup logic
 async function internalSetup() {
+    // Load WebAssembly components.
+    
+
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.

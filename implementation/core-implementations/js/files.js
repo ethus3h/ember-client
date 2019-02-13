@@ -17,4 +17,3 @@ async function getFileFromPath(path) {
     }
     await implDie('An error was encountered loading the requested document '+path+'.');
 }
-
