@@ -19,7 +19,7 @@ cToWasm() {
         # Or without a libc (you need to provide one somehow):
         # --allow-undefined allows undefined symbols in the linked executable. E.g. "extern" declarations. Should I remove that flag?
         wasm-ld --no-entry -o "$1".o.wasm "$1".o #  --allow-undefined
-        wasm2wat -o "$1".wat "$1".o.wasm
+        wasm2wat --inline-exports --inline-imports -f -vvv --generate-names -o "$1".wat "$1".o.wasm
         mv "$1".wat ../
 
         # Or, if you want an assembly file instead:
