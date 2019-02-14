@@ -24,7 +24,7 @@ mkdir ./temp
     rm -r ./wabt-"$myWabtVersion"/*
     mv ./src ./wabt-"$myWabtVersion"/
 ) || die
-rm -r ./temp
+#rm -r ./temp
 
 # Build WASM components
 
