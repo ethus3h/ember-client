@@ -3,7 +3,7 @@
 async function internalWasmCall(strRoutine, intVal) {
     return eiteWasmModule.instance.exports[strRoutine](intVal);
 }
-
+/*
 async function internalWasmCallArrIn(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
 
@@ -31,3 +31,4 @@ async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
+*/
