@@ -9,11 +9,11 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
-rm -r ./distfiles/
+rm -r ./build-temp/distfiles/
 
 dist() {
     echo "Copying distfile: $1"
-    rsync -av --checksum /usr/portage/distfiles/"$1" ./distfiles/
+    rsync -av --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/
 }
 
 dist gcc-"$myGccVersion".tar.xz
