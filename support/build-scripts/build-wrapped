@@ -12,7 +12,7 @@ slcmd="./support/build-scripts/build-stagel-inner"
 srcmd="./support/build-scripts/build-stager-inner"
 #[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
-mkdir ./built/stagel
+mkdir ./built/stagel-parts
 
 targets=(js sh)
 
@@ -43,6 +43,7 @@ for (( i=0; i<targetCount; i++ )); do
     echo $'\n''// @license-end' >> ./implementation/portable/portable."${targets[$i]}"
 
     mkdir ./built/stagel-parts/"${targets[$i]}"
+
     mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
     mv ./implementation/portable/"${targets[$i]}"/portable."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
 
