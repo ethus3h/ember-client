@@ -1,13 +1,7 @@
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalWasmCall(strRoutine, intVal) {
-    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCall:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intReturn;
-
-    let intRes = 0;
-    intRes = await internalWasmCall(strRoutine, intVal);
-
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+    return eiteWasmModule.instance.exports[strRoutine](intVal);
 }
 
 async function internalWasmCallArrIn(strRoutine, intArrayVals) {
