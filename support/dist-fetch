@@ -17,7 +17,7 @@ dist() {
 }
 
 # wabt and its build-time dependencies
-dist wabt-"$myWabtVersion"-linux.tar.gz
+dist wabt-"$myWabtVersion".tar.gz
 dist googletest-"$myGoogletestVersion".tar.gz
 dist python-lex-yacc-"$myPlyVersion".tar.gz
 dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
