@@ -11,12 +11,14 @@ source ./support/build-scripts/dist-versions
 
 # Build WASM version of wat2wasm
 
+rm -r ./temp
 mkdir ./temp
 (
     cd ./temp
     cp ../distfiles/wabt-"$myWabtVersion".tar.gz ./
     tar xozf wabt-"$myWabtVersion".tar.gz
 ) || die
+rm -r ./temp
 
 # Build WASM components
 
