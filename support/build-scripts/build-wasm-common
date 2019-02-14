@@ -28,7 +28,7 @@ mkdir ./temp
     src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
     rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     for file in src/*.cc; do
-        clang++  -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Isrc -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o src/"$file".cc.o -c src/"$file".cc
+        clang++  -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -Isrc -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o src/"$file".cc.o -c -Ofast --target=wasm32-unknown-unknown-wasm src/"$file".cc
     done
 ) || die
 #rm -r ./temp
