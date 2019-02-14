@@ -30,12 +30,15 @@ mkdir -p ./build-temp/build
 cd ./build-temp/build || die
 
 echo "Unpacking GCC"
-    unxz ./gcc-"$myGccVersion".tar.xz
-    tar xof ./gcc-"$myGccVersion".tar
-    rm ./gcc-"$myGccVersion".tar
-    echo "Building wat2wasm"
-    tar xozf ./wabt-"$myWabtVersion".tar.gz
-    rm ./wabt-"$myWabtVersion".tar.gz
-    rm -r ./wabt-"$myWabtVersion"/src/prebuilt
-    mv ./wabt-"$myWabtVersion"/src/ ./
+unxz ./gcc-"$myGccVersion".tar.xz
+tar xof ./gcc-"$myGccVersion".tar
+rm ./gcc-"$myGccVersion".tar
+
 echo "Unpacking wabt"
+tar xozf ./wabt-"$myWabtVersion".tar.gz
+rm ./wabt-"$myWabtVersion".tar.gz
+rm -r ./wabt-"$myWabtVersion"/src/prebuilt
+mv ./wabt-"$myWabtVersion"/src/ ./
+rm -r ./wabt-"$myWabtVersion"
+mkdir ./wabt-"$myWabtVersion"
+mv ./src ./wabt-"$myWabtVersion"/

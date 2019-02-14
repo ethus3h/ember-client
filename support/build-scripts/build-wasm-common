@@ -14,9 +14,6 @@ source ./support/build-scripts/dist-versions
 (
     echo "Building wat2wasm"
     cd ./build-temp/build || die
-    rm -r ./wabt-"$myWabtVersion"
-    mkdir ./wabt-"$myWabtVersion"
-    mv ./src ./wabt-"$myWabtVersion"/
     cd ./wabt-"$myWabtVersion" || die
     re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
     src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
