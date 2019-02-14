@@ -20,10 +20,10 @@ mkdir ./temp
     pushd wabt-"$myWabtVersion" || die
     rm -r src/prebuilt
     mv src/ ../
-    rm -r ./.*
-    rm -r ./*
-    mv ../src ./
     popd || die
+    rm -r ./wabt-"$myWabtVersion".*
+    rm -r ./wabt-"$myWabtVersion"*
+    mv ./src ./wabt-"$myWabtVersion"/
 ) || die
 rm -r ./temp
 
