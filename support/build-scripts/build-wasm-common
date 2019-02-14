@@ -9,6 +9,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build WASM version of wat2wasm
 
+mkdir ./temp
+(
+    cd ./temp
+    cp ../distfiles/wabt-1.0.8-linux.tar.gz ./
+    tar xozf wabt-1.0.8-linux.tar.gz
+)
 
 # Build WASM components
 
