@@ -9,7 +9,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
-echo "Building libstdc++-v3"
+echo "Building libc++"
+# https://libcxx.llvm.org/docs/BuildingLibcxx.html
 #http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
 ../libstdc++-v3/configure           \
     --host=$LFS_TGT                 \
