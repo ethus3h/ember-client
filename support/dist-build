@@ -5,28 +5,28 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Retrieve third-party files
+# Build third-party components
 
 source ./support/build-scripts/dist-versions
 
-    echo "Building libstdc++-v3"
-    #http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
-    ../libstdc++-v3/configure           \
-        --host=$LFS_TGT                 \
-        --prefix=/tools                 \
-        --disable-multilib              \
-        --disable-nls                   \
-        --disable-libstdcxx-threads     \
-        --disable-libstdcxx-pch         \
-        --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/8.2.0
+echo "Building libstdc++-v3"
+#http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
+../libstdc++-v3/configure           \
+    --host=$LFS_TGT                 \
+    --prefix=/tools                 \
+    --disable-multilib              \
+    --disable-nls                   \
+    --disable-libstdcxx-threads     \
+    --disable-libstdcxx-pch         \
+    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/8.2.0
 
-    echo "Building wat2wasm"
-    cd ./build-temp/build || die
-    cd ./wabt-"$myWabtVersion" || die
-    re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
-    src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
-    src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
-    rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
-    for file in src/*.cc; do
-        clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -I../gcc-7.3.0/libstdc++-v3/include -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
-    done
+echo "Building wat2wasm"
+cd ./build-temp/build || die
+cd ./wabt-"$myWabtVersion" || die
+re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
+src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
+src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
+rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
+for file in src/*.cc; do
+    clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -I../gcc-7.3.0/libstdc++-v3/include -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
+done

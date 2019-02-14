@@ -9,12 +9,6 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
-# Build WASM version of wat2wasm
-
-(
-) || die
-#rm -r ./build-temp/build
-
 # Build WASM components
 
 cToWasm() {
