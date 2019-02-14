@@ -16,7 +16,7 @@ mkdir ./temp
     cd ./temp
     cp ../distfiles/wabt-"$myWabtVersion"-linux.tar.gz ./
     tar xozf wabt-"$myWabtVersion"-linux.tar.gz
-)
+) || die
 
 # Build WASM components
 
@@ -40,7 +40,7 @@ cToWasm() {
         #src/work/wasm-install/bin/clang src/work/gcc/gcc/testsuite/gcc.c-torture/execute/20020227-1.c -o src/work/torture-s/20020227-1.c.s --std=gnu89 -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown -S -O2 --sysroot=src/work/wasm-install/sysroot
         # And get the binary file:
         #src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
-    )
+    ) || die
 }
 
 cp -r ./implementation/portable/wasm-common ./built/
