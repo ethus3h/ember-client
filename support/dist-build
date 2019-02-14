@@ -9,7 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 if false; then
 [[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
 
-source ./support/build-scripts/dist-versions
+source ./support/build-scripts/dist-versions || die
 cd ./build-temp/build || die
 
 echo "Building libc++abi"
