@@ -18,7 +18,7 @@ echo "Building libc++abi"
 mkdir libcxxabi-build
 cd libcxxabi-build
 #export CC=clang CXX=clang++
-cmake -DLLVM_ENABLE_PROJECTS=libcxxabi ../llvm-project-${myLlvmCommit}/llvm
+cmake -DLLVM_ENABLE_PROJECTS=libcxxabi -DCMAKE_CXXFLAGS="--target=wasm32-unknown-unknown-wasm" -DCMAKE_CFLAGS="--target=wasm32-unknown-unknown-wasm" ../llvm-project-${myLlvmCommit}/llvm
 make
 #make check-libcxx
 ) || die
