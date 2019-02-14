@@ -9,8 +9,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 rm -r ./distfiles/
 
-getDist() {
+dist() {
     echo "Copying distfile: $1"
     rsync -av --checksum /usr/portage/distfiles/"$1" ./distfiles/
 }
 
+dist googletest-1.8.1.tar.gz
+dist wabt-1.0.8-linux.tar.gz
+dist python-lex-yacc-3.11.tar.gz
+dist WebAssembly-testsuite-89cc463fa1251449d7974086a34ef0dc100b1582.tar.gz
