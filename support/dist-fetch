@@ -31,7 +31,7 @@ dist wabt-"$myWabtVersion".tar.gz
 (
 cd ./build-temp/build || die
 
-echo "Unpacking GCC"
+echo "Unpacking LLVM"
 tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
 
 echo "Unpacking wabt"
