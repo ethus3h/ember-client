@@ -12,6 +12,15 @@ cd ./build-temp/build || die
 
 echo "Building libc++abi"
 # https://libcxxabi.llvm.org/
+(
+mkdir libcxxabi-build
+cd libcxxabi-build
+#export CC=clang CXX=clang++
+cmake -DLLVM_ENABLE_PROJECTS=libcxxabi ../llvm-project-${myLlvmCommit}/llvm
+make
+#make check-libcxx
+) || die
+
 
 echo "Building libc++"
 # https://libcxx.llvm.org/docs/BuildingLibcxx.html
