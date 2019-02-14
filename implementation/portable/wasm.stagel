@@ -11,12 +11,12 @@
 r/n/wasmCall s/routine n/val
     new n/res
     set n/res internalWasmCall s/routine n/val
-    return nan/res
+    return n/res
 
 r/n/wasmCallArrIn s/routine an/vals
     new n/res
     set n/res internalWasmCallArrIn s/routine n/val
-    return nan/res
+    return n/res
 
 r/an/wasmCallArrOut s/routine n/val
     new an/res
