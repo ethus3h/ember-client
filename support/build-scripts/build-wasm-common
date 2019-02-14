@@ -12,8 +12,8 @@ source ./support/build-scripts/dist-versions
 # Build WASM version of wat2wasm
 
 echo "Building wat2wasm"
-rm -rf ./build-temp
-mkdir ./build-temp
+rm -rf ./build-temp/build
+mkdir -p ./build-temp/build
 (
     cd ./build-temp || die
     cp ../distfiles/gcc-"$myGccVersion".tar.xz ./
@@ -34,7 +34,7 @@ mkdir ./build-temp
         clang++ -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
     done
 ) || die
-#rm -r ./build-temp
+#rm -r ./build-temp/build
 
 # Build WASM components
 
