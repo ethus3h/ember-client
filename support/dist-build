@@ -11,15 +11,17 @@ source ./support/build-scripts/dist-versions
 
 echo "Building libc++"
 # https://libcxx.llvm.org/docs/BuildingLibcxx.html
-#http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
-../libstdc++-v3/configure           \
-    --host=$LFS_TGT                 \
-    --prefix=/tools                 \
-    --disable-multilib              \
-    --disable-nls                   \
-    --disable-libstdcxx-threads     \
-    --disable-libstdcxx-pch         \
-    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/8.2.0
+(
+mkdir libcxx-build
+cd libcxx-build
+export CC=clang CXX=clang++
+cmake -DLLVM_PATH=path/to/separate/llvm \
+        -DLIBCXX_CXX_ABI=libcxxabi \
+        -DLIBCXX_CXX_ABI_INCLUDE_PATHS=path/to/separate/libcxxabi/include \
+        path/to/llvm-project/libcxx
+$ make
+$ make check-libcxx # optional
+) || die
 
 echo "Building wat2wasm"
 cd ./build-temp/build || die
