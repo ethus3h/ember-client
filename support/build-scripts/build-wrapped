@@ -5,12 +5,12 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# built the StageL library. Also built StageR while we're at it.
+# Build the StageL library. Also build StageR while we're at it.
 
-slcmd="./support/built-scripts/built-stagel-inner"
-#[[ -f "./stagel-built-internal-stagel-inner" ]] && slcmd=./"$slcmd"
-srcmd="./support/built-scripts/built-stager-inner"
-#[[ -f "./stagel-built-internal-stager-inner" ]] && srcmd=./"$srcmd"
+slcmd="./support/build-scripts/build-stagel-inner"
+#[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
+srcmd="./support/build-scripts/build-stager-inner"
+#[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
 mkdir ./built/stagel
 
