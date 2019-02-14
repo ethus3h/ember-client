@@ -50,7 +50,7 @@ for (( i=0; i<targetCount; i++ )); do
     echo >> ./built/web/eite.js
     cat ./implementation/portable/portable.js >> ./built/web/eite.js
     echo >> ./built/web/eite.js
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/web/eite.js
-    echo $'\n''// @license-end' >> ./built/web/eite.js
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./implementation/speedups/"${targets[$i]}"/speedups."${targets[$i]}"
     cat ./implementation/speedups/speedups.js >> ./built/web/eite.js
+    echo $'\n''// @license-end' >> ./built/web/eite.js
 done
