@@ -16,6 +16,7 @@ dist() {
     rsync -av --checksum /usr/portage/distfiles/"$1" ./distfiles/
 }
 
+dist gcc-"$myGccVersion".tar.xz
 # wabt and its build-time dependencies
 dist wabt-"$myWabtVersion".tar.gz
 #dist googletest-"$myGoogletestVersion".tar.gz

@@ -16,6 +16,9 @@ rm -rf ./temp
 mkdir ./temp
 (
     cd ./temp || die
+    cp ../distfiles/gcc-"$myGccVersion".tar.xz ./
+    unxz ./gcc-"$myGccVersion".tar.xz
+    tar xof ./gcc-"$myGccVersion".tar.xz
     tar xozf ../distfiles/wabt-"$myWabtVersion".tar.gz
     rm -r ./wabt-"$myWabtVersion"/src/prebuilt
     mv ./wabt-"$myWabtVersion"/src/ ./
