@@ -15,6 +15,7 @@ cd ./build-temp/build || die
 echo "Building libc++abi"
 # https://libcxxabi.llvm.org/
 (
+rm -rf libcxxabi-build
 mkdir libcxxabi-build
 cd libcxxabi-build
 #export CC=clang CXX=clang++
@@ -27,6 +28,7 @@ make
 echo "Building libc++"
 # https://libcxx.llvm.org/docs/BuildingLibcxx.html
 (
+rm -rf libcxx-build
 mkdir libcxx-build
 cd libcxx-build
 export CC=clang CXX=clang++
