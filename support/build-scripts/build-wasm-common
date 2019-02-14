@@ -16,8 +16,7 @@ rm -rf ./temp
 mkdir ./temp
 (
     cd ./temp
-    cp ../distfiles/wabt-"$myWabtVersion".tar.gz ./
-    tar xozf wabt-"$myWabtVersion".tar.gz
+    tar xozf ../distfiles/wabt-"$myWabtVersion".tar.gz
     rm -r ./wabt-"$myWabtVersion"/src/prebuilt
     mv ./wabt-"$myWabtVersion"/src/ ./
     rm -r ./wabt-"$myWabtVersion"
