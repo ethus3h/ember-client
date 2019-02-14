@@ -8,6 +8,10 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Build third-party components
 
 source ./support/build-scripts/dist-versions
+cd ./build-temp/build || die
+
+echo "Building libc++abi"
+# https://libcxxabi.llvm.org/
 
 echo "Building libc++"
 # https://libcxx.llvm.org/docs/BuildingLibcxx.html
@@ -17,14 +21,12 @@ cd libcxx-build
 export CC=clang CXX=clang++
 cmake -DLLVM_PATH=path/to/separate/llvm \
         -DLIBCXX_CXX_ABI=libcxxabi \
-        -DLIBCXX_CXX_ABI_INCLUDE_PATHS=path/to/separate/libcxxabi/include \
-        path/to/llvm-project/libcxx
-$ make
-$ make check-libcxx # optional
+        -DLIBCXX_CXX_ABI_INCLUDE_PATHS=path/to/separate/libcxxabi/include ../llvm-project-${myLlvmCommit}/libcxx
+make
+#make check-libcxx
 ) || die
 
 echo "Building wat2wasm"
-cd ./build-temp/build || die
 cd ./wabt-"$myWabtVersion" || die
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
 src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
