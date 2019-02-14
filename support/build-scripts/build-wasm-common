@@ -5,7 +5,7 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-[[ ! -d ./build-temp/distfiles ]] && die "Make sure the required dependency files are in ./distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
+[[ ! -d ./build-temp/distfiles ]] && die "Make sure the required dependency files are in ./build-temp/distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
 
 source ./support/build-scripts/dist-versions
 

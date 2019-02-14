@@ -9,7 +9,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
-rm -r ./build-temp/distfiles/
+rm -rf ./build-temp/distfiles/
+mkdir -p ./build-temp/distfiles/
 
 dist() {
     echo "Copying distfile: $1"
