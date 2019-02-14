@@ -27,6 +27,7 @@ mkdir ./temp
     src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
     src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
     rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
+    
 ) || die
 #rm -r ./temp
 
