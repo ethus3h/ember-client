@@ -17,8 +17,8 @@ mkdir -p ./build-temp/build
 
 dist() {
     echo "Copying distfile: $1"
-    rsync -av --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/
-    rsync -av --checksum ./build-temp/distfiles/"$1" ./build-temp/build/
+    rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
+    rsync -a --checksum ./build-temp/distfiles/"$1" ./build-temp/build/ &>/dev/null
 }
 
 dist gcc-"$myGccVersion".tar.xz
