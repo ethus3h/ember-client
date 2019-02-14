@@ -12,6 +12,9 @@ source ./support/build-scripts/dist-versions
 rm -rf ./build-temp/distfiles/
 mkdir -p ./build-temp/distfiles/
 
+rm -rf ./build-temp/build
+mkdir -p ./build-temp/build
+
 dist() {
     echo "Copying distfile: $1"
     rsync -av --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/
@@ -25,8 +28,6 @@ dist wabt-"$myWabtVersion".tar.gz
 #dist python-lex-yacc-"$myPlyVersion".tar.gz
 #dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 
-rm -rf ./build-temp/build
-mkdir -p ./build-temp/build
 cd ./build-temp/build || die
 
 echo "Unpacking GCC"
