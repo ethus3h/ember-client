@@ -1,3 +1,3 @@
 r/v/runTestsMath b/v
     runTest b/v eq 4 add 2 2
-    runTest b/v ne 4 add 2 2
+    runTest b/v ne 4 add 2 3
