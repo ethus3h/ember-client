@@ -3,7 +3,7 @@
     utf9enc();
 }
 extern int utf8enc(); */
-int fourtytwo() {
+int fortytwo() {
     return 42;
 }
 int add(int a, int b) {

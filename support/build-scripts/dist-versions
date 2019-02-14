@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-myGoogletestVersion="1.8.1"
+#myGoogletestVersion="1.8.1"
 myWabtVersion="1.0.8"
-myPlyVersion="3.11"
-myTestsuiteCommit="89cc463fa1251449d7974086a34ef0dc100b1582"
+#myPlyVersion="3.11"
+#myTestsuiteCommit="89cc463fa1251449d7974086a34ef0dc100b1582"
+myLibCplusplusVersion=""
