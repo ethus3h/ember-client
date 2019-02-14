@@ -1534,8 +1534,7 @@ async function wasmCall(strRoutine, intVal) {
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
 
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function wasmCallArrIn(strRoutine, intArrayVals) {
