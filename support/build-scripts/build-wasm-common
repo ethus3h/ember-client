@@ -17,7 +17,7 @@ mkdir ./temp
     cd ./temp
     cp ../distfiles/wabt-"$myWabtVersion".tar.gz ./
     tar xozf wabt-"$myWabtVersion".tar.gz
-    pushd wabt-"$myWabtVersion".tar.gz || die
+    pushd wabt-"$myWabtVersion" || die
     rm -r src/prebuilt
     mv src/ ../
     rm -r ./.*
