@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Retrieve third-party files
 
-source ./support/build-scripts/dist-versions
+source ./support/build-scripts/dist-versions || die
 
 rm -rf ./build-temp/distfiles/
 mkdir -p ./build-temp/distfiles/
