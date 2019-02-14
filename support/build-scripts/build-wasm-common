@@ -15,13 +15,15 @@ echo "Building wat2wasm"
 rm -rf ./temp
 mkdir ./temp
 (
-    cd ./temp
+    cd ./temp || die
     tar xozf ../distfiles/wabt-"$myWabtVersion".tar.gz
     rm -r ./wabt-"$myWabtVersion"/src/prebuilt
     mv ./wabt-"$myWabtVersion"/src/ ./
     rm -r ./wabt-"$myWabtVersion"
     mkdir ./wabt-"$myWabtVersion"
     mv ./src ./wabt-"$myWabtVersion"/
+    cd ./wabt-"$myWabtVersion" || die
+    
 ) || die
 #rm -r ./temp
 
