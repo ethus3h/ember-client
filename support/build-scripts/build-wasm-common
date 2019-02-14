@@ -5,8 +5,10 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Build 
 [[ ! -d ./distfiles ]] && die "Make sure the required dependency files are in ./distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
+
+# Build WASM version of wat2wasm
+
 
 # Build WASM components
 
