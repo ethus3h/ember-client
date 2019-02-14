@@ -51,7 +51,7 @@ for (( i=0; i<targetCount; i++ )); do
     echo $'\n''// @license-end' >> ./build/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
 
     cp ./build/stagel-parts/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    echo >> ./built/web/eite.js
-    cat ./implementation/portable/portable.js >> ./built/web/eite.js
-    echo >> ./built/web/eite.js
+    echo >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./implementation/portable/"${targets[$i]}"/portable."${targets[$i]}" >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    echo >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
 done
