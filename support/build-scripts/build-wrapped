@@ -52,6 +52,6 @@ for (( i=0; i<targetCount; i++ )); do
 
     cp ./build/stagel-parts/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    cat ./implementation/portable/"${targets[$i]}"/portable."${targets[$i]}" >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./build/stagel-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
 done
