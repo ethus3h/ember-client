@@ -20,8 +20,8 @@ mkdir ./temp
     tar xozf wabt-"$myWabtVersion".tar.gz
     rm -r ./wabt-"$myWabtVersion"/src/prebuilt
     mv ./wabt-"$myWabtVersion"/src/ ./
-    rm -r ./wabt-"$myWabtVersion"/.*
-    rm -r ./wabt-"$myWabtVersion"/*
+    rm -r ./wabt-"$myWabtVersion"
+    mkdir ./wabt-"$myWabtVersion"
     mv ./src ./wabt-"$myWabtVersion"/
 ) || die
 #rm -r ./temp
