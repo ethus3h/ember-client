@@ -1,7 +1,14 @@
 (module
   (type $t0 (func))
   (type $t1 (func (result i32)))
+  (type $t2 (func (param i32 i32) (result i32)))
   (func $__wasm_call_ctors (type $t0))
+  (func $fourtytwo (type $t1) (result i32)
+    (i32.const 42))
+  (func $add (type $t2) (param $p0 i32) (param $p1 i32) (result i32)
+    (i32.add
+      (local.get $p1)
+      (local.get $p0)))
   (func $utf8enc (type $t1) (result i32)
     (i32.const 42))
   (func $utf9enc (type $t1) (result i32)
