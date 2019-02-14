@@ -23,3 +23,6 @@ dist wabt-"$myWabtVersion".tar.gz
 #dist googletest-"$myGoogletestVersion".tar.gz
 #dist python-lex-yacc-"$myPlyVersion".tar.gz
 #dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+
+    echo "Unpacking GCC"
+    echo "Unpacking GCC"
