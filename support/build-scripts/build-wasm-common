@@ -13,6 +13,7 @@ source ./support/build-scripts/dist-versions
 
 (
     echo "Building libstdc++-v3"
+    #http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
     ../libstdc++-v3/configure           \
         --host=$LFS_TGT                 \
         --prefix=/tools                 \
