@@ -28,7 +28,7 @@ mkdir ./temp
     src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
     rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     for file in src/*.cc; do
-        
+        clang++  -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I/var/tmp/portage/dev-util/wabt-1.0.8/work/wabt-1.0.8 -I/var/tmp/portage/dev-util/wabt-1.0.8/work/wabt-1.0.8/out/clang/Debug -I/var/tmp/portage/dev-util/wabt-1.0.8/work/wabt-1.0.8/third_party/gtest/googletest -I/var/tmp/portage/dev-util/wabt-1.0.8/work/wabt-1.0.8/third_party/gtest/googletest/include  -march=core2 -O2 -pipe -std=c++11 -Wold-style-cast -g   -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -g -Wuninitialized -fno-exceptions -o CMakeFiles/wabt.dir/src/error-formatter.cc.o -c /var/tmp/portage/dev-util/wabt-1.0.8/work/wabt-1.0.8/src/error-formatter.cc
     done
 ) || die
 #rm -r ./temp
