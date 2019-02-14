@@ -45,10 +45,12 @@ for (( i=0; i<targetCount; i++ )); do
     mkdir ./build/stagel-parts/"${targets[$i]}"
     mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
     mv ./implementation/portable/"${targets[$i]}"/portable."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/
+
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./build/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
     cat ./implementation/speedups/speedups.js >> ./build/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
     echo $'\n''// @license-end' >> ./build/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-    cp ./implementation/core-implementations/js/core.js ./built/web/eite.js
+
+    cp ./build/stagel-parts/"${targets[$i]}"/core."${targets[$i]}" ./build/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./built/web/eite.js
     cat ./implementation/portable/portable.js >> ./built/web/eite.js
     echo >> ./built/web/eite.js
