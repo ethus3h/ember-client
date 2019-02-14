@@ -43,3 +43,5 @@ mv ./wabt-"$myWabtVersion"/src/ ./
 rm -r ./wabt-"$myWabtVersion"
 mkdir ./wabt-"$myWabtVersion"
 mv ./src ./wabt-"$myWabtVersion"/
+
+./support/dist-build
