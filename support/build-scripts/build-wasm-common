@@ -11,20 +11,9 @@ source ./support/build-scripts/dist-versions
 
 # Build WASM version of wat2wasm
 
-rm -rf ./build-temp/build
-mkdir -p ./build-temp/build
 (
-    cp ./build-temp/distfiles/* ./build-temp/build/
-    cd ./build-temp/build || die
-    echo "Unpacking GCC"
-    unxz ./gcc-"$myGccVersion".tar.xz
-    tar xof ./gcc-"$myGccVersion".tar
-    rm ./gcc-"$myGccVersion".tar
     echo "Building wat2wasm"
-    tar xozf ./wabt-"$myWabtVersion".tar.gz
-    rm ./wabt-"$myWabtVersion".tar.gz
-    rm -r ./wabt-"$myWabtVersion"/src/prebuilt
-    mv ./wabt-"$myWabtVersion"/src/ ./
+    cd ./build-temp/build || die
     rm -r ./wabt-"$myWabtVersion"
     mkdir ./wabt-"$myWabtVersion"
     mv ./src ./wabt-"$myWabtVersion"/

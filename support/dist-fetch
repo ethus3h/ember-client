@@ -15,6 +15,7 @@ mkdir -p ./build-temp/distfiles/
 dist() {
     echo "Copying distfile: $1"
     rsync -av --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/
+    rsync -av --checksum ./build-temp/distfiles/"$1" ./build-temp/build/
 }
 
 dist gcc-"$myGccVersion".tar.xz
@@ -26,13 +27,9 @@ dist wabt-"$myWabtVersion".tar.gz
 
 rm -rf ./build-temp/build
 mkdir -p ./build-temp/build
+cd ./build-temp/build || die
 
 echo "Unpacking GCC"
-
-(
-    cp ./build-temp/distfiles/* ./build-temp/build/
-    cd ./build-temp/build || die
-    echo "Unpacking GCC"
     unxz ./gcc-"$myGccVersion".tar.xz
     tar xof ./gcc-"$myGccVersion".tar
     rm ./gcc-"$myGccVersion".tar
