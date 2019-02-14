@@ -24,5 +24,21 @@ dist wabt-"$myWabtVersion".tar.gz
 #dist python-lex-yacc-"$myPlyVersion".tar.gz
 #dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 
+rm -rf ./build-temp/build
+mkdir -p ./build-temp/build
+
+echo "Unpacking GCC"
+
+(
+    cp ./build-temp/distfiles/* ./build-temp/build/
+    cd ./build-temp/build || die
     echo "Unpacking GCC"
-    echo "Unpacking GCC"
+    unxz ./gcc-"$myGccVersion".tar.xz
+    tar xof ./gcc-"$myGccVersion".tar
+    rm ./gcc-"$myGccVersion".tar
+    echo "Building wat2wasm"
+    tar xozf ./wabt-"$myWabtVersion".tar.gz
+    rm ./wabt-"$myWabtVersion".tar.gz
+    rm -r ./wabt-"$myWabtVersion"/src/prebuilt
+    mv ./wabt-"$myWabtVersion"/src/ ./
+echo "Unpacking wabt"
