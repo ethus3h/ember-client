@@ -21,7 +21,7 @@ dist() {
     rsync -a --checksum ./build-temp/distfiles/"$1" ./build-temp/build/ &>/dev/null
 }
 
-dist gcc-"$myGccVersion".tar.xz
+dist llvm-project-"$myLlvmCommit".tar.gz
 # wabt and its build-time dependencies
 dist wabt-"$myWabtVersion".tar.gz
 #dist googletest-"$myGoogletestVersion".tar.gz
@@ -32,9 +32,7 @@ dist wabt-"$myWabtVersion".tar.gz
 cd ./build-temp/build || die
 
 echo "Unpacking GCC"
-unxz ./gcc-"$myGccVersion".tar.xz
-tar xof ./gcc-"$myGccVersion".tar
-rm ./gcc-"$myGccVersion".tar
+tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
 
 echo "Unpacking wabt"
 tar xozf ./wabt-"$myWabtVersion".tar.gz
