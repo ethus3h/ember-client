@@ -47,7 +47,7 @@ src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
 src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 for file in src/*.cc; do
-    clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -I/usr/include/c++/v1 -pthread -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
+    clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -I../emscripten-${myEmscriptenCommit}/system/include -std=c++11 -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
 done
 
 touch ./build-temp/dist-build-ready
