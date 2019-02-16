@@ -32,6 +32,11 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'EMSCRIPTEN_ROOT = '\'"$pwd"\' >> "$EM_CONFIG"
     echo 'LLVM_ROOT = /usr/lib/llvm/9/bin' >> "$EM_CONFIG"
     echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG" # Their comment says: "if not set, we will use it from ports". Will this download stuff?
+    echo 'NODE_JS = '\''/usr/bin/node'\' >> "$EM_CONFIG"
+    echo 'JAVA = '\''java'\' >> "$EM_CONFIG" # Does it really need this
+    echo 'TEMP_DIR = '\''/tmp'\' >> "$EM_CONFIG"
+    echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
+
     make demo
 )
 #for file in src/*.cc; do
