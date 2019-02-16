@@ -11,15 +11,18 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 source ./support/build-scripts/dist-versions || die
 cd ./build-temp/build || die
 
+unpackedDir="$(readlink -f .)/../unpacked"
+
 echo "Building wat2wasm"
+cp -r "$unpackedDir/wabt-$myWabtVersion" ./
 cd ./wabt-"$myWabtVersion" || die
 
-cp -r "../emscripten-$myEmscriptenCommit" "./emscripten" || die
+cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
-mv "../googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
-cp -r "../ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
-cp -r "../ply-${myPlyVersion}" "./emscripten/third_party/ply" || die "Error copying ply"
-mv "../testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die "Error moving testsuite"
+cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die "Error copying ply"
+cp -r "$unpackedDir/testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die "Error moving testsuite"
 
 mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
