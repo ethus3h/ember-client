@@ -55,6 +55,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
     echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
 
+    ./emscripten/embuilder.py build binaryen
+
     make demo
 )
 #for file in src/*.cc; do
