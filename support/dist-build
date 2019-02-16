@@ -43,6 +43,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     export EM_CACHE
     EMCC_DEBUG="1"
     export EMCC_DEBUG
+    EMCC_LOCAL_PORTS="binaryen=$(readlink -f ./emscripten-ports/binaryen)"
+    export EMCC_LOCAL_PORTS
 
     echo 'import os' >> "$EM_CONFIG"
     echo 'EMSCRIPTEN_ROOT = '\'"$(readlink -f .)"\' >> "$EM_CONFIG"
