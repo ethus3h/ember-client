@@ -19,8 +19,6 @@ cd ./wabt-"$myWabtVersion" || die
 
 cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die
-mkdir "./emscripten-ports-unpacked" || die "Error creating empty emscripten-ports-unpacked directory"
-cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "./emscripten-ports-unpacked/binaryen" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
 cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die
@@ -49,6 +47,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     mkdir "$EM_PORTS"
     mkdir "$EM_PORTS/binaryen"
     cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "./$EM_PORTS/binaryen/"
+    
     #EMCC_LOCAL_PORTS="binaryen=$(readlink -f ./emscripten-ports/binaryen)"
     #export EMCC_LOCAL_PORTS
 
