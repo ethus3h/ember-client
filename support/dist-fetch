@@ -25,9 +25,9 @@ dist emscripten-"$myEmscriptenCommit".tar.gz
 #dist llvm-project-"$myLlvmCommit".tar.gz
 # wabt and its build-time dependencies
 dist wabt-"$myWabtVersion".tar.gz
-#dist googletest-"$myGoogletestVersion".tar.gz
-#dist python-lex-yacc-"$myPlyVersion".tar.gz
-#dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+dist googletest-"$myGoogletestVersion".tar.gz
+dist python-lex-yacc-"$myPlyVersion".tar.gz
+dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 
 (
 cd ./build-temp/build || die
@@ -43,10 +43,7 @@ echo "Unpacking wabt"
 tar xozf ./wabt-"$myWabtVersion".tar.gz
 rm ./wabt-"$myWabtVersion".tar.gz
 rm -r ./wabt-"$myWabtVersion"/src/prebuilt
-mv ./wabt-"$myWabtVersion"/src/ ./
-rm -r ./wabt-"$myWabtVersion"
-mkdir ./wabt-"$myWabtVersion"
-mv ./src ./wabt-"$myWabtVersion"/
+rm -r ./wabt-"$myWabtVersion"/third_party
 )
 
 ./support/dist-build
