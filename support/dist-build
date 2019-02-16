@@ -17,6 +17,7 @@ echo "Building wat2wasm"
 cp -r "$unpackedDir/wabt-$myWabtVersion" ./
 cd ./wabt-"$myWabtVersion" || die
 
+echo "Building wat2wasm: Preparing dependencies"
 cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
@@ -49,7 +50,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
     cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
-        cd "$EM_PORTS/binaryen/binaryen-version_${myBinaryenVersion}/"
+        echo "Building wat2wasm: Building binaryen"
+       cd "$EM_PORTS/binaryen/binaryen-version_${myBinaryenVersion}/"
         cmake -DCMAKE_BUILD_TYPE=Release .
         cmake --build .
         echo "${myBinaryenVersion}" > ../tag.txt
@@ -66,6 +68,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
     echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
 
+    echo "Building wat2wasm: Building"
     ./emscripten/embuilder.py build libc
 
     make demo
