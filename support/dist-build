@@ -43,6 +43,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     export EM_CACHE
     rm -rf "$EM_CACHE"
     mkdir "$EM_CACHE"
+    mkdir "$EM_CACHE/wasm_o"
     EMCC_DEBUG="1"
     export EMCC_DEBUG
     EM_PORTS="$(readlink -f .)/.emscripten_ports"
