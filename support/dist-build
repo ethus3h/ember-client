@@ -27,7 +27,8 @@ src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 (
     EM_CONFIG=""
-make demo
+    make demo
+)
 #for file in src/*.cc; do
     #clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libcxx -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libc -std=c++11 -D_LIBCPP_ABI_VERSION=2 -nostdinc -Xclang -nobuiltininc -Xclang -nostdsysteminc -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
 #done
