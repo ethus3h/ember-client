@@ -26,7 +26,12 @@ src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
 src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 (
-    EM_CONFIG=""
+    EM_CONFIG="./.emscripten"
+    export EM_CONFIG
+    echo 'import os' >> "$EM_CONFIG"
+    echo 'EMSCRIPTEN_ROOT = '\'"$pwd"\' >> "$EM_CONFIG"
+    echo 'LLVM_ROOT = /usr/lib/llvm/9/bin' >> "$EM_CONFIG"
+    echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG" # Their comment says: "if not set, we will use it from ports". Will this download stuff?
     make demo
 )
 #for file in src/*.cc; do
