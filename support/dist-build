@@ -14,7 +14,7 @@ cd ./build-temp/build || die
 echo "Building wat2wasm"
 cd ./wabt-"$myWabtVersion" || die
 
-mv "../emscripten-$myEmscriptenCommit" "./emscripten" || die
+cp -r "../emscripten-$myEmscriptenCommit" "./emscripten" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
 mv "../googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
 cp -r "../ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
