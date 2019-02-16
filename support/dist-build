@@ -18,6 +18,7 @@ mv "../emscripten-$myEmscriptenCommit" "./emscripten" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
 mv "../googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
 cp -r "../ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
+cp -r "../ply-${myPlyVersion}" "./emscripten/third_party/ply" || die "Error copying ply"
 mv "../testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die "Error moving testsuite"
 
 mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
