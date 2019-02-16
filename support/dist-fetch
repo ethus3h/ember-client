@@ -22,6 +22,7 @@ dist() {
 }
 
 dist emscripten-"$myEmscriptenCommit".tar.gz
+dist binaryen-"$myBinaryenVersion".tar.gz
 #dist llvm-project-"$myLlvmCommit".tar.gz
 # wabt and its build-time dependencies
 dist wabt-"$myWabtVersion".tar.gz
