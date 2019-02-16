@@ -18,6 +18,7 @@ cp -r "$unpackedDir/wabt-$myWabtVersion" ./
 cd ./wabt-"$myWabtVersion" || die
 
 cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
+cp -r "$unpackedDir/binaryen-${myBinaryenVersion}" "./emscripten-ports/binaryen" || die "Error copying binaryen"
 mkdir "./third_party" || die "Error creating empty third_party directory"
 cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
