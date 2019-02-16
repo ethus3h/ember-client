@@ -27,9 +27,9 @@ src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 (
     cd "$(readlink -f .)" || die
-    EM_CONFIG="./.emscripten"
+    EM_CONFIG="$(readlink -f .)/.emscripten"
     export EM_CONFIG
-    EM_CACHE="./.emscripten_cache"
+    EM_CACHE="$(readlink -f .)/.emscripten_cache"
     export EM_CACHE
 
     echo 'import os' >> "$EM_CONFIG"
