@@ -37,8 +37,8 @@ cd ./build-temp/unpacked || die
 #tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
 
 echo "Unpacking Binaryen"
-tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz
-rm ./emscripten-"$myEmscriptenCommit".tar.gz
+tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
+rm ./binaryen-"$myBinaryenVersion".tar.gz
 
 echo "Unpacking Emscripten"
 tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz
