@@ -18,7 +18,7 @@ mkdir -p ./build-temp/build
 dist() {
     echo "Copying distfile: $1"
     rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
-    rsync -a --checksum ./build-temp/distfiles/"$1" ./build-temp/build/ &>/dev/null
+    rsync -a --checksum ./build-temp/distfiles/"$1" ./build-temp/unpacked/ &>/dev/null
 }
 
 dist emscripten-"$myEmscriptenCommit".tar.gz
@@ -30,7 +30,7 @@ dist python-lex-yacc-"$myPlyVersion".tar.gz
 dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 
 (
-cd ./build-temp/build || die
+cd ./build-temp/unpacked || die
 
 #echo "Unpacking LLVM"
 #tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
