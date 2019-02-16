@@ -47,6 +47,14 @@ rm -r ./emscripten-"$myEmscriptenCommit"/third_party/websockify
 rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-full.js
 rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
 
+echo "Unpacking wabt dependencies"
+tar xozf ./googletest-"$myGoogletestVersion".tar.gz
+rm ./googletest-"$myGoogletestVersion".tar.gz
+tar xozf ./python-lex-yacc-"$myPlyVersion".tar.gz
+rm ./python-lex-yacc-"$myPlyVersion".tar.gz
+tar xozf ./WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+rm WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+
 echo "Unpacking wabt"
 tar xozf ./wabt-"$myWabtVersion".tar.gz
 rm ./wabt-"$myWabtVersion".tar.gz
