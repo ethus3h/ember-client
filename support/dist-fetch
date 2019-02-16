@@ -23,6 +23,7 @@ dist() {
 
 dist emscripten-"$myEmscriptenCommit".tar.gz
 dist binaryen-"$myBinaryenVersion".tar.gz
+dist binaryen-"$myBinaryenVersion".zip
 #dist llvm-project-"$myLlvmCommit".tar.gz
 # wabt and its build-time dependencies
 dist wabt-"$myWabtVersion".tar.gz
@@ -39,6 +40,7 @@ cd ./build-temp/unpacked || die
 echo "Unpacking Binaryen"
 tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
 rm ./binaryen-"$myBinaryenVersion".tar.gz
+# Leave the .zip version alone; that's for pretending to be the Emscripten port system
 
 echo "Unpacking Emscripten"
 tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz

@@ -55,6 +55,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
         cmake -DCMAKE_BUILD_TYPE=Release .
         cmake --build .
         echo "${myBinaryenVersion}" > ../tag.txt
+        cp "$unpackedDir/binaryen-version_${myBinaryenVersion}.zip" "$EM_PORTS/binaryen.zip"
     )
     #EMCC_LOCAL_PORTS="binaryen=$(readlink -f ./emscripten-ports/binaryen)"
     #export EMCC_LOCAL_PORTS
