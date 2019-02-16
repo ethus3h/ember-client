@@ -72,8 +72,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
     echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
 
-    echo "Building wat2wasm: Building"
-    ./emscripten/embuilder.py build libc
+    echo "Building wat2wasm: Building emscripten built-in packages (libc etc)"
+    ./emscripten/embuilder.py build libc libc-wasm libc++_noexcept libc++abi compiler_rt_wasm dlmalloc pthreads_stub libc-extras
 
     make demo
 )
