@@ -20,13 +20,13 @@ cd ./wabt-"$myWabtVersion" || die
 echo "Building wat2wasm: Preparing dependencies"
 cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die
-rm -r "./third_party"
+rm -rf "./third_party"
 mkdir "./third_party" || die "Error creating empty third_party directory"
 cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die
 cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die
 cp -r "$unpackedDir/testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die
 
-rm -r "./src/prebuilt"
+rm -rf "./src/prebuilt"
 mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
 src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
