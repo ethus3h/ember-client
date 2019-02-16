@@ -12,8 +12,15 @@ source ./support/build-scripts/dist-versions || die
 cd ./build-temp/build || die
 
 echo "Building wat2wasm"
-mv ./emscripten-"$myEmscriptenCommit" ./wabt-"$myWabtVersion"/emscripten || die
 cd ./wabt-"$myWabtVersion" || die
+
+mv "../emscripten-$myEmscriptenCommit" "./emscripten" || die
+mkdir "./third_party" || die "Error creating empty third_party directory"
+mv "../googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
+cp -r "../ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
+mv "../testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die "Error moving testsuite"
+
+mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
 src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
 src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
