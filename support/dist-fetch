@@ -38,6 +38,14 @@ cd ./build-temp/build || die
 echo "Unpacking Emscripten"
 tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz
 rm ./emscripten-"$myEmscriptenCommit".tar.gz
+rm -r ./emscripten-"$myEmscriptenCommit"/tools/node_modules
+rm -r ./emscripten-"$myEmscriptenCommit"/tools/eliminator
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/closure-compiler
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/html-minifier
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/ply
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/websockify
+rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-full.js
+rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
 
 echo "Unpacking wabt"
 tar xozf ./wabt-"$myWabtVersion".tar.gz
