@@ -47,7 +47,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     mkdir "$EM_PORTS"
     mkdir "$EM_PORTS/binaryen"
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
-    cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "./$EM_PORTS/binaryen/"
+    cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
         cd "./$EM_PORTS/binaryen/binaryen-version_${myBinaryenVersion}/"
         cmake -DCMAKE_BUILD_TYPE=Release .
