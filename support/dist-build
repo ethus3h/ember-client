@@ -28,6 +28,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 (
     EM_CONFIG="./.emscripten"
     export EM_CONFIG
+    EM_CACHE="./.emscripten_cache"
+    export EM_CACHE
 
     echo 'import os' >> "$EM_CONFIG"
     echo 'EMSCRIPTEN_ROOT = '\'"$pwd"\' >> "$EM_CONFIG"
@@ -37,7 +39,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'JAVA = '\''java'\' >> "$EM_CONFIG" # Does it really need this
     echo 'TEMP_DIR = '\''/tmp'\' >> "$EM_CONFIG"
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
-    echo "COMPILER_OPTS = ['', '-O0']" >> "$EM_CONFIG" # Does it really need this
+    echo "COMPILER_OPTS += ['-O0']" >> "$EM_CONFIG"
 
     make demo
 )
