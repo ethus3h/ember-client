@@ -44,6 +44,8 @@ tar xozf ./wabt-"$myWabtVersion".tar.gz
 rm ./wabt-"$myWabtVersion".tar.gz
 rm -r ./wabt-"$myWabtVersion"/src/prebuilt
 rm -r ./wabt-"$myWabtVersion"/third_party
+rm -r ./wabt-"$myWabtVersion"/demo/third_party
+rm ./wabt-"$myWabtVersion"/demo/libwabt.js
 )
 
 ./support/dist-build
