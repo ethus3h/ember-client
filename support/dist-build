@@ -28,6 +28,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 (
     EM_CONFIG="./.emscripten"
     export EM_CONFIG
+
     echo 'import os' >> "$EM_CONFIG"
     echo 'EMSCRIPTEN_ROOT = '\'"$pwd"\' >> "$EM_CONFIG"
     echo 'LLVM_ROOT = /usr/lib/llvm/9/bin' >> "$EM_CONFIG"
