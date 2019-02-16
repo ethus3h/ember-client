@@ -11,41 +11,14 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 source ./support/build-scripts/dist-versions || die
 cd ./build-temp/build || die
 
-if false; then
-echo "Building libc++abi"
-# https://libcxxabi.llvm.org/
-(
-rm -rf libcxxabi-build
-mkdir libcxxabi-build
-cd libcxxabi-build
-#export CC=clang CXX=clang++
-cmake -DLLVM_ENABLE_PROJECTS=libcxxabi -DCMAKE_CXXFLAGS="--target=wasm32-unknown-unknown-wasm" -DCMAKE_CFLAGS="--target=wasm32-unknown-unknown-wasm" -DCMAKE_CROSSCOMPILING=True -DLLVM_DEFAULT_TARGET_TRIPLE=wasm32-unknown-unknown-wasm -DLLVM_TARGET_ARCH=wasm -DLLVM_TARGETS_TO_BUILD=WASM ../llvm-project-${myLlvmCommit}/llvm
-make
-#make check-libcxx
-) || die
-
-
-echo "Building libc++"
-# https://libcxx.llvm.org/docs/BuildingLibcxx.html
-(
-rm -rf libcxx-build
-mkdir libcxx-build
-cd libcxx-build
-export CC=clang CXX=clang++
-cmake -DLLVM_PATH=path/to/separate/llvm \
-        -DLIBCXX_CXX_ABI=libcxxabi \
-        -DLIBCXX_CXX_ABI_INCLUDE_PATHS=path/to/separate/libcxxabi/include ../llvm-project-${myLlvmCommit}/libcxx
-make
-#make check-libcxx
-) || die
-fi
-
 echo "Building wat2wasm"
+mv ./emscripten-"$myEmscriptenCommit" ./wabt-"$myWabtVersion"/emscripten || die
 cd ./wabt-"$myWabtVersion" || die
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
 src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
 src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
+make demo
 #for file in src/*.cc; do
     #clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libcxx -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libc -std=c++11 -D_LIBCPP_ABI_VERSION=2 -nostdinc -Xclang -nobuiltininc -Xclang -nostdsysteminc -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
 #done
