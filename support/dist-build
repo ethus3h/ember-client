@@ -29,6 +29,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     cd "$(readlink -f .)" || die
     EM_CONFIG="$(readlink -f .)/.emscripten"
     export EM_CONFIG
+    ln -s "$EM_CONFIG" ./emscripten/.emscripten # shared:ERROR: File /nvme0n1p5/build-temp/build/wabt-1.0.8/emscripten/.emscripten passed to --em-config does not exist!
     EM_CACHE="$(readlink -f .)/.emscripten_cache"
     export EM_CACHE
 
