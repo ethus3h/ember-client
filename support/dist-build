@@ -18,12 +18,13 @@ cp -r "$unpackedDir/wabt-$myWabtVersion" ./
 cd ./wabt-"$myWabtVersion" || die
 
 cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
-cp -r "$unpackedDir/binaryen-${myBinaryenVersion}" "./emscripten-ports/binaryen" || die "Error copying binaryen"
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die
+mkdir "./emscripten-ports" || die "Error creating empty emscripten-ports directory"
+cp -r "$unpackedDir/binaryen-${myBinaryenVersion}" "./emscripten-ports/binaryen" || die
 mkdir "./third_party" || die "Error creating empty third_party directory"
-cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die "Error moving gtest"
-cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die "Error copying ply"
-cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die "Error copying ply"
-cp -r "$unpackedDir/testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die "Error moving testsuite"
+cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die
+cp -r "$unpackedDir/testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die
 
 mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
