@@ -46,13 +46,16 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     EM_PORTS="$(readlink -f .)/.emscripten_ports"
     export EM_PORTS
     rm -rf "$EM_PORTS"
+    mkdir "$EM_PORTS"
+    mkdir "$EM_PORTS/binaryen"
+    cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "./$EM_PORTS/binaryen/"
     #EMCC_LOCAL_PORTS="binaryen=$(readlink -f ./emscripten-ports/binaryen)"
     #export EMCC_LOCAL_PORTS
 
     echo 'import os' >> "$EM_CONFIG"
     echo 'EMSCRIPTEN_ROOT = '\'"$(readlink -f .)"\' >> "$EM_CONFIG"
     echo 'LLVM_ROOT = '\''/usr/lib/llvm/9/bin'\' >> "$EM_CONFIG"
-    echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG" # Their comment says: "if not set, we will use it from ports". Will this download stuff?
+    echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG"
     echo 'NODE_JS = '\''/usr/bin/node'\' >> "$EM_CONFIG"
     echo 'TEMP_DIR = '\''/tmp'\' >> "$EM_CONFIG"
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
