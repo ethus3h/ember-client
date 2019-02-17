@@ -104,6 +104,11 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     mkdir -p "$EMCC_TEMP_DIR"
     TEMP_DIR="$EMCC_TEMP_DIR"
     export TEMP_DIR
+    # Unset CFLAGS and CXXFLAGS since they break the build (since it's for WASM rather than host arch)
+    CFLAGS=""
+    export CFLAGS
+    CXXFLAGS=""
+    export CXXFLAGS
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
     cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
@@ -140,9 +145,6 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     ./emscripten/embuilder.py build libc-extras
 
     echo "Building wat2wasm: Compiling"
-    # I'm thoroughly confused, but it keeps inconsistently not finding the things like "Looking for alloca.h - found" (consistently fails when run from the ebuild, but sometimes works when run by hand)
-    make demo || true
-    rm -rf out
     make demo
 )
 
