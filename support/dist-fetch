@@ -28,6 +28,7 @@ if [[ -d /usr/portage/distfiles ]]; then
     dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 else
     (
+        cd ./build-temp/distfiles/
         wget "https://github.com/emscripten-core/emscripten/archive/${myEmscriptenCommit}.tar.gz" -O "emscripten-${myEmscriptenCommit}.tar.gz"
         wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.tar.gz" -O "binaryen-${myBinaryenVersion}.tar.gz"
         wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.zip" -O "binaryen-${myBinaryenVersion}.zip"
