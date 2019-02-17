@@ -15,9 +15,6 @@ source ./support/build-scripts/dist-versions || die
 (
 cd ./build-temp/unpacked || die
 
-#echo "Unpacking LLVM"
-#tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
-
 echo "Unpacking Binaryen"
 tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
 rm ./binaryen-"$myBinaryenVersion".tar.gz
@@ -132,8 +129,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     echo "Building wat2wasm: Compiling"
     make demo
 )
-#for file in src/*.cc; do
-    #clang++ -v -D__STDC_FORMAT_MACROS=1 -D__STDC_LIMIT_MACROS=1 -I. -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libcxx -Xclang -isystem../emscripten-${myEmscriptenCommit}/system/include/libc -std=c++11 -D_LIBCPP_ABI_VERSION=2 -nostdinc -Xclang -nobuiltininc -Xclang -nostdsysteminc -g -Wold-style-cast -Wall -Wextra -Wno-unused-parameter -Wpointer-arith -Wuninitialized -fno-exceptions -o "$file".o -c -Ofast --target=wasm32-unknown-unknown-wasm "$file"
-#done
+
+cp 
 
 touch ../dist-build-ready
