@@ -82,11 +82,9 @@ src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
 rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
 (
     cd "$(readlink -f .)" || die
+
     EM_CONFIG="$(readlink -f .)/.emscripten"
     export EM_CONFIG
-    rm -f "$EM_CONFIG"
-    rm -f ./emscripten/.emscripten
-    ln -s "$EM_CONFIG" ./emscripten/.emscripten # shared:ERROR: File /nvme0n1p5/build-temp/build/wabt-1.0.8/emscripten/.emscripten passed to --em-config does not exist!
     EM_CACHE="$(readlink -f .)/.emscripten_cache"
     export EM_CACHE
     rm -rf "$EM_CACHE"
@@ -109,6 +107,11 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     export CFLAGS
     CXXFLAGS=""
     export CXXFLAGS
+
+    rm -f "$EM_CONFIG"
+    rm -f ./emscripten/.emscripten
+    ln -s "$EM_CONFIG" ./emscripten/.emscripten # shared:ERROR: File /nvme0n1p5/build-temp/build/wabt-1.0.8/emscripten/.emscripten passed to --em-config does not exist!
+
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
     cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
