@@ -68,6 +68,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     echo 'LLVM_ROOT = '\''/usr/lib/llvm/9/bin'\' >> "$EM_CONFIG"
     echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG"
     echo 'NODE_JS = '\''/usr/bin/node'\' >> "$EM_CONFIG"
+    echo 'JS_ENGINES = [NODE_JS]' >> "$EM_CONFIG"
     echo 'TEMP_DIR = '\''/tmp'\' >> "$EM_CONFIG"
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
     echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
