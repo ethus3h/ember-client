@@ -31,44 +31,4 @@ dist googletest-"$myGoogletestVersion".tar.gz
 dist python-lex-yacc-"$myPlyVersion".tar.gz
 dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
 
-(
-cd ./build-temp/unpacked || die
-
-#echo "Unpacking LLVM"
-#tar xozf ./llvm-project-"$myLlvmCommit".tar.gz
-
-echo "Unpacking Binaryen"
-tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
-rm ./binaryen-"$myBinaryenVersion".tar.gz
-# Leave the .zip version alone; that's for pretending to be the Emscripten port system
-
-echo "Unpacking Emscripten"
-tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz
-rm ./emscripten-"$myEmscriptenCommit".tar.gz
-rm -r ./emscripten-"$myEmscriptenCommit"/tools/node_modules
-rm -r ./emscripten-"$myEmscriptenCommit"/tools/eliminator
-rm -r ./emscripten-"$myEmscriptenCommit"/third_party/closure-compiler
-rm -r ./emscripten-"$myEmscriptenCommit"/third_party/html-minifier
-rm -r ./emscripten-"$myEmscriptenCommit"/third_party/ply
-rm -r ./emscripten-"$myEmscriptenCommit"/third_party/websockify
-rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-full.js
-rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
-
-echo "Unpacking wabt dependencies"
-tar xozf ./googletest-"$myGoogletestVersion".tar.gz
-rm ./googletest-"$myGoogletestVersion".tar.gz
-tar xozf ./python-lex-yacc-"$myPlyVersion".tar.gz
-rm ./python-lex-yacc-"$myPlyVersion".tar.gz
-tar xozf ./WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
-rm WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
-
-echo "Unpacking wabt"
-tar xozf ./wabt-"$myWabtVersion".tar.gz
-rm ./wabt-"$myWabtVersion".tar.gz
-rm -r ./wabt-"$myWabtVersion"/src/prebuilt
-rm -r ./wabt-"$myWabtVersion"/third_party
-rm -r ./wabt-"$myWabtVersion"/demo/third_party
-rm ./wabt-"$myWabtVersion"/demo/libwabt.js
-)
-
 ./support/dist-build
