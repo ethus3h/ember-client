@@ -49,6 +49,8 @@ rm -r ./wabt-"$myWabtVersion"/demo/third_party
 rm ./wabt-"$myWabtVersion"/demo/libwabt.js
 )
 
+(
+
 cd ./build-temp/build || die
 
 unpackedDir="$(readlink -f .)/../unpacked"
@@ -130,6 +132,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     make demo
 )
 
-cp ./wabt-"${myWabtVersion}"/demo/libwabt.js ../../built/web/
+)
 
-touch ../dist-build-ready
+cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./built/web/
+
+touch ./build-temp/dist-build-ready
