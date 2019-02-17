@@ -130,6 +130,6 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     make demo
 )
 
-cp 
+cp ./wabt-"${myWabtVersion}"/demo/libwabt.js ../../built/web/
 
 touch ../dist-build-ready
