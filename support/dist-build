@@ -117,7 +117,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG"
     echo 'NODE_JS = '\''/usr/bin/node'\' >> "$EM_CONFIG"
     echo 'JS_ENGINES = [NODE_JS]' >> "$EM_CONFIG"
-    echo 'TEMP_DIR = '\''/tmp'\' >> "$EM_CONFIG"
+    mkdir "$(readlink -f .)"/.emscripten_temp
+    echo 'TEMP_DIR = '\'"$(readlink -f .)"/.emscripten_temp/\' >> "$EM_CONFIG"
     echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
     echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
 
