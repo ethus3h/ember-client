@@ -19,6 +19,11 @@ if [[ "$1" == "-v" ]]; then
     "$sicmd" "$@"
     ./support/dist-build
     ./support/build-scripts/build-wasm-common
+elif [[ "$1" == "--somewhat-verbose" ]]; then
+    # StageL goes to /dev/null, while other things are verbose
+    "$sicmd" "$@" &> /dev/null
+    ./support/dist-build
+    ./support/build-scripts/build-wasm-common
 else
     "$sicmd" "$@" &> /dev/null
     ./support/dist-build &> /dev/null
