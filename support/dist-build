@@ -95,7 +95,6 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     export EMCC_TEMP_DIR
     TEMP_DIR="$EMCC_TEMP_DIR"
     export TEMP_DIR
-    # Unset CFLAGS and CXXFLAGS since they break the build (since it's for WASM rather than host arch)
     CFLAGS=""
     export CFLAGS
     CXXFLAGS=""
@@ -151,6 +150,8 @@ fi
     ./emscripten/embuilder.py build libc-extras
 
     echo "Building wat2wasm: Compiling"
+    make demo
+    rm -rf out
     make demo
 )
 
