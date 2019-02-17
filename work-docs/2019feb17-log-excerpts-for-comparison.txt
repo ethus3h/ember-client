@@ -1,0 +1,26 @@
+elegiac /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8 # make demo
+make --no-print-directory -C out/emscripten/Release/ all
+[  2%] Building CXX object CMakeFiles/wabt.dir/src/apply-names.cc.o
+clang-9: warning: argument unused during compilation: '-march=core2' [-Wunused-command-line-argument]
+In file included from /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8/src/apply-names.cc:17:
+In file included from /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8/src/apply-names.h:20:
+In file included from /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8/src/common.h:33:
+/var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8/out/emscripten/Release/config.h:273:2: error: 
+      no snprintf
+#error no snprintf
+ ^
+/var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8/out/emscripten/Release/config.h:291:2: error: 
+      no strcasecmp
+#error no strcasecmp
+ ^
+2 errors generated.
+shared:ERROR: compiler frontend failed to generate LLVM bitcode, halting
+make[3]: *** [CMakeFiles/wabt.dir/build.make:68: CMakeFiles/wabt.dir/src/apply-names.cc.o] Error 1
+make[2]: *** [CMakeFiles/Makefile2:68: CMakeFiles/wabt.dir/all] Error 2
+make[1]: *** [Makefile:84: all] Error 2
+make: *** [Makefile:169: emscripten-release] Error 2
+-bash
+failed with the error on /usr/bin/error-notify line 28 in /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8 at 20190216220928723717825_2d303530300a:
+An error was reported on  line 115 in /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8 at 20190217030928692833280U2d303530300a.
+elegiac /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8 #     EMCC_DEBUG="1"    
+elegiac /var/tmp/portage/app-misc/ember-information-technology-environment-9999/work/ember-information-technology-environment-9999/build-temp/build/wabt-1.0.8 #     export EMCC_DEBUG
