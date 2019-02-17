@@ -12,9 +12,6 @@ source ./support/build-scripts/dist-versions || die
 rm -rf ./build-temp/distfiles/
 mkdir -p ./build-temp/distfiles/
 
-rm -rf ./build-temp/build
-mkdir -p ./build-temp/build
-
 rm -rf ./build-temp/unpacked
 mkdir -p ./build-temp/unpacked
 

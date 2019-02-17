@@ -53,6 +53,9 @@ rm ./wabt-"$myWabtVersion"/demo/libwabt.js
 
 (
 
+rm -rf ./build-temp/build
+mkdir -p ./build-temp/build
+
 cd ./build-temp/build || die
 
 unpackedDir="$(readlink -f .)/../unpacked"
