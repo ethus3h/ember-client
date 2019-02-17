@@ -142,6 +142,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     echo "Building wat2wasm: Compiling"
     # I'm thoroughly confused, but it keeps inconsistently not finding the things like "Looking for alloca.h - found" (consistently fails when run from the ebuild, but sometimes works when run by hand)
     make demo || true
+    rm -rf out
     make demo
 )
 
