@@ -102,8 +102,6 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     EMCC_TEMP_DIR="$(readlink -f .)"/.emscripten_temp
     export EMCC_TEMP_DIR
     mkdir -p "$EMCC_TEMP_DIR"
-    EMSCRIPTEN_TEMP_DIR="$EMCC_TEMP_DIR"
-    export EMSCRIPTEN_TEMP_DIR
     TEMP_DIR="$EMCC_TEMP_DIR"
     export TEMP_DIR
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
