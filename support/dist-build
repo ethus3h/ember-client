@@ -56,8 +56,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
     (
         echo "Building wat2wasm: Building binaryen"
         cd "$EM_PORTS/binaryen/binaryen-version_${myBinaryenVersion}/"
-      #  cmake -DCMAKE_BUILD_TYPE=Release .
-       # cmake --build .
+        cmake -DCMAKE_BUILD_TYPE=Release .
+        cmake --build .
         echo "${myBinaryenVersion}" > ../tag.txt
         echo "${myBinaryenVersion}" > "$EM_CACHE/wasm_o/binaryen_tag_version_${myBinaryenVersion}.txt"
         cp "$unpackedDir/binaryen-${myBinaryenVersion}.zip" "$EM_PORTS/binaryen.zip"
