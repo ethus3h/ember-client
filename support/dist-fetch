@@ -12,13 +12,9 @@ source ./support/build-scripts/dist-versions || die
 rm -rf ./build-temp/distfiles/
 mkdir -p ./build-temp/distfiles/
 
-rm -rf ./build-temp/unpacked
-mkdir -p ./build-temp/unpacked
-
 dist() {
     echo "Copying distfile: $1"
     rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
-    rsync -a --checksum ./build-temp/distfiles/"$1" ./build-temp/unpacked/ &>/dev/null
 }
 
 # wabt and its build-time dependencies

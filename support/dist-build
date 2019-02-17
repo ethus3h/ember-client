@@ -8,11 +8,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Build third-party components
 [[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
 
+rm -rf ./build-temp/unpacked
+cp -r ./build-temp/distfiles ./build-temp/unpacked
+
 source ./support/build-scripts/dist-versions || die
 
 # Unpack distfiles
-
-mkdir -p ./build-temp/unpacked
 
 (
 cd ./build-temp/unpacked || die
