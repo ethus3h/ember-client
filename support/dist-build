@@ -74,7 +74,7 @@ mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
 re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
 src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
 src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
-rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
+rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
 (
     cd "$(readlink -f .)" || die
     EM_CONFIG="$(readlink -f .)/.emscripten"
