@@ -15,6 +15,9 @@ mkdir -p ./build-temp/distfiles/
 rm -rf ./build-temp/build
 mkdir -p ./build-temp/build
 
+rm -rf ./build-temp/unpacked
+mkdir -p ./build-temp/unpacked
+
 dist() {
     echo "Copying distfile: $1"
     rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
