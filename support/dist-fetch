@@ -12,18 +12,22 @@ source ./support/build-scripts/dist-versions || die
 rm -rf ./build-temp/distfiles/
 mkdir -p ./build-temp/distfiles/
 
-dist() {
-    echo "Copying distfile: $1"
-    rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
-}
+if [[ -d /usr/portage/distfiles ]]; then
+    dist() {
+        echo "Copying distfile: $1"
+        rsync -a --checksum /usr/portage/distfiles/"$1" ./build-temp/distfiles/ &>/dev/null
+    }
 
-# wabt and its build-time dependencies
-dist emscripten-"$myEmscriptenCommit".tar.gz
-dist binaryen-"$myBinaryenVersion".tar.gz
-dist binaryen-"$myBinaryenVersion".zip
-dist wabt-"$myWabtVersion".tar.gz
-dist googletest-"$myGoogletestVersion".tar.gz
-dist python-lex-yacc-"$myPlyVersion".tar.gz
-dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+    # wabt and its build-time dependencies
+    dist emscripten-"$myEmscriptenCommit".tar.gz
+    dist binaryen-"$myBinaryenVersion".tar.gz
+    dist binaryen-"$myBinaryenVersion".zip
+    dist wabt-"$myWabtVersion".tar.gz
+    dist googletest-"$myGoogletestVersion".tar.gz
+    dist python-lex-yacc-"$myPlyVersion".tar.gz
+    dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+else
+    
+fi
 
 ./support/dist-build
