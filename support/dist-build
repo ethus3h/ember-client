@@ -148,7 +148,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     ./emscripten/embuilder.py build libc-extras
 
     echo "Building wat2wasm: Compiling"
-    make demo
+    make demo || true
     rm -rf out
     make demo
 )
