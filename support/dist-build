@@ -74,7 +74,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py src/wabt.post.js
 
     # Stub out minify_wasm_js method to remove (some of the) node.js dependency
     # https://nixtricks.wordpress.com/2013/01/09/sed-delete-the-lines-lying-in-between-two-patterns/
-    sed '/def\ minify_wasm_js/,/run\ binaryen'\\\''s\ wasm-metadce/{//!d}' ./emscripten/tools/shared.py | sponge ./emscripten/tools/shared.py
+    sed '/def\ minify_wasm_js/,/run\ binaryen'\''s\ wasm-metadce/{//!d}' ./emscripten/tools/shared.py | sponge ./emscripten/tools/shared.py
 die
     echo "Building wat2wasm: Building emscripten built-in packages (libc etc)"
     ./emscripten/embuilder.py build libc
