@@ -112,7 +112,6 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     mkdir -p "$EMCC_TEMP_DIR"
 
     # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
-    if false; then
     cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
         echo "Building wat2wasm: Building binaryen"
@@ -123,7 +122,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
         echo "${myBinaryenVersion}" > "$EM_CACHE/wasm_o/binaryen_tag_version_${myBinaryenVersion}.txt"
         cp "$unpackedDir/binaryen-${myBinaryenVersion}.zip" "$EM_PORTS/binaryen.zip"
     )
-fi
+
     echo 'import os' >> "$EM_CONFIG"
     echo 'EMSCRIPTEN_ROOT = '\'"$(readlink -f .)"\' >> "$EM_CONFIG"
     echo 'LLVM_ROOT = '\''/usr/lib/llvm/9/bin'\' >> "$EM_CONFIG"
@@ -138,7 +137,6 @@ fi
     sed '/def\ minify_wasm_js/,/return\ js_file/{//!d}' ./emscripten/tools/shared.py | sponge ./emscripten/tools/shared.py
 
     # Confirm that a broken binaryen build isn't causing all the headache
-    ./emscripten/embuilder.py build binaryen
     echo "Building wat2wasm: Building emscripten built-in packages (libc etc)"
     ./emscripten/embuilder.py build libc
     ./emscripten/embuilder.py build libc-wasm
