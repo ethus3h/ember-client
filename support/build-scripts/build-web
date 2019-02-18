@@ -10,7 +10,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 rm -rf ./built/web
 mkdir ./built/web
 cp -r ./implementation/platform-support/web/* ./built/web/
-cp -r ./build-temp/out/wabt/* ./built/web/
+cp ./build-temp/out/wabt/* ./built/web/
 rm -rf ./built/web/data
 cp ./built/stagel-parts/js/eite.js ./built/web/
 cp -r ./data ./built/web/

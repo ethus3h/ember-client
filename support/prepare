@@ -64,3 +64,4 @@ fi
 tests/stagel-run-tests || die "StageL tests failed!"
 support/build-scripts/build --somewhat-verbose || die "Build failed!"
 tests/eite-run-tests || die "EITE tests failed!"
+rm -r ./build-temp/*
