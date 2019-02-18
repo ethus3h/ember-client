@@ -148,8 +148,10 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     ./emscripten/embuilder.py build libc-extras
 
     echo "Building wat2wasm: Compiling"
+    env
     make demo || true # Not sure why doing this twice is necessary, but "Looking for alloca.h" seems to fail on the first try, resulting in an invalid config.h, which is removed by the next line, and then the second try of "make demo" works.
-    rm -rf out
+    rm -rv out
+    env
     make demo
 )
 
