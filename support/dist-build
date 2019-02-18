@@ -163,7 +163,7 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
 mkdir -p ./build-temp/out/wabt
 
 cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
-cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.asm ./build-temp/out/wabt/
+cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/out/wabt/
 
 rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
