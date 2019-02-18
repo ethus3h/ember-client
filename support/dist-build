@@ -165,4 +165,6 @@ mkdir -p ./build-temp/out/wabt
 cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
 cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.asm ./build-temp/out/wabt/
 
+rm -r ./build-temp/unpacked
+rm -r ./build-temp/build
 touch ./build-temp/dist-build-ready
