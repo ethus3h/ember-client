@@ -160,7 +160,9 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
 
 )
 
-cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./built/web/
-cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.asm ./built/web/
+mkdir -p ./build-temp/out/wabt
+
+cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
+cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.asm ./build-temp/out/wabt/
 
 touch ./build-temp/dist-build-ready
