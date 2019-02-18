@@ -87,8 +87,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     export EM_CONFIG
     EM_CACHE="$(readlink -f .)/.emscripten_cache"
     export EM_CACHE
-    EMCC_DEBUG="1"
-    export EMCC_DEBUG
+    #EMCC_DEBUG="1"
+    #export EMCC_DEBUG
     EM_PORTS="$(readlink -f .)/.emscripten_ports"
     export EM_PORTS
     EMCC_TEMP_DIR="$(readlink -f .)"/.emscripten_temp
