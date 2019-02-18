@@ -153,6 +153,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     echo "Building wat2wasm: Compiling"
     EMCC_DEBUG="1"
     export EMCC_DEBUG
+    EMCC_CORES="1"
+    export EMCC_CORES
     make -j1 demo
 )
 
