@@ -16,15 +16,15 @@ sicmd="./support/build-scripts/build-wrapped"
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
+    "$sicmd" "$@" # Needs to run before dist-build, because dist-build will copy libwasm.js into built/web, which doesn't exist until build-wrapped has run.
     ./support/dist-build
     ./support/build-scripts/build-wasm-common
-    "$sicmd" "$@"
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
-    ./support/dist-build
-    ./support/build-scripts/build-wasm-common
     # StageL goes to /dev/null, while other things are verbose
     "$sicmd" "$@" &> /dev/null
+    ./support/dist-build
+    ./support/build-scripts/build-wasm-common
 else
     ./support/dist-build &> /dev/null
     ./support/build-scripts/build-wasm-common &> /dev/null
