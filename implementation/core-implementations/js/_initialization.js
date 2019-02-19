@@ -208,9 +208,8 @@ async function internalEiteReqOutputHeight() {
 }
 
 async function internalEiteReqWat2Wabt(watData) {
-    console.log('c');
-    console.log(window.WabtModule);
-    return 'bubble';
+    console.log(watData);
+    return window.WabtModule.parseWat('input.wat', watData);
 }
 
 async function internalEiteReqTypeofWindow() {
