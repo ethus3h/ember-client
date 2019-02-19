@@ -297,7 +297,7 @@ async function internalEiteReqTypeofWindow() {
 
 async function internalEiteReqWat2Wabt(watData) {
     console.log(watData);
-    return window.WabtModule.parseWat('input.wat', watData);
+    return window.WabtModule().then(await async function(){return await parseWat('input.wat', watData);});
 }
 async function internalEiteReqAlert(msg) {
     await alert(msg);
