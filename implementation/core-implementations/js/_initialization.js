@@ -68,8 +68,10 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    WabtModule=await eiteHostCall('internalEiteReqGetWabtModule');
-    console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
+    console.log('a');
+    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
+    console.log(wasmData);
+//    console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
     let importObject = {
         imports: {
             // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
