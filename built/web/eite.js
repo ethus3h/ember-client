@@ -297,7 +297,8 @@ async function internalEiteReqTypeofWindow() {
 
 async function internalEiteReqWat2Wabt(watData) {
     console.log(watData);
-    return window.WabtModule().then(function(wabt){console.log(wabt);return parseWat('input.wat', watData);});
+    return 'bu';
+    return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});
 }
 async function internalEiteReqAlert(msg) {
     await alert(msg);
