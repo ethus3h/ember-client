@@ -295,7 +295,7 @@ async function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
-async function internalEiteReqGetWabtModule() {
+async function internalEiteReqWat2Wabt(watData) {
     console.log('c');
     console.log(window.WabtModule);
     return window.WabtModule;
