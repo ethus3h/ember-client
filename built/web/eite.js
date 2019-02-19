@@ -297,8 +297,8 @@ async function internalEiteReqTypeofWindow() {
 
 async function internalEiteReqGetWabtModule() {
     console.log('c');
+    console.log(window.WabtModule);
     return window.WabtModule;
-    console.log('d');
 }
 
 async function internalEiteReqAlert(msg) {
