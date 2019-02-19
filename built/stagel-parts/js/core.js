@@ -152,6 +152,9 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
+    await import('libwabt.js');
+    await WabtModule();
+    console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
     let importObject = {
         imports: {
             // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
@@ -163,7 +166,7 @@ async function internalSetup() {
             */
         }
     };
-    eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject));
+    //eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject);
 
     // Set up environment variables.
 
@@ -774,17 +777,11 @@ async function internalDebugPrintStack() {
 
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
-async function wasmCall(strRoutine, intVal) {
-    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCall:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intReturn;
-
-    let intRes = 0;
-    intRes = await internalWasmCall(strRoutine, intVal);
-
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+async function internalWasmCall(strRoutine, intVal) {
+    return eiteWasmModule.instance.exports[strRoutine](intVal);
 }
-
-async function wasmCallArrIn(strRoutine, intArrayVals) {
+/*
+async function internalWasmCallArrIn(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
 
     let intRes = 0;
@@ -794,7 +791,7 @@ async function wasmCallArrIn(strRoutine, intArrayVals) {
     await nan/res();
 }
 
-async function wasmCallArrOut(strRoutine, intVal) {
+async function internalWasmCallArrOut(strRoutine, intVal) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
 
     let intArrayRes = [];
@@ -803,7 +800,7 @@ async function wasmCallArrOut(strRoutine, intVal) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function wasmCallArrInOut(strRoutine, intArrayVals) {
+async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
 
     let intArrayRes = [];
@@ -811,6 +808,7 @@ async function wasmCallArrInOut(strRoutine, intArrayVals) {
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
+*/
 
 /* booleans, provides:
     implAnd

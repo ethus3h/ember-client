@@ -210,7 +210,7 @@ async function runTestsMath(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsMath:math-tests'); await assertIsBool(boolV);
 
     await runTest(boolV, await implEq(4, await implAdd(2, 2)));
-    await runTest(boolV, await ne(4, await implAdd(2, 2)));
+    await runTest(boolV, await ne(4, await implAdd(2, 3)));
     await internalDebugStackExit();
 }
 
@@ -352,8 +352,7 @@ async function wasmCall(strRoutine, intVal) {
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
 
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function wasmCallArrIn(strRoutine, intArrayVals) {
@@ -362,8 +361,7 @@ async function wasmCallArrIn(strRoutine, intArrayVals) {
     let intRes = 0;
     intRes = await internalWasmCallArrIn(strRoutine, intVal);
 
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function wasmCallArrOut(strRoutine, intVal) {
@@ -1255,6 +1253,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
+    await runTestsWasm(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -1375,6 +1374,14 @@ async function dcaToIntegerList(intArrayDcIn) {
     await assertIsByteArray(intArrayOut);
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsWasm(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
+
+    await runTest(boolV, await implEq(42, await wasmCall(await fourtytwo())));
+    await runTest(boolV, await implEq(4, await wasmCall(await implAdd(2, 2))));
+    await internalDebugStackExit();
 }
 
 async function or(boolA, boolB) {

@@ -152,6 +152,9 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
+    await import('libwabt.js');
+    await WabtModule();
+    console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
     let importObject = {
         imports: {
             // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
@@ -163,7 +166,7 @@ async function internalSetup() {
             */
         }
     };
-    eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject);
+    //eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject);
 
     // Set up environment variables.
 
@@ -773,11 +776,40 @@ async function internalDebugPrintStack() {
 }
 
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
-// Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalWasmCall(strRoutine, intVal) {
     return eiteWasmModule.instance.exports[strRoutine](intVal);
 }
+/*
+async function internalWasmCallArrIn(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
+
+    let intRes = 0;
+    intRes = await internalWasmCallArrIn(strRoutine, intVal);
+
+    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+    await nan/res();
+}
+
+async function internalWasmCallArrOut(strRoutine, intVal) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrInOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+*/
+
 /* booleans, provides:
     implAnd
     implNot
@@ -1392,7 +1424,7 @@ async function runTestsMath(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsMath:math-tests'); await assertIsBool(boolV);
 
     await runTest(boolV, await implEq(4, await implAdd(2, 2)));
-    await runTest(boolV, await ne(4, await implAdd(2, 2)));
+    await runTest(boolV, await ne(4, await implAdd(2, 3)));
     await internalDebugStackExit();
 }
 
@@ -1535,6 +1567,33 @@ async function wasmCall(strRoutine, intVal) {
     intRes = await internalWasmCall(strRoutine, intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function wasmCallArrIn(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
+
+    let intRes = 0;
+    intRes = await internalWasmCallArrIn(strRoutine, intVal);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function wasmCallArrOut(strRoutine, intVal) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function wasmCallArrInOut(strRoutine, intArrayVals) {
+    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
+
+    let intArrayRes = [];
+    intRes = await internalWasmCallArrInOut(strRoutine, intVal);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaFromAsciiSafeSubset(intArrayContent) {
@@ -2408,6 +2467,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
+    await runTestsWasm(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -2528,6 +2588,14 @@ async function dcaToIntegerList(intArrayDcIn) {
     await assertIsByteArray(intArrayOut);
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsWasm(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
+
+    await runTest(boolV, await implEq(42, await wasmCall(await fourtytwo())));
+    await runTest(boolV, await implEq(4, await wasmCall(await implAdd(2, 2))));
+    await internalDebugStackExit();
 }
 
 async function or(boolA, boolB) {
