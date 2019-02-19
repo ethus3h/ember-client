@@ -152,7 +152,6 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    await import('libwabt.js');
     await WabtModule();
     console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
     let importObject = {
