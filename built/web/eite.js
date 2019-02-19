@@ -152,7 +152,7 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    console.log(window.WabtModule);
+    WabtModule=await eiteHostCall('internalEiteReqGetWabtModule');
     console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
     let importObject = {
         imports: {
@@ -291,6 +291,10 @@ async function internalEiteReqOutputHeight() {
 
 async function internalEiteReqTypeofWindow() {
     return typeof window;
+}
+
+async function internalEiteReqGetWabtModule() {
+    return window.WabtModule;
 }
 
 async function internalEiteReqAlert(msg) {
