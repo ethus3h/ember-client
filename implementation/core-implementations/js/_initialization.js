@@ -68,7 +68,7 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    const WabtModule = import 'libwabt.js';
+    import 'libwabt.js';
     let importObject = {
         imports: {
             // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
