@@ -318,60 +318,15 @@ var features = {};
 
 WabtModule().then(function(wabt) {
 
-var FEATURES = [
-  'exceptions',
-  'mutable_globals',
-  'sat_float_to_int',
-  'sign_extension',
-  'simd',
-  'threads',
-  'multi_value',
-  'tail_call',
-];
 
 var kCompileMinMS = 100;
 
-var outputEl = document.getElementById('output');
-var jsLogEl = document.getElementById('js_log');
-var selectEl = document.getElementById('select');
-var downloadEl = document.getElementById('download');
-var downloadLink = document.getElementById('downloadLink');
 var binaryBuffer = null;
 var binaryBlobUrl = null;
-
-for (var feature of FEATURES) {
-  var featureEl = document.getElementById(feature);
-  features[feature] = featureEl.checked;
-  featureEl.addEventListener('change', event => {
-    var feature = event.target.id;
-    features[feature] = event.target.checked;
-    onWatChange();
-  });
-}
 
 var wasmInstance = null;
 
 var wrappedConsole = Object.create(console);
-
-wrappedConsole.log = (...args) => {
-  let line = args.map(String).join('') + '\n';
-  jsLogEl.textContent += line;
-  console.log(...args);
-}
-
-var watEditor = CodeMirror((elt) => {
-  document.getElementById('top-left').appendChild(elt);
-}, {
-  mode: 'wast',
-  lineNumbers: true,
-});
-
-var jsEditor = CodeMirror((elt) => {
-  document.getElementById('bottom-left').appendChild(elt);
-}, {
-  mode: 'javascript',
-  lineNumbers: true,
-});
 
 function debounce(f, wait) {
   var lastTime = 0;
