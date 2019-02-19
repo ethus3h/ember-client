@@ -205,8 +205,10 @@ async function internalEiteReqOutputHeight() {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
-async function internalEiteReqGetWabtModule() {
-    return window.WabtModule;
+async function internalEiteReqWat2Wabt(watData) {
+    console.log('c');
+    console.log(window.WabtModule);
+    return 'bubble';
 }
 
 async function internalEiteReqTypeofWindow() {

@@ -298,7 +298,7 @@ async function internalEiteReqTypeofWindow() {
 async function internalEiteReqWat2Wabt(watData) {
     console.log('c');
     console.log(window.WabtModule);
-    return window.WabtModule;
+    return 'bubble';
 }
 
 async function internalEiteReqAlert(msg) {
