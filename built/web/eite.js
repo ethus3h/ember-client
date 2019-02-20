@@ -355,9 +355,7 @@ function run() {
   } catch (e) {
   }
 }
-
-var onWatChange = compile();
-var onJsChange = run();
+return 'bebebebbe';
 });
 
 }
