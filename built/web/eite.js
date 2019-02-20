@@ -319,8 +319,8 @@ for (let feature of FEATURES) {
 }
     try {
         module=new Promise(resolve => {
-            WabtModule().then(async function(moduleInner) {
-                try{resolve(moduleInner.parseWat('test.wast',watStr, featuresObject))} catch(e){await implDie('Failed parsing WebAssembly module.');};
+            WabtModule().then(async function(module) {
+                try{resolve(module.parseWat('test.wast',watStr, featuresObject))} catch(e){await implDie('Failed parsing WebAssembly module.');};
             });
         });
         await console.log(await module);
