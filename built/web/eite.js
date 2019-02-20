@@ -302,6 +302,7 @@ async function internalEiteReqWat2Wabt(watData) {
     let watStr=await strFromByteArray(watData);
     let wasmArray;
     let module;
+    let featuresObject={};
     var FEATURES = [
   'exceptions',
   'mutable_globals',
@@ -313,19 +314,13 @@ async function internalEiteReqWat2Wabt(watData) {
   'tail_call',
 ];
 
-for (var feature of FEATURES) {
-  var featureEl = document.getElementById(feature);
-  features[feature] = featureEl.checked;
-  featureEl.addEventListener('change', event => {
-    var feature = event.target.id;
-    features[feature] = event.target.checked;
-    onWatChange();
-  });
+for (let feature of FEATURES) {
+  featuresObject[feature] = false;
 }
     try {
         module=new Promise(resolve => {
             WabtModule().then(async function(module) {
-                try{resolve(module.parseWat('test.wast',watStr, {false,false,false,false,false,false,false,false}))} catch(e){await implDie('Failed parsing WebAssembly module.');};
+                try{resolve(module.parseWat('test.wast',watStr, featuresObject))} catch(e){await implDie('Failed parsing WebAssembly module.');};
             });
         });
         await console.log(await module);
