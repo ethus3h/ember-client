@@ -305,6 +305,21 @@ let module=new Promise(resolve => {
         resolve(module.parseWat('test.wast',watStr, {}));
     });
 });
+  try {
+    var module = wabt.parseWat('test.wast',watStr, {});
+    module.resolveNames();
+    module.validate(features);
+    var binaryOutput = module.toBinary({log: true, write_debug_names:true});
+    binaryBuffer = binaryOutput.buffer;
+    var blob = new Blob([binaryOutput.buffer]);
+    if (binaryBlobUrl) {
+      URL.revokeObjectURL(binaryBlobUrl);
+    }
+    binaryBlobUrl = URL.createObjectURL(blob);
+  } catch (e) {
+  } finally {
+    if (module) module.destroy();
+  }
 console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
