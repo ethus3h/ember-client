@@ -66,10 +66,8 @@ async function setupIfNeeded() {
 
 // Main setup logic
 async function internalSetup() {
-    // Load WebAssembly components.
+    // Load WebAssembly components. Functions provided by them are available with await wasmCall(await fourtytwo()).
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
-    console.log(wasmData);
     await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/simple.c.wat']);
 
     // Set up environment variables.
