@@ -316,7 +316,7 @@ async function internalEiteReqWat2Wabt(watData) {
  */
 var features = {};
 
-WabtModule().then(function(wabt) {
+WabtModule().then(async function(wabt) {
 
 
 
