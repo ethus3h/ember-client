@@ -8,7 +8,9 @@
 # https://github.com/google/googletest
 # https://github.com/dabeaz/ply
 
-r/v/wasmCheckForError s/caller 
+r/v/internalWasmCheckForErrorInner s/caller n/arg
+    
+r/v/wasmCheckForError s/caller n/arg
     
 r/n/wasmCall s/routine n/val
     new n/res
