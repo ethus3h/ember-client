@@ -370,34 +370,6 @@ function setExample(index) {
   onJsChange();
 }
 
-function onSelectChanged(e) {
-  setExample(this.selectedIndex);
-}
-
-function onDownloadClicked(e) {
-  // See https://developer.mozilla.com/en-US/docs/Web/API/MouseEvent
-  var event = new MouseEvent('click', {
-    view: window,
-    bubbles: true,
-    cancelable: true,
-  });
-  downloadLink.dispatchEvent(event);
-}
-
-watEditor.on('change', onWatChange);
-jsEditor.on('change', onJsChange);
-selectEl.addEventListener('change', onSelectChanged);
-downloadEl.addEventListener('click', onDownloadClicked);
-
-for (var i = 0; i < examples.length; ++i) {
-  var example = examples[i];
-  var option = document.createElement('option');
-  option.textContent = example.name;
-  selectEl.appendChild(option);
-}
-selectEl.selectedIndex = 1;
-setExample(selectEl.selectedIndex);
-
 });
 
 }
