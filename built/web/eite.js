@@ -296,9 +296,6 @@ async function internalEiteReqTypeofWindow() {
 }
 
 async function internalEiteReqWat2Wabt(watData) {
-    console.log(watData);
-    /*return window.WabtModule();
-    return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
     let wasmArray;
     let wabtWasmObject;
@@ -307,24 +304,23 @@ async function internalEiteReqWat2Wabt(watData) {
     for (let feature of wabtFeaturesArray) {
         featuresObject[feature] = false;
     }
-return await new Promise(resolve => {
-WabtModule().then(async function(wabt) {
-    try {
-        wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
-        wabtWasmObject.resolveNames();
-        wabtWasmObject.validate(features);
-        wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
-        resolve(wasmArray);
-       } catch (e) {
-        console.log(e);
-        await implDie('Failed loading WebAssembly module.');
-    } finally {
-        if (wabtWasmObject) {
-            wabtWasmObject.destroy();
-        }
-    }
-});
-});
+    return await new Promise(resolve => {
+        WabtModule().then(async function(wabt) {
+            try {
+                wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
+                wabtWasmObject.resolveNames();
+                wabtWasmObject.validate(features);
+                wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
+                resolve(wasmArray);
+            } catch (e) {
+                await implDie('Failed loading WebAssembly module.');
+            } finally {
+                if (wabtWasmObject) {
+                    wabtWasmObject.destroy();
+                }
+            }
+        });
+    });
 return true;
     try {
       module=  wabt.parseWat('test.wast', watEditor.getValue(), features);
