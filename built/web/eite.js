@@ -302,7 +302,7 @@ async function internalEiteReqWat2Wabt(watData) {
     let watStr=await strFromByteArray(watData);
 let module=new Promise(resolve => {
     WabtModule().then(function(module) {
-        resolve(module.parseWat('test.wast',watStr, {});));
+        resolve(module.parseWat('test.wast',watStr, {}););
     });
 });
 console.log(await module);
