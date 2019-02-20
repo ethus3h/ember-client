@@ -70,18 +70,7 @@ async function internalSetup() {
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
     wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
     console.log(wasmData);
-    let importObject = {
-        imports: {
-            // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
-            /*
-            imported_func: function(arg) {
-                console.log(arg);
-            }
-            */
-        }
-    };
-    await eiteHostCall('internalEiteReqWasmLoad', [wasmData, importObject]);
+    await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/simple.c.wat']);
 
     // Set up environment variables.
 
@@ -242,8 +231,19 @@ async function internalEiteReqWat2Wabt(watData) {
     });
 }
 
-async function internalEiteReqWasmLoad(wasmData, importObject) {
-    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
+async function internalEiteReqWasmLoad(path) {
+    let importObject = {
+        imports: {
+            // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();. I could have an import object passed to internalEiteReqWasmLoad, but don't see the need for it at the moment, so this is just here for documentation.
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
+            /*
+            imported_func: function(arg) {
+                console.log(arg);
+            }
+            */
+        }
+    };
+    let wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath(path)]);
     window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 }
 
