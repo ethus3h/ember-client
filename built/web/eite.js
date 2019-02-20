@@ -319,6 +319,7 @@ async function internalEiteReqWat2Wabt(watData) {
             module.destroy();
         }
     }
+    console.log('xbucrecrurce');console.log(wasmArray);
     return await wasmArray;
 console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
