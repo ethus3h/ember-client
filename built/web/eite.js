@@ -300,7 +300,11 @@ async function internalEiteReqWat2Wabt(watData) {
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
-let module=WabtModule();
+let module=new Promise(resolve => {
+    WabtModule().then(function(module) {
+        resolve('nucuehic');
+    });
+}
 console.log( module.parseWat(','));
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
