@@ -8,8 +8,6 @@
 # https://github.com/google/googletest
 # https://github.com/dabeaz/ply
 
-r/v/internalWasmCheckForErrorInner s/caller n/arg
-    
 r/v/wasmCheckForError s/caller n/arg
     
 r/n/wasmCall s/routine n/val
@@ -35,3 +33,6 @@ r/an/wasmCallArrInOut s/routine an/vals
     new an/res
     set n/res internalWasmCallArrInOut s/routine n/val
     return an/res
+
+    r/v/internalWasmCheckForErrorInner s/caller n/arg
+    
