@@ -302,6 +302,26 @@ async function internalEiteReqWat2Wabt(watData) {
     let watStr=await strFromByteArray(watData);
     let wasmArray;
     let module;
+    var FEATURES = [
+  'exceptions',
+  'mutable_globals',
+  'sat_float_to_int',
+  'sign_extension',
+  'simd',
+  'threads',
+  'multi_value',
+  'tail_call',
+];
+
+for (var feature of FEATURES) {
+  var featureEl = document.getElementById(feature);
+  features[feature] = featureEl.checked;
+  featureEl.addEventListener('change', event => {
+    var feature = event.target.id;
+    features[feature] = event.target.checked;
+    onWatChange();
+  });
+}
     try {
         module=new Promise(resolve => {
             WabtModule().then(async function(module) {
