@@ -301,7 +301,7 @@ async function internalEiteReqWat2Wabt(watData) {
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
     let wasmArray;
-    let module;
+    let wabtWasmObject;
     let featuresObject={};
 
     var FEATURES = [
@@ -321,11 +321,9 @@ for (let feature of FEATURES) {
 
 WabtModule().then(async function(wabt) {
     try {
-module=  wabt.parseWat('test.wast', watStr, featuresObject);
-console.log(module);
-    console.log(module.resolveNames());
-        module.validate(features);
-        var binaryOutput = module.toBinary({log: true, write_debug_names:true});
+        wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
+        wabtWasmObject.validate(features);
+        var binaryOutput = wabtWasmObject.toBinary({log: true, write_debug_names:true});
         binaryBuffer = binaryOutput.buffer;
         wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
         console.log(wasmArray);
@@ -335,8 +333,8 @@ console.log(module);
         console.log(e);
         await implDie('Failed loading WebAssembly module.');
     } finally {
-        if (module) {
-            module.destroy();
+        if (wabtWasmObject) {
+            wabtWasmObject.destroy();
         }
     }
 });
