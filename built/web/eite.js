@@ -299,6 +299,7 @@ async function internalEiteReqWat2Wabt(watData) {
     console.log(watData);
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
+    let watStr=await strFromByteArray(watData);
     /*
  * Copyright 2016 WebAssembly Community Group participants
  *
@@ -330,7 +331,7 @@ var wrappedConsole = Object.create(console);
 function compile() {
   var binaryOutput;
   try {
-    var module = wabt.parseWat('test.wast', strFromByteArray(watData), {});
+    var module = wabt.parseWat('test.wast',watStr, {});
     module.resolveNames();
     module.validate(features);
     var binaryOutput = module.toBinary({log: true, write_debug_names:true});
