@@ -314,6 +314,7 @@ async function internalEiteReqWat2Wabt(watData) {
         binaryBuffer = binaryOutput.buffer;
         wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
     } catch (e) {
+        console.log(e);
         await implDie('Failed loading WebAssembly module.');
     } finally {
         if (module) {
