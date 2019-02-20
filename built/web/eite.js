@@ -321,13 +321,14 @@ for (let feature of FEATURES) {
 
 WabtModule().then(async function(wabt) {
     try {
-        module=await new Promise(resolve => {
-            WabtModule().then(async function(moduleParam) {
-                try{resolve(moduleParam)} catch(e){await implDie('Failed parsing WebAssembly module.');};
-            });
-        });
+module=  wabt.parseWat('test.wast', watStr, featuresObject);
 console.log(module);
     console.log(module.resolveNames());
+        module.validate(features);
+        var binaryOutput = module.toBinary({log: true, write_debug_names:true});
+        binaryBuffer = binaryOutput.buffer;
+        wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
+        console.log(wasmArray);
        } catch (e) {
         console.log(e);
         await implDie('Failed loading WebAssembly module.');
