@@ -4,9 +4,9 @@ async function internalEiteReqWasmCall(strRoutine, giVal) {
     return eiteWasmModule.instance.exports[strRoutine](giVal);
 }
 async function internalWasmCall(strRoutine, intVal) {
-    return eiteWasmModule.instance.exports[strRoutine](intVal);
-    eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
+    return await eiteHostCall('internalEiteReqWasmCall', [intVal]);
 }
+
 /*
 async function internalWasmCallArrIn(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
