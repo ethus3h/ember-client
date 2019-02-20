@@ -8,15 +8,15 @@ async function internalWasmCall(strRoutine, intVal) {
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
-async function internalWasmCall(strRoutine, intVal) {
+async function internalWasmCallArrIn(strRoutine, intArrayVals) {
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
-async function internalWasmCall(strRoutine, intVal) {
+async function internalWasmCallArrOut(strRoutine, intVal) {
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
-async function internalWasmCall(strRoutine, intVal) {
+async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
