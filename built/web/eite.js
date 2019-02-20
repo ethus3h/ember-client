@@ -356,6 +356,7 @@ function run() {
   } catch (e) {
   }
 }
+console.log('bubebe');
 return 'bebebebbe';
 });
 
