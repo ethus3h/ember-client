@@ -303,6 +303,9 @@ async function internalEiteReqWat2Wabt(watData) {
     let wasmArray;
     let module;
     let featuresObject={};
+          module=  wabt.parseWat('test.wast', watEditor.getValue(), featuresObject);
+    console.log(module.resolveNames());
+
     var FEATURES = [
   'exceptions',
   'mutable_globals',
