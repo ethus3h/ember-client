@@ -328,7 +328,6 @@ var wasmInstance = null;
 var wrappedConsole = Object.create(console);
 
 function compile() {
-  outputEl.textContent = '';
   var binaryOutput;
   try {
     var module = wabt.parseWat('test.wast', watEditor.getValue(), {});
