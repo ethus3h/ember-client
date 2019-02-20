@@ -3,7 +3,7 @@
     utf9enc();
 }
 extern int utf8enc(); */
-int errorStatus;
+int errorStatus = 0;
 int checkForError() {
     int errorTemp = errorStatus;
     errorStatus = 0;
