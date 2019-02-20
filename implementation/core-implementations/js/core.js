@@ -152,9 +152,8 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    await import('libwabt.js');
-    await WabtModule();
-    console.log(WabtModule.parseWat('wasm-common/simple.c.wat', await getFileFromPath('wasm-common/simple.c.wat')));
+    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
+    console.log(wasmData);
     let importObject = {
         imports: {
             // If there were JavaScript functions that the C code could call, they would go here. For calling C functions from JavaScript, use instance.exports.exported_func();.
@@ -166,7 +165,7 @@ async function internalSetup() {
             */
         }
     };
-    //eiteWasmModule = await WebAssembly.instantiate(await getFileFromPath('wasm-common/simple.c.wat'), importObject);
+    eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 
     // Set up environment variables.
 
@@ -277,6 +276,15 @@ async function internalSetup() {
     setupFinished = true;
 }
 
+function registerSpeedup(name, func) {
+    if (typeof window !== 'undefined') {
+        window[name] = func;
+    }
+    else {
+        self[name] = func;
+    }
+}
+
 // Routines needed for Web worker requests
 async function internalEiteReqCharset() {
     return document.characterSet.toLowerCase();
@@ -288,6 +296,34 @@ async function internalEiteReqOutputWidth() {
 
 async function internalEiteReqOutputHeight() {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+}
+
+async function internalEiteReqWat2Wabt(watData) {
+    let watStr=await strFromByteArray(watData);
+    let wasmArray;
+    let wabtWasmObject;
+    let wabtFeaturesArray = [ 'exceptions', 'mutable_globals', 'sat_float_to_int', 'sign_extension', 'simd', 'threads', 'multi_value', 'tail_call' ];
+    let wabtFeaturesObject={};
+    for (let feature of wabtFeaturesArray) {
+        wabtFeaturesObject[feature] = false;
+    }
+    return await new Promise(resolve => {
+        WabtModule().then(async function(wabt) {
+            try {
+                wabtWasmObject=wabt.parseWat('test.wast', watStr, wabtFeaturesObject);
+                wabtWasmObject.resolveNames();
+                wabtWasmObject.validate(wabtFeaturesObject);
+                wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
+                resolve(wasmArray);
+            } catch (e) {
+                await implDie('Failed loading WebAssembly module.');
+            } finally {
+                if (wabtWasmObject) {
+                    wabtWasmObject.destroy();
+                }
+            }
+        });
+    });
 }
 
 async function internalEiteReqTypeofWindow() {
