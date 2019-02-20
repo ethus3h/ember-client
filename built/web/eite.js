@@ -318,7 +318,6 @@ async function internalEiteReqWat2Wabt(watData) {
 for (let feature of FEATURES) {
   featuresObject[feature] = false;
 }
-return await new Promise(resolve => {
 WabtModule().then(async function(wabt) {
     try {
         wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
@@ -328,7 +327,7 @@ WabtModule().then(async function(wabt) {
         wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
         wasmArray=new Uint8Array(await wasmArray);
         console.log(wasmArray);
-        resolve(wasmArray);
+        //resolve(wasmArray);
        } catch (e) {
         console.log(e);
         await implDie('Failed loading WebAssembly module.');
@@ -338,6 +337,8 @@ WabtModule().then(async function(wabt) {
         }
     }
 });
+return await new Promise(resolve => {
+    resolve(true);
 });
 return true;
     try {
