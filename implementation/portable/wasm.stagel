@@ -22,19 +22,23 @@ r/v/wasmCheckForError s/caller gi/arg
 r/n/wasmCall s/routine n/val
     new n/res
     set n/res internalWasmCall s/routine n/val
+    wasmCheckForError n/val
     return n/res
 
 r/n/wasmCallArrIn s/routine an/vals
     new n/res
     set n/res internalWasmCallArrIn s/routine n/val
+    wasmCheckForError an/vals
     return n/res
 
 r/an/wasmCallArrOut s/routine n/val
     new an/res
     set n/res internalWasmCallArrOut s/routine n/val
+    wasmCheckForError n/val
     return an/res
 
 r/an/wasmCallArrInOut s/routine an/vals
     new an/res
     set n/res internalWasmCallArrInOut s/routine n/val
+    wasmCheckForError an/vals
     return an/res
