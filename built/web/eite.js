@@ -324,6 +324,7 @@ for (let feature of FEATURES) {
             });
         });
         await console.log(await module);
+        return true;
         module.parseWat('test.wast',watStr, featuresObject);
         module.resolveNames();
         module.validate(features);
