@@ -816,38 +816,25 @@ async function internalDebugPrintStack() {
 
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
-async function internalWasmCall(strRoutine, intVal) {
-    return eiteWasmModule.instance.exports[strRoutine](intVal);
+async function internalEiteReqWasmCall(strRoutine, giVal) {
+    return eiteWasmModule.instance.exports[strRoutine](giVal);
 }
-/*
+
+async function internalWasmCall(strRoutine, intVal) {
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
+}
+
 async function internalWasmCallArrIn(strRoutine, intArrayVals) {
-    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
-
-    let intRes = 0;
-    intRes = await internalWasmCallArrIn(strRoutine, intVal);
-
-    intReturn = ; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-    await nan/res();
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intArrayVals]);
 }
 
 async function internalWasmCallArrOut(strRoutine, intVal) {
-    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
-
-    let intArrayRes = [];
-    intRes = await internalWasmCallArrOut(strRoutine, intVal);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
 async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
-    await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
-
-    let intArrayRes = [];
-    intRes = await internalWasmCallArrInOut(strRoutine, intVal);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intArrayVals]);
 }
-*/
 
 /* booleans, provides:
     implAnd
@@ -1599,11 +1586,30 @@ async function settingArrayToString(strArraySettings) {
 /* https://github.com/google/googletest */
 /* https://github.com/dabeaz/ply */
 
+async function wasmCheckForError(strCaller, genericItemArg) {
+    await internalDebugCollect('str Caller = ' + strCaller + '; '); await internalDebugCollect('genericItem Arg = ' + genericItemArg + '; '); await internalDebugStackEnter('wasmCheckForError:wasm'); await assertIsStr(strCaller);await assertIsGenericItem(genericItemArg);
+
+    let strArgStr = '';
+    if (await isArray(genericItemArg)) {
+        strArgStr = await printArray(genericItemArg);
+    }
+    else {
+        strArgStr = await strFrom(genericItemArg);
+    }
+    let intErr = 0;
+    intErr = await internalWasmCall('checkForError');
+    if (await ne(intErr, 0)) {
+        await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
+    }
+    await internalDebugStackExit();
+}
+
 async function wasmCall(strRoutine, intVal) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCall:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intReturn;
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
+    await wasmCheckForError(intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -1613,6 +1619,7 @@ async function wasmCallArrIn(strRoutine, intArrayVals) {
 
     let intRes = 0;
     intRes = await internalWasmCallArrIn(strRoutine, intVal);
+    await wasmCheckForError(intArrayVals);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -1622,6 +1629,7 @@ async function wasmCallArrOut(strRoutine, intVal) {
 
     let intArrayRes = [];
     intRes = await internalWasmCallArrOut(strRoutine, intVal);
+    await wasmCheckForError(intVal);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -1631,6 +1639,7 @@ async function wasmCallArrInOut(strRoutine, intArrayVals) {
 
     let intArrayRes = [];
     intRes = await internalWasmCallArrInOut(strRoutine, intVal);
+    await wasmCheckForError(intArrayVals);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -2632,8 +2641,8 @@ async function dcaToIntegerList(intArrayDcIn) {
 async function runTestsWasm(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq(42, await wasmCall(await fourtytwo())));
-    await runTest(boolV, await implEq(4, await wasmCall(await implAdd(2, 2))));
+    await runTest(boolV, await implEq(42, await wasmCall(await fortytwo(0))));
+    await runTest(boolV, await implEq(4, await wasmCallArrIn(await implAdd([ 2, 2 ]))));
     await internalDebugStackExit();
 }
 
@@ -3664,6 +3673,26 @@ async function strPrintArr(genericArrayInput) {
     }
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function printArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('printArray:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
+
+    /* Just a convenience wrapper */
+    let strRes = '';
+    strRes = await strPrintArr(genericArrayIn);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function printArr(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('printArr:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
+
+    /* Just a convenience wrapper */
+    let strRes = '';
+    strRes = await strPrintArr(genericArrayIn);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function charFromHexByte(strHexByte) {
