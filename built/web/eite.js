@@ -329,7 +329,7 @@ console.log(module);
         binaryBuffer = binaryOutput.buffer;
         wasmArray = Response(new Blob([binaryOutput.buffer])).arrayBuffer();
         console.log(wasmArray);
-        wasmArray = new Uint8Array(wasmArray);
+        wasmArray = new Uint8Array(await wasmArray);
         console.log(wasmArray);
        } catch (e) {
         console.log(e);
