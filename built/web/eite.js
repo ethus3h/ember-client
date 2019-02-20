@@ -327,11 +327,8 @@ console.log(module);
         module.validate(features);
         var binaryOutput = module.toBinary({log: true, write_debug_names:true});
         binaryBuffer = binaryOutput.buffer;
-        wasmArray = Response(new Blob([binaryOutput.buffer])).arrayBuffer();
-        console.log(wasmArray);
-        return true;
-        wasmArray = new Uint8Array(await wasmArray);
-        console.log(wasmArray);
+        wasmArray = new Uint8Array(await new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
+        console.log(wasmArray));
        } catch (e) {
         console.log(e);
         await implDie('Failed loading WebAssembly module.');
