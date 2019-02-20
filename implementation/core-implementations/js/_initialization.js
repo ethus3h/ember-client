@@ -81,7 +81,7 @@ async function internalSetup() {
             */
         }
     };
-    eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
+    window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 
     // Set up environment variables.
 
