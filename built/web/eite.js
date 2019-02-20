@@ -2532,6 +2532,7 @@ async function clearTestStats() {
 
 async function runTestsOnly(boolV) {
     await console.log('Fake running tests.');
+    throw 'u';
     return true;
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
 
