@@ -1,10 +1,11 @@
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
-async function eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);(strRoutine, intVal) {
-    return eiteWasmModule.instance.exports[strRoutine](intVal);
+async function internalEiteReqWasmCall(strRoutine, giVal) {
+    return eiteWasmModule.instance.exports[strRoutine](giVal);
 }
 async function internalWasmCall(strRoutine, intVal) {
     return eiteWasmModule.instance.exports[strRoutine](intVal);
+    eiteHostCall('internalEiteReqAlert', ["EITE reported an error! You may want to reload the page. The error was: " + strMessage]);
 }
 /*
 async function internalWasmCallArrIn(strRoutine, intArrayVals) {
