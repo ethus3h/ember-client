@@ -243,6 +243,7 @@ async function internalEiteReqWat2Wabt(watData) {
 }
 
 async function internalEiteReqWasmLoad(wasmData, importObject) {
+    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath('wasm-common/simple.c.wat')]);
     window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 }
 
