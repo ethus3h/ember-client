@@ -1401,8 +1401,8 @@ async function dcaToIntegerList(intArrayDcIn) {
 async function runTestsWasm(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq(42, await wasmCall(await fortytwo(0))));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn(await implAdd([ 2, 2 ]))));
+    await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
+    await runTest(boolV, await implEq(4, await wasmCallArrIn([ 2, 2 ]'add')));
     await internalDebugStackExit();
 }
 
