@@ -318,12 +318,15 @@ for (let feature of FEATURES) {
   featuresObject[feature] = false;
 }
     try {
+      module=  wabt.parseWat('test.wast', watEditor.getValue(), features);
+    console.log(module.resolveNames());
+    return true;
         module=new Promise(resolve => {
             WabtModule().then(async function(moduleParam) {
                 try{resolve(moduleParam)} catch(e){await implDie('Failed parsing WebAssembly module.');};
             });
         });
-        await console.log(module);
+        //await console.log(module);
         module.then(console.log);
         return true;
         module.parseWat('test.wast',watStr, featuresObject);
