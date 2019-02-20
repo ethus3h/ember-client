@@ -328,45 +328,21 @@ var wasmInstance = null;
 
 var wrappedConsole = Object.create(console);
 
-function debounce(f, wait) {
-  var lastTime = 0;
-  var timeoutId = -1;
-  var wrapped = function() {
-    var time = +new Date();
-    if (time - lastTime < wait) {
-      if (timeoutId == -1)
-        timeoutId = setTimeout(wrapped, (lastTime + wait) - time);
-      return;
-    }
-    if (timeoutId != -1)
-      clearTimeout(timeoutId);
-    timeoutId = -1;
-    lastTime = time;
-    f.apply(null, arguments);
-  };
-  return wrapped;
-}
-
 function compile() {
   outputEl.textContent = '';
   var binaryOutput;
   try {
-    var module = wabt.parseWat('test.wast', watEditor.getValue(), features);
+    var module = wabt.parseWat('test.wast', watEditor.getValue(), {});
     module.resolveNames();
     module.validate(features);
     var binaryOutput = module.toBinary({log: true, write_debug_names:true});
-    outputEl.textContent = binaryOutput.log;
     binaryBuffer = binaryOutput.buffer;
     var blob = new Blob([binaryOutput.buffer]);
     if (binaryBlobUrl) {
       URL.revokeObjectURL(binaryBlobUrl);
     }
     binaryBlobUrl = URL.createObjectURL(blob);
-    downloadLink.setAttribute('href', binaryBlobUrl);
-    downloadEl.classList.remove('disabled');
   } catch (e) {
-    outputEl.textContent += e.toString();
-    downloadEl.classList.add('disabled');
   } finally {
     if (module) module.destroy();
   }
@@ -377,16 +353,14 @@ function run() {
   if (binaryBuffer === null) return;
   try {
     let wasm = new WebAssembly.Module(binaryBuffer);
-    let js = jsEditor.getValue();
     let fn = new Function('wasmModule', 'console', js + '//# sourceURL=demo.js');
     fn(wasm, wrappedConsole);
   } catch (e) {
-    jsLogEl.textContent += String(e);
   }
 }
 
-var onWatChange = debounce(compile, kCompileMinMS);
-var onJsChange = debounce(run, kCompileMinMS);
+var onWatChange = compile();
+var onJsChange = run();
 
 function setExample(index) {
   var example = examples[index];
