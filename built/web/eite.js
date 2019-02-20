@@ -324,8 +324,8 @@ WabtModule().then(async function(wabt) {
         wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
         wabtWasmObject.resolveNames();
         wabtWasmObject.validate(features);
-        wasmArray = new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer();
-        wasmArray=new Uint8Array(await wasmArray);
+//        wasmArray = ;
+        wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
         resolve(wasmArray);
        } catch (e) {
         console.log(e);
