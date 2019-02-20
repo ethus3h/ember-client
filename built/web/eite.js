@@ -299,17 +299,17 @@ async function internalEiteReqWat2Wabt(watData) {
     let watStr=await strFromByteArray(watData);
     let wasmArray;
     let wabtWasmObject;
-    let featuresObject={};
     let wabtFeaturesArray = [ 'exceptions', 'mutable_globals', 'sat_float_to_int', 'sign_extension', 'simd', 'threads', 'multi_value', 'tail_call' ];
+    let wabtFeaturesObject={};
     for (let feature of wabtFeaturesArray) {
-        featuresObject[feature] = false;
+        wabtFeaturesObject[feature] = false;
     }
     return await new Promise(resolve => {
         WabtModule().then(async function(wabt) {
             try {
-                wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
+                wabtWasmObject=wabt.parseWat('test.wast', watStr, wabtFeaturesObject);
                 wabtWasmObject.resolveNames();
-                wabtWasmObject.validate(features);
+                wabtWasmObject.validate(wabtFeaturesObject);
                 wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
                 resolve(wasmArray);
             } catch (e) {
