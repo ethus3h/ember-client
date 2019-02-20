@@ -320,10 +320,18 @@ for (let feature of FEATURES) {
 }        
 
 WabtModule().then(function(wabt) {
+    try {
 module=  wabt.parseWat('test.wast', watStr, featuresObject);
 console.log(module);
     console.log(module.resolveNames());
-    return true;
+       } catch (e) {
+        console.log(e);
+        await implDie('Failed loading WebAssembly module.');
+    } finally {
+        if (module) {
+            module.destroy();
+        }
+    }
 });
 return true;
     try {
