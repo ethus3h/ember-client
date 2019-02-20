@@ -300,6 +300,7 @@ async function internalEiteReqWat2Wabt(watData) {
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
+    return watStr;
     /*
  * Copyright 2016 WebAssembly Community Group participants
  *
