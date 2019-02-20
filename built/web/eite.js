@@ -323,7 +323,7 @@ for (let feature of FEATURES) {
                 try{resolve(moduleParam)} catch(e){await implDie('Failed parsing WebAssembly module.');};
             });
         });
-        await console.log(await module);
+        await console.log(module);
         return true;
         module.parseWat('test.wast',watStr, featuresObject);
         module.resolveNames();
