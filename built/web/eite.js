@@ -300,7 +300,7 @@ async function internalEiteReqWat2Wabt(watData) {
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
-    let watBlob;
+    let wasmArray;
     try {
         let module=new Promise(resolve => {
             WabtModule().then(function(module) {
@@ -312,11 +312,7 @@ async function internalEiteReqWat2Wabt(watData) {
         module.validate(features);
         var binaryOutput = module.toBinary({log: true, write_debug_names:true});
         binaryBuffer = binaryOutput.buffer;
-        var blob = new Blob([binaryOutput.buffer]);
-        if (binaryBlobUrl) {
-            URL.revokeObjectURL(binaryBlobUrl);
-        }
-        binaryBlobUrl = URL.createObjectURL(blob);
+        wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
     } catch (e) {
         await implDie('Failed loading WebAssembly module.');
     } finally {
@@ -324,7 +320,7 @@ async function internalEiteReqWat2Wabt(watData) {
             module.destroy();
         }
     }
-    return watBlob;
+    return await wasmArray;
 console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
