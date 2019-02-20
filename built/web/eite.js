@@ -305,7 +305,7 @@ let module=new Promise(resolve => {
         resolve(module.parseWat('u'));
     });
 });
-console.log(module);
+console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
     return watStr;
