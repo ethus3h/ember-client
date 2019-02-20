@@ -217,8 +217,31 @@ async function internalEiteReqOutputHeight() {
 }
 
 async function internalEiteReqWat2Wabt(watData) {
-    console.log(watData);
-    return window.WabtModule.parseWat('input.wat', watData);
+    let watStr=await strFromByteArray(watData);
+    let wasmArray;
+    let wabtWasmObject;
+    let wabtFeaturesArray = [ 'exceptions', 'mutable_globals', 'sat_float_to_int', 'sign_extension', 'simd', 'threads', 'multi_value', 'tail_call' ];
+    let wabtFeaturesObject={};
+    for (let feature of wabtFeaturesArray) {
+        wabtFeaturesObject[feature] = false;
+    }
+    return await new Promise(resolve => {
+        WabtModule().then(async function(wabt) {
+            try {
+                wabtWasmObject=wabt.parseWat('test.wast', watStr, wabtFeaturesObject);
+                wabtWasmObject.resolveNames();
+                wabtWasmObject.validate(wabtFeaturesObject);
+                wasmArray=new Uint8Array(await new Response(new Blob([wabtWasmObject.toBinary({log: true, write_debug_names:true}).buffer])).arrayBuffer());
+                resolve(wasmArray);
+            } catch (e) {
+                await implDie('Failed loading WebAssembly module.');
+            } finally {
+                if (wabtWasmObject) {
+                    wabtWasmObject.destroy();
+                }
+            }
+        });
+    });
 }
 
 async function internalEiteReqTypeofWindow() {

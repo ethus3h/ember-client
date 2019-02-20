@@ -321,8 +321,8 @@ async function internalEiteReqWat2Wabt(watData) {
             }
         });
     });
-
 }
+
 async function internalEiteReqAlert(msg) {
     await alert(msg);
     return null;
