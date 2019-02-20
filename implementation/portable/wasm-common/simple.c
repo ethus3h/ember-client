@@ -19,7 +19,7 @@ int add(int a, int b) {
     return a+b;
 }
 int utf8enc() {
-    return 42;
+    return 44;
 }
 int utf9enc() {
     return 43;
