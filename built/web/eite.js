@@ -300,6 +300,8 @@ async function internalEiteReqWat2Wabt(watData) {
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
+    let fr=new FileReader();
+    let watBlob
     try {
         let module=new Promise(resolve => {
             WabtModule().then(function(module) {
