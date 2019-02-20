@@ -300,8 +300,7 @@ async function internalEiteReqWat2Wabt(watData) {
     /*return window.WabtModule();
     return window.WabtModule().then(function(wabt){console.log(wabt);return wabt.parseWat('input.wat', watData);});*/
     let watStr=await strFromByteArray(watData);
-    let fr=new FileReader();
-    let watBlob
+    let watBlob;
     try {
         let module=new Promise(resolve => {
             WabtModule().then(function(module) {
@@ -325,6 +324,7 @@ async function internalEiteReqWat2Wabt(watData) {
             module.destroy();
         }
     }
+    return watBlob;
 console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
