@@ -327,7 +327,7 @@ console.log(module);
         module.validate(features);
         var binaryOutput = module.toBinary({log: true, write_debug_names:true});
         binaryBuffer = binaryOutput.buffer;
-        wasmArray = await Response(new Blob([binaryOutput.buffer])).arrayBuffer();
+        wasmArray = Response(new Blob([binaryOutput.buffer])).arrayBuffer();
         console.log(wasmArray);
         wasmArray = new Uint8Array(wasmArray);
         console.log(wasmArray);
