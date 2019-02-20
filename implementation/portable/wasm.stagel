@@ -8,8 +8,14 @@
 # https://github.com/google/googletest
 # https://github.com/dabeaz/ply
 
-r/v/wasmCheckForError s/caller n/arg
+r/v/wasmCheckForError s/caller gi/arg
+    new s/argStr
+    if isArray gi/arg
+        set s/argStr printArray gi/arg
+    else
+        set s/argStr strFrom gi/arg
     
+
 r/n/wasmCall s/routine n/val
     new n/res
     set n/res internalWasmCall s/routine n/val
