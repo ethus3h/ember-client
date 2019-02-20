@@ -308,7 +308,7 @@ async function internalEiteReqWat2Wabt(watData) {
                 resolve(module.parseWat('test.wast',watStr, {}));
             });
         });
-        console.log(module);
+        await console.log(await module);
         module.resolveNames();
         module.validate(features);
         var binaryOutput = module.toBinary({log: true, write_debug_names:true});
