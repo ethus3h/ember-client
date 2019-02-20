@@ -304,7 +304,7 @@ async function internalEiteReqWat2Wabt(watData) {
     let module;
     try {
         module=new Promise(resolve => {
-            WabtModule().then(function(module) {
+            WabtModule().then(async function(module) {
                 try{resolve(module.parseWat('test.wast',watStr, {}))} catch(e){await implDie('Failed parsing WebAssembly module.');};
             });
         });
