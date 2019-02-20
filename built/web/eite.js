@@ -319,7 +319,6 @@ var features = {};
 WabtModule().then(function(wabt) {
 
 
-var kCompileMinMS = 100;
 
 var binaryBuffer = null;
 var binaryBlobUrl = null;
@@ -353,7 +352,7 @@ function run() {
   if (binaryBuffer === null) return;
   try {
     let wasm = new WebAssembly.Module(binaryBuffer);
-    let fn = new Function('wasmModule', 'console', js + '//# sourceURL=demo.js');
+    let fn = new Function('wasmModule', 'console', js + '//# sourceURL=eite.js');
     fn(wasm, wrappedConsole);
   } catch (e) {
   }
@@ -361,15 +360,6 @@ function run() {
 
 var onWatChange = compile();
 var onJsChange = run();
-
-function setExample(index) {
-  var example = examples[index];
-  watEditor.setValue(example.contents);
-  onWatChange();
-  jsEditor.setValue(example.js);
-  onJsChange();
-}
-
 });
 
 }
