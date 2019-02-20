@@ -326,9 +326,9 @@ WabtModule().then(async function(wabt) {
         var binaryOutput = wabtWasmObject.toBinary({log: true, write_debug_names:true});
         binaryBuffer = binaryOutput.buffer;
         wasmArray = new Response(new Blob([binaryOutput.buffer])).arrayBuffer();
-        console.log(wasmArray);
         wasmArray=new Uint8Array(await wasmArray);
         console.log(wasmArray);
+        resolve(wasmArray);
        } catch (e) {
         console.log(e);
         await implDie('Failed loading WebAssembly module.');
