@@ -30,9 +30,8 @@ r/an/wasmCallArrInOut s/routine an/vals
     set n/res internalWasmCallArrInOut s/routine n/val
     return an/res
 
-r/b/internalWasmCheckForErrorInner s/caller s/arg
+r/v/internalWasmCheckForErrorInner s/caller s/arg
     new n/err
     set n/err internalWasmCall 'checkForError'
     if ne n/err 0
-        die cat 'WebAssembly call to ' cat s/routine cat ' with the argument ' cat strFrom n/val } ' reported an error.'
-    return false
+        die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat strFrom s/arg } ' reported an error.'

@@ -11,6 +11,12 @@ r/s/strPrintArr ga/input
         set n/i add n/i 1
     return s/out
 
+r/s/printArray ga/in
+    # Just a convenience wrapper
+    new s/res
+    set s/res strPrintArr ga/in
+    return s/res
+
 r/s/charFromHexByte s/hexByte
     # Bear in mind that StageL doesn't attempt to support Unicode.
     assertIsBaseStr s/hexByte 16
