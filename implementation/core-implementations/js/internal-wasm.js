@@ -3,8 +3,21 @@
 async function internalEiteReqWasmCall(strRoutine, giVal) {
     return eiteWasmModule.instance.exports[strRoutine](giVal);
 }
+
 async function internalWasmCall(strRoutine, intVal) {
-    return await eiteHostCall('internalEiteReqWasmCall', [intVal]);
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
+}
+
+async function internalWasmCall(strRoutine, intVal) {
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
+}
+
+async function internalWasmCall(strRoutine, intVal) {
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
+}
+
+async function internalWasmCall(strRoutine, intVal) {
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
 }
 
 /*
