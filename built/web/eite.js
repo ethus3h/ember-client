@@ -325,6 +325,15 @@ return true;
 
 return WabtModule().then(async function(wabt) {
 
+
+
+var binaryBuffer = null;
+var binaryBlobUrl = null;
+
+var wasmInstance = null;
+
+var wrappedConsole = Object.create(console);
+
 function compile() {
   var binaryOutput;
   try {
