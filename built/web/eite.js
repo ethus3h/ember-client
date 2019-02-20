@@ -325,7 +325,7 @@ console.log(module);
     console.log(module.resolveNames());
     return true;
 });
-
+return true;
     try {
       module=  wabt.parseWat('test.wast', watEditor.getValue(), features);
     console.log(module.resolveNames());
