@@ -330,7 +330,7 @@ var wrappedConsole = Object.create(console);
 function compile() {
   var binaryOutput;
   try {
-    var module = wabt.parseWat('test.wast', watEditor.getValue(), {});
+    var module = wabt.parseWat('test.wast', await strFromByteArray(watData), {});
     module.resolveNames();
     module.validate(features);
     var binaryOutput = module.toBinary({log: true, write_debug_names:true});
