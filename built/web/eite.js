@@ -319,7 +319,7 @@ for (let feature of FEATURES) {
   featuresObject[feature] = false;
 }        
 
-WabtModule().then(function(wabt) {
+WabtModule().then(async function(wabt) {
     try {
 module=  wabt.parseWat('test.wast', watStr, featuresObject);
 console.log(module);
