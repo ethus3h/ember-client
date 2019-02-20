@@ -323,6 +323,8 @@ async function internalEiteReqWat2Wabt(watData) {
     });
 return true;
 
+return WabtModule().then(async function(wabt) {
+
 function compile() {
   var binaryOutput;
   try {
