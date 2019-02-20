@@ -322,35 +322,6 @@ async function internalEiteReqWat2Wabt(watData) {
         });
     });
 return true;
-    try {
-      module=  wabt.parseWat('test.wast', watEditor.getValue(), features);
-    console.log(module.resolveNames());
-    return true;
-        module=new Promise(resolve => {
-            WabtModule().then(async function(moduleParam) {
-                try{resolve(moduleParam)} catch(e){await implDie('Failed parsing WebAssembly module.');};
-            });
-        });
-        //await console.log(module);
-        module.then(console.log);
-        return true;
-        module.parseWat('test.wast',watStr, featuresObject);
-        module.resolveNames();
-        module.validate(features);
-        var binaryOutput = module.toBinary({log: true, write_debug_names:true});
-        binaryBuffer = binaryOutput.buffer;
-        wasmArray = new Uint8Array(Response(new Blob([binaryOutput.buffer])).arrayBuffer());
-    } catch (e) {
-        console.log(e);
-        await implDie('Failed loading WebAssembly module.');
-    } finally {
-        if (module) {
-            module.destroy();
-        }
-    }
-    console.log('xbucrecrurce');console.log(wasmArray);
-    return await wasmArray;
-console.log(await module);
 //console.log(await module.await .then(await async function (wabt) {return 'euueu';}));
 //.then(async function(wabt) {return wabt.parseWat('test.wast',watStr, {});}));
     return watStr;
