@@ -11,6 +11,10 @@
 r/n/wasmCall s/routine n/val
     new n/res
     set n/res internalWasmCall s/routine n/val
+    new n/err
+    set n/err internalWasmCall 'checkForError'
+    if ne n/err 0
+        die cat 'WebAssembly call to ' cat s/routine cat ' with the argument ' cat strFrom n/val } 'reported an error.'
     return n/res
 
 r/n/wasmCallArrIn s/routine an/vals
