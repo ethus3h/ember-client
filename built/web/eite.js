@@ -347,7 +347,6 @@ function compile() {
 }
 
 function run() {
-  jsLogEl.textContent = '';
   if (binaryBuffer === null) return;
   try {
     let wasm = new WebAssembly.Module(binaryBuffer);
