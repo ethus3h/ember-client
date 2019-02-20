@@ -81,6 +81,7 @@ async function internalSetup() {
             */
         }
     };
+    wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [wasmData, importOb]);
     window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 
     // Set up environment variables.
@@ -240,6 +241,10 @@ async function internalEiteReqWat2Wabt(watData) {
             }
         });
     });
+}
+
+async function internalEiteReqWasmLoad(wasmData, importObject) {
+    window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 }
 
 async function internalEiteReqTypeofWindow() {
