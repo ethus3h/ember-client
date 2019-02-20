@@ -317,8 +317,8 @@ async function internalEiteReqWat2Wabt(watData) {
 
 for (let feature of FEATURES) {
   featuresObject[feature] = false;
-}        
-
+}
+return new Promise(resolve => {
 WabtModule().then(async function(wabt) {
     try {
         wabtWasmObject=wabt.parseWat('test.wast', watStr, featuresObject);
@@ -338,6 +338,7 @@ WabtModule().then(async function(wabt) {
         }
     }
 });
+};
 return true;
     try {
       module=  wabt.parseWat('test.wast', watEditor.getValue(), features);
