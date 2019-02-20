@@ -194,6 +194,15 @@ async function internalSetup() {
     setupFinished = true;
 }
 
+function registerSpeedup(name, func) {
+    if (typeof window !== 'undefined') {
+        window[name] = func;
+    }
+    else {
+        self[name] = func;
+    }
+}
+
 // Routines needed for Web worker requests
 async function internalEiteReqCharset() {
     return document.characterSet.toLowerCase();

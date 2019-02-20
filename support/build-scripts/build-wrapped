@@ -55,4 +55,5 @@ for (( i=0; i<targetCount; i++ )); do
     echo >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     cat ./built/stagel-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
 done

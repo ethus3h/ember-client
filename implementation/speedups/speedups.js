@@ -1,12 +1,3 @@
-function registerSpeedup(name, func) {
-    if (typeof window !== 'undefined') {
-        window[name] = func;
-    }
-    else {
-        self[name] = func;
-    }
-}
-
 registerSpeedup('assertIsFalse', async function (bool) {
     if (bool === false) {
         return;
