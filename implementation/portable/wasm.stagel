@@ -8,9 +8,9 @@
 # https://github.com/google/googletest
 # https://github.com/dabeaz/ply
 
-r/n/wasmCall s/routine ga/val
+r/n/wasmCall s/routine n/val
     new n/res
-    set n/res internalWasmCall s/routine /val
+    set n/res internalWasmCall s/routine n/val
     return n/res
 
 r/n/wasmCallArrIn s/routine an/vals
