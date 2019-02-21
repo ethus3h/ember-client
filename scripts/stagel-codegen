@@ -14,7 +14,7 @@ targetLang="$1"
 tokens=()
 
 while IFS='$\n' read -r line; do
-    tokens
+    tokens+="$line"
 done
 
 tokenCount="${#tokens[@]}"
