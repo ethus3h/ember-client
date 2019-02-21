@@ -130,7 +130,7 @@ codegenLiteral() {
         "literal-n"|"literal-b")
             codegenOutput "$2"
             ;;
-        "literal-sn"|"literal-an"|"literal-bn")
+        literal-a*)
             codegenOutput "$2"
             ;;
         esac
