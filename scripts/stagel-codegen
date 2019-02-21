@@ -689,17 +689,9 @@ for (( i=0; i<tokenCount; i++ )); do
         elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
             codegenArrayAppend "$(codegenStartArray "n")"
             stateStack+=("literal-an")
-        elif [[ "${tokens[$i - 1]}" == "literal-an-end" ]]; then
-            codegenArrayAppend "$(codegenEndArray "n")"
-            unset 'stateStack[-1]'
-            i=$((i - 3))
         elif [[ "${tokens[$i - 1]}" == "literal-as-start" ]]; then
             codegenArrayAppend "$(codegenStartArray "s")"
             stateStack+=("literal-as")
-        elif [[ "${tokens[$i - 1]}" == "literal-as-end" ]]; then
-            codegenArrayAppend "$(codegenEndArray "s")"
-            unset 'stateStack[-1]'
-            i=$((i - 3))
         else
             case "${stateStack[-1]}" in
             literal-ab)
@@ -729,6 +721,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             literal-an)
                 case "${tokens[$i - 1]}" in
+                literal-an-end); then
+                    codegenArrayAppend "$(codegenEndArray "n")"
+                    unset 'stateStack[-1]'
+                    i=$((i - 3))
+                    ;;
                 literal-n)
                     codegenArrayAppend "$(codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}")"
                     [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayAppend "$(codegenArrayEntryDelimiter)"
@@ -749,6 +746,11 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             literal-as)
                 case "${tokens[$i - 1]}" in
+                literal-as-end); then
+                    codegenArrayAppend "$(codegenEndArray "s")"
+                    unset 'stateStack[-1]'
+                    i=$((i - 3))
+                    ;;
                 literal-s)
                     codegenArrayAppend "$(codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}")"
                     [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayAppend "$(codegenArrayEntryDelimiter)"
