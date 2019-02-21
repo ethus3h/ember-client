@@ -16,7 +16,12 @@ r/v/wasmCheckForError s/caller gi/arg
         set s/argStr strFrom gi/arg
     new n/err
     set n/err internalWasmCall 'checkForError'
-    if ne n/err 0
+        await console.log('intErr='+intErr+typeof intErr);
+    await console.log('strArgStr='+strArgStr+typeof strArgStr);
+//    await console.log(await ne(intErr, 0));
+    return;
+    if (await ne(intErr, 0)) {
+    if ne 0 n/err
         die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.'
 
 r/n/wasmCall s/routine n/val
