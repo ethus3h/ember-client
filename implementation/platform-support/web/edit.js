@@ -4,6 +4,7 @@ globalCachedInputState="";
 window.onload = function() {
     (async function(){
         let dcNames=[];
+        let editAreaLockClaimed=false;
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
         dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
@@ -116,6 +117,12 @@ function handleDcEditingKeystroke(event) {
     }
 }
 
+function lockEditArea(bool) {
+    if (bool) {
+        
+    }
+}
+
 function handleDcBackspaceOrDelKeystroke(event) {
     if (editInts()) {
         // https://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event
@@ -134,6 +141,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             }
             else {
                 // Delete
+                lockEditArea();
                 after = after.trim().split(' ').slice(1).join(' ');
             }
             start = before.length;
@@ -195,7 +203,7 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    /*if (editInts()) {
+    if (editInts()) {
         // Autoformat input area
         start = el.selectionStart;
         end = el.selectionEnd;
@@ -204,7 +212,7 @@ function autoformatInputArea(el) {
         el.value = el.value.replace(/\s+/g, ' ');
         len = len - el.value.length;
         el.selectionStart = el.selectionEnd = start - len;
-    }*/
+    }
 }
 
 function updateNearestDcLabel(el, autoformat=true) {
