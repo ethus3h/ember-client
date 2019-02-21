@@ -130,13 +130,13 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let length = 0;
             if (key === 8) {
                 // Backspace
-                await console.log('Start was '+start)
+                console.log('Start was '+start)
                 length = before.length;
-                await console.log('Length was '+before.length)
+                console.log('Length was '+before.length)
                 before = before.trim().split(' ').slice(0,-1).join(' ');
-                await console.log('New before is '+before)
+                console.log('New before is '+before)
                 start = length - (length - before.length);
-                await console.log('New start is '+start)
+                console.log('New start is '+start)
             }
             else {
                 // Delete
