@@ -202,7 +202,7 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    if (editInts() && !window.editAreaLockClaimed) {
+    if (editInts()) {
         // Autoformat input area
         start = el.selectionStart;
         end = el.selectionEnd;
@@ -219,7 +219,9 @@ function updateNearestDcLabel(el, autoformat=true) {
         autoformatInputArea(el);
     }
     else {
-        setTimeout(function(){autoformatInputArea(el)}, 750);
+        if (!window.editAreaLockClaimed) {
+            setTimeout(function(){autoformatInputArea(el)}, 750);
+        }
     }
     updateNearestDcLabelInner(el);
 }
