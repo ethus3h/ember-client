@@ -130,20 +130,20 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let length = 0;
             if (key === 8) {
                 // Backspace
-                console.log('Start was '+start)
                 length = before.length;
-                console.log('Length was '+before.length);
-                console.log('Before was '+before);
                 before = before.trim().split(' ').slice(0,-1).join(' ');
-                console.log('New before is '+before)
                 start = length - (length - before.length);
-                console.log('New start is '+start)
             }
             else {
                 // Delete
+                console.log('Start was '+start)
                 length = after.length;
+                console.log('Length was '+after.length);
+                console.log('Before was '+after);
                 after = after.trim().split(' ').slice(1).join(' ');
                 start = length - (length - after.length);
+                console.log('New before is '+after)
+                console.log('New start is '+start)
             }
             el.value = (before + ' ' + after);
             el.selectionStart = el.selectionEnd = start;
