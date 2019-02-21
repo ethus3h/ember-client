@@ -129,6 +129,9 @@ function handleDcBackspaceOrDelKeystroke(event) {
             el.focus();
             if (key === 8) {
                 // Backspace
+        after=after.substring(0, after.indexOf(' '));
+        before=before+after;
+        currentDc=parseInt(before.trim().split(' ').slice(-1));
                 if (before.substr(-1) === ' ' || before.substr(-1) === '') {
                     newText = newText + ' ';
                     el.value = (before + newText + after);
