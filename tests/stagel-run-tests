@@ -40,7 +40,7 @@ runTest stagel/js/bool-literal
 runTest stagel/js/else
 runTest stagel/js/elif
 runTest stagel/js/arglist-inline-end
-runTest stagel/js/wasm-tests
+runTest -v stagel/js/wasm-tests
 
 reportTests
 )
