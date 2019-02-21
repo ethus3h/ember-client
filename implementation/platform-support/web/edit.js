@@ -48,9 +48,9 @@ window.onload = function() {
         inputarea.addEventListener('input', function(event) {
             handleDcEditingKeystroke(event, inputarea);
         });
-        inputarea.addEventListener('keydown', function(event) {
+        inputarea.onkeydown = function() {
             return handleDcBackspaceOrDelKeystroke(event, inputarea);
-        });
+        };
         document.getElementById('ImportDocument').disabled=false;
         document.getElementById('ExportDocument').disabled=false;
         document.getElementById('RunDocument').disabled=false;
