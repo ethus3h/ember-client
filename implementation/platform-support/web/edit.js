@@ -127,11 +127,11 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
             let deleted;
-            let originalLength;
+            let length = 0;
             el.focus();
             if (key === 8) {
                 // Backspace
-                deleted=
+                length = el.value.before.length;
                 el.value = before.trim().split(' ').slice(0,-1).join(' ');
         after=after.substring(0, after.indexOf(' '));
         before=before+after;
@@ -144,7 +144,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
                     newText = ' ' + newText;
                     el.value = (before + newText + after);
                 }
-                el.selectionStart = el.selectionEnd = start + newText.length;
+                el.selectionStart = el.selectionEnd = start + (length - el.value.length);
             }
             else {
                 // Delete
