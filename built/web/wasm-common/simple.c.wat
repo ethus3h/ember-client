@@ -3,7 +3,13 @@
   (type $t1 (func (result i32)))
   (type $t2 (func (param i32) (result i32)))
   (type $t3 (func (param i32 i32) (result i32)))
-  (func $__wasm_call_ctors (export "__wasm_call_ctors") (type $t0))
+  (func $__wasm_call_ctors (type $t0))
+  (func $die (type $t1) (result i32)
+    (local $l0 i32)
+    (i32.store offset=1024
+      (i32.const 0)
+      (i32.const 1))
+    (local.get $l0))
   (func $checkForError (export "checkForError") (type $t1) (result i32)
     (local $l0 i32)
     (local.set $l0
@@ -12,12 +18,6 @@
     (i32.store offset=1024
       (i32.const 0)
       (i32.const 0))
-    (local.get $l0))
-  (func $die (export "die") (type $t1) (result i32)
-    (local $l0 i32)
-    (i32.store offset=1024
-      (i32.const 0)
-      (i32.const 1))
     (local.get $l0))
   (func $fortytwo (export "fortytwo") (type $t2) (param $p0 i32) (result i32)
     (i32.const 42))
@@ -34,6 +34,4 @@
   (global $g0 (mut i32) (i32.const 66576))
   (global $__heap_base (export "__heap_base") i32 (i32.const 66576))
   (global $__data_end (export "__data_end") i32 (i32.const 1028))
-  (global $__dso_handle (export "__dso_handle") i32 (i32.const 1024))
-  (global $errorStatus (export "errorStatus") i32 (i32.const 1024))
   (data $d0 (i32.const 1024) "\00\00\00\00"))
