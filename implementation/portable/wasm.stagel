@@ -27,7 +27,7 @@ r/n/wasmCall s/routine n/val
 
 r/n/wasmCallArrIn s/routine an/vals
     new n/res
-    set n/res internalWasmCallArrIn s/routine n/val
+    set n/res internalWasmCallArrIn s/routine an/vals
     wasmCheckForError s/routine an/vals
     return n/res
 
@@ -39,6 +39,6 @@ r/an/wasmCallArrOut s/routine n/val
 
 r/an/wasmCallArrInOut s/routine an/vals
     new an/res
-    set n/res internalWasmCallArrInOut s/routine n/val
+    set n/res internalWasmCallArrInOut s/routine an/vals
     wasmCheckForError s/routine an/vals
     return an/res
