@@ -1,3 +1,5 @@
+IF /library/Ember/ember-information-technology-environment/tests/stagel/js/routine-minimal/in/in.stagel
+TL js
 1:1:0
 start-document
 
