@@ -662,10 +662,6 @@ codegenArrayAppend() {
     codegenArrayLiteral="$codegenArrayLiteral$1"
 }
 
-codegenGetArrayLiteral() {
-    print "$codegenArrayLiteral"
-}
-
 #set -x
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
