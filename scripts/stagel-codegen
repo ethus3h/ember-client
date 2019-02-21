@@ -11,6 +11,13 @@ targetLang="$1"
 
 # Read token data into tokens array
 
+tokens=()
+
+
+// https://stackoverflow.com/questions/31218391/read-line-by-line-from-standard-input-bash/31219326
+while IFS='$\n' read -r line; do
+    # do whatever with line
+done
 
 tokenCount="${#tokens[@]}"
 
