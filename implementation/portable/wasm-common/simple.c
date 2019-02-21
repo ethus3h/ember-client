@@ -6,9 +6,9 @@
 }
 extern int utf8enc(); */
 int errorStatus = 0;
-int checkForError () EXPORT;
+int checkForError () __attribute__((visibility("default")));
 
-int checkForError() {
+int checkForError() __attribute__((visibility("default"))) {
     int errorTemp = errorStatus;
     errorStatus = 0;
     return errorTemp;
