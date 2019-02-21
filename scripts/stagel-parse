@@ -7,6 +7,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Takes a StageL file as first argument, and prints out corresponding StageL tokens.
 
+quiet="false"
+if [[ "$1" == "-q" ]]; then
+    quiet="true"
+    shift
+fi
+
 input="$1"
 filename="$(basename "$input")"
 filename="${filename//.stagel}" # Don't include extension in name when displaying it in backtraces
@@ -320,10 +326,12 @@ done
 
 tokenCount="${#tokens[@]}"
 #declare -p tokens >&2
-echo "Document contains $((tokenCount / 3)) tokens." >&2
-for (( i=0; i<tokenCount; i++ )); do
-    ! (( (i+1) % 3 )) && echo "Token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
-done
+    if [[ "$quiet" != "true" ]]; then
+    echo "Document contains $((tokenCount / 3)) tokens." >&2
+    for (( i=0; i<tokenCount; i++ )); do
+        ! (( (i+1) % 3 )) && echo "Token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
+    done
+fi
 
 # We now know what each token is, so output them.
 for (( i=0; i<tokenCount; i++ )); do
