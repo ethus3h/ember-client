@@ -210,6 +210,7 @@ function autoformatInputArea(el) {
         console.log('new len ='+len);
         console.log('new start ='+(start + len));
         el.selectionStart = el.selectionEnd = start + len;
+        el.selectionStart = el.selectionEnd = start + len;
     }
 }
 
