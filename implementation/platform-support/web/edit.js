@@ -140,15 +140,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             }
             start = start + (length - el.value.length);
             before = text.substring(0, start);
-            let newText = '';
-            if (before.substr(-1) === ' ' || before.substr(-1) === '') {
-                newText = newText + ' ';
-                el.value = (before + newText + after);
-            }
-            else {
-                newText = ' ' + newText;
-                el.value = (before + newText + after);
-            }
+            el.value = (before + '' + after);
             el.selectionStart = el.selectionEnd = start;
             el.focus();
             return false;
