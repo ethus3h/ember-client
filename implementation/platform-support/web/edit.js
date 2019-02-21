@@ -126,9 +126,13 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let text = el.value;
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
+            let deleted;
+            let originalLength;
             el.focus();
             if (key === 8) {
                 // Backspace
+                deleted=
+                el.value = before.trim().split(' ').slice(0,-1).join(' ');
         after=after.substring(0, after.indexOf(' '));
         before=before+after;
         currentDc=parseInt(before.trim().split(' ').slice(-1));
