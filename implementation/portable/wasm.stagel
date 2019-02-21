@@ -30,6 +30,12 @@ r/n/wasmCall s/routine n/val
     wasmCheckForError s/routine n/val
     return n/res
 
+r/n/wasmCallNoArgs s/routine
+    new n/res
+    set n/res internalWasmCallNoArgs s/routine
+    wasmCheckForError s/routine
+    return n/res
+
 r/n/wasmCallArrIn s/routine an/vals
     new n/res
     set n/res internalWasmCallArrIn s/routine an/vals
