@@ -663,10 +663,7 @@ codegenArrayAppend() {
 }
 
 codegenGetArrayLiteral() {
-    echo "codegenArrayLiteral requested; returning $codegenArrayLiteral" 1>&2
     print "$codegenArrayLiteral"
-    codegenArrayLiteral=""
-    echo "codegenArrayLiteral has been reset to: $codegenArrayLiteral" 1>&2
 }
 
 #set -x
