@@ -1,4 +1,4 @@
-#include "_export.c"
+#include "_eite-shared.c"
 
 /* void _start() {
     utf8enc();
