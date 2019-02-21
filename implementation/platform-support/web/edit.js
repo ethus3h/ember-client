@@ -116,23 +116,23 @@ function handleDcEditingKeystroke(event) {
     }
 }
 
-function handleDcEditingKeystroke(event) {
+function handleDcBackspaceOrDelKeystroke(event) {
     if (editInts()) {
-        if (globalCachedInputState.length === 1) {
-            if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
-                if (inputarea.value.includes(globalCachedInputState)) {
-                    (async function(elem, char) {
-                        let start = elem.selectionStart;
-                        let end = elem.selectionEnd;
-                        elem.value = elem.value.replace(char, '');
-                        elem.selectionStart = start - 1;
-                        elem.selectionEnd = end - 1;
-                        typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
-                    })(inputarea, globalCachedInputState);
-                }
-            }
-        }
+    let start = el.selectionStart;
+    let end = el.selectionEnd;
+    let text = el.value;
+    let before = text.substring(0, start);
+    let after  = text.substring(end, text.length);
+    if (before.substr(-1) === ' ' || before.substr(-1) === '') {
+        newText = newText + ' ';
+        el.value = (before + newText + after);
     }
+    else {
+        newText = ' ' + newText;
+        el.value = (before + newText + after);
+    }
+    el.selectionStart = el.selectionEnd = start + newText.length;
+    el.focus();    }
 }
 
 function startSpinner() {
