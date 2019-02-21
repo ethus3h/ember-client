@@ -38,7 +38,7 @@ done
 # We now know what each token is, so let's do the code generation.
 
 if [[ "$targetLang" == "parsed" ]]; then
-    # Just dump the parse results and exit
+    # Just dump the parse results and exit; for correct input this should produce identical output.
     for (( i=0; i<tokenCount; i++ )); do
         echo "${tokens[$i]}"
     done
@@ -48,7 +48,6 @@ fi
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
-tokenCount="${#tokens[@]}"
 codegenIndent=0
 codegenLastKnownArglistCount=0
 codegenRoutineType=""

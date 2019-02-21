@@ -326,7 +326,7 @@ for (( i=0; i<tokenCount; i++ )); do
     ! (( (i+1) % 3 )) && echo "Token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)" >&2
 done
 
-# We now know what each token is, so let's do the code generation.
+# We now know what each token is, so output them.
 
 if [[ "$targetLang" == "parsed" ]]; then
     # Just dump the parse results and exit
