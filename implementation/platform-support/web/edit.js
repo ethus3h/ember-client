@@ -118,6 +118,7 @@ function handleDcEditingKeystroke(event) {
 
 function handleDcBackspaceOrDelKeystroke(event) {
     if (editInts()) {
+        // https://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event
         let start = el.selectionStart;
         let end = el.selectionEnd;
         let text = el.value;
