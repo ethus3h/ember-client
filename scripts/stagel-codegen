@@ -864,6 +864,10 @@ for (( i=0; i<tokenCount; i++ )); do
             arglist|test)
                 echo "Working on ${stateStack[-1]}" >&2
                 case "${tokens[$i - 1]}" in
+                literal-a*-end)
+                    # Some type of data, array literal.
+                    codegenArgList+=("${tokens[$i - 1]}" "$(codegenGetArrayLiteral)")
+                    ;;
                 literal-*)
                     # Some type of data, literal.
                     [[ "${stateStack[-1]}" == "test" ]] && [[ "$testParameterFound" == "true" ]] && die "Multiple literals (in this case, the ${tokens[$i - 1]} \"${tokens[$i]}\") provided as parameters for a test-style construct."
