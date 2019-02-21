@@ -158,8 +158,9 @@ codegenReference() {
 
 codegenPrintIndentationSpaces() {
     for (( j=0; j<codegenIndent; j++ )); do
-        if [[ "$1" == "--force" ]]
-        codegenOnNewLine && codegenOutput '    '
+        if [[ "$1" == "--force" ]] || codegenOnNewLine; then
+            codegenOutput '    '
+        fi
     done
     true
 }
@@ -707,7 +708,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces)"
+                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
@@ -732,7 +733,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces)"
+                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
@@ -757,7 +758,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces)"
+                    codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
