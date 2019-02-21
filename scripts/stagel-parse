@@ -5,7 +5,7 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Takes a StageL file f, and prints out corresponding StageL tokens.
+# Takes a StageL file as first argument, and prints out corresponding StageL tokens.
 
 input="$1"
 filename="$(basename "$input")"
@@ -326,12 +326,7 @@ for (( i=0; i<tokenCount; i++ )); do
 done
 
 # We now know what each token is, so output them.
-
-if [[ "$targetLang" == "parsed" ]]; then
-    # Just dump the parse results and exit
-    for (( i=0; i<tokenCount; i++ )); do
-        echo "${tokens[$i]}"
-    done
-    true
-    exit
-fi
+for (( i=0; i<tokenCount; i++ )); do
+    echo "${tokens[$i]}"
+done
+true
