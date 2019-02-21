@@ -1,5 +1,3 @@
-IF /library/Ember/ember-information-technology-environment/tests/stagel/js/arglist-inline-end/in/in.stagel
-TL js
 1:1:0
 start-document
 

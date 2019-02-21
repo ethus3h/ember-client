@@ -16,7 +16,7 @@ cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 parseCmd="stagel-parse"
 [[ -f "./stagel-parse" ]] && parseCmd=./"$parseCmd"
 
-codegenCmd="stagel-parse"
+codegenCmd="stagel-codegen"
 [[ -f "./stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
 
 echo "IF $inputFile" 1>&2
