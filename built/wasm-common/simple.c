@@ -6,7 +6,9 @@
 }
 extern int utf8enc(); */
 int errorStatus = 0;
-int checkForError() EXPORT {
+int checkForError () EXPORT;
+
+int checkForError() {
     int errorTemp = errorStatus;
     errorStatus = 0;
     return errorTemp;
