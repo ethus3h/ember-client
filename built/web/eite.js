@@ -1622,9 +1622,7 @@ async function wasmCallArrIn(strRoutine, intArrayVals) {
     await wasmCheckForError(strRoutine, intArrayVals);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}ed token: ')'[Learn More]
-eite.js:166:115
-ReferenceError: eiteCall is not defined[L
+}
 
 async function wasmCallArrOut(strRoutine, intVal) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('int Val = ' + intVal + '; '); await internalDebugStackEnter('wasmCallArrOut:wasm'); await assertIsStr(strRoutine);await assertIsInt(intVal); let intArrayReturn;
