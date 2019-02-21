@@ -158,6 +158,7 @@ codegenReference() {
 
 codegenPrintIndentationSpaces() {
     for (( j=0; j<codegenIndent; j++ )); do
+        if [[ "$1" == "--force" ]]
         codegenOnNewLine && codegenOutput '    '
     done
     true
