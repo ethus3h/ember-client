@@ -1596,10 +1596,10 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     else {
         strArgStr = await strFrom(genericItemArg);
     }
-    console.log('strArgStr='+strArgStr);
-    return;
     let intErr = 0;
     intErr = await internalWasmCall('checkForError');
+    console.log('strArgStr='+strArgStr+typeof strArgStr);
+    return;
     if (await ne(intErr, 0)) {
         await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
     }
