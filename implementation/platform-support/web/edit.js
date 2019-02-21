@@ -48,6 +48,9 @@ window.onload = function() {
         inputarea.addEventListener('input', function(event) {
             handleDcEditingKeystroke(event, inputarea);
         });
+        inputarea.addEventListener('keyup', function(event) {
+            handleDcEditingKeystroke(event, inputarea);
+        });
         document.getElementById('ImportDocument').disabled=false;
         document.getElementById('ExportDocument').disabled=false;
         document.getElementById('RunDocument').disabled=false;
@@ -96,7 +99,6 @@ function editInts() {
 
 function handleDcEditingKeystroke(event) {
     if (editInts()) {
-        if(event.)
         if (globalCachedInputState.length === 1) {
             if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
