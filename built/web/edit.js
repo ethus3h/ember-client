@@ -197,7 +197,7 @@ function setNearestDcLabel(text) {
 function autoformatInputArea(el) {
     if (editInts()) {
         // Autoformat input area
-        // I'm not sure why, but trying to calculate the change in start position is confused by forward delete. I guess I'll just leave it like this for now.
+        // I'm not sure why, but trying to calculate the change in start position is confused by forward delete. I guess I'll just leave it like this for now since it works, even though I don't understand why.
         start = el.selectionStart;
         /* end = el.selectionEnd;
         let len = el.value.length;
