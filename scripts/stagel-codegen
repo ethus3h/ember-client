@@ -51,6 +51,7 @@ blockStack=("root" "")
 testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true". It's returned to "false" once the test's associated code block is located.
 codegenStatus="Nothing done yet"
 tokenLookahead=""
+filename=""
 
 # Define a function for each type of output needed for code generation
 
@@ -662,7 +663,9 @@ for (( i=0; i<tokenCount; i++ )); do
         codegenStatus="State: ${stateStack[-1]}:$codegenIndent, token #$((i / 3 + 1)) (${tokens[$i - 2]}): ${tokens[$i - 1]} ($((i-1))): ${tokens[$i]} ($i)"
         codegenDebug
 
-        if [[ "${tokens[$i - 1]}" == "comment" ]] && [[ "${stateStack[-1]}" != "arglist" ]] && [[ "${stateStack[-1]}" != literal-a* ]]; then
+        if [[ "${tokens[$i - 1]}" == "filename" ]]; then
+            filename="${tokens[$i]}"
+        elif [[ "${tokens[$i - 1]}" == "comment" ]] && [[ "${stateStack[-1]}" != "arglist" ]] && [[ "${stateStack[-1]}" != literal-a* ]]; then
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         elif [[ "${tokens[$i - 1]}" == "literal-ab-start" ]]; then
