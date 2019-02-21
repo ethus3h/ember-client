@@ -48,6 +48,9 @@ window.onload = function() {
         inputarea.addEventListener('input', function(event) {
             handleDcEditingKeystroke(event, inputarea);
         });
+        inputarea.addEventListener('keydown', function(event) {
+            handleDcBackspaceOrDelKeystroke(event, inputarea);
+        });
         document.getElementById('ImportDocument').disabled=false;
         document.getElementById('ExportDocument').disabled=false;
         document.getElementById('RunDocument').disabled=false;
@@ -99,7 +102,7 @@ function handleDcEditingKeystroke(event) {
         if (globalCachedInputState.length === 1) {
             if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
-                    (async function(elem, char){
+                    (async function(elem, char) {
                         let start = elem.selectionStart;
                         let end = elem.selectionEnd;
                         elem.value = elem.value.replace(char, '');
@@ -109,6 +112,40 @@ function handleDcEditingKeystroke(event) {
                     })(inputarea, globalCachedInputState);
                 }
             }
+        }
+    }
+}
+
+function handleDcBackspaceOrDelKeystroke(event) {
+    if (editInts()) {
+        // https://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event
+        let key=event.keyCode || event.charCode;
+        if (key === 8 || key === 46) {
+            let start = el.selectionStart;
+            let end = el.selectionEnd;
+            let text = el.value;
+            let before = text.substring(0, start);
+            let after  = text.substring(end, text.length);
+            let deleted;
+            let length = 0;
+            el.focus();
+            if (key === 8) {
+                // Backspace
+                length = before.length;
+                before = before.trim().split(' ').slice(0,-1).join(' ');
+                start = start + (length - before.length);
+            }
+            else {
+                // Delete
+                length = after.length;
+                after = after.trim().split(' ').slice(1).join(' ');
+                start = start + (length - after.length);
+            }
+            before = text.substring(0, start);
+            el.value = (before + '' + after);
+            el.selectionStart = el.selectionEnd = start;
+            el.focus();
+            return false;
         }
     }
 }
