@@ -133,9 +133,6 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 // Backspace
                 length = el.value.before.length;
                 el.value = before.trim().split(' ').slice(0,-1).join(' ');
-        after=after.substring(0, after.indexOf(' '));
-        before=before+after;
-        currentDc=parseInt(before.trim().split(' ').slice(-1));
                 if (before.substr(-1) === ' ' || before.substr(-1) === '') {
                     newText = newText + ' ';
                     el.value = (before + newText + after);
@@ -144,12 +141,12 @@ function handleDcBackspaceOrDelKeystroke(event) {
                     newText = ' ' + newText;
                     el.value = (before + newText + after);
                 }
-                el.selectionStart = el.selectionEnd = start + (length - el.value.length);
             }
             else {
                 // Delete
                 
             }
+            el.selectionStart = el.selectionEnd = start + (length - el.value.length);
             el.focus();
             return false;
         }
