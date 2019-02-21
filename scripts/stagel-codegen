@@ -46,6 +46,7 @@ codegenArgList=()
 codegenNewLine="true"
 codegenNewlineLookingForSpaces="true" # True while finding indentation spaces at the beginning of a line.
 codegenTestIndentDeferred="false" # True while waiting to come to the code-block portion of a "test"-style construct (e.g. "if") that has a multiline test part
+codegenArrayLiteral=""
 stateStack=("root" "code")
 blockStack=("root" "")
 testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true". It's returned to "false" once the test's associated code block is located.
@@ -657,6 +658,7 @@ blockStackRemoveLast() {
     unset 'blockStack[-1]'
 }
 
+codegenArrayAppend()
 #set -x
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
@@ -674,7 +676,7 @@ for (( i=0; i<tokenCount; i++ )); do
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         elif [[ "${tokens[$i - 1]}" == "literal-ab-start" ]]; then
-            codegenStartArray "b"
+            codegenArrayLiteral="$ codegenStartArray "b"
             stateStack+=("literal-ab")
         elif [[ "${tokens[$i - 1]}" == "literal-ab-end" ]]; then
             codegenEndArray "b"
