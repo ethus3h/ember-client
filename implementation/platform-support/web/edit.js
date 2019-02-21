@@ -121,15 +121,13 @@ function handleDcBackspaceOrDelKeystroke(event) {
         // https://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event
         let key=event.keyCode || event.charCode;
         if (key === 8 || key === 46) {
-            el = document.getElementById('inputarea');
+            let el = document.getElementById('inputarea');
             let start = el.selectionStart;
             let end = el.selectionEnd;
             let text = el.value;
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
-            let deleted;
             let length = 0;
-            el.focus();
             if (key === 8) {
                 // Backspace
                 length = before.length;
