@@ -1609,9 +1609,10 @@ async function wasmCall(strRoutine, intVal) {
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
-    await wasmCheckForError(strRoutine, intVal);
+    //await wasmCheckForError(strRoutine, intVal);
+    await wasmCheckForError('fortytwo', 0);
 
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); throw 'u'; return intReturn;
 }
 
 async function wasmCallArrIn(strRoutine, intArrayVals) {
