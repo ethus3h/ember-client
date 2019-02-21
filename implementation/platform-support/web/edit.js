@@ -116,6 +116,25 @@ function handleDcEditingKeystroke(event) {
     }
 }
 
+function handleDcEditingKeystroke(event) {
+    if (editInts()) {
+        if (globalCachedInputState.length === 1) {
+            if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
+                if (inputarea.value.includes(globalCachedInputState)) {
+                    (async function(elem, char) {
+                        let start = elem.selectionStart;
+                        let end = elem.selectionEnd;
+                        elem.value = elem.value.replace(char, '');
+                        elem.selectionStart = start - 1;
+                        elem.selectionEnd = end - 1;
+                        typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
+                    })(inputarea, globalCachedInputState);
+                }
+            }
+        }
+    }
+}
+
 function startSpinner() {
     // Display loading spinner
     document.getElementById('inputarea').disabled='true';
