@@ -118,9 +118,7 @@ function handleDcEditingKeystroke(event) {
 }
 
 function lockEditArea(bool) {
-    if (bool) {
-        
-    }
+    window.editAreaLockClaimed = bool;
 }
 
 function handleDcBackspaceOrDelKeystroke(event) {
@@ -141,7 +139,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             }
             else {
                 // Delete
-                lockEditArea();
+                lockEditArea(true); // prevent autoformat running since it gets confused by forward delete for some reason
                 after = after.trim().split(' ').slice(1).join(' ');
             }
             start = before.length;
@@ -153,6 +151,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             }
             el.selectionStart = el.selectionEnd = start;
             el.focus();
+            lockEditArea(false);
             return false;
         }
     }
@@ -203,7 +202,7 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    if (editInts()) {
+    if (editInts() && !window.editAreaLockClaimed) {
         // Autoformat input area
         start = el.selectionStart;
         end = el.selectionEnd;
