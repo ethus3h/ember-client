@@ -133,12 +133,14 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 // Backspace
                 length = before.length;
                 before = before.trim().split(' ').slice(0,-1).join(' ');
+                start = start + (length - before.length);
             }
             else {
                 // Delete
-                
+                length = after.length;
+                after = after.trim().split(' ').slice(1).join(' ');
+                start = start + (length - after.length);
             }
-            start = start + (length - before.length);
             before = text.substring(0, start);
             el.value = (before + '' + after);
             el.selectionStart = el.selectionEnd = start;
