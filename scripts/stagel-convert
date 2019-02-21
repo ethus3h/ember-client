@@ -10,7 +10,10 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 inputFile="$1"
 targetLang="$2"
 
-parseCmd="./support/build-scripts/build-stagel-inner"
-[[ -f "./stagel-build-internal-stagel-inner" ]] && parseCmd=./"$parseCmd"
+parseCmd="stagel-parse"
+[[ -f "./scripts/stagel-parse" ]] && parseCmd=./"$parseCmd"
 
-stagel-parse "$inputFile" | stagel-codegen "$targetLang"
+codegenCmd="stagel-parse"
+[[ -f "./scripts/stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
+
+"$parseCmd" "$inputFile" | "$codegenCmd" "$targetLang"
