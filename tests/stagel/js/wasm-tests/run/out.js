@@ -3,6 +3,6 @@ async function runTestsWasm(boolV, boolA) {
 
     await runTest(boolV, await implEq(42, await wasmCall([ true, false ]'fortytwo')));
     await runTest(boolV, await implEq(4, await wasmCallArrIn([ 2, 2 ]'add')));
-    
-await internalDebugStackExit();
+
+    await internalDebugStackExit();
 }
