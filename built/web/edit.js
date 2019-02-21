@@ -131,7 +131,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             if (key === 8) {
                 // Backspace
                 length = before.length;
-                before = before.trim().split(' ').slice(0,-1).join(' ');
+                before = before.trim().split(' ').slice(0, -1).join(' ');
             }
             else {
                 // Delete
@@ -139,7 +139,12 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 after = after.trim().split(' ').slice(1).join(' ');
             }
             start = before.length;
-            el.value = (before + ' ' + after);
+            if (before.substr(-1) !== ' ' && after.substr(0, 1) !== '') {
+                el.value = (before + ' ' + after);
+            }
+            else {
+                el.value = (before + '' + after);
+            }
             el.selectionStart = el.selectionEnd = start;
             el.focus();
             return false;
