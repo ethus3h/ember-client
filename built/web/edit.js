@@ -48,9 +48,9 @@ window.onload = function() {
         inputarea.addEventListener('input', function(event) {
             handleDcEditingKeystroke(event, inputarea);
         });
-        inputarea.addEventListener('keydown', function(event) {
-            handleDcBackspaceOrDelKeystroke(event, inputarea);
-        });
+        inputarea.onkeydown = function() {
+            return handleDcBackspaceOrDelKeystroke(event, inputarea);
+        };
         document.getElementById('ImportDocument').disabled=false;
         document.getElementById('ExportDocument').disabled=false;
         document.getElementById('RunDocument').disabled=false;
@@ -130,9 +130,13 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let length = 0;
             if (key === 8) {
                 // Backspace
+                await console.log('Start was '+start)
                 length = before.length;
+                await console.log('Length was '+before.length)
                 before = before.trim().split(' ').slice(0,-1).join(' ');
+                await console.log('New before is '+before)
                 start = length - (length - before.length);
+                await console.log('New start is '+start)
             }
             else {
                 // Delete
