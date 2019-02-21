@@ -1,3 +1,5 @@
+#include "_export.c"
+
 /* void _start() {
     utf8enc();
     utf9enc();
