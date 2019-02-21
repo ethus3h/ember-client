@@ -1612,7 +1612,7 @@ async function wasmCall(strRoutine, intVal) {
     //await wasmCheckForError(strRoutine, intVal);
     await wasmCheckForError('fortytwo', 0);
 
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); throw 'u'; return intReturn;
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function wasmCallArrIn(strRoutine, intArrayVals) {
