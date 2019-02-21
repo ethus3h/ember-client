@@ -121,30 +121,31 @@ function handleDcBackspaceOrDelKeystroke(event) {
         // https://stackoverflow.com/questions/9906885/detect-backspace-and-del-on-input-event
         let key=event.keyCode || event.charCode;
         if (key === 8 || key === 46) {
+            let start = el.selectionStart;
+            let end = el.selectionEnd;
+            let text = el.value;
+            let before = text.substring(0, start);
+            let after  = text.substring(end, text.length);
+            el.focus();
             if (key === 8) {
                 // Backspace
+                if (before.substr(-1) === ' ' || before.substr(-1) === '') {
+                    newText = newText + ' ';
+                    el.value = (before + newText + after);
+                }
+                else {
+                    newText = ' ' + newText;
+                    el.value = (before + newText + after);
+                }
+                el.selectionStart = el.selectionEnd = start + newText.length;
             }
             else {
                 // Delete
                 
             }
+            el.focus();
             return false;
         }
-        let start = el.selectionStart;
-        let end = el.selectionEnd;
-        let text = el.value;
-        let before = text.substring(0, start);
-        let after  = text.substring(end, text.length);
-        if (before.substr(-1) === ' ' || before.substr(-1) === '') {
-            newText = newText + ' ';
-            el.value = (before + newText + after);
-        }
-        else {
-            newText = ' ' + newText;
-            el.value = (before + newText + after);
-        }
-        el.selectionStart = el.selectionEnd = start + newText.length;
-        el.focus();
     }
 }
 
