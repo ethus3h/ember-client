@@ -6,7 +6,7 @@
 }
 extern int utf8enc(); */
 int errorStatus = 0;
-int checkForError() {
+int checkForError() EXPORT {
     int errorTemp = errorStatus;
     errorStatus = 0;
     return errorTemp;
@@ -14,10 +14,10 @@ int checkForError() {
 int die() {
     errorStatus = 1; /* All calls need to call checkForError exactly once afterwards. */
 }
-int fortytwo(int a) {
+int fortytwo(int a) EXPORT {
     return 42;
 }
-int add(int a, int b) {
+int add(int a, int b) EXPORT {
     return a+b;
 }
 int utf8enc() {
