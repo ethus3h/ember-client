@@ -309,6 +309,17 @@ for (( i=0; i<tokenCount; i++ )); do
 done
 
 tokenCount="${#tokens[@]}"
+# Convert command & number tokens' labels to strings instead of space-separated ASCII
+
+for (( i=0; i<tokenCount; i++ )); do
+    if ! (( (i+1) % 3 )); then
+        if [[ "${tokens[$i - 1]}" == "command" ]] || [[ "${tokens[$i - 1]}" == "literal-n" ]]; then
+            tokens[$i]="$(asciiDecListToText <<< "${tokens[$i]}")"
+        fi
+    fi
+done
+
+tokenCount="${#tokens[@]}"
 #declare -p tokens >&2
 echo "Document contains $((tokenCount / 3)) tokens." >&2
 for (( i=0; i<tokenCount; i++ )); do
