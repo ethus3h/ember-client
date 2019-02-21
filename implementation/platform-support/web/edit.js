@@ -136,14 +136,9 @@ function handleDcBackspaceOrDelKeystroke(event) {
             }
             else {
                 // Delete
-                console.log('Start was '+start)
                 length = after.length;
-                console.log('Length was '+after.length);
-                console.log('Before was '+after);
                 after = after.trim().split(' ').slice(1).join(' ');
-                start = before.length - (length - after.length);
-                console.log('New before is '+after)
-                console.log('New start is '+start)
+                start = before.length;
             }
             el.value = (before + ' ' + after);
             el.selectionStart = el.selectionEnd = start;
