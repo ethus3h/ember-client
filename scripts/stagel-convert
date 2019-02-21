@@ -19,7 +19,4 @@ parseCmd="stagel-parse"
 codegenCmd="stagel-codegen"
 [[ -f "./stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
 
-echo "IF $inputFile" 1>&2
-echo "TL $targetLang" 1>&2
-#"$parseCmd" "$inputFile" 1>&2
 "$parseCmd" "$inputFile" | "$codegenCmd" "$targetLang"

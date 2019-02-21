@@ -771,7 +771,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 ident-r-*)
                     codegenRoutineName="$(asciiDecListToText "${tokens[$i]}")"
-                    if [[ "${tokens[$i - 4]}" != "start-document" ]]; then
+                    if ! [[ "${tokens[$i - 4]}" =~ ^(start-document|filename)$ ]]; then
                         codegenOutput $'\n'
                     fi
                     codegenRoutineType="${tokens[$i - 1]}"
