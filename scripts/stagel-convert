@@ -19,4 +19,4 @@ parseCmd="stagel-parse"
 codegenCmd="stagel-parse"
 [[ -f "./stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
 
-"$parseCmd" "$inputFile" | "$codegenCmd" "$targetLang"
+"$parseCmd" "$inputFile" # | "$codegenCmd" "$targetLang"
