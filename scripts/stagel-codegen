@@ -658,7 +658,10 @@ blockStackRemoveLast() {
     unset 'blockStack[-1]'
 }
 
-codegenArrayAppend()
+codegenArrayAppend() {
+    codegenArrayLiteral="$codegenArrayLiteral$1"
+}
+
 #set -x
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
@@ -676,39 +679,39 @@ for (( i=0; i<tokenCount; i++ )); do
             echo "(Inserting a comment)" >&2
             codegenComment "$(asciiDecListToText "${tokens[$i]}")"
         elif [[ "${tokens[$i - 1]}" == "literal-ab-start" ]]; then
-            codegenArrayLiteral="$ codegenStartArray "b"
+            codegenArrayLiteral "$(codegenStartArray "b")"
             stateStack+=("literal-ab")
         elif [[ "${tokens[$i - 1]}" == "literal-ab-end" ]]; then
-            codegenEndArray "b"
+            codegenArrayLiteral "$(codegenEndArray "b")"
             unset 'stateStack[-1]'
         elif [[ "${tokens[$i - 1]}" == "literal-an-start" ]]; then
-            codegenStartArray "n"
+            codegenArrayLiteral "$(codegenStartArray "n")"
             stateStack+=("literal-an")
         elif [[ "${tokens[$i - 1]}" == "literal-an-end" ]]; then
-            codegenEndArray "n"
+            codegenArrayLiteral "$(codegenEndArray "n")"
             unset 'stateStack[-1]'
         elif [[ "${tokens[$i - 1]}" == "literal-as-start" ]]; then
-            codegenStartArray "s"
+            codegenArrayLiteral "$(codegenStartArray "s")"
             stateStack+=("literal-as")
         elif [[ "${tokens[$i - 1]}" == "literal-as-end" ]]; then
-            codegenEndArray "s"
+            codegenArrayLiteral "$(codegenEndArray "s")"
             unset 'stateStack[-1]'
         else
             case "${stateStack[-1]}" in
             literal-ab)
                 case "${tokens[$i - 1]}" in
                 literal-b)
-                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 ident-b)
-                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenReference "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayEntryDelimiter
-                    codegenOutput $'\n'
-                    codegenPrintIndentationSpaces
+                    codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
+                    codegenArrayLiteral "$(codegenOutput $'\n')"
+                    codegenArrayLiteral "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
                     die "Unexpected token ${tokens[$i - 1]} in array of booleans."
@@ -718,17 +721,17 @@ for (( i=0; i<tokenCount; i++ )); do
             literal-an)
                 case "${tokens[$i - 1]}" in
                 literal-n)
-                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 ident-n)
-                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenReference "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayEntryDelimiter
-                    codegenOutput $'\n'
-                    codegenPrintIndentationSpaces
+                    codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
+                    codegenArrayLiteral "$(codegenOutput $'\n')"
+                    codegenArrayLiteral "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
                     die "Unexpected token ${tokens[$i - 1]} in array of numbers."
@@ -738,17 +741,17 @@ for (( i=0; i<tokenCount; i++ )); do
             literal-as)
                 case "${tokens[$i - 1]}" in
                 literal-s)
-                    codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenLiteral "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 ident-s)
-                    codegenReference "${tokens[$i - 1]}" "${tokens[$i]}"
-                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayEntryDelimiter
+                    codegenArrayLiteral "$(codegenReference "${tokens[$i - 1]}" "${tokens[$i]}")"
+                    [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayEntryDelimiter
-                    codegenOutput $'\n'
-                    codegenPrintIndentationSpaces
+                    codegenArrayLiteral "$(codegenArrayEntryDelimiter)"
+                    codegenArrayLiteral "$(codegenOutput $'\n')"
+                    codegenArrayLiteral "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
                     die "Unexpected token ${tokens[$i - 1]} in array of strings."
