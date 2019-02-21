@@ -139,7 +139,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
             start = before.length;
             if (before.substr(-1) !== ' ' && after.substr(0, 1) !== ' ') {
                 el.value = (before + ' ' + after);
-                el.selectionStart = el.selectionEnd = start + 1;
+                el.selectionStart = el.selectionEnd = start;
             }
             else {
                 el.value = (before + '' + after);
