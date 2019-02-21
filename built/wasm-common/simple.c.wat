@@ -4,6 +4,12 @@
   (type $t2 (func (param i32) (result i32)))
   (type $t3 (func (param i32 i32) (result i32)))
   (func $__wasm_call_ctors (type $t0))
+  (func $die (type $t1) (result i32)
+    (local $l0 i32)
+    (i32.store offset=1024
+      (i32.const 0)
+      (i32.const 1))
+    (local.get $l0))
   (func $checkForError (type $t1) (result i32)
     (local $l0 i32)
     (local.set $l0
@@ -12,12 +18,6 @@
     (i32.store offset=1024
       (i32.const 0)
       (i32.const 0))
-    (local.get $l0))
-  (func $die (type $t1) (result i32)
-    (local $l0 i32)
-    (i32.store offset=1024
-      (i32.const 0)
-      (i32.const 1))
     (local.get $l0))
   (func $fortytwo (type $t2) (param $p0 i32) (result i32)
     (i32.const 42))
