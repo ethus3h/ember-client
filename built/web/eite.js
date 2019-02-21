@@ -1596,6 +1596,8 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     else {
         strArgStr = await strFrom(genericItemArg);
     }
+    console.log('strArgStr='+strArgStr);
+    return;
     let intErr = 0;
     intErr = await internalWasmCall('checkForError');
     if (await ne(intErr, 0)) {
