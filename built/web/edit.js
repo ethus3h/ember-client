@@ -139,7 +139,7 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 after = after.trim().split(' ').slice(1).join(' ');
             }
             start = before.length;
-            if (before.substr(-1) !== ' ' && after.substr(0, 1) !== '') {
+            if (before.substr(-1) !== ' ' && after.substr(0, 1) !== ' ') {
                 el.value = (before + ' ' + after);
             }
             else {
