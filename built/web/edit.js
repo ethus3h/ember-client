@@ -139,12 +139,11 @@ function handleDcBackspaceOrDelKeystroke(event) {
             start = before.length;
             if (before.substr(-1) !== ' ' && after.substr(0, 1) !== ' ') {
                 el.value = (before + ' ' + after);
-                el.selectionStart = el.selectionEnd = start + 1;
             }
             else {
                 el.value = (before + '' + after);
-                el.selectionStart = el.selectionEnd = start;
             }
+            el.selectionStart = el.selectionEnd = start;
             el.focus();
             return false;
         }
@@ -196,7 +195,7 @@ function setNearestDcLabel(text) {
 }
 
 function autoformatInputArea(el) {
-    if (editInts()) {
+    /*if (editInts()) {
         // Autoformat input area
         start = el.selectionStart;
         end = el.selectionEnd;
@@ -205,7 +204,7 @@ function autoformatInputArea(el) {
         el.value = el.value.replace(/\s+/g, ' ');
         len = len - el.value.length;
         el.selectionStart = el.selectionEnd = start - len;
-    }
+    }*/
 }
 
 function updateNearestDcLabel(el, autoformat=true) {
