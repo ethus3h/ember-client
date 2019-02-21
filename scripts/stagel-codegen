@@ -696,7 +696,7 @@ for (( i=0; i<tokenCount; i++ )); do
             case "${stateStack[-1]}" in
             literal-ab)
                 case "${tokens[$i - 1]}" in
-                literal-ab-end); then
+                literal-ab-end)
                     codegenArrayAppend "$(codegenEndArray "b")"
                     unset 'stateStack[-1]'
                     i=$((i - 3))
@@ -721,7 +721,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             literal-an)
                 case "${tokens[$i - 1]}" in
-                literal-an-end); then
+                literal-an-end)
                     codegenArrayAppend "$(codegenEndArray "n")"
                     unset 'stateStack[-1]'
                     i=$((i - 3))
@@ -746,7 +746,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 ;;
             literal-as)
                 case "${tokens[$i - 1]}" in
-                literal-as-end); then
+                literal-as-end)
                     codegenArrayAppend "$(codegenEndArray "s")"
                     unset 'stateStack[-1]'
                     i=$((i - 3))
