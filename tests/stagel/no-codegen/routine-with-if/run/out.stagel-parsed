@@ -1,9 +1,1 @@
-1:1:0
-start-document
-
-1:1:0
-filename
-parsed
-1:1:0
-end-document
-
+1:1:0start-document1:1:0filenamei1:2:0ident-r-s 102 98 83 119 105 116 99 104 101 1141:17:0ident-n 110 117 1091:21:0newline2:6:0indent2:6:1commandif2:9:1commandeq2:12:1literal-02:14:1literal-02:14:1newline3:10:1indent3:10:2commandretur3:17:2literal-s 973:19:2newline4:1:2newline5:2:1dedent5:2:0dedent5:2:0comment5:2:0newline6:1:0end-document
