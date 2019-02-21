@@ -13,7 +13,7 @@ targetLang="$1"
 
 tokens=()
 
-while IFS='$\n' read -r line; do
+while IFS=$'\n' read -r line; do
     tokens+=("$line")
 done
 

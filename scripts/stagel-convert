@@ -21,5 +21,5 @@ codegenCmd="stagel-codegen"
 
 echo "IF $inputFile" 1>&2
 echo "TL $targetLang" 1>&2
-"$parseCmd" "$inputFile" 1>&2
+#"$parseCmd" "$inputFile" 1>&2
 "$parseCmd" "$inputFile" | "$codegenCmd" "$targetLang"
