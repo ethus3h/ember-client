@@ -133,18 +133,20 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 // Backspace
                 length = el.value.before.length;
                 el.value = before.trim().split(' ').slice(0,-1).join(' ');
-                if (before.substr(-1) === ' ' || before.substr(-1) === '') {
-                    newText = newText + ' ';
-                    el.value = (before + newText + after);
-                }
-                else {
-                    newText = ' ' + newText;
-                    el.value = (before + newText + after);
-                }
             }
             else {
                 // Delete
                 
+            }
+            start = start + (length - el.value.length)
+            before = text.substring(0, start);
+            if (before.substr(-1) === ' ' || before.substr(-1) === '') {
+                newText = newText + ' ';
+                el.value = (before + newText + after);
+            }
+            else {
+                newText = ' ' + newText;
+                el.value = (before + newText + after);
             }
             el.selectionStart = el.selectionEnd = start + (length - el.value.length);
             el.focus();
