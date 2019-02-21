@@ -200,14 +200,16 @@ function autoformatInputArea(el) {
         start = el.selectionStart;
         end = el.selectionEnd;
         let len = el.value.length;
-        console.log('start ='+start);
+        console.log('old start ='+start);
         console.log('end ='+end);
         console.log('old len ='+len);
+        console.log('old value ='+el.value);
         el.value = el.value + ' ';
         el.value = el.value.replace(/\s+/g, ' ');
         len = len - el.value.length;
+        console.log('new start/end ='+(start - len));
         console.log('new len ='+len);
-        console.log('new start ='+(start - len));
+        console.log('new value ='+el.value);
         el.selectionStart = el.selectionEnd = start - len;
     }
 }
