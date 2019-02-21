@@ -96,10 +96,11 @@ function editInts() {
 
 function handleDcEditingKeystroke(event) {
     if (editInts()) {
+        if(event.)
         if (globalCachedInputState.length === 1) {
             if (globalCachedInputState !== " " && isNaN(parseInt(globalCachedInputState))) {
                 if (inputarea.value.includes(globalCachedInputState)) {
-                    (async function(elem, char){
+                    (async function(elem, char) {
                         let start = elem.selectionStart;
                         let end = elem.selectionEnd;
                         elem.value = elem.value.replace(char, '');
