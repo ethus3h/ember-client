@@ -61,6 +61,11 @@ tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
 tokens+=("start-document")
 tokens+=("")
 
+# And a token to record the filename
+tokens+=("$lineNumber:$columnNumber:$currentIndentLevel")
+tokens+=("filename")
+tokens+=("$filename")
+
 # Add empty slots to the array for the first token
 tokens+=("$lineNumber:$columnNumber:$currentIndentLevel") # Line/column/depth goes in first slot
 tokens+=("") # Token type goes in second slot
@@ -334,6 +339,7 @@ fi
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
+tokenCount="${#tokens[@]}"
 codegenIndent=0
 codegenLastKnownArglistCount=0
 codegenRoutineType=""
