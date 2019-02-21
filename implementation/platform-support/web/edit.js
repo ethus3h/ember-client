@@ -130,22 +130,21 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let length = 0;
             if (key === 8) {
                 // Backspace
-                length = before.length;
                 before = before.trim().split(' ').slice(0, -1).join(' ');
             }
             else {
                 // Delete
-                length = after.length;
                 after = after.trim().split(' ').slice(1).join(' ');
             }
             start = before.length;
             if (before.substr(-1) !== ' ' && after.substr(0, 1) !== ' ') {
                 el.value = (before + ' ' + after);
+                el.selectionStart = el.selectionEnd = start + 1;
             }
             else {
                 el.value = (before + '' + after);
+                el.selectionStart = el.selectionEnd = start;
             }
-            el.selectionStart = el.selectionEnd = start;
             el.focus();
             return false;
         }
