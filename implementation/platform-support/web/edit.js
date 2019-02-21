@@ -128,7 +128,6 @@ function handleDcBackspaceOrDelKeystroke(event) {
             let before = text.substring(0, start);
             let after  = text.substring(end, text.length);
             let length = 0;
-            el.focus();
             if (key === 8) {
                 // Backspace
                 length = before.length;
