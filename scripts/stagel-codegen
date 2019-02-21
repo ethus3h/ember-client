@@ -706,7 +706,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend "$(codegenOutput $'\n')"
+                    codegenArrayAppend $'\n'
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
@@ -731,7 +731,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend "$(codegenOutput $'\n')"
+                    codegenArrayAppend $'\n'
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
@@ -756,7 +756,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     ;;
                 newline)
                     codegenArrayAppend "$(codegenArrayEntryDelimiter)"
-                    codegenArrayAppend "$(codegenOutput $'\n')"
+                    codegenArrayAppend $'\n'
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
                 *)
