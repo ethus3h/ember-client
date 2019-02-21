@@ -15,15 +15,15 @@ EXPORT int checkForError() {
 int die() {
     errorStatus = 1; /* All calls need to call checkForError exactly once afterwards. */
 }
-int fortytwo(int a) EXPORT {
+EXPORT int fortytwo(int a) {
     return 42;
 }
-int add(int a, int b) EXPORT {
+EXPORT int add(int a, int b) {
     return a+b;
 }
-int utf8enc() {
+EXPORT int utf8enc() {
     return 44;
 }
-int utf9enc() {
+EXPORT int utf9enc() {
     return 43;
 }
