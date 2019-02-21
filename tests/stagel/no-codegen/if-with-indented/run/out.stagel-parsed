@@ -3,7 +3,7 @@ start-document
 
 1:1:0
 filename
-i
+in
 1:2:0
 command
 if
@@ -17,7 +17,7 @@ indent
 command
 eq
 2:9:1
-literal-
+literal-n
 0
 2:11:1
 command
@@ -26,7 +26,7 @@ mod
 ident-n
  110 117 109
 2:21:1
-literal-
+literal-n
 15
 2:22:1
 newline
