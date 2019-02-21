@@ -208,8 +208,8 @@ function autoformatInputArea(el) {
         len = len - el.value.length;
         console.log('new value ='+el.value);
         console.log('new len ='+len);
-        console.log('new start ='+(start - len));
-        el.selectionStart = el.selectionEnd = start - len;
+        console.log('new start ='+(start + len));
+        el.selectionStart = el.selectionEnd = start + len;
     }
 }
 
