@@ -5,16 +5,7 @@
     utf9enc();
 }
 extern int utf8enc(); */
-int errorStatus = 0;
 
-EXPORT int checkForError() {
-    int errorTemp = errorStatus;
-    errorStatus = 0;
-    return errorTemp;
-}
-int die() {
-    errorStatus = 1; /* All calls need to call checkForError exactly once afterwards. */
-}
 EXPORT int fortytwo(int a) {
     return 42;
 }
