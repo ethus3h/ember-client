@@ -48,8 +48,8 @@ window.onload = function() {
         inputarea.addEventListener('input', function(event) {
             handleDcEditingKeystroke(event, inputarea);
         });
-        inputarea.addEventListener('keyup', function(event) {
-            handleDcEditingKeystroke(event, inputarea);
+        inputarea.addEventListener('keydown', function(event) {
+            handleDcBackspaceOrDelKeystroke(event, inputarea);
         });
         document.getElementById('ImportDocument').disabled=false;
         document.getElementById('ExportDocument').disabled=false;
