@@ -140,7 +140,6 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 after = after.trim().split(' ').slice(1).join(' ');
                 start = start + (length - after.length);
             }
-            before = text.substring(0, start);
             el.value = (before + '' + after);
             el.selectionStart = el.selectionEnd = start;
             el.focus();
