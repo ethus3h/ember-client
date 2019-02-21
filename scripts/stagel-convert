@@ -7,11 +7,11 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Takes a StageL file as first argument, and prints out equivalent code in the language of the second argument (bash/js).
 
-# Try to cd to the directory the stagel-convert script is stored in. Based on https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
-
 inputFile="$(readlink -f "$1")"
 targetLang="$2"
+
+# Try to cd to the directory the stagel-convert script is stored in. Based on https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
 parseCmd="stagel-parse"
 [[ -f "./stagel-parse" ]] && parseCmd=./"$parseCmd"
