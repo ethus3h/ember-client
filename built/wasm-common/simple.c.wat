@@ -10,7 +10,7 @@
       (i32.const 0)
       (i32.const 1))
     (local.get $l0))
-  (func $checkForError (export "checkForError") (type $t1) (result i32)
+  (func $checkForError (type $t1) (result i32)
     (local $l0 i32)
     (local.set $l0
       (i32.load offset=1024
@@ -19,15 +19,15 @@
       (i32.const 0)
       (i32.const 0))
     (local.get $l0))
-  (func $fortytwo (export "fortytwo") (type $t2) (param $p0 i32) (result i32)
+  (func $fortytwo (type $t2) (param $p0 i32) (result i32)
     (i32.const 42))
-  (func $add (export "add") (type $t3) (param $p0 i32) (param $p1 i32) (result i32)
+  (func $add (type $t3) (param $p0 i32) (param $p1 i32) (result i32)
     (i32.add
       (local.get $p1)
       (local.get $p0)))
-  (func $utf8enc (export "utf8enc") (type $t1) (result i32)
+  (func $utf8enc (type $t1) (result i32)
     (i32.const 44))
-  (func $utf9enc (export "utf9enc") (type $t1) (result i32)
+  (func $utf9enc (type $t1) (result i32)
     (i32.const 43))
   (table $T0 1 1 anyfunc)
   (memory $memory (export "memory") 2)
