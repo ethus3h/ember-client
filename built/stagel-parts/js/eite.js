@@ -1609,7 +1609,7 @@ async function wasmCall(strRoutine, intVal) {
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
-    await wasmCheckForError(intVal);
+    await wasmCheckForError(strRoutine, intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -1618,8 +1618,8 @@ async function wasmCallArrIn(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrIn:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intReturn;
 
     let intRes = 0;
-    intRes = await internalWasmCallArrIn(strRoutine, intVal);
-    await wasmCheckForError(intArrayVals);
+    intRes = await internalWasmCallArrIn(strRoutine, intArrayVals);
+    await wasmCheckForError(strRoutine, intArrayVals);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -1629,7 +1629,7 @@ async function wasmCallArrOut(strRoutine, intVal) {
 
     let intArrayRes = [];
     intRes = await internalWasmCallArrOut(strRoutine, intVal);
-    await wasmCheckForError(intVal);
+    await wasmCheckForError(strRoutine, intVal);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -1638,8 +1638,8 @@ async function wasmCallArrInOut(strRoutine, intArrayVals) {
     await internalDebugCollect('str Routine = ' + strRoutine + '; '); await internalDebugCollect('intArray Vals = ' + intArrayVals + '; '); await internalDebugStackEnter('wasmCallArrInOut:wasm'); await assertIsStr(strRoutine);await assertIsIntArray(intArrayVals); let intArrayReturn;
 
     let intArrayRes = [];
-    intRes = await internalWasmCallArrInOut(strRoutine, intVal);
-    await wasmCheckForError(intArrayVals);
+    intRes = await internalWasmCallArrInOut(strRoutine, intArrayVals);
+    await wasmCheckForError(strRoutine, intArrayVals);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -2642,7 +2642,7 @@ async function runTestsWasm(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
 
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn([ 2, 2 ]'add')));
+    /*runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 ) */
     await internalDebugStackExit();
 }
 

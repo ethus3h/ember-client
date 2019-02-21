@@ -1598,10 +1598,6 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     }
     let intErr = 0;
     intErr = await internalWasmCall('checkForError');
-    await console.log('intErr='+intErr+typeof intErr);
-    await console.log('strArgStr='+strArgStr+typeof strArgStr);
-//    await console.log(await ne(intErr, 0));
-    return;
     if (await ne(intErr, 0)) {
         await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
     }
@@ -1613,8 +1609,7 @@ async function wasmCall(strRoutine, intVal) {
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
-    //await wasmCheckForError(strRoutine, intVal);
-    await wasmCheckForError('fortytwo', 0);
+    await wasmCheckForError(strRoutine, intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -2647,7 +2642,7 @@ async function runTestsWasm(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
 
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn('add',[ 2, 2 ])));
+    /*runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 ) */
     await internalDebugStackExit();
 }
 
