@@ -824,7 +824,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 case "${tokens[$i - 1]}" in
                 literal-a*-end)
                     # Some type of data, array literal.
-                    codegenArgList+=("${tokens[$i - 1]}" "${tokens[$i]}")
+                    codegenArgList+=("${tokens[$i - 1]}" "$codegenArrayLiteral")
                     ;;
                 literal-*)
                     # Some type of data, literal.
