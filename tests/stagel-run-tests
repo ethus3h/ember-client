@@ -13,7 +13,7 @@ runTest stagel/no-codegen/routine-newline-in-body
 runTest stagel/no-codegen/if-with-indented
 runTest stagel/no-codegen/if-with-comment
 runTest stagel/no-codegen/routine-with-if
-#runTest stagel/no-codegen/routine-fizzbuzz
+runTest stagel/no-codegen/routine-fizzbuzz
 runTest stagel/js/arglist-two-nested
 runTest stagel/js/arglist-three-nested
 runTest stagel/js/routine-minimal
