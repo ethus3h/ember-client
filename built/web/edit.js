@@ -132,7 +132,8 @@ function handleDcBackspaceOrDelKeystroke(event) {
                 // Backspace
                 console.log('Start was '+start)
                 length = before.length;
-                console.log('Length was '+before.length)
+                console.log('Length was '+before.length);
+                console.log('Before was '+before);
                 before = before.trim().split(' ').slice(0,-1).join(' ');
                 console.log('New before is '+before)
                 start = length - (length - before.length);
