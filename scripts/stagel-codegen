@@ -570,6 +570,7 @@ codegenRoutineDefinitionStart() {
         fi
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
+                [[ "$k" != 0 ]] && codegenOutput ' '
                 codegenOutput "await assertIs"
                 codegenType "${codegenArgList[$k - 1]}" "true"
                 codegenOutput "("
