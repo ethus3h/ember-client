@@ -412,7 +412,7 @@ if (typeof window !== 'undefined') {
             internalDebugLogJSObject(message);
             let res = await window[args[0]]( ...args[1] );
             if (!res) {
-                res = null;
+                res = [null];
             }
             await implLog('Request made of host by worker in message '+msgid+' returned the result: '+res);
             window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
@@ -483,7 +483,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             throw error;
         }
         if (!res) {
-            res = null;
+            res = [null];
         }
         await implLog('Request made of worker by host in message '+msgid+' returned the result: '+res);
         self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
