@@ -144,3 +144,7 @@ async function internalDebugPrintStack() {
     }
     return result;
 }
+
+internalDebugLogJSObject(obj) {
+    console.log(obj);
+}
