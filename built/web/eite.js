@@ -411,7 +411,7 @@ if (typeof window !== 'undefined') {
             implDebug('Host understood message '+msgid+' from worker: '+args, 1);
             internalDebugLogJSObject(message);
             let res = await window[args[0]]( ...args[1] );
-            await implLog('Request made of host by worker in message '+msgid+' returned the result: '+res);
+            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res);
             window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
         }
         window.eiteWorker.onmessage = function(message) {
@@ -473,7 +473,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
-        await implLog('Request made of worker by host in message '+msgid+' returned the result: '+res);
+        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res);
         self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
     }
 
