@@ -336,7 +336,10 @@ if (typeof window !== 'undefined') {
             implDebug('Host got message '+msgid+' from worker: '+res, 1);
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
-                if (res || res === null) {
+                if (res === null) {
+                    implDie('Web worker returned null result in message '+msgid+'.');
+                }
+                else if (res) {
                     let resolveCallback;
                     resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
                     if (resolveCallback) {
@@ -404,7 +407,10 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
             const {uuid, msgid, res} = message.data;
-            if (res || res === null) {
+            if (res === null) {
+                implDie('Web worker returned null result in message '+msgid+'.');
+            }
+            else if (res) {
                 let resolveCallback;
                 resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
                 if (resolveCallback) {
