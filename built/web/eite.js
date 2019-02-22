@@ -404,6 +404,8 @@ if (typeof window !== 'undefined') {
             });
         };
         window.eiteHostRequestInternalOnMessage = async function(message) {
+                console.log('Host understood message from worker:');
+                console.log(message);
                 const {uuid, msgid, args} = message.data;
                 let res = await window[args[0]]( ...args[1] );
                 if (!res) {
@@ -413,6 +415,8 @@ if (typeof window !== 'undefined') {
         }
         window.eiteWorker.onmessage = function(message) {
             const {uuid, msgid, res} = message.data;
+            console.log('Host got message from worker:');
+            console.log(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
                     let resolveCallback;
