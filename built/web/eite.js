@@ -423,23 +423,17 @@ if (typeof window !== 'undefined') {
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (msgdata === undefined) {
-                    implDie('Web worker returned undefined result in message '+msgid+'.');
+                    implDebug('Web worker returned undefined result in message '+msgid+'.');
                 }
-                else if (msgdata) {
-                    let resolveCallback;
-                    resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
-                    if (resolveCallback) {
-                        resolveCallback(msgdata);
-                        delete window.eiteWorkerResolveCallbacks[msgid];
-                    }
-                    else {
-                        implDie('Web worker returned invalid message ID '+msgid+'.');
-                        throw 'Web worker returned invalid message ID '+msgid+'.';
-                    }
+                let resolveCallback;
+                resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
+                if (resolveCallback !== undefined) {
+                    resolveCallback(msgdata);
+                    delete window.eiteWorkerResolveCallbacks[msgid];
                 }
                 else {
-                    implDie('Web worker with message '+msgid+' encountered an error.');
-                    throw 'Web worker with mesasge '+msgid+' encountered an error.';
+                    implDie('Web worker returned invalid message ID '+msgid+'.');
+                    throw 'Web worker returned invalid message ID '+msgid+'.';
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
@@ -495,23 +489,17 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
             if (args === undefined) {
-                implDie('Host sent undefined contents in message '+msgid+'.');
+                implDebug('Host sent undefined contents in message '+msgid+'.');
             }
-            else if (args) {
-                let resolveCallback;
-                resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
-                if (resolveCallback) {
-                    resolveCallback(args);
-                    delete self.eiteWorkerHostResolveCallbacks[msgid];
-                }
-                else {
-                    implDie('Host returned invalid message ID.');
-                    throw 'Host returned invalid message ID.';
-                }
+            let resolveCallback;
+            resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
+            if (resolveCallback !== undefined) {
+                resolveCallback(args);
+                delete self.eiteWorkerHostResolveCallbacks[msgid];
             }
             else {
-                implDie('Host encountered an error.');
-                throw 'Host encountered an error.';
+                implDie('Host returned invalid message ID.');
+                throw 'Host returned invalid message ID.';
             }
         }
     }
