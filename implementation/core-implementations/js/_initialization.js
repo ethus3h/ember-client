@@ -410,11 +410,8 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.internalOnMessage(message);
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const args = message.data.args;
-            if (args === null) {
-                implDie('Host sent null contents in message '+msgid+'.');
+            if (args === undefined) {
+                implDie('Host sent undefined contents in message '+msgid+'.');
             }
             else if (args) {
                 let resolveCallback;
