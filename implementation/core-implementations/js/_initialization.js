@@ -313,7 +313,7 @@ if (typeof window !== 'undefined') {
             }
             window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
             let thisCallId=window.eiteWorkerCallID;
-            let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest '+res, msgid: thisCallId, args: [funcName, args]};
+            let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
             return new Promise(function(resolve) {
                 window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
                 window.eiteWorker.postMessage(thisCall);
@@ -322,7 +322,7 @@ if (typeof window !== 'undefined') {
         window.eiteHostRequestInternalOnMessage = async function(message) {
             // The host accepted a message; this function processes it
             const {uuid, msgid, args} = message.data;
-            implDebug('Host understood message '+msgid+' from worker: '+res, 1);
+            implDebug('Host understood message '+msgid+' from worker: '+args, 1);
             internalDebugLogJSObject(message);
             let res = await window[args[0]]( ...args[1] );
             if (!res) {
@@ -333,7 +333,7 @@ if (typeof window !== 'undefined') {
         window.eiteWorker.onmessage = function(message) {
             // Handle messages sent to this code when it is not running as a Web worker
             const {uuid, msgid, res} = message.data;
-            implDebug('Host got message '+msgid+' from worker:', 1);
+            implDebug('Host got message '+msgid+' from worker: '+args, 1);
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
@@ -378,7 +378,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     self.internalOnMessage = async function(message) {
         // The worker accepted a message; this function processes it
         const {uuid, msgid, args} = message.data;
-        implDebug('Worker understood message '+msgid+' from host: '+res, 1);
+        implDebug('Worker understood message '+msgid+' from host: '+args, 1);
         internalDebugLogJSObject(message);
         let res;
         try {
