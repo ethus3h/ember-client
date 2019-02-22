@@ -822,6 +822,12 @@ async function internalDebugPrintStack() {
     return result;
 }
 
+internalDebugLogJSObject(obj) {
+    if (1 <= STAGEL_DEBUG) {
+        console.log(obj);
+    }
+}
+
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal) {

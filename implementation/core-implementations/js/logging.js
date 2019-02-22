@@ -111,7 +111,6 @@ async function internalDebugFlush() {
 }
 
 async function internalDebugStackEnter(strBlockName) {
-    //alert("DbugStackEtner");
     if (strBlockName === undefined) {
         await implDie("Block entry specified but no block name given");
     }
