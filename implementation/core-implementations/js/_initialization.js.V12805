@@ -330,7 +330,7 @@ if (typeof window !== 'undefined') {
             if (!res) {
                 res = null;
             }
-                await implLog('Request made of host by worker in message '+msgid+' returned the result: '+res);
+            await implLog('Request made of host by worker in message '+msgid+' returned the result: '+res);
             window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
         }
         window.eiteWorker.onmessage = function(message) {
