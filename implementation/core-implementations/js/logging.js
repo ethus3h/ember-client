@@ -62,7 +62,7 @@ async function implDebug(strMessage, intLevel) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
     }
-    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
+    if ((! Number.isInteger(intLevel)) || typeof intLevel === "undefined" || intLevel === null || intLevel < -2147483648 || intLevel > 2147483647) {
         throw "Non-integer debug level";
     }
     await assertIsStr(strMessage); await assertIsInt(intLevel);
