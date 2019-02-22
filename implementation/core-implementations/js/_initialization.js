@@ -339,9 +339,9 @@ if (typeof window !== 'undefined') {
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (msgdata === undefined) {
-                    implDie('Web worker returned undefined result in message '+msgid+'.');
+                    implDebug('Web worker returned undefined result in message '+msgid+'.');
                 }
-                else if (msgdata) {
+                if (msgdata) {
                     let resolveCallback;
                     resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
                     if (resolveCallback) {
@@ -411,7 +411,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
             if (args === undefined) {
-                implDie('Host sent undefined contents in message '+msgid+'.');
+                implDebug('Host sent undefined contents in message '+msgid+'.');
             }
             else if (args) {
                 let resolveCallback;
