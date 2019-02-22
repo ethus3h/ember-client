@@ -502,8 +502,8 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             const msgid = message.data.msgid;
             const args = message.data.args;
             if (args === null) {
-                eiteHostCall('internalDebugLogJSObject', [[message, 'buler']]);
-                implDie('Host sent null contents in message '+msgid+'.');
+                eiteHostCall('internalDebugLogJSObject', ['bmucecir', [message, 'buler']]);
+                //implDie('Host sent null contents in message '+msgid+'.');
             }
             else if (args) {
                 let resolveCallback;
