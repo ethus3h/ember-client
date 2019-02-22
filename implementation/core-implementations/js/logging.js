@@ -146,7 +146,7 @@ async function internalDebugPrintStack() {
 }
 
 internalDebugLogJSObject(obj) {
-    if (intLevel <= STAGEL_DEBUG) {
+    if (1 <= STAGEL_DEBUG) {
         console.log(obj);
     }
 }
