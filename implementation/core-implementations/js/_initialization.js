@@ -320,6 +320,8 @@ if (typeof window !== 'undefined') {
             });
         };
         window.eiteHostRequestInternalOnMessage = async function(message) {
+                await implDebug('Host understood message from worker:');
+                internalDebugLogJSObject(message);
                 const {uuid, msgid, args} = message.data;
                 let res = await window[args[0]]( ...args[1] );
                 if (!res) {
@@ -328,6 +330,8 @@ if (typeof window !== 'undefined') {
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
         window.eiteWorker.onmessage = function(message) {
+            await implDebug('Host got message from worker:');
+            await internalDebugLogJSObject(message);
             const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (res || res === null) {
