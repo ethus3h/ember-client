@@ -405,7 +405,7 @@ if (typeof window !== 'undefined') {
         };
         window.eiteHostRequestInternalOnMessage = async function(message) {
                 await implDebug('Host understood message from worker:');
-                internalDebugLogJSObject(message);
+                await internalDebugLogJSObject(message);
                 const {uuid, msgid, args} = message.data;
                 let res = await window[args[0]]( ...args[1] );
                 if (!res) {
