@@ -374,6 +374,8 @@ else {
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
+        await implDebug('Worker got message from host:');
+        await internalDebugLogJSObject(message);
         const {uuid, msgid, args} = message.data;
         let res;
         try {
