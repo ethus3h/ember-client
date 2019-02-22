@@ -397,7 +397,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     self.onmessage = function(message) {
         // Handle messages sent to this code when it is running as a Web worker
         const {uuid, msgid, args} = message.data;
-        implDebug('Worker got message '+msgid+' from host: '+res, 1);
+        implDebug('Worker got message '+msgid+' from host: '+args, 1);
         internalDebugLogJSObject(message);
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
