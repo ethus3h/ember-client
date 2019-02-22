@@ -113,7 +113,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 1;
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -422,8 +422,8 @@ if (typeof window !== 'undefined') {
             implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
-                if (msgdata === null) {
-                    implDie('Web worker returned null result in message '+msgid+'.');
+                if (msgdata === undefined) {
+                    implDie('Web worker returned undefined result in message '+msgid+'.');
                 }
                 else if (msgdata) {
                     let resolveCallback;
@@ -494,14 +494,8 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.internalOnMessage(message);
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const args = message.data.args;
-            if (args === null) {
-                console.log(message.data.uuid + " is Uuid");
-                console.log(message.data.msgid + " is Msgid");
-                console.log(message.data.args +" is Args");
-                implDie('Host sent null contents in message '+msgid+'.');
+            if (args === undefined) {
+                implDie('Host sent undefined contents in message '+msgid+'.');
             }
             else if (args) {
                 let resolveCallback;
