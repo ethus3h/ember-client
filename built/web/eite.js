@@ -411,7 +411,7 @@ if (typeof window !== 'undefined') {
             implDebug('Host understood message '+msgid+' from worker: '+args, 1);
             internalDebugLogJSObject(message);
             let res = await window[args[0]]( ...args[1] );
-            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res);
+            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
             window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
         }
         window.eiteWorker.onmessage = function(message) {
@@ -423,7 +423,7 @@ if (typeof window !== 'undefined') {
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                 if (msgdata === undefined) {
-                    implDebug('Web worker returned undefined result in message '+msgid+'.');
+                    implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
                 }
                 let resolveCallback;
                 resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
@@ -473,7 +473,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
-        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res);
+        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
         self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
     }
 
@@ -489,7 +489,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
             if (args === undefined) {
-                implDebug('Host sent undefined contents in message '+msgid+'.');
+                implDebug('Host sent undefined contents in message '+msgid+'.', 1);
             }
             let resolveCallback;
             resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
