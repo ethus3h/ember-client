@@ -822,7 +822,7 @@ async function internalDebugPrintStack() {
     return result;
 }
 
-internalDebugLogJSObject(obj) {
+function internalDebugLogJSObject(obj) {
     if (1 <= STAGEL_DEBUG) {
         console.log(obj);
     }
