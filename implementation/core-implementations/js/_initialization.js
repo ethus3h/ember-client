@@ -394,13 +394,13 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
         if (!res) {
             res = null;
         }
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
     }
 
     self.onmessage = function(message) {
@@ -417,14 +417,14 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
             const args = message.data.args;
-            if (res === null) {
+            if (args === null) {
                 implDie('Host sent null contents in message '+msgid+'.');
             }
-            else if (res) {
+            else if (args) {
                 let resolveCallback;
                 resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
                 if (resolveCallback) {
-                    resolveCallback(res);
+                    resolveCallback(args);
                     delete self.eiteWorkerHostResolveCallbacks[msgid];
                 }
                 else {
