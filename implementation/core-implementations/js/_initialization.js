@@ -330,22 +330,24 @@ if (typeof window !== 'undefined') {
             if (!res) {
                 res = null;
             }
-            window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
+            window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
         }
         window.eiteWorker.onmessage = function(message) {
             // Handle messages sent to this code when it is not running as a Web worker
-            const {uuid, msgid, res} = message.data;
-            implDebug('Host got message '+msgid+' from worker: '+res, 1);
+            const uuid = message.data.uuid;
+            const msgid = message.data.msgid;
+            const msgdata = message.data.args;
+            implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
             internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
-                if (res === null) {
+                if (msgdata === null) {
                     implDie('Web worker returned null result in message '+msgid+'.');
                 }
-                else if (res) {
+                else if (msgdata) {
                     let resolveCallback;
                     resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
                     if (resolveCallback) {
-                        resolveCallback(res);
+                        resolveCallback(msgdata);
                         delete window.eiteWorkerResolveCallbacks[msgid];
                     }
                     else {
@@ -362,8 +364,8 @@ if (typeof window !== 'undefined') {
                 window.eiteHostRequestInternalOnMessage(message);
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                implDie('Web worker with message '+msgid+' encountered an error: '+res+'.');
-                throw 'Web worker with message '+msgid+' encountered an error: '+res+'.';
+                implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
+                throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
             }
         };
     }
@@ -382,7 +384,9 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
         // The worker accepted a message; this function processes it
-        const {uuid, msgid, args} = message.data;
+        const uuid = message.data.uuid;
+        const msgid = message.data.msgid;
+        const args = message.data.args;
         implDebug('Worker understood message '+msgid+' from host: '+args, 1);
         internalDebugLogJSObject(message);
         let res;
@@ -401,16 +405,20 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
 
     self.onmessage = function(message) {
         // Handle messages sent to this code when it is running as a Web worker
-        const {uuid, msgid, args} = message.data;
+        const uuid = message.data.uuid;
+        const msgid = message.data.msgid;
+        const args = message.data.args;
         implDebug('Worker got message '+msgid+' from host: '+args, 1);
         internalDebugLogJSObject(message);
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-            const {uuid, msgid, res} = message.data;
+            const uuid = message.data.uuid;
+            const msgid = message.data.msgid;
+            const args = message.data.args;
             if (res === null) {
-                implDie('Web worker returned null result in message '+msgid+'.');
+                implDie('Host sent null contents in message '+msgid+'.');
             }
             else if (res) {
                 let resolveCallback;
