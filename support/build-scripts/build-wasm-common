@@ -34,7 +34,8 @@ cToWasm() {
     ) || die
 }
 
-cp -r ./implementation/portable/wasm-common ./built/
+cp -r ./implementation/portable/wasm ./built/
+mv ./built/wasm ./built/wasm-common
 cd ./built/wasm-common/
 cToWasm simple.c
 rm -r temp
