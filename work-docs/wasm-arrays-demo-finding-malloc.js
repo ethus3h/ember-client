@@ -274,59 +274,6 @@ function stringToAscii(str, outPtr) {
 }
 Module["stringToAscii"] = stringToAscii;
 
-function demangle(func) {
-    var __cxa_demangle_func = Module["___cxa_demangle"] || Module["__cxa_demangle"];
-    if (__cxa_demangle_func) {
-        try {
-            var s = func.substr(1);
-            var len = lengthBytesUTF8(s) + 1;
-            var buf = _malloc(len);
-            stringToUTF8(s, buf, len);
-            var status = _malloc(4);
-            var ret = __cxa_demangle_func(buf, 0, 0, status);
-            if (getValue(status, "i32") === 0 && ret) {
-                return Pointer_stringify(ret)
-            }
-        } catch (e) {} finally {
-            if (buf) _free(buf);
-            if (status) _free(status);
-            if (ret) _free(ret)
-        }
-        return func
-    }
-    Runtime.warnOnce("warning: build with  -s DEMANGLE_SUPPORT=1  to link in libcxxabi demangling");
-    return func
-}
-
-function demangleAll(text) {
-    var regex = /__Z[\w\d_]+/g;
-    return text.replace(regex, (function(x) {
-        var y = demangle(x);
-        return x === y ? x : x + " [" + y + "]"
-    }))
-}
-
-function jsStackTrace() {
-    var err = new Error;
-    if (!err.stack) {
-        try {
-            throw new Error(0)
-        } catch (e) {
-            err = e
-        }
-        if (!err.stack) {
-            return "(no stack trace available)"
-        }
-    }
-    return err.stack.toString()
-}
-
-function stackTrace() {
-    var js = jsStackTrace();
-    if (Module["extraStackTrace"]) js += "\n" + Module["extraStackTrace"]();
-    return demangleAll(js)
-}
-Module["stackTrace"] = stackTrace;
 var WASM_PAGE_SIZE = 65536;
 var ASMJS_PAGE_SIZE = 16777216;
 var MIN_TOTAL_MEMORY = 16777216;
@@ -359,9 +306,6 @@ var DYNAMIC_BASE, DYNAMICTOP_PTR;
 STATIC_BASE = STATICTOP = STACK_BASE = STACKTOP = STACK_MAX = DYNAMIC_BASE = DYNAMICTOP_PTR = 0;
 staticSealed = false;
 
-function abortOnCannotGrowMemory() {
-    abort("Cannot enlarge memory arrays. Either (1) compile with  -s TOTAL_MEMORY=X  with X higher than the current value " + TOTAL_MEMORY + ", (2) compile with  -s ALLOW_MEMORY_GROWTH=1  which allows increasing the size at runtime, or (3) if you want malloc to return NULL (0) instead of this abort, compile with  -s ABORTING_MALLOC=0 ")
-}
 if (!Module["reallocBuffer"]) Module["reallocBuffer"] = (function(size) {
     var ret;
     try {
