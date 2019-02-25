@@ -164,8 +164,10 @@ mkdir -p ./build-temp/out/wabt
 
 cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
 cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/out/wabt/
-mkdir ./build-temp/out/wabt/
-cp -r 
+rm -rf ./build-temp/out/wabt/lib
+rm -rf ./build-temp/out/wabt/.emscripten_cache
+cp -r ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache ./build-temp/out/wabt/
+mv ./build-temp/out/wabt/.emscripten_cache ./build-temp/out/wabt/lib
 
 rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
