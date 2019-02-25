@@ -34,9 +34,9 @@ cToWasm() {
     ) || die
 }
 
-rm -rf ./built/wasm-sources
+#rm -rf ./built/wasm-sources
 rm -rf ./built/wasm-common
-rsync -a ./implementation/portable/wasm-sources ./built/
+rsync -av ./implementation/portable/wasm-sources ./built/
 mv ./built/wasm-sources ./built/wasm-common
 cd ./built/wasm-common/
 cToWasm simple.c
