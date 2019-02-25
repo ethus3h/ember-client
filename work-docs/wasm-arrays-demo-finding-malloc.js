@@ -609,24 +609,6 @@ HEAP32[DYNAMICTOP_PTR >> 2] = DYNAMIC_BASE;
 staticSealed = true;
 Module["wasmTableSize"] = 6;
 Module["wasmMaxTableSize"] = 6;
-
-function invoke_ii(index, a1) {
-    try {
-        return Module["dynCall_ii"](index, a1)
-    } catch (e) {
-        if (typeof e !== "number" && e !== "longjmp") throw e;
-        Module["setThrew"](1, 0)
-    }
-}
-
-function invoke_iiii(index, a1, a2, a3) {
-    try {
-        return Module["dynCall_iiii"](index, a1, a2, a3)
-    } catch (e) {
-        if (typeof e !== "number" && e !== "longjmp") throw e;
-        Module["setThrew"](1, 0)
-    }
-}
 Module.asmGlobalArg = {
     "Math": Math,
     "Int8Array": Int8Array,
@@ -640,27 +622,6 @@ Module.asmGlobalArg = {
     "NaN": NaN,
     "Infinity": Infinity,
     "byteLength": byteLength
-};
-Module.asmLibraryArg = {
-    "abort": abort,
-    "assert": assert,
-    "enlargeMemory": enlargeMemory,
-    "getTotalMemory": getTotalMemory,
-    "abortOnCannotGrowMemory": abortOnCannotGrowMemory,
-    "invoke_ii": invoke_ii,
-    "invoke_iiii": invoke_iiii,
-    "_emscripten_run_script": _emscripten_run_script,
-    "___syscall6": ___syscall6,
-    "___setErrNo": ___setErrNo,
-    "_emscripten_memcpy_big": _emscripten_memcpy_big,
-    "___syscall54": ___syscall54,
-    "___syscall140": ___syscall140,
-    "___syscall146": ___syscall146,
-    "DYNAMICTOP_PTR": DYNAMICTOP_PTR,
-    "tempDoublePtr": tempDoublePtr,
-    "ABORT": ABORT,
-    "STACKTOP": STACKTOP,
-    "STACK_MAX": STACK_MAX
 };
 var asm = Module["asm"](Module.asmGlobalArg, Module.asmLibraryArg, buffer);
 Module["asm"] = asm;
