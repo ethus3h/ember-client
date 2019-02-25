@@ -9,7 +9,7 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
         return func(giVal);
     }
     else {
-        // 
+        // Argument 
     }
 }
 
@@ -18,6 +18,7 @@ async function internalWasmCall(strRoutine, intVal) {
 }
 
 async function internalWasmCallNoArgs(strRoutine) {
+    // Only returns an int
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, null, false]);
 }
 

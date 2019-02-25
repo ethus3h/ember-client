@@ -31,6 +31,7 @@ r/n/wasmCall s/routine n/val
     return n/res
 
 r/n/wasmCallNoArgs s/routine
+    # Only returns an int
     new n/res
     set n/res internalWasmCallNoArgs s/routine
     wasmCheckForError s/routine
