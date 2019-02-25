@@ -1,7 +1,12 @@
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal) {
-    return window.eiteWasmModule.instance.exports[strRoutine](giVal);
+    if (typeof giVal === 'number') {
+        return window.eiteWasmModule.instance.exports[strRoutine](giVal);
+    }
+    else {
+        
+    }
 }
 
 async function internalWasmCall(strRoutine, intVal) {
