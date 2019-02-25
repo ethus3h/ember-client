@@ -1,3 +1,5 @@
+This license applies to googletest.
+
 Copyright 2008, Google Inc.
 All rights reserved.
 
