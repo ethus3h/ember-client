@@ -179,6 +179,15 @@ async function internalSetup() {
     setupFinished = true;
 }
 
+function getWindowOrSelf() {
+    if (typeof window !== 'undefined') {
+        window[name] = func;
+    }
+    else {
+        self[name] = func;
+    }
+}
+
 function registerSpeedup(name, func) {
     if (typeof window !== 'undefined') {
         window[name] = func;
