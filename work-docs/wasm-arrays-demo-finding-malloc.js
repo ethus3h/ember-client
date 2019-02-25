@@ -1,4 +1,5 @@
-var Module;
+var Module = {};
+// Module["asm"] / Module.asm contains the module's exports.
 if (!Module) Module = (typeof Module !== "undefined" ? Module : null) || {};
 var moduleOverrides = {};
 for (var key in Module) {
