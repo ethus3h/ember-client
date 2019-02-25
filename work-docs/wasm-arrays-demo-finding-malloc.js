@@ -500,23 +500,6 @@ function integrateWasmJS(Module) {
         return ret
     }
 
-    function getBinary() {
-        try {
-            var binary;
-            if (Module["wasmBinary"]) {
-                binary = Module["wasmBinary"];
-                binary = new Uint8Array(binary)
-            } else if (Module["readBinary"]) {
-                binary = Module["readBinary"](wasmBinaryFile)
-            } else {
-                throw "on the web, we need the wasm binary to be preloaded and set on Module['wasmBinary']. emcc.py will do that for you when generating HTML (but not JS)"
-            }
-            return binary
-        } catch (err) {
-            abort(err)
-        }
-    }
-
     function getBinaryPromise() {
         if (!Module["wasmBinary"] && typeof fetch === "function") {
             return fetch(wasmBinaryFile, {
