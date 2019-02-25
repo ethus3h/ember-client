@@ -3,4 +3,4 @@ Some code used in and by this project is licensed under other licenses. The othe
 All licenses should be free/libre/open-source licenses.
 
 The list of licenses (taken from, and should be kept in sync with, the ebuild; AGPL-3+ is for the project itself, while the others are for its dependencies) is:
-AGPL-3+ GPL-2+ GPL-3 BSD MIT UoI-NCSA MPL-2.0 public-domain
+AGPL-3+ GPL-2+ GPL-3 BSD MIT UoI-NCSA MPL-2.0 OFL-1.1 public-domain
