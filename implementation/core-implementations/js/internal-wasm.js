@@ -10,7 +10,7 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     }
     else {
         // Either it returns an array, it has an array argument, or both.
-        let memory=getWindowOrSelf().eiteWasmModule.instance
+        let memory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
     }
 }
 
