@@ -9,12 +9,12 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
         return func(giVal);
     }
     else {
-        
+        // 
     }
 }
 
 async function internalWasmCall(strRoutine, intVal) {
-    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal]);
+    return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intVal, false]);
 }
 
 async function internalWasmCallNoArgs(strRoutine) {
