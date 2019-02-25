@@ -1,7 +1,7 @@
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
-    let func=window.eiteWasmModule.instance.exports[strRoutine];
+    let func=getWindowOrSelf().eiteWasmModule.instance.exports[strRoutine];
     if (giVal === null) {
         return func();
     }

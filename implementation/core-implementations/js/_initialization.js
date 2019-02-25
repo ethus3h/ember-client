@@ -181,20 +181,15 @@ async function internalSetup() {
 
 function getWindowOrSelf() {
     if (typeof window !== 'undefined') {
-        window[name] = func;
+        return window;
     }
     else {
-        self[name] = func;
+        return self;
     }
 }
 
 function registerSpeedup(name, func) {
-    if (typeof window !== 'undefined') {
-        window[name] = func;
-    }
-    else {
-        self[name] = func;
-    }
+    getWindowOrSelf()[name] = func;
 }
 
 // Routines needed for Web worker requests
@@ -251,7 +246,7 @@ async function internalEiteReqWasmLoad(path) {
         }
     };
     let wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath(path)]);
-    window.eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
+    getWindowOrSelf().eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
 }
 
 async function internalEiteReqTypeofWindow() {
