@@ -712,12 +712,6 @@ var _malloc = Module["_malloc"] = (function() {
 var _emscripten_replace_memory = Module["_emscripten_replace_memory"] = (function() {
     return Module["asm"]["_emscripten_replace_memory"].apply(null, arguments)
 });
-var dynCall_ii = Module["dynCall_ii"] = (function() {
-    return Module["asm"]["dynCall_ii"].apply(null, arguments)
-});
-var dynCall_iiii = Module["dynCall_iiii"] = (function() {
-    return Module["asm"]["dynCall_iiii"].apply(null, arguments)
-});
 Runtime.stackAlloc = Module["stackAlloc"];
 Runtime.stackSave = Module["stackSave"];
 Runtime.stackRestore = Module["stackRestore"];
@@ -725,46 +719,3 @@ Runtime.establishStackSpace = Module["establishStackSpace"];
 Runtime.setTempRet0 = Module["setTempRet0"];
 Runtime.getTempRet0 = Module["getTempRet0"];
 Module["asm"] = asm;
-if (memoryInitializer) {
-    if (typeof Module["locateFile"] === "function") {
-        memoryInitializer = Module["locateFile"](memoryInitializer)
-    } else if (Module["memoryInitializerPrefixURL"]) {
-        memoryInitializer = Module["memoryInitializerPrefixURL"] + memoryInitializer
-    }
-    if (ENVIRONMENT_IS_NODE || ENVIRONMENT_IS_SHELL) {
-        var data = Module["readBinary"](memoryInitializer);
-        HEAPU8.set(data, Runtime.GLOBAL_BASE)
-    } else {
-        addRunDependency("memory initializer");
-        var applyMemoryInitializer = (function(data) {
-            if (data.byteLength) data = new Uint8Array(data);
-            HEAPU8.set(data, Runtime.GLOBAL_BASE);
-            if (Module["memoryInitializerRequest"]) delete Module["memoryInitializerRequest"].response;
-            removeRunDependency("memory initializer")
-        });
-
-        function doBrowserLoad() {
-            Module["readAsync"](memoryInitializer, applyMemoryInitializer, (function() {
-                throw "could not load memory initializer " + memoryInitializer
-            }))
-        }
-        if (Module["memoryInitializerRequest"]) {
-            function useRequest() {
-                var request = Module["memoryInitializerRequest"];
-                if (request.status !== 200 && request.status !== 0) {
-                    console.warn("a problem seems to have happened with Module.memoryInitializerRequest, status: " + request.status + ", retrying " + memoryInitializer);
-                    doBrowserLoad();
-                    return
-                }
-                applyMemoryInitializer(request.response)
-            }
-            if (Module["memoryInitializerRequest"].response) {
-                setTimeout(useRequest, 0)
-            } else {
-                Module["memoryInitializerRequest"].addEventListener("load", useRequest)
-            }
-        } else {
-            doBrowserLoad()
-        }
-    }
-}
