@@ -7,35 +7,7 @@ for (var key in Module) {
     }
 }
 getWindowOrSelf().eiteWasmModule.instance
-function globalEval(x) {
-    eval.call(null, x)
-}
-if (!Module["load"] && Module["read"]) {
-    Module["load"] = function load(f) {
-        globalEval(Module["read"](f))
-    }
-}
-if (!Module["print"]) {
-    Module["print"] = (function() {})
-}
-if (!Module["printErr"]) {
-    Module["printErr"] = Module["print"]
-}
-if (!Module["arguments"]) {
-    Module["arguments"] = []
-}
-if (!Module["thisProgram"]) {
-    Module["thisProgram"] = "./this.program"
-}
-if (!Module["quit"]) {
-    Module["quit"] = (function(status, toThrow) {
-        throw toThrow
-    })
-}
-Module.print = Module["print"];
-Module.printErr = Module["printErr"];
-Module["preRun"] = [];
-Module["postRun"] = [];
+;
 for (var key in moduleOverrides) {
     if (moduleOverrides.hasOwnProperty(key)) {
         Module[key] = moduleOverrides[key]
