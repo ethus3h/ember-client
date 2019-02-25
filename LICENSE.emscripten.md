@@ -1,3 +1,5 @@
+This license applies to the libwabt.js wrapper file from Emscripten.
+
 Emscripten is available under 2 licenses, the MIT license and the
 University of Illinois/NCSA Open Source License.
 
