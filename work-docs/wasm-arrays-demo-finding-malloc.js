@@ -588,6 +588,7 @@ Module.asmGlobalArg = {
 };
 var asm = Module["asm"](Module.asmGlobalArg, Module.asmLibraryArg, buffer);
 Module["asm"] = asm;
+// These functions are all implemented as WebAssembly exports.
 var _memset = Module["_memset"] = (function() {
     return Module["asm"]["_memset"].apply(null, arguments)
 });
@@ -599,12 +600,6 @@ var stackAlloc = Module["stackAlloc"] = (function() {
 });
 var _free = Module["_free"] = (function() {
     return Module["asm"]["_free"].apply(null, arguments)
-});
-var runPostSets = Module["runPostSets"] = (function() {
-    return Module["asm"]["runPostSets"].apply(null, arguments)
-});
-var _testHEAPF64 = Module["_testHEAPF64"] = (function() {
-    return Module["asm"]["_testHEAPF64"].apply(null, arguments)
 });
 var establishStackSpace = Module["establishStackSpace"] = (function() {
     return Module["asm"]["establishStackSpace"].apply(null, arguments)
