@@ -1,4 +1,4 @@
-This license applies to wabt/libwabt.
+This license applies to wabt/libwabt and Binaryen.
 
                                  Apache License
                            Version 2.0, January 2004
