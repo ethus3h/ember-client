@@ -7,7 +7,6 @@ for (var key in Module) {
     }
 }
 getWindowOrSelf().eiteWasmModule.instance
-;
 for (var key in moduleOverrides) {
     if (moduleOverrides.hasOwnProperty(key)) {
         Module[key] = moduleOverrides[key]
