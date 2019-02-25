@@ -529,7 +529,6 @@ function integrateWasmJS(Module) {
         return {}
     }
     Module["asmPreload"] = Module["asm"];
-    var asmjsReallocBuffer = Module["reallocBuffer"];
     var wasmReallocBuffer = (function(size) {
         var PAGE_MULTIPLE = Module["usingWasm"] ? WASM_PAGE_SIZE : ASMJS_PAGE_SIZE;
         size = alignUp(size, PAGE_MULTIPLE);
@@ -551,13 +550,7 @@ function integrateWasmJS(Module) {
             return Module["buffer"] !== old ? Module["buffer"] : null
         }
     });
-    Module["reallocBuffer"] = (function(size) {
-        if (finalMethod === "asmjs") {
-            return asmjsReallocBuffer(size)
-        } else {
-            return wasmReallocBuffer(size)
-        }
-    });
+    Module["reallocBuffer"] = wasmReallocBuffer;
     var finalMethod = "";
     Module["asm"] = (function(global, env, providedBuffer) {
         global = fixImports(global);
