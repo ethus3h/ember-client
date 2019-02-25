@@ -517,22 +517,7 @@ function integrateWasmJS(Module) {
     }
 
     function doNativeWasm(global, env, providedBuffer) {
-        if (typeof WebAssembly !== "object") {
-            Module["printErr"]("no native wasm support detected");
-            return false
-        }
-        if (!(Module["wasmMemory"] instanceof WebAssembly.Memory)) {
-            Module["printErr"]("no native wasm Memory in use");
-            return false
-        }
         env["memory"] = Module["wasmMemory"];
-        info["global"] = {
-            "NaN": NaN,
-            "Infinity": Infinity
-        };
-        info["global.Math"] = global.Math;
-        info["env"] = env;
-
         function receiveInstance(instance) {
             exports = instance.exports;
             if (exports.memory) mergeMemory(exports.memory);
