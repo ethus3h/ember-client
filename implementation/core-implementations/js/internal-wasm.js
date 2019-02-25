@@ -5,11 +5,11 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     if (giVal === null) {
         return func();
     }
-    else if (typeof giVal === 'number') {
+    else if ((typeof giVal === 'number') && (!returnsArray)) {
         return func(giVal);
     }
     else {
-        // Argument 
+        // Either it returns an array, it has an array argument, or both.
     }
 }
 
