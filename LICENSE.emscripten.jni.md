@@ -1,3 +1,4 @@
+This license applies to parts of Emscripten.
 
 * Copyright (C) 2006 The Android Open Source Project
 *
