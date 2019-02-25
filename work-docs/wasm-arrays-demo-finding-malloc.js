@@ -1,19 +1,5 @@
 var Module = {};
 // Module["asm"] / Module.asm contains the module's exports, I think.
-if (!Module) Module = (typeof Module !== "undefined" ? Module : null) || {};
-var moduleOverrides = {};
-for (var key in Module) {
-    if (Module.hasOwnProperty(key)) {
-        moduleOverrides[key] = Module[key]
-    }
-}
-getWindowOrSelf().eiteWasmModule.instance
-for (var key in moduleOverrides) {
-    if (moduleOverrides.hasOwnProperty(key)) {
-        Module[key] = moduleOverrides[key]
-    }
-}
-moduleOverrides = undefined;
 var Runtime = {
     setTempRet0: (function(value) {
         tempRet0 = value;
@@ -260,21 +246,6 @@ function getMemory(size) {
 }
 Module["getMemory"] = getMemory;
 
-function AsciiToString(ptr) {
-    var str = "";
-    while (1) {
-        var ch = HEAP8[ptr++ >> 0];
-        if (!ch) return str;
-        str += String.fromCharCode(ch)
-    }
-}
-Module["AsciiToString"] = AsciiToString;
-
-function stringToAscii(str, outPtr) {
-    return writeAsciiToMemory(str, outPtr, false)
-}
-Module["stringToAscii"] = stringToAscii;
-
 var WASM_PAGE_SIZE = 65536;
 var ASMJS_PAGE_SIZE = 16777216;
 var MIN_TOTAL_MEMORY = 16777216;
@@ -397,15 +368,6 @@ function writeArrayToMemory(array, buffer) {
     HEAP8.set(array, buffer)
 }
 Module["writeArrayToMemory"] = writeArrayToMemory;
-
-function writeAsciiToMemory(str, buffer, dontAddNull) {
-    for (var i = 0; i < str.length; ++i) {
-        HEAP8[buffer++ >> 0] = str.charCodeAt(i)
-    }
-    if (!dontAddNull) HEAP8[buffer >> 0] = 0
-}
-Module["writeAsciiToMemory"] = writeAsciiToMemory;
-var memoryInitializer = null;
 
 function integrateWasmJS(Module) {
     var method = Module["wasmJSMethod"] || "native-wasm";
@@ -626,71 +588,14 @@ Module.asmGlobalArg = {
 };
 var asm = Module["asm"](Module.asmGlobalArg, Module.asmLibraryArg, buffer);
 Module["asm"] = asm;
-var _llvm_bswap_i32 = Module["_llvm_bswap_i32"] = (function() {
-    return Module["asm"]["_llvm_bswap_i32"].apply(null, arguments)
-});
-var _main = Module["_main"] = (function() {
-    return Module["asm"]["_main"].apply(null, arguments)
-});
-var stackSave = Module["stackSave"] = (function() {
-    return Module["asm"]["stackSave"].apply(null, arguments)
-});
-var setThrew = Module["setThrew"] = (function() {
-    return Module["asm"]["setThrew"].apply(null, arguments)
-});
-var _testHEAPU16 = Module["_testHEAPU16"] = (function() {
-    return Module["asm"]["_testHEAPU16"].apply(null, arguments)
-});
-var _testHEAP16 = Module["_testHEAP16"] = (function() {
-    return Module["asm"]["_testHEAP16"].apply(null, arguments)
-});
-var _testHEAP32 = Module["_testHEAP32"] = (function() {
-    return Module["asm"]["_testHEAP32"].apply(null, arguments)
-});
 var _memset = Module["_memset"] = (function() {
     return Module["asm"]["_memset"].apply(null, arguments)
-});
-var _testHEAPF32 = Module["_testHEAPF32"] = (function() {
-    return Module["asm"]["_testHEAPF32"].apply(null, arguments)
-});
-var _get10Nums = Module["_get10Nums"] = (function() {
-    return Module["asm"]["_get10Nums"].apply(null, arguments)
-});
-var _sbrk = Module["_sbrk"] = (function() {
-    return Module["asm"]["_sbrk"].apply(null, arguments)
-});
-var _testHEAPU32 = Module["_testHEAPU32"] = (function() {
-    return Module["asm"]["_testHEAPU32"].apply(null, arguments)
 });
 var _memcpy = Module["_memcpy"] = (function() {
     return Module["asm"]["_memcpy"].apply(null, arguments)
 });
-var _testHEAP8 = Module["_testHEAP8"] = (function() {
-    return Module["asm"]["_testHEAP8"].apply(null, arguments)
-});
-var _addNums = Module["_addNums"] = (function() {
-    return Module["asm"]["_addNums"].apply(null, arguments)
-});
-var _getSetWASMArray = Module["_getSetWASMArray"] = (function() {
-    return Module["asm"]["_getSetWASMArray"].apply(null, arguments)
-});
 var stackAlloc = Module["stackAlloc"] = (function() {
     return Module["asm"]["stackAlloc"].apply(null, arguments)
-});
-var getTempRet0 = Module["getTempRet0"] = (function() {
-    return Module["asm"]["getTempRet0"].apply(null, arguments)
-});
-var _testHEAPU8 = Module["_testHEAPU8"] = (function() {
-    return Module["asm"]["_testHEAPU8"].apply(null, arguments)
-});
-var setTempRet0 = Module["setTempRet0"] = (function() {
-    return Module["asm"]["setTempRet0"].apply(null, arguments)
-});
-var _emscripten_get_global_libc = Module["_emscripten_get_global_libc"] = (function() {
-    return Module["asm"]["_emscripten_get_global_libc"].apply(null, arguments)
-});
-var ___errno_location = Module["___errno_location"] = (function() {
-    return Module["asm"]["___errno_location"].apply(null, arguments)
 });
 var _free = Module["_free"] = (function() {
     return Module["asm"]["_free"].apply(null, arguments)
