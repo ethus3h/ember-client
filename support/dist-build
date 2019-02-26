@@ -165,6 +165,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     echo "Building libc" # https://webghc.github.io/2017/07/25/buildinglibcedited.html
     mkdir libc-build-temp
     cd libc-build-temp || die
+    WASMBUILDS="$(readlink -f .)"
+    export WASMBUILDS
     mkdir ./emscripten
     cp -r ../emscripten/system ./emscripten/
     mkdir libc
