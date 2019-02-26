@@ -7,7 +7,7 @@
 }
 extern int utf8enc(); */
 
-
+https://github.com/emscripten-core/emscripten/blob/5187ea263120ff57424a184c1bc73259e24dc9a9/tests/wrap_malloc.cpp
 void * __attribute__((noinline)) malloc(size_t size)
 {
 	++totalAllocated;
