@@ -38,6 +38,7 @@ rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
 echo "Unpacking libc builder"
 tar xozf "./adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz"
 rm "./adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz"
+mv "./38b603136e59d07b87b9654869d9f45d-${mySyslibBuilderCommit}" "./adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}"
 
 echo "Unpacking wabt dependencies"
 tar xozf ./googletest-"$myGoogletestVersion".tar.gz
