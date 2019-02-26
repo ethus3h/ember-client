@@ -160,13 +160,16 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     EMCC_CORES="1"
     export EMCC_CORES
     make -j1 demo
-
+)
+(
     echo "Building libc"
     mkdir libc-build-temp
     cd libc-build-temp || die
-    cp -r ./emscripten/system ./libc-build-temp/
-)
-(
+    mkdir ./emscripten
+    cp -r ../emscripten/system ./emscripten/
+    mkdir libc
+    mkdir libcbuilder
+    
 )
 
 )
