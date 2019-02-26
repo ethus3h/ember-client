@@ -168,8 +168,11 @@ rm -rf ./build-temp/out/lib
 rm -rf ./build-temp/out/wasm_o
 cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache/wasm_o ./build-temp/out/
 mv ./build-temp/out/wasm_o ./build-temp/out/lib
+
 rm -rf ./build-temp/out/include
 cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/include ./build-temp/out/
+rm ./build-temp/out/include/libc/bits
+cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/lib/libc/musl/arch/emscripten/bits ./build-temp/out/include/libc/
 
 rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
