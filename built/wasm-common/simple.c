@@ -1,6 +1,6 @@
 #include "_eite-shared.c"
-#include <stdlib.h>
-
+/*#include <stdlib.h>
+*/
 /* void _start() {
     utf8enc();
     utf9enc();
