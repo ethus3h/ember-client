@@ -175,5 +175,6 @@ rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
 touch ./build-temp/dist-build-ready
 
+rm -rf ./built/dist-built
 cp ./build-temp/out ./build-temp/dist-built
 mv ./build-temp/dist-built ./built/
