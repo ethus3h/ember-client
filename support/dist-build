@@ -171,6 +171,8 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     mkdir libcbuilder
     cd libcbuilder || die
     cp "$unpackedDir/adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}/Makefile" ./
+    make
+    make install
 )
 
 )
