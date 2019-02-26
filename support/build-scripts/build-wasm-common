@@ -9,6 +9,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
+# Copy built library files
+
 # Build WASM components
 
 cToWasm() {
