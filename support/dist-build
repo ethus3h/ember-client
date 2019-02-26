@@ -35,6 +35,10 @@ rm -r ./emscripten-"$myEmscriptenCommit"/third_party/websockify
 rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-full.js
 rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
 
+echo "Unpacking libc builder"
+tar xozf ./adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz
+rm ./adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz
+
 echo "Unpacking wabt dependencies"
 tar xozf ./googletest-"$myGoogletestVersion".tar.gz
 rm ./googletest-"$myGoogletestVersion".tar.gz
@@ -156,6 +160,13 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     EMCC_CORES="1"
     export EMCC_CORES
     make -j1 demo
+
+    echo "Building libc"
+    mkdir libc-build-temp
+    cd libc-build-temp || die
+    cp -r ./emscripten/system ./libc-build-temp/
+)
+(
 )
 
 )
