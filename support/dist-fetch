@@ -26,13 +26,14 @@ if [[ -d /usr/portage/distfiles ]]; then
     dist "wabt-${myWabtVersion}.tar.gz"
     dist "googletest-${myGoogletestVersion}.tar.gz"
     dist "python-lex-yacc-${myPlyVersion}.tar.gz"
-    dist "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz""
+    dist "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz"
 else
     (
         cd ./build-temp/distfiles/
         wget "https://github.com/emscripten-core/emscripten/archive/${myEmscriptenCommit}.tar.gz" -O "emscripten-${myEmscriptenCommit}.tar.gz"
         wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.tar.gz" -O "binaryen-${myBinaryenVersion}.tar.gz"
         wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.zip" -O "binaryen-${myBinaryenVersion}.zip"
+        wget "https://gist.github.com/mvogelsang/38b603136e59d07b87b9654869d9f45d/archive/332b16bb1bc430673b26fca10d5a07569a7c8d13.tar.gz" -O "adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz"
         wget "https://github.com/WebAssembly/wabt/archive/${myWabtVersion}.tar.gz" -O "wabt-${myWabtVersion}.tar.gz"
         wget "https://github.com/google/googletest/archive/release-${myGoogletestVersion}.tar.gz" -O "googletest-${myGoogletestVersion}.tar.gz"
         wget "https://github.com/dabeaz/ply/archive/${myPlyVersion}.tar.gz" -O "python-lex-yacc-${myPlyVersion}.tar.gz"
