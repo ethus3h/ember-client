@@ -11,6 +11,8 @@ source ./support/build-scripts/dist-versions
 
 # Copy built library files
 
+cp -r ./
+
 # Build WASM components
 
 cToWasm() {
