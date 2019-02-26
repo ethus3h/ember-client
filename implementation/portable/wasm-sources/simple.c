@@ -1,5 +1,5 @@
 #include "_eite-shared.c"
-#include <malloc.c>
+#include <stdlib.h>
 
 /* void _start() {
     utf8enc();
