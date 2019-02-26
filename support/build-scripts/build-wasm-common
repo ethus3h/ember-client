@@ -9,9 +9,15 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ./support/build-scripts/dist-versions
 
+#rm -rf ./built/wasm-sources
+rm -rf ./built/wasm-common
+cp -ra ./implementation/portable/wasm-sources ./built/
+mv ./built/wasm-sources ./built/wasm-common
+cd ./built/wasm-common/
+
 # Copy built library files
 
-cp -r ./
+cp -r ./built/dist-built/lib ./built/wasm-common/
 
 # Build WASM components
 
@@ -38,10 +44,5 @@ cToWasm() {
     ) || die
 }
 
-#rm -rf ./built/wasm-sources
-rm -rf ./built/wasm-common
-cp -ra ./implementation/portable/wasm-sources ./built/
-mv ./built/wasm-sources ./built/wasm-common
-cd ./built/wasm-common/
 cToWasm simple.c
 rm -r temp
