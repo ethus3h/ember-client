@@ -26,7 +26,7 @@ cp -ra ../dist-built/lib ./temp
 cToWasm() {
     echo "Building WASM file: $1"
     # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
-    clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./temp/include --target=wasm32-unknown-unknown-wasm -c -Ofast
+    clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./temp/include -I./temp/lib --target=wasm32-unknown-unknown-wasm -c -Ofast
     mkdir -p temp
     [[ -d "temp/lib" ]] || cp -ra ../dist-built/lib ./temp/
     [[ -d "temp/include" ]] || cp -ra ../dist-built/include ./temp/
