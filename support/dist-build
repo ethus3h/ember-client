@@ -166,6 +166,7 @@ cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/w
 cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/out/wabt/
 rm -rf ./build-temp/out/lib
 rm -rf ./build-temp/out/wasm_o
+rm -rf ./build-temp/out/include
 cp -r ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache/wasm_o ./build-temp/out/
 mv ./build-temp/out/wasm_o ./build-temp/out/lib
 
