@@ -160,15 +160,15 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
 
 )
 
-mkdir -p ./build-temp/out/wabt
+mkdir -p ./build-temp/out/wabt || die
 
-cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
-cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/out/wabt/
-rm -rf ./build-temp/out/wabt/lib
-rm -rf ./build-temp/out/wabt/.emscripten_cache
-cp -r ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache ./build-temp/out/wabt/
-mv ./build-temp/out/wabt/.emscripten_cache ./build-temp/out/wabt/lib
+cp ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/ || die
+cp ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/wabt/ || die
+rm -rf ./build-temp/out/lib || die
+rm -rf ./build-temp/out/.emscripten_cache || die
+cp -r ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache ./build-temp/out/wabt/ || die
+mv ./build-temp/out/.emscripten_cache ./build-temp/out/lib || die
 
-rm -r ./build-temp/unpacked
-rm -r ./build-temp/build
-touch ./build-temp/dist-build-ready
+rm -r ./build-temp/unpacked || die
+#rm -r ./build-temp/build || die
+touch ./build-temp/dist-build-ready || die
