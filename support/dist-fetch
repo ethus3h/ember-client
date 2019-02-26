@@ -19,13 +19,14 @@ if [[ -d /usr/portage/distfiles ]]; then
     }
 
     # wabt and its build-time dependencies
-    dist emscripten-"$myEmscriptenCommit".tar.gz
-    dist binaryen-"$myBinaryenVersion".tar.gz
-    dist binaryen-"$myBinaryenVersion".zip
-    dist wabt-"$myWabtVersion".tar.gz
-    dist googletest-"$myGoogletestVersion".tar.gz
-    dist python-lex-yacc-"$myPlyVersion".tar.gz
-    dist WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+    dist "emscripten-${myEmscriptenCommit}.tar.gz"
+    dist "binaryen-${myBinaryenVersion}.tar.gz"
+    dist "binaryen-${myBinaryenVersion}.zip"
+    dist "adjusted-syslib-builder-Makefile-${mySyslibBuilderCommit}.tar.gz"
+    dist "wabt-${myWabtVersion}.tar.gz"
+    dist "googletest-${myGoogletestVersion}.tar.gz"
+    dist "python-lex-yacc-${myPlyVersion}.tar.gz"
+    dist "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz""
 else
     (
         cd ./build-temp/distfiles/
