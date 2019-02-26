@@ -18,8 +18,8 @@ cd ./built/wasm-common/
 # Copy built library files
 
 mkdir -p temp
-cp -r ./built/dist-built/include ./temp
-cp -r ./built/dist-built/lib ./temp
+cp -r ../dist-built/include ./temp
+cp -r ../dist-built/lib ./temp
 
 # Build WASM components
 
@@ -28,8 +28,8 @@ cToWasm() {
     # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
     clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./system/lib/libc/musl/src -I./system/include/libc -I./system/include -I./system/lib --target=wasm32-unknown-unknown-wasm -c -Ofast
     mkdir -p temp
-    [[ -d "temp/lib" ]] || cp -r ./built/dist-built/lib ./temp/
-    [[ -d "temp/include" ]] || cp -r ./built/dist-built/include ./temp/
+    [[ -d "temp/lib" ]] || cp -r ../dist-built/lib ./temp/
+    [[ -d "temp/include" ]] || cp -r ../dist-built/include ./temp/
     mv "$1".o temp/
     (
         cd temp
