@@ -7,6 +7,21 @@
 }
 extern int utf8enc(); */
 
+
+void * __attribute__((noinline)) malloc(size_t size)
+{
+	++totalAllocated;
+	void *ptr = emscripten_builtin_malloc(size);
+	printf("Allocated %u bytes, got %p. %d pointers allocated total.\n", size, ptr, totalAllocated);
+	return ptr;
+}
+
+void __attribute__((noinline)) free(void *ptr)
+{
+	++totalFreed;
+	emscripten_builtin_free(ptr);
+	printf("Freed ptr %p, %d pointers freed total.\n", ptr, totalFreed);
+}
 EXPORT int fortytwo(int a) {
     return 42;
 }
