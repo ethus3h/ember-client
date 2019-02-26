@@ -26,7 +26,7 @@ cp -r ../dist-built/lib ./temp
 cToWasm() {
     echo "Building WASM file: $1"
     # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
-    clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./system/lib/libc/musl/src -I./system/include/libc -I./system/include -I./system/lib --target=wasm32-unknown-unknown-wasm -c -Ofast
+    clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./temp/include --target=wasm32-unknown-unknown-wasm -c -Ofast
     mkdir -p temp
     [[ -d "temp/lib" ]] || cp -r ../dist-built/lib ./temp/
     [[ -d "temp/include" ]] || cp -r ../dist-built/include ./temp/
@@ -37,7 +37,7 @@ cToWasm() {
         #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
         # Or without a libc (you need to provide one somehow):
         # --allow-undefined allows undefined symbols in the linked executable. E.g. "extern" declarations. Should I remove that flag?
-        wasm-ld -L ./system/lib/libc/musl/src -L ./system/include/libc -L ./system/include -L ./system/lib --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
+        wasm-ld -L ./lib --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
         wasm2wat --inline-exports --inline-imports -f --generate-names -o "$1".wat "$1".o.wasm
         mv "$1".wat ../
 
