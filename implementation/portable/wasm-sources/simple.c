@@ -7,10 +7,10 @@
 }
 extern int utf8enc(); */
 
-EXPORT void * __attribute__((noinline)) malloc(size_t size) {
+EXPORT void * __attribute__((noinline)) _malloc(size_t size) {
     return malloc(size);
 }
-EXPORT void __attribute__((noinline)) free(void *ptr) {
+EXPORT void __attribute__((noinline)) _free(void *ptr) {
     free(ptr);
 }
 EXPORT int fortytwo(int a) {
