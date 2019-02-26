@@ -174,3 +174,6 @@ cp -r ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/include ./bui
 rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
 touch ./build-temp/dist-build-ready
+
+cp ./build-temp/out ./build-temp/dist-built
+mv ./build-temp/dist-built ./built/
