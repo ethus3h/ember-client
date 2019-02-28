@@ -36,7 +36,7 @@ r/b/runTestsOnly b/v
     # This runs each component's test suite
     #runTestsBits b/v
     runTestsMath b/v
-    runTestsWasm b/v
+    #runTestsWasm b/v
     # Did anything fail?
     if eq n/failedTests 0
         return true
