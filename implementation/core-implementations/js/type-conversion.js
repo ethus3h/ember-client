@@ -159,12 +159,11 @@ var Base16b = {
         return code;
     },
     // public method for encoding
-    encode: function(inputArr, base)
-    /*
-    Encode an array of pseudo-booleans (0 or 1)
-    The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
-    */
-    {
+    encode: function(inputArr, base) {
+        /*
+        Encode an array of pseudo-booleans (0 or 1)
+        The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
+        */
         try {
             if (!(base >= 7 && base <= 17)) throw ('invalid encoding base: ' + base);
             var resultArr
