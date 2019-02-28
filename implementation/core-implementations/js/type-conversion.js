@@ -166,17 +166,13 @@ var Base16b = {
         */
         try {
             if (!(base >= 7 && base <= 17)) throw ('invalid encoding base: ' + base);
-            var resultArr
-            var fullSegments
-            var remainBits
+            var resultArr = [];
+            var fullSegments = Math.floor(inputArr.length / base);
+            var remainBits = inputArr.length - (fullSegments * base);
             var segment, bit;
             var segmstart;
-            var segmVal;
-            var currsegm; = []; = Math.floor(inputArr.length / base); = inputArr.length - (fullSegments * base);
-            // construct the value of the bits in the current segment
-        },
-    }
-    catch (e) {}
+            var segmVal; // construct the value of the bits in the current segment
+            var currsegm;
     // convert the next segment of base number of bits to decimal
     for (segment = 0; segment < fullSegments; segment++) {
         // input and output both read from left to right
@@ -197,8 +193,12 @@ var Base16b = {
     }
     resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
     return resultArr.join('');
+    catch (e) {
     alert(e);
     return false;
+        },
+    }
+    }
     // public method for decoding
     decode: function(inputStr) {
         /*
