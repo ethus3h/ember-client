@@ -580,7 +580,8 @@ let Base16b = {
                 resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
             }
             return resultArr;
-        } catch (e) {
+        }
+        catch (e) {
             //alert(e);
             return false;
         }
