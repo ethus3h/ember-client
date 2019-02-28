@@ -55,6 +55,9 @@ r/v/assertIsStrArray gi/in
 r/v/assertIsCharArray gi/in
     assertIsTrue isCharArray gi/in
 
+r/v/assertIsIntBitArray gi/in
+    assertIsTrue isIntBitArray gi/in
+
 r/v/assertIsByteArray gi/in
     assertIsTrue isByteArray gi/in
 
