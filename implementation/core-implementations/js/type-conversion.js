@@ -57,3 +57,15 @@ async function byteArrayToBase17bUtf8(intArrayInput) {
 
     await assertIsByteArray(byteArrayRes); return byteArrayRes;
 }
+
+async function byteArrayFromBase17bUtf8(intArrayInput) {
+    await assertIsByteArray(intArrayInput); let byteArrayRes;
+
+    byteArrayRes = await eiteHostCall('internalByteArrayFromBase17bString', intArrayInput);
+
+    await assertIsByteArray(byteArrayRes); return byteArrayRes;
+}
+
+async function internalByteArrayToBase17bString(intArrayInput) {
+    return Base16b.encode(intArrayInput);
+}
