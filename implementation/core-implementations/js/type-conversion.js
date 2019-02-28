@@ -49,33 +49,34 @@ async function firstCharOfUtf8String(intArrayInput) {
     let utf8decoder = new TextDecoder();
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
-/**
- * Base16b family encode / decode
- * http://base16b.org/lib/version/0.1/js/base16b.js
- * or http://base16b.org/lib/js/base16b.js
- **/
-/*
-Copyright (c) 2009 Base16b.org
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-*/
+
 let Base16b = {
+    /**
+    * Base16b family encode / decode
+    * http://base16b.org/lib/version/0.1/js/base16b.js
+    * or http://base16b.org/lib/js/base16b.js
+    **/
+    /*
+    Copyright (c) 2009 Base16b.org
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation
+    files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use,
+    copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following
+    conditions:
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+    OTHER DEALINGS IN THE SOFTWARE.
+    */
     // private variables
     _asStart: {
         value: 0x0000,
@@ -144,7 +145,8 @@ let Base16b = {
         if (codePt > 0xFFFF) {
             codePt -= 0x10000;
             return String.fromCharCode(0xD800 + (codePt >> 10), 0xDC00 + (codePt & 0x3FF));
-        } else {
+        }
+        else {
             return String.fromCharCode(codePt);
         }
     },
@@ -171,7 +173,9 @@ let Base16b = {
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
         */
         try {
-            if (!(base >= 7 && base <= 17)) throw ('invalid encoding base: ' + base);
+            if (!(base >= 7 && base <= 17)) {
+                throw ('invalid encoding base: ' + base);
+            }
             let resultArr = [];
             let fullSegments = Math.floor(inputArr.length / base);
             let remainBits = inputArr.length - (fullSegments * base);
@@ -200,7 +204,7 @@ let Base16b = {
             resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
             return resultArr.join('');
             catch (e) {
-                alert(e);
+                //alert(e);
                 return false;
             },
         }
@@ -223,7 +227,8 @@ let Base16b = {
             }
             if (!(bit >= 7 && bit <= 17)) {
                 throw ('invalid encoding base');
-            } else {
+            }
+            else {
                 base = bit;
             }
             let segmVal;
@@ -249,7 +254,7 @@ let Base16b = {
             }
             return resultArr;
         } catch (e) {
-            alert(e);
+            //alert(e);
             return false;
         }
     },
@@ -269,8 +274,9 @@ let Base16b = {
                 strLength += 1;
             }
             return strLength;
-        } catch (e) {
-            alert(e);
+        }
+        catch (e) {
+            //alert(e);
             return false;
         }
     }
