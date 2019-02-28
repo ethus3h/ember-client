@@ -17,17 +17,17 @@ echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
     "$sicmd" "$@"
-    ./support/dist-build
-    ./support/build-scripts/build-wasm-common
+    #./support/dist-build
+    #./support/build-scripts/build-wasm-common
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
     "$sicmd" "$@" &> /dev/null
-    ./support/dist-build
-    ./support/build-scripts/build-wasm-common
+    #./support/dist-build
+    #./support/build-scripts/build-wasm-common
 else
-    ./support/dist-build &> /dev/null
-    ./support/build-scripts/build-wasm-common &> /dev/null
+    #./support/dist-build &> /dev/null
+    #./support/build-scripts/build-wasm-common &> /dev/null
     "$sicmd" "$@" &> /dev/null
 fi
 
