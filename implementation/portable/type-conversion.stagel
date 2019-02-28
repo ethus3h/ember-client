@@ -59,9 +59,13 @@ r/an/byteArrayToBase17bUtf8 an/in
     set an/res eiteHostCall 'internalIntBitArrayToBase17bString' an/in
     return an/res
 
-async function byteArrayFromBase17bUtf8(intArrayInput) {
-    await assertIsByteArray(intArrayInput); let byteArrayRes;
-
+r/an/byteArrayFromBase17bUtf8 an/in
+    assertIsByteArray an/in
+    new an/temp
+    new n/len
+    new n/i
+    while lt n/i n/len
+        
     let intBitArrayTemp = [];
     let intLen=intArrayInput.length
     while(i<) {
