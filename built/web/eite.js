@@ -2567,7 +2567,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
-    await runTestsWasm(boolV);
+    /*await runTestsWasm(boolV); */
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
