@@ -38,7 +38,7 @@ cToWasm() {
         # Or without a libc (you need to provide one somehow):
         # --allow-undefined allows undefined symbols in the linked executable. E.g. "extern" declarations. Should I remove that flag?
         # --warn-undefined-symbols is needed since it uses the Emscripten libc etc. which depend on some JavaScript implementations of some stuff.
-        wasm-ld -L./lib -lc-wasm -lc -ldlmalloc -lcompiler_rt_wasm -lcompiler_rt -lc_rt_wasm -lc-extras -lpthreads_stub --warn-undefined-symbols --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
+        wasm-ld -L./lib -lc-wasm -lc -ldlmalloc -lcompiler_rt_wasm -lcompiler_rt -lc_rt_wasm -lc-extras -lpthreads_stub --warn-unresolved-symbols --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
         wasm2wat --inline-exports --inline-imports -f --generate-names -o "$1".wat "$1".o.wasm
         mv "$1".wat ../
 
