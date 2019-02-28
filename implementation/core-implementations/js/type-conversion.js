@@ -75,7 +75,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-var Base16b = {
+let Base16b = {
     // private variables
     _asStart: {
         value: 0x0000,
@@ -83,7 +83,7 @@ var Base16b = {
     },
     // +UF0000 is the first code point in the Asyntactic script
     _noncont: function() {
-        var nc = []; // array of cp : value mappings for the non-contiguous code points
+        let nc = []; // array of cp : value mappings for the non-contiguous code points
         nc[0] = {
             value: 0xFFFE,
             cp: 0xF80A
@@ -104,8 +104,12 @@ var Base16b = {
     },
     // private methods
     _CharBytes: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
-        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) return 2;
-        else return 1;
+        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
+            return 2;
+        }
+        else {
+            return 1;
+        }
     },
     _invertVal: function(segmVal, base) {
         // Two's complement of the value for this base
@@ -113,8 +117,10 @@ var Base16b = {
     },
     _fromCodePoint: function(segmCP, bytes) {
         // Map Code Point to a segment value as specified by the mapping table for this base in the Asyntactic script
-        if (bytes === 2) return this._fixedCharCodeAt(segmCP, 0) - this._asStart.cp;
-        var i;
+        if (bytes === 2) {
+            return this._fixedCharCodeAt(segmCP, 0) - this._asStart.cp;
+        }
+        let i;
         for (i = 0; i < this._noncont().length; i++) {
             // handle non-contiguous code points for last two CPs in bases 16 and 17
             if (this._fixedFromCharCode(this._noncont()[i].cp) === segmCP) {
@@ -125,7 +131,7 @@ var Base16b = {
     _toCodePoint: function(segmVal, base) {
         // Map a segment value to the Code Point specified by the mapping table for this base in the Asyntactic script
         if (base < 16) return this._asStart.cp + segmVal;
-        var i;
+        let i;
         for (i = 0; i < this._noncont().length; i++) {
             // handle non-contiguous code points for bases 16 and 17
             if (this._noncont()[i].value === segmVal) return this._noncont()[i].cp;
@@ -144,8 +150,8 @@ var Base16b = {
     },
     _fixedCharCodeAt: function(str, idx) {
         // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/charCodeAt
-        var code = str.charCodeAt(idx);
-        var hi, low;
+        let code = str.charCodeAt(idx);
+        let hi, low;
         if (0xD800 <= code && code <= 0xDBFF) { // High surrogate (could change last hex to 0xDB7F to treat high private surrogates as single characters)
             hi = code;
             low = str.charCodeAt(idx + 1);
@@ -166,13 +172,13 @@ var Base16b = {
         */
         try {
             if (!(base >= 7 && base <= 17)) throw ('invalid encoding base: ' + base);
-            var resultArr = [];
-            var fullSegments = Math.floor(inputArr.length / base);
-            var remainBits = inputArr.length - (fullSegments * base);
-            var segment, bit;
-            var segmstart;
-            var segmVal; // construct the value of the bits in the current segment
-            var currsegm;
+            let resultArr = [];
+            let fullSegments = Math.floor(inputArr.length / base);
+            let remainBits = inputArr.length - (fullSegments * base);
+            let segment, bit;
+            let segmstart;
+            let segmVal; // construct the value of the bits in the current segment
+            let currsegm;
             // convert the next segment of base number of bits to decimal
             for (segment = 0; segment < fullSegments; segment++) {
                 // input and output both read from left to right
@@ -206,11 +212,11 @@ var Base16b = {
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
         */
         try {
-            var resultArr = [];
-            var termCharBytes = this._CharBytes(inputStr.slice(-2));
-            var termCharCP = inputStr.slice(-termCharBytes); // get the termination character
-            var termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
-            var bit = 17,
+            let resultArr = [];
+            let termCharBytes = this._CharBytes(inputStr.slice(-2));
+            let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
+            let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
+            let bit = 17,
                 base; // decode the base from the termination character
             while (Math.floor(termCharVal / Math.pow(2, bit - 1)) === 0 && bit >= 7) {
                 bit--;
@@ -220,15 +226,15 @@ var Base16b = {
             } else {
                 base = bit;
             }
-            var segmVal;
-            var currCharBytes;
-            var bytesUsed = 0;
-            var fullBytes = inputStr.length - termCharBytes;
+            let segmVal;
+            let currCharBytes;
+            let bytesUsed = 0;
+            let fullBytes = inputStr.length - termCharBytes;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
                 currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
-                var segmVal = this._fromCodePoint(termCharCP, currCharBytes);
+                let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
             }
             for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
@@ -236,7 +242,7 @@ var Base16b = {
             }
             bytesUsed += currCharBytes;
             // remainder
-            var remainVal = this._invertVal(termCharVal, base);
+            let remainVal = this._invertVal(termCharVal, base);
             // decode the remainder from the termination character
             for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
                 resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
@@ -254,9 +260,9 @@ var Base16b = {
         This function can handle stings of mixed BMP plane and higher Unicode planes.
         Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
         */
-        var strBytes = inputStr.length;
-        var strLength = 0;
-        var tallyBytes = 0;
+        let strBytes = inputStr.length;
+        let strLength = 0;
+        let tallyBytes = 0;
         try {
             while (tallyBytes < strBytes) {
                 tallyBytes += this._CharBytes(inputStr.slice(tallyBytes, tallyBytes + 2));
