@@ -54,6 +54,7 @@ r/s/strFromByteArray an/input
     return s/out
 
 r/an/byteToIntBitArray n/in
+    assertIsByte n/in
     new an/res
     new s/temp
     set s/temp intToBaseStr n/in 2
@@ -77,6 +78,7 @@ r/an/byteFromIntBitArray an/in
         set s/temp cat s/temp strFrom get an/in n/i
         set n/i add n/i 1
     set n/res intFromBaseStr s/temp
+    assertIsByte n/res
     return n/res
 
 r/an/byteArrayToIntBitArray an/in
@@ -91,10 +93,26 @@ r/an/byteArrayToIntBitArray an/in
     assertIsIntBitArray an/res
     return an/res
 
+r/an/byteArrayFromIntBitArray an/in
+    assertIsIntBitArray an/in
+    new an/res
+    new n/len
+    new n/i
+    set n/len count an/in
+    new an/temp
+    while lt n/i n/len
+        set an/temp push an/temp get an/in n/i
+        if eq 0 mod n/i 8
+            set an/res push an/res byteFromIntBitArray an/temp
+            set an/temp []
+        set n/i add n/i 1
+    assertIsByteArray an/res
+    return an/res
+
 r/an/byteArrayToBase17bUtf8 an/in
     assertIsByteArray an/in
     new an/res
-    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' an/in
+    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
     return an/res
 
 r/an/byteArrayFromBase17bUtf8 an/in
