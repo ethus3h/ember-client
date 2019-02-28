@@ -448,9 +448,9 @@ let Base16b = {
             catch (e) {
                 //alert(e);
                 return false;
-            },
+            }
         }
-    }
+    },
     // public method for decoding
     decode: function(inputStr) {
         /*
