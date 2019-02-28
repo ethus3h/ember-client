@@ -376,6 +376,239 @@ async function internalLoadDatasets() {
     datasetsLoaded = true;
 }
 
+let Base16b = {
+    /* Based on https://web.archive.org/web/20090902074623/http://www.base16b.org/doc/specification/version/0.1/base16b.pdf */
+    /**
+    * Base16b family encode / decode
+    * http://base16b.org/lib/version/0.1/js/base16b.js
+    * or http://base16b.org/lib/js/base16b.js
+    **/
+    /*
+    Copyright (c) 2009 Base16b.org
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation
+    files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use,
+    copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following
+    conditions:
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+    OTHER DEALINGS IN THE SOFTWARE.
+    */
+    // private variables
+    _asStart: {
+        value: 0x0000,
+        cp: 0xF0000
+    },
+    // +UF0000 is the first code point in the Asyntactic script
+    _noncont: function() {
+        let nc = []; // array of cp : value mappings for the non-contiguous code points
+        nc[0] = {
+            value: 0xFFFE,
+            cp: 0xF80A
+        };
+        nc[1] = {
+            value: 0xFFFF,
+            cp: 0xF80B
+        };
+        nc[2] = {
+            value: 0x1FFFE,
+            cp: 0xF80C
+        };
+        nc[3] = {
+            value: 0x1FFFF,
+            cp: 0xF80D
+        };
+        return nc;
+    },
+    // private methods
+    _CharBytes: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
+        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
+            return 2;
+        }
+        else {
+            return 1;
+        }
+    },
+    _invertVal: function(segmVal, base) {
+        // Two's complement of the value for this base
+        return Math.pow(2, base) - (segmVal + 1);
+    },
+    _fromCodePoint: function(segmCP, bytes) {
+        // Map Code Point to a segment value as specified by the mapping table for this base in the Asyntactic script
+        if (bytes === 2) {
+            return this._fixedCharCodeAt(segmCP, 0) - this._asStart.cp;
+        }
+        let i;
+        for (i = 0; i < this._noncont().length; i++) {
+            // handle non-contiguous code points for last two CPs in bases 16 and 17
+            if (this._fixedFromCharCode(this._noncont()[i].cp) === segmCP) {
+                return this._noncont()[i].value;
+            }
+        }
+    },
+    _toCodePoint: function(segmVal, base) {
+        // Map a segment value to the Code Point specified by the mapping table for this base in the Asyntactic script
+        if (base < 16) return this._asStart.cp + segmVal;
+        let i;
+        for (i = 0; i < this._noncont().length; i++) {
+            // handle non-contiguous code points for bases 16 and 17
+            if (this._noncont()[i].value === segmVal) return this._noncont()[i].cp;
+        }
+        return this._asStart.cp + segmVal;
+    },
+    _fixedFromCharCode: function(codePt) {
+        // Fix the standard String.FromCharCode method to handle non-BMP unicode planes
+        // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/fromCharCode
+        if (codePt > 0xFFFF) {
+            codePt -= 0x10000;
+            return String.fromCharCode(0xD800 + (codePt >> 10), 0xDC00 + (codePt & 0x3FF));
+        }
+        else {
+            return String.fromCharCode(codePt);
+        }
+    },
+    _fixedCharCodeAt: function(str, idx) {
+        // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/charCodeAt
+        let code = str.charCodeAt(idx);
+        let hi, low;
+        if (0xD800 <= code && code <= 0xDBFF) { // High surrogate (could change last hex to 0xDB7F to treat high private surrogates as single characters)
+            hi = code;
+            low = str.charCodeAt(idx + 1);
+            return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;
+        }
+        if (0xDC00 <= code && code <= 0xDFFF) { // Low surrogate
+            hi = str.charCodeAt(idx - 1);
+            low = code;
+            return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;
+        }
+        return code;
+    },
+    // public method for encoding
+    encode: function(inputArr, base) {
+        /*
+        Encode an array of pseudo-booleans (0 or 1)
+        The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
+        */
+        try {
+            if (!(base >= 7 && base <= 17)) {
+                throw ('invalid encoding base: ' + base);
+            }
+            let resultArr = [];
+            let fullSegments = Math.floor(inputArr.length / base);
+            let remainBits = inputArr.length - (fullSegments * base);
+            let segment, bit;
+            let segmstart;
+            let segmVal; // construct the value of the bits in the current segment
+            let currsegm;
+            // convert the next segment of base number of bits to decimal
+            for (segment = 0; segment < fullSegments; segment++) {
+                // input and output both read from left to right
+                segmstart = base * segment;
+                currsegm = inputArr.slice(segmstart, segmstart + base);
+                // most significant bit at the start (left) / least significant bit at the end (right).
+                for (bit = base - 1, segmVal = 0; bit >= 0; bit--) {
+                    segmVal += (currsegm[bit] * Math.pow(2, (base - 1) - bit));
+                }
+                resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(segmVal, base));
+            }
+            // encode the termination character
+            segmVal = 0;
+            segmstart = base * segment;
+            currsegm = inputArr.slice(segmstart);
+            for (bit = remainBits - 1; bit >= 0; bit--) {
+                segmVal += (currsegm[bit] * Math.pow(2, (remainBits - 1) - bit));
+            }
+            resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
+            return resultArr.join('');
+            catch (e) {
+                //alert(e);
+                return false;
+            }
+        }
+    },
+    // public method for decoding
+    decode: function(inputStr) {
+        /*
+        Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
+        The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
+        */
+        try {
+            let resultArr = [];
+            let termCharBytes = this._CharBytes(inputStr.slice(-2));
+            let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
+            let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
+            let bit = 17,
+                base; // decode the base from the termination character
+            while (Math.floor(termCharVal / Math.pow(2, bit - 1)) === 0 && bit >= 7) {
+                bit--;
+            }
+            if (!(bit >= 7 && bit <= 17)) {
+                throw ('invalid encoding base');
+            }
+            else {
+                base = bit;
+            }
+            let segmVal;
+            let currCharBytes;
+            let bytesUsed = 0;
+            let fullBytes = inputStr.length - termCharBytes;
+            while (bytesUsed < fullBytes) {
+                // decode the code point segments in sequence
+                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
+                termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
+                let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
+                // most significant bit at the start (left) / least significant bit at the end (right).
+            }
+            for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
+                resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
+            }
+            bytesUsed += currCharBytes;
+            // remainder
+            let remainVal = this._invertVal(termCharVal, base);
+            // decode the remainder from the termination character
+            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
+                resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
+            }
+            return resultArr;
+        } catch (e) {
+            //alert(e);
+            return false;
+        }
+    },
+    // public method for counting Unicode characters
+    trueLength: function(inputStr) {
+        /*
+        Count the number of characters in a string.
+        This function can handle stings of mixed BMP plane and higher Unicode planes.
+        Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
+        */
+        let strBytes = inputStr.length;
+        let strLength = 0;
+        let tallyBytes = 0;
+        try {
+            while (tallyBytes < strBytes) {
+                tallyBytes += this._CharBytes(inputStr.slice(tallyBytes, tallyBytes + 2));
+                strLength += 1;
+            }
+            return strLength;
+        }
+        catch (e) {
+            //alert(e);
+            return false;
+        }
+    }
+};
+
 // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
 // To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
@@ -574,6 +807,14 @@ async function firstCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the UTF-8 encoding of the first character, given decimal representation of a string as input.
     let utf8decoder = new TextDecoder();
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
+}
+
+async function internalIntBitArrayToBase17bString(intBitArrayInput) {
+    return Base16b.encode(intBitArrayInput);
+}
+
+async function internalIntBitArrayFromBase17bString(byteArrayInput) {
+    return Base16b.decode(byteArrayInput);
 }
 
 /* arrays, provides:
@@ -1284,6 +1525,21 @@ async function isByte(genericIn) {
     intVal = genericIn;
     let boolRes = false;
     boolRes = await intIsBetween(intVal, 0, 255);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isIntBit(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isIntBit:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 0, 1);
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -2472,6 +2728,24 @@ async function isByteArray(genericArrayIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function isIntBitArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntBitArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isIntBit(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function isDcArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
@@ -2567,7 +2841,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
-    /*await runTestsWasm(boolV); */
+    /*runTestsWasm b/v */
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -2904,6 +3178,14 @@ async function assertIsCharArray(genericItemIn) {
     await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsCharArray:assertions'); await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isCharArray(genericItemIn));
+
+    await internalDebugStackExit();
+}
+
+async function assertIsIntBitArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsIntBitArray:assertions'); await assertIsGenericItem(genericItemIn);
+
+    await assertIsTrue(await isIntBitArray(genericItemIn));
 
     await internalDebugStackExit();
 }
@@ -3819,6 +4101,103 @@ async function strFromByteArray(intArrayInput) {
     }
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function byteToIntBitArray(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('byteToIntBitArray:type-conversion'); await assertIsInt(intIn); let intArrayReturn;
+
+    await assertIsByte(intIn);
+    let intArrayRes = [];
+    let strTemp = '';
+    strTemp = await intToBaseStr(intIn, 2);
+    let intLen = 0;
+    let intI = 0;
+    intLen = await len(strTemp);
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intRes = 0;
+    let strTemp = '';
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        strTemp = await implCat(strTemp, await strFrom(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    intRes = await intFromBaseStr(strTemp);
+    await assertIsByte(intRes);
+
+    intArrayReturn = intRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayToIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await byteToIntBitArray(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    let intArrayTemp = [];
+    while (await implLt(intI, intLen)) {
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
+        if (await implEq(0, await implMod(intI, 8))) {
+            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
+            intArrayTemp = [  ];
+        }
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayToBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    intArrayRes = await eiteHostCall('internalIntBitArrayToBase17bString', await byteArrayToIntBitArray(intArrayIn));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    intArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', await byteArrayFromIntBitArray(intArrayIn));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaFromSems(intArrayContent) {

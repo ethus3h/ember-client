@@ -15,6 +15,21 @@ async function isByte(genericIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function isIntBit(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isIntBit:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 0, 1);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function isChar(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
 
@@ -1199,6 +1214,24 @@ async function isByteArray(genericArrayIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function isIntBitArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntBitArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isIntBit(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function isDcArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
@@ -1294,7 +1327,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
-    await runTestsWasm(boolV);
+    /*runTestsWasm b/v */
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -1631,6 +1664,14 @@ async function assertIsCharArray(genericItemIn) {
     await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsCharArray:assertions'); await assertIsGenericItem(genericItemIn);
 
     await assertIsTrue(await isCharArray(genericItemIn));
+
+    await internalDebugStackExit();
+}
+
+async function assertIsIntBitArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('assertIsIntBitArray:assertions'); await assertIsGenericItem(genericItemIn);
+
+    await assertIsTrue(await isIntBitArray(genericItemIn));
 
     await internalDebugStackExit();
 }
@@ -2546,6 +2587,103 @@ async function strFromByteArray(intArrayInput) {
     }
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function byteToIntBitArray(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('byteToIntBitArray:type-conversion'); await assertIsInt(intIn); let intArrayReturn;
+
+    await assertIsByte(intIn);
+    let intArrayRes = [];
+    let strTemp = '';
+    strTemp = await intToBaseStr(intIn, 2);
+    let intLen = 0;
+    let intI = 0;
+    intLen = await len(strTemp);
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intRes = 0;
+    let strTemp = '';
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        strTemp = await implCat(strTemp, await strFrom(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    intRes = await intFromBaseStr(strTemp);
+    await assertIsByte(intRes);
+
+    intArrayReturn = intRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayToIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await byteToIntBitArray(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    let intArrayTemp = [];
+    while (await implLt(intI, intLen)) {
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
+        if (await implEq(0, await implMod(intI, 8))) {
+            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
+            intArrayTemp = [  ];
+        }
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayToBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    intArrayRes = await eiteHostCall('internalIntBitArrayToBase17bString', await byteArrayToIntBitArray(intArrayIn));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    intArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', await byteArrayFromIntBitArray(intArrayIn));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaFromSems(intArrayContent) {
