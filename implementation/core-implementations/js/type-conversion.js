@@ -208,21 +208,21 @@ var Base16b = {
         try {
             var resultArr = [];
             var termCharBytes = this._CharBytes(inputStr.slice(-2));
-            var termCharCP = inputStr.slice(-termCharBytes);
-            // get the termination character
+            var termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             var termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
-            var bit = 17,
-                base;
-            // decode the base from the termination character
+            var bit = 17, base; // decode the base from the termination character
             while (Math.floor(termCharVal / Math.pow(2, bit - 1)) === 0 && bit >= 7) {
                 bit--;
             }
-            if (!(bit >= 7 && bit <= 17)) throw ('invalid encoding base');
-            else base = bit;
+            if (!(bit >= 7 && bit <= 17)) {
+                throw ('invalid encoding base');
+            }
+            else {
+                base = bit;
+            }
             var segmVal;
             var currCharBytes;
             var bytesUsed = 0;
-        };
         var fullBytes = inputStr.length - termCharBytes;
         while (bytesUsed < fullBytes) {
             // decode the code point segments in sequence
@@ -241,14 +241,13 @@ var Base16b = {
         for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
             resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
         }
-    },
-}
-catch {
-    (e)
-}
 return resultArr;
+        }
+catch(e) {
 alert(e);
 return false;
+}
+    },
 // public method for counting Unicode characters
 trueLength: function(inputStr) {
     /*
@@ -270,3 +269,4 @@ trueLength: function(inputStr) {
         return false;
     }
 }
+};
