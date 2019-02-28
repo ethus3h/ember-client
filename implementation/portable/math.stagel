@@ -120,6 +120,8 @@ r/b/isBaseStr s/in n/b
     return b/res
 
 r/s/formatPercentage n/a n/b
+    if eq 0 n/a
+        return '0.000'
     new n/percentageN
     set n/percentageN mul 100 div mul n/a 100000 } n/b
     new s/percentageTemp
