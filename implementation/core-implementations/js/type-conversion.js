@@ -177,7 +177,7 @@ var Base16b = {
         },
     }
     catch (e) {}
-    // convert the next segment of base numer of bits to decimal
+    // convert the next segment of base number of bits to decimal
     for (segment = 0; segment < fullSegments; segment++) {
         // input and output both read from left to right
         segmstart = base * segment;
@@ -200,12 +200,11 @@ var Base16b = {
     alert(e);
     return false;
     // public method for decoding
-    decode: function(inputStr)
-    /*
-    Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
-    The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
-    */
-    {
+    decode: function(inputStr) {
+        /*
+        Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
+        The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
+        */
         try {
             var resultArr = [];
             var termCharBytes = this._CharBytes(inputStr.slice(-2));
