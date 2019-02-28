@@ -54,21 +54,29 @@ r/s/strFromByteArray an/input
     return s/out
 
 r/an/byteToIntBitArray n/in
-    
+    new an/res
+    new s/temp
+    set s/temp intToBaseStr n/in 2
+    new n/len
+    new n/i
+    set n/len len s/temp
+    while lt n/i n/len
+        set an/res push an/res intFromIntStr strChar s/temp n/i
+        set n/i add n/i 1
+    assertIsIntBitArray an/res
+    return an/res
 
 r/an/byteArrayToIntBitArray an/in
     assertIsByteArray an/in
     new an/res
     new n/len
     new n/i
-    new n/currentByte
-    new an/currentBits
+    set n/len count an/in
     while lt n/i n/len
-        set currentBits 
         set an/res push an/res byteToIntBitArray get an/in n/i
-        set an/currentBits []
         set n/i add n/i 1
-
+    assertIsIntBitArray an/res
+    return an/res
 
 r/an/byteArrayToBase17bUtf8 an/in
     assertIsByteArray an/in

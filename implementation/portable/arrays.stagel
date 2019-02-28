@@ -150,6 +150,17 @@ r/b/isByteArray ga/in
         set n/count sub n/count 1
     return true
 
+r/b/isByteArray ga/in
+    new n/count
+    set n/count sub count ga/in } 1
+    new g/elem
+    while ge n/count 0
+        set g/elem get ga/in n/count
+        if not isByte g/elem
+            return false
+        set n/count sub n/count 1
+    return true
+
 r/b/isDcArray ga/in
     new n/count
     set n/count sub count ga/in } 1
