@@ -117,17 +117,6 @@ r/an/byteArrayToBase17bUtf8 an/in
 
 r/an/byteArrayFromBase17bUtf8 an/in
     assertIsByteArray an/in
-    new an/temp
-    new n/len
-    new n/i
-    while lt n/i n/len
-        
-    let intBitArrayTemp = [];
-    let intLen=intArrayInput.length
-    while(i<) {
-        
-    }
-    byteArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', intBitArrayTemp);
-
-    await assertIsByteArray(byteArrayRes); return byteArrayRes;
-}
+    new an/res
+    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' byteArrayFromIntBitArray an/in
+    return an/res
