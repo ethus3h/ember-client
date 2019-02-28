@@ -1691,3 +1691,31 @@ async function assertIsExecId(intIn) {
     await internalDebugStackExit();
 }
 
+/* This file contains the public interface for EITE. */
+/* If you just want to run EITE, use the following function. */
+
+async function startEite() {
+    await internalDebugStackEnter('startEite:public-interface');
+
+    /* Start EITE, using the default startup document. Does not return while EITE is still running. */
+    /* loadAndRun ... */
+
+    await internalDebugStackExit();
+}
+/* If you want to run a different document, you can call loadAndRun with the format of the document to open and its location. */
+
+async function loadAndRun(strFormat, strPath) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadAndRun:public-interface'); await assertIsStr(strFormat); await assertIsStr(strPath);
+
+    /* Load and run the specified document. Does not return while the document is still running. */
+    await runDocument(await loadStoredDocument(strFormat, strPath));
+
+    await internalDebugStackExit();
+}
+/* If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in. */
+
+async function loadAndConvert(strInputFormat, strOutputFormat, strPath) {
+    await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadAndConvert:public-interface'); await assertIsStr(strInputFormat); await assertIsStr(strOutputFormat); await assertIsStr(strPath); let intArrayReturn;
+
+    /* Load the specified document, and return it converted to the specified outputFormat as an array of bytes. */
+    let intArrayOut = [];
