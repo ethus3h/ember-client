@@ -252,13 +252,12 @@ return resultArr;
 alert(e);
 return false;
 // public method for counting Unicode characters
-trueLength: function(inputStr)
-/*
-Count the number of characters in a string.
-This function can handle stings of mixed BMP plane and higher Unicode planes.
-Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
-*/
-{
+trueLength: function(inputStr) {
+    /*
+    Count the number of characters in a string.
+    This function can handle stings of mixed BMP plane and higher Unicode planes.
+    Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
+    */
     var strBytes = inputStr.length;
     var strLength = 0;
     var tallyBytes = 0;
