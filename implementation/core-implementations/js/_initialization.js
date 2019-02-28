@@ -446,10 +446,10 @@ let Base16b = {
             }
             resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
             return resultArr.join('');
-            catch (e) {
-                //alert(e);
-                return false;
-            }
+        }
+        catch (e) {
+            //alert(e);
+            return false;
         }
     },
     // public method for decoding
