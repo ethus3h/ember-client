@@ -50,27 +50,6 @@ async function firstCharOfUtf8String(intArrayInput) {
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
 
-async function byteArrayToBase17bUtf8(intArrayInput) {
-    await assertIsByteArray(intArrayInput); let byteArrayRes;
-
-    byteArrayRes = await eiteHostCall('internalIntBitArrayToBase17bString', intArrayInput);
-
-    await assertIsByteArray(byteArrayRes); return byteArrayRes;
-}
-
-async function byteArrayFromBase17bUtf8(intArrayInput) {
-    await assertIsByteArray(intArrayInput); let byteArrayRes;
-
-    let intBitArrayTemp = [];
-    let intLen=intArrayInput.length
-    while(i<) {
-        
-    }
-    byteArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', intBitArrayTemp);
-
-    await assertIsByteArray(byteArrayRes); return byteArrayRes;
-}
-
 async function internalIntBitArrayToBase17bString(intBitArrayInput) {
     return Base16b.encode(intBitArrayInput);
 }

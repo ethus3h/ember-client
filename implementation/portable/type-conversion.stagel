@@ -52,3 +52,24 @@ r/s/strFromByteArray an/input
         set s/out cat s/out charFromByte get an/input n/i
         set n/i add n/i 1
     return s/out
+
+    async function byteArrayToBase17bUtf8(intArrayInput) {
+    await assertIsByteArray(intArrayInput); let byteArrayRes;
+
+    byteArrayRes = await eiteHostCall('internalIntBitArrayToBase17bString', intArrayInput);
+
+    await assertIsByteArray(byteArrayRes); return byteArrayRes;
+}
+
+async function byteArrayFromBase17bUtf8(intArrayInput) {
+    await assertIsByteArray(intArrayInput); let byteArrayRes;
+
+    let intBitArrayTemp = [];
+    let intLen=intArrayInput.length
+    while(i<) {
+        
+    }
+    byteArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', intBitArrayTemp);
+
+    await assertIsByteArray(byteArrayRes); return byteArrayRes;
+}
