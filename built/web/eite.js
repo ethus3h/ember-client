@@ -152,7 +152,7 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components. Functions provided by them are available with await wasmCall('functionName', argument), where argument is an int or an array of ints.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/simple.c.wat']);
+    //await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/simple.c.wat']);
 
     // Set up environment variables.
 
