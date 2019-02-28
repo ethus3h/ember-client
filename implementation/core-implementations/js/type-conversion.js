@@ -825,13 +825,10 @@ var
                                 tallyBytes +
                                 2
                             ));
-                    strLength
-                        +=
-                        1;
+                    strLength+=1;
                 }
                 return
-                strLength
-                ;
+                strLength;
             } catch (
                 e
             ) {
