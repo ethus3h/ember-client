@@ -132,9 +132,6 @@ var Base16b = {
         }
         return this._asStart.cp + segmVal;
     },
-    24 http: //www.opensource.org/licenses/mit-license.php
-        Base16b.org
-    license
     _fixedFromCharCode: function(codePt) {
         // Fix the standard String.FromCharCode method to handle non-BMP unicode planes
         // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/fromCharCode
@@ -227,8 +224,6 @@ var Base16b = {
             var segmVal;
             var currCharBytes;
             var bytesUsed = 0;
-            Base16b.org
-            license
         };
         var fullBytes = inputStr.length - termCharBytes;
         while (bytesUsed < fullBytes) {
