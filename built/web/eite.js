@@ -404,44 +404,39 @@ if (typeof window !== 'undefined') {
             });
         };
         window.eiteHostRequestInternalOnMessage = async function(message) {
-            // The host accepted a message; this function processes it
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const args = message.data.args;
-            implDebug('Host understood message '+msgid+' from worker: '+args, 1);
-            internalDebugLogJSObject(message);
-            let res = await window[args[0]]( ...args[1] );
-            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
-            window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
+                const {uuid, msgid, args} = message.data;
+                let res = await window[args[0]]( ...args[1] );
+                if (!res) {
+                    res = null;
+                }
+                window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, res: res});
         }
         window.eiteWorker.onmessage = function(message) {
-            // Handle messages sent to this code when it is not running as a Web worker
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const msgdata = message.data.args;
-            implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-            internalDebugLogJSObject(message);
+            const {uuid, msgid, res} = message.data;
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
-                if (msgdata === undefined) {
-                    implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
-                }
-                let resolveCallback;
-                resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
-                if (resolveCallback !== undefined) {
-                    resolveCallback(msgdata);
-                    delete window.eiteWorkerResolveCallbacks[msgid];
+                if (res || res === null) {
+                    let resolveCallback;
+                    resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
+                    if (resolveCallback) {
+                        resolveCallback(res);
+                        delete window.eiteWorkerResolveCallbacks[msgid];
+                    }
+                    else {
+                        implDie('Web worker returned invalid message ID.');
+                        throw 'Web worker returned invalid message ID.';
+                    }
                 }
                 else {
-                    implDie('Web worker returned invalid message ID '+msgid+'.');
-                    throw 'Web worker returned invalid message ID '+msgid+'.';
+                    implDie('Web worker encountered an error.');
+                    throw 'Web worker encountered an error.';
                 }
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
                 window.eiteHostRequestInternalOnMessage(message);
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
-                throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
+                implDie('Web worker encountered an error: '+res+'.');
+                throw 'Web worker encountered an error: '+res+'.';
             }
         };
     }
@@ -459,47 +454,44 @@ else {
 if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
     // Running as a Web worker, so set up accordingly
     self.internalOnMessage = async function(message) {
-        // The worker accepted a message; this function processes it
-        const uuid = message.data.uuid;
-        const msgid = message.data.msgid;
-        const args = message.data.args;
-        implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-        internalDebugLogJSObject(message);
+        const {uuid, msgid, args} = message.data;
         let res;
         try {
             res = await self[args[0]]( ...args[1] );
         }
         catch(error) {
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, res: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
             throw error;
         }
-        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
+        if (!res) {
+            res = null;
+        }
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, res: res});
     }
 
     self.onmessage = function(message) {
         // Handle messages sent to this code when it is running as a Web worker
-        const uuid = message.data.uuid;
-        const msgid = message.data.msgid;
-        const args = message.data.args;
-        implDebug('Worker got message '+msgid+' from host: '+args, 1);
-        internalDebugLogJSObject(message);
+        const {uuid, msgid, args} = message.data;
         if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
             self.internalOnMessage(message);
         }
         else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-            if (args === undefined) {
-                implDebug('Host sent undefined contents in message '+msgid+'.', 1);
-            }
-            let resolveCallback;
-            resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
-            if (resolveCallback !== undefined) {
-                resolveCallback(args);
-                delete self.eiteWorkerHostResolveCallbacks[msgid];
+            const {uuid, msgid, res} = message.data;
+            if (res || res === null) {
+                let resolveCallback;
+                resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
+                if (resolveCallback) {
+                    resolveCallback(res);
+                    delete self.eiteWorkerHostResolveCallbacks[msgid];
+                }
+                else {
+                    implDie('Host returned invalid message ID.');
+                    throw 'Host returned invalid message ID.';
+                }
             }
             else {
-                implDie('Host returned invalid message ID.');
-                throw 'Host returned invalid message ID.';
+                implDie('Host encountered an error.');
+                throw 'Host encountered an error.';
             }
         }
     }
@@ -739,7 +731,7 @@ async function implDebug(strMessage, intLevel) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
     }
-    if ((! Number.isInteger(intLevel)) || typeof intLevel === "undefined" || intLevel === null || intLevel < -2147483648 || intLevel > 2147483647) {
+    if ((! Number.isInteger(int)) || typeof int === "undefined" || int === null || int < -2147483648 || int > 2147483647) {
         throw "Non-integer debug level";
     }
     await assertIsStr(strMessage); await assertIsInt(intLevel);
@@ -820,12 +812,6 @@ async function internalDebugPrintStack() {
         i = i - 1;
     }
     return result;
-}
-
-function internalDebugLogJSObject(obj) {
-    if (1 <= STAGEL_DEBUG) {
-        console.log(obj);
-    }
 }
 
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
