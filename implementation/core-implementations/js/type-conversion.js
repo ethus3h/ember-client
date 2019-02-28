@@ -173,31 +173,31 @@ var Base16b = {
             var segmstart;
             var segmVal; // construct the value of the bits in the current segment
             var currsegm;
-    // convert the next segment of base number of bits to decimal
-    for (segment = 0; segment < fullSegments; segment++) {
-        // input and output both read from left to right
-        segmstart = base * segment;
-        currsegm = inputArr.slice(segmstart, segmstart + base);
-        // most significant bit at the start (left) / least significant bit at the end (right).
-        for (bit = base - 1, segmVal = 0; bit >= 0; bit--) {
-            segmVal += (currsegm[bit] * Math.pow(2, (base - 1) - bit));
+            // convert the next segment of base number of bits to decimal
+            for (segment = 0; segment < fullSegments; segment++) {
+                // input and output both read from left to right
+                segmstart = base * segment;
+                currsegm = inputArr.slice(segmstart, segmstart + base);
+                // most significant bit at the start (left) / least significant bit at the end (right).
+                for (bit = base - 1, segmVal = 0; bit >= 0; bit--) {
+                    segmVal += (currsegm[bit] * Math.pow(2, (base - 1) - bit));
+                }
+                resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(segmVal, base));
+            }
+            // encode the termination character
+            segmVal = 0;
+            segmstart = base * segment;
+            currsegm = inputArr.slice(segmstart);
+            for (bit = remainBits - 1; bit >= 0; bit--) {
+                segmVal += (currsegm[bit] * Math.pow(2, (remainBits - 1) - bit));
+            }
+            resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
+            return resultArr.join('');
+            catch (e) {
+                alert(e);
+                return false;
+            },
         }
-        resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(segmVal, base));
-    }
-    // encode the termination character
-    segmVal = 0;
-    segmstart = base * segment;
-    currsegm = inputArr.slice(segmstart);
-    for (bit = remainBits - 1; bit >= 0; bit--) {
-        segmVal += (currsegm[bit] * Math.pow(2, (remainBits - 1) - bit));
-    }
-    resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
-    return resultArr.join('');
-    catch (e) {
-    alert(e);
-    return false;
-        },
-    }
     }
     // public method for decoding
     decode: function(inputStr) {
@@ -210,63 +210,62 @@ var Base16b = {
             var termCharBytes = this._CharBytes(inputStr.slice(-2));
             var termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             var termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
-            var bit = 17, base; // decode the base from the termination character
+            var bit = 17,
+                base; // decode the base from the termination character
             while (Math.floor(termCharVal / Math.pow(2, bit - 1)) === 0 && bit >= 7) {
                 bit--;
             }
             if (!(bit >= 7 && bit <= 17)) {
                 throw ('invalid encoding base');
-            }
-            else {
+            } else {
                 base = bit;
             }
             var segmVal;
             var currCharBytes;
             var bytesUsed = 0;
-        var fullBytes = inputStr.length - termCharBytes;
-        while (bytesUsed < fullBytes) {
-            // decode the code point segments in sequence
-            currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
-            termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
-            var segmVal = this._fromCodePoint(termCharCP, currCharBytes);
-            // most significant bit at the start (left) / least significant bit at the end (right).
+            var fullBytes = inputStr.length - termCharBytes;
+            while (bytesUsed < fullBytes) {
+                // decode the code point segments in sequence
+                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
+                termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
+                var segmVal = this._fromCodePoint(termCharCP, currCharBytes);
+                // most significant bit at the start (left) / least significant bit at the end (right).
+            }
+            for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
+                resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
+            }
+            bytesUsed += currCharBytes;
+            // remainder
+            var remainVal = this._invertVal(termCharVal, base);
+            // decode the remainder from the termination character
+            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
+                resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
+            }
+            return resultArr;
+        } catch (e) {
+            alert(e);
+            return false;
         }
-        for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
-            resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
-        }
-        bytesUsed += currCharBytes;
-        // remainder
-        var remainVal = this._invertVal(termCharVal, base);
-        // decode the remainder from the termination character
-        for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
-            resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
-        }
-return resultArr;
-        }
-catch(e) {
-alert(e);
-return false;
-}
     },
-// public method for counting Unicode characters
-trueLength: function(inputStr) {
-    /*
-    Count the number of characters in a string.
-    This function can handle stings of mixed BMP plane and higher Unicode planes.
-    Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
-    */
-    var strBytes = inputStr.length;
-    var strLength = 0;
-    var tallyBytes = 0;
-    try {
-        while (tallyBytes < strBytes) {
-            tallyBytes += this._CharBytes(inputStr.slice(tallyBytes, tallyBytes + 2));
-            strLength += 1;
+    // public method for counting Unicode characters
+    trueLength: function(inputStr) {
+        /*
+        Count the number of characters in a string.
+        This function can handle stings of mixed BMP plane and higher Unicode planes.
+        Fixes a problem with Javascript which incorrectly that assumes each character is only one byte.
+        */
+        var strBytes = inputStr.length;
+        var strLength = 0;
+        var tallyBytes = 0;
+        try {
+            while (tallyBytes < strBytes) {
+                tallyBytes += this._CharBytes(inputStr.slice(tallyBytes, tallyBytes + 2));
+                strLength += 1;
+            }
+            return strLength;
+        } catch (e) {
+            alert(e);
+            return false;
         }
-        return strLength;
-    } catch (e) {
-        alert(e);
-        return false;
     }
-}
 };
