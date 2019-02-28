@@ -49,3 +49,11 @@ async function firstCharOfUtf8String(intArrayInput) {
     let utf8decoder = new TextDecoder();
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
+
+async function byteArrayToBase17bUtf8(intArrayInput) {
+    await assertIsByteArray(intArrayInput); let byteArrayRes;
+
+    byteArrayRes = await eiteHostCall('internalByteArrayToBase17bString', intArrayInput);
+
+    await assertIsByteArray(byteArrayRes); return byteArrayRes;
+}
