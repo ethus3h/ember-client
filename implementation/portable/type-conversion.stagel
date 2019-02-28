@@ -65,8 +65,9 @@ r/an/byteArrayToIntBitArray an/in
     new an/currentBits
     while lt n/i n/len
         set currentBits 
-        set an/res push an/res an/currentBits
+        set an/res push an/res byteToIntBitArray get an/in n/i
         set an/currentBits []
+        set n/i add n/i 1
 
 
 r/an/byteArrayToBase17bUtf8 an/in
