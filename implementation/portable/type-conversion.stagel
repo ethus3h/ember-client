@@ -66,6 +66,19 @@ r/an/byteToIntBitArray n/in
     assertIsIntBitArray an/res
     return an/res
 
+r/an/byteFromIntBitArray an/in
+    assertIsIntBitArray an/in
+    new n/res
+    new s/temp
+    new n/len
+    new n/i
+    set n/len count an/in
+    while lt n/i n/len
+        set s/temp cat s/temp strFrom get an/in n/i
+        set n/i add n/i 1
+    set n/res intFromBaseStr s/temp
+    return n/res
+
 r/an/byteArrayToIntBitArray an/in
     assertIsByteArray an/in
     new an/res
