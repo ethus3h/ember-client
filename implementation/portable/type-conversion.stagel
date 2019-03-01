@@ -77,7 +77,7 @@ r/an/byteFromIntBitArray an/in
     while lt n/i n/len
         set s/temp cat s/temp strFrom get an/in n/i
         set n/i add n/i 1
-    set n/res intFromBaseStr s/temp 1
+    set n/res intFromBaseStr s/temp 2
     assertIsByte n/res
     return n/res
 
