@@ -1858,3 +1858,34 @@ async function getDocumentFrame(intExecId, strFormat) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getDocumentFrame:public-interface'); await assertIsInt(intExecId); await assertIsStr(strFormat); let intArrayReturn;
 
     await assertIsSupportedOutputFormat(strFormat);
+    /* Return the most recently available output for the given document in the requested format. */
+}
+/* To run the tests, you can use runTests or runPrintTests. */
+
+async function runTests() {
+    await internalDebugStackEnter('runTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
+    await setupIfNeeded();
+    await clearTestStats();
+    await runTestsOnly(true);
+    await reportTests();
+    if (await implEq(intFailedTests, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function quietRunTests() {
+    await internalDebugStackEnter('quietRunTests:public-interface'); let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise. */
+    await setupIfNeeded();
+    let boolRes = false;
+    boolRes = await runTestsOnly(false);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
