@@ -3892,19 +3892,22 @@ async function decToHex(strN) {
 
 async function intToBaseStr(intN, intB) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intToBaseStr:math'); await assertIsInt(intN); await assertIsInt(intB); let strReturn;
-alert('b');
+    if(intN === 0) {
+        return '0';
+    }
+//alert('b');
     /* Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
     let strRes = '';
     while (await implGt(intN, 0)) {
-alert('c'+intN);
+//alert('c'+intN);
         strRes = await implCat(strRes, await intToBase36Char(await implMod(intN, intB)));
         intN = await implDiv(intN, intB);
     }
-alert('d');
+//alert('d');
     strRes = await reverseStr(strRes);
-alert('e');
+//alert('e');
     await assertIsBaseStr(strRes, intB);
-alert('f');
+//alert('f');
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }

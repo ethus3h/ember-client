@@ -81,10 +81,13 @@ r/s/decToHex s/n
 r/s/intToBaseStr n/n n/b
     # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
     new s/res
-    while gt n/n 0
-        set s/res cat s/res intToBase36Char mod n/n n/b
-        set n/n div n/n n/b
-    set s/res reverseStr s/res
+    if eq 0 n/n
+        set s/res '0'
+    else
+        while gt n/n 0
+            set s/res cat s/res intToBase36Char mod n/n n/b
+            set n/n div n/n n/b
+        set s/res reverseStr s/res
     assertIsBaseStr s/res n/b
     return s/res
 
