@@ -4201,7 +4201,7 @@ async function byteArrayFromBase17bUtf8(intArrayIn) {
 
     await assertIsByteArray(intArrayIn);
     let intArrayRes = [];
-    intArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', await byteArrayFromIntBitArray(intArrayIn));
+    intArrayRes = await eiteHostCall('internalIntBitArrayFromBase17bString', intArrayIn);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }

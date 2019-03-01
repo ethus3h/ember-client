@@ -118,5 +118,5 @@ r/an/byteArrayToBase17bUtf8 an/in
 r/an/byteArrayFromBase17bUtf8 an/in
     assertIsByteArray an/in
     new an/res
-    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' byteArrayFromIntBitArray an/in
+    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
     return an/res
