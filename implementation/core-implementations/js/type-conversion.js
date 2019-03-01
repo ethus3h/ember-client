@@ -51,7 +51,7 @@ async function firstCharOfUtf8String(intArrayInput) {
 }
 
 async function internalIntBitArrayToBase17bString(intBitArrayInput) {
-    return Base16b.encode(intBitArrayInput, 17);
+    return new TextEncoder().encode(Base16b.encode(intBitArrayInput, 17));
 }
 
 async function internalIntBitArrayFromBase17bString(byteArrayInput) {
