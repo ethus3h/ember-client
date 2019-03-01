@@ -4412,7 +4412,7 @@ alert(intI + '=intI;intLen=' + intLen + ';arrayTemp=' + intArrayTemp + ';arrayRe
         alert('bureere');
             if(await implLt(intI,intLen)){
                 alert('ubebr');
-        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));}
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));alert('rnunen');}
         intI = await implAdd(intI, 1);
 
     }
