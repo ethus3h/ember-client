@@ -1702,4 +1702,31 @@ async function xor(boolA, boolB) {
     boolTemp = await nand(boolA, boolB);
     boolTemp = await implAnd(boolTemp, await or(boolA, boolB));
 
-    
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function xnor(boolA, boolB) {
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xnor:booleans'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implNot(await xor(boolA, boolB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isTrue(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isTrue:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+
+    boolReturn = boolIn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isFalse(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('isFalse:booleans'); await assertIsBool(boolIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(boolIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
