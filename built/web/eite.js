@@ -4347,7 +4347,7 @@ async function byteToIntBitArray(intIn) {
         intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
         intI = await implAdd(intI, 1);
     }
-    while (await implLt(8, await count(intArrayRes))) {
+    while (await implGt(8, await count(intArrayRes))) {
         intArrayRes = await push(intArrayZero, intArrayRes);
     }
     await assertIsIntBitArray(intArrayRes);
