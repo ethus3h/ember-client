@@ -4129,7 +4129,7 @@ async function byteToIntBitArray(intIn) {
 }
 
 async function byteFromIntBitArray(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intReturn;
 
     await assertIsIntBitArray(intArrayIn);
     let intRes = 0;
@@ -4144,7 +4144,7 @@ async function byteFromIntBitArray(intArrayIn) {
     intRes = await intFromBaseStr(strTemp, 2);
     await assertIsByte(intRes);
 
-    intArrayReturn = intRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function byteArrayToIntBitArray(intArrayIn) {
