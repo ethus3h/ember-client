@@ -530,10 +530,10 @@ let Base16b = {
             }
             resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(this._invertVal(segmVal, base), base));
             return resultArr.join('');
-            catch (e) {
-                //alert(e);
-                return false;
-            }
+        }
+        catch (e) {
+            //alert(e);
+            return false;
         }
     },
     // public method for decoding
@@ -580,7 +580,8 @@ let Base16b = {
                 resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
             }
             return resultArr;
-        } catch (e) {
+        }
+        catch (e) {
             //alert(e);
             return false;
         }
