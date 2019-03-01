@@ -123,7 +123,7 @@ r/an/byteArrayFromBase17bUtf8 an/in
     assertIsByteArray an/res
     return an/res
 
-r/an/getArmoredBase17bUtf8StartUuid
+r/an/getArmoredUtf8EmbeddedStartUuid
     # start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f
     #new an/startUuid
     #set an/startUuid [ 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ]
@@ -132,7 +132,7 @@ r/an/getArmoredBase17bUtf8StartUuid
     set an/startUuidUtf8 [ 244 141 133 183 243 191 176 153 244 135 164 169 243 185 137 151 243 189 181 169 243 178 184 142 244 143 191 176 ]
     return an/startUuidUtf8
 
-r/an/getArmoredBase17bUtf8EndUuid
+r/an/getArmoredUtf8EmbeddedEndUuid
     # end UUID=60bc936b-f10f-4f50-ab65-3778084060e2
     new an/endUuid
     set an/endUuid [ 96 188 147 107 241 15 79 80 171 101 55 120 8 64 96 226 ]
@@ -141,23 +141,23 @@ r/an/getArmoredBase17bUtf8EndUuid
     set an/endUuidUtf8 [ 244 136 139 178 243 185 186 191 243 179 188 190 244 128 170 188 244 135 159 177 243 178 129 160 244 143 188 157 ]
     return an/endUuidUtf8
 
-r/an/byteArrayToArmoredBase17bUtf8 an/in
-    assertIsByteArray an/in
-    new an/res
-    set an/res getArmoredBase17bUtf8StartUuid
-    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
-    assertIsByteArray an/res
-    set an/res append an/res getArmoredBase17bUtf8EndUuid
-    return an/res
+#r/an/byteArrayToArmoredBase17bUtf8 an/in
+#    assertIsByteArray an/in
+#    new an/res
+#    set an/res getArmoredBase17bUtf8StartUuid
+#    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+#    assertIsByteArray an/res
+#    set an/res append an/res getArmoredBase17bUtf8EndUuid
+#    return an/res
 
-r/an/byteArrayFromArmoredBase17bUtf8 an/in
-    assertIsByteArray an/in
-    new an/temp
-    set an/temp getArmoredBase17bUtf8StartUuid
-    assertIsTrue eq an/temp anSubset an/in 0 count an/temp
-    set an/temp getArmoredBase17bUtf8EndUuid
-    assertIsTrue eq an/temp anSubset an/in -1 sub -1 count an/temp
-    new an/res
-    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
-    assertIsByteArray an/res
-    return an/res
+#r/an/byteArrayFromArmoredBase17bUtf8 an/in
+#    assertIsByteArray an/in
+#    new an/temp
+#    set an/temp getArmoredBase17bUtf8StartUuid
+#    assertIsTrue eq an/temp anSubset an/in 0 count an/temp
+#    set an/temp getArmoredBase17bUtf8EndUuid
+#    assertIsTrue eq an/temp anSubset an/in -1 sub -1 count an/temp
+#    new an/res
+#    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
+#    assertIsByteArray an/res
+#    return an/res
