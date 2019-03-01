@@ -2816,12 +2816,8 @@ async function byteToIntBitArray(intIn) {
     let intLen = 0;
     let intI = 0;
     intLen = await len(strTemp);
-    while (await implLt(intI, intLen)) {
-        intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
-        intI = await implAdd(intI, 1);
-    }
-    while (await implLt(8, await len(intArrayRes))) {
-        intArrayRes = await push(async function dcaFromSems(intArrayContent) {
+    let intArrayZero = [];
+    intArrayZero = async function dcaFromSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     await assertIsByteArray(intArrayContent);
