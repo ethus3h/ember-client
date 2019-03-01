@@ -4413,7 +4413,9 @@ alert(intI + '=intI;intLen=' + intLen + ';arrayTemp=' + intArrayTemp + ';arrayRe
             if(await implLt(intI,intLen)){
                 alert('ubebr');
         intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));alert('rnunen');}
+        alert('rn2');
         intI = await implAdd(intI, 1);
+        alert('rn3');
 
     }
     await assertIsByteArray(intArrayRes);
