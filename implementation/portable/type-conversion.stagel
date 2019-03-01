@@ -61,11 +61,13 @@ r/an/byteToIntBitArray n/in
     new n/len
     new n/i
     set n/len len s/temp
+    new an/zero
+    set an/zero [ 0 ]
     while lt n/i n/len
         set an/res push an/res intFromIntStr strChar s/temp n/i
         set n/i add n/i 1
     while lt 8 len an/res
-        set an/res push [ 0 ] an/res
+        set an/res push an/zero an/res
     assertIsIntBitArray an/res
     return an/res
 
