@@ -4135,6 +4135,7 @@ async function byteFromIntBitArray(intArrayIn) {
     while (await implLt(intI, intLen)) {
         strTemp = await implCat(strTemp, await strFrom(await get(intArrayIn, intI)));
         intI = await implAdd(intI, 1);
+        alert('iter'+intI+' '+intLen+' '+strTemp);
     }
     intRes = await intFromBaseStr(strTemp);
     await assertIsByte(intRes);
