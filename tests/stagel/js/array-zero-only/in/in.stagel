@@ -1,2 +1,3 @@
-if or eq 'Zp' s/type } eq 'Zl' s/type
-    # return true
+new an/res
+while lt 8 len an/res
+    set an/res push [ 0 ] an/res
