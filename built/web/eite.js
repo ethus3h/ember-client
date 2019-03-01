@@ -4406,13 +4406,15 @@ alert(intI + '=intI;intLen=' + intLen + ';arrayTemp=' + intArrayTemp + ';arrayRe
 //alert(await implNot(await implEq(0, await count(intArrayTemp))));
         if (await implAnd(await implEq(0, await implMod(intI, 8), ), await implNot(await implEq(0, await count(intArrayTemp))))) {
             alert('burere');
-            if(await implLt(intI,intLen)){
-                alert('ubebr');
-            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));}
+            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
             intArrayTemp = [  ];
         }
-        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
+        alert('bureere');
+            if(await implLt(intI,intLen)){
+                alert('ubebr');
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));}
         intI = await implAdd(intI, 1);
+
     }
     await assertIsByteArray(intArrayRes);
 
