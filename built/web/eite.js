@@ -815,7 +815,7 @@ async function internalIntBitArrayToBase17bString(intBitArrayInput) {
 }
 
 async function internalIntBitArrayFromBase17bString(byteArrayInput) {
-    return Base16b.decode(byteArrayInput);
+    return Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)));
 }
 
 /* arrays, provides:
