@@ -104,7 +104,7 @@ r/an/byteArrayFromIntBitArray an/in
     new n/i
     set n/len count an/in
     new an/temp
-    while lt n/i n/len
+    while le n/i n/len
         if and eq 0 mod n/i 8 } } not eq 0 count an/temp
             set an/res push an/res byteFromIntBitArray an/temp
             set an/temp ( )
