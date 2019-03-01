@@ -1654,3 +1654,52 @@ async function dcaToIntegerList(intArrayDcIn) {
         intInputIndex = await implAdd(intInputIndex, 1);
     }
     await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsWasm(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
+
+    await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
+    await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+
+    await internalDebugStackExit();
+}
+
+async function or(boolA, boolB) {
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:booleans'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implNot(boolA);
+    boolTemp = await implNot(await implAnd(boolTemp, await implNot(boolB)));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function nor(boolA, boolB) {
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nor:booleans'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implNot(await or(boolA, boolB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function nand(boolA, boolB) {
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('nand:booleans'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implNot(await implAnd(boolA, boolB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function xor(boolA, boolB) {
+    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('xor:booleans'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await nand(boolA, boolB);
+    boolTemp = await implAnd(boolTemp, await or(boolA, boolB));
+
+    
