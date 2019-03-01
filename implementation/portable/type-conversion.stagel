@@ -152,7 +152,11 @@ r/an/byteArrayToArmoredBase17bUtf8 an/in
 
 r/an/byteArrayFromArmoredBase17bUtf8 an/in
     assertIsByteArray an/in
-    assertIsTrue eq getArmoredBase17bUtf8StartUuid } anSubset an/in 0 
+    new an/temp
+    set an/temp getArmoredBase17bUtf8StartUuid
+    assertIsTrue eq an/temp anSubset an/in 0 count an/temp
+    set an/temp getArmoredBase17bUtf8EndUuid
+    assertIsTrue eq an/temp anSubset an/in -1 sub -1 count an/temp
     new an/res
     set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
     assertIsByteArray an/res
