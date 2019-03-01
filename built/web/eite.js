@@ -4401,7 +4401,7 @@ async function byteArrayFromIntBitArray(intArrayIn) {
     intLen = await count(intArrayIn);
     let intArrayTemp = [];
     while (await implLt(intI, intLen)) {
-        alert(intI + ' ' + intLen + ' ' + intArrayTemp + ' ' + intArrayRes + ' ' + await implMod(intI, 8));
+        alert(intI + ';' + intLen + ';' + intArrayTemp + ';' + intArrayRes + ';' + await implMod(intI, 8));
         intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
         if (await implEq(0, await implMod(intI, 8))) {
             intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
