@@ -128,6 +128,7 @@ r/an/byteArrayToArmoredBase17bUtf8 an/in
     # start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f
     new an/startUuid
     set an/startUuid [ 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ]
+    # byteArrayToIntBitArray([ 232, 46, 239, 96, 25, 188, 74, 0, 164, 74, 118, 58, 52, 69, 193, 111 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());})
     new an/startUuidUtf8
     set an/startUuidUtf8 244,141,133,183,243,191,176,153,244,135,164,169,243,185,137,151,243,189,181,169,243,178,184,142,244,143,191,176
     # end UUID=60bc936b-f10f-4f50-ab65-3778084060e2
