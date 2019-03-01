@@ -4410,7 +4410,7 @@ async function byteArrayFromIntBitArray(intArrayIn) {
         intI = await implAdd(intI, 1);
     }
     await assertIsByteArray(intArrayRes);
-alert(intArrayReturn);
+alert(intArrayRes);
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
