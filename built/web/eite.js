@@ -4406,7 +4406,8 @@ alert(await implEq(0, await implMod(intI, 8), ));
 alert(await implNot(await implEq(0, await count(intArrayTemp))));
         if (await implAnd(await implEq(0, await implMod(intI, 8), ), await implNot(await implEq(0, await count(intArrayTemp))))) {
             alert('burere');
-            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
+            if(await implLt(intI,intLen)){
+            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));}
             intArrayTemp = [  ];
         }
         intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
