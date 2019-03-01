@@ -4403,14 +4403,15 @@ async function byteArrayFromIntBitArray(intArrayIn) {
     while (await implLt(intI, intLen)) {
         //alert(intI + '=intI;intLen=' + intLen + ';arrayTemp=' + intArrayTemp + ';arrayRes=' + intArrayRes + ';intI mod 8=' + await implMod(intI, 8)+'; last item='+await get(intArrayIn, intI));
         if (await implAnd(await implEq(0, await implMod(intI, 8), ), await implNot(await implEq(0, await count(intArrayRes))))) {
+alert(intArrayTemp);
             intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
+alert(intArrayRes);
             intArrayTemp = [  ];
         }
         intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
         intI = await implAdd(intI, 1);
     }
     await assertIsByteArray(intArrayRes);
-alert(intArrayRes);
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
