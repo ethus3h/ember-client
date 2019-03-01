@@ -29,6 +29,7 @@ r/s/reverseStr s/str
     new s/res
     while le n/c n/l
         set s/res cat s/res strCharAtPos s/str sub n/l n/c
+        set n/c add 1 n/c
     return s/res
 
 r/s/charToUpper s/char
