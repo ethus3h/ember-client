@@ -123,3 +123,17 @@ r/an/byteArrayFromBase17bUtf8 an/in
     assertIsByteArray an/res
     return an/res
 
+r/an/byteArrayToArmoredBase17bUtf8 an/in
+    assertIsByteArray an/in
+    # UUID=e82eef60-19bc-4a00-a44a-763a3445c16f
+    new an/res
+    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+    assertIsByteArray an/res
+    return an/res
+
+r/an/byteArrayFromArmoredBase17bUtf8 an/in
+    assertIsByteArray an/in
+    new an/res
+    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
+    assertIsByteArray an/res
+    return an/res
