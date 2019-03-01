@@ -108,7 +108,8 @@ r/an/byteArrayFromIntBitArray an/in
         if and eq 0 mod n/i 8 } } not eq 0 count an/temp
             set an/res push an/res byteFromIntBitArray an/temp
             set an/temp ( )
-        set an/temp push an/temp get an/in n/i
+        if lt n/i n/len
+            set an/temp push an/temp get an/in n/i
         set n/i add n/i 1
     assertIsByteArray an/res
     return an/res
