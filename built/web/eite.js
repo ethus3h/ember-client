@@ -3897,6 +3897,7 @@ async function intToBaseStr(intN, intB) {
     while (await implGt(intN, 0)) {
         strRes = await implCat(strRes, await intToBase36Char(await implMod(intN, intB)));
         intN = await implDiv(intN, intB);
+        alert('itbs'+intN+' '+strRes+' '+intN+' '+intB);
     }
     strRes = await reverseStr(strRes);
     await assertIsBaseStr(strRes, intB);
