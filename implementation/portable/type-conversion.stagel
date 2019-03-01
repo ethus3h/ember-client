@@ -129,6 +129,8 @@ r/an/byteArrayToArmoredBase17bUtf8 an/in
     new an/startUuid
     set an/startUuid [ 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ]
     # end UUID=60bc936b-f10f-4f50-ab65-3778084060e2
+    new an/endUuid
+    set an/endUuid [ 096 188 147 107 241 015 079 080 171 101 055 120 008 064 096 226 ]
     new an/res
     set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
     assertIsByteArray an/res
