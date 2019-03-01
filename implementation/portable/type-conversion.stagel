@@ -150,15 +150,9 @@ r/an/byteArrayToArmoredBase17bUtf8 an/in
     set an/res append an/res getArmoredBase17bUtf8EndUuid
     return an/res
 
-r/b/isArmoredBase17bUtf8 an/in
-    assertIsByteArray an/in
-    new an/res
-    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
-    assertIsByteArray an/res
-    return an/res
-
 r/an/byteArrayFromArmoredBase17bUtf8 an/in
     assertIsByteArray an/in
+    assertIsTrue eq getArmoredBase17bUtf8StartUuid } anSubset an/in 0 
     new an/res
     set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
     assertIsByteArray an/res
