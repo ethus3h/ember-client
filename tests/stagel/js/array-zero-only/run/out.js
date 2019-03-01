@@ -1,4 +1,3 @@
-    while (await implLt(intI, intCount)) {
-        strOut = await implCat(strOut, await charFromByte(await get(intArrayInput, intI)));
-        intI = await implAdd(intI, 1);
-    }
+let intArrayRes = [];
+while (await implLt(8, await len(intArrayRes))) {
+    intArrayRes = await push(
