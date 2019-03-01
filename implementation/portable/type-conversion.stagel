@@ -67,7 +67,7 @@ r/an/byteToIntBitArray n/in
     assertIsIntBitArray an/res
     return an/res
 
-r/an/byteFromIntBitArray an/in
+r/n/byteFromIntBitArray an/in
     assertIsIntBitArray an/in
     new n/res
     new s/temp
