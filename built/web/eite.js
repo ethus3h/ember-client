@@ -4409,15 +4409,16 @@ alert(intI + '=intI;intLen=' + intLen + ';arrayTemp=' + intArrayTemp + ';arrayRe
             intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
             intArrayTemp = [  ];
         }
-        alert('bureere');
+//        alert('bureere');
             if(await implLt(intI,intLen)){
-                alert('ubebr');
-        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));alert('rnunen');}
-        alert('rn2');
+                //alert('ubebr');
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));//alert('rnunen');}
+//        alert('rn2');
         intI = await implAdd(intI, 1);
         alert('rn3');
 
     }
+    alert('bureriru');
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
