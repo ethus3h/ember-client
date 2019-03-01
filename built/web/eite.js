@@ -4115,6 +4115,7 @@ async function byteToIntBitArray(intIn) {
     let intI = 0;
     intLen = await len(strTemp);
     while (await implLt(intI, intLen)) {
+        alert('iter'+intI+' '+intLen+' '+intArrayRes);
         intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
         intI = await implAdd(intI, 1);
     }
