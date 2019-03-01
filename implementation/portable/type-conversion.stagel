@@ -144,8 +144,10 @@ r/an/getArmoredBase17bUtf8EndUuid
 r/an/byteArrayToArmoredBase17bUtf8 an/in
     assertIsByteArray an/in
     new an/res
-    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+    set an/res getArmoredBase17bUtf8StartUuid
+    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
     assertIsByteArray an/res
+    set an/res append an/res getArmoredBase17bUtf8EndUuid
     return an/res
 
 r/an/byteArrayFromArmoredBase17bUtf8 an/in
