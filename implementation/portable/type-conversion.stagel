@@ -156,3 +156,10 @@ r/an/byteArrayFromArmoredBase17bUtf8 an/in
     set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
     assertIsByteArray an/res
     return an/res
+
+r/an/byteArrayFromArmoredBase17bUtf8 an/in
+    assertIsByteArray an/in
+    new an/res
+    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
+    assertIsByteArray an/res
+    return an/res
