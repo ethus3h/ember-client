@@ -2822,7 +2822,7 @@ async function byteToIntBitArray(intIn) {
         intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
         intI = await implAdd(intI, 1);
     }
-    while (await implLt(8, await len(intArrayRes))) {
+    while (await implGt(8, await count(intArrayRes))) {
         intArrayRes = await push(intArrayZero, intArrayRes);
     }
     await assertIsIntBitArray(intArrayRes);
@@ -2876,11 +2876,11 @@ async function byteArrayFromIntBitArray(intArrayIn) {
     intLen = await count(intArrayIn);
     let intArrayTemp = [];
     while (await implLt(intI, intLen)) {
-        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
         if (await implEq(0, await implMod(intI, 8))) {
             intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
             intArrayTemp = [  ];
         }
+        intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
         intI = await implAdd(intI, 1);
     }
     await assertIsByteArray(intArrayRes);
