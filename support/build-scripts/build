@@ -17,6 +17,8 @@ distBuild="false"
 if [[ "$1" == "--dist-build" ]]; then
     distBuild="true"
     shift
+    # Also enable building extra parts of stagel that are disabled for now
+
 fi
 
 echo "Building, please wait..."
