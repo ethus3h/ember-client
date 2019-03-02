@@ -593,15 +593,16 @@ let Base16b = {
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
             let foundRemainderBeginning = false;
             let potentialRemainBit = 0;
-            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
+            bit = (termCharBytes * 8) - 1;
+            for (bit = ; bit >= 0; bit--) {
                 potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
-                /*if (foundRemainderBeginning) {
+                if (foundRemainderBeginning) {
                     resultArr.push(potentialRemainBit);
                 }
                 else if (potentialRemainBit === 1) {
-                    foundRemainderBeginning = true;*/
+                    foundRemainderBeginning = true;
                     resultArr.push(potentialRemainBit);
-//                }
+                }
             }
             return resultArr;
         }
