@@ -71,8 +71,8 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     new an/res
     set an/res internalIntBitArrayToBasenbString n/base byteArrayToIntBitArray an/in
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 
-    new n/remainder
-    set n/remainder push an/remainder mod count an/in } 17
+    new an/remainder
+    set an/remainder push an/remainder mod count an/in } 17
     set an/res push an/res internalIntBitArrayToBasenbString 17 an/remainder
     assertIsByteArray an/res
     return an/res
