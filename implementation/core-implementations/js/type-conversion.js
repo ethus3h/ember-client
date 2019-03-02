@@ -50,18 +50,18 @@ async function firstCharOfUtf8String(intArrayInput) {
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
 
-async function internalIntBitArrayToBase17bString(intBitArrayInput) {
+async function internalIntBitArrayToBasenbString(intBase, intBitArrayInput) {
     let res;
-    res=Base16b.encode(intBitArrayInput, 17);
+    res=Base16b.encode(intBitArrayInput, intBase);
     if (res !== false) {
         return new TextEncoder().encode(res);
     }
     await implDie('Base16b.encode returned false');
 }
 
-async function internalIntBitArrayFromBase17bString(byteArrayInput) {
+async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder) {
     let res;
-    res=Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)));
+    res=Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)), intRemainder);
     if (res !== false) {
         return new TextEncoder().encode(res);
     }

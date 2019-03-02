@@ -63,28 +63,28 @@ r/b/isBasenbBase n/base
     new b/res
     set b/res intIsBetween n/base 7 17
 
-r/an/byteArrayToBasenbUtf8 an/in n/base
-    assertIsByteArray an/in
+r/an/byteArrayToBasenbUtf8 n/base an/in
     assertIsTrue isBasenbBase n/base
+    assertIsByteArray an/in
     new an/res
-    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+    set an/res internalIntBitArrayToBasenbString n/base byteArrayToIntBitArray an/in
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 
     new n/remainder
     set n/remainder mod 
     assertIsByteArray an/res
     return an/res
 
-r/an/byteArrayFromBase17bUtf8 an/in
+r/an/byteArrayFromBasenbUtf8 an/in
     assertIsByteArray an/in
     new an/res
-    set an/res byteArrayFromIntBitArray eiteHostCall 'internalIntBitArrayFromBase17bString' an/in
+    set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/in n/remainder
     assertIsByteArray an/res
     return an/res
 
 r/an/byteArrayToBase17bUtf8 an/in
     assertIsByteArray an/in
     new an/res
-    set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+    set an/res byteArrayToBasenbUtf8 17 an/in
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 
     new n/remainder
     set n/remainder mod 
