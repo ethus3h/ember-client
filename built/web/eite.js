@@ -581,11 +581,11 @@ let Base16b = {
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
-                decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
-                if (Number.isNaN(decodedBit)) {
-                    alert('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes + ' bytesUsed=' +bytesUsed+' bytes='+inputStr.slice(bytesUsed, bytesUsed + 1));
-                }
                 for (bit = base - 1; bit >= 0; bit--) {
+                    decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
+                    if (Number.isNaN(decodedBit)) {
+                        alert('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes + ' bytesUsed=' +bytesUsed+' bytes='+inputStr.slice(bytesUsed, bytesUsed + 1));
+                    }
                     resultArr.push(decodedBit);
                 }
                 bytesUsed += currCharBytes;
