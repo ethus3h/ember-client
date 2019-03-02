@@ -500,7 +500,7 @@ let Base16b = {
             let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
-                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
+                currCharBytes = this._CharBytesFixed(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
