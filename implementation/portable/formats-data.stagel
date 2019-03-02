@@ -55,7 +55,9 @@ r/as/listDataTypes
     set as/res dcDataFilterByValue 'formats' 6 'data' 1
     return as/res
 
-r/as/listVariants
+r/as/listVariantsForFormat s/format
+    new s/normalizedFmt
+    set s/normalizedFmt normalizeFormat s/format
     new as/res
     set as/res dc
 
@@ -63,6 +65,11 @@ r/n/getFormatId s/format
     new n/res
     set n/res intFromIntStr dcDataLookupByValue 'formats' 1 s/format 0
     return n/res
+
+r/s/normalizeFormat s/format
+    if eq s/format 'utf8'
+        return 'unicode'
+    return s/format
 
 r/s/getFormatExtension s/format
     new s/res
