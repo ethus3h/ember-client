@@ -571,14 +571,19 @@ let Base16b = {
             let currCharBytes;
             let bytesUsed = 0;
             let fullBytes = inputStr.length - termCharBytes;
+            let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
                 currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
+                decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
+                if (Number.isNaN(decodedBit)) {
+                    console.log('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes);
+                }
                 for (bit = base - 1; bit >= 0; bit--) {
-                    resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
+                    resultArr.push(decodedBit);
                 }
                 bytesUsed += currCharBytes;
             }
