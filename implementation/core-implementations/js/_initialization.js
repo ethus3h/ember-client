@@ -464,8 +464,9 @@ let Base16b = {
             let termCharBytes = this._CharBytes(inputStr.slice(-2));
             let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
-            let bit = 17,
-                base; // decode the base from the termination character
+            let bit = 17;
+            let base;
+            // decode the base from the termination character
             while (Math.floor(termCharVal / Math.pow(2, bit - 1)) === 0 && bit >= 7) {
                 bit--;
             }
@@ -485,14 +486,13 @@ let Base16b = {
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
+                for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
+                    resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
+                }
+                bytesUsed += currCharBytes;
             }
-            for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
-                resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
-            }
-            bytesUsed += currCharBytes;
             // remainder
-            let remainVal = this._invertVal(termCharVal, base);
-            // decode the remainder from the termination character
+            let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
             for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
                 resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
             }
