@@ -14,24 +14,26 @@ sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
 distBuild="true"
-if [[ "$1" == "--quick" ]]; then
+if [[ "$1" == "-s" ]]; then
+    #-s meaning speedy
     distBuild="false"
+fi
 
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
     "$sicmd" "$@"
-    #./support/dist-build
-    #./support/build-scripts/build-wasm-common
+    [[ "$distBuild" == "true" ]] && ./support/dist-build
+    [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
     "$sicmd" "$@" &> /dev/null
-    #./support/dist-build
-    #./support/build-scripts/build-wasm-common
+    [[ "$distBuild" == "true" ]] && ./support/dist-build
+    [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 else
-    #./support/dist-build &> /dev/null
-    #./support/build-scripts/build-wasm-common &> /dev/null
+    [[ "$distBuild" == "true" ]] && ./support/dist-build &> /dev/null
+    [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common &> /dev/null
     "$sicmd" "$@" &> /dev/null
 fi
 
