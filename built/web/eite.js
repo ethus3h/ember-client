@@ -547,7 +547,7 @@ let Base16b = {
         }
     },
     // public method for decoding
-    decode: function(inputStr) {
+    decode: function(inputStr, remainderLength) {
         /*
         Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
@@ -594,15 +594,19 @@ let Base16b = {
             let foundRemainderBeginning = false;
             let potentialRemainBit = 0;
             bit = (termCharBytes * 8) - 1;
+            if (remainderLength !== undefined) {
+                bit = remainderLength;
+            }
             for (bit = ; bit >= 0; bit--) {
                 potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
-                if (foundRemainderBeginning) {
+                    resultArr.push(potentialRemainBit);
+/*                if (foundRemainderBeginning) {
                     resultArr.push(potentialRemainBit);
                 }
                 else if (potentialRemainBit === 1) {
                     foundRemainderBeginning = true;
                     resultArr.push(potentialRemainBit);
-                }
+                }*/
             }
             return resultArr;
         }
