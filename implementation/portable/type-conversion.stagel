@@ -118,6 +118,8 @@ r/an/byteArrayToBase17bUtf8 an/in
     assertIsByteArray an/in
     new an/res
     set an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in
+    # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 
+    
     assertIsByteArray an/res
     return an/res
 
