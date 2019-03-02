@@ -116,14 +116,35 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
-    intRemainder = await get(await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, -5, -1), 0), ), 0)/* last 4 characters */
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
-await getArmoredUtf8EmbeddedStartUuid());
-{
+
+async function byteArrayToBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBase17bUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Convenience wrapper */
+    let intArrayRes = [];
+    intArrayRes = await byteArrayToBasenbUtf8(17, intArrayIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBase17bUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Convenience wrapper */
+    let intArrayRes = [];
+    intArrayRes = await byteArrayFromBasenbUtf8(intArrayIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getArmoredUtf8EmbeddedStartUuid() {
+    await internalDebugStackEnter('getArmoredUtf8EmbeddedStartUuid:basenb-utf8'); let intArrayReturn;
+
     /* start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f */
     /*new an/startUuid */
     /*set an/startUuid ( 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ) */
@@ -132,16 +153,31 @@ await getArmoredUtf8EmbeddedStartUuid());
     let intArrayStartUuidUtf8 = [];
     intArrayStartUuidUtf8 = [ 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144 ];
 
-    async function isByte(genericIn) {
-    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+    intArrayReturn = intArrayStartUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
 
-    if (await implNot(await isInt(genericIn))) {
+async function getArmoredUtf8EmbeddedEndUuid() {
+    await internalDebugStackEnter('getArmoredUtf8EmbeddedEndUuid:basenb-utf8'); let intArrayReturn;
 
-        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
-    }
-    let intVal = 0;
-    intVal = genericIn;
-    let boolRes = false;
-    boolRes = await intIsBetween(intVal, 0, 255);
+    /* end UUID=60bc936b-f10f-4f50-ab65-3778084060e2 */
+    /*new an/endUuid */
+    /*set an/endUuid ( 96 188 147 107 241 15 79 80 171 101 55 120 8 64 96 226 ) */
+    /* byteArrayToIntBitArray([ 96, 188, 147, 107, 241, 15, 79, 80, 171, 101, 55, 120, 8, 64, 96, 226 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());}) */
+    let intArrayEndUuidUtf8 = [];
+    intArrayEndUuidUtf8 = [ 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157 ];
 
-    
+    intArrayReturn = intArrayEndUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+/*r/an/byteArrayToArmoredBase17bUtf8 an/in */
+/*    assertIsByteArray an/in */
+/*    new an/res */
+/*    set an/res getArmoredBase17bUtf8StartUuid */
+/*    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in */
+/*    assertIsByteArray an/res */
+/*    set an/res append an/res getArmoredBase17bUtf8EndUuid */
+/*    return an/res */
+/*r/an/byteArrayFromArmoredBase17bUtf8 an/in */
+/*    assertIsByteArray an/in */
+/*    new an/temp */
+/*    set an/temp getArmoredBase17bUtf8StartUuid */
+/*    assertIsTrue eq an/temp anSubset an/in 0 count an/temp */
