@@ -294,6 +294,7 @@ async function internalLoadDatasets() {
 
 let Base16b = {
     /* Based on https://web.archive.org/web/20090902074623/http://www.base16b.org/doc/specification/version/0.1/base16b.pdf */
+    // This code for the Base16b object is included under the following license:
     /**
     * Base16b family encode / decode
     * http://base16b.org/lib/version/0.1/js/base16b.js
