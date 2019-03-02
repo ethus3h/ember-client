@@ -82,7 +82,11 @@ r/an/byteArrayFromBasenbUtf8 an/in
     new an/res
     # Extract remainder length
     new n/remainder
-    set n/remainder get byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in -5 -1 } 0 } } 0 # last 4 characters
+    new an/remainderArr
+    set an/remainderArr anSubset an/in -5 -1 # last 4 characters
+    new an/remainderDecodedArr
+    set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 0
+    set n/remainder get an/remainderDecodedArr 0
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/in n/remainder
     assertIsByteArray an/res
     return an/res
