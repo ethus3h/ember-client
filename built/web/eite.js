@@ -433,6 +433,14 @@ let Base16b = {
     },
     // private methods
     _CharBytes: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
+        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
+            return 2;
+        }
+        else {
+            return 1;
+        }
+    },
+    _CharBytesFixed: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
         let code = segmCP.charCodeAt(0);
         if (0xD800 <= code && code <= 0xDBFF) { // High surrogate
             return 2;
@@ -548,13 +556,14 @@ let Base16b = {
     },
     // public method for decoding
     decode: function(inputStr, remainderLength) {
+        // remainderLength is not in the original version of this code. It should be provided to get the expected result. It is the input length in bits, mod the number of bits per character (the second argument to the encode function).
         /*
         Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
         */
         try {
             let resultArr = [];
-            let termCharBytes = this._CharBytes(inputStr.slice(-1));
+            let termCharBytes = this._CharBytesFixed(inputStr.slice(-1));
             let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
             let bit = 17;
@@ -576,7 +585,7 @@ let Base16b = {
             let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
-                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
+                currCharBytes = this._CharBytesFixed(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
@@ -829,18 +838,18 @@ async function firstCharOfUtf8String(intArrayInput) {
     return utf8decoder.decode(new Uint8Array(intArrayInput)).codePointAt(0);
 }
 
-async function internalIntBitArrayToBase17bString(intBitArrayInput) {
+async function internalIntBitArrayToBasenbString(intBase, intBitArrayInput) {
     let res;
-    res=Base16b.encode(intBitArrayInput, 17);
+    res=Base16b.encode(intBitArrayInput, intBase);
     if (res !== false) {
         return new TextEncoder().encode(res);
     }
     await implDie('Base16b.encode returned false');
 }
 
-async function internalIntBitArrayFromBase17bString(byteArrayInput) {
+async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder) {
     let res;
-    res=Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)));
+    res=Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)), intRemainder);
     if (res !== false) {
         return new TextEncoder().encode(res);
     }
@@ -1544,7 +1553,135 @@ async function intBytearrayLength(bytearray) {
 
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-async function isByte(genericIn) {
+/* Note that the Basenb formats provided here are different from the Base16b formats in the specification, due to what appears to be a bug in the specification (requiring the remainder length to be stored to decode the remainder correctly when it starts with a 0 bit and is not 16 bits long). */
+
+async function byteToIntBitArray(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('byteToIntBitArray:basenb-utf8'); await assertIsInt(intIn); let intArrayReturn;
+
+    await assertIsByte(intIn);
+    let intArrayRes = [];
+    let strTemp = '';
+    strTemp = await intToBaseStr(intIn, 2);
+    let intLen = 0;
+    let intI = 0;
+    intLen = await len(strTemp);
+    let intArrayZero = [];
+    intArrayZero = [ 0 ];
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    while (await implGt(8, await count(intArrayRes))) {
+        intArrayRes = await push(intArrayZero, intArrayRes);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:basenb-utf8'); await assertIsIntArray(intArrayIn); let intReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intRes = 0;
+    let strTemp = '';
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        strTemp = await implCat(strTemp, await strFrom(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    intRes = await intFromBaseStr(strTemp, 2);
+    await assertIsByte(intRes);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function byteArrayToIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToIntBitArray:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    while (await implLt(intI, intLen)) {
+        intArrayRes = await push(intArrayRes, await byteToIntBitArray(await get(intArrayIn, intI)));
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsIntBitArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromIntBitArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromIntBitArray:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsIntBitArray(intArrayIn);
+    let intArrayRes = [];
+    let intLen = 0;
+    let intI = 0;
+    intLen = await count(intArrayIn);
+    let intArrayTemp = [];
+    while (await le(intI, intLen)) {
+        if (await implAnd(await implEq(0, await implMod(intI, 8), ), await implNot(await implEq(0, await count(intArrayTemp))))) {
+            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
+            intArrayTemp = [  ];
+        }
+        if (await implLt(intI, intLen)) {
+            intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
+        }
+        intI = await implAdd(intI, 1);
+    }
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function isBasenbBase(intBase) {
+    await internalDebugCollect('int Base = ' + intBase + '; '); await internalDebugStackEnter('isBasenbBase:basenb-utf8'); await assertIsInt(intBase); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await intIsBetween(intBase, 7, 17);
+}
+
+async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
+    await internalDebugCollect('int Base = ' + intBase + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBasenbUtf8:basenb-utf8'); await assertIsInt(intBase); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsTrue(await isBasenbBase(intBase));
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    intArrayRes = await internalIntBitArrayToBasenbString(intBase, await byteArrayToIntBitArray(intArrayIn));
+    /* The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function). */
+    let intArrayRemainder = [];
+    intArrayRemainder = await push(intArrayRemainder, await implAdd(2, await implMod(await count(intArrayIn), 17)));
+    intArrayRes = await push(intArrayRes, await internalIntBitArrayToBasenbString(17, intArrayRemainder));
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromBasenbUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    /* Extract remainder length */
+    let intRemainder = 0;
+    intRemainder = await get(await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, -5, -1), 0), ), 0)/* last 4 characters */
+    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+await byteArrayToBase17bUtf8(intArrayIn));
+{
+    /* Convenience wrapper */
+    let intArrayRes = [];
+    intArrayRes = await byteArrayToBasenbUtf8(17, intArrayIn);
+
+    async function isByte(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
 
     if (await implNot(await isInt(genericIn))) {
@@ -4349,157 +4486,6 @@ async function strFromByteArray(intArrayInput) {
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
-
-async function byteToIntBitArray(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('byteToIntBitArray:type-conversion'); await assertIsInt(intIn); let intArrayReturn;
-
-    await assertIsByte(intIn);
-    let intArrayRes = [];
-    let strTemp = '';
-    strTemp = await intToBaseStr(intIn, 2);
-    let intLen = 0;
-    let intI = 0;
-    intLen = await len(strTemp);
-    let intArrayZero = [];
-    intArrayZero = [ 0 ];
-    while (await implLt(intI, intLen)) {
-        intArrayRes = await push(intArrayRes, await intFromIntStr(await strChar(strTemp, intI)));
-        intI = await implAdd(intI, 1);
-    }
-    while (await implGt(8, await count(intArrayRes))) {
-        intArrayRes = await push(intArrayZero, intArrayRes);
-    }
-    await assertIsIntBitArray(intArrayRes);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function byteFromIntBitArray(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intReturn;
-
-    await assertIsIntBitArray(intArrayIn);
-    let intRes = 0;
-    let strTemp = '';
-    let intLen = 0;
-    let intI = 0;
-    intLen = await count(intArrayIn);
-    while (await implLt(intI, intLen)) {
-        strTemp = await implCat(strTemp, await strFrom(await get(intArrayIn, intI)));
-        intI = await implAdd(intI, 1);
-    }
-    intRes = await intFromBaseStr(strTemp, 2);
-    await assertIsByte(intRes);
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function byteArrayToIntBitArray(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
-
-    await assertIsByteArray(intArrayIn);
-    let intArrayRes = [];
-    let intLen = 0;
-    let intI = 0;
-    intLen = await count(intArrayIn);
-    while (await implLt(intI, intLen)) {
-        intArrayRes = await push(intArrayRes, await byteToIntBitArray(await get(intArrayIn, intI)));
-        intI = await implAdd(intI, 1);
-    }
-    await assertIsIntBitArray(intArrayRes);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function byteArrayFromIntBitArray(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromIntBitArray:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
-
-    await assertIsIntBitArray(intArrayIn);
-    let intArrayRes = [];
-    let intLen = 0;
-    let intI = 0;
-    intLen = await count(intArrayIn);
-    let intArrayTemp = [];
-    while (await le(intI, intLen)) {
-        if (await implAnd(await implEq(0, await implMod(intI, 8), ), await implNot(await implEq(0, await count(intArrayTemp))))) {
-            intArrayRes = await push(intArrayRes, await byteFromIntBitArray(intArrayTemp));
-            intArrayTemp = [  ];
-        }
-        if (await implLt(intI, intLen)) {
-            intArrayTemp = await push(intArrayTemp, await get(intArrayIn, intI));
-        }
-        intI = await implAdd(intI, 1);
-    }
-    await assertIsByteArray(intArrayRes);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function byteArrayToBase17bUtf8(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
-
-    await assertIsByteArray(intArrayIn);
-    let intArrayRes = [];
-    intArrayRes = await eiteHostCall('internalIntBitArrayToBase17bString', await byteArrayToIntBitArray(intArrayIn));
-    await assertIsByteArray(intArrayRes);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function byteArrayFromBase17bUtf8(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBase17bUtf8:type-conversion'); await assertIsIntArray(intArrayIn); let intArrayReturn;
-
-    await assertIsByteArray(intArrayIn);
-    let intArrayRes = [];
-    intArrayRes = await byteArrayFromIntBitArray(await eiteHostCall('internalIntBitArrayFromBase17bString', intArrayIn));
-    await assertIsByteArray(intArrayRes);
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function getArmoredUtf8EmbeddedStartUuid() {
-    await internalDebugStackEnter('getArmoredUtf8EmbeddedStartUuid:type-conversion'); let intArrayReturn;
-
-    /* start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f */
-    /*new an/startUuid */
-    /*set an/startUuid ( 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ) */
-    /* byteArrayToIntBitArray([ 232, 46, 239, 96, 25, 188, 74, 0, 164, 74, 118, 58, 52, 69, 193, 111 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());}) */
-    let intArrayStartUuidUtf8 = [];
-    intArrayStartUuidUtf8 = [ 244, 141, 133, 183, 243, 191, 176, 153, 244, 135, 164, 169, 243, 185, 137, 151, 243, 189, 181, 169, 243, 178, 184, 142, 244, 143, 191, 176 ];
-
-    intArrayReturn = intArrayStartUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function getArmoredUtf8EmbeddedEndUuid() {
-    await internalDebugStackEnter('getArmoredUtf8EmbeddedEndUuid:type-conversion'); let intArrayReturn;
-
-    /* end UUID=60bc936b-f10f-4f50-ab65-3778084060e2 */
-    /*new an/endUuid */
-    /*set an/endUuid ( 96 188 147 107 241 15 79 80 171 101 55 120 8 64 96 226 ) */
-    /* byteArrayToIntBitArray([ 96, 188, 147, 107, 241, 15, 79, 80, 171, 101, 55, 120, 8, 64, 96, 226 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());}) */
-    let intArrayEndUuidUtf8 = [];
-    intArrayEndUuidUtf8 = [ 244, 136, 139, 178, 243, 185, 186, 191, 243, 179, 188, 190, 244, 128, 170, 188, 244, 135, 159, 177, 243, 178, 129, 160, 244, 143, 188, 157 ];
-
-    intArrayReturn = intArrayEndUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-/*r/an/byteArrayToArmoredBase17bUtf8 an/in */
-/*    assertIsByteArray an/in */
-/*    new an/res */
-/*    set an/res getArmoredBase17bUtf8StartUuid */
-/*    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in */
-/*    assertIsByteArray an/res */
-/*    set an/res append an/res getArmoredBase17bUtf8EndUuid */
-/*    return an/res */
-/*r/an/byteArrayFromArmoredBase17bUtf8 an/in */
-/*    assertIsByteArray an/in */
-/*    new an/temp */
-/*    set an/temp getArmoredBase17bUtf8StartUuid */
-/*    assertIsTrue eq an/temp anSubset an/in 0 count an/temp */
-/*    set an/temp getArmoredBase17bUtf8EndUuid */
-/*    assertIsTrue eq an/temp anSubset an/in -1 sub -1 count an/temp */
-/*    new an/res */
-/*    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in */
-/*    assertIsByteArray an/res */
-/*    return an/res */
 
 async function dcaFromSems(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
