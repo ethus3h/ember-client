@@ -580,7 +580,7 @@ let Base16b = {
                 // most significant bit at the start (left) / least significant bit at the end (right).
                 decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
                 if (Number.isNaN(decodedBit)) {
-                    alert('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes + ' bytesUsed=' +bytesUsed);
+                    alert('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes + ' bytesUsed=' +bytesUsed+' bytes='+inputStr.slice(bytesUsed + 2));
                 }
                 for (bit = base - 1; bit >= 0; bit--) {
                     resultArr.push(decodedBit);
