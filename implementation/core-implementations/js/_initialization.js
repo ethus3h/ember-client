@@ -497,14 +497,19 @@ let Base16b = {
             let currCharBytes;
             let bytesUsed = 0;
             let fullBytes = inputStr.length - termCharBytes;
+            let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
-                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed + 2)); // taste before taking a byte
+                currCharBytes = this._CharBytes(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
-                for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
-                    resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
+                for (bit = base - 1; bit >= 0; bit--) {
+                    decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
+                    if (Number.isNaN(decodedBit)) {
+                        throw ('Found NaN while decoding');
+                    }
+                    resultArr.push(decodedBit);
                 }
                 bytesUsed += currCharBytes;
             }
