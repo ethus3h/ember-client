@@ -591,8 +591,6 @@ let Base16b = {
             }
             // remainder
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
-            let foundRemainderBeginning = false;
-            let potentialRemainBit = 0;
             bit = (termCharBytes * 8) - 1;
             if (remainderLength !== undefined) {
                 bit = remainderLength - 1;

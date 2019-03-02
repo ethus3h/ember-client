@@ -471,7 +471,7 @@ let Base16b = {
         }
     },
     // public method for decoding
-    decode: function(inputStr) {
+    decode: function(inputStr, remainderLength) {
         /*
         Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
@@ -515,7 +515,11 @@ let Base16b = {
             }
             // remainder
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
-            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
+            bit = (termCharBytes * 8) - 1;
+            if (remainderLength !== undefined) {
+                bit = remainderLength - 1;
+            }
+            for (bit; bit >= 0; bit--) {
                 resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
             }
             return resultArr;
