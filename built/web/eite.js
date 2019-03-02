@@ -571,6 +571,7 @@ let Base16b = {
             let currCharBytes;
             let bytesUsed = 0;
             let fullBytes = inputStr.length - termCharBytes;
+            alert('termCharBytes='+termCharBytes+';fullBytes='+fullBytes);
             let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
