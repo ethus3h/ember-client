@@ -598,15 +598,7 @@ let Base16b = {
                 bit = remainderLength - 1;
             }
             for (bit; bit >= 0; bit--) {
-                potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
-                    resultArr.push(potentialRemainBit);
-/*                if (foundRemainderBeginning) {
-                    resultArr.push(potentialRemainBit);
-                }
-                else if (potentialRemainBit === 1) {
-                    foundRemainderBeginning = true;
-                    resultArr.push(potentialRemainBit);
-                }*/
+                resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
             }
             return resultArr;
         }
