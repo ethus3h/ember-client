@@ -589,11 +589,12 @@ let Base16b = {
             for (bit = base - 1; bit >= 0; bit--) {
                 potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
                 if (foundRemainderBeginning) {
-                    resultArr.push(potentialRemainBit)
-                if (potentialRemainBit === 0) {
-                    
+                    resultArr.push(potentialRemainBit);
                 }
-                resultArr.push();
+                else if (potentialRemainBit === 1) {
+                    foundRemainderBeginning = true;
+                    resultArr.push(potentialRemainBit);
+                }
             }
             return resultArr;
         }
