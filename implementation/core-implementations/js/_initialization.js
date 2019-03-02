@@ -472,7 +472,7 @@ let Base16b = {
     },
     // public method for decoding
     decode: function(inputStr, remainderLength) {
-        // remainderLength is not in the original version of this code. It should be provided to get the result correctly. It is the input length in bits, mod the number of bits per character (the second argument to the encode function).
+        // remainderLength is not in the original version of this code. It should be provided to get the expected result. It is the input length in bits, mod the number of bits per character (the second argument to the encode function).
         /*
         Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
