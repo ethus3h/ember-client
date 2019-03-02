@@ -55,6 +55,10 @@ r/as/listDataTypes
     set as/res dcDataFilterByValue 'formats' 6 'data' 1
     return as/res
 
+r/as/listVariants
+    new as/res
+    set as/res dc
+
 r/n/getFormatId s/format
     new n/res
     set n/res intFromIntStr dcDataLookupByValue 'formats' 1 s/format 0
