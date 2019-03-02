@@ -72,7 +72,8 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     set an/res internalIntBitArrayToBasenbString n/base byteArrayToIntBitArray an/in
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 
     new n/remainder
-    set n/remainder mod 
+    set n/remainder push an/remainder mod count an/in } 17
+    set an/res push an/res internalIntBitArrayToBasenbString 17 an/remainder
     assertIsByteArray an/res
     return an/res
 
@@ -84,17 +85,15 @@ r/an/byteArrayFromBasenbUtf8 an/in
     return an/res
 
 r/an/byteArrayToBase17bUtf8 an/in
-    assertIsByteArray an/in
+    # Convenience wrapper
     new an/res
     set an/res byteArrayToBasenbUtf8 17 an/in
-    assertIsByteArray an/res
     return an/res
 
 r/an/byteArrayFromBase17bUtf8 an/in
-    assertIsByteArray an/in
+    # Convenience wrapper
     new an/res
     set an/res byteArrayFromBasenbUtf8 an/in
-    assertIsByteArray an/res
     return an/res
 
 r/an/getArmoredUtf8EmbeddedStartUuid
