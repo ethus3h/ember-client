@@ -554,7 +554,7 @@ let Base16b = {
         */
         try {
             let resultArr = [];
-            let termCharBytes = this._CharBytes(inputStr.slice(-2));
+            let termCharBytes = this._CharBytes(inputStr.slice(-1));
             let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
             let bit = 17;
@@ -593,7 +593,7 @@ let Base16b = {
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
             let foundRemainderBeginning = false;
             let potentialRemainBit = 0;
-            for (bit = base - 1; bit >= 0; bit--) {
+            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
                 potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
                 if (foundRemainderBeginning) {
                     resultArr.push(potentialRemainBit);
