@@ -406,11 +406,11 @@ let Base16b = {
     OTHER DEALINGS IN THE SOFTWARE.
     */
     // private variables
+    // +UF0000 is the first code point in the Asyntactic script
     _asStart: {
         value: 0x0000,
         cp: 0xF0000
     },
-    // +UF0000 is the first code point in the Asyntactic script
     _noncont: function() {
         let nc = []; // array of cp : value mappings for the non-contiguous code points
         nc[0] = {
@@ -459,11 +459,15 @@ let Base16b = {
     },
     _toCodePoint: function(segmVal, base) {
         // Map a segment value to the Code Point specified by the mapping table for this base in the Asyntactic script
-        if (base < 16) return this._asStart.cp + segmVal;
+        if (base < 16) {
+            return this._asStart.cp + segmVal;
+        }
         let i;
         for (i = 0; i < this._noncont().length; i++) {
             // handle non-contiguous code points for bases 16 and 17
-            if (this._noncont()[i].value === segmVal) return this._noncont()[i].cp;
+            if (this._noncont()[i].value === segmVal) {
+                return this._noncont()[i].cp;
+            }
         }
         return this._asStart.cp + segmVal;
     },
@@ -481,7 +485,8 @@ let Base16b = {
     _fixedCharCodeAt: function(str, idx) {
         // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/charCodeAt
         let code = str.charCodeAt(idx);
-        let hi, low;
+        let hi;
+        let low;
         if (0xD800 <= code && code <= 0xDBFF) { // High surrogate (could change last hex to 0xDB7F to treat high private surrogates as single characters)
             hi = code;
             low = str.charCodeAt(idx + 1);
@@ -507,7 +512,8 @@ let Base16b = {
             let resultArr = [];
             let fullSegments = Math.floor(inputArr.length / base);
             let remainBits = inputArr.length - (fullSegments * base);
-            let segment, bit;
+            let segment;
+            let bit;
             let segmstart;
             let segmVal; // construct the value of the bits in the current segment
             let currsegm;
@@ -517,7 +523,8 @@ let Base16b = {
                 segmstart = base * segment;
                 currsegm = inputArr.slice(segmstart, segmstart + base);
                 // most significant bit at the start (left) / least significant bit at the end (right).
-                for (bit = base - 1, segmVal = 0; bit >= 0; bit--) {
+                segmVal = 0;
+                for (bit = base - 1; bit >= 0; bit--) {
                     segmVal += (currsegm[bit] * Math.pow(2, (base - 1) - bit));
                 }
                 resultArr[segment] = this._fixedFromCharCode(this._toCodePoint(segmVal, base));
