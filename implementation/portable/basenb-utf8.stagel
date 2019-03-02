@@ -1,3 +1,5 @@
+# Note that the Basenb formats provided here are different from the Base16b formats in the specification, due to what appears to be a bug in the specification (requiring the remainder length to be stored to decode the remainder correctly when it starts with a 0 bit and is not 16 bits long).
+
 r/an/byteToIntBitArray n/in
     assertIsByte n/in
     new an/res
