@@ -349,12 +349,14 @@ let Base16b = {
     },
     // private methods
     _CharBytes: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
-        /*if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
+        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
             return 2;
         }
         else {
             return 1;
-        }*/
+        }
+    },
+    _CharBytesFixed: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
         let code = segmCP.charCodeAt(0);
         if (0xD800 <= code && code <= 0xDBFF) { // High surrogate
             return 2;
