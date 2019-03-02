@@ -58,6 +58,8 @@ r/as/listDataTypes
 r/as/listVariantsForFormat s/format
     new s/normalizedFmt
     set s/normalizedFmt normalizeFormat s/format
+    if in s/normalizedFmt [ 'unicodePua' ]
+        set s/normalizedFmt 
     new as/res
     set as/res dc
 

@@ -66,6 +66,12 @@ r/b/contains ga/in g/value
         set n/count sub n/count 1
     return false
 
+r/b/implIn g/value ga/in
+    # Convenience wrapper
+    new b/res
+    set b/res contains ga/in g/value
+    return b/res
+
 r/n/indexOf ga/in g/value
     new n/count
     set n/count count ga/in
