@@ -77,6 +77,16 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     assertIsByteArray an/res
     return an/res
 
+r/an/byteArrayFromBasenbUtf8 an/in
+    assertIsByteArray an/in
+    new an/res
+    # Extract remainder length
+    new n/remainder
+    set n/remainder get byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in -5 -1 } 0 } } 0 # last 4 characters
+    set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/in n/remainder
+    assertIsByteArray an/res
+    return an/res
+
 r/an/getArmoredUtf8EmbeddedStartUuid
     # start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f
     #new an/startUuid
