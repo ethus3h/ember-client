@@ -478,7 +478,7 @@ let Base16b = {
         */
         try {
             let resultArr = [];
-            let termCharBytes = this._CharBytes(inputStr.slice(-2));
+            let termCharBytes = this._CharBytesFixed(inputStr.slice(-1));
             let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
             let termCharVal = this._fromCodePoint(termCharCP, termCharBytes);
             let bit = 17;
