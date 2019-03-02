@@ -1,6 +1,6 @@
 r/as/listFormats
     new as/res
-    set as/res dcDataFilterByValueGreater 'formats' 3 0 1
+    set as/res dcGetColumn 'formats' 1
     return as/res
 
 r/as/listInputFormats
@@ -64,7 +64,8 @@ r/as/listVariantsForFormat s/format
     new s/normalizedFmt
     set s/normalizedFmt normalizeFormat s/format
     new an/formats
-    set an/formats listFor
+    set an/formats listFormats
+    
     if in s/normalizedFmt [ 'unicodePua' ]
         set s/normalizedFmt 
     new as/res
