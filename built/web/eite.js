@@ -433,12 +433,14 @@ let Base16b = {
     },
     // private methods
     _CharBytes: function(segmCP) { // return the number of bytes needed for the character. Usually 2.
-        if (this._fixedCharCodeAt(segmCP, 0) && this._fixedCharCodeAt(segmCP, 1)) {
+        let code = segmCP.charCodeAt(0);
+        if (0xD800 <= code && code <= 0xDBFF) { // High surrogate
             return 2;
         }
-        else {
-            return 1;
+        if (0xDC00 <= code && code <= 0xDFFF) { // Low surrogate
+            return 2;
         }
+        return 1;
     },
     _invertVal: function(segmVal, base) {
         // Two's complement of the value for this base
