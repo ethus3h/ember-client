@@ -472,12 +472,16 @@ let Base16b = {
     },
     // public method for decoding
     decode: function(inputStr, remainderLength) {
-        // remainderLength is not in the original version of this code. It should be provided to get the expected result. It is the input length in bits, mod the number of bits per character (the second argument to the encode function).
+        // remainderLength is not in the original version of this code. It should be provided to get the expected result. It is the input length in bits, mod the number of bits per character (the second argument to the encode function). Other fixes to decoding are also made if remainderLength is provided. If it is not provided, the output should be the same as with original API (if not, that's a bug).
         /*
         Decode a string encoded in the Asyntactic script. Return an array of pseudo-booleans (0 or 1)
         The specification of the encoding is documented elsewhere on this site. (Search Asyntactic script and Base16b.)
         */
         try {
+            let originalApi = true;
+            if (remainderLength !== undefined) {
+                originalApi = false;
+            }
             let resultArr = [];
             let termCharBytes = this._CharBytesFixed(inputStr.slice(-1));
             let termCharCP = inputStr.slice(-termCharBytes); // get the termination character
@@ -499,16 +503,22 @@ let Base16b = {
             let bytesUsed = 0;
             let fullBytes = inputStr.length - termCharBytes;
             let decodedBit = 0;
+            let segmentBitLength = currCharBytes * 8;
+            if (!originalApi) {
+                segmentBitLength = base;
+            }
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
                 currCharBytes = this._CharBytesFixed(inputStr.slice(bytesUsed, bytesUsed + 1)); // taste before taking a byte
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
-                for (bit = base - 1; bit >= 0; bit--) {
+                for (bit = segmentBitLength - 1; bit >= 0; bit--) {
                     decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
-                    if (Number.isNaN(decodedBit)) {
-                        throw ('Found NaN while decoding');
+                    if (!originalApi) {
+                        if (Number.isNaN(decodedBit)) {
+                            throw ('Found NaN while decoding');
+                        }
                     }
                     resultArr.push(decodedBit);
                 }
@@ -517,7 +527,7 @@ let Base16b = {
             // remainder
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
             bit = (termCharBytes * 8) - 1;
-            if (remainderLength !== undefined) {
+            if (!originalApi) {
                 bit = remainderLength - 1;
             }
             for (bit; bit >= 0; bit--) {
