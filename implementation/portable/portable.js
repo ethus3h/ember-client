@@ -109,26 +109,53 @@ async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function byteArrayFromBasenbUtf8(intArrayIn) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+async function getArmoredUtf8EmbeddedStartUuid() {
+    await internalDebugStackEnter('getArmoredUtf8EmbeddedStartUuid:basenb-utf8'); let intArrayReturn;
 
-    await assertIsByteArray(intArrayIn);
-    let intArrayRes = [];
-    /* Extract remainder length */
-    let intRemainder = 0;
-    intRemainder = await get(await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, -5, -1), 0), ), 0)/* last 4 characters */
-    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
-    await assertIsByteArray(intArrayRes);
+    /* start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f */
+    /*new an/startUuid */
+    /*set an/startUuid ( 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 ) */
+    /* byteArrayToIntBitArray([ 232, 46, 239, 96, 25, 188, 74, 0, 164, 74, 118, 58, 52, 69, 193, 111 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());}) */
+    /* UTF8 in binary: 1,1,1,1,0,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,1,1,1,1,1,0,1,0,0,1,0,0,0,1,0,1,1,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,0,1,1,1,1,0,0,1,0,1,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,0,0,0,1,0,1,0,0,1,0,1,1,0,0,0,1,1,1,0,1,1,1,1,0,1,0,0,1,0,0,0,1,0,0,0,1,0,1,1,1,0,1,0,1,0,0,0,1,1,0,1,1,1,1,1,0,0,1,1,1,0,1,1,0,0,1,0,1,0,0,0,1,0,1,1,1,0,1,0,0,0,0,0,1,1,1,1,0,1,0,0,1,0,0,0,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,0 */
+    let intArrayStartUuidUtf8 = [];
+    intArrayStartUuidUtf8 = [ 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144 ];
 
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayStartUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
-await byteArrayToBase17bUtf8(intArrayIn));
-{
-    /* Convenience wrapper */
-    let intArrayRes = [];
-    intArrayRes = await byteArrayToBasenbUtf8(17, intArrayIn);
 
-    async function isByte(genericIn) {
+async function getArmoredUtf8EmbeddedEndUuid() {
+    await internalDebugStackEnter('getArmoredUtf8EmbeddedEndUuid:basenb-utf8'); let intArrayReturn;
+
+    /* end UUID=60bc936b-f10f-4f50-ab65-3778084060e2 */
+    /*new an/endUuid */
+    /*set an/endUuid ( 96 188 147 107 241 15 79 80 171 101 55 120 8 64 96 226 ) */
+    /* byteArrayToIntBitArray([ 96, 188, 147, 107, 241, 15, 79, 80, 171, 101, 55, 120, 8, 64, 96, 226 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());}) */
+    let intArrayEndUuidUtf8 = [];
+    intArrayEndUuidUtf8 = [ 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157 ];
+
+    intArrayReturn = intArrayEndUuidUtf8; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+/*r/an/byteArrayToArmoredBase17bUtf8 an/in */
+/*    assertIsByteArray an/in */
+/*    new an/res */
+/*    set an/res getArmoredBase17bUtf8StartUuid */
+/*    set an/res append an/res eiteHostCall 'internalIntBitArrayToBase17bString' byteArrayToIntBitArray an/in */
+/*    assertIsByteArray an/res */
+/*    set an/res append an/res getArmoredBase17bUtf8EndUuid */
+/*    return an/res */
+/*r/an/byteArrayFromArmoredBase17bUtf8 an/in */
+/*    assertIsByteArray an/in */
+/*    new an/temp */
+/*    set an/temp getArmoredBase17bUtf8StartUuid */
+/*    assertIsTrue eq an/temp anSubset an/in 0 count an/temp */
+/*    set an/temp getArmoredBase17bUtf8EndUuid */
+/*    assertIsTrue eq an/temp anSubset an/in -1 sub -1 count an/temp */
+/*    new an/res */
+/*    set an/res eiteHostCall 'internalIntBitArrayFromBase17bString' an/in */
+/*    assertIsByteArray an/res */
+/*    return an/res */
+
+async function isByte(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
 
     if (await implNot(await isInt(genericIn))) {
@@ -146,4 +173,46 @@ await byteArrayToBase17bUtf8(intArrayIn));
 async function isIntBit(genericIn) {
     await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isIntBit:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
 
-    if (await implNot(
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 0, 1);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isChar(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isStr(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let strVal = '';
+    strVal = genericIn;
+    let boolRes = false;
+    boolRes = await isCharByte(await byteFromChar(strVal));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharByte(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isCharByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 32, 126);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
