@@ -573,7 +573,6 @@ let Base16b = {
             let currCharBytes;
             let bytesUsed = 0;
             let fullBytes = inputStr.length - termCharBytes;
-            alert('termCharBytes='+termCharBytes+';fullBytes='+fullBytes);
             let decodedBit = 0;
             while (bytesUsed < fullBytes) {
                 // decode the code point segments in sequence
@@ -584,7 +583,7 @@ let Base16b = {
                 for (bit = base - 1; bit >= 0; bit--) {
                     decodedBit=Math.floor((segmVal / Math.pow(2, (bit))) % 2);
                     if (Number.isNaN(decodedBit)) {
-                        alert('Bit was NaN: segmVal='+segmVal + ' termCharCP =' +termCharCP + ' currCharBytes ='+currCharBytes + ' bytesUsed=' +bytesUsed+' bytes='+inputStr.slice(bytesUsed, bytesUsed + 1));
+                        throw ('Found NaN while decoding');
                     }
                     resultArr.push(decodedBit);
                 }
