@@ -594,12 +594,10 @@ let Base16b = {
             let foundRemainderBeginning = false;
             let potentialRemainBit = 0;
             bit = (termCharBytes * 8) - 1;
-            let remainderLoopTerm = 0;
             if (remainderLength !== undefined) {
-                bit = remainderLength;
-                remainderLoopTerm = 1;
+                bit = remainderLength - 1;
             }
-            for (bit; bit >= remainderLoopTerm; bit--) {
+            for (bit; bit >= 0; bit--) {
                 potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
                     resultArr.push(potentialRemainBit);
 /*                if (foundRemainderBeginning) {
