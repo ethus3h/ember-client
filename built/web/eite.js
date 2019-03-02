@@ -577,15 +577,23 @@ let Base16b = {
                 termCharCP = inputStr.slice(bytesUsed, bytesUsed + currCharBytes);
                 let segmVal = this._fromCodePoint(termCharCP, currCharBytes);
                 // most significant bit at the start (left) / least significant bit at the end (right).
-                for (bit = (currCharBytes * 8) - 1; bit >= 0; bit--) {
+                for (bit = base - 1; bit >= 0; bit--) {
                     resultArr.push(Math.floor((segmVal / Math.pow(2, (bit))) % 2));
                 }
                 bytesUsed += currCharBytes;
             }
             // remainder
             let remainVal = this._invertVal(termCharVal, base); // decode the remainder from the termination character
-            for (bit = (termCharBytes * 8) - 1; bit >= 0; bit--) {
-                resultArr.push(Math.floor((remainVal / Math.pow(2, (bit))) % 2));
+            let foundRemainderBeginning = false;
+            let potentialRemainBit = 0;
+            for (bit = base - 1; bit >= 0; bit--) {
+                potentialRemainBit = Math.floor((remainVal / Math.pow(2, (bit))) % 2);
+                if (foundRemainderBeginning) {
+                    resultArr.push(potentialRemainBit)
+                if (potentialRemainBit === 0) {
+                    
+                }
+                resultArr.push();
             }
             return resultArr;
         }
