@@ -84,6 +84,12 @@ r/b/strNonempty s/str
     set b/res not strEmpty s/str
     return b/res
 
+r/s/substr s/str n/start n/len
+    # Convenience wrapper
+    new s/res
+    set s/res substring s/str n/start n/len
+    return s/res
+
 r/b/strContainsOnlyInt s/in
     # Positive int, specifically. Only digits allowed.
     new n/temp
