@@ -63,22 +63,23 @@ r/as/listDataTypes
 r/as/listVariantsForFormat s/format
     new s/normalizedFmt
     set s/normalizedFmt normalizeFormat s/format
-    new an/formats
-    set an/formats listFormats
+    new as/formats
+    set as/formats listFormats
     new n/count
     new n/i
-    set n/count count an/formats
+    set n/count count as/formats
     set n/i 0
     new s/candidateFmt
     new s/normalizedVar
+    new as/res
     while le n/i n/count
         set s/candidateFmtType dcDataLookupById 'formats' n/i 6
         if eq 'v:' substr s/candidateFmtType 0 2
             set s/candidateFmtType substr s/candidateFmtType 3 -1
-            set s/normalizedVar s/candidateFmtType
-            if in s/normalizedVar [ unicodePua ]
-                set s/normalizedVar 'unicode'
-            if in substr s/candidateFmtType 3 -1 } [  ]
+            if in s/candidateFmtType [ unicodePua ]
+                set s/candidateFmtType 'unicode'
+            if eq s/format s/candidateFmtType
+                set as/res push as/res dcDataLookupById 'formats' n/i 1
         set n/i add n/i 1
     if in s/normalizedFmt [ 'unicodePua' ]
         set s/normalizedFmt 
