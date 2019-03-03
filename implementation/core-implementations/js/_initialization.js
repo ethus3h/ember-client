@@ -180,6 +180,9 @@ async function internalSetup() {
     }
 
     setupFinished = true;
+    if (typeof window !== 'undefined') {
+        window.setupFinished = true;
+    }
 }
 
 function getWindowOrSelf() {
