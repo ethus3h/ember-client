@@ -78,11 +78,9 @@ r/as/listVariantsForFormat s/format
             set s/candidateFmtType substr s/candidateFmtType 3 -1
             if in s/candidateFmtType [ unicodePua ]
                 set s/candidateFmtType 'unicode'
-            if eq s/format s/candidateFmtType
+            if eq s/normalizedFmt s/candidateFmtType
                 set as/res push as/res dcDataLookupById 'formats' n/i 1
         set n/i add n/i 1
-    if in s/normalizedFmt [ 'unicodePua' ]
-        set s/normalizedFmt 
     new as/res
     set as/res dc
 
