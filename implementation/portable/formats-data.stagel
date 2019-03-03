@@ -65,7 +65,13 @@ r/as/listVariantsForFormat s/format
     set s/normalizedFmt normalizeFormat s/format
     new an/formats
     set an/formats listFormats
-    
+    new n/count
+    new n/i
+    set n/count count an/formats
+    set n/i 0
+    while le n/i n/count
+        
+        set n/i add n/i 1
     if in s/normalizedFmt [ 'unicodePua' ]
         set s/normalizedFmt 
     new as/res
