@@ -2750,3 +2750,34 @@ async function notExcOrEmpty(strTest) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function strPrintArr(genericArrayInput) {
+    await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
+
+    /* Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :) */
+    let intCount = 0;
+    intCount = await count(genericArrayInput);
+    let intI = 0;
+    intI = 0;
+    let strOut = '';
+    while (await implLt(intI, intCount)) {
+        strOut = await implCat(strOut, await strFrom(await get(genericArrayInput, intI)));
+        strOut = await implCat(strOut, ' ');
+        intI = await implAdd(intI, 1);
+    }
+
+    strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function printArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('printArray:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
+
+    /* Just a convenience wrapper */
+    let strRes = '';
+    strRes = await strPrintArr(genericArrayIn);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function printArr(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('printArr:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
+
