@@ -2703,3 +2703,50 @@ async function formatPercentage(intA, intB) {
     strReturn = strPercentage; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+/* Can check for exception as result like: if eq s/res dcDataNoResultException */
+
+async function dcDataNoResultException() {
+    await internalDebugStackEnter('dcDataNoResultException:exceptions'); let strReturn;
+
+
+    strReturn = '89315802-d53d-4d11-ba5d-bf505e8ed454'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function excep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excep:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = false;
+    /* Test for each exception type in turn (there's only one so far) */
+    boolRes = await or(boolRes, await implEq(strTest, await dcDataNoResultException()));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function notExcep(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcep:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await excep(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function excOrEmpty(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await excep(strTest), await strEmpty(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function notExcOrEmpty(strTest) {
+    await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('notExcOrEmpty:exceptions'); await assertIsStr(strTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await excOrEmpty(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
