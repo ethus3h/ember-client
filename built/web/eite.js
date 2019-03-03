@@ -145,6 +145,7 @@ async function setupIfNeeded() {
     if (setupFinished) {
         return;
     }
+    await eiteHostCall('setupIfNeeded');
     await internalSetup();
 }
 
@@ -2422,7 +2423,7 @@ async function listVariantsForFormat(strFormat) {
     let strCandidateFmt = '';
     let strNormalizedVar = '';
     let strArrayRes = [];
-    while (await le(intI, intCount)) {
+    while (await implLt(intI, intCount)) {
         strCandidateFmtType = await dcDataLookupById('formats', intI, 6);
         if (await implEq('v:', await substr(strCandidateFmtType, 0, 2))) {
             strCandidateFmtType = await substr(strCandidateFmtType, 3, -1);

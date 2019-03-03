@@ -145,6 +145,7 @@ async function setupIfNeeded() {
     if (setupFinished) {
         return;
     }
+    await eiteHostCall('setupIfNeeded');
     await internalSetup();
 }
 
