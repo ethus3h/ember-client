@@ -70,9 +70,11 @@ r/as/listVariantsForFormat s/format
     set n/count count an/formats
     set n/i 0
     new s/candidateFmt
+    new s/normalizedVar
     while le n/i n/count
-        set s/candidateFmtType dcDataLookupById 'formats' n/i 6
-        if 
+        set s/candidateFmtType  dcDataLookupById 'formats' n/i 6
+        set normalizedVar
+        if in substr s/candidateFmtType 3 -1 } [  ]
         set n/i add n/i 1
     if in s/normalizedFmt [ 'unicodePua' ]
         set s/normalizedFmt 
