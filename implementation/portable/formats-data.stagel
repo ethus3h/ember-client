@@ -72,7 +72,7 @@ r/as/listVariantsForFormat s/format
     new s/candidateFmt
     new s/normalizedVar
     new as/res
-    while le n/i n/count
+    while lt n/i n/count
         set s/candidateFmtType dcDataLookupById 'formats' n/i 6
         if eq 'v:' substr s/candidateFmtType 0 2
             set s/candidateFmtType substr s/candidateFmtType 3 -1
