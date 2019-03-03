@@ -61,7 +61,9 @@ async function setupIfNeeded() {
     if (setupFinished) {
         return;
     }
-    await eiteHostCall('setupIfNeeded');
+    if (typeof window !== 'undefined') {
+        await eiteHostCall('setupIfNeeded');
+    }
     await internalSetup();
 }
 
