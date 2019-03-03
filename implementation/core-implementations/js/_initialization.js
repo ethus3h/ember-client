@@ -564,6 +564,8 @@ let Base16b = {
     }
 };
 
+eiteHostCall('setupIfNeeded');
+
 // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
 // To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
