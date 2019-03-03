@@ -81,8 +81,7 @@ r/as/listVariantsForFormat s/format
             if eq s/normalizedFmt s/candidateFmtType
                 set as/res push as/res dcDataLookupById 'formats' n/i 1
         set n/i add n/i 1
-    new as/res
-    set as/res dc
+    return as/res
 
 r/n/getFormatId s/format
     new n/res
