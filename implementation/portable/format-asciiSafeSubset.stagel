@@ -52,6 +52,8 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             set s/state 'crlf'
         if eq s/state 'normal'
             set an/tempChar dcToFormat 'utf8' n/dcAtIndex
+            if eq 0 count an/tempChar
+                
             if dcIsNewline n/dcAtIndex
                 set an/out append an/out crlf
             elif isAsciiSafeSubsetChar get an/tempChar 0
