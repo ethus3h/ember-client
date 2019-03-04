@@ -3148,14 +3148,14 @@ async function runTestsOnly(boolV) {
     await runTestsMath(boolV);
     /*runTestsWasm b/v */
     /* Format tests */
-    await runTestsFormatAscii();
-    await runTestsFormatAsciiSafeSubset();
-    await runTestsFormatDc();
-    await runTestsFormatHtml();
-    await runTestsFormatHtmlFragment();
-    await runTestsFormatIntegerList();
-    await runTestsFormatSems();
-    await runTestsFormatUtf8();
+    await runTestsFormatAscii(boolV);
+    await runTestsFormatAsciiSafeSubset(boolV);
+    await runTestsFormatDc(boolV);
+    await runTestsFormatHtml(boolV);
+    await runTestsFormatHtmlFragment(boolV);
+    await runTestsFormatIntegerList(boolV);
+    await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
