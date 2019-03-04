@@ -105,10 +105,10 @@ r/an/dcFromFormat s/inFormat an/content
     return an/ret
 
 r/v/exportWarning n/index s/problem
-    warn cat 'An error was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
+    warn cat 'A problem was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
 
 r/v/importWarning n/index s/problem
-    warn cat 'An error was encountered while importing at character ' cat strFrom n/index } cat ': ' s/problem
+    warn cat 'A problem was encountered while importing at character ' cat strFrom n/index } cat ': ' s/problem
 
 r/v/exportWarningUnmappable n/index n/problemDc
     exportWarning n/index cat 'The character ' cat strFrom n/problemDc } ' could not be represented in the chosen export format.'
