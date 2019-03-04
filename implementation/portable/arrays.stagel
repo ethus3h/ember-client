@@ -109,10 +109,10 @@ r/b/arrEq ga/a ga/b
     new g/elem
     new n/i
     while le n/i n/count
-        set g/elem get ga/in n/count
-        if not isInt g/elem
+        set g/elem get ga/a n/i
+        if ne g/elem get ga/b n/i
             return false
-        set n/count sub n/count 1
+        set n/i add n/i 1
     return true
 
 r/b/isIntArray ga/in

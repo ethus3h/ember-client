@@ -1,6 +1,6 @@
 r/v/runTestsFormatSems b/v
-    runTest b/v eq ( 1 2 ) dcaFromSems ( 49 32 50 )
-    runTest b/v eq ( 49 32 50 ) dcaToSems ( 1 2 )
+    runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 )
+    runTest b/v arrEq ( 49 32 50 ) dcaToSems ( 1 2 )
     # TODO: Support comment preservation
-    #runTest b/v eq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 )
-    #runTest b/v eq ( 49 32 50 ) dcaToSems ( 1 2 )
+    #runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 )
+    #runTest b/v arrEq ( 49 32 50 ) dcaToSems ( 1 2 )
