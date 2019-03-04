@@ -259,7 +259,7 @@ async function isCharByte(genericIn) {
 async function runTestsFormatHtmlFragment(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtmlFragment:format-htmlFragment-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 53, 38, 108, 116, 59, 54 ], await dcaToHtmlFragment([ 39, 46, 40 ])));
+    await runTest(boolV, await arrEq([ 53, 38, 108, 116, 59, 54 ], await dcaToHtmlFragment([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
 }
@@ -436,8 +436,8 @@ async function runTestsMath(boolV) {
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-asciiSafeSubset-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
-    await runTest(boolV, await implEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
+    await runTest(boolV, await arrEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
+    await runTest(boolV, await arrEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
 
     await internalDebugStackExit();
 }
@@ -487,8 +487,8 @@ async function dcaFromUtf8(intArrayContent) {
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-ascii-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 0, 212, 120, 216, 221, 226, 231, 21, 26 ], await dcaFromAscii([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ])));
-    await runTest(boolV, await implEq([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ], await dcaToAscii([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 26 ])));
+    await runTest(boolV, await arrEq([ 0, 212, 120, 216, 221, 226, 231, 21, 26 ], await dcaFromAscii([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ])));
+    await runTest(boolV, await arrEq([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ], await dcaToAscii([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 26 ])));
 
     await internalDebugStackExit();
 }
@@ -1435,6 +1435,29 @@ async function isArray(genericItemIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function arrEq(genericArrayA, genericArrayB) {
+    await internalDebugCollect('genericArray A = ' + genericArrayA + '; '); await internalDebugCollect('genericArray B = ' + genericArrayB + '; '); await internalDebugStackEnter('arrEq:arrays'); await assertIsGenericArray(genericArrayA); await assertIsGenericArray(genericArrayB); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(genericArrayA);
+    if (await ne(intCount, await count(genericArrayB))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let genericElem;
+    let intI = 0;
+    while (await le(intI, intCount)) {
+        genericElem = await get(genericArrayA, intI);
+        if (await ne(genericElem, await get(genericArrayB, intI))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intI = await implAdd(intI, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function isIntArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
 
@@ -1709,11 +1732,11 @@ async function reportTests() {
 async function runTestsFormatSems(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatSems:format-sems-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
-    await runTest(boolV, await implEq([ 49, 32, 50 ], await dcaToSems([ 1, 2 ])));
+    await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToSems([ 1, 2 ])));
     /* TODO: Support comment preservation */
-    /*runTest b/v eq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 ) */
-    /*runTest b/v eq ( 49 32 50 ) dcaToSems ( 1 2 ) */
+    /*runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 ) */
+    /*runTest b/v arrEq ( 49 32 50 ) dcaToSems ( 1 2 ) */
 
     await internalDebugStackExit();
 }
@@ -2348,8 +2371,8 @@ async function dcaToHtml(intArrayDcIn) {
 async function runTestsFormatIntegerList(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatIntegerList:format-integerlist-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 1, 2 ], await dcaFromIntegerList([ 49, 32, 50 ])));
-    await runTest(boolV, await implEq([ 49, 32, 50 ], await dcaToIntegerList([ 1, 2 ])));
+    await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromIntegerList([ 49, 32, 50 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToIntegerList([ 1, 2 ])));
 
     await internalDebugStackExit();
 }
@@ -2357,8 +2380,8 @@ async function runTestsFormatIntegerList(boolV) {
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
-    await runTest(boolV, await implEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
+    await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
 
     await internalDebugStackExit();
 }
@@ -2623,7 +2646,7 @@ async function dcIsPrintable(intDc) {
 async function runTestsFormatHtml(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtml:format-html-tests'); await assertIsBool(boolV);
 
-    await runTest(boolV, await implEq(await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>'), await dcaToHtml([ 39, 46, 40 ])));
+    await runTest(boolV, await arrEq(await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>'), await dcaToHtml([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
 }
