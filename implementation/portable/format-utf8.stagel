@@ -22,7 +22,7 @@ r/an/dcaFromUtf8 an/content
     new an/remaining
     set an/remaining an/content
     new an/temp
-    while not eq 0 count an/content
+    while not eq 0 count an/remaining
         set an/temp ( )
         set an/temp push an/temp firstCharOfUtf8String an/remaining
         set an/res push an/res dcFromFormat 'unicode' an/temp
