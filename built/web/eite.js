@@ -2024,7 +2024,7 @@ async function dcaFromUtf8(intArrayContent) {
         intArrayTemp = [  ];
         intArrayTemp = await push(intArrayTemp, await firstCharOfUtf8String(intArrayRemaining));
         intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
-        intArrayRemaining = await anSubset(await count(intArrayTemp), -1);
+        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
     }
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
