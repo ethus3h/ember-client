@@ -3,7 +3,10 @@ r/s/getSettingForFormat s/format s/direction s/settingKey
     new as/temp
     set as/temp getSettingsForFormat s/format s/direction
     new s/res
-    set s/res getNext as/temp indexOf as/temp s/settingKey
+    if contains as/temp s/settingKey
+        set s/res getNext as/temp indexOf as/temp s/settingKey
+    else
+        set s/res ''
     return s/res
 
 r/as/getSettingsForFormat s/format s/direction
