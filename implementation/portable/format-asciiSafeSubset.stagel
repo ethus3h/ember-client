@@ -46,7 +46,7 @@ r/an/dcaToAsciiSafeSubset an/dcIn
     set s/state 'normal'
     new an/mapTemp
     while lt n/inputIndex n/len
-        set an/mapTemp dcToFormat 'ascii' get an/dcIn n/inputIndex
+        set an/mapTemp dcToFormat 'utf8' get an/dcIn n/inputIndex
         if eq 0 count an/mapTemp
             set an/temp setElement an/temp n/inputIndex -1
         else

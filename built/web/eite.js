@@ -2305,7 +2305,7 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
     strState = 'normal';
     let intArrayMapTemp = [];
     while (await implLt(intInputIndex, intLen)) {
-        intArrayMapTemp = await dcToFormat('ascii', await get(intArrayDcIn, intInputIndex));
+        intArrayMapTemp = await dcToFormat('utf8', await get(intArrayDcIn, intInputIndex));
         if (await implEq(0, await count(intArrayMapTemp))) {
             intArrayTemp = await setElement(intArrayTemp, intInputIndex, -1);
         }
