@@ -509,15 +509,15 @@ async function getSettingsForFormat(strFormat, strDirection) {
     /* Returns an array of setting key/value pairs. A format setting string looks like, which should be fairly parseable (keys and vals follow StageL ident naming rules): key1:val1,key2:val2, */
     let intFormatId = 0;
     intFormatId = await getFormatId(strFormat);
-    let strRes = '';
+    let strArrayRes = [];
     if (await implEq(strDirection, 'in')) {
-        strRes = await get(await settingStringToArray(await getImportSettings(intFormatId)));
+        strArrayRes = await settingStringToArray(await getImportSettings(intFormatId));
     }
     else {
-        strRes = await get(await settingStringToArray(await getExportSettings(intFormatId)));
+        strArrayRes = await settingStringToArray(await getExportSettings(intFormatId));
     }
 
-    strArrayReturn = strRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function settingStringToArray(strSettings) {
