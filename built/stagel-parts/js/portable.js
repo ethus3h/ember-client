@@ -454,6 +454,14 @@ async function dcaFromUtf8(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     let intArrayRes = [];
+    let intArrayRemaining = [];
+    intArrayRemaining = intArrayContent;
+    while !(await implEq(0, await count(intArrayContent))) {
+        let intArrayTemp = [];
+        intArrayTemp = await firstCharOfUtf8String(intArrayRemaining);
+        intArrayRes = await push(intArrayRes, intArrayTemp);
+        intArrayRemaining = await anSubset(await count(intArrayTemp), -1);
+    }
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }

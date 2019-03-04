@@ -246,8 +246,10 @@ async function updateNearestDcLabelInner(el) {
         if (currentDc.length === 0) {
             currentDc=after[0];
         }
-        currentDc=await dcaFromUtf8(currentDc);
-        currentDc=currentDc[0];
+        if (currentDc !== undefined) {
+            currentDc=await dcaFromUtf8(new TextEncoder().encode(currentDc));
+            currentDc=currentDc[0];
+        }
     }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
         setNearestDcLabel('');
