@@ -2563,7 +2563,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
 async function exportWarning(intIndex, strProblem) {
     await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
 
-    await implWarn(await implCat('An error was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await implWarn(await implCat('A problem was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
 
     await internalDebugStackExit();
 }
@@ -2571,7 +2571,7 @@ async function exportWarning(intIndex, strProblem) {
 async function importWarning(intIndex, strProblem) {
     await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
 
-    await implWarn(await implCat('An error was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    await implWarn(await implCat('A problem was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
 
     await internalDebugStackExit();
 }

@@ -105,4 +105,32 @@ registerSpeedup('ge', async function (intA, intB) {
     return intA >= intB;
 });
 
+registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
+    if ((genericArrayA.constructor.name !== 'Uint8Array') && (genericArrayA.constructor.name !== 'Array')) || ((genericArrayB.constructor.name !== 'Uint8Array') && (genericArrayB.constructor.name !== 'Array')) {
+        await assertIsGenericArray(genericArrayA);
+        await assertIsGenericArray(genericArrayB);
+    }
+    function countSync(array) {
+        if (array.constructor.name === 'Uint8Array') {
+            return array.byteLength;
+        }
+        return Object.keys(array).length;
+    }
+    let intCount = 0;
+    intCount = countSync(genericArrayA);
+    if (intCount !== countSync(genericArrayB)) {
+        return false;
+    }
+    let genericElem;
+    let intI = 0;
+    while (intI < intCount) {
+        genericElem = genericArrayA[intI];
+        if (genericElem !== genericArrayB[intI]) {
+            return false;
+        }
+        intI = intI + 1;
+    }
+    return true;
+});
+
 // @license-end
