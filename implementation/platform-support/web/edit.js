@@ -293,7 +293,7 @@ async function getInputDoc() {
     let res;
     res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     if (!editInts()) {
-        res = await eiteCall('importDocument', ['utf8', res]);
+        res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
     }
     return res;
 }
