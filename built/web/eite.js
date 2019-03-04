@@ -2281,6 +2281,9 @@ async function dcaFromAsciiSafeSubset(intArrayContent) {
         }
         intCounter = await implAdd(intCounter, 1);
     }
+    intArrayPrefilter = await dcaFromAscii(intArrayPrefilter);
+
+    intArrayReturn = intArrayPrefilter; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaToAsciiSafeSubset(intArrayDcIn) {
