@@ -1988,6 +1988,9 @@ async function assertIsDcDataset(strIn) {
 async function assertIsSupportedInputFormat(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedInputFormat:assertions'); await assertIsStr(strIn);
 
+    if (await implNot(await isSupportedInputFormat(strIn))) {
+        await implDie(await implCat(strIn, ' is not a supported input format.'));
+    }
     await assertIsTrue(await isSupportedInputFormat(strIn));
 
     await internalDebugStackExit();
@@ -1996,6 +1999,9 @@ async function assertIsSupportedInputFormat(strIn) {
 async function assertIsSupportedOutputFormat(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedOutputFormat:assertions'); await assertIsStr(strIn);
 
+    if (await implNot(await isSupportedOutputFormat(strIn))) {
+        await implDie(await implCat(strIn, ' is not a supported output format.'));
+    }
     await assertIsTrue(await isSupportedOutputFormat(strIn));
 
     await internalDebugStackExit();
@@ -2004,6 +2010,9 @@ async function assertIsSupportedOutputFormat(strIn) {
 async function assertIsSupportedEnvironmentCharEncoding(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsSupportedEnvironmentCharEncoding:assertions'); await assertIsStr(strIn);
 
+    if (await implNot(await isSupportedEnvironmentCharEncoding(strIn))) {
+        await implDie(await implCat(strIn, ' is not a supported environment character encoding.'));
+    }
     await assertIsTrue(await isSupportedEnvironmentCharEncoding(strIn));
 
     await internalDebugStackExit();
