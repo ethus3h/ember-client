@@ -2023,6 +2023,7 @@ async function dcaFromUtf8(intArrayContent) {
     while (await implNot(await implEq(0, await count(intArrayContent)))) {
         intArrayTemp = [  ];
         intArrayTemp = await push(intArrayTemp, await firstCharOfUtf8String(intArrayRemaining));
+        await console.log(await dcFromFormat('unicode', intArrayTemp));
         intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
     }
