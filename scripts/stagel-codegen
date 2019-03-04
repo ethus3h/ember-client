@@ -407,7 +407,9 @@ codegenCommandInvocationStart() {
         ;;
     until)
         codegenPrintIndentationSpaces
-        codegenOutput "while !("
+        codegenOutput "while (!("
+        # Pretend it's in an arglist to make it close the parenthesis for the outside of the while
+        stateStack+=("arglist")
         ;;
     and|not|eq|gt|lt|add|sub|mul|div|mod|cat|die|error|warn|log|debug|in)
         codegenPrintIndentationSpaces
