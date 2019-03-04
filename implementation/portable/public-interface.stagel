@@ -41,7 +41,8 @@ r/an/exportDocument s/format an/contents
     return an/out
 
 r/an/importDocument s/format an/contents
-    assertIsSupportedInputFormat s/format
+    if not isSupportedInputFormat s/format
+        die cat s/format ' is not a supported input format.'
     # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
     setupIfNeeded
     new an/out
@@ -49,8 +50,10 @@ r/an/importDocument s/format an/contents
     return an/out
 
 r/an/importAndExport s/inputFormat s/outputFormat an/contents
-    assertIsSupportedInputFormat s/inputFormat
-    assertIsSupportedOutputFormat s/outputFormat
+    if not isSupportedInputFormat s/inputFormat
+        die cat s/inputFormat ' is not a supported input format.'
+    if not isSupportedOutputFormat s/outputFormat
+        die cat s/outputFormat ' is not a supported output format.'
     # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
     setupIfNeeded
     new an/out
