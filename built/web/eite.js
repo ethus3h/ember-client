@@ -1284,22 +1284,24 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
     await assertIsStrArray(asReturn); return asReturn;
 }
 
-async function getImportSettings() {
-    assertIsStrArray(importSettings);
-    return importSettings;
+async function getImportSettings(formatId) {
+    await assertIsStrArray(importSettings); await assertIsInt(formatId)
+
+    return importSettings[formatId];
 }
 
-async function getExportSettings() {
-    assertIsStrArray(exportSettings);
-    return exportSettings;
+async function getExportSettings(formatId) {
+    await assertIsStrArray(exportSettings); await assertIsInt(formatId);
+
+    return exportSettings[formatId];
 }
 
 async function setImportSettings(strArrayNewSettings) {
-    assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
+    await assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
 }
 
-async function setExportSettings() {
-    assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
+async function setExportSettings(strArrayNewSettings) {
+    await assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
 }
 
 /* assertions, provides:
@@ -1997,7 +1999,7 @@ async function runTestsMath(boolV) {
 }
 
 async function runTestsFormatAsciiSafeSubset(boolV) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-asciiSafeSubset-tests'); await assertIsBool(boolV);
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAsciiSafeSubset:format-asciiSafeSubset-tests'); await assertIsBool(boolV);
 
     await runTest(boolV, await arrEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
     await runTest(boolV, await arrEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
