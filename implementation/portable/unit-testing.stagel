@@ -10,6 +10,7 @@ r/b/runTestsOnly b/v
     runTestsFormatAsciiSafeSubset
     runTestsFormatDc
     runTestsFormatHtml
+    runTestsFormatHtmlFragment
     runTestsFormatIntegerList
     runTestsFormatSems
     runTestsFormatUtf8

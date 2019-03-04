@@ -1,4 +1,4 @@
-r/an/dcaToHtml an/dcIn
+r/an/dcaToHtmlFragment an/dcIn
     assertIsDcArray an/dcIn
     new an/out
     set an/out append an/out strToByteArray '<div style="white-space:pre-wrap">'

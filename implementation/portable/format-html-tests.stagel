@@ -1,2 +1,2 @@
-r/v/runTestsFormatDc b/v
-    #runTest b/v dcIsPrintable 21
+r/v/runTestsFormatHtml b/v
+    runTest b/v eq strToByteArray '<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>' } dcaToHtml ( 39 46 40 )
