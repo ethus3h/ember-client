@@ -104,7 +104,12 @@ registerSpeedup('ge', async function (intA, intB) {
 });
 
 registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
-    
+    if (val.constructor.name !== 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertIsTrue(false);
+    }
     function countSync(array) {
         if (array.constructor.name === 'Uint8Array') {
             return array.byteLength;
@@ -113,18 +118,17 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     }
     let intCount = 0;
     intCount = countSync(genericArrayA);
-    if (intCount != countSync(genericArrayB)) {
+    if (intCount !== countSync(genericArrayB)) {
         return false;
     }
     let genericElem;
     let intI = 0;
-    while (intI, intCount)) {
-        genericElem = await get(genericArrayA, intI);
-        if (await ne(genericElem, await get(genericArrayB, intI))) {
+    while (intI < intCount) {
+        genericElem = genericArrayA[intI];
+        if (genericElem !== genericArrayB[intI]) {
             return false;
         }
-        intI = await implAdd(intI, 1);
+        intI = intI + 1;
     }
-
-    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    return true;
 });
