@@ -31,6 +31,8 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     #    set an/ret dcaFromUtf8 an/contentBytes
     elif eq s/outFormat 'html'
         set an/res dcaToHtml an/dcArrayIn
+    elif eq s/outFormat 'htmlFragment'
+        set an/res dcaToHtmlFragment an/dcArrayIn
     else
         die cat 'Unimplemented document render output format: ' s/outFormat
     assertIsByteArray an/res
