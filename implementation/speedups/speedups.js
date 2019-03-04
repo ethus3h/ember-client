@@ -104,21 +104,24 @@ registerSpeedup('ge', async function (intA, intB) {
 });
 
 registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
-    await internalDebugCollect('genericArray A = ' + genericArrayA + '; '); await internalDebugCollect('genericArray B = ' + genericArrayB + '; '); await internalDebugStackEnter('arrEq:arrays'); await assertIsGenericArray(genericArrayA); await assertIsGenericArray(genericArrayB); let boolReturn;
-
+    
+    function countSync(array) {
+        if (array.constructor.name === 'Uint8Array') {
+            return array.byteLength;
+        }
+        return Object.keys(array).length;
+    }
     let intCount = 0;
-    intCount = await count(genericArrayA);
-    if (await ne(intCount, await count(genericArrayB))) {
-
-        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    intCount = countSync(genericArrayA);
+    if (intCount != countSync(genericArrayB)) {
+        return false;
     }
     let genericElem;
     let intI = 0;
-    while (await implLt(intI, intCount)) {
+    while (intI, intCount)) {
         genericElem = await get(genericArrayA, intI);
         if (await ne(genericElem, await get(genericArrayB, intI))) {
-
-            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+            return false;
         }
         intI = await implAdd(intI, 1);
     }
