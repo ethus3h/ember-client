@@ -1866,11 +1866,11 @@ async function dcaToAscii(intArrayContent) {
                 intArrayRes = await append(intArrayRes, intArrayTemp);
             }
             else {
-                await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+                await exportWarningUnmappable(intC, intDcAtIndex);
             }
         }
         else {
-            await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+            await exportWarningUnmappable(intC, intDcAtIndex);
         }
         intC = await implAdd(intC, 1);
     }
@@ -2022,7 +2022,7 @@ async function dcaToUtf8(intArrayContent) {
         intDcAtIndex = await get(intArrayContent, intC);
         intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         if (await implEq(0, await count(intArrayTemp))) {
-            await exportWarning(intC, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+            await exportWarningUnmappable(intC, intDcAtIndex);
         }
         intArrayRes = await append(intArrayRes, intArrayTemp);
         intC = await implAdd(intC, 1);
@@ -2307,15 +2307,20 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
             strState = 'crlf';
         }
         if (await implEq(strState, 'normal')) {
-            intArrayTempChar = await dcToFormat('html', intDcAtIndex);
-            if (await dcIsNewline(intDcAtIndex)) {
-                intArrayOut = await append(intArrayOut, await crlf());
-            }
-            else if (await isAsciiSafeSubsetChar(await get(intArrayTempChar, 0))) {
-                intArrayOut = await push(intArrayOut, intArrayTempChar);
+            intArrayTempChar = await dcToFormat('utf8', intDcAtIndex);
+            if (await implEq(0, await count(intArrayTempChar))) {
+                await exportWarningUnmappable(intInputIndex, intDcAtIndex);
             }
             else {
-                await exportWarning(intInputIndex, await implCat('The character ', await implCat(await strFrom(intDcAtIndex), ' could not be represented in the chosen export format.')));
+                if (await dcIsNewline(intDcAtIndex)) {
+                    intArrayOut = await append(intArrayOut, await crlf());
+                }
+                else if (await isAsciiSafeSubsetChar(await get(intArrayTempChar, 0))) {
+                    intArrayOut = await push(intArrayOut, intArrayTempChar);
+                }
+                else {
+                    await exportWarningUnmappable(intInputIndex, intDcAtIndex);
+                }
             }
         }
         else if (await implEq(strState, 'crlf')) {
@@ -3182,10 +3187,11 @@ async function runTestsOnly(boolV) {
     /*runTestsBits b/v */
     await runTestsMath(boolV);
     /*runTestsWasm b/v */
+    /* Core tests */
+    await runTestsFormatDc(boolV);
     /* Format tests */
     await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
-    await runTestsFormatDc(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
@@ -4131,6 +4137,14 @@ async function importWarning(intIndex, strProblem) {
     await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
 
     await implWarn(await implCat('An error was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+
+    await internalDebugStackExit();
+}
+
+async function exportWarningUnmappable(intIndex, intProblemDc) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('int ProblemDc = ' + intProblemDc + '; '); await internalDebugStackEnter('exportWarningUnmappable:formats'); await assertIsInt(intIndex); await assertIsInt(intProblemDc);
+
+    await exportWarning(intIndex, await implCat('The character ', await implCat(await strFrom(intProblemDc), ' could not be represented in the chosen export format.')));
 
     await internalDebugStackExit();
 }
