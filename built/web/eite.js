@@ -2337,7 +2337,7 @@ async function isAsciiSafeSubsetChar(intChar) {
     await internalDebugCollect('int Char = ' + intChar + '; '); await internalDebugStackEnter('isAsciiSafeSubsetChar:format-asciiSafeSubset'); await assertIsInt(intChar); let boolReturn;
 
     let boolRes = false;
-    boolRes = await or(await asciiIsPrintable(intChar), await or(await asciiIsNewline(intChar)));
+    boolRes = await or(await asciiIsPrintable(intChar), await asciiIsNewline(intChar));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
