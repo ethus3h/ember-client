@@ -875,8 +875,6 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
 */
 
 async function append(array1, array2) {
-    console.log('a1: ' + array1);
-    console.log('a2:' + array2);
     await assertIsArray(array1); await assertIsGenericItem(array2); let arrayReturn;
 
     if (array1.constructor.name !== 'Uint8Array' && array2.constructor.name !== 'Uint8Array') {
@@ -899,7 +897,6 @@ async function append(array1, array2) {
 }
 
 async function push(array1, array2) {
-    console.log('push a1:'+array1+',a2:'+array2);
     return await append(array1, array2);
 }
 
@@ -2023,17 +2020,13 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayRemaining = [];
     intArrayRemaining = intArrayContent;
     let intArrayTemp = [];
-    while (await implNot(await implEq(0, await count(intArrayContent)))) {
+    while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
-        await console.log('arrayreminenng:'+intArrayRemaining);
         intArrayTemp = await push(intArrayTemp, await firstCharOfUtf8String(intArrayRemaining));
-        await console.log('intarrayres:'+intArrayRes+',dcfromformat:'+await dcFromFormat('unicode', intArrayTemp));
         intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
-        await console.log('done push');
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
-        await console.log('done subset');
     }
-await console.log('done while');
+
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
