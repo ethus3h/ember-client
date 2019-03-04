@@ -26,5 +26,5 @@ r/an/dcaFromUtf8 an/content
         set an/temp ( )
         set an/temp push an/temp firstCharOfUtf8String an/remaining
         set an/res push an/res dcFromFormat 'unicode' an/temp
-        set an/remaining anSubset count an/temp } -1
+        set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
