@@ -2307,7 +2307,7 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
             strState = 'crlf';
         }
         if (await implEq(strState, 'normal')) {
-            intArrayTempChar = await dcToFormat('html', intDcAtIndex);
+            intArrayTempChar = await dcToFormat('utf8', intDcAtIndex);
             if (await dcIsNewline(intDcAtIndex)) {
                 intArrayOut = await append(intArrayOut, await crlf());
             }

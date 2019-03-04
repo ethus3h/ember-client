@@ -5,10 +5,11 @@ r/b/runTestsOnly b/v
     #runTestsBits b/v
     runTestsMath b/v
     #runTestsWasm b/v
+    # Core tests
+    runTestsFormatDc b/v
     # Format tests
     runTestsFormatAscii b/v
     runTestsFormatAsciiSafeSubset b/v
-    runTestsFormatDc b/v
     runTestsFormatHtml b/v
     runTestsFormatHtmlFragment b/v
     runTestsFormatIntegerList b/v
