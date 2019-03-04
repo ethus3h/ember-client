@@ -30,6 +30,8 @@ r/an/dcaFromAsciiSafeSubset an/content
         else
             set an/prefilter push an/prefilter n/currentChar
         set n/counter add n/counter 1
+    set an/prefilter dcaFromAscii an/prefilter
+    return an/prefilter
 
 r/an/dcaToAsciiSafeSubset an/dcIn
     assertIsDcArray an/dcIn
