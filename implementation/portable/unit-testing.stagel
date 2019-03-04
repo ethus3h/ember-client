@@ -6,14 +6,14 @@ r/b/runTestsOnly b/v
     runTestsMath b/v
     #runTestsWasm b/v
     # Format tests
-    runTestsFormatAscii
-    runTestsFormatAsciiSafeSubset
-    runTestsFormatDc
-    runTestsFormatHtml
-    runTestsFormatHtmlFragment
-    runTestsFormatIntegerList
-    runTestsFormatSems
-    runTestsFormatUtf8
+    runTestsFormatAscii b/v
+    runTestsFormatAsciiSafeSubset b/v
+    runTestsFormatDc b/v
+    runTestsFormatHtml b/v
+    runTestsFormatHtmlFragment b/v
+    runTestsFormatIntegerList b/v
+    runTestsFormatSems b/v
+    runTestsFormatUtf8 b/v
     # Did anything fail?
     if eq n/failedTests 0
         return true
