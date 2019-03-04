@@ -497,8 +497,10 @@ async function getSettingForFormat(strFormat, strDirection, strSettingKey) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugCollect('str SettingKey = ' + strSettingKey + '; '); await internalDebugStackEnter('getSettingForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); await assertIsStr(strSettingKey); let strReturn;
 
     /* s/direction can be "in" for import settings or "out" for export settings. */
+    let strArrayTemp = [];
+    strArrayTemp = await getSettingsForFormat(strFormat, strDirection);
     let strRes = '';
-    strRes = await getNext(await indexOf(await getSettingsForFormat(strFormat, strDirection), strSettingKey));
+    strRes = await getNext(strArrayTemp, await indexOf(strArrayTemp, strSettingKey));
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
