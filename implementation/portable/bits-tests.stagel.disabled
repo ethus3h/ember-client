@@ -1,2 +1,3 @@
 r/v/runTestsBits b/v
+    testing 'bits'
     runTest b/v eq 4294967294 bitAnd32 -1 1

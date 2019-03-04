@@ -1,3 +1,4 @@
 r/v/runTestsWasm b/v
+    testing 'wasm'
     runTest b/v eq 42 wasmCall 'fortytwo' 0
     runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 )
