@@ -37,7 +37,6 @@ r/an/dcaToAsciiSafeSubset an/dcIn
     assertIsDcArray an/dcIn
     new an/out
     new an/temp
-    set an/temp dcaToAscii an/dcIn
     new n/len
     set n/len count an/dcIn
     new n/inputIndex
