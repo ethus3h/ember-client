@@ -2307,6 +2307,7 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
     strState = 'normal';
     let intArrayTempChar = [];
     while (await implLt(intInputIndex, intLen)) {
+        alert(intInputIndex);
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
         if (await implEq(intDcAtIndex, 121)) {
             strState = 'crlf';
