@@ -2030,8 +2030,9 @@ async function dcaFromUtf8(intArrayContent) {
         intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
         await console.log('done push');
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
+        await console.log('done subset');
     }
-
+await console.log('done while');
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
