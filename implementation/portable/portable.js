@@ -2425,3 +2425,13 @@ async function runTestsFormatIntegerList(boolV) {
     await internalDebugStackExit();
 }
 
+async function runTestsFormatUtf8(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'formatUtf8');
+    await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
+
+    await internalDebugStackExit();
+}
+
