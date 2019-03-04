@@ -1,1 +1,3 @@
- 
+r/v/runTestsFormatDc b/v
+    runTest b/v dcIsPrintable 21
+    runTest b/v not dcIsPrintable 231
