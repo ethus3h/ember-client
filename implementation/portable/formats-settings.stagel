@@ -1,7 +1,9 @@
 r/s/getSettingForFormat s/format s/direction s/settingKey
     # s/direction can be "in" for import settings or "out" for export settings.
+    new as/temp
+    set as/temp getSettingsForFormat s/format s/direction
     new s/res
-    set s/res getNext indexOf getSettingsForFormat s/format s/direction } s/settingKey
+    set s/res getNext as/temp indexOf as/temp s/settingKey
     return s/res
 
 r/as/getSettingsForFormat s/format s/direction
