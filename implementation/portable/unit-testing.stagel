@@ -1,9 +1,18 @@
 r/b/runTestsOnly b/v
     # Run tests without report. b/v=verbose: true=print test result lines; false=return value only
     # This runs each component's test suite
+    # General tests
     #runTestsBits b/v
     runTestsMath b/v
     #runTestsWasm b/v
+    # Format tests
+    runTestsFormatAscii
+    runTestsFormatAsciiSafeSubset
+    runTestsFormatDc
+    runTestsFormatHtml
+    runTestsFormatIntegerList
+    runTestsFormatSems
+    runTestsFormatUtf8
     # Did anything fail?
     if eq n/failedTests 0
         return true
