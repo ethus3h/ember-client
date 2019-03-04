@@ -247,7 +247,7 @@ async function updateNearestDcLabelInner(el) {
             currentDc=after[0];
         }
         if (currentDc !== undefined) {
-            currentDc=await dcaFromUtf8(currentDc);
+            currentDc=await dcaFromUtf8(new TextEncoder().encode(currentDc));
             currentDc=currentDc[0];
         }
     }
