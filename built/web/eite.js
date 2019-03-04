@@ -2023,6 +2023,7 @@ async function dcaFromUtf8(intArrayContent) {
         let intArrayTemp = [];
         intArrayTemp = await firstCharOfUtf8String(intArrayRemaining);
         intArrayRes = await push(intArrayRes, intArrayTemp);
+        console.log(intArrayTemp);
         intArrayRemaining = await anSubset(await count(intArrayTemp), -1);
     }
 
