@@ -456,10 +456,11 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayRes = [];
     let intArrayRemaining = [];
     intArrayRemaining = intArrayContent;
+    let intArrayTemp = [];
     while (await implNot(await implEq(0, await count(intArrayContent)))) {
-        let intTemp = 0;
-        intTemp = await firstCharOfUtf8String(intArrayRemaining);
-        intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intTemp));
+        intArrayTemp = [  ];
+        intArrayTemp = await push(intArrayTemp, await firstCharOfUtf8String(intArrayRemaining));
+        intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
         intArrayRemaining = await anSubset(await count(intArrayTemp), -1);
     }
 
