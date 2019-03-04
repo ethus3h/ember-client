@@ -108,7 +108,7 @@ r/b/arrEq ga/a ga/b
         return false
     new g/elem
     new n/i
-    while le n/i n/count
+    while lt n/i n/count
         set g/elem get ga/a n/i
         if ne g/elem get ga/b n/i
             return false

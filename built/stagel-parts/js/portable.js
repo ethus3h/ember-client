@@ -1446,7 +1446,7 @@ async function arrEq(genericArrayA, genericArrayB) {
     }
     let genericElem;
     let intI = 0;
-    while (await le(intI, intCount)) {
+    while (await implLt(intI, intCount)) {
         genericElem = await get(genericArrayA, intI);
         if (await ne(genericElem, await get(genericArrayB, intI))) {
 
