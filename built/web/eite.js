@@ -145,9 +145,6 @@ async function setupIfNeeded() {
     if (setupFinished) {
         return;
     }
-    if (typeof window !== 'undefined') {
-        await eiteHostCall('setupIfNeeded');
-    }
     await internalSetup();
 }
 
@@ -264,9 +261,6 @@ async function internalSetup() {
     }
 
     setupFinished = true;
-    if (typeof window !== 'undefined') {
-        window.setupFinished = true;
-    }
 }
 
 function getWindowOrSelf() {
