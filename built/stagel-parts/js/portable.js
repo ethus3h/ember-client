@@ -456,7 +456,7 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayRes = [];
     let intArrayRemaining = [];
     intArrayRemaining = intArrayContent;
-    while !(await implEq(0, await count(intArrayContent))) {
+    while (await implNot(await implEq(0, await count(intArrayContent)))) {
         let intArrayTemp = [];
         intArrayTemp = await firstCharOfUtf8String(intArrayRemaining);
         intArrayRes = await push(intArrayRes, intArrayTemp);
