@@ -45,6 +45,12 @@ r/an/dcaToAsciiSafeSubset an/dcIn
     new n/dcAtIndex
     new s/state
     set s/state 'normal'
+    new an/mapTemp
+    while lt n/inputIndex n/len
+        set an/mapTemp 
+        set an/temp setElement an/temp n/inputIndex dcToFormat 'ascii' get an/dcIn n/inputIndex
+        set n/inputIndex add n/inputIndex 1
+    set n/inputIndex 0
     new an/tempChar
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
