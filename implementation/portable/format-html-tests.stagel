@@ -1,3 +1,3 @@
 r/v/runTestsFormatHtml b/v
-    testing 'formatHtml'
+    testing b/v 'formatHtml'
     runTest b/v arrEq strToByteArray '<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>' } dcaToHtml ( 39 46 40 )

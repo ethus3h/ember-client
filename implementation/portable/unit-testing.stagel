@@ -20,8 +20,10 @@ r/b/runTestsOnly b/v
         return true
     return false
 
-r/v/testing s/testSuite
-    set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Started running test suite: ' s/testSuite
+r/v/testing b/v s/testSuite
+    if b/v
+        set an/testFrameBuffer append an/testFrameBuffer prepareStrForEcho cat 'Started running test suite: ' s/testSuite
+        renderDrawContents an/testFrameBuffer
 
 r/b/runTest b/v b/testReturn
     set n/totalTests add n/totalTests 1

@@ -1,4 +1,4 @@
 r/v/runTestsMath b/v
-    testing 'math'
+    testing b/v 'math'
     runTest b/v eq 4 add 2 2
     runTest b/v ne 4 add 2 3

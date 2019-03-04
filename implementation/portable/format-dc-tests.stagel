@@ -1,4 +1,4 @@
 r/v/runTestsFormatDc b/v
-    testing 'formatDc'
+    testing b/v 'formatDc'
     runTest b/v dcIsPrintable 21
     runTest b/v not dcIsPrintable 231

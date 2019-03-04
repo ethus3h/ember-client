@@ -1,5 +1,5 @@
 r/v/runTestsFormatSems b/v
-    testing 'formatSems'
+    testing b/v 'formatSems'
     runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 )
     runTest b/v arrEq ( 49 32 50 ) dcaToSems ( 1 2 )
     # TODO: Support comment preservation

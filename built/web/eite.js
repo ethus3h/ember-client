@@ -2005,6 +2005,7 @@ async function runTestsFormatAsciiSafeSubset(boolV) {
 
     await testing('formatAsciiSafeSubset');
     await runTest(boolV, await arrEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
+    STAGEL_DEBUG=2;
     await runTest(boolV, await arrEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
 
     await internalDebugStackExit();
