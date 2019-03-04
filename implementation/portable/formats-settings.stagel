@@ -20,6 +20,11 @@ r/as/getSettingsForFormat s/format s/direction
         set as/res settingStringToArray getExportSettings n/formatId
     return as/res
 
+r/as/getFormatSettingsArray
+    new as/res
+    set as/res implGetFormatSettingsArray
+    return as/res
+
 r/as/settingStringToArray s/settings
     new as/res
     set n/count len s/settings
