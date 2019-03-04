@@ -1,3 +1,14 @@
+r/b/runTestsOnly b/v
+    # Run tests without report. b/v=verbose: true=print test result lines; false=return value only
+    # This runs each component's test suite
+    #runTestsBits b/v
+    runTestsMath b/v
+    #runTestsWasm b/v
+    # Did anything fail?
+    if eq n/failedTests 0
+        return true
+    return false
+
 r/b/runTest b/v b/testReturn
     set n/totalTests add n/totalTests 1
     if b/testReturn
@@ -30,17 +41,6 @@ r/v/clearTestStats
     set n/totalTests 0
     set n/passedTests 0
     set n/failedTests 0
-
-r/b/runTestsOnly b/v
-    # Run tests without report. b/v=verbose: true=print test result lines; false=return value only
-    # This runs each component's test suite
-    #runTestsBits b/v
-    runTestsMath b/v
-    #runTestsWasm b/v
-    # Did anything fail?
-    if eq n/failedTests 0
-        return true
-    return false
 
 r/b/reportTests
     new s/passedWord
