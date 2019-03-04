@@ -3191,12 +3191,12 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsMath(boolV);
+    //await runTestsMath(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
-    await runTestsFormatDc(boolV);
+    //await runTestsFormatDc(boolV);
     /* Format tests */
-    await runTestsFormatAscii(boolV);
+    //await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
