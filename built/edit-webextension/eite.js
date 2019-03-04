@@ -1824,6 +1824,7 @@ async function isCharByte(genericIn) {
 async function runTestsFormatHtmlFragment(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtmlFragment:format-htmlFragment-tests'); await assertIsBool(boolV);
 
+    await testing('formatHtmlFragment');
     await runTest(boolV, await arrEq([ 53, 38, 108, 116, 59, 54 ], await dcaToHtmlFragment([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
@@ -1992,6 +1993,7 @@ async function crlf() {
 async function runTestsMath(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsMath:math-tests'); await assertIsBool(boolV);
 
+    await testing('math');
     await runTest(boolV, await implEq(4, await implAdd(2, 2)));
     await runTest(boolV, await ne(4, await implAdd(2, 3)));
 
@@ -2001,6 +2003,7 @@ async function runTestsMath(boolV) {
 async function runTestsFormatAsciiSafeSubset(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAsciiSafeSubset:format-asciiSafeSubset-tests'); await assertIsBool(boolV);
 
+    await testing('formatAsciiSafeSubset');
     await runTest(boolV, await arrEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
     await runTest(boolV, await arrEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
 
@@ -2052,6 +2055,7 @@ async function dcaFromUtf8(intArrayContent) {
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-ascii-tests'); await assertIsBool(boolV);
 
+    await testing('formatAscii');
     await runTest(boolV, await arrEq([ 0, 212, 120, 216, 221, 226, 231, 21, 26 ], await dcaFromAscii([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ])));
     await runTest(boolV, await arrEq([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ], await dcaToAscii([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 26 ])));
 
@@ -3206,6 +3210,14 @@ async function runTestsOnly(boolV) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function testing(strTestSuite) {
+    await internalDebugCollect('str TestSuite = ' + strTestSuite + '; '); await internalDebugStackEnter('testing:unit-testing'); await assertIsStr(strTestSuite);
+
+    intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Started running test suite: ', strTestSuite)));
+
+    await internalDebugStackExit();
+}
+
 async function runTest(boolV, boolTestReturn) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTest:unit-testing'); await assertIsBool(boolV); await assertIsBool(boolTestReturn); let boolReturn;
 
@@ -3313,6 +3325,7 @@ async function reportTests() {
 async function runTestsFormatSems(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatSems:format-sems-tests'); await assertIsBool(boolV);
 
+    await testing('formatSems');
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToSems([ 1, 2 ])));
     /* TODO: Support comment preservation */
@@ -3390,6 +3403,7 @@ async function dcaToIntegerList(intArrayDcIn) {
 async function runTestsWasm(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsWasm:wasm-tests'); await assertIsBool(boolV);
 
+    await testing('wasm');
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
     await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
 
@@ -3462,6 +3476,7 @@ async function isFalse(boolIn) {
 async function runTestsFormatDc(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatDc:format-dc-tests'); await assertIsBool(boolV);
 
+    await testing('formatDc');
     await runTest(boolV, await dcIsPrintable(21));
     await runTest(boolV, await implNot(await dcIsPrintable(231)));
 
@@ -3952,6 +3967,7 @@ async function dcaToHtml(intArrayDcIn) {
 async function runTestsFormatIntegerList(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatIntegerList:format-integerlist-tests'); await assertIsBool(boolV);
 
+    await testing('formatIntegerList');
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromIntegerList([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToIntegerList([ 1, 2 ])));
 
@@ -3961,6 +3977,7 @@ async function runTestsFormatIntegerList(boolV) {
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
 
+    await testing('formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
 
@@ -4235,6 +4252,7 @@ async function dcIsPrintable(intDc) {
 async function runTestsFormatHtml(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtml:format-html-tests'); await assertIsBool(boolV);
 
+    await testing('formatHtml');
     await runTest(boolV, await arrEq(await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>'), await dcaToHtml([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
@@ -4773,7 +4791,7 @@ registerSpeedup('ge', async function (intA, intB) {
 });
 
 registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
-    if ((genericArrayA.constructor.name !== 'Uint8Array') && (genericArrayA.constructor.name !== 'Array')) || ((genericArrayB.constructor.name !== 'Uint8Array') && (genericArrayB.constructor.name !== 'Array')) {
+    if (((genericArrayA.constructor.name !== 'Uint8Array') && (genericArrayA.constructor.name !== 'Array')) || ((genericArrayB.constructor.name !== 'Uint8Array') && (genericArrayB.constructor.name !== 'Array'))) {
         await assertIsGenericArray(genericArrayA);
         await assertIsGenericArray(genericArrayB);
     }
