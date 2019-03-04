@@ -101,11 +101,14 @@ r/b/isArray gi/in
     set b/res isGenericArray gi/in
     return b/res
 
-r/b/isIntArray ga/in
+r/b/arrEq ga/a ga/b
     new n/count
-    set n/count sub count ga/in } 1
+    set n/count count ga/a
+    if ne n/count count ga/b
+        return false
     new g/elem
-    while ge n/count 0
+    new n/i
+    while le n/i n/count
         set g/elem get ga/in n/count
         if not isInt g/elem
             return false
