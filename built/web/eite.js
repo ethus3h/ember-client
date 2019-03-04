@@ -875,8 +875,8 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
 */
 
 async function append(array1, array2) {
-    console.log(array1);
-    console.log(array2);
+    console.log('a1: ' + array1);
+    console.log('a2:' + array2);
     await assertIsArray(array1); await assertIsGenericItem(array2); let arrayReturn;
 
     if (array1.constructor.name !== 'Uint8Array' && array2.constructor.name !== 'Uint8Array') {
