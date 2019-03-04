@@ -104,7 +104,7 @@ registerSpeedup('ge', async function (intA, intB) {
 });
 
 registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
-    if ((genericArrayA.constructor.name !== 'Uint8Array') && (genericArrayA.constructor.name !== 'Array')) || ((genericArrayB.constructor.name !== 'Uint8Array') && (genericArrayB.constructor.name !== 'Array')) {
+    if (((genericArrayA.constructor.name !== 'Uint8Array') && (genericArrayA.constructor.name !== 'Array')) || ((genericArrayB.constructor.name !== 'Uint8Array') && (genericArrayB.constructor.name !== 'Array'))) {
         await assertIsGenericArray(genericArrayA);
         await assertIsGenericArray(genericArrayB);
     }
