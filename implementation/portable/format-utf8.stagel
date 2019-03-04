@@ -21,9 +21,10 @@ r/an/dcaFromUtf8 an/content
     new an/res
     new an/remaining
     set an/remaining an/content
+    new an/temp
     while not eq 0 count an/content
-        new n/temp
-        set n/temp firstCharOfUtf8String an/remaining
-        set an/res push an/res dcFromFormat 'unicode' n/temp
+        set an/temp ( )
+        set an/temp push an/temp firstCharOfUtf8String an/remaining
+        set an/res push an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset count an/temp } -1
     return an/res
