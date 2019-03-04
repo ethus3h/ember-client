@@ -111,4 +111,4 @@ r/v/importWarning n/index s/problem
     warn cat 'An error was encountered while importing at character ' cat strFrom n/index } cat ': ' s/problem
 
 r/v/exportWarningUnmappable n/index n/problemDc
-    exportWarning n/inputIndex cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
+    exportWarning n/index cat 'The character ' cat strFrom n/problemDc } ' could not be represented in the chosen export format.'

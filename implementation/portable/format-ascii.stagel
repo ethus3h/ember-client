@@ -27,9 +27,9 @@ r/an/dcaToAscii an/content
             if isAsciiByte get an/temp 0
                 set an/res append an/res an/temp
             else
-                exportWarning n/c cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
+                exportWarningUnmappable n/c n/dcAtIndex
         else
-            exportWarning n/c cat 'The character ' cat strFrom n/dcAtIndex } ' could not be represented in the chosen export format.'
+            exportWarningUnmappable n/c n/dcAtIndex
         set n/c add n/c 1
     assertIsByteArray an/res
     return an/res
