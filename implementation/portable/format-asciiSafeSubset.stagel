@@ -50,6 +50,8 @@ r/an/dcaToAsciiSafeSubset an/dcIn
         set n/dcAtIndex get an/dcIn n/inputIndex
         if eq n/dcAtIndex 121
             set s/state 'crlf'
+            set n/inputIndex add n/inputIndex 1
+            set n/dcAtIndex get an/dcIn n/inputIndex
         if eq s/state 'normal'
             set an/tempChar dcToFormat 'utf8' n/dcAtIndex
             if eq 0 count an/tempChar
