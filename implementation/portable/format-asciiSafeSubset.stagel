@@ -54,12 +54,13 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             set an/tempChar dcToFormat 'utf8' n/dcAtIndex
             if eq 0 count an/tempChar
                 exportWarningUnmappable n/inputIndex n/dcAtIndex
-            if dcIsNewline n/dcAtIndex
-                set an/out append an/out crlf
-            elif isAsciiSafeSubsetChar get an/tempChar 0
-                set an/out push an/out an/tempChar
             else
-                exportWarningUnmappable n/inputIndex n/dcAtIndex
+                if dcIsNewline n/dcAtIndex
+                    set an/out append an/out crlf
+                elif isAsciiSafeSubsetChar get an/tempChar 0
+                    set an/out push an/out an/tempChar
+                else
+                    exportWarningUnmappable n/inputIndex n/dcAtIndex
         elif eq s/state 'crlf'
             set s/state 'normal'
             if eq n/dcAtIndex 120
