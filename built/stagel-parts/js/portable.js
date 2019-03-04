@@ -500,7 +500,12 @@ async function getSettingForFormat(strFormat, strDirection, strSettingKey) {
     let strArrayTemp = [];
     strArrayTemp = await getSettingsForFormat(strFormat, strDirection);
     let strRes = '';
-    strRes = await getNext(strArrayTemp, await indexOf(strArrayTemp, strSettingKey));
+    if (await contains(strArrayTemp, strSettingKey)) {
+        strRes = await getNext(strArrayTemp, await indexOf(strArrayTemp, strSettingKey));
+    }
+    else {
+        strRes = '';
+    }
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
