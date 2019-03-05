@@ -98,5 +98,5 @@ async function setImportSettings(formatId, strNewSettings) {
 }
 
 async function setExportSettings(formatId, strNewSettings) {
-    await assertIsArray(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }

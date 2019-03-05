@@ -1306,7 +1306,7 @@ async function setImportSettings(formatId, strNewSettings) {
 }
 
 async function setExportSettings(formatId, strNewSettings) {
-    await assertIsArray(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
 
 // Based on https://web.archive.org/web/20190305073920/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/wtf-8.js
