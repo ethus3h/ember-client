@@ -14,7 +14,14 @@ window.onload = function() {
         document.getElementById('searchDcs').addEventListener('input', function(){
             handleSearchResultUpdate();
         });
-        document.getElementById('searchDcs').addEventListener('keyup', );
+        document.getElementById('searchDcs').addEventListener('keyup', function(ev){
+            if (ev.key === "Escape") {
+                clearDcFilters();
+            }
+        });
+        document.getElementById('dcsShowAllButton').addEventListener('click', function(){
+            clearDcFilters();
+        });
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
@@ -92,10 +99,8 @@ window.onload = function() {
         }, 500);
     })();
 };
-function clearDcFilters(ev){
-    if (ev.key === "Escape") {
-        document.getElementById('searchDcs').value="";
-    }
+function clearDcFilters(){
+    document.getElementById('searchDcs').value="";
     handleSearchResultUpdate();
 }
 function editInts() {
