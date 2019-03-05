@@ -80,9 +80,9 @@ window.onload = function() {
             window.setTimeout(async function(){
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
-                window.editFormatValue=editFormat;
                 let inputarea=document.getElementById('inputarea');
                 inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()])]);
+                window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
         };
