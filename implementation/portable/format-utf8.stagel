@@ -10,19 +10,21 @@ r/an/dcaToUtf8 an/content
     new an/unmappables
     new as/variantSettings
     set as/variantSettings utf8VariantSettings 'out'
+    new b/dcBasenbEnabled
+    set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     while lt n/c n/l
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
         if eq 0 count an/temp
-            if contains as/variantSettings 'dcBasenb'
+            if dcBasenbEnabled
                 set an/unmappables push an/unmappables n/dcAtIndex
             else
                 exportWarningUnmappable n/c n/dcAtIndex
         else
-            if contains as/variantSettings '
-            if gt 0 count an/unmappables
-                # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
-                
+            if dcBasenbEnabled
+                if gt 0 count an/unmappables
+                    # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
+                    
         set an/res append an/res an/temp
         set n/c add n/c 1
     assertIsByteArray an/res
