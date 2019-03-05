@@ -7,5 +7,5 @@ r/an/pack32 n/in
 
 r/n/unpack32 an/in
     new n/res
-    set n/res intArrayUnpackWtf8 
+    set n/res intUnpackWtf8 an/in
     return n/res
