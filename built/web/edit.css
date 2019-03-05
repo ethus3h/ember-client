@@ -131,9 +131,6 @@ body {
     height: 100%;
     width: 100%;
 }
-#currentDcLabel {
-    width: 100%;
-}
 #currentDcLabelGroup {
     border-left: 0.5rem solid rgba(255,255,255,0.9);
     min-height: 1.5rem;
@@ -147,6 +144,9 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: row;
+}
+#currentDcLabel {
+    width: 100%;
 }
 #filepicker {
     display: none;
