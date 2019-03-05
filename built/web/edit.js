@@ -25,6 +25,11 @@ window.onload = function() {
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
         inputarea=document.getElementById('inputarea');
         inputarea.disabled=false;
+        document.getElementById('editFormat').onchange=async function(){
+            inputarea.disabled=true;
+            inputarea.value=
+            inputarea.disabled=false;
+        };
         document.addEventListener('input', function() {
             updateNearestDcLabel(inputarea,false);
         }, false);
