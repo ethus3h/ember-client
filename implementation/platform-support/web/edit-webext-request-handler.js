@@ -1,6 +1,6 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-window.addEventListener('message', function(message) {
+let messageEventHandler = function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
         if (element !== null) {
@@ -61,17 +61,20 @@ window.addEventListener('message', function(message) {
         }
     };
 
-    window.DoneEditingHandler = async function() {
+    let DoneEditingHandler = async function() {
         startSpinner();
         window.setTimeout(async function() {
             let utf8decoder = new TextDecoder();
             window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(new Uint8Array(await eiteCall('importAndExport', ['integerList', 'ascii', await getInputDoc()])))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
         }, 500);
     }
+    window.DoneEditingHandler = DoneEditingHandler;
 
     onRemove(document.getElementById('overlay'), function() {
         eiteReadyCallback(message);
     });
-});
+};
+document.addEventListener('message', messageEventHandler);
+window.addEventListener('message', messageEventHandler);
 
 // @license-end
