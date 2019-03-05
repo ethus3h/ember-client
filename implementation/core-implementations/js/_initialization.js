@@ -23,6 +23,8 @@ let intTotalTests = 0;
 let intArrayFrameBuffer = []; // an
 let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
+let strArrayImportDeferredSettingsStack = []; // as
+let strArrayExportDeferredSettingsStack = []; // as
 
 // Global environment
 let haveDom = false;

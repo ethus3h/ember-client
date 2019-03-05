@@ -30,6 +30,24 @@ r/s/getExportSettings n/formatId
     set s/res get getExportSettingsArr n/formatId
     return s/res
 
+r/v/pushImportSettings n/formatId s/newSettingString
+    # Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack).
+    set as/importDeferredSettingsStack push as/importDeferredSettingsStack getImportSettings n/formatId
+    setImportSettings n/formatId s/newSettingString
+
+r/v/pushExportSettings n/formatId s/newSettingString
+    # Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack).
+    set as/exportDeferredSettingsStack push as/exportDeferredSettingsStack getExportSettings n/formatId
+    setExportSettings n/formatId s/newSettingString
+
+r/v/popImportSettings n/formatId
+    setImportSettings n/formatId get as/importDeferredSettingsStack -1
+    set as/importDeferredSettingsStack asSubset as/importDeferredSettingsStack 0 -2
+
+r/v/popExportSettings n/formatId
+    setExportSettings n/formatId get as/exportDeferredSettingsStack -1
+    set as/exportDeferredSettingsStack asSubset as/exportDeferredSettingsStack 0 -2
+
 r/as/settingStringToArray s/settings
     new as/res
     set n/count len s/settings
