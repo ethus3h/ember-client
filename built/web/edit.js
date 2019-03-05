@@ -29,29 +29,31 @@ window.onload = function() {
         // Attach click event listeners to elements
         document.getElementById('searchDcs').addEventListener('input', async function(){
             let searchQuery=document.getElementById('searchDcs').value;
+            let re=new RegExp('.*');
             if (searchQuery.length !== 0) {
-                let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
-                Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
-                    e.remove();
-                });
-                for (let i=0; i<datasetLength; i++) {
-                    if (dcNames[i].match(new RegExp(searchQuery))) {
-                        let elem=document.createElement('button');
-                        elem.onclick=async function() {
-                            if (editInts()) {
-                                editAreaInsert(i+'');
-                            }
-                            else {
-                                // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
-                                let temp;
-                                temp=await dcaToUtf8([i]);
-                                editAreaInsert(temp);
-                            }
-                        };
-                        elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
-                        elem.className='dcInsertButton';
-                        document.getElementById('DcSelection').appendChild(elem);
-                    }
+                re=new RegExp(searchQuery);
+            }
+            let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+            Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
+                e.remove();
+            });
+            for (let i=0; i<datasetLength; i++) {
+                if (dcNames[i].match(re)) {
+                    let elem=document.createElement('button');
+                    elem.onclick=async function() {
+                        if (editInts()) {
+                            editAreaInsert(i+'');
+                        }
+                        else {
+                            // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
+                            let temp;
+                            temp=await dcaToUtf8([i]);
+                            editAreaInsert(temp);
+                        }
+                    };
+                    elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
+                    elem.className='dcInsertButton';
+                    document.getElementById('DcSelection').appendChild(elem);
                 }
             }
         });
