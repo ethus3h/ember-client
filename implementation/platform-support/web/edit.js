@@ -83,7 +83,7 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()])]);
+                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
@@ -105,8 +105,11 @@ function clearDcFilters() {
     handleSearchResultUpdate();
 }
 
-function editInts() {
-    return 'integerList' === document.getElementById('editFormat').value;
+function editInts(overrideEditFormat) {
+    if (overrideEditFormat === undefined) {
+        overrideEditFormat=document.getElementById('editFormat').value;
+    }
+    return 'integerList' === overrideEditFormat;
 }
 
 async function handleSearchResultUpdate() {
@@ -336,9 +339,9 @@ function typeInTextareaSpaced(el, newText) {
     el.focus();
 }
 
-async function getInputDoc() {
+async function getInputDoc(overrideEditFormat) {
     let res;
-    if(editInts()) {
+    if(editInts(overrideEditFormat)) {
         res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     }
     else {
