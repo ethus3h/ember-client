@@ -2375,6 +2375,9 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
     intInputIndex = 0;
     let intArrayTempChar = [];
     while (await implLt(intInputIndex, intLen)) {
+        if (intInputIndex === 1) {
+            STAGEL_DEBUG = 2;
+        }
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
         if (await implEq(intDcAtIndex, 121)) {
             strState = 'crlf';
@@ -2410,6 +2413,9 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
             }
         }
         intInputIndex = await implAdd(intInputIndex, 1);
+        if (intInputIndex === 3) {
+            STAGEL_DEBUG = 0;
+        }
     }
     await assertIsByteArray(intArrayOut);
 
