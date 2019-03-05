@@ -64,10 +64,9 @@ r/an/dcaFromUtf8 an/content
     set b/inDcBasenbSection false
     new b/skipNextChar
     set b/skipNextChar false
-    new an/decodedUnmappables
-    new n/decodedUnmappablesCount
-    new n/decodedUnmappablesCounter
     new an/collectedDcBasenbChars
+    new n/collectedDcBasenbCharsCount
+    new n/collectedDcBasenbCharsCounter
     while not eq 0 count an/remaining
         set an/temp ( )
         set an/latestChar firstCharOfUtf8String an/remaining
