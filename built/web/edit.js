@@ -31,7 +31,7 @@ window.onload = function() {
             let searchQuery=document.getElementById('searchDcs').value;
             let re=new RegExp('.*');
             if (searchQuery.length !== 0) {
-                re=new RegExp('/'+searchQuery+'/i');
+                re=new RegExp(searchQuery, 'i');
             }
             let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
             Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
