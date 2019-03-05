@@ -20,10 +20,9 @@
     "default_popup": "framehost.html"
   },
 
-  "content_scripts": [
-  {
-    "matches": ["*://*.mozilla.org/*"],
-    "js": ["borderify.js"]
+  "content_scripts": [ {
+    "matches": ["*://*/*"],
+    "js": ["render-inline-dc-docs.js"]
   } ],
 
   "web_accessible_resources": [
