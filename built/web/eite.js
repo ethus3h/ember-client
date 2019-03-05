@@ -907,7 +907,7 @@ async function push(array1, array2) {
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
-    if(index < 0) {
+    if (index < 0) {
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
     }
@@ -4205,7 +4205,6 @@ async function dcToFormat(strOutFormat, intDc) {
     }
     else if (await implEq(strOutFormat, 'html')) {
         strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
-        console.log('strRes='+strRes);
         if (await strNonempty(strRes)) {
             intArrayRes = await strToByteArray(strRes);
         }

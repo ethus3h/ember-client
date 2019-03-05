@@ -492,7 +492,7 @@ async function dcaToDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
@@ -504,7 +504,7 @@ async function dcaFromDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaFromUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
@@ -560,7 +560,7 @@ async function getImportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getImportSettingsArr()))) {
-        strRes = await get(await getImportSettingsArr(intFormatId));
+        strRes = await get(await getImportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';
@@ -574,7 +574,7 @@ async function getExportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getExportSettingsArr()))) {
-        strRes = await get(await getExportSettingsArr(intFormatId));
+        strRes = await get(await getExportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';

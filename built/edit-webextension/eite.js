@@ -907,7 +907,7 @@ async function push(array1, array2) {
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
-    if(index < 0) {
+    if (index < 0) {
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
     }
@@ -1226,7 +1226,8 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     // Add 1 to account for header row
     rowNum = rowNum + 1;
 
-    if (rowNum >= dcData[dataset].length) {
+    // and another 1 to account for last row
+    if (rowNum + 1 >= dcData[dataset].length) {
         strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
     else {
@@ -2061,7 +2062,7 @@ async function dcaToDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
@@ -2073,7 +2074,7 @@ async function dcaFromDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaFromUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
@@ -2129,7 +2130,7 @@ async function getImportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getImportSettingsArr()))) {
-        strRes = await get(await getImportSettingsArr(intFormatId));
+        strRes = await get(await getImportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';
@@ -2143,7 +2144,7 @@ async function getExportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getExportSettingsArr()))) {
-        strRes = await get(await getExportSettingsArr(intFormatId));
+        strRes = await get(await getExportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';
