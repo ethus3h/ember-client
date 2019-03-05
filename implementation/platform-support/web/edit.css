@@ -212,7 +212,7 @@ button {
 .importDialog > button:last-of-type {
     border-width: 0 0 0 0;
 }
-#editorButtons > button:not(#ImportDocument)::before {
+#editorButtons button:not(#ImportDocument)::before {
     content: ' ';
     display: block;
     height: 100%;
