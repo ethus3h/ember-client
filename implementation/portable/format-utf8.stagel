@@ -17,14 +17,16 @@ r/an/dcaToUtf8 an/content
     set as/variantSettings utf8VariantSettings 'out'
     new b/dcBasenbEnabled
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
-    while lt n/c n/l
-        set n/dcAtIndex get an/content n/c
-        set an/temp dcToFormat 'utf8' n/dcAtIndex
+    while le n/c n/l
+        if lt n/c n/l
+            set n/dcAtIndex get an/content n/c
+            set an/temp dcToFormat 'utf8' n/dcAtIndex
         if eq 0 count an/temp
-            if b/dcBasenbEnabled
-                set an/unmappables push an/unmappables n/dcAtIndex
-            else
-                exportWarningUnmappable n/c n/dcAtIndex
+            if lt n/c n/l
+                if b/dcBasenbEnabled
+                    set an/unmappables push an/unmappables n/dcAtIndex
+                else
+                    exportWarningUnmappable n/c n/dcAtIndex
         else
             if b/dcBasenbEnabled
                 set n/unmappablesCount count an/unmappables
@@ -41,7 +43,8 @@ r/an/dcaToUtf8 an/content
                     set an/res append an/res bytearrayToBase17bUtf8 an/unmappablesIntermediatePacked
                     set an/unmappables ( )
                     set an/unmappablesIntermediatePacked ( )
-        set an/res append an/res an/temp
+        if lt n/c n/l
+            set an/res append an/res an/temp
         set n/c add n/c 1
     if and b/dcBasenbEnabled b/foundAnyUnmappables
         set an/res append an/res getArmoredUtf8EmbeddedEndUuid
