@@ -6,6 +6,7 @@ r/b/runTestsOnly b/v
     runTestsMath b/v
     #runTestsWasm b/v
     # Core tests
+    runTestsDcData b/v
     runTestsFormatDc b/v
     # Format tests
     runTestsFormatAscii b/v
