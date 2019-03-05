@@ -54,8 +54,8 @@ r/an/dcaFromUtf8 an/content
     set an/remaining an/content
     new an/temp
     new an/latestChar
-    new n/dcBasenbStartUuidMonitorState
-    set n/dcBasenbStartUuidMonitorState 0
+    new n/dcBasenbUuidMonitorState
+    set n/dcBasenbUuidMonitorState 0
     new as/variantSettings
     set as/variantSettings utf8VariantSettings 'in'
     new b/dcBasenbEnabled
@@ -65,30 +65,30 @@ r/an/dcaFromUtf8 an/content
         set an/latestChar firstCharOfUtf8String an/remaining
         if b/dcBasenbEnabled
             # 8 characters for uuid.
-            if eq dcBasenbStartUuidMonitorState 0
+            if eq dcBasenbUuidMonitorState 0
                 if arrEq an/latestChar ( 244 141 129 157 )
-                    set dcBasenbStartUuidMonitorState 1
-            elif eq dcBasenbStartUuidMonitorState 1
+                    set dcBasenbUuidMonitorState 1
+            elif eq dcBasenbUuidMonitorState 1
                 if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 2
-            elif eq dcBasenbStartUuidMonitorState 2
+                    set dcBasenbUuidMonitorState 2
+            elif eq dcBasenbUuidMonitorState 2
                 if arrEq an/latestChar ( 243 188 183 162 )
-                    set dcBasenbStartUuidMonitorState 3
-            elif eq dcBasenbStartUuidMonitorState 3
+                    set dcBasenbUuidMonitorState 3
+            elif eq dcBasenbUuidMonitorState 3
                 if arrEq an/latestChar ( 243 186 128 138 )
-                    set dcBasenbStartUuidMonitorState 4
-            elif eq dcBasenbStartUuidMonitorState 4
+                    set dcBasenbUuidMonitorState 4
+            elif eq dcBasenbUuidMonitorState 4
                 if arrEq an/latestChar ( 243 184 165 142 )
-                    set dcBasenbStartUuidMonitorState 5
-            elif eq dcBasenbStartUuidMonitorState 5
+                    set dcBasenbUuidMonitorState 5
+            elif eq dcBasenbUuidMonitorState 5
                 if arrEq an/latestChar ( 244 136 186 141 )
-                    set dcBasenbStartUuidMonitorState 6
-            elif eq dcBasenbStartUuidMonitorState 6
+                    set dcBasenbUuidMonitorState 6
+            elif eq dcBasenbUuidMonitorState 6
                 if arrEq an/latestChar ( 243 178 139 160 )
-                    set dcBasenbStartUuidMonitorState 7
-            elif eq dcBasenbStartUuidMonitorState 7
+                    set dcBasenbUuidMonitorState 7
+            elif eq dcBasenbUuidMonitorState 7
                 if arrEq an/latestChar ( 244 143 186 144 )
-                    set dcBasenbStartUuidMonitorState 0
+                    set dcBasenbUuidMonitorState 0
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
