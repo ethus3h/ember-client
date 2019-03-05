@@ -42,7 +42,7 @@ window.addEventListener('message', function(message) {
                 else {
                     await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
                     tempInterpreted=await eiteCall('importAndExport', ['utf8', 'integerList', new Uint8Array(utf8encoder.encode(contents))]);
-                    await popImportSettings();
+                    await popImportSettings(await getFormatId('utf8'));
                 }
                 document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [tempInterpreted]);
                 removeSpinner();

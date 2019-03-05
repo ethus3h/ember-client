@@ -1,5 +1,5 @@
 (async function() {
-    // https://web.archive.org/web/20190305052833/https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
+    //let elems=document.getElementsByTagName('*');
     function textNodesUnder(el) {
         var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
         while(n=walk.nextNode()) a.push(n);

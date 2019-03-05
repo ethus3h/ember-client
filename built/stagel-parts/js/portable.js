@@ -487,6 +487,30 @@ async function dcaFromUtf8(intArrayContent) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function dcaToDcbnbUtf8(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToDcbnbUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* convenience wrapper */
+    let intArrayRes = [];
+    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    intArrayRes = await dcaToUtf8(intArrayContent);
+    await popImportSettings(await getFormatId('utf8'));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaFromDcbnbUtf8(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromDcbnbUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* convenience wrapper */
+    let intArrayRes = [];
+    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    intArrayRes = await dcaFromUtf8(intArrayContent);
+    await popImportSettings(await getFormatId('utf8'));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-ascii-tests'); await assertIsBool(boolV);
 
