@@ -131,6 +131,10 @@ function editInts() {
     return 'integerList' === document.getElementById('editFormat').value;
 }
 
+handleSearchResultUpdate() {
+    
+}
+
 function handleDcEditingKeystroke(event) {
     if (editInts()) {
         if (globalCachedInputState.length === 1) {
