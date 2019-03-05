@@ -27,7 +27,7 @@ window.onload = function() {
         }
         //console.log(dcNames);
         // Attach click event listeners to elements
-        document.getElementById('searchDcs').oninput=async function(){
+        document.getElementById('searchDcs').addEventListener('input', async function(){
             let searchQuery=document.getElementById('searchDcs').value;
             if (searchQuery.length !== 0) {
                 let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
@@ -54,7 +54,7 @@ window.onload = function() {
                     }
                 }
             }
-        };
+        });
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
