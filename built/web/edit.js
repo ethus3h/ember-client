@@ -3,13 +3,13 @@
 globalCachedInputState="";
 window.onload = function() {
     (async function(){
-        let dcNames=[];
+        let window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
-        dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
+        window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         await handleSearchResultUpdate();
-        //console.log(dcNames);
+        //console.log(window.dcNames);
         // Attach event listeners to elements
         document.getElementById('searchDcs').addEventListener('input', function(){
             handleSearchResultUpdate();
@@ -101,7 +101,7 @@ async function handleSearchResultUpdate() {
         e.remove();
     });
     for (let i=0; i<datasetLength; i++) {
-        if (dcNames[i].match(re)) {
+        if (window.dcNames[i].match(re)) {
             let elem=document.createElement('button');
             elem.onclick=async function() {
                 if (editInts()) {
@@ -114,7 +114,7 @@ async function handleSearchResultUpdate() {
                     editAreaInsert(temp);
                 }
             };
-            elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
+            elem.innerHTML=window.dcNames[i]+' <small>('+i+')</small>';
             elem.className='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
         }
