@@ -99,7 +99,7 @@ window.onload = function() {
         }, 500);
     })();
 };
-function clearDcFilters(){
+function clearDcFilters() {
     document.getElementById('searchDcs').value="";
     handleSearchResultUpdate();
 }
