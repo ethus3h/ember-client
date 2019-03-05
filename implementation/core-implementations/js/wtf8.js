@@ -24,28 +24,28 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // Encoding
-function intArrayPackWtf8(integerValue) {
-    let createByte = function(integerValue, shift) {
-        return String.fromCharCode(((integerValue >> shift) & 0x3F) | 0x80);
+function intArrayPackWtf8(intValue) {
+    let createByte = function(intValue, shift) {
+        return String.fromCharCode(((intValue >> shift) & 0x3F) | 0x80);
     }
 
-    if ((integerValue & 0xFFFFFF80) == 0) { // 1-byte sequence
-        return String.fromCharCode(integerValue);
+    if ((intValue & 0xFFFFFF80) == 0) { // 1-byte sequence
+        return String.fromCharCode(intValue);
     }
     let symbol = '';
-    if ((integerValue & 0xFFFFF800) == 0) { // 2-byte sequence
-        symbol = String.fromCharCode(((integerValue >> 6) & 0x1F) | 0xC0);
+    if ((intValue & 0xFFFFF800) == 0) { // 2-byte sequence
+        symbol = String.fromCharCode(((intValue >> 6) & 0x1F) | 0xC0);
     }
-    else if ((integerValue & 0xFFFF0000) == 0) { // 3-byte sequence
-        symbol = String.fromCharCode(((integerValue >> 12) & 0x0F) | 0xE0);
-        symbol += createByte(integerValue, 6);
+    else if ((intValue & 0xFFFF0000) == 0) { // 3-byte sequence
+        symbol = String.fromCharCode(((intValue >> 12) & 0x0F) | 0xE0);
+        symbol += createByte(intValue, 6);
     }
-    else if ((integerValue & 0xFFE00000) == 0) { // 4-byte sequence
-        symbol = String.fromCharCode(((integerValue >> 18) & 0x07) | 0xF0);
-        symbol += createByte(integerValue, 12);
-        symbol += createByte(integerValue, 6);
+    else if ((intValue & 0xFFE00000) == 0) { // 4-byte sequence
+        symbol = String.fromCharCode(((intValue >> 18) & 0x07) | 0xF0);
+        symbol += createByte(intValue, 12);
+        symbol += createByte(intValue, 6);
     }
-    symbol += String.fromCharCode((integerValue & 0x3F) | 0x80);
+    symbol += String.fromCharCode((intValue & 0x3F) | 0x80);
     let res = [];
     let len = symbol.length;
     let i = 0;
@@ -80,7 +80,7 @@ function intUnpackWtf8(byteArrayInput) {
     let byte2;
     let byte3;
     let byte4;
-    let integerValue;
+    let intValue;
 
     if (byteIndex > byteCount) {
         throw Error('Invalid byte index');
@@ -102,9 +102,9 @@ function intUnpackWtf8(byteArrayInput) {
     // 2-byte sequence
     if ((byte1 & 0xE0) == 0xC0) {
         let byte2 = readContinuationByte();
-        integerValue = ((byte1 & 0x1F) << 6) | byte2;
-        if (integerValue >= 0x80) {
-            return integerValue;
+        intValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (intValue >= 0x80) {
+            return intValue;
         } else {
             throw Error('Invalid continuation byte');
         }
@@ -114,9 +114,9 @@ function intUnpackWtf8(byteArrayInput) {
     if ((byte1 & 0xF0) == 0xE0) {
         byte2 = readContinuationByte();
         byte3 = readContinuationByte();
-        integerValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
-        if (integerValue >= 0x0800) {
-            return integerValue;
+        intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (intValue >= 0x0800) {
+            return intValue;
         } else {
             throw Error('Invalid continuation byte');
         }
@@ -127,10 +127,10 @@ function intUnpackWtf8(byteArrayInput) {
         byte2 = readContinuationByte();
         byte3 = readContinuationByte();
         byte4 = readContinuationByte();
-        integerValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+        intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
             (byte3 << 0x06) | byte4;
-        if (integerValue >= 0x010000 && integerValue <= 0x10FFFF) {
-            return integerValue;
+        if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
+            return intValue;
         }
     }
 
