@@ -2242,7 +2242,7 @@ async function dcaToUtf8(intArrayContent) {
 
 async function dcaFromUtf8(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-    function dcBasenbUuidMonitorState(int){
+    async function dcBasenbUuidMonitorState(int){
         let boolRes;
         boolRes=await implEq(int, intDcBasenbUuidMonitorState);
         return boolRes;
