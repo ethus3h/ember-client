@@ -101,6 +101,9 @@ body {
     display: flex;
     flex-direction: row;
 }
+.impExpButtonColumn {
+    flex-direction: column;
+}
 .formatOptions > div {
     padding: 0.2rem;
     vertical-align: center;
