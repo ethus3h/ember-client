@@ -2180,7 +2180,7 @@ async function runTestsFormatAsciiSafeSubset(boolV) {
 
 async function dcaToUtf8(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-
+STAGEL_DEBUG=2;
     await assertIsDcArray(intArrayContent);
     let intArrayRes = [];
     let intL = 0;
@@ -2238,6 +2238,7 @@ async function dcaToUtf8(intArrayContent) {
         intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedEndUuid());
     }
     await assertIsByteArray(intArrayRes);
+STAGEL_DEBUG=0;
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
