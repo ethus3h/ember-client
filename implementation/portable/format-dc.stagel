@@ -21,7 +21,7 @@ r/n/maximumKnownDc
 
 r/b/dcIsNewline n/dc
     assertIsDc n/dc
-    if eq 'b' dcGetBidiClass n/dc
+    if eq 'B' dcGetBidiClass n/dc
         return true
     return false
 
