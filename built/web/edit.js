@@ -28,6 +28,7 @@ window.onload = function() {
         //console.log(dcNames);
         // Attach click event listeners to elements
         document.getElementById('searchDcs').addEventListener('input', async function(ev){
+            console.log(ev);
             if (ev.key === "Escape") {
                 document.getElementById('searchDcs').value="";
             }
