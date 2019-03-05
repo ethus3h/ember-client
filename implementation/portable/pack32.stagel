@@ -2,8 +2,10 @@
 
 r/an/pack32 n/in
     new an/res
+    set an/res intArrayPackWtf8 n/in
     return an/res
 
 r/n/unpack32 an/in
     new n/res
+    set n/res intArrayUnpackWtf8 
     return n/res
