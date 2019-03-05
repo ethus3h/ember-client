@@ -129,10 +129,9 @@ async function handleSearchResultUpdate() {
                     editAreaInsert(i+'');
                 }
                 else {
-                    // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
+                    // Calling editAreaInsert(await dcaToDcbnbUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
                     let temp;
-                    temp=await dcaToUtf8([i]);
-                    console.log(temp);
+                    temp=await dcaToDcbnbUtf8([i]);
                     editAreaInsert(new TextDecoder().decode(new Uint8Array(temp)));
                 }
             };
@@ -295,7 +294,7 @@ async function updateNearestDcLabelInner(el) {
             currentDc=after[0];
         }
         if (currentDc !== undefined) {
-            currentDc=await dcaFromUtf8(new TextEncoder().encode(currentDc));
+            currentDc=await dcaFromDcbnbUtf8(new TextEncoder().encode(currentDc));
             currentDc=currentDc[0];
         }
     }
