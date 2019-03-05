@@ -83,12 +83,7 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-                console.log('was: '+inputarea.value);
-                console.log('getInputDoc:'+await getInputDoc(oldEditFormat));
-                console.log('inportAndexport:'+await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)]));
-                console.log('strFromByteArray:'+await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]));
                 inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]);
-                console.log('now is:'+inputarea.value);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
@@ -352,7 +347,7 @@ async function getInputDoc(overrideEditFormat) {
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-        res = new TextDecoder().decode(await eiteCall('importDocument', ['utf8', res]));
+        res = new TextDecoder().decode(new Uint8Array(await eiteCall('importDocument', ['utf8', res])));
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
     return res;
