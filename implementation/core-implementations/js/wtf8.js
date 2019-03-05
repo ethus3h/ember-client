@@ -57,13 +57,15 @@ function encodeCodePoint(integerValue) {
 }
 
 //Decoding
-function decodeSymbol() {
+function decodeSymbol(byteArrayInput) {
+    let byteIndex = 0;
+    let byteCount = byteArrayInput.length;
     let readContinuationByte = function() {
         if (byteIndex >= byteCount) {
             throw Error('Invalid byte index');
         }
 
-        let continuationByte = byteArray[byteIndex] & 0xFF;
+        let continuationByte = byteArrayInput[byteIndex] & 0xFF;
         byteIndex++;
 
         if ((continuationByte & 0xC0) == 0x80) {
@@ -89,7 +91,7 @@ function decodeSymbol() {
     }
 
     // Read the first byte.
-    byte1 = byteArray[byteIndex] & 0xFF;
+    byte1 = byteArrayInput[byteIndex] & 0xFF;
     byteIndex++;
 
     // 1-byte sequence (no continuation bytes)
