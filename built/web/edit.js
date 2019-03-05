@@ -29,6 +29,7 @@ window.onload = function() {
         // Attach click event listeners to elements
         document.getElementById('searchDcs').addEventListener('input', async function(){
             let searchQuery=document.getElementById('searchDcs').value;
+            console.log(searchQuery);
             if (searchQuery.length !== 0) {
                 let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
                 Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
