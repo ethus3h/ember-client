@@ -35,6 +35,7 @@ window.onload = function() {
                 Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
                     e.remove();
                 });
+                console.log(document.getElementById('DcSelection').innerHTML);
                 for (let i=0; i<datasetLength; i++) {
                     if (dcNames[i].match(new RegExp(searchQuery))) {
                         let elem=document.createElement('button');
