@@ -83,7 +83,7 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]);
+                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)])]);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
