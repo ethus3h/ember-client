@@ -2508,28 +2508,28 @@ async function dcaFromFormat(strInFormat, intArrayContentBytes) {
 
     await assertIsSupportedInputFormat(strInFormat);
     await assertIsByteArray(intArrayContentBytes);
-    let intArrayRet = [];
+    let intArrayRes = [];
     if (await implEq(strInFormat, 'sems')) {
-        intArrayRet = await dcaFromSems(intArrayContentBytes);
+        intArrayRes = await dcaFromSems(intArrayContentBytes);
     }
     else if (await implEq(strInFormat, 'integerList')) {
-        intArrayRet = await dcaFromIntegerList(intArrayContentBytes);
+        intArrayRes = await dcaFromIntegerList(intArrayContentBytes);
     }
     else if (await implEq(strInFormat, 'ascii')) {
-        intArrayRet = await dcaFromAscii(intArrayContentBytes);
+        intArrayRes = await dcaFromAscii(intArrayContentBytes);
     }
     else if (await implEq(strInFormat, 'asciiSafeSubset')) {
-        intArrayRet = await dcaFromAsciiSafeSubset(intArrayContentBytes);
+        intArrayRes = await dcaFromAsciiSafeSubset(intArrayContentBytes);
     }
     else if (await implEq(strInFormat, 'utf8')) {
-        intArrayRet = await dcaFromUtf8(intArrayContentBytes);
+        intArrayRes = await dcaFromUtf8(intArrayContentBytes);
     }
     else {
         await implError(await implCat('Unimplemented document parsing format: ', strInFormat));
     }
-    await assertIsDcArray(intArrayRet);
+    await assertIsDcArray(intArrayRes);
 
-    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
@@ -2548,7 +2548,7 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
         intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
     }
     else if (await implEq(strOutFormat, 'utf8')) {
-        intArrayRet = await dcaFromUtf8(intArrayContentBytes);
+        intArrayRes = await dcaToUtf8(intArrayDcArrayIn);
     }
     else if (await implEq(strOutFormat, 'html')) {
         intArrayRes = await dcaToHtml(intArrayDcArrayIn);
@@ -2635,7 +2635,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
 
     /* Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
     await assertIsTrue(await isSupportedInternalFormat(strInFormat));
-    let intArrayRet = [];
+    let intArrayRes = [];
     let intDc = 0;
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
         let intC = 0;
@@ -2649,17 +2649,17 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
             await implDie('FIXME: save unmapped unicode chars');
 
-            intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+            intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
     }
-    intArrayRet = await setElement(intArrayRet, 0, intDc);
-    await assertIsDcArray(intArrayRet);
+    intArrayRes = await setElement(intArrayRes, 0, intDc);
+    await assertIsDcArray(intArrayRes);
 
-    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function importWarning(intIndex, strProblem) {
