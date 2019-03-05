@@ -24,29 +24,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // Encoding
-function encodeCodePoint(codePoint) {
-    let createByte = function(codePoint, shift) {
-        return String.fromCharCode(((codePoint >> shift) & 0x3F) | 0x80);
+function encodeCodePoint(integerValue) {
+    let createByte = function(integerValue, shift) {
+        return String.fromCharCode(((integerValue >> shift) & 0x3F) | 0x80);
     }
 
-    if ((codePoint & 0xFFFFFF80) == 0) { // 1-byte sequence
-        return String.fromCharCode(codePoint);
+    if ((integerValue & 0xFFFFFF80) == 0) { // 1-byte sequence
+        return String.fromCharCode(integerValue);
     }
     let symbol = '';
-    if ((codePoint & 0xFFFFF800) == 0) { // 2-byte sequence
-        symbol = String.fromCharCode(((codePoint >> 6) & 0x1F) | 0xC0);
+    if ((integerValue & 0xFFFFF800) == 0) { // 2-byte sequence
+        symbol = String.fromCharCode(((integerValue >> 6) & 0x1F) | 0xC0);
     }
-    else if ((codePoint & 0xFFFF0000) == 0) { // 3-byte sequence
-        symbol = String.fromCharCode(((codePoint >> 12) & 0x0F) | 0xE0);
-        symbol += createByte(codePoint, 6);
+    else if ((integerValue & 0xFFFF0000) == 0) { // 3-byte sequence
+        symbol = String.fromCharCode(((integerValue >> 12) & 0x0F) | 0xE0);
+        symbol += createByte(integerValue, 6);
     }
-    else if ((codePoint & 0xFFE00000) == 0) { // 4-byte sequence
-        symbol = String.fromCharCode(((codePoint >> 18) & 0x07) | 0xF0);
-        symbol += createByte(codePoint, 12);
-        symbol += createByte(codePoint, 6);
+    else if ((integerValue & 0xFFE00000) == 0) { // 4-byte sequence
+        symbol = String.fromCharCode(((integerValue >> 18) & 0x07) | 0xF0);
+        symbol += createByte(integerValue, 12);
+        symbol += createByte(integerValue, 6);
     }
-    symbol += String.fromCharCode((codePoint & 0x3F) | 0x80);
-    return symbol;
+    symbol += String.fromCharCode((integerValue & 0x3F) | 0x80);
+    let res = [];
+    let len = symbol.length;
+    let i = 0;
+    while (i<len) {
+        res.push(symbol.charCodeAt(i));
+        i = i+1;
+    }
+    return res;
 }
 
 //Decoding
@@ -71,7 +78,7 @@ function decodeSymbol() {
     let byte2;
     let byte3;
     let byte4;
-    let codePoint;
+    let integerValue;
 
     if (byteIndex > byteCount) {
         throw Error('Invalid byte index');
@@ -93,9 +100,9 @@ function decodeSymbol() {
     // 2-byte sequence
     if ((byte1 & 0xE0) == 0xC0) {
         let byte2 = readContinuationByte();
-        codePoint = ((byte1 & 0x1F) << 6) | byte2;
-        if (codePoint >= 0x80) {
-            return codePoint;
+        integerValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (integerValue >= 0x80) {
+            return integerValue;
         } else {
             throw Error('Invalid continuation byte');
         }
@@ -105,9 +112,9 @@ function decodeSymbol() {
     if ((byte1 & 0xF0) == 0xE0) {
         byte2 = readContinuationByte();
         byte3 = readContinuationByte();
-        codePoint = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
-        if (codePoint >= 0x0800) {
-            return codePoint;
+        integerValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (integerValue >= 0x0800) {
+            return integerValue;
         } else {
             throw Error('Invalid continuation byte');
         }
@@ -118,10 +125,10 @@ function decodeSymbol() {
         byte2 = readContinuationByte();
         byte3 = readContinuationByte();
         byte4 = readContinuationByte();
-        codePoint = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+        integerValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
             (byte3 << 0x06) | byte4;
-        if (codePoint >= 0x010000 && codePoint <= 0x10FFFF) {
-            return codePoint;
+        if (integerValue >= 0x010000 && integerValue <= 0x10FFFF) {
+            return integerValue;
         }
     }
 
