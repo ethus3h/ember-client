@@ -21,7 +21,7 @@ window.onload = function() {
                     editAreaInsert(temp);
                 }
             };
-            elem.innerHTML=dcNames[i]+'('+i+')';
+            elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
             elem.class='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
         }
@@ -188,10 +188,12 @@ function editAreaInsert(text) {
     }
 }
 
-function setNearestDcLabel(text) {
+function setNearestDcLabel(id, text) {
     let nearestDcLabel = document.getElementById('currentDcLabel');
+    let nearestDcId = document.getElementById('currentDcId');
     nearestDcLabel.innerHTML=text;
-    nearestDcLabel.title=text;
+    nearestDcLabel.title=id + ': ' + text;
+    nearestDcId.innerHTML=id;
 }
 
 function autoformatInputArea(el) {
