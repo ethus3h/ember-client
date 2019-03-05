@@ -2199,8 +2199,6 @@ async function dcaToUtf8(intArrayContent) {
     strArrayVariantSettings = await utf8VariantSettings('out');
     let boolDcBasenbEnabled = false;
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
-    console.log(boolDcBasenbEnabled);
-    console.log(strArrayVariantSettings);
     while (await implLt(intC, intL)) {
         intDcAtIndex = await get(intArrayContent, intC);
         intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
@@ -2441,9 +2439,9 @@ async function dcaToDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaToUtf8(intArrayContent);
-    await popImportSettings(await getFormatId('utf8'));
+    await popExportSettings(await getFormatId('utf8'));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }

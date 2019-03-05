@@ -182,9 +182,9 @@ r/as/utf8VariantSettings s/direction
 r/an/dcaToDcbnbUtf8 an/content
     # convenience wrapper
     new an/res
-    pushImportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
+    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
     set an/res dcaToUtf8 an/content
-    popImportSettings getFormatId 'utf8'
+    popExportSettings getFormatId 'utf8'
     return an/res
 
 r/an/dcaFromDcbnbUtf8 an/content
