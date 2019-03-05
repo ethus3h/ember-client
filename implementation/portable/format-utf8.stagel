@@ -62,6 +62,7 @@ r/an/dcaFromUtf8 an/content
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     new b/inDcBasenbSection
     set b/inDcBasenbSection false
+    new an/collectedDcBasenbChars
     while not eq 0 count an/remaining
         set an/temp ( )
         set an/latestChar firstCharOfUtf8String an/remaining
@@ -143,6 +144,11 @@ r/an/dcaFromUtf8 an/content
                     if arrEq an/latestChar ( 244 143 188 157 )
                         set dcBasenbUuidMonitorState 0
                         set b/inDcBasenbSection false
+                # Check for dcbasenb characters and collect them for decoding
+                if isBasenbChar an/latestChar
+                    set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
+                else
+                    # Not a basenb char
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
