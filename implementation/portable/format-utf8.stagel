@@ -160,8 +160,8 @@ r/an/dcaFromUtf8 an/content
                     set n/collectedDcBasenbCharsCounter 0
                     while lt n/collectedDcBasenbCharsCount n/collectedDcBasenbCharsCounter
                         set an/currentUnmappableChar firstCharOfUtf8String
+                        set an/res append an/res unpack32 an/currentUnmappableChar
                         set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
-                    set an/res append an/res unpack32 firstCharOfUtf8String
                     set an/collectedDcBasenbChars ( )
         if b/skipNextChar
             set b/skipNextChar false
