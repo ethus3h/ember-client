@@ -82,7 +82,7 @@ window.onload = function() {
                 let editFormat=document.getElementById('editFormat').value;
                 window.editFormatValue=editFormat;
                 let inputarea=document.getElementById('inputarea');
-                inputarea.value=await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()]);
+                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()])]);
                 removeSpinner();
             }, 500);
         };
