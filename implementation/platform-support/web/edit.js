@@ -340,7 +340,9 @@ async function getInputDoc() {
     let res;
     res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     if (!editInts()) {
+        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
         res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
+        await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
     return res;
 }
