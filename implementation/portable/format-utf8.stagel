@@ -12,6 +12,8 @@ r/an/dcaToUtf8 an/content
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
         if eq 0 count an/temp
+            if 
+            exportWarningUnmappable n/c n/dcAtIndex
             set an/unmappables push an/unmappables n/dcAtIndex
         else
             if gt 0 count an/unmappables
@@ -33,6 +35,14 @@ r/an/dcaFromUtf8 an/content
         set an/res push an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
+
+r/as/utf8VariantSettings s/direction
+    new as/res
+    new s/formatSettings
+    set s/formatSettings getSettingForFormat 'utf8' s/direction 'variants'
+    # TODO: Support multiple variants enabled (chop up the value of the s/formatSettings string into its constituent variants)
+    set as/res push as/res s/formatSettings
+    return as/
 
 r/an/dcaToDcbnbUtf8 an/content
     # convenience wrapper
