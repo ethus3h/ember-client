@@ -342,7 +342,7 @@ function typeInTextareaSpaced(el, newText) {
 async function getInputDoc(overrideEditFormat) {
     let res;
     if(editInts(overrideEditFormat)) {
-        res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
+        res = document.getElementById('inputarea').value;
     }
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
@@ -350,7 +350,7 @@ async function getInputDoc(overrideEditFormat) {
         res = await eiteCall('importDocument', ['utf8', res]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
-    return res;
+    return await eiteCall('strToByteArray', [res]);
 }
 
 async function RunDocumentHandler(callback) {
