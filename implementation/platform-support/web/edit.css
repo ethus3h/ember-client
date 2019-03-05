@@ -18,6 +18,7 @@
 #mainRow {
     display: flex;
     min-height: 50%;
+    height: 100%;
 }
 body {
     overflow: hidden;
