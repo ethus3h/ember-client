@@ -104,11 +104,29 @@ r/an/dcFromFormat s/inFormat an/content
     assertIsDcArray an/ret
     return an/ret
 
-r/v/exportWarning n/index s/problem
-    warn cat 'A problem was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
-
 r/v/importWarning n/index s/problem
-    warn cat 'A problem was encountered while importing at character ' cat strFrom n/index } cat ': ' s/problem
+    new s/warning
+    set s/warning cat 'A problem was encountered while importing at character ' cat strFrom n/index } cat ': ' s/problem
+    set as/importWarnings push as/importWarnings s/warning
+    warn s/warning
+
+r/v/exportWarning n/index s/problem
+    new s/warning
+    set s/warning cat 'A problem was encountered while exporting at character ' cat strFrom n/index } cat ': ' s/problem
+    set as/exportWarnings push as/exportWarnings s/warning
+    warn s/warning
+
+r/as/getImportWarnings
+    new as/res
+    set as/res as/importWarnings
+    set as/importWarnings [ ]
+    return as/res
+
+r/as/getExportWarnings
+    new as/res
+    set as/res as/exportWarnings
+    set as/exportWarnings [ ]
+    return as/res
 
 r/v/exportWarningUnmappable n/index n/problemDc
     exportWarning n/index cat 'The character ' cat strFrom n/problemDc } ' could not be represented in the chosen export format.'

@@ -25,6 +25,8 @@ let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
 let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
+let strArrayImportWarnings = []; // as
+let strArrayExportWarnings = []; // as
 
 // Global environment
 let haveDom = false;
