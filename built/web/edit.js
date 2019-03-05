@@ -339,8 +339,9 @@ function typeInTextareaSpaced(el, newText) {
 async function getInputDoc() {
     let res;
     if(editInts()) {
-    res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
-    if (!editInts()) {
+        res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
+    }
+    else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
         res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
