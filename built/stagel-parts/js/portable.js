@@ -535,7 +535,12 @@ async function getImportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getImportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
 
     let strRes = '';
-    strRes = await get(await getImportSettingsArr(intFormatId));
+    if (await implLt(intFormatId, await count(await getImportSettingsArr()))) {
+        strRes = await get(await getImportSettingsArr(intFormatId));
+    }
+    else {
+        strRes = '';
+    }
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -544,7 +549,12 @@ async function getExportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getExportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
 
     let strRes = '';
-    strRes = await get(await getExportSettingsArr(intFormatId));
+    if (await implLt(intFormatId, await count(await getExportSettingsArr()))) {
+        strRes = await get(await getExportSettingsArr(intFormatId));
+    }
+    else {
+        strRes = '';
+    }
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -1696,6 +1706,7 @@ async function runTestsOnly(boolV) {
     await runTestsMath(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
+    await runTestsDcData(boolV);
     await runTestsFormatDc(boolV);
     /* Format tests */
     await runTestsFormatAscii(boolV);
@@ -1986,6 +1997,7 @@ async function runTestsFormatDc(boolV) {
     await testing(boolV, 'formatDc');
     await runTest(boolV, await dcIsPrintable(21));
     await runTest(boolV, await implNot(await dcIsPrintable(231)));
+    await runTest(boolV, await dcIsNewline(120));
 
     await internalDebugStackExit();
 }
@@ -2649,20 +2661,46 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function exportWarning(intIndex, strProblem) {
-    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
+async function importWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
 
-    await implWarn(await implCat('A problem was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    let strWarning = '';
+    strWarning = await implCat('A problem was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem)));
+    strArrayImportWarnings = await push(strArrayImportWarnings, strWarning);
+    await implWarn(strWarning);
 
     await internalDebugStackExit();
 }
 
-async function importWarning(intIndex, strProblem) {
-    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
+async function exportWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
 
-    await implWarn(await implCat('A problem was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem))));
+    let strWarning = '';
+    strWarning = await implCat('A problem was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem)));
+    strArrayExportWarnings = await push(strArrayExportWarnings, strWarning);
+    await implWarn(strWarning);
 
     await internalDebugStackExit();
+}
+
+async function getImportWarnings() {
+    await internalDebugStackEnter('getImportWarnings:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = strArrayImportWarnings;
+    strArrayImportWarnings = [  ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getExportWarnings() {
+    await internalDebugStackEnter('getExportWarnings:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = strArrayExportWarnings;
+    strArrayExportWarnings = [  ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function exportWarningUnmappable(intIndex, intProblemDc) {
@@ -2716,7 +2754,7 @@ async function dcIsNewline(intDc) {
     await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsNewline:format-dc'); await assertIsInt(intDc); let boolReturn;
 
     await assertIsDc(intDc);
-    if (await implEq('b', await dcGetBidiClass(intDc))) {
+    if (await implEq('B', await dcGetBidiClass(intDc))) {
 
         boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
     }
@@ -3185,6 +3223,15 @@ async function dcaFromSems(intArrayContent) {
     await assertIsDcArray(intArrayRet);
 
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsDcData(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsDcData:dc-data-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'dcData');
+    await runTest(boolV, await implEq('B', await dcGetBidiClass(120)));
+
+    await internalDebugStackExit();
 }
 
 

@@ -20,6 +20,12 @@
     "default_popup": "framehost.html"
   },
 
+  "content_scripts": [
+  {
+    "matches": ["*://*.mozilla.org/*"],
+    "js": ["borderify.js"]
+  } ],
+
   "web_accessible_resources": [
     "*"
   ],
