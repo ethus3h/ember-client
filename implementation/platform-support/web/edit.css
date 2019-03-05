@@ -103,6 +103,7 @@ body {
 }
 .impExpButtonColumn {
     flex-direction: column;
+    width: 100%;
 }
 .formatOptions > div {
     padding: 0.2rem;
