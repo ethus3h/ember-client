@@ -28,7 +28,13 @@ body {
     flex-direction: column;
     overflow-x: scroll;
 }
-#DcSelection > span, .importDialog > div {
+#DcSelection > span {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
+}
+.importDialog > div {
     font-size: 1.8rem;
     font-weight: bold;
     text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
@@ -116,8 +122,9 @@ body {
 #editorButtons > button, .formatOptions > select {
     width: 100%;
 }
-#editorButtons > button {
+#editorButtons button {
     border-width: 0;
+    font-weight: bold;
 }
 #DcSelection, #editorColumn, #eiteDocumentRoot, #inputarea {
     height: 100%;
@@ -208,6 +215,10 @@ button {
     position: relative;
     font-size: 1.5rem;
     padding: 0.5rem;
+}
+#DcSelection > button {
+    font-size: 1.2rem;
+    padding: 0.1rem;
 }
 .importDialog > button:last-of-type {
     border-width: 0 0 0 0;

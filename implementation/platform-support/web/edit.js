@@ -21,7 +21,7 @@ window.onload = function() {
                     editAreaInsert(temp);
                 }
             };
-            elem.innerHTML=dcNames[i];
+            elem.innerHTML=dcNames[i]+'('+i+')';
             elem.class='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
         }
