@@ -28,14 +28,23 @@ window.addEventListener('message', function(message) {
     }
 
     async function eiteReadyCallback(message) {
-        if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') {
+        if ((message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') || (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8')) {
             startSpinner();
             window.setTimeout(async function() {
                 canEdit=message.data[1];
                 contents=message.data[2];
                 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
                 let utf8encoder = new TextEncoder();
-                document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [await eiteCall('importAndExport', ['ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))])]);
+                let tempInterpreted;
+                if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage'){
+                    tempInterpreted=await eiteCall('importAndExport', ['ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))]);
+                }
+                else {
+                    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+                    tempInterpreted=await eiteCall('importAndExport', ['utf8', 'integerList', new Uint8Array(utf8encoder.encode(contents))]);
+                    await popImportSettings();
+                }
+                document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [tempInterpreted]);
                 removeSpinner();
                 RunDocumentHandler(async function() {
                     if (!canEdit) {
