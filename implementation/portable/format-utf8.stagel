@@ -29,11 +29,11 @@ r/an/dcaFromUtf8 an/content
         set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
 
-r/an/dcaFromDcbnbUtf8 an/content
+r/an/dcaToDcbnbUtf8 an/content
     # convenience wrapper
     new an/res
     pushImportSettings getFormatId 'utf8' 'variants:dcBasenb,'
-    set an/res dcaFromUtf8 an/content
+    set an/res dcaToUtf8 an/content
     popImportSettings getFormatId 'utf8'
     return an/res
 
