@@ -15,6 +15,7 @@ r/an/dcaToUtf8 an/content
             set an/unmappables push an/unmappables n/dcAtIndex
         else
             if gt 0 count an/unmappables
+                # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
                 
         set an/res append an/res an/temp
         set n/c add n/c 1
