@@ -559,12 +559,12 @@ async function dcaFromUtf8(intArrayContent) {
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
-                if (await implEq(await dcBasenbUuidMonitorState(0))) {
+                if (await implEq(intDcBasenbUuidMonitorState, 0)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
                         intDcBasenbUuidMonitorState = 1;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(1))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 139, 182, 128 ])) {
                         intDcBasenbUuidMonitorState = 2;
                     }
@@ -572,7 +572,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(2))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 188, 183, 162 ])) {
                         intDcBasenbUuidMonitorState = 3;
                     }
@@ -580,7 +580,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(3))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 186, 128, 138 ])) {
                         intDcBasenbUuidMonitorState = 4;
                     }
@@ -588,7 +588,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(4))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 184, 165, 142 ])) {
                         intDcBasenbUuidMonitorState = 5;
                     }
@@ -596,7 +596,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(5))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 136, 186, 141 ])) {
                         intDcBasenbUuidMonitorState = 6;
                     }
@@ -604,7 +604,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(6))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 178, 139, 160 ])) {
                         intDcBasenbUuidMonitorState = 7;
                     }
@@ -612,7 +612,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(7))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
                         intDcBasenbUuidMonitorState = 0;
                         boolInDcBasenbSection = true;
@@ -620,12 +620,12 @@ async function dcaFromUtf8(intArrayContent) {
                 }
             }
             else {
-                if (await implEq(await dcBasenbUuidMonitorState(0))) {
+                if (await implEq(intDcBasenbUuidMonitorState, 0)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 188, 133, 185 ])) {
                         intDcBasenbUuidMonitorState = 1;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(1))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 180, 182, 175 ])) {
                         intDcBasenbUuidMonitorState = 2;
                     }
@@ -633,7 +633,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(2))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 136, 161, 186 ])) {
                         intDcBasenbUuidMonitorState = 3;
                     }
@@ -641,7 +641,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(3))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 191, 148, 138 ])) {
                         intDcBasenbUuidMonitorState = 4;
                     }
@@ -649,7 +649,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(4))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 134, 178, 166 ])) {
                         intDcBasenbUuidMonitorState = 5;
                     }
@@ -657,7 +657,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(5))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 141, 184, 130 ])) {
                         intDcBasenbUuidMonitorState = 6;
                     }
@@ -665,7 +665,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(6))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
                     if (await arrEq(intArrayLatestChar, [ 243, 178, 128, 176 ])) {
                         intDcBasenbUuidMonitorState = 7;
                     }
@@ -673,7 +673,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intDcBasenbUuidMonitorState = 0;
                     }
                 }
-                else if (await implEq(await dcBasenbUuidMonitorState(7))) {
+                else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
                     if (await arrEq(intArrayLatestChar, [ 244, 143, 188, 157 ])) {
                         intDcBasenbUuidMonitorState = 0;
                         boolInDcBasenbSection = false;
@@ -1650,14 +1650,6 @@ async function dcGetDescription(intDc) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
-async function runTestsBits(boolV) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsBits:bits-tests'); await assertIsBool(boolV);
-
-    await testing(boolV, 'bits');
-    await runTest(boolV, await implEq(4294967294, await bitAnd32(-1, 1)));
-
-    await internalDebugStackExit();
-}
 
 async function abSubset(boolArrayIn, intStart, intEnd) {
     await internalDebugCollect('boolArray In = ' + boolArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('abSubset:arrays'); await assertIsBoolArray(boolArrayIn); await assertIsInt(intStart); await assertIsInt(intEnd); let boolArrayReturn;
@@ -1985,204 +1977,6 @@ async function sumArray(intArrayIn) {
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function bytesToInt32(intA, intB, intC, intD) {
-    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugCollect('int C = ' + intC + '; '); await internalDebugCollect('int D = ' + intD + '; '); await internalDebugStackEnter('bytesToInt32:bits'); await assertIsInt(intA); await assertIsInt(intB); await assertIsInt(intC); await assertIsInt(intD); let intReturn;
-
-    /* Input bytes are 0 to 255 */
-    let intRes = 0;
-    /* 8 least significant bits */
-    intRes = intD;
-    /* next 8: n * 2^8 */
-    intRes = await implAdd(intRes, await implMul(intC, 256));
-    /* and so on: n * 2^16 */
-    intRes = await implAdd(intRes, await implMul(intB, 65536));
-    if (await le(intA, 127)) {
-        intRes = await implAdd(intRes, await implMul(intA, 16777216));
-    }
-    else {
-        let intTemp = 0;
-        intTemp = await implSub(intA, 127);
-        intRes = await implAdd(intRes, await implMul(intTemp, 16777216));
-        intRes = await implAdd(intRes, -2147483648);
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitAnd32(intA, intB) {
-    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('bitAnd32:bits'); await assertIsInt(intA); await assertIsInt(intB); let intReturn;
-
-    /* 32-bit bit operations take and produce signed ints. E.g. passing a=-1 b=1 is equivalent to unsigned long 4294967295 << 1 (= 4294967294) and will return -2. Use unsigned conversion I guess. */
-    let intRes = 0;
-    let intAtemp = 0;
-    let intBtemp = 0;
-    if (await implLt(intA, 0)) {
-        intA = await implAdd(intA, 2147483648);
-        if (await implLt(intB, 0)) {
-            /* both have msb=1 so result does too */
-            intRes = -2147483648;
-        }
-    }
-    if (await implLt(intB, 0)) {
-        intB = await implAdd(intB, 2147483648);
-    }
-    intAtemp = await implDiv(intA, 16777216);
-    intA = await implSub(intA, intAtemp);
-    intBtemp = await implDiv(intB, 16777216);
-    intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(await implMul(16777216, await bitAnd8(intAtemp, intBtemp), ), 0, 0, 0));
-    intAtemp = await implDiv(intA, 65536);
-    intA = await implSub(intA, intAtemp);
-    intBtemp = await implDiv(intB, 65536);
-    intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(0, await implMul(65536, await bitAnd8(intAtemp, intBtemp), ), 0, 0));
-    intAtemp = await implDiv(intA, 256);
-    intA = await implSub(intA, intAtemp);
-    intBtemp = await implDiv(intB, 256);
-    intB = await implSub(intB, intBtemp);
-    intRes = await implAdd(intRes, await bytesToInt32(0, 0, await implMul(256, await bitAnd8(intAtemp, intBtemp), ), 0));
-    intRes = await implAdd(intRes, await bytesToInt32(0, 0, 0, await bitAnd8(intA, intB)));
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitAnd32(intA, intB) {
-    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('bitAnd32:bits'); await assertIsInt(intA); await assertIsInt(intB); let intReturn;
-
-    /* FIXME unimplemented */
-
-    intReturn = 1; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitAnd(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitAnd:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    let intRes = 0;
-    if (await implEq(intWidth, 8)) {
-        intRes = await bitAnd8(intByte1, intByte2);
-    }
-    else if (await implEq(intWidth, 32)) {
-        intRes = await bitAnd32(intByte1, intByte2);
-    }
-    else {
-        await implDie(await implCat('bitAnd called with unsupported bit width ', await strFrom(intWidth)));
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitNot(intWidth, intByte) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte = ' + intByte + '; '); await internalDebugStackEnter('bitNot:bits'); await assertIsInt(intWidth); await assertIsInt(intByte); let intReturn;
-
-    let intRes = 0;
-    if (await implEq(intWidth, 8)) {
-        intRes = await bitNot8(intByte);
-    }
-    else if (await implEq(intWidth, 32)) {
-        intRes = await bitNot32(intByte);
-    }
-    else {
-        await implDie(await implCat('bitNot called with unsupported bit width ', await strFrom(intWidth)));
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitLshift(intWidth, intByte1, intPlaces) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Places = ' + intPlaces + '; '); await internalDebugStackEnter('bitLshift:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intPlaces); let intReturn;
-
-    let intRes = 0;
-    if (await implEq(intWidth, 8)) {
-        intRes = await bitLshift8(intByte);
-    }
-    else if (await implEq(intWidth, 32)) {
-        intRes = await bitLshift32(intByte);
-    }
-    else {
-        await implDie(await implCat('bitLshift called with unsupported bit width ', await strFrom(intWidth)));
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitRshift(intWidth, intByte1, intPlaces) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Places = ' + intPlaces + '; '); await internalDebugStackEnter('bitRshift:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intPlaces); let intReturn;
-
-    let intRes = 0;
-    if (await implEq(intWidth, 8)) {
-        intRes = await bitRshift8(intByte);
-    }
-    else if (await implEq(intWidth, 32)) {
-        intRes = await bitRshift32(intByte);
-    }
-    else {
-        await implDie(await implCat('bitRshift called with unsupported bit width ', await strFrom(intWidth)));
-    }
-
-    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitOr(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitOr:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    await assertIsByte(intByte1);
-    await assertIsByte(intByte2);
-    let intTemp = 0;
-    intTemp = await bitNot(intWidth, intByte1);
-    intTemp = await bitNot(intWidth, await bitAnd(intWidth, intTemp, await bitNot8(intByte2)));
-    await assertIsByte(intTemp);
-
-    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitNor(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNor:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    await assertIsByte(intByte1);
-    await assertIsByte(intByte2);
-    let intTemp = 0;
-    intTemp = await bitNot(intWidth, await bitOr(intWidth, intByte1, intByte2));
-    await assertIsByte(intTemp);
-
-    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitNand(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitNand:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    await assertIsByte(intByte1);
-    await assertIsByte(intByte2);
-    let intTemp = 0;
-    intTemp = await bitNot(intWidth, await bitAnd(intWidth, intByte1, intByte2));
-    await assertIsByte(intTemp);
-
-    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitXor(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXor:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    await assertIsByte(intByte1);
-    await assertIsByte(intByte2);
-    let intTemp = 0;
-    intTemp = await bitNand(intWidth, intByte1, intByte2);
-    intTemp = await bitAnd(intWidth, intTemp, await bitOr(intWidth, intByte1, intByte2));
-    await assertIsByte(intTemp);
-
-    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
-
-async function bitXnor(intWidth, intByte1, intByte2) {
-    await internalDebugCollect('int Width = ' + intWidth + '; '); await internalDebugCollect('int Byte1 = ' + intByte1 + '; '); await internalDebugCollect('int Byte2 = ' + intByte2 + '; '); await internalDebugStackEnter('bitXnor:bits'); await assertIsInt(intWidth); await assertIsInt(intByte1); await assertIsInt(intByte2); let intReturn;
-
-    await assertIsByte(intByte1);
-    await assertIsByte(intByte2);
-    let intTemp = 0;
-    intTemp = await bitNot(intWidth, await bitXor(intWidth, intByte1, intByte2));
-    await assertIsByte(intTemp);
-
-    intReturn = intTemp; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
-}
 
 async function runTestsOnly(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
