@@ -24,7 +24,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // Encoding
-function encodeCodePoint(integerValue) {
+function intArrayPackWtf8(integerValue) {
     let createByte = function(integerValue, shift) {
         return String.fromCharCode(((integerValue >> shift) & 0x3F) | 0x80);
     }
@@ -57,7 +57,7 @@ function encodeCodePoint(integerValue) {
 }
 
 //Decoding
-function decodeSymbol(byteArrayInput) {
+function intUnpackWtf8(byteArrayInput) {
     let byteIndex = 0;
     let byteCount = byteArrayInput.length;
     let readContinuationByte = function() {
