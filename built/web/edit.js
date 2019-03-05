@@ -30,7 +30,7 @@ window.onload = function() {
         document.getElementById('searchDcs').onclick=async function(){
             let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
             let searchQuery=document.getElementById('searchDcs').value;
-            document.getElementsByClassName.forEach(function(e) {
+            document.getElementsByClassName().forEach(function(e) {
                 e.remove();
             });
             for (let i=0; i<datasetLength; i++) {
