@@ -70,25 +70,25 @@ r/an/dcaFromUtf8 an/content
                     set dcBasenbStartUuidMonitorState 1
             elif eq dcBasenbStartUuidMonitorState 1
                 if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                    set dcBasenbStartUuidMonitorState 2
             elif eq dcBasenbStartUuidMonitorState 2
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 243 188 183 162 )
+                    set dcBasenbStartUuidMonitorState 3
             elif eq dcBasenbStartUuidMonitorState 3
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 243 186 128 138 )
+                    set dcBasenbStartUuidMonitorState 4
             elif eq dcBasenbStartUuidMonitorState 4
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 243 184 165 142 )
+                    set dcBasenbStartUuidMonitorState 5
             elif eq dcBasenbStartUuidMonitorState 5
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 244 136 186 141 )
+                    set dcBasenbStartUuidMonitorState 6
             elif eq dcBasenbStartUuidMonitorState 6
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 243 178 139 160 )
+                    set dcBasenbStartUuidMonitorState 7
             elif eq dcBasenbStartUuidMonitorState 7
-                if arrEq an/latestChar ( 244 139 182 128 )
-                    set dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 244 143 186 144 )
+                    set dcBasenbStartUuidMonitorState 0
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
