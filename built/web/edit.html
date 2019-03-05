@@ -38,13 +38,7 @@
         <div id="editorColumn">
             <textarea id="inputarea" disabled="true"></textarea>
             <div id="currentDcLabel"></div>
-            <div id="formatOptions">
-                <div>Imp: </div><select id="inFormat" disabled="true">
-                    <option value="">[not loaded]</option>
-                </select>
-                <div>Exp: </div><select id="outFormat" disabled="true">
-                    <option value="">[not loaded]</option>
-                </select>
+            <div class="formatOptions">
                 <div>Edit: </div><select id="editFormat" disabled="true">
                     <option value="">[not loaded]</option>
                 </select>
@@ -53,7 +47,15 @@
         <p id="eiteDocumentRoot"></p>
     </div>
     <div id="editorButtons">
+            <div class="formatOptions">
+            <div>Imp: </div><select id="inFormat" disabled="true">
+                <option value="">[not loaded]</option>
+            </select></div>
         <button disabled="true" id="ImportDocument">Import</button>
+            <div class="formatOptions">
+                <div>Exp: </div><select id="outFormat" disabled="true">
+                    <option value="">[not loaded]</option>
+                </select></div>
         <button disabled="true" id="ExportDocument">Export</button>
         <button disabled="true" id="RunDocument">Run</button>
     </div>

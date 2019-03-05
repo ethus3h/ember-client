@@ -97,16 +97,16 @@ body {
     flex-direction: column;
     min-width: 0; /* needed to clip text with white-space: nowrap in #currentDcLabel */
 }
-#editorButtons, #formatOptions {
+#editorButtons, .formatOptions {
     display: flex;
     flex-direction: row;
 }
-#formatOptions > div {
+.formatOptions > div {
     padding: 0.2rem;
     vertical-align: center;
     background-color: rgba(255,255,255,0.9);
 }
-#editorButtons > button, #formatOptions > select {
+#editorButtons > button, .formatOptions > select {
     width: 100%;
 }
 #editorButtons > button {
