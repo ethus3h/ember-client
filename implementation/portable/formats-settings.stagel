@@ -23,7 +23,7 @@ r/as/getSettingsForFormat s/format s/direction
 r/s/getImportSettings n/formatId
     new s/res
     if lt n/formatId count getImportSettingsArr
-        set s/res get getImportSettingsArr n/formatId
+        set s/res get getImportSettingsArr } n/formatId
     else
         set s/res ''
     return s/res
@@ -31,7 +31,7 @@ r/s/getImportSettings n/formatId
 r/s/getExportSettings n/formatId
     new s/res
     if lt n/formatId count getExportSettingsArr
-        set s/res get getExportSettingsArr n/formatId
+        set s/res get getExportSettingsArr } n/formatId
     else
         set s/res ''
     return s/res

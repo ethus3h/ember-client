@@ -35,7 +35,7 @@ async function push(array1, array2) {
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
-    if(index < 0) {
+    if (index < 0) {
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
     }
