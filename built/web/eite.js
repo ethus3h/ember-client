@@ -2263,9 +2263,9 @@ async function dcaFromUtf8(intArrayContent) {
     let intCollectedDcBasenbCharsCounter = 0;
     let intArrayCurrentUnmappableChar = [];
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
-    alert('ok');
         intArrayTemp = [  ];
         intArrayLatestChar = await firstCharOfUtf8String(intArrayRemaining);
+    alert('ok');
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
