@@ -8,14 +8,18 @@ r/an/dcaToUtf8 an/content
     new an/temp
     new n/dcAtIndex
     new an/unmappables
+    new as/variantSettings
+    set as/variantSettings utf8VariantSettings 'out'
     while lt n/c n/l
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
         if eq 0 count an/temp
-            if 
-            exportWarningUnmappable n/c n/dcAtIndex
-            set an/unmappables push an/unmappables n/dcAtIndex
+            if contains as/variantSettings 'dcBasenb'
+                set an/unmappables push an/unmappables n/dcAtIndex
+            else
+                exportWarningUnmappable n/c n/dcAtIndex
         else
+            if contains as/variantSettings '
             if gt 0 count an/unmappables
                 # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
                 
@@ -38,11 +42,11 @@ r/an/dcaFromUtf8 an/content
 
 r/as/utf8VariantSettings s/direction
     new as/res
-    new s/formatSettings
-    set s/formatSettings getSettingForFormat 'utf8' s/direction 'variants'
-    # TODO: Support multiple variants enabled (chop up the value of the s/formatSettings string into its constituent variants)
-    set as/res push as/res s/formatSettings
-    return as/
+    new s/enabledVariants
+    set s/enabledVariants getSettingForFormat 'utf8' s/direction 'variants'
+    # TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants)
+    set as/res push as/res s/enabledVariants
+    return as/res
 
 r/an/dcaToDcbnbUtf8 an/content
     # convenience wrapper
