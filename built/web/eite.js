@@ -4205,6 +4205,7 @@ async function dcToFormat(strOutFormat, intDc) {
     }
     else if (await implEq(strOutFormat, 'html')) {
         strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
+        console.log('strRes='+strRes);
         if (await strNonempty(strRes)) {
             intArrayRes = await strToByteArray(strRes);
         }
