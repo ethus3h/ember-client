@@ -1,21 +1,21 @@
 r/an/dcaFromFormat s/inFormat an/contentBytes
     assertIsSupportedInputFormat s/inFormat
     assertIsByteArray an/contentBytes
-    new an/ret
+    new an/res
     if eq s/inFormat 'sems'
-        set an/ret dcaFromSems an/contentBytes
+        set an/res dcaFromSems an/contentBytes
     elif eq s/inFormat 'integerList'
-        set an/ret dcaFromIntegerList an/contentBytes
+        set an/res dcaFromIntegerList an/contentBytes
     elif eq s/inFormat 'ascii'
-        set an/ret dcaFromAscii an/contentBytes
+        set an/res dcaFromAscii an/contentBytes
     elif eq s/inFormat 'asciiSafeSubset'
-        set an/ret dcaFromAsciiSafeSubset an/contentBytes
+        set an/res dcaFromAsciiSafeSubset an/contentBytes
     elif eq s/inFormat 'utf8'
-        set an/ret dcaFromUtf8 an/contentBytes
+        set an/res dcaFromUtf8 an/contentBytes
     else
         error cat 'Unimplemented document parsing format: ' s/inFormat
-    assertIsDcArray an/ret
-    return an/ret
+    assertIsDcArray an/res
+    return an/res
 
 r/an/dcaToFormat s/outFormat an/dcArrayIn
     assertIsSupportedOutputFormat s/outFormat
@@ -28,7 +28,7 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     elif eq s/outFormat 'asciiSafeSubset'
         set an/res dcaToAsciiSafeSubset an/dcArrayIn
     elif eq s/outFormat 'utf8'
-        set an/ret dcaToUtf8 an/dcArrayIn
+        set an/res dcaToUtf8 an/dcArrayIn
     elif eq s/outFormat 'html'
         set an/res dcaToHtml an/dcArrayIn
     elif eq s/outFormat 'htmlFragment'
@@ -85,7 +85,7 @@ r/an/dcToFormat s/outFormat n/dc
 r/an/dcFromFormat s/inFormat an/content
     # Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
     assertIsTrue isSupportedInternalFormat s/inFormat
-    new an/ret
+    new an/res
     new n/dc
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
         new n/c
@@ -96,13 +96,13 @@ r/an/dcFromFormat s/inFormat an/content
         assertIsNonnegative n/c
         if ge n/c dcDatasetLength 'mappings/from/unicode'
             die 'FIXME: save unmapped unicode chars'
-            return an/ret
+            return an/res
         set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
     else
         die cat 'Unimplemented character source format: ' s/inFormat
-    set an/ret setElement an/ret 0 n/dc
-    assertIsDcArray an/ret
-    return an/ret
+    set an/res setElement an/res 0 n/dc
+    assertIsDcArray an/res
+    return an/res
 
 r/v/importWarning n/index s/problem
     new s/warning
