@@ -64,7 +64,11 @@ r/an/dcaFromUtf8 an/content
         set an/temp ( )
         set an/latestChar firstCharOfUtf8String an/remaining
         if b/dcBasenbEnabled
-            if arrEq an/latestChar 
+            # 8 characters for uuid.
+            if eq dcBasenbStartUuidMonitorState 0
+                if arrEq an/latestChar ( 244 141 129 157 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq 
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
