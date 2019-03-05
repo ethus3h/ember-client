@@ -11,15 +11,10 @@ window.onload = function() {
         await handleSearchResultUpdate();
         //console.log(dcNames);
         // Attach event listeners to elements
-        document.getElementById('searchDcs').addEventListener('input', function(ev){
-            console.log(ev);
-            if (ev.key === "Escape") {
-                document.getElementById('searchDcs').value="";
-            }
+        document.getElementById('searchDcs').addEventListener('input', function(){
             handleSearchResultUpdate();
         });
         document.getElementById('searchDcs').addEventListener('keyup', function(ev){
-            console.log(ev);
             if (ev.key === "Escape") {
                 document.getElementById('searchDcs').value="";
             }
