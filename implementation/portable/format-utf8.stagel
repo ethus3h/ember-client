@@ -70,7 +70,7 @@ r/an/dcaFromUtf8 an/content
     new an/currentUnmappableChar
     while not eq 0 count an/remaining
         set an/temp ( )
-        set an/latestChar firstCharOfUtf8String an/remaining
+        set an/latestChar pack32 firstCharOfUtf8String an/remaining
         if b/dcBasenbEnabled
             if not b/inDcBasenbSection
                 # 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc.
@@ -159,7 +159,7 @@ r/an/dcaFromUtf8 an/content
                     set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
                     set n/collectedDcBasenbCharsCounter 0
                     while lt n/collectedDcBasenbCharsCount n/collectedDcBasenbCharsCounter
-                        set an/currentUnmappableChar firstCharOfUtf8String
+                        set an/currentUnmappableChar pack32 firstCharOfUtf8String
                         set an/res append an/res unpack32 an/currentUnmappableChar
                         set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
                     set an/collectedDcBasenbChars ( )
