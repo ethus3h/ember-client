@@ -99,10 +99,12 @@ window.onload = function() {
         }, 500);
     })();
 };
+
 function clearDcFilters() {
     document.getElementById('searchDcs').value="";
     handleSearchResultUpdate();
 }
+
 function editInts() {
     return 'integerList' === document.getElementById('editFormat').value;
 }
