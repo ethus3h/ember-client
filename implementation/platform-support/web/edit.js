@@ -83,7 +83,12 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
+                console.log('was: '+inputarea.value);
+                console.log('getInputDoc:'+await getInputDoc(oldEditFormat));
+                console.log('inportAndexport:'+await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)]));
+                console.log('strFromByteArray:'+await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]));
                 inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc(oldEditFormat)])]);
+                console.log('now is:'+inputarea.value);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
@@ -156,7 +161,7 @@ function handleDcEditingKeystroke(event) {
                         elem.value = elem.value.replace(char, '');
                         elem.selectionStart = start - 1;
                         elem.selectionEnd = end - 1;
-                        typeInTextareaSpaced(elem, await dcFromFormat('utf8', new TextEncoder().encode(char)));
+                        typeInTextareaSpaced(elem, await printArr(await dcaFromFormat('utf8', new TextEncoder().encode(char))));
                     })(inputarea, globalCachedInputState);
                 }
             }
@@ -347,7 +352,7 @@ async function getInputDoc(overrideEditFormat) {
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-        res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
+        res = new TextDecoder().decode(await eiteCall('importDocument', ['utf8', res]));
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
     return res;
