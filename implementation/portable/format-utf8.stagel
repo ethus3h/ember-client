@@ -53,9 +53,18 @@ r/an/dcaFromUtf8 an/content
     new an/remaining
     set an/remaining an/content
     new an/temp
+    new an/latestChar
+    new n/dcBasenbStartUuidMonitorState
+    set n/dcBasenbStartUuidMonitorState 0
+    new as/variantSettings
+    set as/variantSettings utf8VariantSettings 'out'
+    new b/dcBasenbEnabled
+    set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     while not eq 0 count an/remaining
         set an/temp ( )
-        set an/temp push an/temp firstCharOfUtf8String an/remaining
+        set an/latestChar firstCharOfUtf8String an/remaining
+        if 
+        set an/temp push an/temp an/latestChar
         set an/res push an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
