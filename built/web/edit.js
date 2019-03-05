@@ -27,9 +27,7 @@ window.onload = function() {
         }
         //console.log(dcNames);
         // Attach click event listeners to elements
-        document.getElementById('searchDcs').onclick=function(){
-            
-        };
+        document.getElementById('searchDcs').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
