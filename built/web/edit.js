@@ -161,7 +161,7 @@ function handleDcEditingKeystroke(event) {
                         elem.value = elem.value.replace(char, '');
                         elem.selectionStart = start - 1;
                         elem.selectionEnd = end - 1;
-                        typeInTextareaSpaced(elem, await dcFromFormat('utf8', new TextEncoder().encode(char)));
+                        typeInTextareaSpaced(elem, await printArr(await dcaFromFormat('utf8', new TextEncoder().encode(char))));
                     })(inputarea, globalCachedInputState);
                 }
             }
