@@ -74,6 +74,18 @@ window.onload = function() {
             elem.innerHTML=formats[i];
             editFormat.appendChild(elem);
         }
+        window.editFormatValue=document.getElementById('editFormat').value;
+        document.getElementById('editFormat').onchange=function(){
+            startSpinner();
+            window.setTimeout(async function(){
+                let oldEditFormat=window.editFormatValue;
+                let editFormat=document.getElementById('editFormat').value;
+                window.editFormatValue=editFormat;
+                let inputarea=document.getElementById('inputarea');
+                inputarea.value=await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()]);
+                removeSpinner();
+            }, 500);
+        };
         editFormat.disabled=false;
         window.setTimeout(function(){
             let overlay=document.getElementById('overlay');
@@ -504,7 +516,7 @@ function exportNotify(name) {
 async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
-        outFormat=document.getElementById('outFormat').value;
+        let outFormat=document.getElementById('outFormat').value;
         if (!await eiteCall('isSupportedOutputFormat', [outFormat])) {
             await implDie(outFormat+' is not a supported output format!');
         }
