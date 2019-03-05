@@ -1306,7 +1306,7 @@ async function setImportSettings(formatId, strNewSettings) {
 }
 
 async function setExportSettings(formatId, strNewSettings) {
-    await assertIsArray(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
 
 // Based on https://web.archive.org/web/20190305073920/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/wtf-8.js
@@ -1340,23 +1340,25 @@ function intArrayPackWtf8(intValue) {
         return String.fromCharCode(((intValue >> shift) & 0x3F) | 0x80);
     }
 
-    if ((intValue & 0xFFFFFF80) == 0) { // 1-byte sequence
-        return String.fromCharCode(intValue);
-    }
     let symbol = '';
-    if ((intValue & 0xFFFFF800) == 0) { // 2-byte sequence
-        symbol = String.fromCharCode(((intValue >> 6) & 0x1F) | 0xC0);
+    if ((intValue & 0xFFFFFF80) == 0) { // 1-byte sequence
+        symbol = String.fromCharCode(intValue);
     }
-    else if ((intValue & 0xFFFF0000) == 0) { // 3-byte sequence
-        symbol = String.fromCharCode(((intValue >> 12) & 0x0F) | 0xE0);
-        symbol += createByte(intValue, 6);
+    else {
+        if ((intValue & 0xFFFFF800) == 0) { // 2-byte sequence
+            symbol = String.fromCharCode(((intValue >> 6) & 0x1F) | 0xC0);
+        }
+        else if ((intValue & 0xFFFF0000) == 0) { // 3-byte sequence
+            symbol = String.fromCharCode(((intValue >> 12) & 0x0F) | 0xE0);
+            symbol += createByte(intValue, 6);
+        }
+        else if ((intValue & 0xFFE00000) == 0) { // 4-byte sequence
+            symbol = String.fromCharCode(((intValue >> 18) & 0x07) | 0xF0);
+            symbol += createByte(intValue, 12);
+            symbol += createByte(intValue, 6);
+        }
+        symbol += String.fromCharCode((intValue & 0x3F) | 0x80);
     }
-    else if ((intValue & 0xFFE00000) == 0) { // 4-byte sequence
-        symbol = String.fromCharCode(((intValue >> 18) & 0x07) | 0xF0);
-        symbol += createByte(intValue, 12);
-        symbol += createByte(intValue, 6);
-    }
-    symbol += String.fromCharCode((intValue & 0x3F) | 0x80);
     let res = [];
     let len = symbol.length;
     let i = 0;

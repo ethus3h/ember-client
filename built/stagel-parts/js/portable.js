@@ -488,15 +488,19 @@ async function dcaToUtf8(intArrayContent) {
     strArrayVariantSettings = await utf8VariantSettings('out');
     let boolDcBasenbEnabled = false;
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
-    while (await implLt(intC, intL)) {
-        intDcAtIndex = await get(intArrayContent, intC);
-        intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+    while (await le(intC, intL)) {
+        if (await implLt(intC, intL)) {
+            intDcAtIndex = await get(intArrayContent, intC);
+            intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+        }
         if (await implEq(0, await count(intArrayTemp))) {
-            if (boolDcBasenbEnabled) {
-                intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
-            }
-            else {
-                await exportWarningUnmappable(intC, intDcAtIndex);
+            if (await implLt(intC, intL)) {
+                if (boolDcBasenbEnabled) {
+                    intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
+                }
+                else {
+                    await exportWarningUnmappable(intC, intDcAtIndex);
+                }
             }
         }
         else {
@@ -520,7 +524,9 @@ async function dcaToUtf8(intArrayContent) {
                 }
             }
         }
-        intArrayRes = await append(intArrayRes, intArrayTemp);
+        if (await implLt(intC, intL)) {
+            intArrayRes = await append(intArrayRes, intArrayTemp);
+        }
         intC = await implAdd(intC, 1);
     }
     if (await implAnd(boolDcBasenbEnabled, boolFoundAnyUnmappables)) {
@@ -728,9 +734,9 @@ async function dcaToDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaToUtf8(intArrayContent);
-    await popImportSettings(await getFormatId('utf8'));
+    await popExportSettings(await getFormatId('utf8'));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }

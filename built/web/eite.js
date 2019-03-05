@@ -2180,7 +2180,7 @@ async function runTestsFormatAsciiSafeSubset(boolV) {
 
 async function dcaToUtf8(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-STAGEL_DEBUG=2;
+
     await assertIsDcArray(intArrayContent);
     let intArrayRes = [];
     let intL = 0;
@@ -2199,15 +2199,19 @@ STAGEL_DEBUG=2;
     strArrayVariantSettings = await utf8VariantSettings('out');
     let boolDcBasenbEnabled = false;
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
-    while (await implLt(intC, intL)) {
-        intDcAtIndex = await get(intArrayContent, intC);
-        intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+    while (await le(intC, intL)) {
+        if (await implLt(intC, intL)) {
+            intDcAtIndex = await get(intArrayContent, intC);
+            intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+        }
         if (await implEq(0, await count(intArrayTemp))) {
-            if (boolDcBasenbEnabled) {
-                intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
-            }
-            else {
-                await exportWarningUnmappable(intC, intDcAtIndex);
+            if (await implLt(intC, intL)) {
+                if (boolDcBasenbEnabled) {
+                    intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
+                }
+                else {
+                    await exportWarningUnmappable(intC, intDcAtIndex);
+                }
             }
         }
         else {
@@ -2231,14 +2235,15 @@ STAGEL_DEBUG=2;
                 }
             }
         }
-        intArrayRes = await append(intArrayRes, intArrayTemp);
+        if (await implLt(intC, intL)) {
+            intArrayRes = await append(intArrayRes, intArrayTemp);
+        }
         intC = await implAdd(intC, 1);
     }
     if (await implAnd(boolDcBasenbEnabled, boolFoundAnyUnmappables)) {
         intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedEndUuid());
     }
     await assertIsByteArray(intArrayRes);
-STAGEL_DEBUG=0;
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
