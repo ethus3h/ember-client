@@ -8,6 +8,8 @@ r/an/dcaToUtf8 an/content
     new an/temp
     new n/dcAtIndex
     new an/unmappables
+    new n/unmappablesCount
+    new n/unmappablesCounter
     new as/variantSettings
     set as/variantSettings utf8VariantSettings 'out'
     new b/dcBasenbEnabled
@@ -22,9 +24,14 @@ r/an/dcaToUtf8 an/content
                 exportWarningUnmappable n/c n/dcAtIndex
         else
             if dcBasenbEnabled
-                if gt 0 count an/unmappables
+                set n/unmappablesCount count an/unmappables
+                if gt 0 n/unmappablesCount
                     # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
-                    
+                    set n/unmappablesCounter 0
+                    while lt n/unmappablesCounter n/unmappablesCount
+                        # The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first  get the bytearray for the character we're on.
+                        set n/unmappablesCounter add n/unmappablesCounter 1
+                    set an/unmappables ( )
         set an/res append an/res an/temp
         set n/c add n/c 1
     assertIsByteArray an/res
