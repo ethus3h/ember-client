@@ -32,7 +32,7 @@ function encodeCodePoint(codePoint) {
     if ((codePoint & 0xFFFFFF80) == 0) { // 1-byte sequence
         return String.fromCharCode(codePoint);
     }
-    var symbol = '';
+    let symbol = '';
     if ((codePoint & 0xFFFFF800) == 0) { // 2-byte sequence
         symbol = String.fromCharCode(((codePoint >> 6) & 0x1F) | 0xC0);
     }
@@ -56,7 +56,7 @@ function decodeSymbol() {
             throw Error('Invalid byte index');
         }
 
-        var continuationByte = byteArray[byteIndex] & 0xFF;
+        let continuationByte = byteArray[byteIndex] & 0xFF;
         byteIndex++;
 
         if ((continuationByte & 0xC0) == 0x80) {
@@ -67,11 +67,11 @@ function decodeSymbol() {
         throw Error('Invalid continuation byte');
     }
 
-    var byte1;
-    var byte2;
-    var byte3;
-    var byte4;
-    var codePoint;
+    let byte1;
+    let byte2;
+    let byte3;
+    let byte4;
+    let codePoint;
 
     if (byteIndex > byteCount) {
         throw Error('Invalid byte index');
@@ -92,7 +92,7 @@ function decodeSymbol() {
 
     // 2-byte sequence
     if ((byte1 & 0xE0) == 0xC0) {
-        var byte2 = readContinuationByte();
+        let byte2 = readContinuationByte();
         codePoint = ((byte1 & 0x1F) << 6) | byte2;
         if (codePoint >= 0x80) {
             return codePoint;
