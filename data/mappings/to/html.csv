@@ -1,5 +1,5 @@
 Dc,"HTML equivalent, if different from Unicode character mapping"
-0,"<font color=""red"">␀</font>"
+0,"<font color=""red"">&#9216;</font>"
 1,
 2,"<font color=""red"">(begin separator)</font>"
 3,"<font color=""red"">(end separator)</font>"
