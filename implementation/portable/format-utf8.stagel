@@ -105,6 +105,8 @@ r/an/dcaFromUtf8 an/content
                     if arrEq an/latestChar ( 244 143 186 144 )
                         set dcBasenbUuidMonitorState 0
                         set b/inDcBasenbSection true
+            else
+                
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
