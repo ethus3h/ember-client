@@ -17,3 +17,5 @@ cp -r ./data ./built/web/
 #cp -r ./built/wasm-common ./built/web/
 cp /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp ./LICENSE* ./built/web/
+rm ./built/web/
+cp /usr/share/javascript/PapaParse/papaparse.js ./built/web/
