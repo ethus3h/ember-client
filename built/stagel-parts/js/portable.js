@@ -531,6 +531,62 @@ async function getSettingsForFormat(strFormat, strDirection) {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
+async function getImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getImportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    strRes = await get(await getImportSettingsArr(intFormatId));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getExportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    strRes = await get(await getExportSettingsArr(intFormatId));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function pushImportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushImportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack). */
+    strArrayImportDeferredSettingsStack = await push(strArrayImportDeferredSettingsStack, await getImportSettings(intFormatId));
+    await setImportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function pushExportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushExportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack). */
+    strArrayExportDeferredSettingsStack = await push(strArrayExportDeferredSettingsStack, await getExportSettings(intFormatId));
+    await setExportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function popImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popImportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setImportSettings(intFormatId, await get(strArrayImportDeferredSettingsStack, -1));
+    strArrayImportDeferredSettingsStack = await asSubset(strArrayImportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
+}
+
+async function popExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popExportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setExportSettings(intFormatId, await get(strArrayExportDeferredSettingsStack, -1));
+    strArrayExportDeferredSettingsStack = await asSubset(strArrayExportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
+}
+
 async function settingStringToArray(strSettings) {
     await internalDebugCollect('str Settings = ' + strSettings + '; '); await internalDebugStackEnter('settingStringToArray:formats-settings'); await assertIsStr(strSettings); let strArrayReturn;
 
@@ -740,7 +796,7 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
     strState = 'normal';
     let intArrayMapTemp = [];
     while (await implLt(intInputIndex, intLen)) {
-        intArrayMapTemp = await dcToFormat('ascii', await get(intArrayDcIn, intInputIndex));
+        intArrayMapTemp = await dcToFormat('utf8', await get(intArrayDcIn, intInputIndex));
         if (await implEq(0, await count(intArrayMapTemp))) {
             intArrayTemp = await setElement(intArrayTemp, intInputIndex, -1);
         }

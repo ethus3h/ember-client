@@ -107,6 +107,8 @@ let intTotalTests = 0;
 let intArrayFrameBuffer = []; // an
 let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
+let strArrayImportDeferredSettingsStack = []; // as
+let strArrayExportDeferredSettingsStack = []; // as
 
 // Global environment
 let haveDom = false;
@@ -1284,24 +1286,24 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
     await assertIsStrArray(asReturn); return asReturn;
 }
 
-async function getImportSettings(formatId) {
-    await assertIsStrArray(importSettings); await assertIsInt(formatId)
+async function getImportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().importSettings);
 
-    return importSettings[formatId];
+    return getWindowOrSelf().importSettings;
 }
 
-async function getExportSettings(formatId) {
-    await assertIsStrArray(exportSettings); await assertIsInt(formatId);
+async function getExportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().exportSettings);
 
-    return exportSettings[formatId];
+    return getWindowOrSelf().exportSettings;
 }
 
-async function setImportSettings(strArrayNewSettings) {
-    await assertIsStrArray(strArrayNewSettings); window.importSettings=strArrayNewSettings;
+async function setImportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings); getWindowOrSelf().importSettings[formatId]=strNewSettings;
 }
 
-async function setExportSettings(strArrayNewSettings) {
-    await assertIsStrArray(strArrayNewSettings); window.exportSettings=strArrayNewSettings;
+async function setExportSettings(formatId, strNewSettings) {
+    await assertIsArray(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
 
 /* assertions, provides:
@@ -2094,6 +2096,62 @@ async function getSettingsForFormat(strFormat, strDirection) {
     }
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getImportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    strRes = await get(await getImportSettingsArr(intFormatId));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getExportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    strRes = await get(await getExportSettingsArr(intFormatId));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function pushImportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushImportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack). */
+    strArrayImportDeferredSettingsStack = await push(strArrayImportDeferredSettingsStack, await getImportSettings(intFormatId));
+    await setImportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function pushExportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushExportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack). */
+    strArrayExportDeferredSettingsStack = await push(strArrayExportDeferredSettingsStack, await getExportSettings(intFormatId));
+    await setExportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function popImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popImportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setImportSettings(intFormatId, await get(strArrayImportDeferredSettingsStack, -1));
+    strArrayImportDeferredSettingsStack = await asSubset(strArrayImportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
+}
+
+async function popExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popExportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setExportSettings(intFormatId, await get(strArrayExportDeferredSettingsStack, -1));
+    strArrayExportDeferredSettingsStack = await asSubset(strArrayExportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
 }
 
 async function settingStringToArray(strSettings) {
