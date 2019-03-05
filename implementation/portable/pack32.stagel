@@ -1,4 +1,4 @@
-# Note that the Basenb formats provided here are different from the Base16b formats in the specification, due to what appears to be a bug in the specification (requiring the remainder length to be stored to decode the remainder correctly when it starts with a 0 bit and is not 16 bits long).
+# This is an attempt at packing arbitrary 32-bit unsigned ints losslessly in a manner similar to UTF-8.
 
 r/an/byteToIntBitArray n/in
     assertIsByte n/in
