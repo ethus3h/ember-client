@@ -68,7 +68,27 @@ r/an/dcaFromUtf8 an/content
             if eq dcBasenbStartUuidMonitorState 0
                 if arrEq an/latestChar ( 244 141 129 157 )
                     set dcBasenbStartUuidMonitorState 1
-            elif eq 
+            elif eq dcBasenbStartUuidMonitorState 1
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 2
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 3
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 4
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 5
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 6
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
+            elif eq dcBasenbStartUuidMonitorState 7
+                if arrEq an/latestChar ( 244 139 182 128 )
+                    set dcBasenbStartUuidMonitorState 1
         set an/temp append an/temp an/latestChar
         set an/res append an/res dcFromFormat 'unicode' an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
