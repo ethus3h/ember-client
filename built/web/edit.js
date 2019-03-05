@@ -27,7 +27,7 @@ window.onload = function() {
         }
         //console.log(dcNames);
         // Attach click event listeners to elements
-        document.getElementById('searchDcs').onclick=function(){
+        document.getElementById('searchDcs').onclick=async function(){
             let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
             let searchQuery=document.getElementById('searchDcs').value;
             document.getElementsByClassName.forEach(function(e) {
