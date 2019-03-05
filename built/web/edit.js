@@ -347,7 +347,7 @@ async function getInputDoc(overrideEditFormat) {
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-        res = new TextDecoder().decode(new Uint8Array(await eiteCall('importDocument', ['utf8', res])));
+        res = await eiteCall('importDocument', ['utf8', res]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
     return res;
@@ -411,15 +411,15 @@ function closeAlertDialog() {
 }
 
 function importDialogEscapeListener(event) {
-        if (event.key === 'Escape') {
-            closeImportDialog();
-        }
+    if (event.key === 'Escape') {
+        closeImportDialog();
+    }
 }
 
 function alertDialogEscapeListener(event) {
-        if (event.key === 'Escape') {
-            closeAlertDialog();
-        }
+    if (event.key === 'Escape') {
+        closeAlertDialog();
+    }
 }
 
 function openImportDialog() {
