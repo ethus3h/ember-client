@@ -65,6 +65,10 @@ r/b/isBasenbBase n/base
     new b/res
     set b/res intIsBetween n/base 7 17
 
+r/b/isBasenbChar an/utf8Char
+    new b/res
+    set b/res intIsBetween n/base 7 17
+
 r/an/byteArrayToBasenbUtf8 n/base an/in
     assertIsTrue isBasenbBase n/base
     assertIsByteArray an/in
