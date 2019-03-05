@@ -2061,7 +2061,7 @@ async function dcaToDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
@@ -2073,7 +2073,7 @@ async function dcaFromDcbnbUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8', 'variants:dcBasenb,'));
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
     intArrayRes = await dcaFromUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
