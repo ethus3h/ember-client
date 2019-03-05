@@ -153,7 +153,7 @@ function handleDcEditingKeystroke(event) {
                         elem.value = elem.value.replace(char, '');
                         elem.selectionStart = start - 1;
                         elem.selectionEnd = end - 1;
-                        typeInTextareaSpaced(elem, await dcFromFormat('ascii', await strToByteArray (char)));
+                        typeInTextareaSpaced(elem, await dcFromFormat('utf8', new TextEncoder().encode(char)));
                     })(inputarea, globalCachedInputState);
                 }
             }
@@ -338,8 +338,10 @@ function typeInTextareaSpaced(el, newText) {
 
 async function getInputDoc() {
     let res;
+    if(editInts()) {
     res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
     if (!editInts()) {
+        res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
         res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
