@@ -1226,7 +1226,8 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     // Add 1 to account for header row
     rowNum = rowNum + 1;
 
-    if (rowNum >= dcData[dataset].length) {
+    // and another 1 to account for last row
+    if (rowNum + 1 >= dcData[dataset].length) {
         strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
     else {
