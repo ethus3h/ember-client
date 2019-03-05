@@ -24,11 +24,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // Encoding
-function createByte(codePoint, shift) {
-    return String.fromCharCode(((codePoint >> shift) & 0x3F) | 0x80);
-}
-
 function encodeCodePoint(codePoint) {
+    let createByte = function(codePoint, shift) {
+        return String.fromCharCode(((codePoint >> shift) & 0x3F) | 0x80);
+    }
+
     if ((codePoint & 0xFFFFFF80) == 0) { // 1-byte sequence
         return String.fromCharCode(codePoint);
     }
@@ -50,23 +50,23 @@ function encodeCodePoint(codePoint) {
 }
 
 //Decoding
-function readContinuationByte() {
-    if (byteIndex >= byteCount) {
-        throw Error('Invalid byte index');
-    }
-
-    var continuationByte = byteArray[byteIndex] & 0xFF;
-    byteIndex++;
-
-    if ((continuationByte & 0xC0) == 0x80) {
-        return continuationByte & 0x3F;
-    }
-
-    // If we end up here, it’s not a continuation byte.
-    throw Error('Invalid continuation byte');
-}
-
 function decodeSymbol() {
+    let readContinuationByte = function() {
+        if (byteIndex >= byteCount) {
+            throw Error('Invalid byte index');
+        }
+
+        var continuationByte = byteArray[byteIndex] & 0xFF;
+        byteIndex++;
+
+        if ((continuationByte & 0xC0) == 0x80) {
+            return continuationByte & 0x3F;
+        }
+
+        // If we end up here, it’s not a continuation byte.
+        throw Error('Invalid continuation byte');
+    }
+
     var byte1;
     var byte2;
     var byte3;
