@@ -2262,6 +2262,7 @@ async function dcaFromUtf8(intArrayContent) {
     let intCollectedDcBasenbCharsCount = 0;
     let intCollectedDcBasenbCharsCounter = 0;
     let intArrayCurrentUnmappableChar = [];
+    alert('ok');
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await firstCharOfUtf8String(intArrayRemaining);
