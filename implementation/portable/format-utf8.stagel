@@ -11,6 +11,8 @@ r/an/dcaToUtf8 an/content
     new n/unmappablesCount
     new n/unmappablesCounter
     new an/unmappablesIntermediatePacked
+    new b/foundAnyUnmappables
+    set b/foundAnyUnmappables false
     new as/variantSettings
     set as/variantSettings utf8VariantSettings 'out'
     new b/dcBasenbEnabled
@@ -19,12 +21,13 @@ r/an/dcaToUtf8 an/content
         set n/dcAtIndex get an/content n/c
         set an/temp dcToFormat 'utf8' n/dcAtIndex
         if eq 0 count an/temp
-            if dcBasenbEnabled
+            if b/dcBasenbEnabled
+                set b/foundAnyUnmappables true
                 set an/unmappables push an/unmappables n/dcAtIndex
             else
                 exportWarningUnmappable n/c n/dcAtIndex
         else
-            if dcBasenbEnabled
+            if b/dcBasenbEnabled
                 set n/unmappablesCount count an/unmappables
                 if gt 0 n/unmappablesCount
                     # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
@@ -38,6 +41,8 @@ r/an/dcaToUtf8 an/content
                     set an/unmappablesIntermediatePacked ( )
         set an/res append an/res an/temp
         set n/c add n/c 1
+    if and b/dcBasenbEnabled b/foundAnyUnmappables
+        set an/res append an/res getArmoredUtf8EmbeddedEndUuid
     assertIsByteArray an/res
     return an/res
 
