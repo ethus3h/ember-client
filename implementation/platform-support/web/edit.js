@@ -16,9 +16,11 @@ window.onload = function() {
         });
         document.getElementById('searchDcs').addEventListener('keyup', function(ev){
             if (ev.key === "Escape") {
-                document.getElementById('searchDcs').value="";
+                clearDcFilters();
             }
-            handleSearchResultUpdate();
+        });
+        document.getElementById('dcsShowAllButton').addEventListener('click', function(){
+            clearDcFilters();
         });
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
@@ -98,6 +100,11 @@ window.onload = function() {
     })();
 };
 
+function clearDcFilters() {
+    document.getElementById('searchDcs').value="";
+    handleSearchResultUpdate();
+}
+
 function editInts() {
     return 'integerList' === document.getElementById('editFormat').value;
 }
@@ -122,10 +129,10 @@ async function handleSearchResultUpdate() {
                     editAreaInsert(i+'');
                 }
                 else {
-                    // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
+                    // Calling editAreaInsert(await dcaToDcbnbUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
                     let temp;
-                    temp=await dcaToUtf8([i]);
-                    editAreaInsert(temp);
+                    temp=await dcaToDcbnbUtf8([i]);
+                    editAreaInsert(new TextDecoder().decode(new Uint8Array(temp)));
                 }
             };
             elem.innerHTML=window.dcNames[i]+' <small>('+i+')</small>';
@@ -287,7 +294,7 @@ async function updateNearestDcLabelInner(el) {
             currentDc=after[0];
         }
         if (currentDc !== undefined) {
-            currentDc=await dcaFromUtf8(new TextEncoder().encode(currentDc));
+            currentDc=await dcaFromDcbnbUtf8(new TextEncoder().encode(currentDc));
             currentDc=currentDc[0];
         }
     }
