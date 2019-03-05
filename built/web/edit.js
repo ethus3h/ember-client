@@ -231,7 +231,7 @@ async function updateNearestDcLabelInner(el) {
     let start = el.selectionStart;
     let end = el.selectionEnd;
     if (start !== end) {
-        setNearestDcLabel('');
+        setNearestDcLabel('', '');
         return;
     }
     let text = el.value;
@@ -254,10 +254,10 @@ async function updateNearestDcLabelInner(el) {
         }
     }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
-        setNearestDcLabel('');
+        setNearestDcLabel('', '');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
+    setNearestDcLabel(currentDc, await dcGetName(currentDc));
 }
 
 function typeInTextarea(el, newText) {
