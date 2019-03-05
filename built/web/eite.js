@@ -2394,6 +2394,7 @@ async function dcaToAsciiSafeSubset(intArrayDcIn) {
                     intArrayOut = await append(intArrayOut, await crlf());
                 }
                 else if (await isAsciiSafeSubsetChar(await get(intArrayTempChar, 0))) {
+                    alert('Appending char '+intArrayTempChar);
                     intArrayOut = await push(intArrayOut, intArrayTempChar);
                 }
                 else {
