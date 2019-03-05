@@ -148,9 +148,6 @@ body {
     display: flex;
     flex-direction: row;
 }
-#currentDcId {
-    text-align: right;
-}
 #filepicker {
     display: none;
 }
