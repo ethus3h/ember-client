@@ -64,10 +64,20 @@ r/an/byteArrayFromIntBitArray an/in
 r/b/isBasenbBase n/base
     new b/res
     set b/res intIsBetween n/base 7 17
+    return b/res
 
 r/b/isBasenbChar an/utf8Char
     new b/res
-    set b/res intIsBetween n/base 7 17
+    set b/res false
+    new n/codepoint
+    set n/codepoint unpack32 an/utf8Char
+    if intIsBetween n/codepoint 983040 1048573
+        set b/res true
+    elif intIsBetween n/codepoint 1048576 1114109
+        set b/res true
+    elif intIsBetween n/codepoint 63498 63501
+        set b/res true
+    return b/res
 
 r/an/byteArrayToBasenbUtf8 n/base an/in
     assertIsTrue isBasenbBase n/base
