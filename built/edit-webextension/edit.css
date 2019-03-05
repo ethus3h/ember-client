@@ -18,6 +18,7 @@
 #mainRow {
     display: flex;
     min-height: 50%;
+    height: 100%;
 }
 body {
     overflow: hidden;
@@ -28,7 +29,13 @@ body {
     flex-direction: column;
     overflow-x: scroll;
 }
-#DcSelection > span, .importDialog > div {
+#DcSelection > span {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
+}
+.importDialog > div {
     font-size: 1.8rem;
     font-weight: bold;
     text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
@@ -97,26 +104,35 @@ body {
     flex-direction: column;
     min-width: 0; /* needed to clip text with white-space: nowrap in #currentDcLabel */
 }
-#editorButtons, #formatOptions {
+#editorButtons, .formatOptions {
     display: flex;
     flex-direction: row;
 }
-#formatOptions > div {
+.impExpButtonColumn {
+    flex-direction: column;
+    width: 100%;
+}
+.impExpButtonColumn > button {
+    width: 100%;
+}
+.formatOptions > div {
     padding: 0.2rem;
     vertical-align: center;
     background-color: rgba(255,255,255,0.9);
+    white-space: pre;
 }
-#editorButtons > button, #formatOptions > select {
+#editorButtons > button, .formatOptions > select {
     width: 100%;
 }
-#editorButtons > button {
+#editorButtons button {
     border-width: 0;
+    font-weight: bold;
 }
 #DcSelection, #editorColumn, #eiteDocumentRoot, #inputarea {
     height: 100%;
     width: 100%;
 }
-#currentDcLabel {
+#currentDcLabelGroup {
     border-left: 0.5rem solid rgba(255,255,255,0.9);
     min-height: 1.5rem;
     background-color: rgba(255,255,255,0.9);
@@ -127,6 +143,11 @@ body {
     text-overflow: ellipsis;
     min-width: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+#currentDcLabel {
+    width: 100%;
 }
 #filepicker {
     display: none;
@@ -202,10 +223,14 @@ button {
     font-size: 1.5rem;
     padding: 0.5rem;
 }
+#DcSelection > button {
+    font-size: 1.2rem;
+    padding: 0.1rem;
+}
 .importDialog > button:last-of-type {
     border-width: 0 0 0 0;
 }
-#editorButtons > button:not(#ImportDocument)::before {
+#editorButtons button:not(#ImportDocument)::before {
     content: ' ';
     display: block;
     height: 100%;

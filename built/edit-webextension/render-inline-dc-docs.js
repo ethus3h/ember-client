@@ -13,7 +13,7 @@
         if(el.textContent.match(re)){
             let ifr=document.createElement('iframe');
             ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
-            ifr.class='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
+            ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
             ifr.src=browser.runtime.getURL('edit.html');
             el.parentNode.insertBefore(ifr, el);
             ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);

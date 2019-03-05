@@ -3,30 +3,23 @@
 globalCachedInputState="";
 window.onload = function() {
     (async function(){
-        let dcNames=[];
+        window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
-        dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
+        window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
-        for (let i=0; i<datasetLength; i++) {
-            let elem=document.createElement('button');
-            elem.onclick=async function() {
-                if (editInts()) {
-                    editAreaInsert(i+'');
-                }
-                else {
-                    // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
-                    let temp;
-                    temp=await dcaToUtf8([i]);
-                    editAreaInsert(temp);
-                }
-            };
-            elem.innerHTML=dcNames[i];
-            elem.class='dcInsertButton';
-            document.getElementById('DcSelection').appendChild(elem);
-        }
-        //console.log(dcNames);
-        // Attach click event listeners to elements
+        await handleSearchResultUpdate();
+        //console.log(window.dcNames);
+        // Attach event listeners to elements
+        document.getElementById('searchDcs').addEventListener('input', function(){
+            handleSearchResultUpdate();
+        });
+        document.getElementById('searchDcs').addEventListener('keyup', function(ev){
+            if (ev.key === "Escape") {
+                document.getElementById('searchDcs').value="";
+            }
+            handleSearchResultUpdate();
+        });
         document.getElementById('ImportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));openImportDialog();};
         document.getElementById('ExportDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));ExportDocument();};
         document.getElementById('RunDocument').onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));RunDocumentHandler();};
@@ -81,6 +74,18 @@ window.onload = function() {
             elem.innerHTML=formats[i];
             editFormat.appendChild(elem);
         }
+        window.editFormatValue=document.getElementById('editFormat').value;
+        document.getElementById('editFormat').onchange=function(){
+            startSpinner();
+            window.setTimeout(async function(){
+                let oldEditFormat=window.editFormatValue;
+                let editFormat=document.getElementById('editFormat').value;
+                window.editFormatValue=editFormat;
+                let inputarea=document.getElementById('inputarea');
+                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()])]);
+                removeSpinner(true);
+            }, 500);
+        };
         editFormat.disabled=false;
         window.setTimeout(function(){
             let overlay=document.getElementById('overlay');
@@ -95,6 +100,37 @@ window.onload = function() {
 
 function editInts() {
     return 'integerList' === document.getElementById('editFormat').value;
+}
+
+async function handleSearchResultUpdate() {
+    let searchQuery=document.getElementById('searchDcs').value;
+    let re=new RegExp('.*');
+    if (searchQuery.length !== 0) {
+        re=new RegExp(searchQuery, 'i');
+    }
+    let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+    Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
+        e.remove();
+    });
+    for (let i=0; i<datasetLength; i++) {
+        if (window.dcNames[i].match(re)) {
+            let elem=document.createElement('button');
+            elem.onclick=async function() {
+                if (editInts()) {
+                    editAreaInsert(i+'');
+                }
+                else {
+                    // Calling editAreaInsert(await dcaToUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
+                    let temp;
+                    temp=await dcaToUtf8([i]);
+                    editAreaInsert(temp);
+                }
+            };
+            elem.innerHTML=window.dcNames[i]+' <small>('+i+')</small>';
+            elem.className='dcInsertButton';
+            document.getElementById('DcSelection').appendChild(elem);
+        }
+    }
 }
 
 function handleDcEditingKeystroke(event) {
@@ -188,10 +224,12 @@ function editAreaInsert(text) {
     }
 }
 
-function setNearestDcLabel(text) {
+function setNearestDcLabel(id, text) {
     let nearestDcLabel = document.getElementById('currentDcLabel');
+    let nearestDcId = document.getElementById('currentDcId');
     nearestDcLabel.innerHTML=text;
-    nearestDcLabel.title=text;
+    nearestDcLabel.title=id + ': ' + text;
+    nearestDcId.innerHTML=id;
 }
 
 function autoformatInputArea(el) {
@@ -229,7 +267,7 @@ async function updateNearestDcLabelInner(el) {
     let start = el.selectionStart;
     let end = el.selectionEnd;
     if (start !== end) {
-        setNearestDcLabel('');
+        setNearestDcLabel('', '');
         return;
     }
     let text = el.value;
@@ -252,10 +290,10 @@ async function updateNearestDcLabelInner(el) {
         }
     }
     if (isNaN(currentDc) || (! await isKnownDc(currentDc))) {
-        setNearestDcLabel('');
+        setNearestDcLabel('', '');
         return;
     }
-    setNearestDcLabel(currentDc + ': ' + await dcGetName(currentDc));
+    setNearestDcLabel(currentDc, await dcGetName(currentDc));
 }
 
 function typeInTextarea(el, newText) {
@@ -478,7 +516,7 @@ function exportNotify(name) {
 async function ExportDocument() {
     startSpinner();
     window.setTimeout(async function(){
-        outFormat=document.getElementById('outFormat').value;
+        let outFormat=document.getElementById('outFormat').value;
         if (!await eiteCall('isSupportedOutputFormat', [outFormat])) {
             await implDie(outFormat+' is not a supported output format!');
         }

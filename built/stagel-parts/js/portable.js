@@ -2547,8 +2547,9 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     else if (await implEq(strOutFormat, 'asciiSafeSubset')) {
         intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
     }
-    /*elif eq s/outFormat 'utf8' */
-    /*    set an/ret dcaFromUtf8 an/contentBytes */
+    else if (await implEq(strOutFormat, 'utf8')) {
+        intArrayRet = await dcaFromUtf8(intArrayContentBytes);
+    }
     else if (await implEq(strOutFormat, 'html')) {
         intArrayRes = await dcaToHtml(intArrayDcArrayIn);
     }

@@ -33,28 +33,37 @@
 <section id="mainBox">
     <div id="mainRow">
         <div id="DcSelection">
-            <span>Click to insert</span>
+            <span>(Click buttons below to insert.)</span>
+            <input type="text" id="searchDcs" placeholder="Search…"/>
         </div>
         <div id="editorColumn">
-            <textarea id="inputarea" disabled="true"></textarea>
-            <div id="currentDcLabel"></div>
-            <div id="formatOptions">
-                <div>Imp: </div><select id="inFormat" disabled="true">
-                    <option value="">[not loaded]</option>
-                </select>
-                <div>Exp: </div><select id="outFormat" disabled="true">
-                    <option value="">[not loaded]</option>
-                </select>
-                <div>Edit: </div><select id="editFormat" disabled="true">
+            <div class="formatOptions">
+                <div>Edit as: </div><select id="editFormat" disabled="true">
                     <option value="">[not loaded]</option>
                 </select>
             </div>
+            <div id="currentDcLabelGroup"><div id="currentDcLabel"></div><div id="currentDcId"></div></div>
+            <textarea id="inputarea" disabled="true"></textarea>
         </div>
         <p id="eiteDocumentRoot"></p>
     </div>
     <div id="editorButtons">
-        <button disabled="true" id="ImportDocument">Import</button>
-        <button disabled="true" id="ExportDocument">Export</button>
+        <div class="impExpButtonColumn">
+            <button disabled="true" id="ImportDocument">Import</button>
+            <div class="formatOptions">
+                <div>Import as: </div><select id="inFormat" disabled="true">
+                    <option value="">[not loaded]</option>
+                </select>
+            </div>
+        </div>
+        <div class="impExpButtonColumn">
+            <button disabled="true" id="ExportDocument">Export</button>
+            <div class="formatOptions">
+                <div>Export as: </div><select id="outFormat" disabled="true">
+                    <option value="">[not loaded]</option>
+                </select>
+            </div>
+        </div>
         <button disabled="true" id="RunDocument">Run</button>
     </div>
 </section>
