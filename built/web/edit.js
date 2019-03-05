@@ -3,7 +3,7 @@
 globalCachedInputState="";
 window.onload = function() {
     (async function(){
-        let window.dcNames=[];
+        window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
