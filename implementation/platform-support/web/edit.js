@@ -105,8 +105,10 @@ function editInts() {
 async function handleSearchResultUpdate() {
     let searchQuery=document.getElementById('searchDcs').value;
     let re=new RegExp('.*');
+    document.getElementById('dcsShowAllButton').style.display='none';
     if (searchQuery.length !== 0) {
         re=new RegExp(searchQuery, 'i');
+        document.getElementById('dcsShowAllButton').style.display='block';
     }
     let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
     Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
