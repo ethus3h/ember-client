@@ -74,6 +74,7 @@ let messageEventHandler = function(message) {
         eiteReadyCallback(message);
     });
 };
+document.addEventListener('message', messageEventHandler);
 window.addEventListener('message', messageEventHandler);
 
 // @license-end
