@@ -2129,7 +2129,7 @@ async function getImportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getImportSettingsArr()))) {
-        strRes = await get(await getImportSettingsArr(intFormatId));
+        strRes = await get(await getImportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';
@@ -2143,7 +2143,7 @@ async function getExportSettings(intFormatId) {
 
     let strRes = '';
     if (await implLt(intFormatId, await count(await getExportSettingsArr()))) {
-        strRes = await get(await getExportSettingsArr(intFormatId));
+        strRes = await get(await getExportSettingsArr(), intFormatId);
     }
     else {
         strRes = '';
