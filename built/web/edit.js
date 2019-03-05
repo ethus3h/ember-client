@@ -133,7 +133,7 @@ async function handleSearchResultUpdate() {
                     let temp;
                     temp=await dcaToUtf8([i]);
                     console.log(temp);
-                    editAreaInsert(new TextDecoder().decode(new Uint8Array(await strFromByteArray(temp))));
+                    editAreaInsert(new TextDecoder().decode(new Uint8Array(temp)));
                 }
             };
             elem.innerHTML=window.dcNames[i]+' <small>('+i+')</small>';
