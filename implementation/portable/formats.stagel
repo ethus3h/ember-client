@@ -28,7 +28,7 @@ r/an/dcaToFormat s/outFormat an/dcArrayIn
     elif eq s/outFormat 'asciiSafeSubset'
         set an/res dcaToAsciiSafeSubset an/dcArrayIn
     elif eq s/outFormat 'utf8'
-        set an/ret dcaFromUtf8 an/dcArrayIn
+        set an/ret dcaToUtf8 an/dcArrayIn
     elif eq s/outFormat 'html'
         set an/res dcaToHtml an/dcArrayIn
     elif eq s/outFormat 'htmlFragment'
