@@ -1309,6 +1309,145 @@ async function setExportSettings(formatId, strNewSettings) {
     await assertIsArray(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
 
+// Based on https://web.archive.org/web/20190305073920/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/wtf-8.js
+// This code for wtf8 is included under the following license (from https://web.archive.org/web/20190305074047/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/LICENSE-MIT.txt):
+/*
+Copyright Mathias Bynens <https://mathiasbynens.be/>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+// Encoding
+function intArrayPackWtf8(intValue) {
+    let createByte = function(intValue, shift) {
+        return String.fromCharCode(((intValue >> shift) & 0x3F) | 0x80);
+    }
+
+    if ((intValue & 0xFFFFFF80) == 0) { // 1-byte sequence
+        return String.fromCharCode(intValue);
+    }
+    let symbol = '';
+    if ((intValue & 0xFFFFF800) == 0) { // 2-byte sequence
+        symbol = String.fromCharCode(((intValue >> 6) & 0x1F) | 0xC0);
+    }
+    else if ((intValue & 0xFFFF0000) == 0) { // 3-byte sequence
+        symbol = String.fromCharCode(((intValue >> 12) & 0x0F) | 0xE0);
+        symbol += createByte(intValue, 6);
+    }
+    else if ((intValue & 0xFFE00000) == 0) { // 4-byte sequence
+        symbol = String.fromCharCode(((intValue >> 18) & 0x07) | 0xF0);
+        symbol += createByte(intValue, 12);
+        symbol += createByte(intValue, 6);
+    }
+    symbol += String.fromCharCode((intValue & 0x3F) | 0x80);
+    let res = [];
+    let len = symbol.length;
+    let i = 0;
+    while (i<len) {
+        res.push(symbol.charCodeAt(i));
+        i = i+1;
+    }
+    return res;
+}
+
+//Decoding
+function intUnpackWtf8(byteArrayInput) {
+    let byteIndex = 0;
+    let byteCount = byteArrayInput.length;
+    let readContinuationByte = function() {
+        if (byteIndex >= byteCount) {
+            throw Error('Invalid byte index');
+        }
+
+        let continuationByte = byteArrayInput[byteIndex] & 0xFF;
+        byteIndex++;
+
+        if ((continuationByte & 0xC0) == 0x80) {
+            return continuationByte & 0x3F;
+        }
+
+        // If we end up here, it’s not a continuation byte.
+        throw Error('Invalid continuation byte');
+    }
+
+    let byte1;
+    let byte2;
+    let byte3;
+    let byte4;
+    let intValue;
+
+    if (byteIndex > byteCount) {
+        throw Error('Invalid byte index');
+    }
+
+    if (byteIndex == byteCount) {
+        return false;
+    }
+
+    // Read the first byte.
+    byte1 = byteArrayInput[byteIndex] & 0xFF;
+    byteIndex++;
+
+    // 1-byte sequence (no continuation bytes)
+    if ((byte1 & 0x80) == 0) {
+        return byte1;
+    }
+
+    // 2-byte sequence
+    if ((byte1 & 0xE0) == 0xC0) {
+        let byte2 = readContinuationByte();
+        intValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (intValue >= 0x80) {
+            return intValue;
+        } else {
+            throw Error('Invalid continuation byte');
+        }
+    }
+
+    // 3-byte sequence (may include unpaired surrogates)
+    if ((byte1 & 0xF0) == 0xE0) {
+        byte2 = readContinuationByte();
+        byte3 = readContinuationByte();
+        intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (intValue >= 0x0800) {
+            return intValue;
+        } else {
+            throw Error('Invalid continuation byte');
+        }
+    }
+
+    // 4-byte sequence
+    if ((byte1 & 0xF8) == 0xF0) {
+        byte2 = readContinuationByte();
+        byte3 = readContinuationByte();
+        byte4 = readContinuationByte();
+        intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+            (byte3 << 0x06) | byte4;
+        if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
+            return intValue;
+        }
+    }
+
+    throw Error('Invalid WTF-8 detected');
+}
+
 /* assertions, provides:
     assertIsBool
     assertIsTrue
@@ -1661,6 +1800,28 @@ async function isBasenbBase(intBase) {
 
     let boolRes = false;
     boolRes = await intIsBetween(intBase, 7, 17);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBasenbChar(intArrayUtf8Char) {
+    await internalDebugCollect('intArray Utf8Char = ' + intArrayUtf8Char + '; '); await internalDebugStackEnter('isBasenbChar:basenb-utf8'); await assertIsIntArray(intArrayUtf8Char); let boolReturn;
+
+    let boolRes = false;
+    boolRes = false;
+    let intCodepoint = 0;
+    intCodepoint = await unpack32(intArrayUtf8Char);
+    if (await intIsBetween(intCodepoint, 983040, 1048573)) {
+        boolRes = true;
+    }
+    else if (await intIsBetween(intCodepoint, 1048576, 1114109)) {
+        boolRes = true;
+    }
+    else if (await intIsBetween(intCodepoint, 63498, 63501)) {
+        boolRes = true;
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
@@ -2026,14 +2187,53 @@ async function dcaToUtf8(intArrayContent) {
     intC = 0;
     let intArrayTemp = [];
     let intDcAtIndex = 0;
+    let intArrayUnmappables = [];
+    let intUnmappablesCount = 0;
+    let intUnmappablesCounter = 0;
+    let intArrayUnmappablesIntermediatePacked = [];
+    let boolFoundAnyUnmappables = false;
+    boolFoundAnyUnmappables = false;
+    let strArrayVariantSettings = [];
+    strArrayVariantSettings = await utf8VariantSettings('out');
+    let boolDcBasenbEnabled = false;
+    boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
     while (await implLt(intC, intL)) {
         intDcAtIndex = await get(intArrayContent, intC);
         intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         if (await implEq(0, await count(intArrayTemp))) {
-            await exportWarningUnmappable(intC, intDcAtIndex);
+            if (boolDcBasenbEnabled) {
+                intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
+            }
+            else {
+                await exportWarningUnmappable(intC, intDcAtIndex);
+            }
+        }
+        else {
+            if (boolDcBasenbEnabled) {
+                intUnmappablesCount = await count(intArrayUnmappables);
+                if (await implGt(0, intUnmappablesCount)) {
+                    if (await implNot(boolFoundAnyUnmappables)) {
+                        intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
+                    }
+                    boolFoundAnyUnmappables = true;
+                    /* We've gotten to the end of a string of unmappable characters, so convert them to PUA characters */
+                    intUnmappablesCounter = 0;
+                    while (await implLt(intUnmappablesCounter, intUnmappablesCount)) {
+                        /* The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first  get the bytearray for the character we're on. */
+                        intArrayUnmappablesIntermediatePacked = await append(intArrayUnmappablesIntermediatePacked, await pack32(await get(intArrayUnmappables, intUnmappablesCounter)));
+                        intUnmappablesCounter = await implAdd(intUnmappablesCounter, 1);
+                    }
+                    intArrayRes = await append(intArrayRes, await bytearrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
+                    intArrayUnmappables = [  ];
+                    intArrayUnmappablesIntermediatePacked = [  ];
+                }
+            }
         }
         intArrayRes = await append(intArrayRes, intArrayTemp);
         intC = await implAdd(intC, 1);
+    }
+    if (await implAnd(boolDcBasenbEnabled, boolFoundAnyUnmappables)) {
+        intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedEndUuid());
     }
     await assertIsByteArray(intArrayRes);
 
@@ -2047,40 +2247,29 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayRemaining = [];
     intArrayRemaining = intArrayContent;
     let intArrayTemp = [];
+    let intArrayLatestChar = [];
+    let intDcBasenbUuidMonitorState = 0;
+    intDcBasenbUuidMonitorState = 0;
+    let strArrayVariantSettings = [];
+    strArrayVariantSettings = await utf8VariantSettings('in');
+    let boolDcBasenbEnabled = false;
+    boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
+    let boolInDcBasenbSection = false;
+    boolInDcBasenbSection = false;
+    let boolSkipNextChar = false;
+    boolSkipNextChar = false;
+    let intArrayCollectedDcBasenbChars = [];
+    let intCollectedDcBasenbCharsCount = 0;
+    let intCollectedDcBasenbCharsCounter = 0;
+    let intArrayCurrentUnmappableChar = [];
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
-        intArrayTemp = await push(intArrayTemp, await firstCharOfUtf8String(intArrayRemaining));
-        intArrayRes = await push(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
-        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
-    }
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function dcaToDcbnbUtf8(intArrayContent) {
-    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToDcbnbUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-
-    /* convenience wrapper */
-    let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
-    intArrayRes = await dcaToUtf8(intArrayContent);
-    await popImportSettings(await getFormatId('utf8'));
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function dcaFromDcbnbUtf8(intArrayContent) {
-    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromDcbnbUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
-
-    /* convenience wrapper */
-    let intArrayRes = [];
-    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
-    intArrayRes = await dcaFromUtf8(intArrayContent);
-    await popImportSettings(await getFormatId('utf8'));
-
-    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
+        intArrayLatestChar = await firstCharOfUtf8String(intArrayRemaining);
+        if (boolDcBasenbEnabled) {
+            if (await implNot(boolInDcBasenbSection)) {
+                /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
+                if (await implEq(await dcBasenbUuidMonitorState(0))) {
+                    if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-ascii-tests'); await assertIsBool(boolV);
 
@@ -2089,6 +2278,26 @@ async function runTestsFormatAscii(boolV) {
     await runTest(boolV, await arrEq([ 0, 5, 10, 15, 20, 25, 30, 35, 40 ], await dcaToAscii([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 26 ])));
 
     await internalDebugStackExit();
+}
+
+/* This is an attempt at packing arbitrary 32-bit unsigned? ints losslessly in a manner similar to UTF-8. For now, it is simply a wrapper around WTF-8 (UTF-8 but allowing unpaired surrogates). Consequently, it only supports a chunk of the 32 bit numbers. Later it can be extended to support all. Note that these functions take *signed* ints as input at least for the moment. */
+
+async function pack32(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('pack32:pack32'); await assertIsInt(intIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await intArrayPackWtf8(intIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function unpack32(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('unpack32:pack32'); await assertIsIntArray(intArrayIn); let intReturn;
+
+    let intRes = 0;
+    intRes = await intUnpackWtf8(intArrayIn);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function getSettingForFormat(strFormat, strDirection, strSettingKey) {
@@ -3298,6 +3507,7 @@ async function runTestsOnly(boolV) {
     /* General tests */
     /*runTestsBits b/v */
     await runTestsMath(boolV);
+    await runTestsPack32(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
     await runTestsDcData(boolV);
@@ -4075,6 +4285,19 @@ async function dcaToHtml(intArrayDcIn) {
     await assertIsByteArray(intArrayOut);
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsPack32(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsPack32:pack32-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'pack32');
+    await runTest(boolV, await implEq(0, await unpack32(await pack32(0))));
+    await runTest(boolV, await implEq(10, await unpack32(await pack32(10))));
+    await runTest(boolV, await implEq(100, await unpack32(await pack32(100))));
+    await runTest(boolV, await implEq(1000, await unpack32(await pack32(1000))));
+    await runTest(boolV, await implEq(10000, await unpack32(await pack32(10000))));
+
+    await internalDebugStackExit();
 }
 
 async function runTestsFormatIntegerList(boolV) {

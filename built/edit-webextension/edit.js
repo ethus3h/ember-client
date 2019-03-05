@@ -83,7 +83,7 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', [oldEditFormat, editFormat, await getInputDoc()])]);
+                inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)])]);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
@@ -105,8 +105,11 @@ function clearDcFilters() {
     handleSearchResultUpdate();
 }
 
-function editInts() {
-    return 'integerList' === document.getElementById('editFormat').value;
+function editInts(overrideEditFormat) {
+    if (overrideEditFormat === undefined) {
+        overrideEditFormat=document.getElementById('editFormat').value;
+    }
+    return 'integerList' === overrideEditFormat;
 }
 
 async function handleSearchResultUpdate() {
@@ -153,7 +156,7 @@ function handleDcEditingKeystroke(event) {
                         elem.value = elem.value.replace(char, '');
                         elem.selectionStart = start - 1;
                         elem.selectionEnd = end - 1;
-                        typeInTextareaSpaced(elem, await dcFromFormat('utf8', new TextEncoder().encode(char)));
+                        typeInTextareaSpaced(elem, await printArr(await dcaFromFormat('utf8', new TextEncoder().encode(char))));
                     })(inputarea, globalCachedInputState);
                 }
             }
@@ -336,18 +339,18 @@ function typeInTextareaSpaced(el, newText) {
     el.focus();
 }
 
-async function getInputDoc() {
+async function getInputDoc(overrideEditFormat) {
     let res;
-    if(editInts()) {
-        res = await eiteCall('strToByteArray', [document.getElementById('inputarea').value]);
+    if(editInts(overrideEditFormat)) {
+        res = document.getElementById('inputarea').value;
     }
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
         await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-        res = await eiteCall('strToByteArray', [await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])])]);
+        res = await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
-    return res;
+    return await eiteCall('strToByteArray', [res]);
 }
 
 async function RunDocumentHandler(callback) {
@@ -408,15 +411,15 @@ function closeAlertDialog() {
 }
 
 function importDialogEscapeListener(event) {
-        if (event.key === 'Escape') {
-            closeImportDialog();
-        }
+    if (event.key === 'Escape') {
+        closeImportDialog();
+    }
 }
 
 function alertDialogEscapeListener(event) {
-        if (event.key === 'Escape') {
-            closeAlertDialog();
-        }
+    if (event.key === 'Escape') {
+        closeAlertDialog();
+    }
 }
 
 function openImportDialog() {
