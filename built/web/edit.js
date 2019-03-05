@@ -22,20 +22,18 @@ window.onload = function() {
                 }
             };
             elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
-            elem.class='dcInsertButton';
+            elem.className='dcInsertButton';
             document.getElementById('DcSelection').appendChild(elem);
         }
         //console.log(dcNames);
         // Attach click event listeners to elements
         document.getElementById('searchDcs').addEventListener('input', async function(){
             let searchQuery=document.getElementById('searchDcs').value;
-            console.log(searchQuery);
             if (searchQuery.length !== 0) {
                 let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
                 Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
                     e.remove();
                 });
-                console.log(document.getElementById('DcSelection').innerHTML);
                 for (let i=0; i<datasetLength; i++) {
                     if (dcNames[i].match(new RegExp(searchQuery))) {
                         let elem=document.createElement('button');
@@ -51,7 +49,7 @@ window.onload = function() {
                             }
                         };
                         elem.innerHTML=dcNames[i]+' <small>('+i+')</small>';
-                        elem.class='dcInsertButton';
+                        elem.className='dcInsertButton';
                         document.getElementById('DcSelection').appendChild(elem);
                     }
                 }
