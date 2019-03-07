@@ -5241,7 +5241,7 @@ async function dcaFromSems(intArrayContent) {
         }
         intArrayRet = await push(intArrayRet, 248);
     }
-    elseif (await ne(0, await len(strCurrentDc))) {
+    else if (await ne(0, await len(strCurrentDc))) {
         if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
             await implDie('No trailing space present in sems format while importing. This is not allowed in strict mode.');
         }
