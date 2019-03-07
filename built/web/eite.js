@@ -2208,6 +2208,7 @@ async function dcaToUtf8(intArrayContent) {
         if (await implEq(0, await count(intArrayTemp))) {
             if (await implLt(intC, intL)) {
                 if (boolDcBasenbEnabled) {
+            console.log(intDcAtIndex+','+intArrayTemp+','+intC+','+intL);
                     intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
                 }
                 else {
