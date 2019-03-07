@@ -3700,6 +3700,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
+    await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3708,7 +3709,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatDc(boolV);
     /* Format tests */
     await runTestsFormatAscii(boolV);
-    await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
