@@ -17,6 +17,8 @@ debugBuild="--no-debug"
 if [[ "$1" == "--debug" ]]; then
     debugBuild="--debug"
     shift
+elif [[ "$1" == "--no-debug" ]]; then
+    shift
 fi
 
 distBuild="false"

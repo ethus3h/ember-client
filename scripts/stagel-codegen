@@ -7,10 +7,18 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Takes parsed StageL tokens from standard input, and prints out equivalent code in the language of the first argument (bash/js).
 
+debugBuild="--no-debug"
+if [[ "$1" == "--debug" ]]; then
+    debugBuild="--debug"
+    shift
+elif [[ "$1" == "--no-debug" ]]; then
+    shift
+fi
+
 targetLang="$1"
-noDebug="$2"
+
 generateDebugCode() {
-    if [[ "$noDebug" == "--no-debug" ]]; then
+    if [[ "$debugBuild" == "--no-debug" ]]; then
         return 1
     fi
     return 0
