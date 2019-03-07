@@ -295,7 +295,7 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 291,Yellow,0,BN,,!Cx,Colors,,,
 292,Black,0,BN,,!Cx,Colors,,,
 293,White,0,BN,,!Cx,Colors,,,
-294,New line within paragraph,0,B,,Cc,Punctuation,,"This is the Unicode U+2028. It refers to a non-paragraph-separator newline, usually within a paragraph.",
+294,New line within paragraph,0,WS,,Zl,Punctuation,,"This is the Unicode U+2028. It refers to a non-paragraph-separator newline, usually within a paragraph.",
 295,Paragraph separator,0,B,,Zp,Punctuation,,This is the Unicode U+2029.,
 296,,,,,,,,,
 297,,,,,,,,,

@@ -26,7 +26,7 @@ r/b/dcIsNewline n/dc
     #if eq 'B' dcGetBidiClass n/dc
     #    return true
     # because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator).
-    if contains (  ) n/dc
+    if contains ( 119 120 121 240 294 295 ) n/dc
         return true
     return false
 
