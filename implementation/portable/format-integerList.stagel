@@ -21,6 +21,9 @@ r/an/dcaFromIntegerList an/content
         else
             die 'Unexpected parser state in integerList document.'
         set n/byteOffset add n/byteOffset 1
+    if ne 0 len s/currentDc
+        # Ended without a trailing space
+        set an/ret push an/ret intFromIntStr s/currentDc
     assertIsDcArray an/ret
     return an/ret
 
