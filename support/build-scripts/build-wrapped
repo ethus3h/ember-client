@@ -12,6 +12,7 @@ if [[ "$1" == "--debug" ]]; then
     debugBuild="--debug"
     shift
 elif [[ "$1" == "--no-debug" ]]; then
+    debugBuild="--no-debug"
     shift
 fi
 
