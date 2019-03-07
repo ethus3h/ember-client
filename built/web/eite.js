@@ -2203,6 +2203,7 @@ async function dcaToUtf8(intArrayContent) {
         if (await implLt(intC, intL)) {
             intDcAtIndex = await get(intArrayContent, intC);
             intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+            alert(intDcAtIndex+','+intArrayTemp);
         }
         if (await implEq(0, await count(intArrayTemp))) {
             if (await implLt(intC, intL)) {
