@@ -5,11 +5,19 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+debugBuild="--no-debug"
+if [[ "$1" == "--debug" ]]; then
+    debugBuild="--debug"
+    shift
+elif [[ "$1" == "--no-debug" ]]; then
+    shift
+fi
+
 [[ -z "$2" ]] && die "No target language given."
 
 if [[ -f "./scripts/stagel-convert" ]]; then
-    ./scripts/stagel-convert "$1" "$2" >> ./implementation/portable/portable."$2"
+    ./scripts/stagel-convert "$debugBuild" "$1" "$2" >> ./implementation/portable/portable."$2"
 else
-    stagel-convert "$1" "$2" >> ./implementation/portable/portable."$2"
+    stagel-convert "$debugBuild" "$1" "$2" >> ./implementation/portable/portable."$2"
 fi
 echo >> ./implementation/portable/portable."$2"
