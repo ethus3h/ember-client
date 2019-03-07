@@ -3700,6 +3700,8 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
+    await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3712,8 +3714,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
-    await runTestsFormatSems(boolV);
-    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
