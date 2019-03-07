@@ -7,6 +7,14 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the StageL library. Also build StageR while we're at it.
 
+debugBuild="--no-debug"
+if [[ "$1" == "--debug" ]]; then
+    debugBuild="--debug"
+    shift
+elif [[ "$1" == "--no-debug" ]]; then
+    shift
+fi
+
 slcmd="./support/build-scripts/build-stagel-inner"
 #[[ -f "./stagel-build-internal-stagel-inner" ]] && slcmd=./"$slcmd"
 srcmd="./support/build-scripts/build-stager-inner"
@@ -38,7 +46,7 @@ for (( i=0; i<targetCount; i++ )); do
 
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/portable/portable."${targets[$i]}"
 
-    find ./implementation/portable/ -name '*.stagel' -exec "$srcmd" {} "${targets[$i]}" \;
+    find ./implementation/portable/ -name '*.stagel' -exec "$srcmd" "$debugBuild" {} "${targets[$i]}" \;
 
     echo $'\n''// @license-end' >> ./implementation/portable/portable."${targets[$i]}"
 

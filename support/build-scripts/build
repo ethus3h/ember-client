@@ -13,6 +13,12 @@ mkdir ./built
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
+debugBuild="--no-debug"
+if [[ "$1" == "--debug" ]]; then
+    debugBuild="--debug"
+    shift
+fi
+
 distBuild="false"
 if [[ "$1" == "--dist-build" ]]; then
     distBuild="true"
@@ -22,17 +28,17 @@ fi
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
-    "$sicmd" "$@"
+    "$sicmd" "$debugBuild" "$@"
     [[ "$distBuild" == "true" ]] && ./support/dist-build
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
-    "$sicmd" "$@" &> /dev/null
+    "$sicmd" "$debugBuild" "$@" &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/dist-build
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 else
-    "$sicmd" "$@" &> /dev/null
+    "$sicmd" "$debugBuild" "$@" &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/dist-build &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common &> /dev/null
 fi
