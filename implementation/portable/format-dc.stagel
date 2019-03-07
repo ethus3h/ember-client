@@ -21,8 +21,11 @@ r/n/maximumKnownDc
 
 r/b/dcIsNewline n/dc
     assertIsDc n/dc
-    if eq 'B' dcGetBidiClass n/dc
-        return true
+    # This function returns whether a character should be treated as a newline, in general. Individual characters may have more complex or ambiguous meanings (see details in DcData.csv), but this is useful as a general guide.
+    # We can't just use:
+    #if eq 'B' dcGetBidiClass n/dc
+    #    return true
+    # because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator).
     return false
 
 r/b/dcIsSpace n/dc
