@@ -24,7 +24,9 @@ r/an/dcaFromSems an/content
             elif eq 35 n/currentByte
                 # pound sign: start comment
                 if ne 0 len s/currentDc
-                    # Comment was not preceded by a trailing space
+                    # Comment was not preceded by a space
+                    if eq 'true' getSettingForFormat 'sems' 'in' 'strict'
+                        die 'No trailing space present in sems format while importing. This is not allowed in strict mode.'
                     set an/ret push an/ret intFromIntStr s/currentDc
                 set an/ret push an/ret 246
                 set s/parserState 'comment'
@@ -41,8 +43,12 @@ r/an/dcaFromSems an/content
         set n/byteOffset add n/byteOffset 1
     if eq s/parserState 'comment'
         # Document ended with a comment and no newline at the end
+        if ne 0 len s/currentDc
+            die 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.'
         set an/ret push an/ret 248
     else if ne 0 len s/currentDc
+        if eq 'true' getSettingForFormat 'sems' 'in' 'strict'
+            die 'No trailing space present in sems format while importing. This is not allowed in strict mode.'
         # Ended without a trailing space
         set an/ret push an/ret intFromIntStr s/currentDc
     assertIsDcArray an/ret
