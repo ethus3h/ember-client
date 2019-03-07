@@ -2420,7 +2420,11 @@ async function dcaFromUtf8(intArrayContent) {
         }
         else {
             intArrayTemp = await append(intArrayTemp, intArrayLatestChar);
-            intArrayRes = await append(intArrayRes, await dcFromFormat('unicode', intArrayTemp));
+            let intArrayTempFromUnicode = [];
+            intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
+            if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
+                intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
+            }
         }
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
     }
@@ -4653,7 +4657,9 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
-            await implDie(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
+            await implWarn(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
+
+            intArrayReturn = [ -1 ]; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
