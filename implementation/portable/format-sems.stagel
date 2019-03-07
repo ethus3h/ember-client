@@ -41,3 +41,17 @@ r/an/dcaFromSems an/content
         set an/ret push an/ret 248
     assertIsDcArray an/ret
     return an/ret
+
+r/an/dcaToSems an/dcIn
+    assertIsDcArray an/dcIn
+    # TODO: Support SEMS comment roundtripping
+    new an/out
+    new n/len
+    set n/len count an/dcIn
+    new n/inputIndex
+    set n/inputIndex 0
+    while lt n/inputIndex n/len
+        set an/out push an/out strToByteArray cat strFrom get an/dcIn n/inputIndex } } ' '
+        set n/inputIndex add n/inputIndex 1
+    assertIsByteArray an/out
+    return an/out
