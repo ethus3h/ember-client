@@ -8,6 +8,11 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Takes parsed StageL tokens from standard input, and prints out equivalent code in the language of the first argument (bash/js).
 
 targetLang="$1"
+noDebug="$2"
+generateDebugCode="true"
+if [[ "$noDebug" == "--no-debug" ]]; then
+    generateDebugCode="false"
+fi
 
 # Read token data into tokens array
 

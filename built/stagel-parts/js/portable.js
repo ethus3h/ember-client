@@ -2135,7 +2135,7 @@ async function runTestsFormatSems(boolV) {
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToSems([ 1, 2 ])));
     /* TODO: Support comment preservation */
     /*runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 ) */
-    /*runTest b/v arrEq ( 49 32 50 ) dcaToSems ( 1 2 ) */
+    /*runTest b/v arrEq ( 49 32 50 32 ) dcaToSems ( 1 2 ) */
 
     await internalDebugStackExit();
 }
@@ -2791,6 +2791,8 @@ async function runTestsFormatUtf8(boolV) {
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid())))))));
+    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])))));
 
     await internalDebugStackExit();
 }
@@ -3493,6 +3495,13 @@ async function dcaFromSems(intArrayContent) {
             }
             else if (await implEq(35, intCurrentByte)) {
                 /* pound sign: start comment */
+                if (await ne(0, await len(strCurrentDc))) {
+                    /* Comment was not preceded by a space */
+                    if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
+                        await implDie('No trailing space present in sems format while importing. This is not allowed in strict mode.');
+                    }
+                    intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+                }
                 intArrayRet = await push(intArrayRet, 246);
                 strParserState = 'comment';
             }
@@ -3516,7 +3525,17 @@ async function dcaFromSems(intArrayContent) {
     }
     if (await implEq(strParserState, 'comment')) {
         /* Document ended with a comment and no newline at the end */
+        if (await ne(0, await len(strCurrentDc))) {
+            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.');
+        }
         intArrayRet = await push(intArrayRet, 248);
+    }
+    elseif (await ne(0, await len(strCurrentDc))) {
+        if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
+            await implDie('No trailing space present in sems format while importing. This is not allowed in strict mode.');
+        }
+        /* Ended without a trailing space */
+        intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
     }
     await assertIsDcArray(intArrayRet);
 

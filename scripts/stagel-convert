@@ -9,6 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 inputFile="$(readlink -f "$1")"
 targetLang="$2"
+noDebug="$3" # pass --no-debug to not include debugging information in the generated code
 
 # Try to cd to the directory the stagel-convert script is stored in. Based on https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
@@ -19,4 +20,4 @@ parseCmd="stagel-parse"
 codegenCmd="stagel-codegen"
 [[ -f "./stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
 
-"$parseCmd" -q "$inputFile" | "$codegenCmd" "$targetLang"
+"$parseCmd" -q "$inputFile" | "$codegenCmd" "$targetLang" "$noDebug"
