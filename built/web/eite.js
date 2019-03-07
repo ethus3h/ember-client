@@ -4653,7 +4653,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
-            await implDie(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
+            await implWarn(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
