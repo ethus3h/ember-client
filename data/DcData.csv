@@ -297,6 +297,6 @@ ID,Name (!=deprecated),◌,⇆,Aa,Type,Script,"Aliases; >=xref, <=decompos., :=D
 293,White,0,BN,,!Cx,Colors,,,
 294,Paragraph separator,0,B,,Zp,Punctuation,,,
 295,New line within paragraph,0,B,,Cc,Punctuation,<variant>119,,
-296,,,,,,,,,
+296,Next line,0,B,,Cc,Punctuation,<compat>119,This is the Unicode U+0085. It is provided distinct from 119 to allow referencing it specifically as the various newline characters’ meanings are complicated.,
 297,,,,,,,,,
 298,,,,,,,,,
