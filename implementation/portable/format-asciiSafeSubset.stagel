@@ -65,7 +65,8 @@ r/an/dcaToAsciiSafeSubset an/dcIn
             if eq 0 count an/tempChar
                 exportWarningUnmappable n/inputIndex n/dcAtIndex
             else
-                if dcIsNewline n/dcAtIndex
+                if contains ( 120 121 ) n/dcAtIndex
+                    # 
                     set an/out append an/out crlf
                 elif isAsciiSafeSubsetChar get an/tempChar 0
                     set an/out push an/out an/tempChar
