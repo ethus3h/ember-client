@@ -3523,6 +3523,25 @@ async function dcaFromSems(intArrayContent) {
     intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function dcaToSems(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToSems:format-sems'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    /* TODO: Support SEMS comment roundtripping */
+    let intArrayOut = [];
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    while (await implLt(intInputIndex, intLen)) {
+        intArrayOut = await push(intArrayOut, await strToByteArray(await implCat(await strFrom(await get(intArrayDcIn, intInputIndex), ), ' ')));
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function runTestsDcData(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsDcData:dc-data-tests'); await assertIsBool(boolV);
 
