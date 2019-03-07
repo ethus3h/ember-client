@@ -23,6 +23,8 @@ r/an/dcaFromIntegerList an/content
         set n/byteOffset add n/byteOffset 1
     if ne 0 len s/currentDc
         # Ended without a trailing space
+        if eq 'true' getSettingForFormat 'integerList' 'in' 'strict'
+            die 'No trailing space present in integerList format while importing. This is not allowed in strict mode.'
         set an/ret push an/ret intFromIntStr s/currentDc
     assertIsDcArray an/ret
     return an/ret
