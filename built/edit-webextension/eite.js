@@ -1993,7 +1993,7 @@ async function runTestsFormatHtmlFragment(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtmlFragment:format-htmlFragment-tests'); await assertIsBool(boolV);
 
     await testing(boolV, 'formatHtmlFragment');
-    await runTest(boolV, await arrEq([ 53, 38, 108, 116, 59, 54 ], await dcaToHtmlFragment([ 39, 46, 40 ])));
+    await runTest(boolV, await arrEq(await strToByteArray('<div style="white-space:pre-wrap">5&lt;6</div>'), await dcaToHtmlFragment([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
 }
@@ -4766,7 +4766,12 @@ async function dcIsNewline(intDc) {
     await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsNewline:format-dc'); await assertIsInt(intDc); let boolReturn;
 
     await assertIsDc(intDc);
-    if (await implEq('B', await dcGetBidiClass(intDc))) {
+    /* This function returns whether a character should be treated as a newline, in general. Individual characters may have more complex or ambiguous meanings (see details in DcData.csv), but this is useful as a general guide. */
+    /* We can't just use: */
+    /*if eq 'B' dcGetBidiClass n/dc */
+    /*    return true */
+    /* because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator). */
+    if (await contains([ 119, 120, 121, 240, 294, 295 ], intDc)) {
 
         boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
     }
@@ -4810,7 +4815,7 @@ async function runTestsFormatHtml(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatHtml:format-html-tests'); await assertIsBool(boolV);
 
     await testing(boolV, 'formatHtml');
-    await runTest(boolV, await arrEq(await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body>5&lt;6</body></html>'), await dcaToHtml([ 39, 46, 40 ])));
+    await runTest(boolV, await arrEq(await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body><div style="white-space:pre-wrap">5&lt;6</div></body></html>'), await dcaToHtml([ 39, 46, 40 ])));
 
     await internalDebugStackExit();
 }
