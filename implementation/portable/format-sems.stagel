@@ -23,6 +23,9 @@ r/an/dcaFromSems an/content
                 set s/currentDc ''
             elif eq 35 n/currentByte
                 # pound sign: start comment
+                if ne 0 len s/currentDc
+                    # Comment was not preceded by a trailing space
+                    set an/ret push an/ret intFromIntStr s/currentDc
                 set an/ret push an/ret 246
                 set s/parserState 'comment'
             else
