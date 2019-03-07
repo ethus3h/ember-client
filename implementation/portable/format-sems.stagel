@@ -39,6 +39,9 @@ r/an/dcaFromSems an/content
     if eq s/parserState 'comment'
         # Document ended with a comment and no newline at the end
         set an/ret push an/ret 248
+    else if ne 0 len s/currentDc
+        # Ended without a trailing space
+        set an/ret push an/ret intFromIntStr s/currentDc
     assertIsDcArray an/ret
     return an/ret
 
