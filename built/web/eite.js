@@ -2221,7 +2221,7 @@ async function dcaToUtf8(intArrayContent) {
             if (boolDcBasenbEnabled) {
                     console.log('.,p.,p,.'+intArrayUnmappables);
                 intUnmappablesCount = await count(intArrayUnmappables);
-                if (await implNe(0, intUnmappablesCount)) {
+                if (await ne(0, intUnmappablesCount)) {
                     console.log('Borururururru'+intArrayUnmappables);
                     if (await implNot(boolFoundAnyUnmappables)) {
                         intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
