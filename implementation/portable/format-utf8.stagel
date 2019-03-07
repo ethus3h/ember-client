@@ -170,7 +170,10 @@ r/an/dcaFromUtf8 an/content
             set b/skipNextChar false
         else
             set an/temp append an/temp an/latestChar
-            set an/res append an/res dcFromFormat 'unicode' an/temp
+            new an/tempFromUnicode
+            set an/tempFromUnicode dcFromFormat 'unicode' an/temp
+            if ne -1 get an/tempFromUnicode 0
+                set an/res append an/res an/tempFromUnicode
         set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
 
