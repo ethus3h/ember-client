@@ -3700,6 +3700,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
+    await runTestsFormatUtf8(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3713,7 +3714,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
-    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4652,7 +4652,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
-            await implDie('FIXME: save unmapped unicode chars');
+            await implDie(await implCat('FIXME: save unmapped unicode chars', await strFrom(intC)));
 
             intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
         }
