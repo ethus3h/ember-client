@@ -96,7 +96,10 @@ r/an/dcFromFormat s/inFormat an/content
         assertIsNonnegative n/c
         if ge n/c dcDatasetLength 'mappings/from/unicode'
             warn cat 'FIXME: save unmapped unicode char ' strFrom n/c
-        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
+        new s/temp
+        set s/temp dcDataLookupById 'mappings/from/unicode' n/c 1
+        if 
+        set n/dc intFromIntStr dcDataLookupById 
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/res setElement an/res 0 n/dc
