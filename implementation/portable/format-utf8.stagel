@@ -30,7 +30,7 @@ r/an/dcaToUtf8 an/content
         else
             if b/dcBasenbEnabled
                 set n/unmappablesCount count an/unmappables
-                if gt 0 n/unmappablesCount
+                if ne 0 n/unmappablesCount
                     if not b/foundAnyUnmappables
                         set an/res append an/res getArmoredUtf8EmbeddedStartUuid
                     set b/foundAnyUnmappables true
