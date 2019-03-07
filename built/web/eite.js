@@ -3857,8 +3857,6 @@ async function dcaFromIntegerList(intArrayContent) {
     await assertIsByteArray(intArrayContent);
     let intArrayRet = [];
     /* Accepts an array of bytes representing an ASCII list of integers representing Dcs. Returns an array of Dcs. This format is the same as sems but without supporting comments. */
-    let strParserState = '';
-    strParserState = 'dc';
     let strCurrentDc = '';
     strCurrentDc = '';
     let intContentLength = 0;
@@ -3868,30 +3866,24 @@ async function dcaFromIntegerList(intArrayContent) {
     while (await implLt(intByteOffset, intContentLength)) {
         /* do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
         intCurrentByte = await get(intArrayContent, intByteOffset);
-        if (await implEq(strParserState, 'dc')) {
-            if (await asciiIsDigit(intCurrentByte)) {
-                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
-            }
-            else if (await asciiIsSpace(intCurrentByte)) {
-                intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
-                strCurrentDc = '';
-            }
-            else {
-                await implDie('Unexpected parser state in integerList document.');
-            }
+        if (await asciiIsDigit(intCurrentByte)) {
+            strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
         }
-        else if (await implEq(strParserState, 'comment')) {
-            if (await asciiIsNewline(intCurrentByte)) {
-                strParserState = 'dc';
-            }
-            else {
-                /* Do nothing: comments are ignored */
-            }
+        else if (await asciiIsSpace(intCurrentByte)) {
+            intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+            strCurrentDc = '';
         }
         else {
-            await implDie('Internal error: unexpected parser state while parsing integerList document');
+            await implDie('Unexpected parser state in integerList document.');
         }
         intByteOffset = await implAdd(intByteOffset, 1);
+    }
+    if (await ne(0, await len(strCurrentDc))) {
+        /* Ended without a trailing space */
+        if (await implEq('true', await getSettingForFormat('integerList', 'in', 'strict'))) {
+            await implDie('No trailing space present in integerList format while importing. This is not allowed in strict mode.');
+        }
+        intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
     }
     await assertIsDcArray(intArrayRet);
 
@@ -4499,7 +4491,7 @@ async function runTestsFormatIntegerList(boolV) {
 
     await testing(boolV, 'formatIntegerList');
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromIntegerList([ 49, 32, 50 ])));
-    await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToIntegerList([ 1, 2 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToIntegerList([ 1, 2 ])));
 
     await internalDebugStackExit();
 }
