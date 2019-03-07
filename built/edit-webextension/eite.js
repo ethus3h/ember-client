@@ -2217,7 +2217,7 @@ async function dcaToUtf8(intArrayContent) {
         else {
             if (boolDcBasenbEnabled) {
                 intUnmappablesCount = await count(intArrayUnmappables);
-                if (await implGt(0, intUnmappablesCount)) {
+                if (await ne(0, intUnmappablesCount)) {
                     if (await implNot(boolFoundAnyUnmappables)) {
                         intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
                     }
@@ -2229,7 +2229,7 @@ async function dcaToUtf8(intArrayContent) {
                         intArrayUnmappablesIntermediatePacked = await append(intArrayUnmappablesIntermediatePacked, await pack32(await get(intArrayUnmappables, intUnmappablesCounter)));
                         intUnmappablesCounter = await implAdd(intUnmappablesCounter, 1);
                     }
-                    intArrayRes = await append(intArrayRes, await bytearrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
+                    intArrayRes = await append(intArrayRes, await byteArrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
                     intArrayUnmappables = [  ];
                     intArrayUnmappablesIntermediatePacked = [  ];
                 }
@@ -4504,6 +4504,7 @@ async function runTestsFormatUtf8(boolV) {
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
     await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
+    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291 ])));
 
     
 }
@@ -4652,9 +4653,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
-            await implDie('FIXME: save unmapped unicode chars');
-
-            intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
+            await implDie(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }

@@ -2203,12 +2203,10 @@ async function dcaToUtf8(intArrayContent) {
         if (await implLt(intC, intL)) {
             intDcAtIndex = await get(intArrayContent, intC);
             intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
-            console.log(intDcAtIndex+','+intArrayTemp);
         }
         if (await implEq(0, await count(intArrayTemp))) {
             if (await implLt(intC, intL)) {
                 if (boolDcBasenbEnabled) {
-            console.log(intDcAtIndex+','+intArrayTemp+','+intC+','+intL);
                     intArrayUnmappables = await push(intArrayUnmappables, intDcAtIndex);
                 }
                 else {
@@ -2217,12 +2215,9 @@ async function dcaToUtf8(intArrayContent) {
             }
         }
         else {
-                    console.log('oeaieou'+intArrayUnmappables);
             if (boolDcBasenbEnabled) {
-                    console.log('.,p.,p,.'+intArrayUnmappables);
                 intUnmappablesCount = await count(intArrayUnmappables);
                 if (await ne(0, intUnmappablesCount)) {
-                    console.log('Borururururru'+intArrayUnmappables);
                     if (await implNot(boolFoundAnyUnmappables)) {
                         intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
                     }
@@ -3705,7 +3700,6 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsFormatUtf8(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3719,6 +3713,7 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4504,11 +4499,12 @@ async function runTestsFormatIntegerList(boolV) {
 async function runTestsFormatUtf8(boolV) {
      await assertIsBool(boolV);
 
-    //await testing(boolV, 'formatUtf8');
-    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
+    await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
+    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
+    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291 ])));
 
     
 }
@@ -4657,9 +4653,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         }
         await assertIsNonnegative(intC);
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
-            await implDie(await implCat('FIXME: save unmapped unicode chars', await strFrom(intC)));
-
-            intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
+            await implDie(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
