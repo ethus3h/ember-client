@@ -9,10 +9,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 targetLang="$1"
 noDebug="$2"
-generateDebugCode="true"
-if [[ "$noDebug" == "--no-debug" ]]; then
-    generateDebugCode="false"
-fi
+generateDebugCode() {
+    if [[ "$noDebug" == "--no-debug" ]]; then
+        return 1
+    fi
+    return 0
+}
 
 # Read token data into tokens array
 
@@ -568,16 +570,18 @@ codegenRoutineDefinitionStart() {
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
-        for (( k=0; k<argumentCount; k++ )); do
-            if (( k % 2 )); then
-                codegenOutput "await internalDebugCollect('"
-                codegenType "${codegenArgList[$k - 1]}"
-                codegenOutput " ${codegenArgList[$k]^} = ' + "
-                codegenType "${codegenArgList[$k - 1]}"
-                codegenOutput "${codegenArgList[$k]^} + '; '); "
-            fi
-        done
-        codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
+        if generateDebugCode; then
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    codegenOutput "await internalDebugCollect('"
+                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenOutput " ${codegenArgList[$k]^} = ' + "
+                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenOutput "${codegenArgList[$k]^} + '; '); "
+                fi
+            done
+            codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
+        fi
         if [[ "$argumentCount" != 0 ]] || [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
@@ -620,7 +624,7 @@ codegenRoutineDefinitionPreEnd() {
             codegenPrintIndentationSpaces
             codegenIndent=$(( codegenIndent - 1 ))
         fi
-        codegenOutput "await internalDebugStackExit();"
+        generateDebugCode && codegenOutput "await internalDebugStackExit();"
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
         else
