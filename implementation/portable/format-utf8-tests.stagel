@@ -4,3 +4,4 @@ r/v/runTestsFormatUtf8 b/v
     runTest b/v arrEq ( 49 32 50 ) dcaToUtf8 ( 35 18 36 )
     runTest b/v arrEq ( 35 18 36 291 36 ) dcaFromDcbnbUtf8 append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 50 ) getArmoredUtf8EmbeddedEndUuid }
     runTest b/v arrEq append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 50 ) getArmoredUtf8EmbeddedEndUuid } } } } dcaToDcbnbUtf8 ( 35 18 36 291 36 )
+    runTest b/v arrEq append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 ) getArmoredUtf8EmbeddedEndUuid } } } } dcaToDcbnbUtf8 ( 35 18 36 291 )
