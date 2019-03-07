@@ -2217,7 +2217,9 @@ async function dcaToUtf8(intArrayContent) {
             }
         }
         else {
+                    console.log('oeaieou'+intArrayUnmappables);
             if (boolDcBasenbEnabled) {
+                    console.log('.,p.,p,.'+intArrayUnmappables);
                 intUnmappablesCount = await count(intArrayUnmappables);
                 if (await implGt(0, intUnmappablesCount)) {
                     console.log('Borururururru'+intArrayUnmappables);
