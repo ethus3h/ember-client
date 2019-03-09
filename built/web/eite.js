@@ -2463,12 +2463,14 @@ async function dcaFromUtf8(intArrayContent) {
                              console.log('Input chars: '+intArrayCollectedDcBasenbChars);
                             console.log('Input utf8: '+await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
                             console.log('ok');
-                            intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
+
+                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayRes = await append(intArrayRes, await get(intArrayCollectedDcBasenbChars, intCollectedDcBasenbCharsCounter));
-                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, 1);
+                                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
+                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
                             intArrayCollectedDcBasenbChars = [  ];
                         }
