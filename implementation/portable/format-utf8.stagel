@@ -30,7 +30,6 @@ r/an/dcaToUtf8 an/content
                     set an/unmappables push an/unmappables n/dcAtIndex
                 else
                     exportWarningUnmappable n/c n/dcAtIndex
-        else
             # The character was mappable.
             if b/dcBasenbEnabled
                 set n/unmappablesCount count an/unmappables
