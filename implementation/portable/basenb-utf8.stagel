@@ -87,7 +87,7 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function).
     new an/remainder
     set an/remainder push an/remainder add 2 mod count an/in } 17
-    set an/res push an/res internalIntBitArrayToBasenbString 17 an/remainder
+    set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
     assertIsByteArray an/res
     return an/res
 
