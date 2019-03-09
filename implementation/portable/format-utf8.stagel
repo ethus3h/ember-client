@@ -129,9 +129,11 @@ r/an/dcaFromUtf8 an/content
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 7
                         if arrEq an/latestChar ( 244 143 186 144 )
-                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                             set b/inDcBasenbSection true
+                        else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
+                            set n/dcBasenbUuidMonitorState 0
                     if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
                         # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
                         set n/tempArrayCount count an/remaining
@@ -147,36 +149,45 @@ r/an/dcaFromUtf8 an/content
                         if arrEq an/latestChar ( 243 180 182 175 )
                             set n/dcBasenbUuidMonitorState 2
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 2
                         if arrEq an/latestChar ( 244 136 161 186 )
                             set n/dcBasenbUuidMonitorState 3
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 3
                         if arrEq an/latestChar ( 243 191 148 138 )
                             set n/dcBasenbUuidMonitorState 4
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 4
                         if arrEq an/latestChar ( 244 134 178 166 )
                             set n/dcBasenbUuidMonitorState 5
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 5
                         if arrEq an/latestChar ( 244 141 184 130 )
                             set n/dcBasenbUuidMonitorState 6
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 6
                         if arrEq an/latestChar ( 243 178 128 176 )
                             set n/dcBasenbUuidMonitorState 7
                         else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                     elif eq n/dcBasenbUuidMonitorState 7
                         if arrEq an/latestChar ( 244 143 188 157 )
                             set n/dcBasenbUuidMonitorState 0
                             set b/inDcBasenbSection false
+                        else
+                            set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
+                            set n/dcBasenbUuidMonitorState 0
                     if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
                         # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
                         set n/tempArrayCount count an/remaining
