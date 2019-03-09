@@ -743,12 +743,11 @@ async function dcaFromUtf8(intArrayContent) {
                         }
                         else {
                             /* Not a basenb char, so decode the ones we've collected */
-                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                                intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                                intArrayCurrentUnmappableChar = await firstCharOfUtf8String(intArrayCollectedDcBasenbChars);
+                                intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
                             intArrayCollectedDcBasenbChars = [  ];
@@ -779,12 +778,11 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
-            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                intArrayCurrentUnmappableChar = await firstCharOfUtf8String(intArrayCollectedDcBasenbChars);
+                intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
             }
         }
