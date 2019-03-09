@@ -2233,6 +2233,7 @@ async function dcaToUtf8(intArrayContent) {
                     intUnmappablesCounter = 0;
                     while (await implLt(intUnmappablesCounter, intUnmappablesCount)) {
                         /* The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first  get the bytearray for the character we're on. */
+                        console.log('bubebicecu:'+await get(intArrayUnmappables, intUnmappablesCounter));
                         intArrayUnmappablesIntermediatePacked = await append(intArrayUnmappablesIntermediatePacked, await pack32(await get(intArrayUnmappables, intUnmappablesCounter)));
                         intUnmappablesCounter = await implAdd(intUnmappablesCounter, 1);
                     }
