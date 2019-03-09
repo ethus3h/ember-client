@@ -1,10 +1,12 @@
 r/ab/abSubset ab/in n/start n/end
     new n/count
     set n/count count ab/in
-    new n/i
-    set n/i n/start
+    if lt n/start 0
+        set n/start add n/count n/start
     if lt n/end 0
         set n/end add n/count n/end
+    new n/i
+    set n/i n/start
     set n/count n/end
     new ab/res
     while le n/i n/count
@@ -31,10 +33,12 @@ r/an/anSubset an/in n/start n/end
 r/as/asSubset as/in n/start n/end
     new n/count
     set n/count count as/in
-    new n/i
-    set n/i n/start
+    if lt n/start 0
+        set n/start add n/count n/start
     if lt n/end 0
         set n/end add n/count n/end
+    new n/i
+    set n/i n/start
     set n/count n/end
     new as/res
     while le n/i n/count
