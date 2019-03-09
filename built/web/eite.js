@@ -2462,7 +2462,6 @@ async function dcaFromUtf8(intArrayContent) {
                             /* Not a basenb char, so decode the ones we've collected */
                              console.log('Input chars: '+intArrayCollectedDcBasenbChars);
                             console.log('Input utf8: '+await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
-                            intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
                             console.log('ok');
                             intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
