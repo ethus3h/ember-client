@@ -61,7 +61,7 @@ async function internalIntBitArrayToBasenbString(intBase, intBitArrayInput) {
 
 async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder) {
     let res;
-    res=Base16b.decode(new TextDecoder().decode(new UInt8Array(byteArrayInput)), intRemainder);
+    res=Base16b.decode(new TextDecoder().decode(new Uint8Array(byteArrayInput)), intRemainder);
     if (res !== false) {
         return new TextEncoder().encode(res);
     }
