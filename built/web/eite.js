@@ -2283,6 +2283,7 @@ async function dcaFromUtf8(intArrayContent) {
         console.log('Repneedcount at iter start: '+intDcBasenbUuidMonitorReprocessNeededCount);
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
+        console.log('Latest char for itneration:'+intArrayLatestChar.toString());
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
