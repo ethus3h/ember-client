@@ -78,6 +78,7 @@ r/an/dcaFromUtf8 an/content
     new n/collectedDcBasenbCharsCount
     new n/collectedDcBasenbCharsCounter
     new an/currentUnmappableChar
+    new n/tempArrayCount
     while not eq 0 count an/remaining
         set an/temp ( )
         set an/latestChar pack32 firstCharOfUtf8String an/remaining
@@ -132,7 +133,9 @@ r/an/dcaFromUtf8 an/content
                             set n/dcBasenbUuidMonitorState 0
                             set b/inDcBasenbSection true
                     if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
-                        set an/remaining append anSubset an/content count an/remaining }  an/remaining
+                        # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
+                        set n/tempArrayCount count an/remaining
+                        set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
             else
                 if eq n/dcBasenbUuidMonitorState 0
                     if arrEq an/latestChar ( 243 188 133 185 )
