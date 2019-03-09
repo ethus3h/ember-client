@@ -2,7 +2,9 @@ r/v/runTestsFormatUtf8 b/v
     testing b/v 'formatUtf8'
     runTest b/v arrEq ( 35 18 36 ) dcaFromUtf8 ( 49 32 50 )
     runTest b/v arrEq ( 49 32 50 ) dcaToUtf8 ( 35 18 36 )
-    runTest b/v arrEq ( 35 18 36 291 36 ) dcaFromDcbnbUtf8 append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 50 ) getArmoredUtf8EmbeddedEndUuid }
+    # Test for converting to UTF8+dcbnb with only one unmappable char at the end
     runTest b/v arrEq append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 ) getArmoredUtf8EmbeddedEndUuid } } } } dcaToDcbnbUtf8 ( 35 18 36 291 )
-    # Test for converting to UTF8 with intermixed mappable and nonmappable
+    # Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable
     runTest b/v arrEq append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 50 ) getArmoredUtf8EmbeddedEndUuid } } } } dcaToDcbnbUtf8 ( 35 18 36 291 36 )
+    # Test for converting from UTF8+dcbnb
+    runTest b/v arrEq ( 35 18 36 291 36 ) dcaFromDcbnbUtf8 append ( 49 32 50 ) append getArmoredUtf8EmbeddedStartUuid } append ( 244 131 173 156 244 143 191 187 50 ) getArmoredUtf8EmbeddedEndUuid }
