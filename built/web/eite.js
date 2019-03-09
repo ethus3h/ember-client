@@ -2447,7 +2447,7 @@ async function dcaFromUtf8(intArrayContent) {
                 }
                 if (await implEq(0, intDcBasenbUuidMonitorState)) {
                     /* Check for basenb characters and collect them for decoding */
-                    if (await implAnd(await inDcBasenbSection(await isBasenbChar(intArrayLatestChar)))) {
+                    if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                         boolSkipNextChar = true;
                     }
