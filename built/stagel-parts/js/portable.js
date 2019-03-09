@@ -648,7 +648,7 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                         /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
-                        intTempArrayCount = await count(intArrayRemaining);
+                        intTempArrayCount = await implSub(await count(intArrayContent), await count(intArrayRemaining));
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
@@ -767,7 +767,7 @@ async function dcaFromUtf8(intArrayContent) {
                 }
             }
         }
-        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
+        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
     }
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
@@ -3189,14 +3189,17 @@ async function intIsBetween(intN, intA, intB) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intIsBetween:math'); await assertIsInt(intN); await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
     /* Checks whether N is within the range A and B, including endpoints */
-    let intT1 = 0;
-    intT1 = await implSub(intN, intA);
-    let intT2 = 0;
-    intT2 = await implSub(intN, intB);
-    let intT3 = 0;
-    intT3 = await implMul(intT1, intT2);
-    let boolTemp = false;
-    boolTemp = await le(intT3, 0);
+    /* Can't do it this way since it can use ints intermediately that are outside of 32 bit */
+    /*new n/t1 */
+    /*set n/t1 sub n/n n/a */
+    /*new n/t2 */
+    /*set n/t2 sub n/n n/b */
+    /*new n/t3 */
+    /*set n/t3 mul n/t1 n/t2 */
+    /*new b/temp */
+    /*set b/temp le n/t3 0 */
+    /* So instead implement using gt/lt */
+    boolTemp = await implAnd(await ge(intN, intA), await le(intN, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }

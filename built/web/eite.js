@@ -2279,11 +2279,8 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayCurrentUnmappableChar = [];
     let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
-        console.log('Iteration started with '+intArrayRes.toString()+' as the result, and '+intArrayRemaining.toString()+' as the remainder.')
-        console.log('Repneedcount at iter start: '+intDcBasenbUuidMonitorReprocessNeededCount);
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
-        console.log('Latest char for itneration:'+intArrayLatestChar.toString());
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
@@ -2360,13 +2357,9 @@ async function dcaFromUtf8(intArrayContent) {
                             intDcBasenbUuidMonitorState = 0;
                         }
                     }
-                    console.log('Repneedcount before test: '+intDcBasenbUuidMonitorReprocessNeededCount);
                     if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                         /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
-                        intTempArrayCount = await count(intArrayRemaining) - 1;
-                        console.log('Remainning: '+intArrayRemaining.toString()+' ; content : '+intArrayContent.toString());
-                        console.log('addRes: '+await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount))+' ; count : '+intTempArrayCount);
-                        console.log(intArrayContent);
+                        intTempArrayCount = await implSub(await count(intArrayContent), await count(intArrayRemaining));
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
@@ -2472,7 +2465,7 @@ async function dcaFromUtf8(intArrayContent) {
                 }
             }
         }
-/*        if (await implEq(0, intDcBasenbUuidMonitorState)) {
+        if (await implEq(0, intDcBasenbUuidMonitorState)) {
             if (boolSkipNextChar) {
                 boolSkipNextChar = false;
             }
@@ -2484,7 +2477,7 @@ async function dcaFromUtf8(intArrayContent) {
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
             }
-        }*/
+        }
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
     }
     if (boolDcBasenbEnabled) {
@@ -3774,7 +3767,6 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsFormatUtf8(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3788,6 +3780,7 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4572,7 +4565,6 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
@@ -4582,6 +4574,7 @@ async function runTestsFormatUtf8(boolV) {
     /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Test for converting from UTF8+dcbnb */
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await internalDebugStackExit();
 }
@@ -4907,14 +4900,17 @@ async function intIsBetween(intN, intA, intB) {
     await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intIsBetween:math'); await assertIsInt(intN); await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
 
     /* Checks whether N is within the range A and B, including endpoints */
-    let intT1 = 0;
-    intT1 = await implSub(intN, intA);
-    let intT2 = 0;
-    intT2 = await implSub(intN, intB);
-    let intT3 = 0;
-    intT3 = await implMul(intT1, intT2);
-    let boolTemp = false;
-    boolTemp = await le(intT3, 0);
+    /* Can't do it this way since it can use ints intermediately that are outside of 32 bit */
+    /*new n/t1 */
+    /*set n/t1 sub n/n n/a */
+    /*new n/t2 */
+    /*set n/t2 sub n/n n/b */
+    /*new n/t3 */
+    /*set n/t3 mul n/t1 n/t2 */
+    /*new b/temp */
+    /*set b/temp le n/t3 0 */
+    /* So instead implement using gt/lt */
+    boolTemp = await implAnd(await ge(intN, intA), await le(intN, intB));
 
     boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
