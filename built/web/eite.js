@@ -3767,6 +3767,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
+    await runTestsFormatUtf8(boolV);
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3780,7 +3781,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
-    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4565,6 +4565,7 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
@@ -4574,7 +4575,6 @@ async function runTestsFormatUtf8(boolV) {
     /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Test for converting from UTF8+dcbnb */
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await internalDebugStackExit();
 }
