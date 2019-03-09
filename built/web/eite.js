@@ -2463,8 +2463,8 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
                                 console.log('Strating with nthe number first char of utf8 str: '+intArrayCollectedDcBasenbChars);
-                                console.log('First char is: '+await unpack32(intArrayCurrentUnmappableChar));
                                 intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                console.log('First char is: '+await unpack32(intArrayCurrentUnmappableChar));
                                 console.log('Burobicecu'+intArrayCurrentUnmappableChar);
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
