@@ -5,14 +5,17 @@ r/b/isNonnegative n/in
 
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
-    new n/t1
-    set n/t1 sub n/n n/a
-    new n/t2
-    set n/t2 sub n/n n/b
-    new n/t3
-    set n/t3 mul n/t1 n/t2
-    new b/temp
-    set b/temp le n/t3 0
+    # Can't do it this way since it can use ints intermediately that are outside of 32 bit
+    #new n/t1
+    #set n/t1 sub n/n n/a
+    #new n/t2
+    #set n/t2 sub n/n n/b
+    #new n/t3
+    #set n/t3 mul n/t1 n/t2
+    #new b/temp
+    #set b/temp le n/t3 0
+    # So instead implement using gt/lt
+    set b/temp and ge n/n n/a } le n/n n/b
     return b/temp
 
 r/s/intToBase36Char n/n
