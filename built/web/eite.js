@@ -2363,6 +2363,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intTempArrayCount = await count(intArrayRemaining);
                         console.log('Remainning: '+intArrayRemaining.toString()+' ; content : '+intArrayContent.toString());
                         console.log('addRes: '+await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount))+' ; count : '+intTempArrayCount);
+                        console.log(intArrayContent);
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
