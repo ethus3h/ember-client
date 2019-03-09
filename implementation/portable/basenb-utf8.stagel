@@ -101,7 +101,7 @@ r/an/byteArrayFromBasenbUtf8 an/in
     set an/remainderArr anSubset an/in -4 -1
     new an/remainderDecodedArr
     set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
-    set n/remainder get an/remainderDecodedArr 0
+    set n/remainder add -2 get an/remainderDecodedArr 0
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/in n/remainder
     assertIsByteArray an/res
     return an/res
