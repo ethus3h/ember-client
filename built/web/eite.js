@@ -3782,10 +3782,10 @@ async function runTestsOnly(boolV) {
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
-    await runTestsDcData(boolV);
-    await runTestsFormatDc(boolV);
+    //await runTestsDcData(boolV);
+    //await runTestsFormatDc(boolV);
     /* Format tests */
-    await runTestsFormatAscii(boolV);
+    /*await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
