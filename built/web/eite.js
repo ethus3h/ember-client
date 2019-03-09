@@ -2458,13 +2458,12 @@ async function dcaFromUtf8(intArrayContent) {
                         }
                         else {
                             /* Not a basenb char, so decode the ones we've collected */
+                            intArrayCollectedDcBasenbChars = await unpack32(byteArrayFromBase17bUtf8(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars)));
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                                console.log('Curent unmappable char: ' + intArrayCurrentUnmappableChar);
-                                intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
-                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+                                intArrayRes = await append(intArrayRes, await get(intArrayCollectedDcBasenbChars, intCollectedDcBasenbCharsCounter));
+                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, a1);
                             }
                             intArrayCollectedDcBasenbChars = [  ];
                         }
