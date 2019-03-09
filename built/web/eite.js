@@ -1845,6 +1845,7 @@ async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
 async function byteArrayFromBasenbUtf8(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
     await assertIsByteArray(intArrayIn);
+    console.log('Trying to decode: '+intArrayIn);
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
@@ -1857,6 +1858,7 @@ console.log('remainderarr:'+intArrayRemainderArr);
 console.log('remainderDecoded:'+intArrayRemainderDecodedArr);
     intRemainder = await get(intArrayRemainderDecodedArr, 0);
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
+    console.log('Decoding returned: '+intArrayRes);
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
