@@ -100,7 +100,7 @@ r/an/byteArrayFromBasenbUtf8 an/in
     # last 4 bytes (1 character), which represent the remainder
     set an/remainderArr anSubset an/in -4 -1
     new an/remainderDecodedArr
-    set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 16
+    set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
     set n/remainder get an/remainderDecodedArr 0
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/in n/remainder
     assertIsByteArray an/res

@@ -1855,7 +1855,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
 console.log('remainderarr:'+intArrayRemainderArr);
     let intArrayRemainderDecodedArr = [];
-    intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 16));
+    intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
 console.log('remainderDecoded:'+intArrayRemainderDecodedArr);
     intRemainder = await get(intArrayRemainderDecodedArr, 0);
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
