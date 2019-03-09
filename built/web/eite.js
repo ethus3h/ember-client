@@ -2458,7 +2458,7 @@ async function dcaFromUtf8(intArrayContent) {
                         }
                         else {
                             /* Not a basenb char, so decode the ones we've collected */
-                            intArrayCollectedDcBasenbChars = await unpack32(byteArrayFromBase17bUtf8(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars)));
+                            intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
