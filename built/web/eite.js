@@ -1844,20 +1844,18 @@ async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
 
 async function byteArrayFromBasenbUtf8(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
     await assertIsByteArray(intArrayIn);
-    console.log('Trying to decode: '+intArrayIn);
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
     let intArrayRemainderArr = [];
-    /* last 4 characters */
+    /* last 4 bytes (1 character), which represent the remainder */
     intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
     let intArrayRemainderDecodedArr = [];
     intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
-    intRemainder = await get(intArrayRemainderDecodedArr, 0);
+    intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
-    console.log('Decoding returned: '+intArrayRes);
-    //implWarn('decoding returned at call : ');
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
@@ -2281,10 +2279,8 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayCurrentUnmappableChar = [];
     let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
-        console.log('Iteration started with '+intArrayRes.toString()+' as the result, and '+intArrayRemaining.toString()+' as the remainder.')
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
- console.log('Latest char for itneration:'+intArrayLatestChar.toString());
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
@@ -2355,7 +2351,6 @@ async function dcaFromUtf8(intArrayContent) {
                         if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
                             intDcBasenbUuidMonitorState = 0;
                             boolInDcBasenbSection = true;
-                            intArrayLatestChar=[];
                         }
                         else {
                             intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
@@ -2436,8 +2431,8 @@ async function dcaFromUtf8(intArrayContent) {
                     else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
                         if (await arrEq(intArrayLatestChar, [ 244, 143, 188, 157 ])) {
                             intDcBasenbUuidMonitorState = 0;
+                            intArrayLatestChar = [  ];
                             boolInDcBasenbSection = false;
-                            intArrayLatestChar=[];
                         }
                         else {
                             intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
@@ -2452,7 +2447,7 @@ async function dcaFromUtf8(intArrayContent) {
                 }
                 if (await implEq(0, intDcBasenbUuidMonitorState)) {
                     /* Check for basenb characters and collect them for decoding */
-                    if (await isBasenbChar(intArrayLatestChar)) {
+                    if (await implAnd(await inDcBasenbSection(await isBasenbChar(intArrayLatestChar)))) {
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                         boolSkipNextChar = true;
                     }
@@ -2486,16 +2481,18 @@ async function dcaFromUtf8(intArrayContent) {
         }
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
     }
-    console.log('Remaining list of Dcbasenb chars: '+intArrayCollectedDcBasenbChars);
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
-        intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
-        intCollectedDcBasenbCharsCounter = 0;
-        while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
-            intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
-            intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
-            intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+        if (await ne(0, intCollectedDcBasenbCharsCount)) {
+            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+            intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
+            intCollectedDcBasenbCharsCounter = 0;
+            while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
+                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
+                intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+            }
         }
     }
 
@@ -3783,20 +3780,20 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsFormatUtf8(boolV);
-/*    await runTestsMath(boolV);
+    await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
-    //await runTestsDcData(boolV);
-    //await runTestsFormatDc(boolV);
+    await runTestsDcData(boolV);
+    await runTestsFormatDc(boolV);
     /* Format tests */
-    /*await runTestsFormatAscii(boolV);
+    await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
-    await runTestsFormatSems(boolV);*/
+    await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4581,8 +4578,7 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
-return;
+
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
@@ -4591,6 +4587,7 @@ return;
     /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Test for converting from UTF8+dcbnb */
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await internalDebugStackExit();
 }
