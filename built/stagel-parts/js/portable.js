@@ -489,10 +489,12 @@ async function dcaToUtf8(intArrayContent) {
     let boolDcBasenbEnabled = false;
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
     while (await le(intC, intL)) {
+        /* Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8. */
         if (await implLt(intC, intL)) {
             intDcAtIndex = await get(intArrayContent, intC);
             intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         }
+        /* Could the character be mapped? If not, stick it in the unmappables array or warn as appropriate. */
         if (await implEq(0, await count(intArrayTemp))) {
             if (await implLt(intC, intL)) {
                 if (boolDcBasenbEnabled) {
@@ -503,8 +505,9 @@ async function dcaToUtf8(intArrayContent) {
                 }
             }
         }
-        else {
-            if (boolDcBasenbEnabled) {
+        /* If we've reached the end of the input string or the last character was mappable, convert the an/unmappables array to PUA characters and append that result to the output string */
+        if (boolDcBasenbEnabled) {
+            if (await or(await implEq(intC, intL), await ne(0, await count(intArrayTemp)))) {
                 intUnmappablesCount = await count(intArrayUnmappables);
                 if (await ne(0, intUnmappablesCount)) {
                     if (await implNot(boolFoundAnyUnmappables)) {
@@ -524,9 +527,11 @@ async function dcaToUtf8(intArrayContent) {
                 }
             }
         }
+        /* Stick the current character onto the result array */
         if (await implLt(intC, intL)) {
             intArrayRes = await append(intArrayRes, intArrayTemp);
         }
+        /* and finally increment the loop counter */
         intC = await implAdd(intC, 1);
     }
     if (await implAnd(boolDcBasenbEnabled, boolFoundAnyUnmappables)) {
@@ -547,6 +552,8 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayLatestChar = [];
     let intDcBasenbUuidMonitorState = 0;
     intDcBasenbUuidMonitorState = 0;
+    let intDcBasenbUuidMonitorReprocessNeededCount = 0;
+    intDcBasenbUuidMonitorReprocessNeededCount = 0;
     let strArrayVariantSettings = [];
     strArrayVariantSettings = await utf8VariantSettings('in');
     let boolDcBasenbEnabled = false;
@@ -559,130 +566,171 @@ async function dcaFromUtf8(intArrayContent) {
     let intCollectedDcBasenbCharsCount = 0;
     let intCollectedDcBasenbCharsCounter = 0;
     let intArrayCurrentUnmappableChar = [];
+    let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
-                if (await implEq(intDcBasenbUuidMonitorState, 0)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
-                        intDcBasenbUuidMonitorState = 1;
-                    }
+                if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                    intDcBasenbUuidMonitorReprocessNeededCount = await implSub(intDcBasenbUuidMonitorReprocessNeededCount, 1);
                 }
-                else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 139, 182, 128 ])) {
-                        intDcBasenbUuidMonitorState = 2;
+                else {
+                    if (await implEq(intDcBasenbUuidMonitorState, 0)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
+                            intDcBasenbUuidMonitorState = 1;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 139, 182, 128 ])) {
+                            intDcBasenbUuidMonitorState = 2;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 188, 183, 162 ])) {
-                        intDcBasenbUuidMonitorState = 3;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 188, 183, 162 ])) {
+                            intDcBasenbUuidMonitorState = 3;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 186, 128, 138 ])) {
+                            intDcBasenbUuidMonitorState = 4;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 186, 128, 138 ])) {
-                        intDcBasenbUuidMonitorState = 4;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 184, 165, 142 ])) {
+                            intDcBasenbUuidMonitorState = 5;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 136, 186, 141 ])) {
+                            intDcBasenbUuidMonitorState = 6;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 184, 165, 142 ])) {
-                        intDcBasenbUuidMonitorState = 5;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 178, 139, 160 ])) {
+                            intDcBasenbUuidMonitorState = 7;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
+                            intDcBasenbUuidMonitorState = 0;
+                            boolInDcBasenbSection = true;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 136, 186, 141 ])) {
-                        intDcBasenbUuidMonitorState = 6;
-                    }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
-                    }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 178, 139, 160 ])) {
-                        intDcBasenbUuidMonitorState = 7;
-                    }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
-                    }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
-                        intDcBasenbUuidMonitorState = 0;
-                        boolInDcBasenbSection = true;
+                    if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                        /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
+                        intTempArrayCount = await count(intArrayRemaining);
+                        intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
             }
             else {
-                if (await implEq(intDcBasenbUuidMonitorState, 0)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 188, 133, 185 ])) {
-                        intDcBasenbUuidMonitorState = 1;
-                    }
+                if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                    intDcBasenbUuidMonitorReprocessNeededCount = await implSub(intDcBasenbUuidMonitorReprocessNeededCount, 1);
                 }
-                else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 180, 182, 175 ])) {
-                        intDcBasenbUuidMonitorState = 2;
+                else {
+                    if (await implEq(intDcBasenbUuidMonitorState, 0)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 188, 133, 185 ])) {
+                            intDcBasenbUuidMonitorState = 1;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 180, 182, 175 ])) {
+                            intDcBasenbUuidMonitorState = 2;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 136, 161, 186 ])) {
-                        intDcBasenbUuidMonitorState = 3;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 136, 161, 186 ])) {
+                            intDcBasenbUuidMonitorState = 3;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 191, 148, 138 ])) {
+                            intDcBasenbUuidMonitorState = 4;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 191, 148, 138 ])) {
-                        intDcBasenbUuidMonitorState = 4;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 134, 178, 166 ])) {
+                            intDcBasenbUuidMonitorState = 5;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 141, 184, 130 ])) {
+                            intDcBasenbUuidMonitorState = 6;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 134, 178, 166 ])) {
-                        intDcBasenbUuidMonitorState = 5;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 178, 128, 176 ])) {
+                            intDcBasenbUuidMonitorState = 7;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
+                    else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 143, 188, 157 ])) {
+                            intDcBasenbUuidMonitorState = 0;
+                            boolInDcBasenbSection = false;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
                     }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 141, 184, 130 ])) {
-                        intDcBasenbUuidMonitorState = 6;
-                    }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
-                    }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
-                    if (await arrEq(intArrayLatestChar, [ 243, 178, 128, 176 ])) {
-                        intDcBasenbUuidMonitorState = 7;
-                    }
-                    else {
-                        intDcBasenbUuidMonitorState = 0;
-                    }
-                }
-                else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
-                    if (await arrEq(intArrayLatestChar, [ 244, 143, 188, 157 ])) {
-                        intDcBasenbUuidMonitorState = 0;
-                        boolInDcBasenbSection = false;
+                    if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                        /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
+                        intTempArrayCount = await count(intArrayRemaining);
+                        intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
                 /* Check for basenb characters and collect them for decoding */
@@ -708,7 +756,7 @@ async function dcaFromUtf8(intArrayContent) {
             boolSkipNextChar = false;
         }
         else {
-            intArrayTemp = await append(intArrayTemp, intArrayLatestChar);
+            intArrayTemp = intArrayLatestChar;
             let intArrayTempFromUnicode = [];
             intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
             if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
@@ -2795,9 +2843,12 @@ async function runTestsFormatUtf8(boolV) {
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
-    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
+    /* Test for converting to UTF8+dcbnb with only one unmappable char at the end */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291 ])));
+    /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
+    await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
+    /* Test for converting from UTF8+dcbnb */
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await internalDebugStackExit();
 }
