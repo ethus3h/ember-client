@@ -2355,6 +2355,7 @@ async function dcaFromUtf8(intArrayContent) {
                         if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
                             intDcBasenbUuidMonitorState = 0;
                             boolInDcBasenbSection = true;
+                            intArrayLatestChar=[];
                         }
                         else {
                             intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
@@ -2436,6 +2437,7 @@ async function dcaFromUtf8(intArrayContent) {
                         if (await arrEq(intArrayLatestChar, [ 244, 143, 188, 157 ])) {
                             intDcBasenbUuidMonitorState = 0;
                             boolInDcBasenbSection = false;
+                            intArrayLatestChar=[];
                         }
                         else {
                             intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
