@@ -2237,6 +2237,8 @@ async function dcaToUtf8(intArrayContent) {
                         intArrayUnmappablesIntermediatePacked = await append(intArrayUnmappablesIntermediatePacked, await pack32(await get(intArrayUnmappables, intUnmappablesCounter)));
                         intUnmappablesCounter = await implAdd(intUnmappablesCounter, 1);
                     }
+                    console.log('Packed:'+intArrayUnmappablesIntermediatePacked);
+                    console.log('Appending:'+await byteArrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
                     intArrayRes = await append(intArrayRes, await byteArrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
                     intArrayUnmappables = [  ];
                     intArrayUnmappablesIntermediatePacked = [  ];
