@@ -2446,6 +2446,7 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                 }
                 if (await implEq(0, intDcBasenbUuidMonitorState) && await count(intArrayLatestChar)) {
+                    STAGEL_DEBUG=2;
                     /* Check for basenb characters and collect them for decoding */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
@@ -2463,6 +2464,7 @@ async function dcaFromUtf8(intArrayContent) {
                         }
                         intArrayCollectedDcBasenbChars = [  ];
                     }
+                    STAGEL_DEBUG=0;
                 }
                 if(!await count(intArrayLatestChar)){
                     boolSkipNextChar=true;
