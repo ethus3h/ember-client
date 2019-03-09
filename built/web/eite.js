@@ -2450,7 +2450,6 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                 }
                 if (await implEq(0, intDcBasenbUuidMonitorState) && await count(intArrayLatestChar)) {
-                    STAGEL_DEBUG=2;
                     /* Check for basenb characters and collect them for decoding */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
@@ -2463,12 +2462,12 @@ async function dcaFromUtf8(intArrayContent) {
                         intCollectedDcBasenbCharsCounter = 0;
                         while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
                             intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
+                            console.log('Appending decoded unmappable character: '+intArrayCurrentUnmappableChar);
                             intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                             intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                         }
                         intArrayCollectedDcBasenbChars = [  ];
                     }
-                    STAGEL_DEBUG=0;
                 }
                 if(!await count(intArrayLatestChar)){
                     boolSkipNextChar=true;
