@@ -2445,7 +2445,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
-                if (await implEq(0, intDcBasenbUuidMonitorState) && await implCount(intArrayLatestChar)) {
+                if (await implEq(0, intDcBasenbUuidMonitorState) && await count(intArrayLatestChar)) {
                     /* Check for basenb characters and collect them for decoding */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
