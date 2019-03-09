@@ -137,43 +137,50 @@ r/an/dcaFromUtf8 an/content
                         set n/tempArrayCount count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
             else
-                if eq n/dcBasenbUuidMonitorState 0
-                    if arrEq an/latestChar ( 243 188 133 185 )
-                        set n/dcBasenbUuidMonitorState 1
-                elif eq n/dcBasenbUuidMonitorState 1
-                    if arrEq an/latestChar ( 243 180 182 175 )
-                        set n/dcBasenbUuidMonitorState 2
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 2
-                    if arrEq an/latestChar ( 244 136 161 186 )
-                        set n/dcBasenbUuidMonitorState 3
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 3
-                    if arrEq an/latestChar ( 243 191 148 138 )
-                        set n/dcBasenbUuidMonitorState 4
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 4
-                    if arrEq an/latestChar ( 244 134 178 166 )
-                        set n/dcBasenbUuidMonitorState 5
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 5
-                    if arrEq an/latestChar ( 244 141 184 130 )
-                        set n/dcBasenbUuidMonitorState 6
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 6
-                    if arrEq an/latestChar ( 243 178 128 176 )
-                        set n/dcBasenbUuidMonitorState 7
-                    else
-                        set n/dcBasenbUuidMonitorState 0
-                elif eq n/dcBasenbUuidMonitorState 7
-                    if arrEq an/latestChar ( 244 143 188 157 )
-                        set n/dcBasenbUuidMonitorState 0
-                        set b/inDcBasenbSection false
+                if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
+                    set n/dcBasenbUuidMonitorReprocessNeededCount sub n/dcBasenbUuidMonitorReprocessNeededCount 1
+                else
+                    if eq n/dcBasenbUuidMonitorState 0
+                        if arrEq an/latestChar ( 243 188 133 185 )
+                            set n/dcBasenbUuidMonitorState 1
+                    elif eq n/dcBasenbUuidMonitorState 1
+                        if arrEq an/latestChar ( 243 180 182 175 )
+                            set n/dcBasenbUuidMonitorState 2
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 2
+                        if arrEq an/latestChar ( 244 136 161 186 )
+                            set n/dcBasenbUuidMonitorState 3
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 3
+                        if arrEq an/latestChar ( 243 191 148 138 )
+                            set n/dcBasenbUuidMonitorState 4
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 4
+                        if arrEq an/latestChar ( 244 134 178 166 )
+                            set n/dcBasenbUuidMonitorState 5
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 5
+                        if arrEq an/latestChar ( 244 141 184 130 )
+                            set n/dcBasenbUuidMonitorState 6
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 6
+                        if arrEq an/latestChar ( 243 178 128 176 )
+                            set n/dcBasenbUuidMonitorState 7
+                        else
+                            set n/dcBasenbUuidMonitorState 0
+                    elif eq n/dcBasenbUuidMonitorState 7
+                        if arrEq an/latestChar ( 244 143 188 157 )
+                            set n/dcBasenbUuidMonitorState 0
+                            set b/inDcBasenbSection false
+                    if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
+                        # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
+                        set n/tempArrayCount count an/remaining
+                        set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
                 # Check for basenb characters and collect them for decoding
                 if isBasenbChar an/latestChar
                     set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
