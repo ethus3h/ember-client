@@ -2464,6 +2464,9 @@ async function dcaFromUtf8(intArrayContent) {
                         intArrayCollectedDcBasenbChars = [  ];
                     }
                 }
+                if(!await count(intArrayLatestChar)){
+                    boolSkipNextChar=true;
+                }
             }
         }
         if (await implEq(0, intDcBasenbUuidMonitorState)) {

@@ -209,6 +209,8 @@ r/an/dcaFromUtf8 an/content
                                 set an/res append an/res unpack32 an/currentUnmappableChar
                                 set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
                             set an/collectedDcBasenbChars ( )
+                    else
+                        set b/skipNextChar true
         if eq 0 n/dcBasenbUuidMonitorState
             if b/skipNextChar
                 set b/skipNextChar false
