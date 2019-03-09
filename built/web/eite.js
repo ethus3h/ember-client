@@ -2281,7 +2281,6 @@ async function dcaFromUtf8(intArrayContent) {
     let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         console.log('Iteration started with '+intArrayRes.toString()+' as the result, and '+intArrayRemaining.toString()+' as the remainder.')
-        console.log('Repneedcount at iter start: '+intDcBasenbUuidMonitorReprocessNeededCount);
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
  console.log('Latest char for itneration:'+intArrayLatestChar.toString());
