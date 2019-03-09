@@ -2472,7 +2472,7 @@ async function dcaFromUtf8(intArrayContent) {
                 }
             }
         }
-        if (await implEq(0, intDcBasenbUuidMonitorState)) {
+/*        if (await implEq(0, intDcBasenbUuidMonitorState)) {
             if (boolSkipNextChar) {
                 boolSkipNextChar = false;
             }
@@ -2484,8 +2484,8 @@ async function dcaFromUtf8(intArrayContent) {
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
             }
-        }
-        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
+        }*/
+        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
     }
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
