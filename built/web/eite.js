@@ -3778,7 +3778,7 @@ async function runTestsOnly(boolV) {
     /* General tests */
     /*runTestsBits b/v */
     await runTestsFormatUtf8(boolV);
-    await runTestsMath(boolV);
+/*    await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
@@ -3790,7 +3790,7 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
-    await runTestsFormatSems(boolV);
+    await runTestsFormatSems(boolV);*/
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
