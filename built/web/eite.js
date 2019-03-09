@@ -2461,6 +2461,7 @@ async function dcaFromUtf8(intArrayContent) {
                             console.log('Input chars: '+intArrayCollectedDcBasenbChars);
                             console.log('Input utf8: '+await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
                             intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
+                            console.log('ok');
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
