@@ -2461,7 +2461,7 @@ async function dcaFromUtf8(intArrayContent) {
                         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                         intCollectedDcBasenbCharsCounter = 0;
                         console.log('Collected dc basenb chars: '+intArrayCollectedDcBasenbChars);
-                        while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
+                        while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
                             intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
                             console.log('Appending decoded unmappable character: '+intArrayCurrentUnmappableChar);
                             intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
