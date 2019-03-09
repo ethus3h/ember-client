@@ -736,21 +736,26 @@ async function dcaFromUtf8(intArrayContent) {
                 }
                 if (await implEq(0, intDcBasenbUuidMonitorState)) {
                     /* Check for basenb characters and collect them for decoding */
-                    if (await implAnd(await inDcBasenbSection(await isBasenbChar(intArrayLatestChar)))) {
-                        intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
-                        boolSkipNextChar = true;
+                    if (await ne(0, await count(intArrayLatestChar))) {
+                        if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
+                            intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
+                            boolSkipNextChar = true;
+                        }
+                        else {
+                            /* Not a basenb char, so decode the ones we've collected */
+                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                            intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
+                            intCollectedDcBasenbCharsCounter = 0;
+                            while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
+                                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+                            }
+                            intArrayCollectedDcBasenbChars = [  ];
+                        }
                     }
                     else {
-                        /* Not a basenb char, so decode the ones we've collected */
-                        intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
-                        intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
-                        intCollectedDcBasenbCharsCounter = 0;
-                        while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
-                            intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
-                            intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
-                            intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
-                        }
-                        intArrayCollectedDcBasenbChars = [  ];
+                        boolSkipNextChar = true;
                     }
                 }
             }
@@ -777,8 +782,8 @@ async function dcaFromUtf8(intArrayContent) {
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
-            while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
-                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String());
+            while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
+                intArrayCurrentUnmappableChar = await pack32(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
             }

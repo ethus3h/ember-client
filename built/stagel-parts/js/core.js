@@ -1092,7 +1092,11 @@ async function internalDebugStackEnter(strBlockName) {
 
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
-    await internalDebugQuiet("Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
+    if (2 <= STAGEL_DEBUG) {
+        let callstackLevel=stagelDebugCallstack.length;
+        let callstackLevelStr=":".repeat(callstackLevel);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
+    }
 }
 
 async function internalDebugStackExit() {
