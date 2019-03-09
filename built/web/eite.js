@@ -2461,7 +2461,7 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayCurrentUnmappableChar = await firstCharOfUtf8String(intArrayCollectedDcBasenbChars);
+                                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
                                 intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
