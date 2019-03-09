@@ -4506,10 +4506,13 @@ async function runTestsFormatUtf8(boolV) {
     //STAGEL_DEBUG=2;
     console.log('burur');
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291 ])));
+    console.log(await dcaToDcbnbUtf8([ 35, 18, 36, 291 ]));
+    console.log((await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ));
     console.log('buruar');
     //STAGEL_DEBUG=0;
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     console.log('buruaoer');
+    throw 'bubu';
     await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
