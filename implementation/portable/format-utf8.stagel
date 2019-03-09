@@ -18,16 +18,20 @@ r/an/dcaToUtf8 an/content
     new b/dcBasenbEnabled
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     while le n/c n/l
+        # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
             set n/dcAtIndex get an/content n/c
             set an/temp dcToFormat 'utf8' n/dcAtIndex
+        # Could the character be mapped?
         if eq 0 count an/temp
+            # The character could not be mapped, so stick it in the unmappables array.
             if lt n/c n/l
                 if b/dcBasenbEnabled
                     set an/unmappables push an/unmappables n/dcAtIndex
                 else
                     exportWarningUnmappable n/c n/dcAtIndex
         else
+            # The character was mappable.
             if b/dcBasenbEnabled
                 set n/unmappablesCount count an/unmappables
                 if ne 0 n/unmappablesCount
