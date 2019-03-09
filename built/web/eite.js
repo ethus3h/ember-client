@@ -1846,17 +1846,14 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
     await assertIsByteArray(intArrayIn);
     console.log('Trying to decode: '+intArrayIn);
-    await implWarn('bubububu');
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
     let intArrayRemainderArr = [];
     /* last 4 characters */
     intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
-console.log('remainderarr:'+intArrayRemainderArr);
     let intArrayRemainderDecodedArr = [];
     intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
-console.log('remainderDecoded:'+intArrayRemainderDecodedArr);
     intRemainder = await get(intArrayRemainderDecodedArr, 0);
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
     console.log('Decoding returned: '+intArrayRes);
