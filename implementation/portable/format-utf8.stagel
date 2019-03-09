@@ -192,29 +192,40 @@ r/an/dcaFromUtf8 an/content
                         # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
                         set n/tempArrayCount count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
-                # Check for basenb characters and collect them for decoding
-                if isBasenbChar an/latestChar
-                    set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
-                    set b/skipNextChar true
-                else
-                    # Not a basenb char, so decode the ones we've collected
-                    set an/collectedDcBasenbChars bytearrayFromBase17bUtf8 an/collectedDcBasenbChars
-                    set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
-                    set n/collectedDcBasenbCharsCounter 0
-                    while lt n/collectedDcBasenbCharsCount n/collectedDcBasenbCharsCounter
-                        set an/currentUnmappableChar pack32 firstCharOfUtf8String
-                        set an/res append an/res unpack32 an/currentUnmappableChar
-                        set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
-                    set an/collectedDcBasenbChars ( )
-        if b/skipNextChar
-            set b/skipNextChar false
-        else
-            set an/temp an/latestChar
-            new an/tempFromUnicode
-            set an/tempFromUnicode dcFromFormat 'unicode' an/temp
-            if ne -1 get an/tempFromUnicode 0
-                set an/res append an/res an/tempFromUnicode
+                if eq 0 n/dcBasenbUuidMonitorState
+                    # Check for basenb characters and collect them for decoding
+                    if isBasenbChar an/latestChar
+                        set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
+                        set b/skipNextChar true
+                    else
+                        # Not a basenb char, so decode the ones we've collected
+                        set an/collectedDcBasenbChars bytearrayFromBase17bUtf8 an/collectedDcBasenbChars
+                        set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
+                        set n/collectedDcBasenbCharsCounter 0
+                        while lt n/collectedDcBasenbCharsCount n/collectedDcBasenbCharsCounter
+                            set an/currentUnmappableChar pack32 firstCharOfUtf8String
+                            set an/res append an/res unpack32 an/currentUnmappableChar
+                            set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
+                        set an/collectedDcBasenbChars ( )
+        if eq 0 n/dcBasenbUuidMonitorState
+            if b/skipNextChar
+                set b/skipNextChar false
+            else
+                set an/temp an/latestChar
+                new an/tempFromUnicode
+                set an/tempFromUnicode dcFromFormat 'unicode' an/temp
+                if ne -1 get an/tempFromUnicode 0
+                    set an/res append an/res an/tempFromUnicode
         set an/remaining anSubset an/remaining count an/temp } -1
+    if b/dcBasenbEnabled
+        # Handle any remaining collected DcBasenb characters
+        set an/collectedDcBasenbChars bytearrayFromBase17bUtf8 an/collectedDcBasenbChars
+        set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
+        set n/collectedDcBasenbCharsCounter 0
+        while lt n/collectedDcBasenbCharsCount n/collectedDcBasenbCharsCounter
+            set an/currentUnmappableChar pack32 firstCharOfUtf8String
+            set an/res append an/res unpack32 an/currentUnmappableChar
+            set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
     return an/res
 
 r/as/utf8VariantSettings s/direction
