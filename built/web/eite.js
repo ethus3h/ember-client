@@ -2283,8 +2283,11 @@ async function dcaFromUtf8(intArrayContent) {
     let intArrayCurrentUnmappableChar = [];
     let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
+        console.log('Iteration started with '+intArrayRes.toString()+' as the result, and '+intArrayRemaining.toString()+' as the remainder.')
+        console.log('Repneedcount at iter start: '+intDcBasenbUuidMonitorReprocessNeededCount);
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
+ console.log('Latest char for itneration:'+intArrayLatestChar.toString());
         if (boolDcBasenbEnabled) {
             if (await implNot(boolInDcBasenbSection)) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
