@@ -201,10 +201,10 @@ r/an/dcaFromUtf8 an/content
                             set b/skipNextChar true
                         else
                             # Not a basenb char, so decode the ones we've collected
+                            set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
                             set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
                             set n/collectedDcBasenbCharsCounter 0
                             while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
-                                set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
                                 set an/currentUnmappableChar utf8BytesFromDecimalChar firstCharOfUtf8String an/collectedDcBasenbChars
                                 set an/res append an/res unpack32 byteArrayFromBase17bUtf8 an/currentUnmappableChar
                                 set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
@@ -225,10 +225,10 @@ r/an/dcaFromUtf8 an/content
         # Handle any remaining collected DcBasenb characters
         set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
         if ne 0 n/collectedDcBasenbCharsCount
+            set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
             set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
             set n/collectedDcBasenbCharsCounter 0
             while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
-                set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
                 set an/currentUnmappableChar utf8BytesFromDecimalChar firstCharOfUtf8String an/collectedDcBasenbChars
                 set an/res append an/res unpack32 byteArrayFromBase17bUtf8 an/currentUnmappableChar
                 set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
