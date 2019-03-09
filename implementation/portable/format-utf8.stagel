@@ -136,7 +136,7 @@ r/an/dcaFromUtf8 an/content
                             set n/dcBasenbUuidMonitorState 0
                     if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
                         # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
-                        set n/tempArrayCount count an/remaining
+                        set n/tempArrayCount add -1 count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
             else
                 if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
