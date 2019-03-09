@@ -3780,7 +3780,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsFormatUtf8(boolV);
+    await runTestsFormatUtf8(boolV);return;
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
