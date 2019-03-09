@@ -2452,7 +2452,7 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     else {
                         /* Not a basenb char, so decode the ones we've collected */
-                        intArrayCollectedDcBasenbChars = await bytearrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                        intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                         intCollectedDcBasenbCharsCounter = 0;
                         while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
@@ -2482,7 +2482,7 @@ async function dcaFromUtf8(intArrayContent) {
     }
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
-        intArrayCollectedDcBasenbChars = await bytearrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+        intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         intCollectedDcBasenbCharsCounter = 0;
         while (await implLt(intCollectedDcBasenbCharsCount, intCollectedDcBasenbCharsCounter)) {
