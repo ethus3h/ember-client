@@ -1851,6 +1851,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     let intRemainder = 0;
     let intArrayRemainderArr = [];
     /* last 4 characters */
+    console.log('inputArr: '+intArrayIn);
     intArrayRemainderArr = await anSubset(intArrayIn, -5, -1);
     let intArrayRemainderDecodedArr = [];
     console.log('remainderArr: '+intArrayRemainderArr);
