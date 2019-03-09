@@ -131,6 +131,8 @@ r/an/dcaFromUtf8 an/content
                             set n/dcBasenbUuidMonitorReprocessNeededCount n/dcBasenbUuidMonitorState
                             set n/dcBasenbUuidMonitorState 0
                             set b/inDcBasenbSection true
+                    if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
+                        set an/remaining append anSubset an/content count an/remaining }  an/remaining
             else
                 if eq n/dcBasenbUuidMonitorState 0
                     if arrEq an/latestChar ( 243 188 133 185 )
