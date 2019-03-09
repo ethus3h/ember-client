@@ -2280,6 +2280,7 @@ async function dcaFromUtf8(intArrayContent) {
     let intTempArrayCount = 0;
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         console.log('Iteration started with '+intArrayRes.toString()+' as the result, and '+intArrayRemaining.toString()+' as the remainder.')
+        console.log('Repneedcount at iter start: '+intDcBasenbUuidMonitorReprocessNeededCount);
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
         if (boolDcBasenbEnabled) {
@@ -2358,9 +2359,10 @@ async function dcaFromUtf8(intArrayContent) {
                             intDcBasenbUuidMonitorState = 0;
                         }
                     }
+                    console.log('Repneedcount before test: '+intDcBasenbUuidMonitorReprocessNeededCount);
                     if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                         /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
-                        intTempArrayCount = await count(intArrayRemaining);
+                        intTempArrayCount = await count(intArrayRemaining) - 1;
                         console.log('Remainning: '+intArrayRemaining.toString()+' ; content : '+intArrayContent.toString());
                         console.log('addRes: '+await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount))+' ; count : '+intTempArrayCount);
                         console.log(intArrayContent);
