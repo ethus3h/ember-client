@@ -1835,11 +1835,13 @@ async function byteArrayToBasenbUtf8(intBase, intArrayIn) {
 
     await assertIsTrue(await isBasenbBase(intBase));
     await assertIsByteArray(intArrayIn);
+    let intArrayInputIntBitArray = [];
+    intArrayInputIntBitArray = await byteArrayToIntBitArray(intArrayIn);
     let intArrayRes = [];
-    intArrayRes = await internalIntBitArrayToBasenbString(intBase, await byteArrayToIntBitArray(intArrayIn));
+    intArrayRes = await internalIntBitArrayToBasenbString(intBase, intArrayInputIntBitArray);
     /* The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function). */
     let intArrayRemainder = [];
-    intArrayRemainder = await push(intArrayRemainder, await implAdd(2, await implMod(await count(intArrayIn), 17)));
+    intArrayRemainder = await push(intArrayRemainder, await implAdd(2, await implMod(await count(intArrayInputIntBitArray), 17)));
     intArrayRes = await push(intArrayRes, await internalIntBitArrayToBasenbString(17, await byteArrayToIntBitArray(intArrayRemainder)));
     await assertIsByteArray(intArrayRes);
 
@@ -1859,7 +1861,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     let intArrayRemainderDecodedArr = [];
     intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
     intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
-    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayIn, intRemainder));
+    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -5), intRemainder));
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
@@ -2233,12 +2235,9 @@ async function dcaToUtf8(intArrayContent) {
                     intUnmappablesCounter = 0;
                     while (await implLt(intUnmappablesCounter, intUnmappablesCount)) {
                         /* The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first  get the bytearray for the character we're on. */
-                        console.log('bubebicecu:'+await get(intArrayUnmappables, intUnmappablesCounter));
                         intArrayUnmappablesIntermediatePacked = await append(intArrayUnmappablesIntermediatePacked, await pack32(await get(intArrayUnmappables, intUnmappablesCounter)));
                         intUnmappablesCounter = await implAdd(intUnmappablesCounter, 1);
                     }
-                    console.log('Packed:'+intArrayUnmappablesIntermediatePacked);
-                    console.log('Appending:'+await byteArrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
                     intArrayRes = await append(intArrayRes, await byteArrayToBase17bUtf8(intArrayUnmappablesIntermediatePacked));
                     intArrayUnmappables = [  ];
                     intArrayUnmappablesIntermediatePacked = [  ];
@@ -2461,15 +2460,13 @@ async function dcaFromUtf8(intArrayContent) {
                         }
                         else {
                             /* Not a basenb char, so decode the ones we've collected */
-                            console.log('Input chars: '+intArrayCollectedDcBasenbChars);
-                            console.log('Input utf8: '+await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
-                            intArrayCollectedDcBasenbChars = await unpack32(await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars));
-                            console.log('ok');
+                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayRes = await append(intArrayRes, await get(intArrayCollectedDcBasenbChars, intCollectedDcBasenbCharsCounter));
-                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, a1);
+                                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
+                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
                             intArrayCollectedDcBasenbChars = [  ];
                         }
@@ -2499,10 +2496,11 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
+            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                intArrayCurrentUnmappableChar = await firstCharOfUtf8String(intArrayCollectedDcBasenbChars);
+                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
                 intArrayRes = await append(intArrayRes, await unpack32(await byteArrayFromBase17bUtf8(intArrayCurrentUnmappableChar)));
                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
             }
@@ -3793,8 +3791,6 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-        await runTestsFormatUtf8(boolV);
-return;
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3808,6 +3804,7 @@ return;
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4592,8 +4589,7 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
-return;
+
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
@@ -4602,6 +4598,7 @@ return;
     /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Test for converting from UTF8+dcbnb */
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 187, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ))))));
 
     await internalDebugStackExit();
 }
