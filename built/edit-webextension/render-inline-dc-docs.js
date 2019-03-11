@@ -28,7 +28,7 @@
                 height: "100px",
                 background: "red",
                 "border-radius": "50%",
-                content: "''"
+                content: "' '"
             });
         }
     }
