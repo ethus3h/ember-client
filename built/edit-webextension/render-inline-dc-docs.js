@@ -96,7 +96,7 @@
                     let replaceSpan=function(span, ifr){console.log('tebuice');span.remove();ifr.style.display='inline-block';};
                     console.log('bubube');
                     //alert('a');
-                    const sleep = t => new Promise(r => setTimeout(r, t));
+                    const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
                     await sleep(1); alert('b');
                     //window.setTimeout(alert, 1);
                     //window.setTimeout(replaceSpan, 1, span, ifr);
