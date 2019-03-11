@@ -94,7 +94,7 @@
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     let replaceSpan=function(span, ifr){console.log('tebuice');span.remove();ifr.style.display='inline-block';};
-                    replaceSpan();
+                    replaceSpan(span, ifr);
                     console.log('bubube');
                     //alert('a');
                     const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
