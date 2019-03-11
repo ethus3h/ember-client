@@ -1,24 +1,24 @@
 (async function() {
     //let elems=document.getElementsByTagName('*');
     function textNodesUnder(el) {
-        var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
+        let n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
         while (n=walk.nextNode()) {
             a.push(n);
         }
         return a;
     }
     let elems=textNodesUnder(document.body);
-    var addRule = (function (style) {
+    let addRule = (function (style) {
         // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
-        var sheet = document.head.appendChild(style).sheet;
+        let sheet = document.head.appendChild(style).sheet;
         return function (selector, css) {
-            var propText = typeof css === "string" ? css : Object.keys(css).map(function (p) {
+            let propText = typeof css === "string" ? css : Object.keys(css).map(function (p) {
                 return p + ":" + (p === "content" ? "'" + css[p] + "'" : css[p]);
             }).join(";");
             sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
         };
     })(document.createElement("style"));
-    addRule("p:before", {
+    addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
         display: "block",
         width: "100px",
         height: "100px",
@@ -43,6 +43,7 @@
         console.log('bubububbubu');
         el=elems[i];
         if (el.textContent.match(re)) {
+            addCssIfNeeded();
             replacedAll = false;
             j = 0;
             while (!replacedAll && j < limit) {
