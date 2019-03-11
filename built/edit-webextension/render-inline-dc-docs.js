@@ -30,7 +30,8 @@
                 });
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame", {
                     display: "inline-block",
-                    border: 0
+                    border: 0,
+                    opacity: 0
                 });
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
                     display: "block",
@@ -91,11 +92,10 @@
                     ifr.src=browser.runtime.getURL('edit.html');
                     ifr.style.height=span.clientHeight+'px';
                     ifr.style.width=span.clientWidth+'px';
-                    span.remove();
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
-                    setTimeout(function(){span.remove();ifr.style.opacity=100;});
+                    setTimeout(function(){span.remove();ifr.style.opacity=100;}, 500);
                 }
             }
         }
