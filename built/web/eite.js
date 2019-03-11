@@ -2455,6 +2455,7 @@ async function dcaFromUtf8(intArrayContent) {
                     /* Check for basenb characters and collect them for decoding */
                     if (await ne(0, await count(intArrayLatestChar))) {
                         if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
+                            console.log('Normal charecter'+intArrayLatestChar);
                             intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                             boolSkipNextChar = true;
                         }
@@ -2465,6 +2466,7 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
                                 intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                console.log('urerur'+intArrayCollectedDcBasenbChars);
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
@@ -2496,7 +2498,7 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
-        console.log('Bububububbubu!');
+            console.log('Bububububbubu!'+intArrayCollectedDcBasenbChars);
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
