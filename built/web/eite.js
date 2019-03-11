@@ -2287,6 +2287,7 @@ async function dcaFromUtf8(intArrayContent) {
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
+        console.log('Iteration: '+intArrayLatestChar);
         if (boolDcBasenbEnabled) {
             /* Dcbasenb is enabled, so process characters accordingly. */
             if (await implNot(boolInDcBasenbSection)) {
@@ -2479,6 +2480,7 @@ async function dcaFromUtf8(intArrayContent) {
                     /* There is a latest char (latestChar has more than 0 elems), so work on it */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         /* The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding. */
+                        console.log('Collected char '+intArrayLatestChar);
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                         intSkipThisChar = await count(intArrayLatestChar);
                     }
