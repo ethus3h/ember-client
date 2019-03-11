@@ -83,10 +83,9 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-        res = await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])]);
+                await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
                 inputarea.value=await eiteCall('strFromByteArray', [await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)])]);
-        await eiteCall('popImportSettings', [await getFormatId('utf8')]);
+                await eiteCall('popImportSettings', [await getFormatId('utf8')]);
                 window.editFormatValue=editFormat;
                 removeSpinner(true);
             }, 500);
