@@ -2455,7 +2455,7 @@ async function dcaFromUtf8(intArrayContent) {
                     /* Check for basenb characters and collect them for decoding */
                     if (await ne(0, await count(intArrayLatestChar))) {
                         if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
-                            console.log('Normal charecter'+intArrayLatestChar);
+                            console.log('Collected dcbnb charecter for later: '+intArrayLatestChar);
                             intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                             boolSkipNextChar = true;
                         }
@@ -2466,7 +2466,7 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
                                 intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                                console.log('urerur'+intArrayCollectedDcBasenbChars);
+                                console.log('Decoding collected chars '+intArrayCollectedDcBasenbChars);
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
@@ -2488,6 +2488,7 @@ async function dcaFromUtf8(intArrayContent) {
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
                 if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
+                    console.log('Appending normal character '+intArrayTemp + '/'+intArrayTempFromUnicode);
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
             }
@@ -2498,7 +2499,7 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
-            console.log('Bububububbubu!'+intArrayCollectedDcBasenbChars);
+            console.log('Decoding remaining collected chars '+intArrayCollectedDcBasenbChars);
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
