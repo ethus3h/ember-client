@@ -2,7 +2,9 @@
     //let elems=document.getElementsByTagName('*');
     function textNodesUnder(el) {
         var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
-        while(n=walk.nextNode()) a.push(n);
+        while (n=walk.nextNode()) {
+            a.push(n);
+        }
         return a;
     }
     let elems=textNodesUnder(document.body);
@@ -17,13 +19,18 @@
     let parentNode;
     let span;
     let replacedAll;
+    let limit = 1;
+    let j;
     for (let i=0;i<elems.length;i++) {
+        console.log('bubububbubu');
         el=elems[i];
         if (el.textContent.match(re)) {
             replacedAll = false;
-            while (!replacedAll) {
+            j = 0;
+            while (!replacedAll && j < limit) {
+                j = j + 1;
                 // based on https://web.archive.org/web/20190311140420/https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript
-                nodeVal=el.nodeValue;
+                nodeVal = el.nodeValue;
                 foundIndex = nodeVal.indexOf('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐');
                 if (foundIndex < 0) {
                     replacedAll = true;
@@ -31,7 +38,7 @@
                 else {
                     begin = nodeVal.substring(0, foundIndex);
                     parentNode = el.parentNode;
-                    matched = el.textContent.match(new RegExp('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐(.*)󼅹󴶯􈡺󿔊􆲦􍸂󲀰􏼝'));
+                    matched = el.textContent.match(new RegExp('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐(.*)󼅹󴶯􈡺󿔊􆲦􍸂󲀰􏼝'))[0];
                     if (begin.length > 0) {
                         textNode = document.createTextNode(begin);
                         parentNode.insertBefore(textNode, el);
@@ -41,13 +48,13 @@
                     span.appendChild(document.createTextNode(matched));
                     parentNode.insertBefore(span, el);
                     ifr=document.createElement('iframe');
-                    nodeVal = nodeVal.substring(foundIndex + matched.length);
+                    el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
                     ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                     ifr.src=browser.runtime.getURL('edit.html');
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                    ifr.contentWindow.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched)[0]], ifr.src);
+                    ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
                 }
             }
         }

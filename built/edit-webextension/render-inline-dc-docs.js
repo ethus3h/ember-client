@@ -30,7 +30,7 @@
             while (!replacedAll && j < limit) {
                 j = j + 1;
                 // based on https://web.archive.org/web/20190311140420/https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript
-                nodeVal=el.nodeValue;
+                nodeVal = el.nodeValue;
                 foundIndex = nodeVal.indexOf('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐');
                 if (foundIndex < 0) {
                     replacedAll = true;
@@ -48,7 +48,7 @@
                     span.appendChild(document.createTextNode(matched));
                     parentNode.insertBefore(span, el);
                     ifr=document.createElement('iframe');
-                    nodeVal = nodeVal.substring(foundIndex + matched.length);
+                    el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
                     ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                     ifr.src=browser.runtime.getURL('edit.html');
