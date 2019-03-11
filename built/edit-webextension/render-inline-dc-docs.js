@@ -2,7 +2,9 @@
     //let elems=document.getElementsByTagName('*');
     function textNodesUnder(el) {
         var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
-        while(n=walk.nextNode()) a.push(n);
+        while (n=walk.nextNode()) {
+            a.push(n);
+        }
         return a;
     }
     let elems=textNodesUnder(document.body);
@@ -17,7 +19,7 @@
     let parentNode;
     let span;
     let replacedAll;
-    let limit = 100;
+    let limit = 0;
     let j;
     for (let i=0;i<elems.length;i++) {
         console.log('bubububbubu');
