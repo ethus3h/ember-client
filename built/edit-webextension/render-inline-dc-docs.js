@@ -97,7 +97,7 @@
                     console.log('bubube');
                     //alert('a');
                     const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
-                    await sleep(1); alert('b');
+                    await sleep(1000); alert('b');
                     //window.setTimeout(alert, 1);
                     //window.setTimeout(replaceSpan, 1, span, ifr);
                     //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
