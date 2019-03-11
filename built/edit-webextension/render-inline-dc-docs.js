@@ -93,12 +93,13 @@
                     ifr.style.width=span.clientWidth+'px';
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                    let replaceSpan=function(span, ifr){console.log('tebuice');span.remove();ifr.style.display='inline-block';};
+                    // Wow, I really hate developing JavaScript.
+                    let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
                     replaceSpan(span, ifr);
-                    console.log('bubube');
+                   // console.log('bubube');
                     //alert('a');
-                    const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
-                    await sleep(1000); alert('b');
+                    //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
+                    //await sleep(1000); alert('b');
                     //window.setTimeout(alert, 1);
                     //window.setTimeout(replaceSpan, 1, span, ifr);
                     //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
