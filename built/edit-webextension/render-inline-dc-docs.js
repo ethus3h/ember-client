@@ -89,6 +89,8 @@
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
                     ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                     ifr.src=browser.runtime.getURL('edit.html');
+                    ifr.style.height=span.clientHeight;
+                    ifr.style.width=span.clientWidth;
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
