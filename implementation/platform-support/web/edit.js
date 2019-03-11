@@ -86,7 +86,7 @@ window.onload = function() {
                 let tempInputValue=await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)]);
                 if (editFormat === 'utf8') {
                     await eiteCall('pushExportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
-                    inputarea.value=new TextDecoder().decode(tempInputValue);
+                    inputarea.value=new TextDecoder().decode(new Uint8Array(tempInputValue));
                     await eiteCall('popExportSettings', [await getFormatId('utf8')]);
                 }
                 else {
