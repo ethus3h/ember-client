@@ -29,9 +29,8 @@
                     display: "inline-block"
                 });
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame", {
-                    display: "inline-block",
-                    border: 0,
-                    opacity: 0
+                    display: "none",
+                    border: 0
                 });
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
                     display: "block",
