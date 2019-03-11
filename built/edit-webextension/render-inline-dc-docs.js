@@ -26,10 +26,16 @@
             // https://github.com/codepo8/CSS3-Rainbow-Dividers/blob/master/rainbows.css
             //keyframeSheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', keyframeSheet.cssRules.length);
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
-                display: "block",
+                /*display: "block",
                 "background-image": "linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
                 animation: "keyframeRule 2.5s forwards linear infinite",
                 height: "0.2rem",
+                content: "' '",*/
+                display: "block",
+                width: "100%",
+                height: "0.2rem",
+                background: "red",
+                "border-radius": "50%",
                 content: "' '"
             });
         }
@@ -48,7 +54,6 @@
     let limit = 1;
     let j;
     for (let i=0;i<elems.length;i++) {
-        console.log('bubububbubu');
         el=elems[i];
         if (el.textContent.match(re)) {
             addCssIfNeeded();
