@@ -153,3 +153,19 @@ function internalDebugLogJSObject(obj) {
         console.log(obj);
     }
 }
+
+// Just a useful function, not needed by anything
+function printVariablesInObj(obj) {
+    var n, arg, name;
+    alert("typeof obj = " + typeof obj);
+    for (name in obj) {
+        alert("obj[" + name + "]=" + obj[name]);
+    }
+    for (n = 0; n < arguments.length; ++n) {
+        arg = arguments[n];
+        alert("typeof arguments[" + n + "] = " + typeof arg);
+        for (name in arg) {
+            alert("arguments[" + n + "][" + name + "]=" + arg[name]);
+        }
+    }
+}
