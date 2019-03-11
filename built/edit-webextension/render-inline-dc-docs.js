@@ -94,7 +94,7 @@
                     parentNode.insertBefore(ifr, el);
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     window.setTimeout(function(){console.log('tebuice');span.remove();ifr.style.display='inline-block';}, 500);
-                    ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
+                    //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
                 }
             }
         }
