@@ -207,6 +207,7 @@ r/an/dcaFromUtf8 an/content
                     if ne 0 count an/latestChar
                         # There is a latest char (latestChar has more than 0 elems), so work on it
                         if and b/inDcBasenbSection isBasenbChar an/latestChar
+                            # The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding.
                             set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
                             set b/skipNextChar true
                         else
