@@ -32,7 +32,7 @@
                 height: "0.2rem",
                 "background-image": "linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
                 "background-image": "-moz-linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
-                background: "red",
+                //background: "red",
                 "background-size": "50% auto",
                 content: "' '"
             });
