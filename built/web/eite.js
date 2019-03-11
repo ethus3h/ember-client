@@ -2356,6 +2356,7 @@ async function dcaFromUtf8(intArrayContent) {
                     else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
                         if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
                             intDcBasenbUuidMonitorState = 0;
+                            intArrayLatestChar = [  ];
                             boolInDcBasenbSection = true;
                         }
                         else {
