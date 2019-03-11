@@ -27,12 +27,11 @@
             //keyframeSheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', keyframeSheet.cssRules.length);
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
                 display: "block",
-                "background-image": "linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
                 animation: "keyframeRule 2.5s forwards linear infinite",
                 width: "100%",
                 height: "0.2rem",
                 background: "red",
-                "border-radius": "50%",
+                "background-image": "linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
                 content: "' '"
             });
         }
