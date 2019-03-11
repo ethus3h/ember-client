@@ -37,7 +37,7 @@
                     animation: "keyframeRule 2.5s forwards linear infinite",
                     width: "100%",
                     height: "0.2rem",
-                    position: relative,
+                    position: "relative",
                     top: "-0.2rem",
                     "background-image": "linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
                     "background-image": "-moz-linear-gradient( left, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red )",
