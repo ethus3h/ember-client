@@ -12,6 +12,7 @@
     let addCssIfNeeded = function() {
         if (!added) {
             added=true;
+            let stylesheet = document.head.appendChild(document.createElement("style")).sheet;
             let addRule = (function (style) {
                 // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
                 let sheet = document.head.appendChild(style).sheet;
@@ -22,7 +23,6 @@
                     sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
                 };
             })(document.createElement("style"));
-            let keyframeSheet = document.head.appendChild(document.createElement("style")).sheet;
             // https://github.com/codepo8/CSS3-Rainbow-Dividers/blob/master/rainbows.css
             keyframeSheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', keyframeSheet.cssRules.length);
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan", {
