@@ -34,7 +34,7 @@
             span.appendChild(document.createTextNode(matched));
             parentNode.insertBefore(span, el);
             ifr=document.createElement('iframe');
-            nodeVal = nodeVal.substring(foundIndex + myToken.length);
+            nodeVal = nodeVal.substring(foundIndex + matched.length);
             ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
             ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
             ifr.src=browser.runtime.getURL('edit.html');
