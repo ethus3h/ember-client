@@ -22,14 +22,14 @@
                     sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
                 };
             })(document.createElement("style"));
-            addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
+            /*addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
                 display: "block",
                 width: "100px",
                 height: "100px",
                 background: "red",
                 "border-radius": "50%",
                 content: "' '"
-            });
+            });*/
         }
     }
     let el;
