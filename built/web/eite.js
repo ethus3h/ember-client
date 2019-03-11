@@ -2454,6 +2454,7 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                 }
             }
+            console.log('lates character'+intArrayLatestChar);
             if (await implEq(0, intDcBasenbUuidMonitorState)) {
                 /* Check for basenb characters and collect them for decoding */
                 if (await ne(0, await count(intArrayLatestChar))) {
