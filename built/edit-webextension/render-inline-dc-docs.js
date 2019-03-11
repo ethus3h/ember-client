@@ -8,20 +8,20 @@
         return a;
     }
     let elems=textNodesUnder(document.body);
-    let addRule = (function (style) {
-        // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
-        let sheet = document.head.appendChild(style).sheet;
-        return function (selector, css) {
-            let propText = typeof css === "string" ? css : Object.keys(css).map(function (p) {
-                return p + ":" + (p === "content" ? "'" + css[p] + "'" : css[p]);
-            }).join(";");
-            sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
-        };
-    })(document.createElement("style"));
     let added=false;
     let addCssIfNeeded = function() {
         if (!added) {
             added=true;
+            let addRule = (function (style) {
+                // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
+                let sheet = document.head.appendChild(style).sheet;
+                return function (selector, css) {
+                    let propText = typeof css === "string" ? css : Object.keys(css).map(function (p) {
+                        return p + ":" + (p === "content" ? "'" + css[p] + "'" : css[p]);
+                    }).join(";");
+                    sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
+                };
+            })(document.createElement("style"));
             addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
                 display: "block",
                 width: "100px",
