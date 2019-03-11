@@ -2277,8 +2277,8 @@ async function dcaFromUtf8(intArrayContent) {
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
     let boolInDcBasenbSection = false;
     boolInDcBasenbSection = false;
-    let boolSkipNextChar = false;
-    boolSkipNextChar = false;
+    let intSkipThisChar = 0;
+    intSkipThisChar = 0;
     let intArrayCollectedDcBasenbChars = [];
     let intCollectedDcBasenbCharsCount = 0;
     let intCollectedDcBasenbCharsCounter = 0;
@@ -2288,12 +2288,17 @@ async function dcaFromUtf8(intArrayContent) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
         if (boolDcBasenbEnabled) {
+            /* Dcbasenb is enabled, so process characters accordingly. */
             if (await implNot(boolInDcBasenbSection)) {
+                /* Not in a dcbasenb section, so look out for the UUID in case we run into one */
+                /* All this code down to "(End of code section)" is only looking for UUIDs, and can mostly be disregarded for purposes of understanding the decoder logic. */
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
                 if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                    /* We're reprocessing potential UUID chars that didn't match a UUID after all, so don't check them for being a UUID. FIXME: Non-UUID char being reprocessed followed by 244 141 129 157 etc. (a potential UUID) would NOT be checked to be a UUID here. It should handle correctly the situation where there's potential but not a UUID, followed by potential and is a UUID, overlapping, like that. */
                     intDcBasenbUuidMonitorReprocessNeededCount = await implSub(intDcBasenbUuidMonitorReprocessNeededCount, 1);
                 }
                 else {
+                    /* Check for a UUID. */
                     if (await implEq(intDcBasenbUuidMonitorState, 0)) {
                         if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
                             intDcBasenbUuidMonitorState = 1;
@@ -2366,17 +2371,19 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                         /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
-                        console.log('Reprossesing '+intDcBasenbUuidMonitorReprocessNeededCount);
                         intTempArrayCount = await implSub(await count(intArrayContent), await count(intArrayRemaining));
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
             }
             else {
+                /* Dcbasenb support is enabled, and we're inside a dcbasenb region. Process chars accordingly. */
                 if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                    /* Reprocessing non-UUID chars that could have been a UUID. Again, FIXME same as for the start UUID reprocessing bug mentioned in the earlier FIXME. */
                     intDcBasenbUuidMonitorReprocessNeededCount = await implSub(intDcBasenbUuidMonitorReprocessNeededCount, 1);
                 }
                 else {
+                    /* Look for a dcbasenb region end UUID. */
                     if (await implEq(intDcBasenbUuidMonitorState, 0)) {
                         if (await arrEq(intArrayLatestChar, [ 243, 188, 133, 185 ])) {
                             intDcBasenbUuidMonitorState = 1;
@@ -2453,26 +2460,25 @@ async function dcaFromUtf8(intArrayContent) {
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
+                /* (End of code section) (see explanation above) */
             }
-            console.log('lates character'+intArrayLatestChar);
             if (await implEq(0, intDcBasenbUuidMonitorState)) {
-                /* Check for basenb characters and collect them for decoding */
+                /* Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result. */
                 if (await ne(0, await count(intArrayLatestChar))) {
+                    /* There is a latest char (latestChar has more than 0 elems), so work on it */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
-                        console.log('Collected dcbnb charecter for later: '+intArrayLatestChar);
+                        /* The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding. */
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
-                        boolSkipNextChar = true;
+                        intSkipThisChar = await count(intArrayLatestChar);
                     }
                     else {
-                        /* Not a basenb char, so decode the ones we've collected */
-                        if(0 !== await count(intArrayCollectedDcBasenbChars)) {
-                            console.log(intArrayLatestChar+'bubububbububu'+boolInDcBasenbSection+intArrayCollectedDcBasenbChars);
+                        /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
+                        if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
                                 intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                                console.log('Decoding collected chars '+intArrayCollectedDcBasenbChars);
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                             }
@@ -2481,32 +2487,35 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                 }
                 else {
-                    boolSkipNextChar = true;
+                    /* The latest char was the last char of a confirmed UUID. */
+                    intSkipThisChar = 4;
                 }
             }
         }
+        intTempArrayCount = await count(intArrayLatestChar);
         if (await implEq(0, intDcBasenbUuidMonitorState)) {
-            // We're not in a dcbnb section, so just process these characters normally.
-            if (boolSkipNextChar) {
-                boolSkipNextChar = false;
+            /* (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.) */
+            if (await ne(0, intSkipThisChar)) {
+                /* The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. (Or, it was the last character of a confirmed UUID; either way, it doesn't get processed now.) */
+                intTempArrayCount = intSkipThisChar;
+                intSkipThisChar = 0;
             }
             else {
+                /* Not skipping the current char, so decode it from Unicode normally. */
                 intArrayTemp = intArrayLatestChar;
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
                 if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
-                    console.log('Appending normal character outside of dcbnb section: '+intArrayTemp + '/'+intArrayTempFromUnicode);
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
             }
         }
-        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
+        /* Place in an/remaining the substring of input that has not been processed yet. */
+        intArrayRemaining = await anSubset(intArrayRemaining, intTempArrayCount, -1);
     }
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
-        intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
-        if (await ne(0, intCollectedDcBasenbCharsCount)) {
-            console.log('Decoding remaining collected chars at end of input: '+intArrayCollectedDcBasenbChars);
+        if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
@@ -3802,9 +3811,7 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsFormatUtf8(boolV);
-return;
-await runTestsMath(boolV);
+    await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
@@ -3817,6 +3824,7 @@ await runTestsMath(boolV);
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4601,15 +4609,7 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
-    await runTest(boolV, await arrEq([ 18, 11, 18 ], await dcaFromDcbnbUtf8(await append([ 32 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 143, 191, 180, 244, 143, 191, 181 ], await append(await getArmoredUtf8EmbeddedEndUuid(), [ 32 ])))))));
-return;
-        await runTest(boolV, await arrEq([ 18, 11, 18 ], await dcaFromDcbnbUtf8(await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 32, 244, 143, 191, 180, 244, 143, 191, 181, 32 ], await getArmoredUtf8EmbeddedEndUuid())))));
-        await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173, 50 ], await getArmoredUtf8EmbeddedEndUuid()))))));
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173 ], await getArmoredUtf8EmbeddedEndUuid()))))));
-    /* Make sure the dcbnb region gets output at the right place relative to the other chars (there's a bug where it outputs 18 18 11 instead of 18 11 18) */
-    /* Two dcbnb regions */
-    await runTest(boolV, await arrEq([ 89, 7, 11 ], await dcaFromDcbnbUtf8([ 104, 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 184, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157, 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 180, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157 ])));
-    return;
+
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
@@ -4618,7 +4618,14 @@ return;
     /* Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable */
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Tests for converting from UTF8+dcbnb */
-
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173, 50 ], await getArmoredUtf8EmbeddedEndUuid()))))));
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173 ], await getArmoredUtf8EmbeddedEndUuid()))))));
+    /* Make sure the dcbnb region gets output at the right place relative to the other chars (there's a bug where it outputs 18 18 11 instead of 18 11 18) */
+    await runTest(boolV, await arrEq([ 18, 11, 18 ], await dcaFromDcbnbUtf8(await append([ 18 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 143, 191, 180, 244, 143, 191, 181 ], await append(await getArmoredUtf8EmbeddedEndUuid(), [ 18 ])))))));
+    /* Same as the previous test, but with the spaces inside the start and end UUIDs. Works even though the previous one failed. */
+    await runTest(boolV, await arrEq([ 18, 11, 18 ], await dcaFromDcbnbUtf8(await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 32, 244, 143, 191, 180, 244, 143, 191, 181, 32 ], await getArmoredUtf8EmbeddedEndUuid())))));
+    /* Two dcbnb regions */
+    await runTest(boolV, await arrEq([ 89, 7, 11 ], await dcaFromDcbnbUtf8([ 104, 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 184, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157, 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 180, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157 ])));
     /* "h\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff8}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff4}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,184,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,180,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157" */
 
     await internalDebugStackExit();
