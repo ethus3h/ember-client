@@ -30,7 +30,7 @@
                 parentNode.insertBefore(textNode, el);
             }
             span = document.createElement("span");
-            span.className += finalClassName;
+            span.className = span.className + ' b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan';
             span.appendChild(document.createTextNode(matched));
             parentNode.insertBefore(span, el);
             ifr=document.createElement('iframe');
