@@ -23,9 +23,10 @@
                 };
             })(document.createElement("style"));
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
+                // https://github.com/codepo8/CSS3-Rainbow-Dividers/blob/master/rainbows.css
                 display: "block",
-                width: "100px",
-                height: "100px",
+                width: "100%",
+                height: "0.2rem",
                 background: "red",
                 "border-radius": "50%",
                 content: "' '"
