@@ -83,11 +83,11 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
+                await eiteCall('pushExportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
                 let tempInputValue=await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)]);
+                await eiteCall('popExportSettings', [await getFormatId('utf8')]);
                 if (editFormat === 'utf8') {
-                    await eiteCall('pushExportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
                     inputarea.value=new TextDecoder().decode(new Uint8Array(tempInputValue));
-                    await eiteCall('popExportSettings', [await getFormatId('utf8')]);
                 }
                 else {
                     inputarea.value=await eiteCall('strFromByteArray', [tempInputValue]);
