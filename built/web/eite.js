@@ -2480,6 +2480,7 @@ async function dcaFromUtf8(intArrayContent) {
             }
         }
         if (await implEq(0, intDcBasenbUuidMonitorState)) {
+            // We're not in a dcbnb section, so just process these characters normally.
             if (boolSkipNextChar) {
                 boolSkipNextChar = false;
             }
@@ -2488,7 +2489,7 @@ async function dcaFromUtf8(intArrayContent) {
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
                 if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
-                    console.log('Appending normal character '+intArrayTemp + '/'+intArrayTempFromUnicode);
+                    console.log('Appending normal character outside of dcbnb section: '+intArrayTemp + '/'+intArrayTempFromUnicode);
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
             }
@@ -2499,7 +2500,7 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
-            console.log('Decoding remaining collected chars '+intArrayCollectedDcBasenbChars);
+            console.log('Decoding remaining collected chars at end of input: '+intArrayCollectedDcBasenbChars);
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;

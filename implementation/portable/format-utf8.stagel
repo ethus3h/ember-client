@@ -83,11 +83,16 @@ r/an/dcaFromUtf8 an/content
         set an/temp ( )
         set an/latestChar pack32 firstCharOfUtf8String an/remaining
         if b/dcBasenbEnabled
+            # Dcbasenb is enabled, so process characters accordingly.
             if not b/inDcBasenbSection
+                # Not in a dcbasenb section, so look out for the UUID in case we run into one
+                # All this code down to "(End of code section)" is only looking for UUIDs, and can mostly be disregarded for purposes of understanding the decoder logic.
                 # 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc.
                 if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
+                    # We're reprocessing potential UUID chars that didn't match a UUID after all, so don't check them for being a UUID. FIXME: Non-UUID char being reprocessed followed by 244 141 129 157 etc. (a potential UUID) would NOT be checked to be a UUID here. It should handle correctly the situation where there's potential but not a UUID, followed by potential and is a UUID, overlapping, like that.
                     set n/dcBasenbUuidMonitorReprocessNeededCount sub n/dcBasenbUuidMonitorReprocessNeededCount 1
                 else
+                    # Check for a UUID.
                     if eq n/dcBasenbUuidMonitorState 0
                         if arrEq an/latestChar ( 244 141 129 157 )
                             set n/dcBasenbUuidMonitorState 1
@@ -139,9 +144,12 @@ r/an/dcaFromUtf8 an/content
                         set n/tempArrayCount sub count an/content } count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
             else
+                # Dcbasenb support is enabled, and we're inside a dcbasenb region. Process chars accordingly.
                 if ne 0 n/dcBasenbUuidMonitorReprocessNeededCount
+                    # Reprocessing non-UUID chars that could have been a UUID. Again, FIXME same as for the start UUID reprocessing bug mentioned in the earlier FIXME.
                     set n/dcBasenbUuidMonitorReprocessNeededCount sub n/dcBasenbUuidMonitorReprocessNeededCount 1
                 else
+                    # Look for a dcbasenb region end UUID.
                     if eq n/dcBasenbUuidMonitorState 0
                         if arrEq an/latestChar ( 243 188 133 185 )
                             set n/dcBasenbUuidMonitorState 1
@@ -193,9 +201,11 @@ r/an/dcaFromUtf8 an/content
                         # It's necessary to reprocess the number of bytes that were consumed while checking for a UUID
                         set n/tempArrayCount count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
+                # (End of code section) (see explanation above)
                 if eq 0 n/dcBasenbUuidMonitorState
-                    # Check for basenb characters and collect them for decoding
+                    # Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result.
                     if ne 0 count an/latestChar
+                        # There is a latest char (latestChar has more than 0 elems), so work on it
                         if and b/inDcBasenbSection isBasenbChar an/latestChar
                             set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
                             set b/skipNextChar true
@@ -210,8 +220,10 @@ r/an/dcaFromUtf8 an/content
                                 set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
                             set an/collectedDcBasenbChars ( )
                     else
+                        # There is not a latest char (latestChar has zero elems), so skip the next character (huh??)
                         set b/skipNextChar true
         if eq 0 n/dcBasenbUuidMonitorState
+            # We're not in a dcbnb section, so just process these characters normally.
             if b/skipNextChar
                 set b/skipNextChar false
             else
