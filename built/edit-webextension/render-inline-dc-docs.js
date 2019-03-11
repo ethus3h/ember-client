@@ -19,7 +19,7 @@
     let parentNode;
     let span;
     let replacedAll;
-    let limit = 0;
+    let limit = 1;
     let j;
     for (let i=0;i<elems.length;i++) {
         console.log('bubububbubu');
