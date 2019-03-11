@@ -225,10 +225,12 @@ r/an/dcaFromUtf8 an/content
                 else
                     # The latest char was the last char of a confirmed UUID.
                     set n/skipThisChar 4
+        set n/tempArrayCount count an/latestChar
         if eq 0 n/dcBasenbUuidMonitorState
             # (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.)
             if ne 0 n/skipThisChar
                 # The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. (Or, it was the last character of a confirmed UUID; either way, it doesn't get processed now.)
+                set n/tempArrayCount n/skipThisChar
                 set n/skipThisChar 0
             else
                 # Not skipping the current char, so decode it from Unicode normally.
@@ -238,7 +240,7 @@ r/an/dcaFromUtf8 an/content
                 if ne -1 get an/tempFromUnicode 0
                     set an/res append an/res an/tempFromUnicode
         # Place in an/remaining the substring of input that has not been processed yet.
-        set an/remaining anSubset an/remaining count an/latestChar } -1
+        set an/remaining anSubset an/remaining n/tempArrayCount -1
     if b/dcBasenbEnabled
         # Handle any remaining collected DcBasenb characters
         if ne 0 count an/collectedDcBasenbChars
