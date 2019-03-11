@@ -1129,6 +1129,26 @@ function internalDebugLogJSObject(obj) {
     }
 }
 
+// Just a useful function, not needed by anything
+function printVariablesInObj(obj) {
+    // Pass it "this" to see current scope, basically
+    // https://web.archive.org/web/20190311170104/https://stackoverflow.com/questions/2051678/getting-all-variables-in-scope
+    let n;
+    let arg;
+    let name;
+    console.log("typeof obj = " + typeof obj);
+    for (name in obj) {
+        console.log("obj[" + name + "]=" + obj[name]);
+    }
+    for (n = 0; n < arguments.length; ++n) {
+        arg = arguments[n];
+        console.log("typeof arguments[" + n + "] = " + typeof arg);
+        for (name in arg) {
+            console.log("arguments[" + n + "][" + name + "]=" + arg[name]);
+        }
+    }
+}
+
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
