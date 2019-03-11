@@ -10,12 +10,14 @@
     let re=/􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐/g;
     let nodeVal;
     let foundIndex;
+    let begin;
     for (let i=0;i<elems.length;i++) {
         el=elems[i];
         if (el.textContent.match(re)) {
             // based on https://web.archive.org/web/20190311140420/https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript
             let nodeVal=el.nodeValue;
             let foundIndex = nodeVal.indexOf('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐');
+            begin = nodeVal.substring(0, foundIndex);
             let matchedText = el.textContent.match(new RegExp('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐(.*)󼅹󴶯􈡺󿔊􆲦􍸂󲀰􏼝'));
             let ifr=document.createElement('iframe');
             ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
