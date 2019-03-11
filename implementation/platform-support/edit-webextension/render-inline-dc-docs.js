@@ -15,6 +15,7 @@
     let matched;
     let textNode;
     let parentNode;
+    let span;
     for (let i=0;i<elems.length;i++) {
         el=elems[i];
         if (el.textContent.match(re)) {
@@ -28,7 +29,12 @@
                 textNode = document.createTextNode(begin);
                 parentNode.insertBefore(textNode, el);
             }
+            span = document.createElement("span");
+            span.className += finalClassName;
+            span.appendChild(document.createTextNode(matched));
+            parentNode.insertBefore(span, el);
             ifr=document.createElement('iframe');
+            nodeVal = nodeVal.substring(foundIndex + myToken.length);
             ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
             ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
             ifr.src=browser.runtime.getURL('edit.html');
