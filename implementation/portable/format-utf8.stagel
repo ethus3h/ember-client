@@ -202,28 +202,28 @@ r/an/dcaFromUtf8 an/content
                         set n/tempArrayCount count an/remaining
                         set an/remaining anSubset an/content n/tempArrayCount add n/tempArrayCount mul 4 n/dcBasenbUuidMonitorReprocessNeededCount
                 # (End of code section) (see explanation above)
-                if eq 0 n/dcBasenbUuidMonitorState
-                    # Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result.
-                    if ne 0 count an/latestChar
-                        # There is a latest char (latestChar has more than 0 elems), so work on it
-                        if and b/inDcBasenbSection isBasenbChar an/latestChar
-                            # The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding.
-                            set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
-                            set b/skipNextChar true
-                        else
-                            # Not a basenb char, so decode the ones we've collected, if there are any
-                            if ne 0 count an/collectedDcBasenbChars
-                                set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
-                                set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
-                                set n/collectedDcBasenbCharsCounter 0
-                                while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
-                                    set an/currentUnmappableChar utf8BytesFromDecimalChar firstCharOfUtf8String an/collectedDcBasenbChars
-                                    set an/res append an/res unpack32 an/currentUnmappableChar
-                                    set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
-                                set an/collectedDcBasenbChars ( )
-                    else
-                        # There is not a latest char (latestChar has zero elems), so skip the next character (huh??)
+            if eq 0 n/dcBasenbUuidMonitorState
+                # Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result.
+                if ne 0 count an/latestChar
+                    # There is a latest char (latestChar has more than 0 elems), so work on it
+                    if and b/inDcBasenbSection isBasenbChar an/latestChar
+                        # The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding.
+                        set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
                         set b/skipNextChar true
+                    else
+                        # Not a basenb char, so decode the ones we've collected, if there are any
+                        if ne 0 count an/collectedDcBasenbChars
+                            set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
+                            set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
+                            set n/collectedDcBasenbCharsCounter 0
+                            while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
+                                set an/currentUnmappableChar utf8BytesFromDecimalChar firstCharOfUtf8String an/collectedDcBasenbChars
+                                set an/res append an/res unpack32 an/currentUnmappableChar
+                                set n/collectedDcBasenbCharsCounter add n/collectedDcBasenbCharsCounter count an/currentUnmappableChar
+                            set an/collectedDcBasenbChars ( )
+                else
+                    # There is not a latest char (latestChar has zero elems), so skip the next character (huh??)
+                    set b/skipNextChar true
         if eq 0 n/dcBasenbUuidMonitorState
             # (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.)
             if b/skipNextChar
