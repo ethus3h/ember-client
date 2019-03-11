@@ -2366,6 +2366,7 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                         /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
+                        console.log('Reprossesing '+intDcBasenbUuidMonitorReprocessNeededCount);
                         intTempArrayCount = await implSub(await count(intArrayContent), await count(intArrayRemaining));
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
