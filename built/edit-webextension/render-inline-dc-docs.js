@@ -22,6 +22,8 @@
                     sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
                 };
             })(document.createElement("style"));
+            let keyframeSheet = document.head.appendChild(style).sheet;
+            keyframeSheet.insertRule('@keyframes keyframeRule {from { background-position:top left; } to { background-position:top right; } }', keyframeSheet.cssRules.length);
             addRule("@keyframes keyframeRule", {
                 from { background-position:top left; }
                 to { background-position:top right; }  
