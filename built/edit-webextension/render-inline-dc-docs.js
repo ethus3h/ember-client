@@ -38,7 +38,7 @@
                 else {
                     begin = nodeVal.substring(0, foundIndex);
                     parentNode = el.parentNode;
-                    matched = el.textContent.match(new RegExp('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐(.*)󼅹󴶯􈡺󿔊􆲦􍸂󲀰􏼝'));
+                    matched = el.textContent.match(new RegExp('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐(.*)󼅹󴶯􈡺󿔊􆲦􍸂󲀰􏼝'))[0];
                     if (begin.length > 0) {
                         textNode = document.createTextNode(begin);
                         parentNode.insertBefore(textNode, el);
