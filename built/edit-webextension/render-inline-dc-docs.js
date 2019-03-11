@@ -1,6 +1,6 @@
 (async function() {
     //let elems=document.getElementsByTagName('*');
-    function textNodesUnder(el) {
+    let textNodesUnder = function(el) {
         let n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
         while (n=walk.nextNode()) {
             a.push(n);
@@ -18,14 +18,20 @@
             sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
         };
     })(document.createElement("style"));
-    addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
-        display: "block",
-        width: "100px",
-        height: "100px",
-        background: "red",
-        "border-radius": "50%",
-        content: "''"
-    });
+    let added=false;
+    let addCssIfNeeded = function() {
+        if (!added) {
+            added=true;
+            addRule("b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan.::before", {
+                display: "block",
+                width: "100px",
+                height: "100px",
+                background: "red",
+                "border-radius": "50%",
+                content: "''"
+            });
+        }
+    }
     let el;
     let re=/􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐/g;
     let nodeVal;
