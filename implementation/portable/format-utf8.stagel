@@ -227,7 +227,7 @@ r/an/dcaFromUtf8 an/content
         if eq 0 n/dcBasenbUuidMonitorState
             # (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.)
             if b/skipThisChar
-                # The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. This is also set if the current character array an/latestChar was empty, but I don't understand why.
+                # The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. (Or, it was the last character of a confirmed dcbasenb-section-end UUID; either way, it doesn't get processed now.)
                 set b/skipThisChar false
             else
                 # Not skipping the current char, so decode it from Unicode normally.
