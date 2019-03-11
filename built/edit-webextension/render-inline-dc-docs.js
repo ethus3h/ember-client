@@ -9,6 +9,7 @@
     let el;
     let re=/􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐/g;
     let nodeVal;
+    console.log('bubub!');
     let foundIndex;
     let begin;
     let ifr;
