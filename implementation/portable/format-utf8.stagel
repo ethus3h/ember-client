@@ -224,10 +224,12 @@ r/an/dcaFromUtf8 an/content
                         # There is not a latest char (latestChar has zero elems), so skip the next character (huh??)
                         set b/skipNextChar true
         if eq 0 n/dcBasenbUuidMonitorState
-            # We're not in a dcbnb section, so just process these characters normally.
+            # (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.)
             if b/skipNextChar
+                # The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. This is also set if the current character array an/latestChar was empty, but I don't understand why.
                 set b/skipNextChar false
             else
+                # Not skipping the current char, so decode it from Unicode normally.
                 set an/temp an/latestChar
                 new an/tempFromUnicode
                 set an/tempFromUnicode dcFromFormat 'unicode' an/temp
