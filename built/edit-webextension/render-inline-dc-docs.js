@@ -95,7 +95,9 @@
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     let replaceSpan=function(span, ifr){console.log('tebuice');span.remove();ifr.style.display='inline-block';};
                     console.log('bubube');
-                    window.setTimeout(alert, 1, span, ifr);
+                    alert();
+                    window.setTimeout(alert, 1);
+                    window.setTimeout(replaceSpan, 1, span, ifr);
                     //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
                 }
             }
