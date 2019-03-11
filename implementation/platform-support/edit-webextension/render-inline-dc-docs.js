@@ -8,9 +8,9 @@
     let elems=textNodesUnder(document.body);
     let el;
     let re=/􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐/g
-    for(let i=0;i<elems.length;i++){
+    for(let i=0;i<elems.length;i++) {
         el=elems[i];
-        if(el.textContent.match(re)){
+        if(el.textContent.match(re)) {
             let ifr=document.createElement('iframe');
             ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
             ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
