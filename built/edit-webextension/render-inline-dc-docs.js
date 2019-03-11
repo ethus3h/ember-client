@@ -1,5 +1,3 @@
-    alert('bububoerurer!');
-
 (async function() {
     //let elems=document.getElementsByTagName('*');
     function textNodesUnder(el) {
@@ -11,7 +9,6 @@
     let el;
     let re=/􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐/g;
     let nodeVal;
-    alert('bubub!');
     let foundIndex;
     let begin;
     let ifr;
