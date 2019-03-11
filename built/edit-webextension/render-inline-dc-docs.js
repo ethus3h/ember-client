@@ -17,12 +17,16 @@
     let parentNode;
     let span;
     let replacedAll;
+    let limit = 100;
+    let j;
     for (let i=0;i<elems.length;i++) {
         console.log('bubububbubu');
         el=elems[i];
         if (el.textContent.match(re)) {
             replacedAll = false;
-            while (!replacedAll) {
+            j = 0;
+            while (!replacedAll && j < limit) {
+                j = j + 1;
                 // based on https://web.archive.org/web/20190311140420/https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript
                 nodeVal=el.nodeValue;
                 foundIndex = nodeVal.indexOf('􍁝􋶀󼷢󺀊󸥎􈺍󲋠􏺐');
