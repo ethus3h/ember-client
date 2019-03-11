@@ -2494,7 +2494,7 @@ async function dcaFromUtf8(intArrayContent) {
                     else {
                         /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
-                            alert('Decoding batch of dcbnb chars '+intArrayCollectedDcBasenbChars);
+                            console.log('Decoding batch of dcbnb chars '+intArrayCollectedDcBasenbChars);
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
@@ -2537,7 +2537,7 @@ async function dcaFromUtf8(intArrayContent) {
     if (boolDcBasenbEnabled) {
         /* Handle any remaining collected DcBasenb characters */
         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
-                            alert('Decoding trailing batch of dcbnb chars '+intArrayCollectedDcBasenbChars);
+                            console.log('Decoding trailing batch of dcbnb chars '+intArrayCollectedDcBasenbChars);
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
