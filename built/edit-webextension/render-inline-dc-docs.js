@@ -27,6 +27,7 @@
             //keyframeSheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', keyframeSheet.cssRules.length);
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan", {
                 position: "relative",
+                display: "inline-block"
             });
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
                 display: "block",
