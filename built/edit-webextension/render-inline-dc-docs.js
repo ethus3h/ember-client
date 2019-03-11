@@ -14,7 +14,7 @@
             added=true;
             let stylesheet = document.head.appendChild(document.createElement("style")).sheet;
             let addRule = function() {
-                function (stylesheet) {
+                (function (stylesheet) {
                     // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
                     let sheet = stylesheet;
                     return function (selector, css) {
