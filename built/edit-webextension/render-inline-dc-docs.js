@@ -22,6 +22,10 @@
                     sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
                 };
             })(document.createElement("style"));
+            addRule("@keyframes keyframeRule", {
+                from { background-position:top left; }
+                to { background-position:top right; }  
+}})
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan::before", {
                 // https://github.com/codepo8/CSS3-Rainbow-Dividers/blob/master/rainbows.css
                 display: "block",
