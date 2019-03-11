@@ -2451,33 +2451,33 @@ async function dcaFromUtf8(intArrayContent) {
                         intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
                     }
                 }
-                if (await implEq(0, intDcBasenbUuidMonitorState)) {
-                    /* Check for basenb characters and collect them for decoding */
-                    if (await ne(0, await count(intArrayLatestChar))) {
-                        if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
-                            console.log('Collected dcbnb charecter for later: '+intArrayLatestChar);
-                            intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
-                            boolSkipNextChar = true;
-                        }
-                        else {
-                            /* Not a basenb char, so decode the ones we've collected */
-                            if(0 !== await count(intArrayCollectedDcBasenbChars)) {
-                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
-                            intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
-                            intCollectedDcBasenbCharsCounter = 0;
-                            while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
-                                console.log('Decoding collected chars '+intArrayCollectedDcBasenbChars);
-                                intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
-                                intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
-                            }
-                            intArrayCollectedDcBasenbChars = [  ];
-                            }
-                        }
-                    }
-                    else {
+            }
+            if (await implEq(0, intDcBasenbUuidMonitorState)) {
+                /* Check for basenb characters and collect them for decoding */
+                if (await ne(0, await count(intArrayLatestChar))) {
+                    if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
+                        console.log('Collected dcbnb charecter for later: '+intArrayLatestChar);
+                        intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                         boolSkipNextChar = true;
                     }
+                    else {
+                        /* Not a basenb char, so decode the ones we've collected */
+                        if(0 !== await count(intArrayCollectedDcBasenbChars)) {
+                        intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                        intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
+                        intCollectedDcBasenbCharsCounter = 0;
+                        while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
+                            intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                            console.log('Decoding collected chars '+intArrayCollectedDcBasenbChars);
+                            intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                            intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+                        }
+                        intArrayCollectedDcBasenbChars = [  ];
+                        }
+                    }
+                }
+                else {
+                    boolSkipNextChar = true;
                 }
             }
         }
