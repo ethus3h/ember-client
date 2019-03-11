@@ -72,8 +72,8 @@ r/an/dcaFromUtf8 an/content
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     new b/inDcBasenbSection
     set b/inDcBasenbSection false
-    new b/skipThisChar
-    set b/skipThisChar false
+    new n/skipThisChar
+    set n/skipThisChar 0
     new an/collectedDcBasenbChars
     new n/collectedDcBasenbCharsCount
     new n/collectedDcBasenbCharsCounter
@@ -210,7 +210,7 @@ r/an/dcaFromUtf8 an/content
                     if and b/inDcBasenbSection isBasenbChar an/latestChar
                         # The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding.
                         set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
-                        set b/skipThisChar true
+                        set n/skipThisChar count an/latestChar
                     else
                         # Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any
                         if ne 0 count an/collectedDcBasenbChars
@@ -224,12 +224,12 @@ r/an/dcaFromUtf8 an/content
                             set an/collectedDcBasenbChars ( )
                 else
                     # The latest char was the last char of a confirmed UUID.
-                    set b/skipThisChar true
+                    set n/skipThisChar 4
         if eq 0 n/dcBasenbUuidMonitorState
             # (We're not trying to spot a UUID right now: either the current char couldn't be one, or we confirmed it's not part of one and are re-processing this char.)
-            if b/skipThisChar
+            if ne 0 n/skipThisChar
                 # The current character was a dcbasenb character, so it was stuck onto the collectedDcBasenbChars array and so we defer working on it until later. (Or, it was the last character of a confirmed UUID; either way, it doesn't get processed now.)
-                set b/skipThisChar false
+                set n/skipThisChar 0
             else
                 # Not skipping the current char, so decode it from Unicode normally.
                 set an/temp an/latestChar
