@@ -2493,10 +2493,10 @@ async function dcaFromUtf8(intArrayContent) {
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayLatestChar), -1);
     }
     if (boolDcBasenbEnabled) {
-        console.log('Bububububbubu!');
         /* Handle any remaining collected DcBasenb characters */
         intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
         if (await ne(0, intCollectedDcBasenbCharsCount)) {
+        console.log('Bububububbubu!');
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
