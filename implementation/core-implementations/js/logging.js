@@ -156,16 +156,20 @@ function internalDebugLogJSObject(obj) {
 
 // Just a useful function, not needed by anything
 function printVariablesInObj(obj) {
-var n, arg, name;
-alert("typeof this = " + typeof this);
-for (name in this) {
-    alert("this[" + name + "]=" + this[name]);
-}
-for (n = 0; n < arguments.length; ++n) {
-    arg = arguments[n];
-    alert("typeof arguments[" + n + "] = " + typeof arg);
-    for (name in arg) {
-        alert("arguments[" + n + "][" + name + "]=" + arg[name]);
+    // Pass it "this" to see current scope, basically
+    // https://web.archive.org/web/20190311170104/https://stackoverflow.com/questions/2051678/getting-all-variables-in-scope
+    let n;
+    let arg;
+    let name;
+    console.log("typeof obj = " + typeof obj);
+    for (name in obj) {
+        console.log("obj[" + name + "]=" + obj[name]);
     }
-}
+    for (n = 0; n < arguments.length; ++n) {
+        arg = arguments[n];
+        console.log("typeof arguments[" + n + "] = " + typeof arg);
+        for (name in arg) {
+            console.log("arguments[" + n + "][" + name + "]=" + arg[name]);
+        }
+    }
 }
