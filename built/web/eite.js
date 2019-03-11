@@ -3817,7 +3817,8 @@ async function sumArray(intArrayIn) {
 
 async function runTestsOnly(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
-
+    await runTestsFormatUtf8(boolV);
+return;
     /* Run tests without report. b/v=verbose: true=print test result lines; false=return value only */
     /* This runs each component's test suite */
     /* General tests */
@@ -3835,7 +3836,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
-    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
