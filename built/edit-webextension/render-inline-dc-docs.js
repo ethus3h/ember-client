@@ -18,6 +18,7 @@
     let span;
     let replacedAll;
     for (let i=0;i<elems.length;i++) {
+        console.log('bubububbubu');
         el=elems[i];
         if (el.textContent.match(re)) {
             replacedAll = false;
