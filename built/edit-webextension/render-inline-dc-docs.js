@@ -13,18 +13,18 @@
         if (!added) {
             added=true;
             let stylesheet = document.head.appendChild(document.createElement("style")).sheet;
-            let addRule = (function (style) {
+            let addRule = (function (stylesheet) {
                 // https://web.archive.org/web/20190311175426/https://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
-                let sheet = document.head.appendChild(style).sheet;
+                let sheet = stylesheet;
                 return function (selector, css) {
                     let propText = typeof css === "string" ? css : Object.keys(css).map(function (p) {
                         return p + ":" + (p === "content" ? "'" + css[p] + "'" : css[p]);
                     }).join(";");
                     sheet.insertRule(selector + "{" + propText + "}", sheet.cssRules.length);
                 };
-            })(document.createElement("style"));
+            })(stylesheet);
             // https://github.com/codepo8/CSS3-Rainbow-Dividers/blob/master/rainbows.css
-            keyframeSheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', keyframeSheet.cssRules.length);
+            stylesheet.insertRule('@keyframes keyframeRule { from { background-position: top left; } to { background-position: top right; } }', stylesheet.cssRules.length);
             addRule(".b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderSpan", {
                 position: "relative",
                 display: "inline-block"
