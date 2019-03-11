@@ -97,8 +97,8 @@
                     ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                     // Wow, I really hate developing JavaScript.
                     let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
-                    replaceSpan(span, ifr);
-                   // console.log('bubube');
+                    //replaceSpan(span, ifr);
+                    // console.log('bubube');
                     //alert('a');
                     //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
                     //await sleep(1000); alert('b');
