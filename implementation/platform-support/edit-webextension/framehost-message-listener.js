@@ -13,29 +13,6 @@ window.addEventListener('message', function(message) {
             }
         )}
     }
-    // Inline document renderer messages.
-    // Architecture:
-    /*
-     * • Content script = render-inline-dc-docs.js;
-     * • Editor in frame = edit-webext-request-handler.js;
-     * • Background message listener = background-message-listener.js (this file)
-     *
-     *  Content script
-     *      │
-     *      │ ⑴ On spotting a document, sends the document contents to the
-     *      │   message listener with a frame ID, then makes a frame with
-     *      │   a URL with the frame ID in the anchor (# part of the URL).
-     *      │
-     *      ├─────────────────────────────────┐
-     *      ↓                                 ↓
-     *    Editor in frame            Framehost message listener
-     *      ↑   │                            ↑        │
-     *      │   │ ⑵ Asks message listener    │        │ ⑶ Sends document contents
-     *      │   │   for document matching    │        │   back to editor in frame
-     *      │   │   ID in anchor             │        │
-     *      │   └────────────────────────────┘        │
-     *      └─────────────────────────────────────────┘
-     * */
 );
 
 // @license-end
