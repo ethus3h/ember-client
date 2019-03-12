@@ -94,7 +94,7 @@
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
                     console.log('Sending document data ' + i + ' to background script: '+matched);
                     browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]).then(function() {
-                    };
+                    });
                         ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                         ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
                         ifr.style.height=span.clientHeight+'px';
