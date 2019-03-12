@@ -2,7 +2,7 @@
 
 (async function() {
     const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
-    await sleep(1000); alert('b');
+    await sleep(100);
     //let elems=document.getElementsByTagName('*');
     let textNodesUnder = function(el) {
         let n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
