@@ -15,8 +15,14 @@ window.addEventListener('message', function(message) {
     // Architecture:
     /* 
      *  Content script
-     *      ↕
-     *  Framehost message listener
+     *      |
+     *      | On spotting a document, makes a frame with a URL with a
+     *      |   frame ID in the anchor (# part of the URL), and
+     *      |   sends the document contents to the message listener.
+     *      |
+     *      
+     *      ↓ 
+     *    Editor in frame            Framehost message listener
      *      ↕
      *  
      * 
