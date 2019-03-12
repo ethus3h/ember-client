@@ -16,7 +16,7 @@ window.addEventListener('message', function(message) {
     /* 
      * • Content script = render-inline-dc-docs.js;
      * • Editor in frame = edit-webext-request-handler.js;
-     * • Framehost message listener = framehost-message-listener.js
+     * • Framehost message listener = framehost-message-listener.js (this file)
      * 
      *  Content script
      *      │
