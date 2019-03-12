@@ -2,6 +2,13 @@
 
 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments={};
 
+//https://stackoverflow.com/questions/19196337/string-contains-doesnt-exist-while-working-in-chrome
+if(!('contains' in String.prototype)) {
+    String.prototype.contains = function(str, startIndex) {
+            return -1 !== String.prototype.indexOf.call(this, str, startIndex);
+    };
+}
+
 browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     // Inline document renderer messages.
     // Architecture:
