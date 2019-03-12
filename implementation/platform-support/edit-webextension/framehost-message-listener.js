@@ -11,4 +11,16 @@ window.addEventListener('message', function(message) {
             }
         )}
     }
+    // Inline document renderer messages.
+    // Architecture:
+    /* 
+     *  Content script
+     *      ↕
+     *  Framehost message listener
+     *      ↕
+     *  
+     * 
+     * 
+     * 
+     * */
 );
