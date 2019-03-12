@@ -87,6 +87,9 @@ window.addEventListener('message', messageEventHandler);
 if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId')) {
     browser.runtime.sendMessage([window.location.hash.substr(1).replace('Document','GetDocumentBy')]).then(async function(responseMessage){
         await setupIfNeeded();
+        document.getElementById('DcSelection').style.display='none';
+        document.getElementById('editorColumn').style.display='none';
+        document.getElementById('editorButtons').style.display='none';
         await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
         runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
         await popExportSettings(await getFormatId('utf8'));
