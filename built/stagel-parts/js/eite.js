@@ -2458,6 +2458,7 @@ async function dcaFromUtf8(intArrayContent) {
                                     intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                     intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
                                 }
+                                intArrayCollectedDcBasenbChars = [  ];
                             }
                         }
                         else {

@@ -2287,7 +2287,6 @@ async function dcaFromUtf8(intArrayContent) {
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
-        console.log('Iteration: '+intArrayLatestChar);
         if (boolDcBasenbEnabled) {
             /* Dcbasenb is enabled, so process characters accordingly. */
             if (await implNot(boolInDcBasenbSection)) {
@@ -2481,7 +2480,6 @@ async function dcaFromUtf8(intArrayContent) {
                     /* There is a latest char (latestChar has more than 0 elems), so work on it */
                     if (await implAnd(boolInDcBasenbSection, await isBasenbChar(intArrayLatestChar))) {
                         /* The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding. */
-                        console.log('Collected char '+intArrayLatestChar);
                         intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                         intSkipThisChar = await count(intArrayLatestChar);
                     }
@@ -3820,8 +3818,7 @@ async function sumArray(intArrayIn) {
 
 async function runTestsOnly(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
-    await runTestsFormatUtf8(boolV);
-return;
+
     /* Run tests without report. b/v=verbose: true=print test result lines; false=return value only */
     /* This runs each component's test suite */
     /* General tests */
@@ -3839,6 +3836,7 @@ return;
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
+    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -4623,7 +4621,7 @@ async function runTestsFormatIntegerList(boolV) {
 
 async function runTestsFormatUtf8(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatUtf8:format-utf8-tests'); await assertIsBool(boolV);
-    await runTest(boolV, await arrEq([ 35, 18, 36, 291 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173 ], await getArmoredUtf8EmbeddedEndUuid()))))));
+
     await testing(boolV, 'formatUtf8');
     await runTest(boolV, await arrEq([ 35, 18, 36 ], await dcaFromUtf8([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50 ], await dcaToUtf8([ 35, 18, 36 ])));
@@ -4633,6 +4631,7 @@ async function runTestsFormatUtf8(boolV) {
     await runTest(boolV, await arrEq(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173, 50 ], await getArmoredUtf8EmbeddedEndUuid(), ), ), ), await dcaToDcbnbUtf8([ 35, 18, 36, 291, 36 ])));
     /* Tests for converting from UTF8+dcbnb */
     await runTest(boolV, await arrEq([ 35, 18, 36, 291, 36 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173, 50 ], await getArmoredUtf8EmbeddedEndUuid()))))));
+    await runTest(boolV, await arrEq([ 35, 18, 36, 291 ], await dcaFromDcbnbUtf8(await append([ 49, 32, 50 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 131, 173, 156, 244, 143, 191, 173 ], await getArmoredUtf8EmbeddedEndUuid()))))));
     /* Make sure the dcbnb region gets output at the right place relative to the other chars (there's a bug where it outputs 18 18 11 instead of 18 11 18) */
     await runTest(boolV, await arrEq([ 18, 11, 18 ], await dcaFromDcbnbUtf8(await append([ 32 ], await append(await getArmoredUtf8EmbeddedStartUuid(), await append([ 244, 143, 191, 180, 244, 143, 191, 181 ], await append(await getArmoredUtf8EmbeddedEndUuid(), [ 32 ])))))));
     /* Same as the previous test, but with the spaces inside the start and end UUIDs. Works even though the previous one failed. */

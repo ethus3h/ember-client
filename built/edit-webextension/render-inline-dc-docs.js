@@ -1,3 +1,5 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+
 (async function() {
     //let elems=document.getElementsByTagName('*');
     let textNodesUnder = function(el) {
@@ -88,24 +90,77 @@
                     ifr=document.createElement('iframe');
                     el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
-                    ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
-                    ifr.src=browser.runtime.getURL('edit.html');
-                    ifr.style.height=span.clientHeight+'px';
-                    ifr.style.width=span.clientWidth+'px';
-                    parentNode.insertBefore(ifr, el);
-                    ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                    // Wow, I really hate developing JavaScript.
-                    let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
-                    replaceSpan(span, ifr);
-                    // console.log('bubube');
-                    //alert('a');
-                    //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
-                    //await sleep(1000); alert('b');
-                    //window.setTimeout(alert, 1);
-                    //window.setTimeout(replaceSpan, 1, span, ifr);
-                    //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
+                    console.log('Sending document data ' + i + ' to background script: '+matched);
+                    browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]).then(function() {
+                        ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
+                        ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
+                        ifr.style.height=span.clientHeight+'px';
+                        ifr.style.width=span.clientWidth+'px';
+                        parentNode.insertBefore(ifr, el);
+                        ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
+                        // Wow, I really hate developing JavaScript.
+                        let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
+                        replaceSpan(span, ifr);
+                        // console.log('bubube');
+                        //alert('a');
+                        //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
+                        //await sleep(1000); alert('b');
+                        //window.setTimeout(alert, 1);
+                        //window.setTimeout(replaceSpan, 1, span, ifr);
+                        //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
+                    });
                 }
             }
         }
     }
 })();
+
+
+let messageEventHandler = function(message) {
+    async function eiteReadyCallback(message) {
+        if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessagePopupExtensionUri') {
+                window.b8316ea083754b2e9290591f37d94765EiteWebextensionPopupMessageUri=message.data[3];
+                let utf8encoder = new TextEncoder();
+                let tempInterpreted;
+                if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage'){
+                    tempInterpreted=await eiteCall('importAndExport', ['ascii', 'integerList', new Uint8Array(utf8encoder.encode(contents))]);
+                }
+                else {
+                    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+                    tempInterpreted=await eiteCall('importAndExport', ['utf8', 'integerList', new Uint8Array(utf8encoder.encode(contents))]);
+                    await popImportSettings(await getFormatId('utf8'));
+                }
+                document.getElementById('inputarea').value = await eiteCall('strFromByteArray', [tempInterpreted]);
+                removeSpinner();
+                RunDocumentHandler(async function() {
+                    if (!canEdit) {
+                        openAlertDialog('Note: The requested content is read-only.');
+                    }
+                    else {
+                        let elem=document.importNode(document.getElementById('doneButtonTemplate').content, true);
+                        elem.firstChild.onclick=function(){updateNearestDcLabel(document.getElementById('inputarea'));DoneEditingHandler();};
+                        elem.disabled=false;
+                        document.getElementById('editorButtons').appendChild(elem.firstChild);
+                    }
+                });
+            }, 500);
+        }
+    };
+
+    let DoneEditingHandler = async function() {
+        startSpinner();
+        window.setTimeout(async function() {
+            let utf8decoder = new TextDecoder();
+            window.parent.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessage',utf8decoder.decode(new Uint8Array(await eiteCall('importAndExport', ['integerList', 'ascii', await getInputDoc()])))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+        }, 500);
+    }
+    window.DoneEditingHandler = DoneEditingHandler;
+
+    onRemove(document.getElementById('overlay'), function() {
+        eiteReadyCallback(message);
+    });
+};
+document.addEventListener('message', messageEventHandler);
+window.addEventListener('message', messageEventHandler);
+
+// @license-end
