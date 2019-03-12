@@ -90,23 +90,25 @@
                     ifr=document.createElement('iframe');
                     el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
-                    browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]);
-                    ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
-                    ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
-                    ifr.style.height=span.clientHeight+'px';
-                    ifr.style.width=span.clientWidth+'px';
-                    parentNode.insertBefore(ifr, el);
-                    ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                    // Wow, I really hate developing JavaScript.
-                    let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
-                    replaceSpan(span, ifr);
-                    // console.log('bubube');
-                    //alert('a');
-                    //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
-                    //await sleep(1000); alert('b');
-                    //window.setTimeout(alert, 1);
-                    //window.setTimeout(replaceSpan, 1, span, ifr);
-                    //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
+                    console.log('Sending document data ' + i + ' to background script: '+matched);
+                    browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]).then(function() {
+                        ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
+                        ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
+                        ifr.style.height=span.clientHeight+'px';
+                        ifr.style.width=span.clientWidth+'px';
+                        parentNode.insertBefore(ifr, el);
+                        ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
+                        // Wow, I really hate developing JavaScript.
+                        let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
+                        replaceSpan(span, ifr);
+                        // console.log('bubube');
+                        //alert('a');
+                        //const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
+                        //await sleep(1000); alert('b');
+                        //window.setTimeout(alert, 1);
+                        //window.setTimeout(replaceSpan, 1, span, ifr);
+                        //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
+                    });
                 }
             }
         }

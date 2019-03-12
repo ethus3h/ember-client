@@ -28,10 +28,12 @@ browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
      * */
     if (message.data[0].contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId')) {
         // We've been given document contents by the render-inline-dc-docs.js.
+        console.log('Document was saved '+message.data[0]+' : '+message.data[1]);
         window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message.data[0]]=message.data[1];
     }
     elif (message.data[0].contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageGetDocumentById')) {
-       sendResponse({response: window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message.data[0].replace('GetDocumentBy','Document')]});
+        console.log('Document was requested '+message.data[0]);
+        sendResponse({response: window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message.data[0].replace('GetDocumentBy','Document')]});
     }
 );
 
