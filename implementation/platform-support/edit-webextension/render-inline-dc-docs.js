@@ -1,5 +1,12 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
+//https://stackoverflow.com/questions/19196337/string-contains-doesnt-exist-while-working-in-chrome
+if(!('contains' in String.prototype)) {
+    String.prototype.contains = function(str, startIndex) {
+            return -1 !== String.prototype.indexOf.call(this, str, startIndex);
+    };
+}
+
 (async function() {
     const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
     await sleep(100);
@@ -94,6 +101,7 @@
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
                     console.log('Sending document data ' + i + ' to background script: '+matched);
                     browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]).then(function() {
+                    });
                         ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                         ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
                         ifr.style.height=span.clientHeight+'px';
@@ -109,7 +117,7 @@
                         //window.setTimeout(alert, 1);
                         //window.setTimeout(replaceSpan, 1, span, ifr);
                         //ifr.contentWindow.postMessage([ 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8', false, matched], ifr.src);
-                    });
+                    //});
                 }
             }
         }
