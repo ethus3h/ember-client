@@ -78,7 +78,9 @@ document.addEventListener('message', messageEventHandler);
 window.addEventListener('message', messageEventHandler);
 
 if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId')) {
-    browser.runtime.sendMessage([window.location.hash.replace('Document','GetDocumentBy')]);
+    browser.runtime.sendMessage([window.location.hash.substr(1).replace('Document','GetDocumentBy')]).then(function(responseMessage){
+        runDocument(responseMessage.response);
+    });
 }
 
 // @license-end
