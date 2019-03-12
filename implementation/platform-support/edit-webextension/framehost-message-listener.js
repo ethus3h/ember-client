@@ -20,9 +20,9 @@ window.addEventListener('message', function(message) {
      * 
      *  Content script
      *      │
-     *      │ ⑴ On spotting a document, makes a frame with a URL with a
-     *      │   frame ID in the anchor (# part of the URL), and
-     *      │   sends the document contents to the message listener.
+     *      │ ⑴ On spotting a document, sends the document contents to the
+     *      │   message listener with a frame ID, then makes a frame with
+     *      │   a URL with the frame ID in the anchor (# part of the URL).
      *      │
      *      ├─────────────────────────────────┐
      *      ↓                                 ↓
