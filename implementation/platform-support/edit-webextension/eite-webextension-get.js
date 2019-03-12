@@ -1,3 +1,5 @@
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+
 // I swear this file isn't obfuscated. Replace b8316ea083754b2e9290591f37d94765EiteWebextensionProvider with empty string to make it more readable. Doing that would cause problems though since all this gets dumped into the window namespace of random Web pages.
 
 // Don't use let since it will persist between executions of this script.
@@ -87,3 +89,5 @@ browser.runtime.onMessage.addListener(function(message) {
     }
 });
 b8316ea083754b2e9290591f37d94765EiteWebextensionProviderGetResponse;
+
+// @license-end
