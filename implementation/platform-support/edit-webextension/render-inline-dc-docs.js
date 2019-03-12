@@ -90,7 +90,7 @@
                     ifr=document.createElement('iframe');
                     el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
-                    window.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,utf8decoder.decode(new Uint8Array(await eiteCall('importAndExport', ['integerList', 'ascii', await getInputDoc()])))], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
+                    window.postMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched], window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri);
                     ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                     ifr.src=browser.runtime.getURL('edit.html');
                     ifr.style.height=span.clientHeight+'px';
