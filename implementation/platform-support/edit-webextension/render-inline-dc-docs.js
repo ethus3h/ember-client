@@ -115,39 +115,9 @@
 
 
 let messageEventHandler = function(message) {
-    function onRemove(element, onDetachCallback) {
-        // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
-        if (element !== null) {
-            const observer = new MutationObserver(function () {
-                function isDetached(el) {
-                    if (el.parentNode === document) {
-                        return false;
-                    } else if (el.parentNode === null) {
-                        return true;
-                    } else {
-                        isDetached(el.parentNode);
-                    }
-                }
-                if (isDetached(element)) {
-                    observer.disconnect();
-                    onDetachCallback();
-                }
-            });
-
-            observer.observe(document, {
-                childList: true,
-                subtree: true
-            });
-        }
-    }
-
     async function eiteReadyCallback(message) {
-        if ((message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage') || (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUtf8')) {
-            startSpinner();
-            window.setTimeout(async function() {
-                canEdit=message.data[1];
-                contents=message.data[2];
-                window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageUri=message.data[3];
+        if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessagePopupExtensionUri') {
+                window.b8316ea083754b2e9290591f37d94765EiteWebextensionPopupMessageUri=message.data[3];
                 let utf8encoder = new TextEncoder();
                 let tempInterpreted;
                 if (message.data[0] === 'b8316ea083754b2e9290591f37d94765EiteWebextensionMessage'){
