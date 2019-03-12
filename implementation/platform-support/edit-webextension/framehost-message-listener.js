@@ -29,8 +29,5 @@ window.addEventListener('message', function(message) {
      *      │   │   ID in anchor             │        │
      *      │   └────────────────────────────┘        │
      *      └─────────────────────────────────────────┘
-     * 
-     * 
-     * 
      * */
 );
