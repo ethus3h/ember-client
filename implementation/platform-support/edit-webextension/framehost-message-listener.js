@@ -23,12 +23,12 @@ window.addEventListener('message', function(message) {
      *      ├─────────────────────────────────┐
      *      ↓                                 ↓
      *    Editor in frame            Framehost message listener
-     *      │
-     *      │ ⑵ Asks message listener   │
-     *      │   for document matching    │
-     *      │   ID in anchor             │
-     *      └────────────────────────────┘
-     *  
+     *      ↑   │                            ↑        │
+     *      │   │ ⑵ Asks message listener    │        │ ⑶ Sends document contents
+     *      │   │   for document matching    │        │   back to editor in frame
+     *      │   │   ID in anchor             │        │
+     *      │   └────────────────────────────┘        │
+     *      └─────────────────────────────────────────┘
      * 
      * 
      * 
