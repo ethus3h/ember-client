@@ -14,6 +14,9 @@ window.addEventListener('message', function(message) {
     // Inline document renderer messages.
     // Architecture:
     /* 
+     * (Content script = render-inline-dc-docs.js;
+     *  Editor in frame =)
+     * 
      *  Content script
      *      │
      *      │ ⑴ On spotting a document, makes a frame with a URL with a
