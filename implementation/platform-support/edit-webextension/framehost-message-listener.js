@@ -14,8 +14,9 @@ window.addEventListener('message', function(message) {
     // Inline document renderer messages.
     // Architecture:
     /* 
-     * (Content script = render-inline-dc-docs.js;
-     *  Editor in frame =)
+     * • Content script = render-inline-dc-docs.js;
+     * • Editor in frame = edit-webext-request-handler.js;
+     * • Framehost message listener = framehost-message-listener.js
      * 
      *  Content script
      *      │
