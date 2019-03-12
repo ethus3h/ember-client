@@ -25,6 +25,10 @@
     "js": ["render-inline-dc-docs.js"]
   } ],
 
+  "background": {
+    "scripts": ["background-message-listener.js"]
+  },
+
   "web_accessible_resources": [
     "*"
   ],
