@@ -1,6 +1,8 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
 (async function() {
+    const sleep = t => x => new Promise(r => setTimeout(()=>r(x), t));
+    await sleep(1000); alert('b');
     //let elems=document.getElementsByTagName('*');
     let textNodesUnder = function(el) {
         let n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
@@ -98,7 +100,6 @@
                         ifr.style.width=span.clientWidth+'px';
                         parentNode.insertBefore(ifr, el);
                         ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                        // Wow, I really hate developing JavaScript.
                         let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
                         replaceSpan(span, ifr);
                         // console.log('bubube');
