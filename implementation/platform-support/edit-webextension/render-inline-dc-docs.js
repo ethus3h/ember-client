@@ -90,7 +90,7 @@
                     ifr=document.createElement('iframe');
                     el.nodeValue = nodeVal.substring(foundIndex + matched.length);
                     ifr.id='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i;
-                    browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]).then();
+                    browser.runtime.sendMessage(['b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i,matched]);
                     ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                     ifr.src=browser.runtime.getURL('edit.html');
                     ifr.style.height=span.clientHeight+'px';
