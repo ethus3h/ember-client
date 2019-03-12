@@ -2,7 +2,7 @@
 
 window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments={};
 
-browser.runtime.onMessage.addListener(function(message) {
+browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     // Inline document renderer messages.
     // Architecture:
     /*
@@ -31,7 +31,7 @@ browser.runtime.onMessage.addListener(function(message) {
         window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message.data[0]]=message.data[1];
     }
     elif (message.data[0].contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageGetDocumentById')) {
-        
+       sendResponse() 
     }
 );
 
