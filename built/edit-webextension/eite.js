@@ -2561,7 +2561,7 @@ async function utf8VariantSettings(strDirection) {
     if (await implEq('dcBasenb', strEnabledVariants)) {
         strArrayRes = await push(strArrayRes, strEnabledVariants);
     }
-    else if (await implEq('dcBasenb dcBasenbFragment')) {
+    else if (await implEq('dcBasenb dcBasenbFragment', strEnabledVariants)) {
         strArrayRes = await push(strArrayRes, [ 'dcBasenb', 'dcBasenbFragment' ]);
     }
 
