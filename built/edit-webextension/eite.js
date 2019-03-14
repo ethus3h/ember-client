@@ -84,7 +84,7 @@ async function internalRunDocument(execId) {
 
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
-var window.STAGEL_DEBUG;
+window.STAGEL_DEBUG='';
 var importSettings;
 var exportSettings;
 var envPreferredFormat;
