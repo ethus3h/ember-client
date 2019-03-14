@@ -96,10 +96,11 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     new an/res
     set an/res internalIntBitArrayToBasenbString n/base an/inputIntBitArray
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function).
-    new an/remainder
-    # Previous version, which doesn't provide clear end-of-character markers: set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
-    set an/remainder push an/remainder sub mod count an/inputIntBitArray } 17 } 63497
-    set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
+    # Previous version, which doesn't provide clear end-of-character markers:
+    # new an/remainder
+    # set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
+    # set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
+    set an/res push an/res pack32 sub mod count an/inputIntBitArray } 17 } 63497
     assertIsByteArray an/res
     return an/res
 
@@ -109,11 +110,16 @@ r/an/byteArrayFromBasenbUtf8 an/in
     # Extract remainder length
     new n/remainder
     new an/remainderArr
-    # last 4 bytes (1 character), which represent the remainder
-    set an/remainderArr anSubset an/in -4 -1
-    new an/remainderDecodedArr
-    set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
-    set n/remainder add -2 get an/remainderDecodedArr 0
+    # last 3 bytes (1 character), which represent the remainder
+    set an/remainderArr anSubset an/in -3 -1
+    if not isBasenbDistinctRemainderChar an/remainderArr
+        # last 4 bytes (1 character), which represent the remainder
+        set an/remainderArr anSubset an/in -4 -1
+        new an/remainderDecodedArr
+        set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
+        set n/remainder add -2 get an/remainderDecodedArr 0
+    else
+        set an/remainder unpack32 an/remainderArr
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in 0 -5 } n/remainder
     assertIsByteArray an/res
     return an/res
