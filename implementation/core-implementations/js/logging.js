@@ -150,7 +150,6 @@ async function internalDebugPrintHotspots() {
         console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
         i=i+1;
     }
-    alert(i);
 }
 
 async function internalDebugPrintStack() {
