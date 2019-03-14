@@ -1092,6 +1092,7 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
+        implLog('Eating '+strBlockName);
     if (! stagelDebugCallNames.contains(strBlockName)) {
         stagelDebugCallNames.push(strBlockName);
         stagelDebugCallCounts[stagelDebugCallNames.indexOf(strBlockName)] = 0;
