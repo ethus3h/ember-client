@@ -1095,7 +1095,6 @@ async function internalDebugStackEnter(strBlockName) {
     if (stagelDebugCallNames.indexOf(strBlockName) < 0) {
         stagelDebugCallNames.push(strBlockName);
         stagelDebugCallCounts[stagelDebugCallNames.indexOf(strBlockName)] = 0;
-        implLog('Pushed '+strBlockName);
     }
 
     let ind;
@@ -1124,10 +1123,10 @@ async function internalDebugPrintHotspots() {
     n = stagelDebugCallNames.length;
     let i = 0;
     if (n === 0) {
-        implLog('No routine calls have been logged.');
+        console.log('No routine calls have been logged.');
     }
     while (i < n){
-        implLog(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
+        console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
         i = i + 1;
     }
 }
