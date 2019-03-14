@@ -8,6 +8,8 @@
 */
 
 let stagelDebugCallstack = [];
+let stagelDebugCallNames = [];
+let stagelDebugCallCounts = [];
 let stagelDebugCollection = "";
 //alert("Setting up logging");
 
@@ -115,6 +117,12 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
+    if (! stagelDebugCallNames.contains(strBlockName)) {
+        stagelDebugCallNames.push(strBlockName);
+    }
+    let ind;
+    ind=stagelDebugCallNames.indexOf(strBlockName);
+    stagelDebugCallCounts[ind] = stagelDebugCallCounts[ind] + 1;
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
     if (2 <= STAGEL_DEBUG) {
