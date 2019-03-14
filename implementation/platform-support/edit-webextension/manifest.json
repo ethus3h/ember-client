@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "EITE Text-Fields",
+  "name": "EITE Text-Fields and Rendering",
   "version": "0.1",
 
   "description": "Use EITE document extensions in text fields; render document extensions where they appear in Web pages",
