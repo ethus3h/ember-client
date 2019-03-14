@@ -1121,11 +1121,11 @@ async function internalDebugPrintHotspots() {
     let n = 0;
     n = stagelDebugCallNames.length;
     let i = 0;
-    if (n = 0) {
-        console.log('No routine calls have been logged.');
+    if (n === 0) {
+        implLog('No routine calls have been logged.');
     }
-    while (i<n){
-        console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
+    while (i < n){
+        implLog(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
         i = i + 1;
     }
 }
