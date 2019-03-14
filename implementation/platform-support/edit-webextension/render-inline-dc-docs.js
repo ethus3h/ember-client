@@ -70,6 +70,7 @@ if(!('contains' in String.prototype)) {
     let replacedAll;
     let limit = 1;
     let j;
+    // fromm https://web.archive.org/web/20190314133524/https://stackoverflow.com/questions/986937/how-can-i-get-the-browsers-scrollbar-sizes
     function getScrollBarWidth () {
   var inner = document.createElement('p');
   inner.style.width = "100%";
