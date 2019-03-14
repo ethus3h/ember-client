@@ -17,6 +17,8 @@ r/an/dcaToUtf8 an/content
     set as/variantSettings utf8VariantSettings 'out'
     new b/dcBasenbEnabled
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
+    new b/dcBasenbFragmentEnabled
+    set b/dcBasenbFragmentEnabled contains as/variantSettings 'dcBasenbFragment'
     while le n/c n/l
         # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
@@ -35,7 +37,8 @@ r/an/dcaToUtf8 an/content
                 set n/unmappablesCount count an/unmappables
                 if ne 0 n/unmappablesCount
                     if not b/foundAnyUnmappables
-                        set an/res append an/res getArmoredUtf8EmbeddedStartUuid
+                        if not b/dcBasenbFragmentEnabled
+                            set an/res append an/res getArmoredUtf8EmbeddedStartUuid
                     set b/foundAnyUnmappables true
                     # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
                     set n/unmappablesCounter 0
@@ -52,7 +55,8 @@ r/an/dcaToUtf8 an/content
         # and finally increment the loop counter
         set n/c add n/c 1
     if and b/dcBasenbEnabled b/foundAnyUnmappables
-        set an/res append an/res getArmoredUtf8EmbeddedEndUuid
+        if not b/dcBasenbFragmentEnabled
+            set an/res append an/res getArmoredUtf8EmbeddedEndUuid
     assertIsByteArray an/res
     return an/res
 
@@ -72,6 +76,8 @@ r/an/dcaFromUtf8 an/content
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     new b/inDcBasenbSection
     set b/inDcBasenbSection false
+    if b/dcBasenbEnabled
+        set b/inDcBasenbSection contains as/variantSettings 'dcBasenbFragment'
     new n/skipThisChar
     set n/skipThisChar 0
     new an/collectedDcBasenbChars
@@ -268,7 +274,10 @@ r/as/utf8VariantSettings s/direction
     new s/enabledVariants
     set s/enabledVariants getSettingForFormat 'utf8' s/direction 'variants'
     # TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants)
-    set as/res push as/res s/enabledVariants
+    if eq 'dcBasenb' s/enabledVariants
+        set as/res push as/res s/enabledVariants
+    elif eq 'dcBasenb dcBasenbFragment'
+        set as/res push as/res [ 'dcBasenb' 'dcBasenbFragment' ]
     return as/res
 
 r/an/dcaToDcbnbUtf8 an/content
