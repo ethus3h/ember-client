@@ -116,7 +116,7 @@ let strArrayExportWarnings = []; // as
 let haveDom = false;
 
 // Set defaults for preferences if not set already
-if (window === undefined) {
+if (typeof window === 'undefined') {
     window = {};
 }
 if (window.STAGEL_DEBUG === undefined) {
