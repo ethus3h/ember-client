@@ -96,7 +96,7 @@ if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextens
         //await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
         //await runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
         //await popExportSettings(await getFormatId('utf8'));
-        await runDocument(await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(responseMessage.response)));
+        await eiteCall('runDocument', [await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)])]);
         await removeSpinner();
     });
 }
