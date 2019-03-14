@@ -75,7 +75,16 @@ r/b/isBasenbChar an/utf8Char
         set b/res true
     elif intIsBetween n/codepoint 1048576 1114109
         set b/res true
-    elif intIsBetween n/codepoint 63498 63501
+    elif intIsBetween n/codepoint 63481 63501
+        set b/res true
+    return b/res
+
+r/b/isBasenbDistinctRemainderChar an/utf8Char
+    new b/res
+    set b/res false
+    new n/codepoint
+    set n/codepoint unpack32 an/utf8Char
+    if intIsBetween n/codepoint 63481 63497
         set b/res true
     return b/res
 
@@ -88,7 +97,8 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     set an/res internalIntBitArrayToBasenbString n/base an/inputIntBitArray
     # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function).
     new an/remainder
-    set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
+    # Previous version, which doesn't provide clear end-of-character markers: set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
+    set an/remainder push an/remainder sub mod count an/inputIntBitArray } 17 } 63497
     set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
     assertIsByteArray an/res
     return an/res
