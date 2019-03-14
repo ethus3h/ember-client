@@ -99,7 +99,7 @@ if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextens
         //await eiteCall('setupIfNeeded', []);
         //alert('erciorcl');
         //alert(await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)]));
-        alert(await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(responseMessage.response)));
+        alert(new TextEncoder().encode(responseMessage.response));
         await runDocument(await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(responseMessage.response)));
         //await runDocument(await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)]));
         //await eiteCall('runDocument', [await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)])]);
