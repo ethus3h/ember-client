@@ -142,7 +142,7 @@ async function handleSearchResultUpdate() {
                 else {
                     // Calling editAreaInsert(await dcaToDcbnbUtf8([i])) (without the temp variable) gives an error saying missing ) after argument list, for some reason. I don't understand why, but this fixes it.
                     let temp;
-                    temp=await dcaToDcbnbUtf8([i]);
+                    temp=await dcaToDcbnbFragmentUtf8([i]);
                     editAreaInsert(new TextDecoder().decode(new Uint8Array(temp)));
                 }
             };
