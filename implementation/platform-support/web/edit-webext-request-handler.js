@@ -92,9 +92,11 @@ if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextens
         document.getElementById('editorButtons').style.display='none';
         document.getElementById('eiteDocumentRoot').style.border='none';
         document.getElementById('eiteDocumentRoot').style.fontSize='1rem';
+        // Doing it like this should work, but I can't figure out the scopes and lifetimes of the settings array easily enough.
         //await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
         //await runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
         //await popExportSettings(await getFormatId('utf8'));
+        await runDocument(await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(responseMessage.response)));
     });
 }
 
