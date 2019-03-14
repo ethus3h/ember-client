@@ -145,8 +145,8 @@ async function internalDebugStackExit() {
 async function internalDebugPrintHotspots() {
     let n = 0;
     n = stagelDebugCallNames.length;
-    let i=0;
-    while(i<n){
+    let i = 0;
+    while (i<n){
         console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
         i=i+1;
     }
