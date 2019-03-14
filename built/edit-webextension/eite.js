@@ -84,7 +84,7 @@ async function internalRunDocument(execId) {
 
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
-//var window.STAGEL_DEBUG;
+var STAGEL_DEBUG;
 var importSettings;
 var exportSettings;
 var envPreferredFormat;
@@ -116,11 +116,8 @@ let strArrayExportWarnings = []; // as
 let haveDom = false;
 
 // Set defaults for preferences if not set already
-if (typeof window === 'undefined') {
-    window = {};
-}
-if (window.STAGEL_DEBUG === undefined) {
-    window.STAGEL_DEBUG = 2;
+if (STAGEL_DEBUG === undefined) {
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -256,12 +253,12 @@ async function internalSetup() {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
             }
             else {
-                if (2 <= window.STAGEL_DEBUG && 3 > window.STAGEL_DEBUG) {
+                if (2 <= STAGEL_DEBUG && 3 > STAGEL_DEBUG) {
                     await console.log("(Previous message sent from non-StageL code.)");
                     await console.trace();
                 }
             }
-            if (3 <= window.STAGEL_DEBUG) {
+            if (3 <= STAGEL_DEBUG) {
                 await console.trace();
             }
         });
@@ -1030,7 +1027,7 @@ async function implLog(strMessage) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
-        if (2 <= window.STAGEL_DEBUG) {
+        if (2 <= STAGEL_DEBUG) {
             await console.log("(Previous message sent from non-StageL code.)");
         }
     }
@@ -1046,7 +1043,7 @@ async function implDebug(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
-    if (intLevel <= window.STAGEL_DEBUG) {
+    if (intLevel <= STAGEL_DEBUG) {
         await implLog(strMessage);
     }
 }
@@ -1055,7 +1052,7 @@ async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
     // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
-    window.STAGEL_DEBUG=intLevel;
+    STAGEL_DEBUG=intLevel;
 }
 
 async function FIXMEUnimplemented(strLocation) {
@@ -1070,7 +1067,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message, but don't print a trace for it
 
-    if (intLevel <= window.STAGEL_DEBUG) {
+    if (intLevel <= STAGEL_DEBUG) {
         // await implLog(strMessage);
         console.log(strMessage);
     }
@@ -1095,7 +1092,7 @@ async function internalDebugStackEnter(strBlockName) {
 
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
-    if (2 <= window.STAGEL_DEBUG) {
+    if (2 <= STAGEL_DEBUG) {
         let callstackLevel=stagelDebugCallstack.length;
         let callstackLevelStr=":".repeat(callstackLevel);
         await internalDebugQuiet(callstackLevelStr+"Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
@@ -1127,7 +1124,7 @@ async function internalDebugPrintStack() {
 }
 
 function internalDebugLogJSObject(obj) {
-    if (1 <= window.STAGEL_DEBUG) {
+    if (1 <= STAGEL_DEBUG) {
         console.log(obj);
     }
 }
@@ -2564,7 +2561,7 @@ async function utf8VariantSettings(strDirection) {
     if (await implEq('dcBasenb', strEnabledVariants)) {
         strArrayRes = await push(strArrayRes, strEnabledVariants);
     }
-    else if (await implEq('dcBasenb dcBasenbFragment', strEnabledVariants)) {
+    else if (await implEq('dcBasenb dcBasenbFragment')) {
         strArrayRes = await push(strArrayRes, [ 'dcBasenb', 'dcBasenbFragment' ]);
     }
 
