@@ -39,7 +39,7 @@ browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message[0]]=message[1];
     }
     else if (message[0].contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageGetDocumentById')) {
-        console.log('Document was requested '+message[0]+' : '+window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message[0].replace('GetDocumentBy','Document')]);
+        console.log('Document was requested '+message[0]);
         sendResponse({response: window.b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocuments[message[0].replace('GetDocumentBy','Document')]});
     }
 });
