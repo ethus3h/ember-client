@@ -100,7 +100,7 @@ if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextens
         //alert('erciorcl');
         //alert(await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)]));
         // Encoded response: 244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,99,111,108,108,97,98,111,114,97,116,105,111,110,32,111,110,32,97,32,244,131,173,161,244,143,191,173,115,112,101,99,105,102,105,99,97,116,105,111,110,244,131,173,160,244,143,191,173,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157
-        await runDocument(await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(responseMessage.response)));
+        await runDocument(await dcaFromDcbnbUtf8(new TextEncoder().encode(responseMessage.response)));
         //await runDocument(await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)]));
         //await eiteCall('runDocument', [await eiteCall('dcaFromDcbnbFragmentUtf8', [new TextEncoder().encode(responseMessage.response)])]);
         await removeSpinner();
