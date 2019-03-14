@@ -983,8 +983,8 @@ async function len(str) {
 */
 
 let stagelDebugCallstack = [];
-let stagelDebugCallNames = [];
-let stagelDebugCallCounts = [];
+let stagelDebugCallNames = ['exaple'];
+let stagelDebugCallCounts = [15];
 let stagelDebugCollection = "";
 //alert("Setting up logging");
 
@@ -1121,11 +1121,13 @@ async function internalDebugPrintHotspots() {
     let n = 0;
     n = stagelDebugCallNames.length;
     let i = 0;
+    if (n = 0) {
+        console.log('No routine calls have been logged.');
+    }
     while (i<n){
         console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
-        i=i+1;
+        i = i + 1;
     }
-    await implLog(i);
 }
 
 async function internalDebugPrintStack() {
