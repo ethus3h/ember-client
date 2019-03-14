@@ -1129,6 +1129,11 @@ async function internalDebugPrintHotspots() {
         console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
         i = i + 1;
     }
+    let sum = 0;
+    sum = stagelDebugCallCounts.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue;
+    }, 0);
+    console.log('Total function calls: ' + sum);
 }
 
 async function internalDebugPrintStack() {
