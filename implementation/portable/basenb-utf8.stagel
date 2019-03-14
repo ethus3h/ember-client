@@ -100,7 +100,7 @@ r/an/byteArrayToBasenbUtf8 n/base an/in
     # new an/remainder
     # set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
     # set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
-    set an/res push an/res pack32 sub mod count an/inputIntBitArray } 17 } 63497
+    set an/res push an/res pack32 sub 63497 mod count an/inputIntBitArray } 17
     assertIsByteArray an/res
     return an/res
 
@@ -119,7 +119,7 @@ r/an/byteArrayFromBasenbUtf8 an/in
         set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
         set n/remainder add -2 get an/remainderDecodedArr 0
     else
-        set an/remainder unpack32 an/remainderArr
+        set an/remainder sub 63497 unpack32 an/remainderArr
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in 0 -5 } n/remainder
     assertIsByteArray an/res
     return an/res
