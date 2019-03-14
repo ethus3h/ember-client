@@ -158,7 +158,7 @@ async function internalDebugPrintHotspots() {
     sum = stagelDebugCallCounts.reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
-    console.log('Total function calls: ')
+    console.log('Total function calls: ' + sum);
 }
 
 async function internalDebugPrintStack() {
