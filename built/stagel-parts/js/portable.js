@@ -490,6 +490,8 @@ async function dcaToUtf8(intArrayContent) {
     strArrayVariantSettings = await utf8VariantSettings('out');
     let boolDcBasenbEnabled = false;
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
+    let boolDcBasenbFragmentEnabled = false;
+    boolDcBasenbFragmentEnabled = await contains(strArrayVariantSettings, 'dcBasenbFragment');
     while (await le(intC, intL)) {
         /* Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8. */
         if (await implLt(intC, intL)) {
@@ -513,7 +515,9 @@ async function dcaToUtf8(intArrayContent) {
                 intUnmappablesCount = await count(intArrayUnmappables);
                 if (await ne(0, intUnmappablesCount)) {
                     if (await implNot(boolFoundAnyUnmappables)) {
-                        intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
+                        if (await implNot(boolDcBasenbFragmentEnabled)) {
+                            intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedStartUuid());
+                        }
                     }
                     boolFoundAnyUnmappables = true;
                     /* We've gotten to the end of a string of unmappable characters, so convert them to PUA characters */
@@ -537,7 +541,9 @@ async function dcaToUtf8(intArrayContent) {
         intC = await implAdd(intC, 1);
     }
     if (await implAnd(boolDcBasenbEnabled, boolFoundAnyUnmappables)) {
-        intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedEndUuid());
+        if (await implNot(boolDcBasenbFragmentEnabled)) {
+            intArrayRes = await append(intArrayRes, await getArmoredUtf8EmbeddedEndUuid());
+        }
     }
     await assertIsByteArray(intArrayRes);
 
@@ -562,6 +568,9 @@ async function dcaFromUtf8(intArrayContent) {
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
     let boolInDcBasenbSection = false;
     boolInDcBasenbSection = false;
+    if (boolDcBasenbEnabled) {
+        boolInDcBasenbSection = await contains(strArrayVariantSettings, 'dcBasenbFragment');
+    }
     let intSkipThisChar = 0;
     intSkipThisChar = 0;
     let intArrayCollectedDcBasenbChars = [];
@@ -834,7 +843,12 @@ async function utf8VariantSettings(strDirection) {
     let strEnabledVariants = '';
     strEnabledVariants = await getSettingForFormat('utf8', strDirection, 'variants');
     /* TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants) */
-    strArrayRes = await push(strArrayRes, strEnabledVariants);
+    if (await implEq('dcBasenb', strEnabledVariants)) {
+        strArrayRes = await push(strArrayRes, strEnabledVariants);
+    }
+    else if (await implEq('dcBasenb dcBasenbFragment')) {
+        strArrayRes = await push(strArrayRes, [ 'dcBasenb', 'dcBasenbFragment' ]);
+    }
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn);  return strArrayReturn;
 }
@@ -857,6 +871,30 @@ async function dcaFromDcbnbUtf8(intArrayContent) {
     /* convenience wrapper */
     let intArrayRes = [];
     await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+    intArrayRes = await dcaFromUtf8(intArrayContent);
+    await popImportSettings(await getFormatId('utf8'));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
+}
+
+async function dcaToDcbnbFragmentUtf8(intArrayContent) {
+     await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* convenience wrapper */
+    let intArrayRes = [];
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
+    intArrayRes = await dcaToUtf8(intArrayContent);
+    await popExportSettings(await getFormatId('utf8'));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn);  return intArrayReturn;
+}
+
+async function dcaFromDcbnbFragmentUtf8(intArrayContent) {
+     await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* convenience wrapper */
+    let intArrayRes = [];
+    await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
     intArrayRes = await dcaFromUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
 
