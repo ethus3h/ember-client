@@ -4,7 +4,7 @@
   "name": "EITE Text-Fields",
   "version": "0.1",
 
-  "description": "Use EITE document in text fields",
+  "description": "Use EITE document extensions in text fields; render document extensions where they appear in Web pages",
 
   "icons": {
     "48": "icons/eite-text-field-icon-48.svg"
