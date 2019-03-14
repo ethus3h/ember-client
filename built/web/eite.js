@@ -983,6 +983,8 @@ async function len(str) {
 */
 
 let stagelDebugCallstack = [];
+let stagelDebugCallNames = [];
+let stagelDebugCallCounts = [];
 let stagelDebugCollection = "";
 //alert("Setting up logging");
 
@@ -1090,6 +1092,14 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
+    if (! stagelDebugCallNames.contains(strBlockName)) {
+        stagelDebugCallNames.push(strBlockName);
+    }
+
+    let ind;
+    ind=stagelDebugCallNames.indexOf(strBlockName);
+    stagelDebugCallCounts[ind] = stagelDebugCallCounts[ind] + 1;
+
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
 
     if (2 <= STAGEL_DEBUG) {
@@ -1105,6 +1115,16 @@ async function internalDebugStackExit() {
         await implDie("Exited block, but no block on stack");
     }
     await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);
+}
+
+async function internalDebugPrintHotspots() {
+    let n = 0;
+    n = stagelDebugCallNames.length;
+    let i = 0;
+    while (i<n){
+        console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
+        i=i+1;
+    }
 }
 
 async function internalDebugPrintStack() {
