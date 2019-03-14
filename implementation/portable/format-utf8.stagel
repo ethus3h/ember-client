@@ -286,3 +286,19 @@ r/an/dcaFromDcbnbUtf8 an/content
     set an/res dcaFromUtf8 an/content
     popImportSettings getFormatId 'utf8'
     return an/res
+
+r/an/dcaToDcbnbFragmentUtf8 an/content
+    # convenience wrapper
+    new an/res
+    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
+    set an/res dcaToUtf8 an/content
+    popExportSettings getFormatId 'utf8'
+    return an/res
+
+r/an/dcaFromDcbnbFragmentUtf8 an/content
+    # convenience wrapper
+    new an/res
+    pushImportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
+    set an/res dcaFromUtf8 an/content
+    popImportSettings getFormatId 'utf8'
+    return an/res
