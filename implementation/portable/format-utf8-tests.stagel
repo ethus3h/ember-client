@@ -1,5 +1,6 @@
 r/v/runTestsFormatUtf8 b/v
     testing b/v 'formatUtf8'
+    # FIXME: Update tests for new remainder character format.
     runTest b/v arrEq ( 35 18 36 ) dcaFromUtf8 ( 49 32 50 )
     runTest b/v arrEq ( 49 32 50 ) dcaToUtf8 ( 35 18 36 )
     # Test for converting to UTF8+dcbnb with only one unmappable char at the end
