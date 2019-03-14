@@ -155,7 +155,6 @@ async function internalDebugPrintHotspots() {
         i = i + 1;
     }
     let sum = 0;
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
     sum = stagelDebugCallCounts.reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
