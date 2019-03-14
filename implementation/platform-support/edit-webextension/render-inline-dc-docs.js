@@ -70,32 +70,35 @@ if(!('contains' in String.prototype)) {
     let replacedAll;
     let limit = 1;
     let j;
-    // fromm https://web.archive.org/web/20190314133524/https://stackoverflow.com/questions/986937/how-can-i-get-the-browsers-scrollbar-sizes
+    // from https://web.archive.org/web/20190314133524/https://stackoverflow.com/questions/986937/how-can-i-get-the-browsers-scrollbar-sizes
     function getScrollBarWidth () {
-  var inner = document.createElement('p');
-  inner.style.width = "100%";
-  inner.style.height = "200px";
+        var inner = document.createElement('p');
+        inner.style.width = "100%";
+        inner.style.height = "200px";
 
-  var outer = document.createElement('div');
-  outer.style.position = "absolute";
-  outer.style.top = "0px";
-  outer.style.left = "0px";
-  outer.style.visibility = "hidden";
-  outer.style.width = "200px";
-  outer.style.height = "150px";
-  outer.style.overflow = "hidden";
-  outer.appendChild (inner);
+        var outer = document.createElement('div');
+        outer.style.position = "absolute";
+        outer.style.top = "0px";
+        outer.style.left = "0px";
+        outer.style.visibility = "hidden";
+        outer.style.width = "200px";
+        outer.style.height = "150px";
+        outer.style.overflow = "hidden";
+        outer.appendChild (inner);
 
-  document.body.appendChild (outer);
-  var w1 = inner.offsetWidth;
-  outer.style.overflow = 'scroll';
-  var w2 = inner.offsetWidth;
-  if (w1 == w2) w2 = outer.clientWidth;
+        document.body.appendChild (outer);
+        var w1 = inner.offsetWidth;
+        outer.style.overflow = 'scroll';
+        var w2 = inner.offsetWidth;
+        if (w1 == w2) w2 = outer.clientWidth;
 
-  document.body.removeChild (outer);
+        document.body.removeChild (outer);
 
-  return (w1 - w2);
-};
+        return (w1 - w2);
+    };
+    let scrollBarWidth;
+    // Will be wrong if the page zoom changes, but I'm not sure what to do about that.
+    scrollBarWidth=getScrollBarWidth();
     for (let i=0;i<elems.length;i++) {
         el=elems[i];
         if (el.textContent.match(re)) {
