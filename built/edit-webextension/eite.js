@@ -117,7 +117,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (window.STAGEL_DEBUG === undefined) {
-    window.STAGEL_DEBUG = 0;
+    window.STAGEL_DEBUG = 2;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -1050,7 +1050,6 @@ async function implDebug(strMessage, intLevel) {
 
 async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
-    alert('bubububu');
     // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
     window.STAGEL_DEBUG=intLevel;
