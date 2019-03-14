@@ -290,7 +290,7 @@ r/an/dcaFromDcbnbUtf8 an/content
 r/an/dcaToDcbnbFragmentUtf8 an/content
     # convenience wrapper
     new an/res
-    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
+    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb dcBasenbFragment,'
     set an/res dcaToUtf8 an/content
     popExportSettings getFormatId 'utf8'
     return an/res
@@ -298,7 +298,7 @@ r/an/dcaToDcbnbFragmentUtf8 an/content
 r/an/dcaFromDcbnbFragmentUtf8 an/content
     # convenience wrapper
     new an/res
-    pushImportSettings getFormatId 'utf8' } 'variants:dcBasenb,'
+    pushImportSettings getFormatId 'utf8' } 'variants:dcBasenb dcBasenbFragment,'
     set an/res dcaFromUtf8 an/content
     popImportSettings getFormatId 'utf8'
     return an/res
