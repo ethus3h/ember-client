@@ -92,9 +92,9 @@ if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextens
         document.getElementById('editorButtons').style.display='none';
         document.getElementById('eiteDocumentRoot').style.border='none';
         document.getElementById('eiteDocumentRoot').style.fontSize='1rem';
-        await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
-        await runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
-        await popExportSettings(await getFormatId('utf8'));
+        //await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+        //await runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
+        //await popExportSettings(await getFormatId('utf8'));
     });
 }
 
