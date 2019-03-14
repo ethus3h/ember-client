@@ -276,7 +276,7 @@ r/as/utf8VariantSettings s/direction
     # TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants)
     if eq 'dcBasenb' s/enabledVariants
         set as/res push as/res s/enabledVariants
-    elif eq 'dcBasenb dcBasenbFragment'
+    elif eq 'dcBasenb dcBasenbFragment' s/enabledVariants
         set as/res push as/res [ 'dcBasenb' 'dcBasenbFragment' ]
     return as/res
 
