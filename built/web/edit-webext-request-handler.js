@@ -1,5 +1,12 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
+//https://stackoverflow.com/questions/19196337/string-contains-doesnt-exist-while-working-in-chrome
+if(!('contains' in String.prototype)) {
+    String.prototype.contains = function(str, startIndex) {
+            return -1 !== String.prototype.indexOf.call(this, str, startIndex);
+    };
+}
+
 let messageEventHandler = function(message) {
     function onRemove(element, onDetachCallback) {
         // https://stackoverflow.com/questions/31798816/simple-mutationobserver-version-of-domnoderemovedfromdocument
@@ -78,9 +85,16 @@ document.addEventListener('message', messageEventHandler);
 window.addEventListener('message', messageEventHandler);
 
 if (window.location.hash.contains('b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId')) {
-    browser.runtime.sendMessage([window.location.hash.substr(1).replace('Document','GetDocumentBy')]).then(function(responseMessage){
-        console.log('Got document contents message: '+responseMessage);
-        runDocument(responseMessage.response);
+    browser.runtime.sendMessage([window.location.hash.substr(1).replace('Document','GetDocumentBy')]).then(async function(responseMessage){
+        await setupIfNeeded();
+        document.getElementById('DcSelection').style.display='none';
+        document.getElementById('editorColumn').style.display='none';
+        document.getElementById('editorButtons').style.display='none';
+        document.getElementById('eiteDocumentRoot').style.border='none';
+        document.getElementById('eiteDocumentRoot').style.fontSize='1rem';
+        await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb,');
+        runDocument(await importDocument('utf8', new TextEncoder().encode(responseMessage.response)));
+        await popExportSettings(await getFormatId('utf8'));
     });
 }
 
