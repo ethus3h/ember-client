@@ -97,7 +97,7 @@ if(!('contains' in String.prototype)) {
         return (w1 - w2);
     };
     let scrollBarWidth;
-    // Will be wrong if the page zoom changes, but I'm not sure what to do about that.
+    // May be wrong if the page zoom changes, but I'm not sure what to do about that.
     scrollBarWidth=getScrollBarWidth();
     for (let i=0;i<elems.length;i++) {
         el=elems[i];
@@ -133,8 +133,8 @@ if(!('contains' in String.prototype)) {
                     });
                         ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                         ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
-                        ifr.style.height=span.clientHeight+'px';
-                        ifr.style.width=span.clientWidth+'px';
+                        ifr.style.height=(scrollBarWidth + span.clientHeight)+'px';
+                        ifr.style.width=(scrollBarWidth + span.clientWidth)+'px';
                         parentNode.insertBefore(ifr, el);
                         ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
                         let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
