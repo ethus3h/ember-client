@@ -119,10 +119,12 @@ async function internalDebugStackEnter(strBlockName) {
 
     if (! stagelDebugCallNames.contains(strBlockName)) {
         stagelDebugCallNames.push(strBlockName);
+        stagelDebugCallCounts[stagelDebugCallNames.indexOf(strBlockName)] = 0;
+        implLog('Pushed '+strBlockName);
     }
 
     let ind;
-    ind=stagelDebugCallNames.indexOf(strBlockName);
+    ind = stagelDebugCallNames.indexOf(strBlockName);
     stagelDebugCallCounts[ind] = stagelDebugCallCounts[ind] + 1;
 
     await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
