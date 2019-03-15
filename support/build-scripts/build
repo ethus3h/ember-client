@@ -13,7 +13,7 @@ mkdir ./built
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
-debugBuild="--no-debug"
+debugBuild="--debug"
 if [[ "$1" == "--debug" ]]; then
     debugBuild="--debug"
     shift
@@ -21,7 +21,20 @@ elif [[ "$1" == "--no-debug" ]]; then
     debugBuild="--no-debug"
     shift
 fi
+typecheckBuild="--runtime-type-checks"
+if [[ "$1" == "--runtime-type-checks" ]]; then
+    typecheckBuild="--runtime-type-checks"
+    shift
+elif [[ "$1" == "--no-runtime-type-checks" ]]; then
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
+if [[ "$1" == "--fast" ]]; then
+    debugBuild="--no-debug"
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
 distBuild="false"
 if [[ "$1" == "--dist-build" ]]; then
@@ -32,17 +45,17 @@ fi
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
     shift
-    "$sicmd" "$debugBuild" "$@"
+    "$sicmd" "$debugBuild" "$typecheckBuild" "$@"
     [[ "$distBuild" == "true" ]] && ./support/dist-build
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
-    "$sicmd" "$debugBuild" "$@" &> /dev/null
+    "$sicmd" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/dist-build
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common
 else
-    "$sicmd" "$debugBuild" "$@" &> /dev/null
+    "$sicmd" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/dist-build &> /dev/null
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common &> /dev/null
 fi
