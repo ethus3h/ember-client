@@ -59,12 +59,12 @@ function intArrayPackWtf8(intValue) {
 }
 
 //Decoding
-function intUnpackWtf8(byteArrayInput) {
+async function intUnpackWtf8(byteArrayInput) {
     let byteIndex = 0;
     let byteCount = byteArrayInput.length;
     let readContinuationByte = function() {
         if (byteIndex >= byteCount) {
-            throw Error('Invalid byte index');
+            await implDie('Invalid byte index');
         }
 
         let continuationByte = byteArrayInput[byteIndex] & 0xFF;
@@ -75,7 +75,7 @@ function intUnpackWtf8(byteArrayInput) {
         }
 
         // If we end up here, it’s not a continuation byte.
-        throw Error('Invalid continuation byte');
+        await implDie('Invalid continuation byte');
     }
 
     let byte1;
@@ -85,7 +85,7 @@ function intUnpackWtf8(byteArrayInput) {
     let intValue;
 
     if (byteIndex > byteCount) {
-        throw Error('Invalid byte index');
+        await implDie('Invalid byte index');
     }
 
     if (byteIndex == byteCount) {
@@ -108,7 +108,7 @@ function intUnpackWtf8(byteArrayInput) {
         if (intValue >= 0x80) {
             return intValue;
         } else {
-            throw Error('Invalid continuation byte');
+            await implDie('Invalid continuation byte');
         }
     }
 
@@ -120,7 +120,7 @@ function intUnpackWtf8(byteArrayInput) {
         if (intValue >= 0x0800) {
             return intValue;
         } else {
-            throw Error('Invalid continuation byte');
+            await implDie('Invalid continuation byte');
         }
     }
 
@@ -136,5 +136,5 @@ function intUnpackWtf8(byteArrayInput) {
         }
     }
 
-    throw Error('Invalid WTF-8 detected');
+    await implDie('Invalid WTF-8 detected');
 }
