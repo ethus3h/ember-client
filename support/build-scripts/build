@@ -22,6 +22,11 @@ elif [[ "$1" == "--no-debug" ]]; then
     shift
 fi
 
+if [[ "$1" == "--fast" ]]; then
+    debugBuild="--no-debug"
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
 distBuild="false"
 if [[ "$1" == "--dist-build" ]]; then
