@@ -612,16 +612,18 @@ codegenRoutineDefinitionStart() {
         if [[ "$argumentCount" != 0 ]] || [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
-        for (( k=0; k<argumentCount; k++ )); do
-            if (( k % 2 )); then
-                [[ "$k" != 1 ]] && codegenOutput ' '
-                codegenOutput "await assertIs"
-                codegenType "${codegenArgList[$k - 1]}" "true"
-                codegenOutput "("
-                codegenType "${codegenArgList[$k - 1]}"
-                codegenOutput "${codegenArgList[$k]^});"
-            fi
-        done
+        if generateRuntimeTypeCheckCode; then
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    [[ "$k" != 1 ]] && codegenOutput ' '
+                    codegenOutput "await assertIs"
+                    codegenType "${codegenArgList[$k - 1]}" "true"
+                    codegenOutput "("
+                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenOutput "${codegenArgList[$k]^});"
+                fi
+            done
+        fi
         if [[ "$argumentCount" != 0 ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
         fi
