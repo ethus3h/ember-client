@@ -21,6 +21,11 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
+if [[ "$1" == "--fast" ]]; then
+    debugBuild="--no-debug"
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
 [[ -z "$2" ]] && die "No target language given."
 
