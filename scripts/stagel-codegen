@@ -15,6 +15,14 @@ elif [[ "$1" == "--no-debug" ]]; then
     debugBuild="--no-debug"
     shift
 fi
+typecheckBuild="--runtime-type-checks"
+if [[ "$1" == "--runtime-type-checks" ]]; then
+    typecheckBuild="--runtime-type-checks"
+    shift
+elif [[ "$1" == "--no-runtime-type-checks" ]]; then
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
 targetLang="$1"
 
