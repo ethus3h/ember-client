@@ -222,11 +222,11 @@ r/an/dcaFromUtf8 an/content
                 # (End of code section) (see explanation above)
             if eq 0 n/dcBasenbUuidMonitorState
                 # Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result.
-                # FIXME: Decode each batch at end of character run denoted by isBasenbDistinctRemainderChar.
                 if ne 0 count an/latestChar
                     # There is a latest char (latestChar has more than 0 elems), so work on it
-                    if and b/inDcBasenbSection isBasenbChar an/latestChar
+                    if and b/inDcBasenbSection and isBasenbChar an/latestChar } not isBasenbDistinctRemainderChar an/latestChar
                         # The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding.
+                        # Should decode each character as a single batch with the end of the run denoted by isBasenbDistinctRemainderChar, so don't match those here.
                         set an/collectedDcBasenbChars append an/collectedDcBasenbChars an/latestChar
                         set n/skipThisChar count an/latestChar
                     else
