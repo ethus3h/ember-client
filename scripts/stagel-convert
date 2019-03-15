@@ -23,7 +23,6 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
-echo "SL CONVERT has: $typecheckBuild" 1>&2
 
 inputFile="$(readlink -f "$1")"
 targetLang="$2"

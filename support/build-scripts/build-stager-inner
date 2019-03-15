@@ -21,7 +21,6 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
-echo "BUILD STAGER INNER has: $typecheckBuild" 1>&2
 
 [[ -z "$2" ]] && die "No target language given."
 

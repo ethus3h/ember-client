@@ -35,7 +35,6 @@ if [[ "$1" == "--fast" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
-echo "BUILD has: $typecheckBuild" 1>&2
 
 distBuild="false"
 if [[ "$1" == "--dist-build" ]]; then

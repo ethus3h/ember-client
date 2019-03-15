@@ -23,7 +23,6 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
-echo "SL CODEGEN has: $typecheckBuild" 1>&2
 
 targetLang="$1"
 
@@ -34,7 +33,7 @@ generateDebugCode() {
     return 0
 }
 generateRuntimeTypeCheckCode() {
-    if [[ "$debugBuild" == "--no-runtime-type-checks" ]]; then
+    if [[ "$typecheckBuild" == "--no-runtime-type-checks" ]]; then
         return 1
     fi
     return 0
