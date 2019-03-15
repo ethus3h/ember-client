@@ -15,6 +15,14 @@ elif [[ "$1" == "--no-debug" ]]; then
     debugBuild="--no-debug"
     shift
 fi
+typecheckBuild="--runtime-type-checks"
+if [[ "$1" == "--runtime-type-checks" ]]; then
+    typecheckBuild="--runtime-type-checks"
+    shift
+elif [[ "$1" == "--no-runtime-type-checks" ]]; then
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
 
 inputFile="$(readlink -f "$1")"
 targetLang="$2"
@@ -28,4 +36,4 @@ parseCmd="stagel-parse"
 codegenCmd="stagel-codegen"
 [[ -f "./stagel-codegen" ]] && codegenCmd=./"$codegenCmd"
 
-"$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$targetLang"
+"$parseCmd" -q "$inputFile" | "$codegenCmd" "$typecheckBuild" "$debugBuild" "$targetLang"
