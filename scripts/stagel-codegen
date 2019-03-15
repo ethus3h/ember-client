@@ -32,6 +32,12 @@ generateDebugCode() {
     fi
     return 0
 }
+generateRuntimeTypeCheckCode() {
+    if [[ "$debugBuild" == "--no-runtime-type-checks" ]]; then
+        return 1
+    fi
+    return 0
+}
 
 # Read token data into tokens array
 
@@ -401,11 +407,15 @@ codegenCommandInvocationStart() {
             else
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
-            codegenOutput "; await assertIs"
-            codegenType "$returnType" true
-            codegenOutput "("
-            codegenType "$returnType"
-            codegenOutput "Return); "
+            if generateRuntimeTypeCheckCode; then
+                codegenOutput "; await assertIs"
+                codegenType "$returnType" true
+                codegenOutput "("
+                codegenType "$returnType"
+                codegenOutput "Return); "
+            else
+                codegenOutput "; "
+            fi
             codegenRoutineDefinitionPreEnd
             codegenOutput "return "
             codegenType "$returnType"
