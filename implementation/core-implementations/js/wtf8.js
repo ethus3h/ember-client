@@ -62,7 +62,7 @@ function intArrayPackWtf8(intValue) {
 async function intUnpackWtf8(byteArrayInput) {
     let byteIndex = 0;
     let byteCount = byteArrayInput.length;
-    let readContinuationByte = function() {
+    let readContinuationByte = async function() {
         if (byteIndex >= byteCount) {
             await implDie('Invalid byte index');
         }
