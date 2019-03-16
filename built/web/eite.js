@@ -1447,7 +1447,7 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 2-byte sequence
     if ((byte1 & 0xE0) == 0xC0) {
-        let byte2 = readContinuationByte();
+        let byte2 = await readContinuationByte();
         intValue = ((byte1 & 0x1F) << 6) | byte2;
         if (intValue >= 0x80) {
             return intValue;
@@ -1458,8 +1458,8 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 3-byte sequence (may include unpaired surrogates)
     if ((byte1 & 0xF0) == 0xE0) {
-        byte2 = readContinuationByte();
-        byte3 = readContinuationByte();
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
         intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
         if (intValue >= 0x0800) {
             return intValue;
@@ -1470,9 +1470,9 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 4-byte sequence
     if ((byte1 & 0xF8) == 0xF0) {
-        byte2 = readContinuationByte();
-        byte3 = readContinuationByte();
-        byte4 = readContinuationByte();
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
+        byte4 = await readContinuationByte();
         intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
             (byte3 << 0x06) | byte4;
         if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
