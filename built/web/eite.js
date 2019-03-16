@@ -3914,7 +3914,8 @@ async function runTestsOnly(boolV) {
     /* Run tests without report. b/v=verbose: true=print test result lines; false=return value only */
     /* This runs each component's test suite */
     /* General tests */
-    /*runTestsBits b/v */
+    await runTestsFormatUtf8(boolV);
+return;    /*runTestsBits b/v */
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     /*runTestsWasm b/v */
@@ -3928,7 +3929,6 @@ async function runTestsOnly(boolV) {
     await runTestsFormatHtmlFragment(boolV);
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
-    await runTestsFormatUtf8(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
