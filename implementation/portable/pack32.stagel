@@ -9,3 +9,8 @@ r/n/unpack32 an/in
     new n/res
     set n/res intUnpackWtf8 an/in
     return n/res
+
+r/b/isPack32Char an/in
+    new b/res
+    set b/res boolIsUnpackableWtf8 an/in
+    return b/res

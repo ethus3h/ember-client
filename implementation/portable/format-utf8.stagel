@@ -232,7 +232,6 @@ r/an/dcaFromUtf8 an/content
                     else
                         # Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any
                         if ne 0 count an/collectedDcBasenbChars
-                            # FIXME: The bug is at isBasenbDistinctRemainderChar: Can't call isBasenbDistinctRemainderChar on something that's not at least a valid pack32 char, since decoding it will fail. isBasenbDistinctRemainderChar should be changed to check for that first. Also remove all fixme2019mar16: fixme2019mar16
                             set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
                             set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
                             set n/collectedDcBasenbCharsCounter 0
