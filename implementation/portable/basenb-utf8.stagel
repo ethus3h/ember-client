@@ -80,6 +80,7 @@ r/b/isBasenbChar an/utf8Char
     return b/res
 
 r/b/isBasenbDistinctRemainderChar an/utf8Char
+    # FIXME: HERE'S THE BUG: Can't call isBasenbDistinctRemainderChar on something that's not at least a valid pack32 char, since decoding it will fail. isBasenbDistinctRemainderChar should be changed to check for that first. Also remove all fixme2019mar16: fixme2019mar16
     new b/res
     set b/res false
     new n/codepoint
@@ -111,7 +112,7 @@ r/an/byteArrayFromBasenbUtf8 an/in
     new n/remainder
     new an/remainderArr
     # last 3 bytes (1 character), which represent the remainder
-    # FIXME: HERE'S THE BUG: Can't call isBasenbDistinctRemainderChar on something that's not at least a valid pack32 char, since decoding it will fail. isBasenbDistinctRemainderChar should be changed to check for that first.
+    # FIXME: The bug is at isBasenbDistinctRemainderChar: Can't call isBasenbDistinctRemainderChar on something that's not at least a valid pack32 char, since decoding it will fail. isBasenbDistinctRemainderChar should be changed to check for that first. Also remove all fixme2019mar16: fixme2019mar16
     set an/remainderArr anSubset an/in -3 -1
     if not isBasenbDistinctRemainderChar an/remainderArr
         # last 4 bytes (1 character), which represent the remainder
