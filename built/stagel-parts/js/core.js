@@ -1406,7 +1406,7 @@ function intArrayPackWtf8(intValue) {
 async function intUnpackWtf8(byteArrayInput) {
     let byteIndex = 0;
     let byteCount = byteArrayInput.length;
-    let readContinuationByte = function() {
+    let readContinuationByte = async function() {
         if (byteIndex >= byteCount) {
             await implDie('Invalid byte index');
         }
@@ -1447,7 +1447,7 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 2-byte sequence
     if ((byte1 & 0xE0) == 0xC0) {
-        let byte2 = readContinuationByte();
+        let byte2 = await readContinuationByte();
         intValue = ((byte1 & 0x1F) << 6) | byte2;
         if (intValue >= 0x80) {
             return intValue;
@@ -1458,8 +1458,8 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 3-byte sequence (may include unpaired surrogates)
     if ((byte1 & 0xF0) == 0xE0) {
-        byte2 = readContinuationByte();
-        byte3 = readContinuationByte();
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
         intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
         if (intValue >= 0x0800) {
             return intValue;
@@ -1470,9 +1470,9 @@ async function intUnpackWtf8(byteArrayInput) {
 
     // 4-byte sequence
     if ((byte1 & 0xF8) == 0xF0) {
-        byte2 = readContinuationByte();
-        byte3 = readContinuationByte();
-        byte4 = readContinuationByte();
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
+        byte4 = await readContinuationByte();
         intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
             (byte3 << 0x06) | byte4;
         if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
@@ -1481,6 +1481,105 @@ async function intUnpackWtf8(byteArrayInput) {
     }
 
     await implDie('Invalid WTF-8 detected');
+}
+
+//Copy of the decoder that returns a boolean indicating whether the input was a valid char
+async function boolIsUnpackableWtf8(byteArrayInput) {
+    let byteIndex = 0;
+    let byteCount = byteArrayInput.length;
+    let readContinuationByte = async function() {
+        if (byteIndex >= byteCount) {
+            return false;
+        }
+
+        let continuationByte = byteArrayInput[byteIndex] & 0xFF;
+        byteIndex++;
+
+        if ((continuationByte & 0xC0) == 0x80) {
+            return continuationByte & 0x3F;
+        }
+
+        // If we end up here, it’s not a continuation byte.
+        return false;
+    }
+
+    let byte1;
+    let byte2;
+    let byte3;
+    let byte4;
+    let intValue;
+
+    if (byteIndex > byteCount) {
+        return false;
+    }
+
+    if (byteIndex == byteCount) {
+        return false;
+    }
+
+    // Read the first byte.
+    byte1 = byteArrayInput[byteIndex] & 0xFF;
+    byteIndex++;
+
+    // 1-byte sequence (no continuation bytes)
+    if ((byte1 & 0x80) == 0) {
+        return true;
+    }
+
+    // 2-byte sequence
+    if ((byte1 & 0xE0) == 0xC0) {
+        let byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (intValue >= 0x80) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 3-byte sequence (may include unpaired surrogates)
+    if ((byte1 & 0xF0) == 0xE0) {
+        byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        byte3 = await readContinuationByte();
+        if (byte3 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (intValue >= 0x0800) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 4-byte sequence
+    if ((byte1 & 0xF8) == 0xF0) {
+        byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        byte3 = await readContinuationByte();
+        if (byte3 === false) {
+            return false;
+        }
+        byte4 = await readContinuationByte();
+        if (byte4 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+            (byte3 << 0x06) | byte4;
+        if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /* assertions, provides:

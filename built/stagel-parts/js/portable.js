@@ -100,6 +100,10 @@ async function isBasenbChar(intArrayUtf8Char) {
 
     let boolRes = false;
     boolRes = false;
+    if (await implNot(await isPack32Char(intArrayUtf8Char))) {
+
+        boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
     let intCodepoint = 0;
     intCodepoint = await unpack32(intArrayUtf8Char);
     if (await intIsBetween(intCodepoint, 983040, 1048573)) {
@@ -120,6 +124,10 @@ async function isBasenbDistinctRemainderChar(intArrayUtf8Char) {
 
     let boolRes = false;
     boolRes = false;
+    if (await implNot(await isPack32Char(intArrayUtf8Char))) {
+
+        boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
     let intCodepoint = 0;
     intCodepoint = await unpack32(intArrayUtf8Char);
     if (await intIsBetween(intCodepoint, 63481, 63497)) {
@@ -954,6 +962,15 @@ async function unpack32(intArrayIn) {
     intRes = await intUnpackWtf8(intArrayIn);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function isPack32Char(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('isPack32Char:pack32'); await assertIsIntArray(intArrayIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await boolIsUnpackableWtf8(intArrayIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function getSettingForFormat(strFormat, strDirection, strSettingKey) {
