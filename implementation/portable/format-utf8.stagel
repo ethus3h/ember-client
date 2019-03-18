@@ -331,8 +331,13 @@ r/an/dcbnbGetFirstChar an/in
             set an/res an/nextUtf8
             set an/continue false
         else
-            set n/tempArrayCount count an/nextUtf8
-            set an/remaining anSubset an/remaining n/tempArrayCount -1
+            if isBasenbDistinctRemainderChar an/nextUtf8
+                set an/res append an/res an/nextUtf8
+                set an/continue false
+            else
+                set n/tempArrayCount count an/nextUtf8
+                set an/res append an/res an/nextUtf8
+                set an/remaining anSubset an/remaining n/tempArrayCount -1
     return an/res
 
 r/an/dcbnbGetLastChar an/in
