@@ -20,6 +20,16 @@ r/b/notExcep s/test
     set b/res not excep s/test
     return b/res
 
+r/b/excepArr ga/test
+    new b/res
+    set b/res not excep strPrintArray s/test
+    return b/res
+
+r/b/notExcepArr ga/test
+    new b/res
+    set b/res not excep s/test
+    return b/res
+
 r/b/excOrEmpty s/test
     new b/res
     set b/res or excep s/test } strEmpty s/test
