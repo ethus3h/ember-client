@@ -22,12 +22,12 @@ r/b/notExcep s/test
 
 r/b/excepArr ga/test
     new b/res
-    set b/res not excep strPrintArray s/test
+    set b/res excep strPrintArray s/test
     return b/res
 
 r/b/notExcepArr ga/test
     new b/res
-    set b/res not excep s/test
+    set b/res not excepArr ga/test
     return b/res
 
 r/b/excOrEmpty s/test
