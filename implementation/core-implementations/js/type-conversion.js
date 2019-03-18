@@ -53,8 +53,9 @@ async function firstCharOfUtf8String(intArrayInput) {
 async function lastCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the Unicode codepoint of the last character, given decimal representation of a UTF-8 string as input.
     let utf8decoder = new TextDecoder();
+    // 
     let tempStrCharArray = [...utf8decoder.decode(new Uint8Array(intArrayInput))];
-    return .codePointAt(0);
+    return tempStrCharArray.slice(-1)[0].codePointAt(0);
 }
 
 async function internalIntBitArrayToBasenbString(intBase, intBitArrayInput) {
