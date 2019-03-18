@@ -314,5 +314,15 @@ r/an/dcaFromDcbnbFragmentUtf8 an/content
     popImportSettings getFormatId 'utf8'
     return an/res
 
+r/an/dcbnbGetFirstChar an/in
+    # Return the first character of a dcbnb string
+    new an/res
+    if eq 0 count an/in
+        return an/res
+    
+    return an/res
+
 r/an/dcbnbGetLastChar an/in
-r/an/dcbnbGetLastChar an/in
+    # Return the first character of a dcbnb string
+    new an/res
+    return an/res
