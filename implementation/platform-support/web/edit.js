@@ -311,6 +311,7 @@ async function updateNearestDcLabelInner(el) {
     }
     else {
         //currentDc=before.slice(-1);
+        console.log('Retrieved last char ' + )
         currentDc=new TextDecoder().decode(await dcbnbGetLastChar(new TextEncoder().encode(before)));
         if (currentDc.length === 0) {
             //currentDc=after[0];
