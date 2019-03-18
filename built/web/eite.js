@@ -2790,6 +2790,7 @@ async function dcbnbGetFirstChar(intArrayIn) {
 
     /* Return the first character of a dcbnb string */
     let intArrayRes = [];
+    alert('First INput given' + intArrayIn);
     if (await implEq(0, await count(intArrayIn))) {
 
         intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
