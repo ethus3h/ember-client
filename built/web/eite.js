@@ -2790,7 +2790,6 @@ async function dcbnbGetFirstChar(intArrayIn) {
 
     /* Return the first character of a dcbnb string */
     let intArrayRes = [];
-    alert('First INput given' + intArrayIn);
     if (await implEq(0, await count(intArrayIn))) {
 
         intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
@@ -2820,7 +2819,6 @@ async function dcbnbGetFirstChar(intArrayIn) {
             }
         }
     }
-    alert('Found first result given inptu ' + intArrayIn + ' gave result ' + intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -2845,9 +2843,8 @@ async function dcbnbGetLastChar(intArrayIn) {
     while (boolContinue) {
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
-    alert('intArrayNe is ' + intArrayNextUtf8 + ', intArrayResCount=' + await count(intArrayRes));
             if (await implEq(0, await count(intArrayRes))) {
-                intArrayNextUtf8 = intArrayRes;
+                intArrayRes = intArrayNextUtf8;
             }
             boolContinue = false;
         }
@@ -2868,7 +2865,6 @@ async function dcbnbGetLastChar(intArrayIn) {
             }
         }
     }
-    alert('Found last result given inptu ' + intArrayIn + ' gave result ' + intArrayRes);
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
