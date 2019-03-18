@@ -2841,6 +2841,7 @@ async function dcbnbGetLastChar(intArrayIn) {
     let intTempArrayCount = 0;
     let boolPastFirstBasenbChar = false;
     boolPastFirstBasenbChar = false;
+    alert('Starting loop last')
     while (boolContinue) {
         alert('iter last: '+intArrayRemaining);
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
