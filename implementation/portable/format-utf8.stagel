@@ -319,7 +319,7 @@ r/an/dcbnbGetFirstChar an/in
     new an/res
     if eq 0 count an/in
         return an/res
-    
+    set an/latestChar pack32 firstCharOfUtf8String an/remaining
     return an/res
 
 r/an/dcbnbGetLastChar an/in
