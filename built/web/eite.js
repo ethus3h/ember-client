@@ -2801,7 +2801,6 @@ async function dcbnbGetFirstChar(intArrayIn) {
     intArrayRemaining = intArrayIn;
     let intTempArrayCount = 0;
     while (boolContinue) {
-        alert('iter first: '+intArrayRemaining);
         intArrayNextUtf8 = await pack32(await firstCharOfUtf8String(intArrayRemaining));
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
             if (await implEq(0, await count(intArrayRes))) {
