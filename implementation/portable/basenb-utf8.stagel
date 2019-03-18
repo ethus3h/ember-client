@@ -124,6 +124,9 @@ r/an/byteArrayFromBasenbUtf8 an/in
         set n/remainder add -2 get an/remainderDecodedArr 0
     else
         set an/remainder sub 63497 unpack32 an/remainderArr
+    if nge count an/in } count an/remainderArr
+        # All we have is a remainder, or a chunk of a character without a remainder
+        
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in 0 -5 } n/remainder
     assertIsByteArray an/res
     return an/res
