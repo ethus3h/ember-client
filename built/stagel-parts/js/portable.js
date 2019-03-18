@@ -177,6 +177,12 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     else {
         intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
+    if (await nge(await count(intArrayIn), await count(intArrayRemainderArr))) {
+        /* All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037) */
+        intArrayRes = [ 51, 98, 218, 163, 23, 5, 64, 236, 154, 151, 89, 208, 82, 253, 64, 55 ];
+
+        intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    }
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -5), intRemainder));
     await assertIsByteArray(intArrayRes);
 
@@ -777,6 +783,9 @@ async function dcaFromUtf8(intArrayContent) {
                             /* Handle any remaining collected DcBasenb characters */
                             if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
                                 intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                                if (await excepArr(intArrayCollectedDcBasenbChars)) {
+                                    await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                                }
                                 intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                                 intCollectedDcBasenbCharsCounter = 0;
                                 while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
@@ -814,6 +823,9 @@ async function dcaFromUtf8(intArrayContent) {
                         /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                            if (await excepArr(intArrayCollectedDcBasenbChars)) {
+                                await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                            }
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
@@ -856,6 +868,9 @@ async function dcaFromUtf8(intArrayContent) {
         /* Handle any remaining collected DcBasenb characters */
         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+            if (await excepArr(intArrayCollectedDcBasenbChars)) {
+                await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+            }
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
@@ -3679,13 +3694,22 @@ async function dcDataNoResultException() {
     strReturn = '89315802-d53d-4d11-ba5d-bf505e8ed454'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function byteArrayFromBasenbUtf8InvalidInputException() {
+    await internalDebugStackEnter('byteArrayFromBasenbUtf8InvalidInputException:exceptions'); let strReturn;
+
+    /* It doesn't look like a normal UUID since it's an an/ function, so call strPrintArray on it to get the value as a string that can be compared using excep. (just use excepArr instead, which does this for you) */
+
+    strReturn = '51 98 218 163 23 5 64 236 154 151 89 208 82 253 64 55 '; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
 async function excep(strTest) {
     await internalDebugCollect('str Test = ' + strTest + '; '); await internalDebugStackEnter('excep:exceptions'); await assertIsStr(strTest); let boolReturn;
 
     let boolRes = false;
     boolRes = false;
-    /* Test for each exception type in turn (there's only one so far) */
+    /* Test for each exception type in turn */
     boolRes = await or(boolRes, await implEq(strTest, await dcDataNoResultException()));
+    boolRes = await or(boolRes, await implEq(strTest, await byteArrayFromBasenbUtf8InvalidInputException()));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -3695,6 +3719,24 @@ async function notExcep(strTest) {
 
     let boolRes = false;
     boolRes = await implNot(await excep(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function excepArr(genericArrayTest) {
+    await internalDebugCollect('genericArray Test = ' + genericArrayTest + '; '); await internalDebugStackEnter('excepArr:exceptions'); await assertIsGenericArray(genericArrayTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await excep(await strPrintArray(strTest));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function notExcepArr(genericArrayTest) {
+    await internalDebugCollect('genericArray Test = ' + genericArrayTest + '; '); await internalDebugStackEnter('notExcepArr:exceptions'); await assertIsGenericArray(genericArrayTest); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await excepArr(genericArrayTest));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
