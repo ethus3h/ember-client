@@ -2022,6 +2022,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
         /* last 4 bytes (1 character), which represent the remainder */
         intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
         let intArrayRemainderDecodedArr = [];
+        await alert(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
         intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
         intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
     }
