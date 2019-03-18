@@ -278,6 +278,8 @@ function autoformatInputArea(el) {
             el.selectionStart = start;
             el.selectionEnd = end;
         }
+        // Check if the cursor is in the middle of a character, and try to get it outside of it.
+        // if ()
     }
 }
 
