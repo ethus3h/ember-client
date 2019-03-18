@@ -205,6 +205,8 @@ r/an/dcaFromUtf8 an/content
                             # Handle any remaining collected DcBasenb characters
                             if ne 0 count an/collectedDcBasenbChars
                                 set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
+                                if excepArr an/collectedDcBasenbChars
+                                    
                                 set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
                                 set n/collectedDcBasenbCharsCounter 0
                                 while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
