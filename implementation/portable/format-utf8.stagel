@@ -323,6 +323,8 @@ r/an/dcbnbGetFirstChar an/in
     return an/res
 
 r/an/dcbnbGetLastChar an/in
-    # Return the first character of a dcbnb string
+    # Return the last character of a dcbnb string
     new an/res
+    if eq 0 count an/in
+        return an/res
     return an/res
