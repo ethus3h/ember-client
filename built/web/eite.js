@@ -2842,8 +2842,8 @@ async function dcbnbGetLastChar(intArrayIn) {
     boolPastFirstBasenbChar = false;
  alert('Starting loop last')
     while (boolContinue) {
-        alert(boolContinue+' iter last: '+intArrayRemaining);
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
+        alert(boolContinue+' iter last: '+intArrayRemaining+'This iter:'+intArrayNextUtf8);
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
             alert('Is not basenbchr');
             if (await implEq(0, await count(intArrayRes))) {
