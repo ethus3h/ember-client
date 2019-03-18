@@ -300,9 +300,9 @@ async function updateNearestDcLabelInner(el) {
         currentDc=parseInt(before.trim().split(' ').slice(-1));
     }
     else {
-        currentDc=before.slice(-1);
+        //currentDc=before.slice(-1);
         if (currentDc.length === 0) {
-            currentDc=after[0];
+            //currentDc=after[0];
         }
         if (currentDc !== undefined) {
             currentDc=await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(currentDc));
