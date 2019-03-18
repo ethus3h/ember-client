@@ -235,6 +235,8 @@ r/an/dcaFromUtf8 an/content
                         # Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any
                         if ne 0 count an/collectedDcBasenbChars
                             set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
+                            if excepArr an/collectedDcBasenbChars
+                                importWarning sub count an/content } count an/remaining } } 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.'
                             set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
                             set n/collectedDcBasenbCharsCounter 0
                             while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
@@ -265,6 +267,8 @@ r/an/dcaFromUtf8 an/content
         # Handle any remaining collected DcBasenb characters
         if ne 0 count an/collectedDcBasenbChars
             set an/collectedDcBasenbChars byteArrayFromBase17bUtf8 an/collectedDcBasenbChars
+            if excepArr an/collectedDcBasenbChars
+                importWarning sub count an/content } count an/remaining } } 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.'
             set n/collectedDcBasenbCharsCount count an/collectedDcBasenbChars
             set n/collectedDcBasenbCharsCounter 0
             while lt n/collectedDcBasenbCharsCounter n/collectedDcBasenbCharsCount
