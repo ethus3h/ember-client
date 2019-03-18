@@ -29,7 +29,10 @@ r/v/runTestsFormatUtf8 b/v
     runTest b/v arrEq ( 5 ) dcbnbGetLastChar ( 97 101 244 143 191 186 239 160 129 ) # 82 86 5
     runTest b/v arrEq ( ) dcbnbGetLastChar ( 239 160 129 ) # invalid
     runTest b/v arrEq ( ) dcbnbGetLastChar ( 97 101 244 143 191 186 ) # invalid
+    runTest b/v arrEq ( 82 ) dcbnbGetLastChar ( 244 143 191 186 97 ) # invalid 82
     # Tests for dcbnbGetFirstChar
-    runTest b/v arrEq ( 5 ) dcbnbGetLastChar ( 97 101 244 143 191 186 239 160 129 ) # 82 86 5
-    runTest b/v arrEq ( ) dcbnbGetLastChar ( 239 160 129 ) # invalid
-    runTest b/v arrEq ( ) dcbnbGetLastChar ( 97 101 244 143 191 186 ) # invalid
+    runTest b/v arrEq ( 5 ) dcbnbGetFirstChar ( 244 143 191 186 239 160 129 97 101 ) # 5 82 86
+    runTest b/v arrEq ( ) dcbnbGetFirstChar ( 239 160 129 ) # invalid
+    runTest b/v arrEq ( ) dcbnbGetFirstChar ( 239 160 129 97 101 ) # invalid 82 86
+    runTest b/v arrEq ( ) dcbnbGetFirstChar ( 244 143 191 186 97 101 ) # invalid 82 86
+    runTest b/v arrEq ( 86 ) dcbnbGetFirstChar ( 101 244 143 191 186 ) # 86 invalid
