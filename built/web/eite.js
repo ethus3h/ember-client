@@ -2807,12 +2807,12 @@ async function dcbnbGetFirstChar(intArrayIn) {
             if (await implEq(0, await count(intArrayRes))) {
                 intArrayRes = intArrayNextUtf8;
             }
-            intArrayContinue = false;
+            boolContinue = false;
         }
         else {
             intArrayRes = await append(intArrayRes, intArrayNextUtf8);
             if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
-                intArrayContinue = false;
+                boolContinue = false;
             }
             else {
                 intTempArrayCount = await count(intArrayNextUtf8);
@@ -2851,7 +2851,7 @@ async function dcbnbGetLastChar(intArrayIn) {
                 alert('Count res is 0');
                 intArrayNextUtf8 = intArrayRes;
             }
-            intArrayContinue = false;
+            boolContinue = false;
         }
         else {
             alert('It is basenbchr');
@@ -2859,7 +2859,7 @@ async function dcbnbGetLastChar(intArrayIn) {
                 alert('It is Remainerchar');
                 if (boolPastFirstBasenbChar) {
                 alert('It is Past first char');
-                    intArrayContinue = false;
+                    boolContinue = false;
                 }
                 else {
                 alert('Found first remainder char');

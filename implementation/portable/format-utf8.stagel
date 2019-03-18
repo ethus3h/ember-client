@@ -330,11 +330,11 @@ r/an/dcbnbGetFirstChar an/in
         if not isBasenbChar an/nextUtf8
             if eq 0 count an/res
                 set an/res an/nextUtf8
-            set an/continue false
+            set b/continue false
         else
             set an/res append an/res an/nextUtf8
             if isBasenbDistinctRemainderChar an/nextUtf8
-                set an/continue false
+                set b/continue false
             else
                 set n/tempArrayCount count an/nextUtf8
                 set an/remaining anSubset an/remaining n/tempArrayCount -1
@@ -358,11 +358,11 @@ r/an/dcbnbGetLastChar an/in
         if not isBasenbChar an/nextUtf8
             if eq 0 count an/res
                 set an/nextUtf8 an/res
-            set an/continue false
+            set b/continue false
         else
             if isBasenbDistinctRemainderChar an/nextUtf8
                 if b/pastFirstBasenbChar
-                    set an/continue false
+                    set b/continue false
                 else
                     set an/res append an/nextUtf8 an/res
                     set b/pastFirstBasenbChar true
