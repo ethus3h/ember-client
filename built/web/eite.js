@@ -2022,13 +2022,13 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
         /* last 4 bytes (1 character), which represent the remainder */
         intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
         let intArrayRemainderDecodedArr = [];
-        await alert('stuecrhuorchcohu'+await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
         intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
         intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
     }
     else {
         intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
+    await alert('stuecrhuorchcohu'+await anSubset(intArrayIn, 0, -5), intRemainder));
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -5), intRemainder));
     await assertIsByteArray(intArrayRes);
 
