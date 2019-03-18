@@ -312,7 +312,6 @@ async function updateNearestDcLabelInner(el) {
     else {
         //currentDc=before.slice(-1);
         currentDc=new TextDecoder().decode(new Uint8Array(await dcbnbGetLastChar(new TextEncoder().encode(before))));
-        alert('Current dc ' + currentDc + ' with length ' + currentDc.length);
         if (currentDc.length === 0) {
             //currentDc=after[0];
             currentDc=new TextDecoder().decode(new Uint8Array(await dcbnbGetFirstChar(new TextEncoder().encode(after))));
