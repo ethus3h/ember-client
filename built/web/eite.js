@@ -2028,7 +2028,6 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     else {
         intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
-    await alert('stuecrhuorchcohu'+await anSubset(intArrayIn, 0, -5));
     intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -5), intRemainder));
     await assertIsByteArray(intArrayRes);
 
