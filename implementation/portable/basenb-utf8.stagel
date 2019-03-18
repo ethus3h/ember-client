@@ -125,8 +125,8 @@ r/an/byteArrayFromBasenbUtf8 an/in
     else
         set an/remainder sub 63497 unpack32 an/remainderArr
     if nge count an/in } count an/remainderArr
-        # All we have is a remainder, or a chunk of a character without a remainder, so return -1 to represent the error
-        set an/res ( 051 098 218 163 023 005 064 236 154 151 089 208 082 253 064 055 )
+        # All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037)
+        set an/res ( 51 98 218 163 23 5 64 236 154 151 89 208 82 253 64 55 )
         return an/res
     set an/res byteArrayFromIntBitArray internalIntBitArrayFromBasenbString anSubset an/in 0 -5 } n/remainder
     assertIsByteArray an/res
