@@ -934,6 +934,90 @@ async function dcaFromDcbnbFragmentUtf8(intArrayContent) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function dcbnbGetFirstChar(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcbnbGetFirstChar:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Return the first character of a dcbnb string */
+    let intArrayRes = [];
+    if (await implEq(0, await count(intArrayIn))) {
+
+        intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    }
+    let boolContinue = false;
+    boolContinue = true;
+    let intArrayNextUtf8 = [];
+    let intArrayRemaining = [];
+    intArrayRemaining = intArrayIn;
+    let intTempArrayCount = 0;
+    while (boolContinue) {
+        intArrayNextUtf8 = await pack32(await firstCharOfUtf8String(intArrayRemaining));
+        if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
+            if (await implEq(0, await count(intArrayRes))) {
+                intArrayRes = intArrayNextUtf8;
+            }
+            intArrayContinue = false;
+        }
+        else {
+            intArrayRes = await append(intArrayRes, intArrayNextUtf8);
+            if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
+                intArrayContinue = false;
+            }
+            else {
+                intTempArrayCount = await count(intArrayNextUtf8);
+                intArrayRemaining = await anSubset(intArrayRemaining, intTempArrayCount, -1);
+            }
+        }
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcbnbGetLastChar(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcbnbGetLastChar:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Return the last character of a dcbnb string */
+    let intArrayRes = [];
+    if (await implEq(0, await count(intArrayIn))) {
+
+        intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    }
+    let boolContinue = false;
+    boolContinue = true;
+    let intArrayNextUtf8 = [];
+    let intArrayRemaining = [];
+    intArrayRemaining = intArrayIn;
+    let intTempArrayCount = 0;
+    let boolPastFirstBasenbChar = false;
+    boolPastFirstBasenbChar = false;
+    while (boolContinue) {
+        intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
+        if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
+            if (await implEq(0, await count(intArrayRes))) {
+                intArrayNextUtf8 = intArrayRes;
+            }
+            intArrayContinue = false;
+        }
+        else {
+            if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
+                if (boolPastFirstBasenbChar) {
+                    intArrayContinue = false;
+                }
+                else {
+                    intArrayRes = await append(intArrayNextUtf8, intArrayRes);
+                    boolPastFirstBasenbChar = true;
+                }
+            }
+            else {
+                intArrayRes = await append(intArrayNextUtf8, intArrayRes);
+                intTempArrayCount = await count(intArrayNextUtf8);
+                intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
+            }
+        }
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function runTestsFormatAscii(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAscii:format-ascii-tests'); await assertIsBool(boolV);
 

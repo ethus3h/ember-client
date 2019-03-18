@@ -256,20 +256,30 @@ function autoformatInputArea(el) {
     if (editInts()) {
         // Autoformat input area
         // I'm not sure why, but trying to calculate the change in start position is confused by forward delete. I guess I'll just leave it like this for now since it works, even though I don't understand why.
-        start = el.selectionStart;
-        /* end = el.selectionEnd;
+        let start = el.selectionStart;
+        let end = el.selectionEnd;
         let len = el.value.length;
-        console.log('old value ='+el.value);
+        /* console.log('old value ='+el.value);
         console.log('old len ='+len);
         console.log('old start ='+start);*/
-        el.value = el.value + ' ';
+        let oldValue = el.value;
+        el.value = oldValue + ' ';
         el.value = el.value.replace(/\s+/g, ' ');
         /* len = len - el.value.length;
         console.log('new value ='+el.value);
         console.log('new len ='+len);
         console.log('new start ='+(start - len));
         el.selectionStart = el.selectionEnd = start - len; */
-        el.selectionStart = el.selectionEnd = start;
+        if (oldValue !== el.value) {
+            el.selectionStart = el.selectionEnd = start;
+        }
+        else {
+            // There was no change in the contents, so we can preserve the end value
+            el.selectionStart = start;
+            el.selectionEnd = end;
+        }
+        // Check if the cursor is in the middle of a character, and try to get it outside of it.
+        // if ()
     }
 }
 
@@ -300,9 +310,11 @@ async function updateNearestDcLabelInner(el) {
         currentDc=parseInt(before.trim().split(' ').slice(-1));
     }
     else {
-        currentDc=before.slice(-1);
+        //currentDc=before.slice(-1);
+        currentDc=new TextDecoder().decode(await dcbnbGetLastChar(new TextEncoder().encode(before)));
         if (currentDc.length === 0) {
-            currentDc=after[0];
+            //currentDc=after[0];
+            currentDc=new TextDecoder().decode(await dcbnbGetFirstChar(new TextEncoder().encode(after)));
         }
         if (currentDc !== undefined) {
             currentDc=await dcaFromDcbnbFragmentUtf8(new TextEncoder().encode(currentDc));
