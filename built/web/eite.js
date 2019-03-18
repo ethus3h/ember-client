@@ -2820,6 +2820,7 @@ async function dcbnbGetFirstChar(intArrayIn) {
             }
         }
     }
+    alert('Found first result given inptu ' + intArrayIn + ' gave result ' + intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -2841,41 +2842,32 @@ async function dcbnbGetLastChar(intArrayIn) {
     let intTempArrayCount = 0;
     let boolPastFirstBasenbChar = false;
     boolPastFirstBasenbChar = false;
-    alert('Starting loop last')
     while (boolContinue) {
-        alert(boolContinue+' iter last: '+intArrayRemaining);
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
-            alert('Is not basenbchr');
             if (await implEq(0, await count(intArrayRes))) {
-                alert('Count res is 0');
                 intArrayNextUtf8 = intArrayRes;
             }
             boolContinue = false;
         }
         else {
-            alert('It is basenbchr');
             if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
-                alert('It is Remainerchar');
                 if (boolPastFirstBasenbChar) {
-                alert('It is Past first char');
                     boolContinue = false;
                 }
                 else {
-                alert('Found first remainder char');
                     intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                     boolPastFirstBasenbChar = true;
                 }
             }
             else {
-                alert('It is basenb regular char');
                 intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                 intTempArrayCount = await count(intArrayNextUtf8);
                 intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
             }
         }
     }
-
+    alert('Found last result given inptu ' + intArrayIn + ' gave result ' + intArrayRes);
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
