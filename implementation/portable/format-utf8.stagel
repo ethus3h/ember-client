@@ -328,7 +328,8 @@ r/an/dcbnbGetFirstChar an/in
     while b/continue
         set an/nextUtf8 pack32 firstCharOfUtf8String an/remaining
         if not isBasenbChar an/nextUtf8
-            set an/res an/nextUtf8
+            if eq 0 count an/res
+                set an/res an/nextUtf8
             set an/continue false
         else
             set an/res append an/res an/nextUtf8
@@ -355,7 +356,8 @@ r/an/dcbnbGetLastChar an/in
     while b/continue
         set an/nextUtf8 pack32 lastCharOfUtf8String an/remaining
         if not isBasenbChar an/nextUtf8
-            set an/nextUtf8 an/res
+            if eq 0 count an/res
+                set an/nextUtf8 an/res
             set an/continue false
         else
             if isBasenbDistinctRemainderChar an/nextUtf8
