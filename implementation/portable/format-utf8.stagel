@@ -360,6 +360,7 @@ r/an/dcbnbGetLastChar an/in
     new an/remaining
     set an/remaining an/in
     new n/tempArrayCount
+    set n/tempArrayCount 0
     new b/pastFirstBasenbChar
     set b/pastFirstBasenbChar false
     while b/continue
