@@ -2012,7 +2012,6 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     await assertIsByteArray(intArrayIn);
-    console.log('Starting debasenb of '+intArrayIn);
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
@@ -2029,14 +2028,13 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     else {
         intRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
-    console.log('Remiainedr array is '+intArrayRemainderArr+'; reminer is '+intRemainder);
     if (await ngt(await count(intArrayIn), await count(intArrayRemainderArr))) {
         /* All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037) */
         intArrayRes = [ 51, 98, 218, 163, 23, 5, 64, 236, 154, 151, 89, 208, 82, 253, 64, 55 ];
 
         intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
     }
-    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -1 + ( -1 * await count(intArrayRemainderArr))), intRemainder));
+    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, await implAdd(-1, await implMul(-1, await count(intArrayRemainderArr), ), ), ), intRemainder));
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
@@ -2472,7 +2470,6 @@ async function dcaFromUtf8(intArrayContent) {
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
-        console.log('Starting iteration with remaining chars '+intArrayRemaining+' and already found '+intArrayRes);
         if (boolDcBasenbEnabled) {
             /* Dcbasenb is enabled, so process characters accordingly. */
             if (await implNot(boolInDcBasenbSection)) {
@@ -2676,16 +2673,11 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     else {
                         /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
-                        console.log('Found the not a char.');
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
-                            console.log('Ok we continue');
                             if (await isBasenbDistinctRemainderChar(intArrayLatestChar)) {
-                                console.log('It is reminder char pushing '+intArrayLatestChar+' onto '+intArrayCollectedDcBasenbChars);
                                 intArrayCollectedDcBasenbChars = await push(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                             }
-                            console.log('Decodeds is eq '+intArrayCollectedDcBasenbChars);
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
-                            console.log('After de-basenb is '+intArrayCollectedDcBasenbChars);
                             if (await excepArr(intArrayCollectedDcBasenbChars)) {
                                 await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
                                 intArrayCollectedDcBasenbChars = [  ];
@@ -2693,7 +2685,6 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
-                                console.log('Decoder inner iter');
                                 intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));

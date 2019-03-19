@@ -2026,7 +2026,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
         intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
     }
     else {
-        intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
+        intRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
     if (await ngt(await count(intArrayIn), await count(intArrayRemainderArr))) {
         /* All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037) */
@@ -2034,7 +2034,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
 
         intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
     }
-    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, -5), intRemainder));
+    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, await implAdd(-1, await implMul(-1, await count(intArrayRemainderArr), ), ), ), intRemainder));
     await assertIsByteArray(intArrayRes);
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
