@@ -2674,8 +2674,11 @@ async function dcaFromUtf8(intArrayContent) {
                     }
                     else {
                         /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
+                        console.log('Found the not a char.');
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
+                            console.log('Ok we continue');
                             if (await isBasenbDistinctRemainderChar(intArrayLatestChar)) {
+                                console.log('It is reminder char pushing');
                                 intArrayCollectedDcBasenbChars = await push(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                             }
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
@@ -2686,6 +2689,7 @@ async function dcaFromUtf8(intArrayContent) {
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
                             while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
+                                console.log('Decoder inner iter');
                                 intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
                                 intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
                                 intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
