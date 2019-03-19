@@ -2891,7 +2891,7 @@ async function dcbnbGetLastChar(intArrayIn) {
                 await console.log('Is not reminter char');
                 intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                 intTempArrayCount = await count(intArrayNextUtf8);
-                intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
+                intArrayRemaining = await anSubset(intArrayRemaining, 0, await implAdd(-1, await implMul(-1, intTempArrayCount)));
             }
         }
     }
