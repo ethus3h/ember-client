@@ -2858,6 +2858,7 @@ async function dcbnbGetLastChar(intArrayIn) {
     boolPastFirstBasenbChar = false;
     console.log('Working on thie inptu'+intArrayIn);
     while (boolContinue) {
+        console.log('Last chara of new string is:'+await lastCharOfUtf8String(intArrayRemaining));
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
         console.log('Working on utf8 char: '+intArrayNextUtf8);
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
