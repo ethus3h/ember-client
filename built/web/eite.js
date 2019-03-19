@@ -2470,6 +2470,7 @@ async function dcaFromUtf8(intArrayContent) {
     while (await implNot(await implEq(0, await count(intArrayRemaining)))) {
         intArrayTemp = [  ];
         intArrayLatestChar = await pack32(await firstCharOfUtf8String(intArrayRemaining));
+        console.log('Starting iteration with remaining chars '+intArrayRemaining+' and already found '+intArrayRes);
         if (boolDcBasenbEnabled) {
             /* Dcbasenb is enabled, so process characters accordingly. */
             if (await implNot(boolInDcBasenbSection)) {
