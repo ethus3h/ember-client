@@ -2720,8 +2720,8 @@ async function dcaFromUtf8(intArrayContent) {
         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             if (await excepArr(intArrayCollectedDcBasenbChars)) {
-                console.log('Result colleited: '+await strPrintArr(intArrayRes));
                 await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                intArrayCollectedDcBasenbChars=[];
             }
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
