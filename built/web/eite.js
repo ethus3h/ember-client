@@ -2636,6 +2636,7 @@ async function dcaFromUtf8(intArrayContent) {
                                 intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                                 if (await excepArr(intArrayCollectedDcBasenbChars)) {
                                     await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                                    intArrayCollectedDcBasenbChars = [  ];
                                 }
                                 intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                                 intCollectedDcBasenbCharsCounter = 0;
@@ -2673,9 +2674,13 @@ async function dcaFromUtf8(intArrayContent) {
                     else {
                         /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
+                            if (await isBasenbDistinctRemainderChar(intArrayLatestChar)) {
+                                intArrayCollectedDcBasenbChars = await push(intArrayCollectedDcBasenbChars, intArrayLatestChar);
+                            }
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                             if (await excepArr(intArrayCollectedDcBasenbChars)) {
                                 await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                                intArrayCollectedDcBasenbChars = [  ];
                             }
                             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
                             intCollectedDcBasenbCharsCounter = 0;
@@ -2721,7 +2726,7 @@ async function dcaFromUtf8(intArrayContent) {
             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
             if (await excepArr(intArrayCollectedDcBasenbChars)) {
                 await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
-                intArrayCollectedDcBasenbChars=[];
+                intArrayCollectedDcBasenbChars = [  ];
             }
             intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
             intCollectedDcBasenbCharsCounter = 0;
@@ -2804,7 +2809,7 @@ async function dcaFromDcbnbFragmentUtf8(intArrayContent) {
 async function dcbnbGetFirstChar(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcbnbGetFirstChar:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
-    /* Return the first character of a dcbnb string */
+    /* Return the first character of a dcbnb string (doesn't do any conversion; returns dcbnb) */
     let intArrayRes = [];
     if (await implEq(0, await count(intArrayIn))) {
 
@@ -2842,7 +2847,7 @@ async function dcbnbGetFirstChar(intArrayIn) {
 async function dcbnbGetLastChar(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcbnbGetLastChar:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
-    /* Return the last character of a dcbnb string */
+    /* Return the last character of a dcbnb string (doesn't do any conversion; returns dcbnb) */
     let intArrayRes = [];
     if (await implEq(0, await count(intArrayIn))) {
 
@@ -2854,41 +2859,30 @@ async function dcbnbGetLastChar(intArrayIn) {
     let intArrayRemaining = [];
     intArrayRemaining = intArrayIn;
     let intTempArrayCount = 0;
-    let boolPastFirstBasenbChar = false;
-    boolPastFirstBasenbChar = false;
-    await console.log('Working on thie inptu'+intArrayIn);
+    intTempArrayCount = 0;
+    let boolPastFirstBasenbRemainderChar = false;
+    boolPastFirstBasenbRemainderChar = false;
     while (boolContinue) {
-        await console.log('Last chara of new string is:'+await lastCharOfUtf8String(intArrayRemaining));
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
-        await console.log('Working on utf8 char: '+intArrayNextUtf8);
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
-            await console.log('not basneb char');
             if (await implEq(0, await count(intArrayRes))) {
-                await console.log('No res avilabel yet, using nonbasenb char as retval');
                 intArrayRes = intArrayNextUtf8;
             }
             boolContinue = false;
         }
         else {
-            await console.log('Is basenb char');
             if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
-                await console.log('Is remainedr char');
-                if (boolPastFirstBasenbChar) {
-                    await console.log('Stopping continuing : is past first basneb alredy');
+                if (boolPastFirstBasenbRemainderChar) {
                     boolContinue = false;
                 }
                 else {
-                    await console.log('Continuing continuing, found a remainder char that we keep going past.');
                     intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                     intTempArrayCount = await count(intArrayNextUtf8);
-                    await console.log('Numebr to remove is:'+intTempArrayCount);
                     intArrayRemaining = await anSubset(intArrayRemaining, 0, await implAdd(-1, await implMul(-1, intTempArrayCount)));
-                    await console.log('Remaining array is:'+intArrayRemaining);
-                    boolPastFirstBasenbChar = true;
+                    boolPastFirstBasenbRemainderChar = true;
                 }
             }
             else {
-                await console.log('Is not reminter char');
                 intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                 intTempArrayCount = await count(intArrayNextUtf8);
                 intArrayRemaining = await anSubset(intArrayRemaining, 0, await implAdd(-1, await implMul(-1, intTempArrayCount)));
@@ -4978,8 +4972,10 @@ async function runTestsFormatUtf8(boolV) {
     /* With the h in the middle separating the two dcbnb regions */
     await runTest(boolV, await arrEq([ 7, 89, 11 ], await dcaFromDcbnbUtf8([ 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 184, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157, 104, 244, 141, 129, 157, 244, 139, 182, 128, 243, 188, 183, 162, 243, 186, 128, 138, 243, 184, 165, 142, 244, 136, 186, 141, 243, 178, 139, 160, 244, 143, 186, 144, 244, 143, 191, 180, 244, 143, 191, 181, 243, 188, 133, 185, 243, 180, 182, 175, 244, 136, 161, 186, 243, 191, 148, 138, 244, 134, 178, 166, 244, 141, 184, 130, 243, 178, 128, 176, 244, 143, 188, 157 ])));
     /* "h\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff8}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff4}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,184,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,180,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157" */
+    /* Test for a bug that results in the output being 16 uppercase letter Bs */
+    await runTest(boolV, await arrEq([ 6 ], await dcaFromDcbnbFragmentUtf8([ 244, 143, 191, 185, 239, 160, 129 ])));
     /* A simple one with new format remainder character */
-    await runTest(boolV, await arrEq([ 82, 86, 5 ], await dcbnbGetLastChar([ 97, 101, 244, 143, 191, 186, 239, 160, 129 ])));
+    await runTest(boolV, await arrEq([ 82, 86, 5 ], await dcaFromDcbnbFragmentUtf8([ 97, 101, 244, 143, 191, 186, 239, 160, 129 ])));
     /* Tests for dcbnbGetLastChar */
     /* 82 86 5 */
     await runTest(boolV, await arrEq([ 244, 143, 191, 186, 239, 160, 129 ], await dcbnbGetLastChar([ 97, 101, 244, 143, 191, 186, 239, 160, 129 ])));
@@ -4988,7 +4984,7 @@ async function runTestsFormatUtf8(boolV) {
     /* invalid */
     await runTest(boolV, await arrEq([  ], await dcbnbGetLastChar([ 97, 101, 244, 143, 191, 186 ])));
     /* invalid 82 */
-    await runTest(boolV, await arrEq([ 97 ], await dcbnbGetLastChar([ 244, 143, 191, 186, 97 ])));
+    await runTest(boolV, await arrEq([ 82 ], await dcbnbGetLastChar([ 244, 143, 191, 186, 97 ])));
     /* Tests for dcbnbGetFirstChar */
     /* 5 82 86 */
     await runTest(boolV, await arrEq([ 244, 143, 191, 186, 239, 160, 129 ], await dcbnbGetFirstChar([ 244, 143, 191, 186, 239, 160, 129, 97, 101 ])));
@@ -4999,7 +4995,7 @@ async function runTestsFormatUtf8(boolV) {
     /* invalid 82 86 */
     await runTest(boolV, await arrEq([  ], await dcbnbGetFirstChar([ 244, 143, 191, 186, 97, 101 ])));
     /* 86 invalid */
-    await runTest(boolV, await arrEq([ 101 ], await dcbnbGetFirstChar([ 101, 244, 143, 191, 186 ])));
+    await runTest(boolV, await arrEq([ 86 ], await dcbnbGetFirstChar([ 101, 244, 143, 191, 186 ])));
 
     await internalDebugStackExit();
 }
@@ -5591,7 +5587,7 @@ async function excepArr(genericArrayTest) {
     await internalDebugCollect('genericArray Test = ' + genericArrayTest + '; '); await internalDebugStackEnter('excepArr:exceptions'); await assertIsGenericArray(genericArrayTest); let boolReturn;
 
     let boolRes = false;
-    boolRes = await excep(await strPrintArr(genericArrayTest));
+    boolRes = await excep(await strPrintArray(genericArrayTest));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
@@ -5643,6 +5639,16 @@ async function strPrintArr(genericArrayInput) {
 
 async function printArray(genericArrayIn) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('printArray:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
+
+    /* Just a convenience wrapper */
+    let strRes = '';
+    strRes = await strPrintArr(genericArrayIn);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strPrintArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('strPrintArray:type-conversion'); await assertIsGenericArray(genericArrayIn); let strReturn;
 
     /* Just a convenience wrapper */
     let strRes = '';
