@@ -5578,7 +5578,7 @@ async function excepArr(genericArrayTest) {
     await internalDebugCollect('genericArray Test = ' + genericArrayTest + '; '); await internalDebugStackEnter('excepArr:exceptions'); await assertIsGenericArray(genericArrayTest); let boolReturn;
 
     let boolRes = false;
-    boolRes = await excep(await strPrintArr(strTest));
+    boolRes = await excep(await strPrintArr(genericArrayTest));
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
