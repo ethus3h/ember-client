@@ -324,7 +324,7 @@ r/an/dcaFromDcbnbFragmentUtf8 an/content
     return an/res
 
 r/an/dcbnbGetFirstChar an/in
-    # Return the first character of a dcbnb string
+    # Return the first character of a dcbnb string (doesn't do any conversion; returns dcbnb)
     new an/res
     if eq 0 count an/in
         return an/res
@@ -350,7 +350,7 @@ r/an/dcbnbGetFirstChar an/in
     return an/res
 
 r/an/dcbnbGetLastChar an/in
-    # Return the last character of a dcbnb string
+    # Return the last character of a dcbnb string (doesn't do any conversion; returns dcbnb)
     new an/res
     if eq 0 count an/in
         return an/res
