@@ -2882,7 +2882,7 @@ async function dcbnbGetLastChar(intArrayIn) {
                     intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                     intTempArrayCount = await count(intArrayNextUtf8);
                     console.log('Numebr to remove is:'+intTempArrayCount);
-                    intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
+                    intArrayRemaining = await anSubset(intArrayRemaining, 0, await implAdd(1, await implMul(-1, intTempArrayCount)));
                     console.log('Remaining array is:'+intArrayRemaining);
                     boolPastFirstBasenbChar = true;
                 }
