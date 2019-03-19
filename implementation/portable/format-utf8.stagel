@@ -361,8 +361,8 @@ r/an/dcbnbGetLastChar an/in
     set an/remaining an/in
     new n/tempArrayCount
     set n/tempArrayCount 0
-    new b/pastFirstBasenbChar
-    set b/pastFirstBasenbChar false
+    new b/pastFirstBasenbRemainderChar
+    set b/pastFirstBasenbRemainderChar false
     while b/continue
         set an/nextUtf8 pack32 lastCharOfUtf8String an/remaining
         if not isBasenbChar an/nextUtf8
@@ -371,13 +371,13 @@ r/an/dcbnbGetLastChar an/in
             set b/continue false
         else
             if isBasenbDistinctRemainderChar an/nextUtf8
-                if b/pastFirstBasenbChar
+                if b/pastFirstBasenbRemainderChar
                     set b/continue false
                 else
                     set an/res append an/nextUtf8 an/res
                     set n/tempArrayCount count an/nextUtf8
                     set an/remaining anSubset an/remaining 0 mul -1 n/tempArrayCount
-                    set b/pastFirstBasenbChar true
+                    set b/pastFirstBasenbRemainderChar true
             else
                 set an/res append an/nextUtf8 an/res
                 set n/tempArrayCount count an/nextUtf8
