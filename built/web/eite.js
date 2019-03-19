@@ -4976,7 +4976,7 @@ async function runTestsFormatUtf8(boolV) {
     /* invalid */
     await runTest(boolV, await arrEq([  ], await dcbnbGetLastChar([ 97, 101, 244, 143, 191, 186 ])));
     /* invalid 82 */
-    await runTest(boolV, await arrEq([ 82 ], await dcbnbGetLastChar([ 244, 143, 191, 186, 97 ])));
+    await runTest(boolV, await arrEq([ 97 ], await dcbnbGetLastChar([ 244, 143, 191, 186, 97 ])));
     /* Tests for dcbnbGetFirstChar */
     /* 5 82 86 */
     await runTest(boolV, await arrEq([ 244, 143, 191, 186, 239, 160, 129 ], await dcbnbGetFirstChar([ 244, 143, 191, 186, 239, 160, 129, 97, 101 ])));
@@ -4987,7 +4987,7 @@ async function runTestsFormatUtf8(boolV) {
     /* invalid 82 86 */
     await runTest(boolV, await arrEq([  ], await dcbnbGetFirstChar([ 244, 143, 191, 186, 97, 101 ])));
     /* 86 invalid */
-    await runTest(boolV, await arrEq([ 86 ], await dcbnbGetFirstChar([ 101, 244, 143, 191, 186 ])));
+    await runTest(boolV, await arrEq([ 101 ], await dcbnbGetFirstChar([ 101, 244, 143, 191, 186 ])));
 
     await internalDebugStackExit();
 }
