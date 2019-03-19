@@ -2856,6 +2856,7 @@ async function dcbnbGetLastChar(intArrayIn) {
     let intTempArrayCount = 0;
     let boolPastFirstBasenbChar = false;
     boolPastFirstBasenbChar = false;
+    console.log('Working on thie inptu'+intArrayIn);
     while (boolContinue) {
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
         console.log('Working on utf8 char: '+intArrayNextUtf8);
