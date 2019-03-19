@@ -2027,7 +2027,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
         intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
     }
     else {
-        intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
+        intRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
     console.log('Remiainedr array is '+intArrayRemainder);
     if (await ngt(await count(intArrayIn), await count(intArrayRemainderArr))) {

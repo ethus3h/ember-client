@@ -123,7 +123,7 @@ r/an/byteArrayFromBasenbUtf8 an/in
         set an/remainderDecodedArr byteArrayFromIntBitArray internalIntBitArrayFromBasenbString an/remainderArr 8
         set n/remainder add -2 get an/remainderDecodedArr 0
     else
-        set an/remainder sub 63497 unpack32 an/remainderArr
+        set n/remainder sub 63497 unpack32 an/remainderArr
     if ngt count an/in } count an/remainderArr
         # All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037)
         set an/res ( 51 98 218 163 23 5 64 236 154 151 89 208 82 253 64 55 )
