@@ -2858,18 +2858,25 @@ async function dcbnbGetLastChar(intArrayIn) {
     boolPastFirstBasenbChar = false;
     while (boolContinue) {
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
+        console.log('Working on utf8 char: '+intArrayNextUtf8);
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
+            console.log('not basneb char');
             if (await implEq(0, await count(intArrayRes))) {
+                console.log('No res avilabel yet, using nonbasenb char as retval');
                 intArrayRes = intArrayNextUtf8;
             }
             boolContinue = false;
         }
         else {
+            console.log('Is basenb char');
             if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
+                console.log('Is remainedr char');
                 if (boolPastFirstBasenbChar) {
+                    console.log('Stopping continuing : is past first basneb alredy');
                     boolContinue = false;
                 }
                 else {
+                    console.log('Continuing continuing, found a remainder char that we keep going past.');
                     intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                     intTempArrayCount = await count(intArrayNextUtf8);
                     intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
@@ -2877,6 +2884,7 @@ async function dcbnbGetLastChar(intArrayIn) {
                 }
             }
             else {
+                console.log('Is not reminter char');
                 intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                 intTempArrayCount = await count(intArrayNextUtf8);
                 intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
