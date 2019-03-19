@@ -2856,39 +2856,39 @@ async function dcbnbGetLastChar(intArrayIn) {
     let intTempArrayCount = 0;
     let boolPastFirstBasenbChar = false;
     boolPastFirstBasenbChar = false;
-    console.log('Working on thie inptu'+intArrayIn);
+    await console.log('Working on thie inptu'+intArrayIn);
     while (boolContinue) {
-        console.log('Last chara of new string is:'+await lastCharOfUtf8String(intArrayRemaining));
+        await console.log('Last chara of new string is:'+await lastCharOfUtf8String(intArrayRemaining));
         intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
-        console.log('Working on utf8 char: '+intArrayNextUtf8);
+        await console.log('Working on utf8 char: '+intArrayNextUtf8);
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
-            console.log('not basneb char');
+            await console.log('not basneb char');
             if (await implEq(0, await count(intArrayRes))) {
-                console.log('No res avilabel yet, using nonbasenb char as retval');
+                await console.log('No res avilabel yet, using nonbasenb char as retval');
                 intArrayRes = intArrayNextUtf8;
             }
             boolContinue = false;
         }
         else {
-            console.log('Is basenb char');
+            await console.log('Is basenb char');
             if (await isBasenbDistinctRemainderChar(intArrayNextUtf8)) {
-                console.log('Is remainedr char');
+                await console.log('Is remainedr char');
                 if (boolPastFirstBasenbChar) {
-                    console.log('Stopping continuing : is past first basneb alredy');
+                    await console.log('Stopping continuing : is past first basneb alredy');
                     boolContinue = false;
                 }
                 else {
-                    console.log('Continuing continuing, found a remainder char that we keep going past.');
+                    await console.log('Continuing continuing, found a remainder char that we keep going past.');
                     intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                     intTempArrayCount = await count(intArrayNextUtf8);
-                    console.log('Numebr to remove is:'+intTempArrayCount);
+                    await console.log('Numebr to remove is:'+intTempArrayCount);
                     intArrayRemaining = await anSubset(intArrayRemaining, 0, await implAdd(-1, await implMul(-1, intTempArrayCount)));
-                    console.log('Remaining array is:'+intArrayRemaining);
+                    await console.log('Remaining array is:'+intArrayRemaining);
                     boolPastFirstBasenbChar = true;
                 }
             }
             else {
-                console.log('Is not reminter char');
+                await console.log('Is not reminter char');
                 intArrayRes = await append(intArrayNextUtf8, intArrayRes);
                 intTempArrayCount = await count(intArrayNextUtf8);
                 intArrayRemaining = await anSubset(intArrayRemaining, 0, await implMul(-1, intTempArrayCount));
