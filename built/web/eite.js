@@ -2012,6 +2012,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBasenbUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     await assertIsByteArray(intArrayIn);
+    console.log('Starting debasenb of '+intArrayIn);
     let intArrayRes = [];
     /* Extract remainder length */
     let intRemainder = 0;
