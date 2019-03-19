@@ -2028,6 +2028,7 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
     else {
         intArrayRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
     }
+    console.log('Count in:'+await count(intArrayIn)+' , +'+await count(intArrayRemainderArr));
     if (await nge(await count(intArrayIn), await count(intArrayRemainderArr))) {
         /* All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037) */
         intArrayRes = [ 51, 98, 218, 163, 23, 5, 64, 236, 154, 151, 89, 208, 82, 253, 64, 55 ];
