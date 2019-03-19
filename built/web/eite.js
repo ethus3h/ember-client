@@ -2678,7 +2678,7 @@ async function dcaFromUtf8(intArrayContent) {
                         if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
                             console.log('Ok we continue');
                             if (await isBasenbDistinctRemainderChar(intArrayLatestChar)) {
-                                console.log('It is reminder char pushing');
+                                console.log('It is reminder char pushing '+intArrayLatestChar+' onto '+intArrayCollectedDcBasenbChars);
                                 intArrayCollectedDcBasenbChars = await push(intArrayCollectedDcBasenbChars, intArrayLatestChar);
                             }
                             intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
