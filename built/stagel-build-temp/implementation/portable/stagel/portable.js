@@ -3234,4 +3234,13 @@ async function dcIsPrintable(intDc) {
     strGeneralType = await strChar(strType, 0);
     if (await or(await implEq('Zl', strType), await implEq('Zp', strType))) {
 
-        
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    if (await or(await implEq('!', strGeneralType), await implEq('C', strGeneralType))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
