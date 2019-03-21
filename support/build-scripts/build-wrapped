@@ -41,31 +41,37 @@ for (( i=0; i<targetCount; i++ )); do
 
     #StageL
 
+    mkdir -p "./built/stagel-build-temp/implementation/core-implementations/${targets[$i]}"
+
     rm -f ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
-    find ./implementation/core-implementations/"${targets[$i]}"/ -not -name "core.${targets[$i]}" -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+    find ./implementation/core-implementations/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
 
-    echo $'\n''// @license-end' >> ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
 
     #StageR
 
-    rm -f ./implementation/portable/stagel/portable."${targets[$i]}"
+    mkdir -p "./built/stagel-build-temp/implementation/portable/stagel"
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./implementation/portable/stagel/portable."${targets[$i]}"
+    rm -f ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
 
     find ./implementation/portable/stagel/ -name '*.stagel' -exec "$srcmd" "$debugBuild" "$typecheckBuild" {} "${targets[$i]}" \;
 
-    echo $'\n''// @license-end' >> ./implementation/portable/stagel/portable."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
 
-    mkdir ./built/stagel-parts/"${targets[$i]}"
+    # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
-    mv ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
-    mv ./implementation/portable/stagel/portable."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
+    mkdir -p ./built/stagel-parts/"${targets[$i]}"
+
+    mv ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
+    mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
 
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-    cat ./implementation/speedups/speedups.js >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
+    cat ./implementation/speedups/speedups."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
     echo $'\n''// @license-end' >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
 
     cp ./built/stagel-parts/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
@@ -73,4 +79,6 @@ for (( i=0; i<targetCount; i++ )); do
     cat ./built/stagel-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
     cat ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+
+    rm -r "./built/stagel-build-temp"
 done
