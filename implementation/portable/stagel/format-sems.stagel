@@ -1,27 +1,29 @@
-r/an/dcaFromSems an/content
-    assertIsByteArray an/content
+r/an/dcaFromSems an/in
+    assertIsByteArray an/in
     new an/ret
 
     # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
 
+    new an/content
+    set an/content utf8CharArrayFromByteArray an/in
     new s/parserState
     set s/parserState 'dc'
     new s/currentDc
     set s/currentDc ''
     new n/contentLength
     set n/contentLength count an/content
-    new n/byteOffset
-    new n/currentByte
-    while lt n/byteOffset n/contentLength
-        # do something with each byte in the array. an/content[n/byteOffset], which is copied to n/currentByte, holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
-        set n/currentByte get an/content n/byteOffset
+    new n/charOffset
+    new n/currentChar
+    while lt n/charOffset n/contentLength
+        # do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        set n/currentChar get an/content n/charOffset
         if eq s/parserState 'dc'
-            if asciiIsDigit n/currentByte
-                set s/currentDc cat s/currentDc charFromByte n/currentByte
-            elif asciiIsSpace n/currentByte
+            if asciiIsDigit n/currentChar
+                set s/currentDc cat s/currentDc charFromByte n/currentChar
+            elif asciiIsSpace n/currentChar
                 set an/ret push an/ret intFromIntStr s/currentDc
                 set s/currentDc ''
-            elif eq 35 n/currentByte
+            elif eq 35 n/currentChar
                 # pound sign: start comment
                 if ne 0 len s/currentDc
                     # Comment was not preceded by a space
@@ -33,14 +35,14 @@ r/an/dcaFromSems an/content
             else
                 die 'Unexpected parser state in SEMS document.'
         elif eq s/parserState 'comment'
-            if asciiIsNewline n/currentByte
+            if asciiIsNewline n/currentChar
                 set an/ret push an/ret 248
                 set s/parserState 'dc'
             else
-                set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/byteOffset -1
+                set an/ret push an/ret dcFromFormat 'unicode' anFromN firstCharOfUtf8String anSubset an/content n/charOffset -1
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
-        set n/byteOffset add n/byteOffset 1
+        set n/charOffset add n/charOffset 1
     if eq s/parserState 'comment'
         # Document ended with a comment and no newline at the end
         if ne 0 len s/currentDc
