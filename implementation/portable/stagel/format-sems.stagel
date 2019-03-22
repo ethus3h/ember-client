@@ -39,7 +39,7 @@ r/an/dcaFromSems an/in
                 set an/res push an/res 248
                 set s/parserState 'dc'
             else
-                set an/res push an/res dcFromUnicodeChar n/currentChar
+                set an/res append an/res dcaFromUnicodeChar n/currentChar
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/charOffset add n/charOffset 1
