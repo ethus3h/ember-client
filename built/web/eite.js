@@ -121,7 +121,7 @@ let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 2;
+    STAGEL_DEBUG = 0;
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -1887,6 +1887,7 @@ async function prepareDocumentExec(intArrayContents) {
 }
 
 async function isExecId(intExecId) {
+    alert('isexecid'+intExecId);
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
 
     if (await implLt(intExecId, await count(strArrayDocumentExecPtrs))) {
