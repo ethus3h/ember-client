@@ -28,6 +28,11 @@ r/an/getCurrentExecData n/execId
     set an/res intArrFromStrPrintedArr get as/documentExecData n/execId
     return an/res
 
+r/an/getCurrentExecFrame n/execId
+    new an/res
+    set an/res intArrFromStrPrintedArr get as/documentExecFrames n/execId
+    return an/res
+
 r/v/startDocumentExec n/execId
     assertIsExecId n/execId
     new b/continue
@@ -45,4 +50,4 @@ r/v/startDocumentExec n/execId
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId an/wipFrame
         set an/wipFrame ( )
-        renderDrawContents dcaToFormat getEnvPreferredFormat } get as/documentExecFrames n/execId
+        renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId

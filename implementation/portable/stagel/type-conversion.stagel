@@ -30,6 +30,11 @@ r/s/printArr ga/in
     set s/res strPrintArr ga/in
     return s/res
 
+r/as/strSplit s/in s/separator
+    new as/res
+    while 
+    return as/res
+
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.
     new an/res
