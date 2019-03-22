@@ -1,4 +1,4 @@
-r/n/startDocumentExec an/contents
+r/n/prepareDocumentExec an/contents
     new n/execId
     set n/execId -1
     # documentExecData is a global, created during initialization. It holds the current document state for any documents being executed.
@@ -8,6 +8,7 @@ r/n/startDocumentExec an/contents
     set as/documentExecSymbolIndex push as/documentExecSymbolIndex ''
     set as/documentExecPtrs push as/documentExecPtrs ',0'
     set as/documentExecFrames push as/documentExecFrames ''
+    set as/documentExecEvents push as/documentExecEvents ''
     assertIsExecId n/execId
     return n/execId
 
@@ -15,3 +16,6 @@ r/b/isExecId n/execId
     if lt n/execId count an/documentExecPtrs
         return true
     return false
+
+r/n/startDocumentExec n/execId
+    assertIsExecId n/execId

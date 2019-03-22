@@ -72,7 +72,7 @@ r/n/startDocument an/contents
     # Start execution of the provided document and return an ID for it.
     setupIfNeeded
     new n/execId
-    set n/execId startDocumentExec an/contents
+    set n/execId prepareDocumentExec an/contents
     return n/execId
 
 r/as/getDesiredEventNotifications n/execId
