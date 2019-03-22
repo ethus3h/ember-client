@@ -14,6 +14,8 @@ r/an/dcaFromSems an/in
     set n/contentLength count an/content
     new n/charOffset
     new n/currentChar
+    new b/strict
+    set b/strict eq 'true' getSettingForFormat 'sems' 'in' 'strict'
     while lt n/charOffset n/contentLength
         # do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
         set n/currentChar get an/content n/charOffset
@@ -27,8 +29,7 @@ r/an/dcaFromSems an/in
                 # pound sign: start comment
                 if ne 0 len s/currentDc
                     # Comment was not preceded by a space
-                    if eq 'true' getSettingForFormat 'sems' 'in' 'strict'
-                        die 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
+                    warnOrDie 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
                     else
                         warn 
                     set an/res push an/res intFromIntStr s/currentDc

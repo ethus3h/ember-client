@@ -1,3 +1,8 @@
+r/v/warnOrDie s/msg b/strict
+    if b/strict
+        die s/msg
+    warn s/msg
+
 r/v/assertIsTrue b/in
     if isFalse b/in
         assertionFailed cat bool ' is not true.'
