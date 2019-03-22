@@ -60,6 +60,8 @@ else
     [[ "$distBuild" == "true" ]] && ./support/build-scripts/build-wasm-common &> /dev/null
 fi
 
+cp -r ./implementation/portable/eite ./built/
+
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
 
