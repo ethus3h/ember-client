@@ -49,10 +49,10 @@ r/an/importDocument s/format an/contents
     return an/out
 
 r/an/importAndExport s/inputFormat s/outputFormat an/contents
+    setupIfNeeded
     assertIsSupportedInputFormat s/inputFormat
     assertIsSupportedOutputFormat s/outputFormat
     # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
-    setupIfNeeded
     new an/out
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
@@ -61,9 +61,9 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
 r/an/loadStoredDocument s/format s/path
+    setupIfNeeded
     assertIsSupportedInputFormat s/format
     # Load and return the specified document as a Dc array.
-    setupIfNeeded
     new an/res
     set an/res dcaFromFormat s/format getFileFromPath s/path
     return an/res
