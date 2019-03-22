@@ -366,7 +366,10 @@ r/an/dcbnbGetLastChar an/in
     new b/pastFirstBasenbRemainderChar
     set b/pastFirstBasenbRemainderChar false
     while b/continue
-        set an/nextUtf8 pack32 lastCharOfUtf8String an/remaining
+        if ne 0 count an/remaining
+            set an/nextUtf8 pack32 lastCharOfUtf8String an/remaining
+        else
+            set an/nextUtf8 ( )
         if not isBasenbChar an/nextUtf8
             if eq 0 count an/res
                 set an/res an/nextUtf8
