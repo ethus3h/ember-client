@@ -23,6 +23,13 @@ r/n/getCurrentExecPtrPos n/execId
     set n/res 0
     return n/res
 
+r/an/getCurrentExecData n/execId
+    new an/res
+    new s/temp
+    set s/temp get as/documentExecData n/execId
+    set an/res 0
+    return an/res
+
 r/v/startDocumentExec n/execId
     assertIsExecId n/execId
     new b/continue

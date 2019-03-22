@@ -1,4 +1,5 @@
 r/s/strPrintArr ga/input
+    # The reverse of this for an/ input is intArrFromStrPrintedArr.
     # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
     new n/count
     set n/count count ga/input
@@ -29,37 +30,32 @@ r/s/printArr ga/in
     set s/res strPrintArr ga/in
     return s/res
 
-r/an/intArrFromStrPrintedArr ga/input
-r/an/dcaFromIntegerList an/content
-    assertIsByteArray an/content
-    new an/ret
-
+r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.
-
-    new s/currentDc
-    set s/currentDc ''
+    new an/res
+    new an/content
+    set an/content strToByteArray s/input
+    new s/currentInt
+    set s/currentInt ''
     new n/contentLength
     set n/contentLength count an/content
     new n/byteOffset
     new n/currentByte
     while lt n/byteOffset n/contentLength
-        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are ints represented as ASCII text bytes, rather than an array of ints.
         set n/currentByte get an/content n/byteOffset
         if asciiIsDigit n/currentByte
-            set s/currentDc cat s/currentDc charFromByte n/currentByte
+            set s/currentInt cat s/currentInt charFromByte n/currentByte
         elif asciiIsSpace n/currentByte
-            set an/ret push an/ret intFromIntStr s/currentDc
-            set s/currentDc ''
+            set an/res push an/res intFromIntStr s/currentInt
+            set s/currentInt ''
         else
-            die 'Unexpected parser state in integerList document.'
+            die 'Unexpected parser state in intArrFromStrPrintedArr.'
         set n/byteOffset add n/byteOffset 1
-    if ne 0 len s/currentDc
+    if ne 0 len s/currentInt
         # Ended without a trailing space
-        if eq 'true' getSettingForFormat 'integerList' 'in' 'strict'
-            die 'No trailing space present in integerList format while importing. This is not allowed in strict mode.'
-        set an/ret push an/ret intFromIntStr s/currentDc
-    assertIsDcArray an/ret
-    return an/ret
+        set an/res push an/res intFromIntStr s/currentInt
+    return an/res
 
 r/s/charFromHexByte s/hexByte
     # Bear in mind that StageL doesn't attempt to support Unicode.
