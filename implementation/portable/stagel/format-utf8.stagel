@@ -294,13 +294,13 @@ r/as/utf8VariantSettings s/direction
     return as/res
 
 r/n/dcFromUnicodeChar n/char
-    # convenience function. Takes a character number not a byte array.
+    # Takes a character number, not a byte array.
     new n/res
     set n/res dcFromFormat 'unicode' anFromN n/char
     return n/res
 
 r/n/dcToUnicodeChar n/dc
-    # convenience function. Takes a character number not a byte array.
+    # Returns a character number, not a byte array.
     new n/res
     new an/temp
     set an/temp dcToFormat 'unicode' n/dc

@@ -77,7 +77,7 @@ r/an/dcToFormat s/outFormat n/dc
             if isBaseStr s/res 16
                 set an/res append an/res utf8BytesFromDecimalChar hexToDec s/res
     else
-        error cat 'Unimplemented character output format: ' s/outFormat
+        die cat 'Unimplemented character output format: ' s/outFormat
     # Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
     assertIsByteArray an/res
     return an/res
