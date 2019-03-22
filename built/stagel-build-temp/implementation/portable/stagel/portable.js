@@ -993,4 +993,30 @@ async function dcaFromUtf8(intArrayContent) {
                             if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
                                 intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
                                 if (await excepArr(intArrayCollectedDcBasenbChars)) {
-                                    await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 
+                                    await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 'An invalid base17b UTF8 input was encountered. Probably it was incorrectly truncated.');
+                                    intArrayCollectedDcBasenbChars = [  ];
+                                }
+                                intCollectedDcBasenbCharsCount = await count(intArrayCollectedDcBasenbChars);
+                                intCollectedDcBasenbCharsCounter = 0;
+                                while (await implLt(intCollectedDcBasenbCharsCounter, intCollectedDcBasenbCharsCount)) {
+                                    intArrayCurrentUnmappableChar = await utf8BytesFromDecimalChar(await firstCharOfUtf8String(intArrayCollectedDcBasenbChars));
+                                    intArrayRes = await append(intArrayRes, await unpack32(intArrayCurrentUnmappableChar));
+                                    intCollectedDcBasenbCharsCounter = await implAdd(intCollectedDcBasenbCharsCounter, await count(intArrayCurrentUnmappableChar));
+                                }
+                                intArrayCollectedDcBasenbChars = [  ];
+                            }
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                        /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
+                        intTempArrayCount = await count(intArrayRemaining);
+                        intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
+                    }
+                }
+                /* (End of code section) (see explanation above) */
+            }
+            if (await implEq(0, intDcBasenbUuidMonitorState)) {
