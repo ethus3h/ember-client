@@ -338,6 +338,13 @@ r/an/utf8CharArrayFromByteArray an/in
 
 r/an/byteArrayFromUtf8CharArray an/in
     new an/res
+    new n/count
+    new n/i
+    set n/count count an/in
+    set n/i 0
+    while lt n/i n/count
+        set an/res append an/res utf8BytesFromDecimalChar get an/in n/i
+        set n/i add 1 n/i
     return an/res
 
 r/an/dcbnbGetFirstChar an/in
