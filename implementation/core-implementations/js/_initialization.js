@@ -17,12 +17,11 @@ let dcData = []; // an
 let strArrayDocumentExecData = []; // as: holds the current document state for any documents being executed.
 let strArrayDocumentExecSymbolIndex = []; // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
 let intArrayDocumentExecPtrs = []; // an: holds the current execution pointer position for each doc. When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
-let boolArrayDocumentExecFrameStates = []; // ab: each entry represents whether the document's frame buffer is dirty and ready to render to screen
+let strArrayDocumentExecFrames = []; // as: holds strings of space-terminated integers representing Dcs to be rendered.
 let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
 let intTotalTests = 0;
-let strArrayFrameBuffer = []; // as: holds space-terminated integers representing Dcs to be rendered.
 let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
 let strArrayImportDeferredSettingsStack = []; // as
