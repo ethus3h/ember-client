@@ -5715,7 +5715,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
         if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
             await implWarn(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
 
-            intArrayReturn = [ -1 ]; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+            intArrayReturn = [ ]; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
         }
         intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
     }
