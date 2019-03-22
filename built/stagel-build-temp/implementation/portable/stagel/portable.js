@@ -886,4 +886,37 @@ async function dcaFromUtf8(intArrayContent) {
                             intDcBasenbUuidMonitorState = 6;
                         }
                         else {
-                            intDcBasenbUuidMonitorReprocessNeededCount = 
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 6)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 178, 139, 160 ])) {
+                            intDcBasenbUuidMonitorState = 7;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 7)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 143, 186, 144 ])) {
+                            intDcBasenbUuidMonitorState = 0;
+                            intArrayLatestChar = [  ];
+                            boolInDcBasenbSection = true;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
+                        /* It's necessary to reprocess the number of bytes that were consumed while checking for a UUID */
+                        intTempArrayCount = await implSub(await count(intArrayContent), await count(intArrayRemaining));
+                        intArrayRemaining = await anSubset(intArrayContent, intTempArrayCount, await implAdd(intTempArrayCount, await implMul(4, intDcBasenbUuidMonitorReprocessNeededCount)));
+                    }
+                }
+            }
+            else {
+                /* Dcbasenb support is enabled, and we're inside a dcbasenb region. Process chars accordingly. */
+                if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
