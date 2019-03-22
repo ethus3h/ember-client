@@ -96,12 +96,10 @@ r/an/dcFromFormat s/inFormat an/content
                 die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
         assertIsNonnegative n/c
         set s/temp dcDataLookupByValue 'mappings/from/unicode' 0 decToHex n/c } 1
-        if 
-        set n/dc intFromIntStr
-        if ge n/c dcDatasetLength 'mappings/from/unicode'
+        if excep s/temp
             warn cat 'FIXME: save unmapped unicode char ' strFrom n/c
             return ( )
-        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
+        set n/dc intFromIntStr s/temp
     else
         die cat 'Unimplemented character source format: ' s/inFormat
     set an/res setElement an/res 0 n/dc
