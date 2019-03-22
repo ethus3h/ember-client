@@ -87,6 +87,7 @@ r/an/dcFromFormat s/inFormat an/content
     assertIsTrue isSupportedInternalFormat s/inFormat
     new an/res
     new n/dc
+    new s/temp
     if or eq s/inFormat 'ascii' } eq s/inFormat 'unicode'
         new n/c
         set n/c get an/content 0
@@ -94,7 +95,9 @@ r/an/dcFromFormat s/inFormat an/content
             if not isAsciiByte n/c
                 die cat 'The character number ' cat strFrom n/c } ' is not a 7-bit ASCII character.'
         assertIsNonnegative n/c
-        set n/dc intFromIntStr dcDataLookupById 'mappings/from/unicode' n/c 1
+        set s/temp dcDataLookupByValue 'mappings/from/unicode' 0 decToHex n/c } 1
+        if 
+        set n/dc intFromIntStr
         if ge n/c dcDatasetLength 'mappings/from/unicode'
             warn cat 'FIXME: save unmapped unicode char ' strFrom n/c
             return ( )
