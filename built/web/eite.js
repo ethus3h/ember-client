@@ -2140,6 +2140,17 @@ async function runTestsFormatDc(boolV) {
     await internalDebugStackExit();
 }
 
+async function warnOrDie(boolStrict, strMsg) {
+    await internalDebugCollect('bool Strict = ' + boolStrict + '; '); await internalDebugCollect('str Msg = ' + strMsg + '; '); await internalDebugStackEnter('warnOrDie:assertions'); await assertIsBool(boolStrict); await assertIsStr(strMsg);
+
+    if (boolStrict) {
+        await implDie(strMsg);
+    }
+    await implWarn(strMsg);
+
+    await internalDebugStackExit();
+}
+
 async function assertIsTrue(boolIn) {
     await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('assertIsTrue:assertions'); await assertIsBool(boolIn);
 
@@ -2987,7 +2998,7 @@ async function dcaFromUnicodeChar(intChar) {
     let intArrayTemp = [];
     intArrayTemp = await dcFromFormat('unicode', await anFromN(intChar));
     if (await ne(0, await count(intArrayTemp))) {
-        intRes = await push(intArrayRes, await get(intArrayTemp, 0));
+        intArrayRes = await push(intArrayRes, await get(intArrayTemp, 0));
     }
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
@@ -3309,6 +3320,9 @@ async function runTestsFormatUtf8(boolV) {
     await runTest(boolV, await arrEq([  ], await dcbnbGetFirstChar([ 244, 143, 191, 186, 97, 101 ])));
     /* 86 invalid */
     await runTest(boolV, await arrEq([ 86 ], await dcbnbGetFirstChar([ 101, 244, 143, 191, 186 ])));
+    /* Tests for utf8CharArrayFromByteArray and vice versa */
+    await runTest(boolV, await arrEq([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 9917, 34, 10, 49, 32, 50, 32, 35, 32, 9917, 10 ], await utf8CharArrayFromByteArray([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
+    await runTest(boolV, await arrEq([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ], await byteArrayFromUtf8CharArray([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 9917, 34, 10, 49, 32, 50, 32, 35, 32, 9917, 10 ])));
 
     await internalDebugStackExit();
 }
@@ -5780,6 +5794,8 @@ async function dcaFromSems(intArrayIn) {
     intContentLength = await count(intArrayContent);
     let intCharOffset = 0;
     let intCurrentChar = 0;
+    let boolStrict = false;
+    boolStrict = await implEq('true', await getSettingForFormat('sems', 'in', 'strict'));
     while (await implLt(intCharOffset, intContentLength)) {
         /* do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
         intCurrentChar = await get(intArrayContent, intCharOffset);
@@ -5795,9 +5811,7 @@ async function dcaFromSems(intArrayIn) {
                 /* pound sign: start comment */
                 if (await ne(0, await len(strCurrentDc))) {
                     /* Comment was not preceded by a space */
-                    if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
-                        await implDie('No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
-                    }
+                    await warnOrDie(boolStrict, 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
                     intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
                 }
                 intArrayRes = await push(intArrayRes, 246);
@@ -5829,9 +5843,7 @@ async function dcaFromSems(intArrayIn) {
         intArrayRes = await push(intArrayRes, 248);
     }
     else if (await ne(0, await len(strCurrentDc))) {
-        if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
-            await implDie('No trailing space present in sems format while importing. This is not allowed in strict mode.');
-        }
+        await warnOrDie(boolStrict, 'No trailing space present in sems format while importing. This is not allowed in strict mode.');
         /* Ended without a trailing space */
         intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
     }
@@ -5877,11 +5889,11 @@ async function runTestsFormatSems(boolV) {
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
     /* Should fail but I don't have a way to test to ensure failure yet: runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 32 50 ) */
     await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
-    /* UTF-8 comments (will need update for comment preservation) */
-    await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 1, 2 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
-    /* TODO: Support comment preservation */
-    /*runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 ) */
-    /*runTest b/v arrEq ( 49 32 50 32 ) dcaToSems ( 1 2 ) */
+    /* Comment preservation */
+    await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
+    /* UTF-8 comments */
+    await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 246, 248, 1, 2, 246, 248 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
 
     await internalDebugStackExit();
 }
