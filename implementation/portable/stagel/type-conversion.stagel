@@ -32,7 +32,16 @@ r/s/printArr ga/in
 
 r/as/strSplit s/in s/separator
     new as/res
-    while 
+    new n/separLen
+    set n/separLen len s/separator
+    new s/remaining
+    set s/remaining s/in
+    new s/currentElem
+    while lt 0 count s/remaining
+        if eq s/separator substr s/remaining 0 n/separLen
+            set as/res push as/res s/currentElem
+        else
+            
     return as/res
 
 r/an/intArrFromStrPrintedArr s/input
