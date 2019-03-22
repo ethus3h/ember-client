@@ -11,8 +11,5 @@ async function internalRunDocument(execId) {
     let eventsToNotify = [];
     eventsToNotify = await getDesiredEventNotifications(execId);
 
-    let outFormat;
-    outFormat = await getEnvPreferredFormat();
-
-    await renderDrawContents(await dcaToFormat(outFormat, strArrayDocumentExecData[execId]));
+    // FIXME Unimplemented
 }
