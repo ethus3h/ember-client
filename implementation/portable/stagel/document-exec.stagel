@@ -18,15 +18,13 @@ r/b/isExecId n/execId
     return false
 
 r/n/getCurrentExecPtrPos n/execId
-    # FIXME stub
     new n/res
-    set n/res 0
+    set n/res get strSplit get as/documentExecPtrs n/execId } ',' } -1
     return n/res
 
 r/n/getNextExecPtrPos n/execId
-    # FIXME stub
     new n/res
-    set n/res 0
+    set n/res get strSplit get as/documentExecPtrs n/execId } ',' } -2
     return n/res
 
 r/an/getCurrentExecData n/execId
