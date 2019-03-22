@@ -76,9 +76,9 @@ r/n/hexToDec s/n
     set n/res intFromBaseStr s/n 16
     return n/res
 
-r/s/decToHex s/n
+r/s/decToHex n/n
     new s/res
-    set s/res intToBaseStr n/n 10
+    set s/res intToBaseStr n/n 16
     return s/res
 
 r/s/intToBaseStr n/n n/b
