@@ -1,5 +1,10 @@
 // Implementations of routines provided in public-interface.stagel.
 
+async function setBufferDirty(execId) {
+    await assertIsExecId(execId);
+    
+}
+
 async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
