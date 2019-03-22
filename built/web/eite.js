@@ -2543,9 +2543,12 @@ async function runDocument(intArrayContents) {
 
     /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
     await setupIfNeeded();
+    alert('1');
     await assertIsDcArray(intArrayContents);
+    alert('2');
     let intExecId = 0;
     intExecId = await startDocument(intArrayContents);
+    alert('3');
     await internalRunDocument(intExecId);
 
     await internalDebugStackExit();
