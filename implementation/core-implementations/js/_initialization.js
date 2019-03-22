@@ -14,8 +14,9 @@ var envResolutionH;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
-let strArrayDocumentExecData = []; // as
-let intArrayDocumentExecPtrs = []; // an
+let strArrayDocumentExecData = []; // as: holds the current document state for any documents being executed.
+let intArrayDocumentExecPtrs = []; // an: holds the current execution pointer position for each doc.
+let boolArrayDocumentExecFrameStates = []; // ab: each entry represents whether the document's frame buffer is dirty and ready to render to screen
 let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
