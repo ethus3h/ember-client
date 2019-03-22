@@ -836,4 +836,54 @@ async function dcaFromUtf8(intArrayContent) {
                 /* 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc. */
                 if (await ne(0, intDcBasenbUuidMonitorReprocessNeededCount)) {
                     /* We're reprocessing potential UUID chars that didn't match a UUID after all, so don't check them for being a UUID. FIXME: Non-UUID char being reprocessed followed by 244 141 129 157 etc. (a potential UUID) would NOT be checked to be a UUID here. It should handle correctly the situation where there's potential but not a UUID, followed by potential and is a UUID, overlapping, like that. */
-                    intDcBasenbUuidMonitorReprocessNeededCount = await implSub(
+                    intDcBasenbUuidMonitorReprocessNeededCount = await implSub(intDcBasenbUuidMonitorReprocessNeededCount, 1);
+                }
+                else {
+                    /* Check for a UUID. */
+                    if (await implEq(intDcBasenbUuidMonitorState, 0)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 141, 129, 157 ])) {
+                            intDcBasenbUuidMonitorState = 1;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 1)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 139, 182, 128 ])) {
+                            intDcBasenbUuidMonitorState = 2;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 2)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 188, 183, 162 ])) {
+                            intDcBasenbUuidMonitorState = 3;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 3)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 186, 128, 138 ])) {
+                            intDcBasenbUuidMonitorState = 4;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 4)) {
+                        if (await arrEq(intArrayLatestChar, [ 243, 184, 165, 142 ])) {
+                            intDcBasenbUuidMonitorState = 5;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = intDcBasenbUuidMonitorState;
+                            intDcBasenbUuidMonitorState = 0;
+                        }
+                    }
+                    else if (await implEq(intDcBasenbUuidMonitorState, 5)) {
+                        if (await arrEq(intArrayLatestChar, [ 244, 136, 186, 141 ])) {
+                            intDcBasenbUuidMonitorState = 6;
+                        }
+                        else {
+                            intDcBasenbUuidMonitorReprocessNeededCount = 
