@@ -5,6 +5,7 @@ r/n/startDocumentExec an/contents
     set n/execId count an/documentExecPtrs
     set as/documentExecData push as/documentExecData strPrintArr an/contents
     # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is.
+    set as/documentExecSymbolIndex push as/documentExecSymbolIndex ''
     set an/documentExecPtrs push an/documentExecPtrs 0
     set ab/documentExecFrameStates push an/documentExecFrameStates false
     assertIsExecId n/execId
