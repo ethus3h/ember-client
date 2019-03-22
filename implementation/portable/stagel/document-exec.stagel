@@ -19,3 +19,15 @@ r/b/isExecId n/execId
 
 r/n/startDocumentExec n/execId
     assertIsExecId n/execId
+    new b/continue
+    set b/continue true
+    new n/currentPtrPos
+    # for now
+    set b/continue false
+    while b/continue
+        set n/currentPtrPos getCurrentExecPtrPos n/execId
+        if gt 0 n/currentPtrPos
+            # Pointer's been set to a negative position, so we're done with the document
+            set b/continue false
+    # Just copy it over for now
+    setElement as/documentExecFrames n/execId get as/documentExecData n/execId

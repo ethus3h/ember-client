@@ -6,10 +6,10 @@ async function internalRunDocument(execId) {
     // Start actually running the document
     startDocumentExec(execId);
 
-    // This routine only handles external events and puts them into the event 
+    // Watch for events and add them into strArrayDocumentExecEvents as needed
 
-    let events = [];
-    events = await getDesiredEventNotifications(execId);
+    let eventsToNotify = [];
+    eventsToNotify = await getDesiredEventNotifications(execId);
 
     let outFormat;
     outFormat = await getEnvPreferredFormat();
