@@ -5,6 +5,7 @@ r/b/runTestsOnly b/v
     #runTestsBits b/v
     runTestsMath b/v
     runTestsPack32 b/v
+    runTestsTypeConversion b/v
     #runTestsWasm b/v
     # Core tests
     runTestsDcData b/v
