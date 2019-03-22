@@ -299,7 +299,7 @@ r/an/dcaFromUnicodeChar n/char
     new an/temp
     set an/temp dcFromFormat 'unicode' anFromN n/char
     if ne 0 count an/temp
-        set n/res push an/res get an/temp 0
+        set an/res push an/res get an/temp 0
     return an/res
 
 r/an/dcToUnicodeCharArray n/dc
