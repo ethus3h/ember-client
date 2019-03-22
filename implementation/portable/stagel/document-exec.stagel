@@ -17,7 +17,7 @@ r/b/isExecId n/execId
         return true
     return false
 
-r/b/getCurrentExecPtrPos n/execId
+r/n/getCurrentExecPtrPos n/execId
     # FIXME stub
     new n/res
     set n/res 0

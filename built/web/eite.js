@@ -1904,7 +1904,7 @@ async function getCurrentExecPtrPos(intExecId) {
     let intRes = 0;
     intRes = 0;
 
-    boolReturn = intRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function startDocumentExec(intExecId) {
