@@ -345,8 +345,8 @@ async function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
-async function internalEiteReqconsole.log(msg) {
-    await console.log(msg);
+async function internalEiteReqAlert(msg) {
+    await alert(msg);
     return null;
 }
 
@@ -558,7 +558,7 @@ let Base16b = {
             return resultArr.join('');
         }
         catch (e) {
-            //console.log(e);
+            //alert(e);
             return false;
         }
     },
@@ -628,7 +628,7 @@ let Base16b = {
             return resultArr;
         }
         catch (e) {
-            //console.log(e);
+            //alert(e);
             return false;
         }
     },
@@ -650,7 +650,7 @@ let Base16b = {
             return strLength;
         }
         catch (e) {
-            //console.log(e);
+            //alert(e);
             return false;
         }
     }
@@ -1000,7 +1000,7 @@ let stagelDebugCallstack = [];
 let stagelDebugCallNames = [];
 let stagelDebugCallCounts = [];
 let stagelDebugCollection = "";
-//console.log("Setting up logging");
+//alert("Setting up logging");
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
@@ -1136,7 +1136,7 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackExit() {
-    //console.log("Dbgstackext");
+    //alert("Dbgstackext");
     if (await stagelDebugCallstack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
