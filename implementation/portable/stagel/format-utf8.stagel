@@ -327,6 +327,13 @@ r/an/dcaFromDcbnbFragmentUtf8 an/content
 
 r/an/utf8CharArrayFromByteArray an/in
     new an/res
+    new an/remaining
+    set an/remaining an/in
+    new an/temp
+    while gt 0 count an/remaining
+        set an/temp firstCharOfUtf8String an/in
+        set an/res append an/res an/temp
+        set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
 
 r/an/byteArrayFromUtf8CharArray an/in
