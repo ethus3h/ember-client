@@ -1,15 +1,18 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-async function startDocumentExec(intArrayContents) {
-    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsIntArray(intArrayContents); let intReturn;
+async function prepareDocumentExec(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('prepareDocumentExec:document-exec'); await assertIsIntArray(intArrayContents); let intReturn;
 
     let intExecId = 0;
     intExecId = -1;
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
     intExecId = await count(intArrayDocumentExecPtrs);
     strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
-    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an int indicating the position in the document where execution is. */
-    intArrayDocumentExecPtrs = await push(intArrayDocumentExecPtrs, 0);
+    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as a list of comma-prefixed ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
+    strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
+    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, ',0');
+    strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
+    strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
     await assertIsExecId(intExecId);
 
     intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
@@ -24,6 +27,42 @@ async function isExecId(intExecId) {
     }
 
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function getCurrentExecPtrPos(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let boolReturn;
+
+    /* FIXME stub */
+    let intRes = 0;
+    intRes = 0;
+
+    boolReturn = intRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function startDocumentExec(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsInt(intExecId);
+
+    await assertIsExecId(intExecId);
+    let boolContinue = false;
+    boolContinue = true;
+    let intCurrentPtrPos = 0;
+    let intArrayWipFrame = [];
+    while (boolContinue) {
+        intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
+        if (await implGt(0, intCurrentPtrPos)) {
+            /* Pointer's been set to a negative position, so we're done with the document */
+            boolContinue = false;
+        }
+        /* FIXME Just copy the input document over for now */
+        intArrayWipFrame = await get(strArrayDocumentExecData, intExecId);
+        boolContinue = false;
+        /* Frame is done, so convert it to the environment-appropriate format and output it */
+        await setElement(strArrayDocumentExecFrames, intExecId, intArrayWipFrame);
+        intArrayWipFrame = [  ];
+        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await get(strArrayDocumentExecFrames, intExecId)));
+    }
+
+    await internalDebugStackExit();
 }
 
 async function runTestsOnly(boolV) {
@@ -671,7 +710,7 @@ async function startDocument(intArrayContents) {
     /* Start execution of the provided document and return an ID for it. */
     await setupIfNeeded();
     let intExecId = 0;
-    intExecId = await startDocumentExec(intArrayContents);
+    intExecId = await prepareDocumentExec(intArrayContents);
 
     intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }

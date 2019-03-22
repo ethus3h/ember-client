@@ -73,13 +73,15 @@ async function getFileFromPath(path) {
 async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
-    let events = [];
-    events = await getDesiredEventNotifications(execId);
+    // Start actually running the document
+    startDocumentExec(execId);
 
-    // FIXME: Make this not just be converting the document and dumping it out.
-    let outFormat;
-    outFormat = await getEnvPreferredFormat();
-    await renderDrawContents(await dcaToFormat(outFormat, await dcaFromSems(await strToByteArray(strArrayDocumentExecData[execId]))));
+    // Watch for events and add them into strArrayDocumentExecEvents as needed
+
+    let eventsToNotify = [];
+    eventsToNotify = await getDesiredEventNotifications(execId);
+
+    // FIXME Unimplemented
 }
 
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
@@ -98,13 +100,15 @@ var envResolutionH;
 let datasets = []; // as
 let datasetsLoaded = false;
 let dcData = []; // an
-let strArrayDocumentExecData = []; // as
-let intArrayDocumentExecPtrs = []; // an
+let strArrayDocumentExecData = []; // as: holds the current document state for any documents being executed.
+let strArrayDocumentExecSymbolIndex = []; // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
+let strArrayDocumentExecPtrs = []; // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
+let strArrayDocumentExecFrames = []; // as: holds strings of space-terminated integers representing Dcs to be rendered.
+let strArrayDocumentExecEvents = []; // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
 let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
 let intTotalTests = 0;
-let intArrayFrameBuffer = []; // an
 let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
 let strArrayImportDeferredSettingsStack = []; // as
@@ -883,7 +887,8 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
     append
     push
     get
-    set-element
+    getNext
+    setElement
     count
 */
 
