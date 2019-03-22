@@ -854,10 +854,10 @@ async function firstCharOfUtf8String(intArrayInput) {
 
 async function lastCharOfUtf8String(intArrayInput) {
     // Returns a decimal representing the Unicode codepoint of the last character, given decimal representation of a UTF-8 string as input.
-    console.log('Working on '+intArrayInput);
-    if (await count(intArrayInput) === 0) {
-        return [];
-    }
+        console.log('Working on '+intArrayInput);
+        if (await count(intArrayInput) === 0) {
+            return [];
+        }
     let utf8decoder = new TextDecoder();
     // You have got to be kidding me. https://web.archive.org/web/20190318025116/https://stackoverflow.com/questions/46157867/how-to-get-the-nth-unicode-character-from-a-string-in-javascript
     let tempStrCharArray = [...utf8decoder.decode(new Uint8Array(intArrayInput))];
