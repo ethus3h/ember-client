@@ -25,9 +25,7 @@ r/n/getCurrentExecPtrPos n/execId
 
 r/an/getCurrentExecData n/execId
     new an/res
-    new s/temp
-    set s/temp get as/documentExecData n/execId
-    set an/res 0
+    set an/res intArrFromStrPrintedArr get as/documentExecData n/execId
     return an/res
 
 r/v/startDocumentExec n/execId
