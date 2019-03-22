@@ -1020,3 +1020,21 @@ async function dcaFromUtf8(intArrayContent) {
                 /* (End of code section) (see explanation above) */
             }
             if (await implEq(0, intDcBasenbUuidMonitorState)) {
+                /* Process the current character: if we're in a dcbasenb section, check if it is a dcbasenb character and collect it for decoding. Otherwise, decode the preceding run of dcbasenb chars as a chunk and append that to the result. */
+                if (await ne(0, await count(intArrayLatestChar))) {
+                    /* There is a latest char (latestChar has more than 0 elems), so work on it */
+                    if (await implAnd(boolInDcBasenbSection, await implAnd(await isBasenbChar(intArrayLatestChar), await implNot(await isBasenbDistinctRemainderChar(intArrayLatestChar))))) {
+                        /* The character is a dcbasenb char and we're in a dcbasenb section, so collect the character for decoding. */
+                        /* Should decode each character as a single batch with the end of the run denoted by isBasenbDistinctRemainderChar, so don't match those here. */
+                        intArrayCollectedDcBasenbChars = await append(intArrayCollectedDcBasenbChars, intArrayLatestChar);
+                        intSkipThisChar = await count(intArrayLatestChar);
+                    }
+                    else {
+                        /* Not a basenb char (or not in a dcbasenb section), so decode the ones we've collected, if there are any */
+                        if (await ne(0, await count(intArrayCollectedDcBasenbChars))) {
+                            if (await isBasenbDistinctRemainderChar(intArrayLatestChar)) {
+                                intArrayCollectedDcBasenbChars = await push(intArrayCollectedDcBasenbChars, intArrayLatestChar);
+                            }
+                            intArrayCollectedDcBasenbChars = await byteArrayFromBase17bUtf8(intArrayCollectedDcBasenbChars);
+                            if (await excepArr(intArrayCollectedDcBasenbChars)) {
+                                await importWarning(await implSub(await count(intArrayContent), await count(intArrayRemaining), ), 
