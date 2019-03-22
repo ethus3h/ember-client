@@ -298,8 +298,10 @@ r/n/dcFromUnicodeChar n/char
     new n/res
     new an/temp
     set an/temp dcFromFormat 'unicode' anFromN n/char
-    if 
-    set n/res get dcFromFormat 'unicode' anFromN n/char } } 0
+    if ne 0 count an/temp
+        set n/res get an/temp 0
+    else
+        set n/res 
     return n/res
 
 r/n/dcToUnicodeChar n/dc
