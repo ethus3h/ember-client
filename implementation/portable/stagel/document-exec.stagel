@@ -23,6 +23,12 @@ r/n/getCurrentExecPtrPos n/execId
     set n/res 0
     return n/res
 
+r/n/getNextExecPtrPos n/execId
+    # FIXME stub
+    new n/res
+    set n/res 0
+    return n/res
+
 r/an/getCurrentExecData n/execId
     new an/res
     set an/res intArrFromStrPrintedArr get as/documentExecData n/execId

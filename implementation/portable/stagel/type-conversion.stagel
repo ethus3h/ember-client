@@ -37,11 +37,19 @@ r/as/strSplit s/in s/separator
     new s/remaining
     set s/remaining s/in
     new s/currentElem
+    new s/currentChar
     while lt 0 count s/remaining
         if eq s/separator substr s/remaining 0 n/separLen
             set as/res push as/res s/currentElem
+            set s/currentElem ''
+            set s/remaining substr s/remaining n/separLen -1
         else
-            
+            set s/currentChar strChar s/remaining 0
+            set s/currentElem cat s/currentElem s/currentChar
+            set s/remaining substr s/remaining 1 -1
+    if ne '' s/currentElem
+        # No trailing delimiter
+        set as/res push as/res s/currentElem
     return as/res
 
 r/an/intArrFromStrPrintedArr s/input
