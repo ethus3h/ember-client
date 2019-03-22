@@ -345,8 +345,8 @@ async function internalEiteReqTypeofWindow() {
     return typeof window;
 }
 
-async function internalEiteReqAlert(msg) {
-    await alert(msg);
+async function internalEiteReqconsole.log(msg) {
+    await console.log(msg);
     return null;
 }
 
@@ -558,7 +558,7 @@ let Base16b = {
             return resultArr.join('');
         }
         catch (e) {
-            //alert(e);
+            //console.log(e);
             return false;
         }
     },
@@ -628,7 +628,7 @@ let Base16b = {
             return resultArr;
         }
         catch (e) {
-            //alert(e);
+            //console.log(e);
             return false;
         }
     },
@@ -650,7 +650,7 @@ let Base16b = {
             return strLength;
         }
         catch (e) {
-            //alert(e);
+            //console.log(e);
             return false;
         }
     }
@@ -1000,7 +1000,7 @@ let stagelDebugCallstack = [];
 let stagelDebugCallNames = [];
 let stagelDebugCallCounts = [];
 let stagelDebugCollection = "";
-//alert("Setting up logging");
+//console.log("Setting up logging");
 
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
@@ -1136,7 +1136,7 @@ async function internalDebugStackEnter(strBlockName) {
 }
 
 async function internalDebugStackExit() {
-    //alert("Dbgstackext");
+    //console.log("Dbgstackext");
     if (await stagelDebugCallstack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
@@ -1887,7 +1887,7 @@ async function prepareDocumentExec(intArrayContents) {
 }
 
 async function isExecId(intExecId) {
-    alert('isexecid'+intExecId);
+    console.log('isexecid'+intExecId);
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
 
     if (await implLt(intExecId, await count(strArrayDocumentExecPtrs))) {
@@ -1941,7 +1941,7 @@ async function startDocumentExec(intExecId) {
     let boolContinue = false;
     boolContinue = true;
     let intCurrentPtrPos = 0;
-    alert('ok');
+    console.log('ok');
     let intArrayWipFrame = [];
     while (boolContinue) {
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
@@ -2543,12 +2543,12 @@ async function runDocument(intArrayContents) {
 
     /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
     await setupIfNeeded();
-    alert('1');
+    console.log('1');
     await assertIsDcArray(intArrayContents);
-    alert('2');
+    console.log('2');
     let intExecId = 0;
     intExecId = await startDocument(intArrayContents);
-    alert('3');
+    console.log('3');
     await internalRunDocument(intExecId);
 
     await internalDebugStackExit();
