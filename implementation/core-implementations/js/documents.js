@@ -3,10 +3,7 @@
 async function internalRunDocument(execId) {
     await assertIsExecId(execId);
 
-    // Start actually running the document
-    startDocumentExec(execId);
-
-    // This routine only handles external events and puts them into the event 
+    // This routine only handles exten
 
     let events = [];
     events = await getDesiredEventNotifications(execId);
