@@ -19,7 +19,7 @@ if(!('contains' in String.prototype)) {
         return a;
     }
     // from https://stackoverflow.com/questions/36532307/rem-px-in-javascript
-    function convertRemToPixels(rem) {    
+    let convertRemToPixels = function(rem) {
         return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
     }
     let elems=textNodesUnder(document.body);
@@ -137,11 +137,12 @@ if(!('contains' in String.prototype)) {
                     });
                         ifr.className='b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrame';
                         ifr.src=browser.runtime.getURL('edit.html')+'#'+'b8316ea083754b2e9290591f37d94765EiteWebextensionMessageDocumentId'+i;
-                        ifr.style.height=(scrollBarWidth + span.clientHeight)+'px';
-                        ifr.style.width=(scrollBarWidth + span.clientWidth)+'px';
+                        ifr.style.height=(scrollBarWidth + span.clientHeight + convertRemToPixels(0.1))+'px';
+                        ifr.style.width=(scrollBarWidth + span.clientWidth + convertRemToPixels(0.1))+'px';
+                        ifr.style.border='0.1rem dotted black';
                         parentNode.insertBefore(ifr, el);
                         ifr=document.getElementById('b8316ea083754b2e9290591f37d94765EiteWebextensionInlineRenderFrameId'+i);
-                        let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.remove();ifr.style.display='inline-block';};
+                        let replaceSpan=function(span, ifr){/*console.log('tebuice');*/span.style.display='none';ifr.style.display='inline-block';};
                         replaceSpan(span, ifr);
                         // console.log('bubube');
                         //alert('a');
