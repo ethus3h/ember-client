@@ -9,6 +9,7 @@ async function internalRunDocument(execId) {
     let outFormat;
     outFormat = await getEnvPreferredFormat();
 
-    
-    await renderDrawContents(await dcaToFormat(outFormat, strArrayDocumentExecData[execId]));
+    while (true) {
+        await renderDrawContents(await dcaToFormat(outFormat, strArrayDocumentExecData[execId]));
+    }
 }
