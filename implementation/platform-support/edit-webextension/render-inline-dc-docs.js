@@ -18,6 +18,10 @@ if(!('contains' in String.prototype)) {
         }
         return a;
     }
+    // from https://stackoverflow.com/questions/36532307/rem-px-in-javascript
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
     let elems=textNodesUnder(document.body);
     let added=false;
     let addCssIfNeeded = function() {
