@@ -2418,7 +2418,7 @@ async function startEite() {
     await internalDebugStackEnter('startEite:public-interface');
 
     /* Start EITE, using the default startup document. Does not return while EITE is still running. */
-    /* loadAndRun ... */
+    await loadAndRun('sems', 'eite.sems');
 
     await internalDebugStackExit();
 }
@@ -2483,10 +2483,10 @@ async function importDocument(strFormat, intArrayContents) {
 async function importAndExport(strInputFormat, strOutputFormat, intArrayContents) {
     await internalDebugCollect('str InputFormat = ' + strInputFormat + '; '); await internalDebugCollect('str OutputFormat = ' + strOutputFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('importAndExport:public-interface'); await assertIsStr(strInputFormat); await assertIsStr(strOutputFormat); await assertIsIntArray(intArrayContents); let intArrayReturn;
 
+    await setupIfNeeded();
     await assertIsSupportedInputFormat(strInputFormat);
     await assertIsSupportedOutputFormat(strOutputFormat);
     /* Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format. */
-    await setupIfNeeded();
     let intArrayOut = [];
     intArrayOut = await convertFormats(strInputFormat, strOutputFormat, intArrayContents);
 
@@ -2497,9 +2497,9 @@ async function importAndExport(strInputFormat, strOutputFormat, intArrayContents
 async function loadStoredDocument(strFormat, strPath) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat); await assertIsStr(strPath); let intArrayReturn;
 
+    await setupIfNeeded();
     await assertIsSupportedInputFormat(strFormat);
     /* Load and return the specified document as a Dc array. */
-    await setupIfNeeded();
     let intArrayRes = [];
     intArrayRes = await dcaFromFormat(strFormat, await getFileFromPath(strPath));
 
@@ -3073,7 +3073,12 @@ async function dcbnbGetLastChar(intArrayIn) {
     let boolPastFirstBasenbRemainderChar = false;
     boolPastFirstBasenbRemainderChar = false;
     while (boolContinue) {
-        intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
+        if (await ne(0, await count(intArrayRemaining))) {
+            intArrayNextUtf8 = await pack32(await lastCharOfUtf8String(intArrayRemaining));
+        }
+        else {
+            intArrayNextUtf8 = [  ];
+        }
         if (await implNot(await isBasenbChar(intArrayNextUtf8))) {
             if (await implEq(0, await count(intArrayRes))) {
                 intArrayRes = intArrayNextUtf8;
@@ -5798,8 +5803,8 @@ async function runTestsFormatSems(boolV) {
     /* No trailing space, will fail in strict mode. */
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
-    /* UTF-8 comment */
-    await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
+    /* UTF-8 comments (will need update for comment preservation) */
+    await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 1, 2 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
     /* TODO: Support comment preservation */
     /*runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 50 35 65 ) */
     /*runTest b/v arrEq ( 49 32 50 32 ) dcaToSems ( 1 2 ) */

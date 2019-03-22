@@ -311,11 +311,9 @@ async function updateNearestDcLabelInner(el) {
     }
     else {
         //currentDc=before.slice(-1);
-        console.log('Geting last '+new TextEncoder().encode(before));
         currentDc=new TextDecoder().decode(new Uint8Array(await dcbnbGetLastChar(new TextEncoder().encode(before))));
         if (currentDc.length === 0) {
             //currentDc=after[0];
-            console.log('Geting first '+new TextEncoder().encode(before));
             currentDc=new TextDecoder().decode(new Uint8Array(await dcbnbGetFirstChar(new TextEncoder().encode(after))));
         }
         if (currentDc !== undefined) {
