@@ -1,6 +1,6 @@
 r/an/dcaFromSems an/in
     assertIsByteArray an/in
-    new an/ret
+    new an/res
 
     # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
 
@@ -21,7 +21,7 @@ r/an/dcaFromSems an/in
             if asciiIsDigit n/currentChar
                 set s/currentDc cat s/currentDc charFromByte n/currentChar
             elif asciiIsSpace n/currentChar
-                set an/ret push an/ret intFromIntStr s/currentDc
+                set an/res push an/res intFromIntStr s/currentDc
                 set s/currentDc ''
             elif eq 35 n/currentChar
                 # pound sign: start comment
@@ -29,17 +29,17 @@ r/an/dcaFromSems an/in
                     # Comment was not preceded by a space
                     if eq 'true' getSettingForFormat 'sems' 'in' 'strict'
                         die 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
-                    set an/ret push an/ret intFromIntStr s/currentDc
-                set an/ret push an/ret 246
+                    set an/res push an/res intFromIntStr s/currentDc
+                set an/res push an/res 246
                 set s/parserState 'comment'
             else
                 die 'Unexpected parser state in SEMS document.'
         elif eq s/parserState 'comment'
             if asciiIsNewline n/currentChar
-                set an/ret push an/ret 248
+                set an/res push an/res 248
                 set s/parserState 'dc'
             else
-                set an/ret push an/ret dcFromUnicodeChar n/currentChar
+                set an/res push an/res dcFromUnicodeChar n/currentChar
         else
             die 'Internal error: unexpected parser state while parsing SEMS document'
         set n/charOffset add n/charOffset 1
@@ -47,14 +47,14 @@ r/an/dcaFromSems an/in
         # Document ended with a comment and no newline at the end
         if ne 0 len s/currentDc
             die 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.'
-        set an/ret push an/ret 248
+        set an/res push an/res 248
     elif ne 0 len s/currentDc
         if eq 'true' getSettingForFormat 'sems' 'in' 'strict'
             die 'No trailing space present in sems format while importing. This is not allowed in strict mode.'
         # Ended without a trailing space
-        set an/ret push an/ret intFromIntStr s/currentDc
-    assertIsDcArray an/ret
-    return an/ret
+        set an/res push an/res intFromIntStr s/currentDc
+    assertIsDcArray an/res
+    return an/res
 
 r/an/dcaToSems an/dcIn
     assertIsDcArray an/dcIn
