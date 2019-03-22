@@ -4062,7 +4062,7 @@ async function strSplit(strIn, strSeparator) {
     strRemaining = strIn;
     let strCurrentElem = '';
     let strCurrentChar = '';
-    while (await implLt(0, await count(strRemaining))) {
+    while (await implLt(0, await len(strRemaining))) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';

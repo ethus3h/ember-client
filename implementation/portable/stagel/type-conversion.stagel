@@ -38,7 +38,7 @@ r/as/strSplit s/in s/separator
     set s/remaining s/in
     new s/currentElem
     new s/currentChar
-    while lt 0 count s/remaining
+    while lt 0 len s/remaining
         if eq s/separator substr s/remaining 0 n/separLen
             set as/res push as/res s/currentElem
             set s/currentElem ''
