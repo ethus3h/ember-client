@@ -2968,6 +2968,33 @@ async function utf8VariantSettings(strDirection) {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
+async function dcFromUnicodeChar(intChar) {
+    await internalDebugCollect('int Char = ' + intChar + '; '); await internalDebugStackEnter('dcFromUnicodeChar:format-utf8'); await assertIsInt(intChar); let intReturn;
+
+    /* Takes a character number, not a byte array. */
+    let intRes = 0;
+    intRes = await dcFromFormat('unicode', await anFromN(intChar));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function dcToUnicodeChar(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcToUnicodeChar:format-utf8'); await assertIsInt(intDc); let intReturn;
+
+    /* Returns a character number, not a byte array. */
+    let intRes = 0;
+    let intArrayTemp = [];
+    intArrayTemp = await dcToFormat('unicode', intDc);
+    if (await ne(0, await count(intArrayTemp))) {
+        intRes = await firstCharOfUtf8String(intArrayTemp);
+    }
+    else {
+        intRes = [  ];
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
 async function dcaToDcbnbUtf8(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToDcbnbUtf8:format-utf8'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
@@ -3012,6 +3039,38 @@ async function dcaFromDcbnbFragmentUtf8(intArrayContent) {
     await pushImportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
     intArrayRes = await dcaFromUtf8(intArrayContent);
     await popImportSettings(await getFormatId('utf8'));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function utf8CharArrayFromByteArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('utf8CharArrayFromByteArray:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    let intArrayRemaining = [];
+    intArrayRemaining = intArrayIn;
+    let intArrayTemp = [];
+    while (await implGt(0, await count(intArrayRemaining))) {
+        intArrayTemp = await firstCharOfUtf8String(intArrayIn);
+        intArrayRes = await append(intArrayRes, intArrayTemp);
+        intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromUtf8CharArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromUtf8CharArray:format-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    let intCount = 0;
+    let intI = 0;
+    intCount = await count(intArrayIn);
+    intI = 0;
+    while (await implLt(intI, intCount)) {
+        intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await get(intArrayIn, intI)));
+        intI = await implAdd(1, intI);
+    }
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -5603,7 +5662,7 @@ async function dcToFormat(strOutFormat, intDc) {
         }
     }
     else {
-        await implError(await implCat('Unimplemented character output format: ', strOutFormat));
+        await implDie(await implCat('Unimplemented character output format: ', strOutFormat));
     }
     /* Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc. */
     await assertIsByteArray(intArrayRes);
@@ -5693,37 +5752,39 @@ async function exportWarningUnmappable(intIndex, intProblemDc) {
     await internalDebugStackExit();
 }
 
-async function dcaFromSems(intArrayContent) {
-    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+async function dcaFromSems(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
-    await assertIsByteArray(intArrayContent);
+    await assertIsByteArray(intArrayIn);
     let intArrayRet = [];
     /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
+    let intArrayContent = [];
+    intArrayContent = await utf8CharArrayFromByteArray(intArrayIn);
     let strParserState = '';
     strParserState = 'dc';
     let strCurrentDc = '';
     strCurrentDc = '';
     let intContentLength = 0;
     intContentLength = await count(intArrayContent);
-    let intByteOffset = 0;
-    let intCurrentByte = 0;
-    while (await implLt(intByteOffset, intContentLength)) {
-        /* do something with each byte in the array. an/content[n/byteOffset], which is copied to n/currentByte, holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
-        intCurrentByte = await get(intArrayContent, intByteOffset);
+    let intCharOffset = 0;
+    let intCurrentChar = 0;
+    while (await implLt(intCharOffset, intContentLength)) {
+        /* do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
+        intCurrentChar = await get(intArrayContent, intCharOffset);
         if (await implEq(strParserState, 'dc')) {
-            if (await asciiIsDigit(intCurrentByte)) {
-                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
+            if (await asciiIsDigit(intCurrentChar)) {
+                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentChar));
             }
-            else if (await asciiIsSpace(intCurrentByte)) {
+            else if (await asciiIsSpace(intCurrentChar)) {
                 intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
                 strCurrentDc = '';
             }
-            else if (await implEq(35, intCurrentByte)) {
+            else if (await implEq(35, intCurrentChar)) {
                 /* pound sign: start comment */
                 if (await ne(0, await len(strCurrentDc))) {
                     /* Comment was not preceded by a space */
                     if (await implEq('true', await getSettingForFormat('sems', 'in', 'strict'))) {
-                        await implDie('No trailing space present in sems format while importing. This is not allowed in strict mode.');
+                        await implDie('No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
                     }
                     intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
                 }
@@ -5735,18 +5796,18 @@ async function dcaFromSems(intArrayContent) {
             }
         }
         else if (await implEq(strParserState, 'comment')) {
-            if (await asciiIsNewline(intCurrentByte)) {
+            if (await asciiIsNewline(intCurrentChar)) {
                 intArrayRet = await push(intArrayRet, 248);
                 strParserState = 'dc';
             }
             else {
-                intArrayRet = await push(intArrayRet, await dcFromFormat('unicode', await anFromN(await firstCharOfUtf8String(await anSubset(intArrayContent, intByteOffset, -1)))));
+                intArrayRet = await push(intArrayRet, await dcFromUnicodeChar(intCurrentChar));
             }
         }
         else {
             await implDie('Internal error: unexpected parser state while parsing SEMS document');
         }
-        intByteOffset = await implAdd(intByteOffset, 1);
+        intCharOffset = await implAdd(intCharOffset, 1);
     }
     if (await implEq(strParserState, 'comment')) {
         /* Document ended with a comment and no newline at the end */
