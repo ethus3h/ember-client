@@ -5788,6 +5788,7 @@ async function dcaFromSems(intArrayIn) {
                 strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentChar));
             }
             else if (await asciiIsSpace(intCurrentChar)) {
+                console.log('Found Space, appending '+strCurrentDc);
                 intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
                 strCurrentDc = '';
             }
