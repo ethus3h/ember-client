@@ -40,4 +40,4 @@ r/v/startDocumentExec n/execId
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId an/wipFrame
         set an/wipFrame ( )
-        renderDrawContents(await dcaToFormat(outFormat, strArrayDocumentExecData[execId]));
+        renderDrawContents dcaToFormat getEnvPreferredFormat } get strArrayDocumentExecData n/execId
