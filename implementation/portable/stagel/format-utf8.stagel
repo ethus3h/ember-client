@@ -293,6 +293,23 @@ r/as/utf8VariantSettings s/direction
         set as/res push as/res [ 'dcBasenb' 'dcBasenbFragment' ]
     return as/res
 
+r/n/dcFromUnicodeChar n/char
+    # convenience wrapper. Takes a character number not a byte array.
+    new n/res
+    set n/res dcFromFormat 'unicode' anFromN n/char
+    return n/res
+
+r/n/dcToUnicodeChar n/dc
+    # convenience wrapper. Takes a character number not a byte array.
+    new n/res
+    new an/temp
+    set an/temp dcToFormat 'unicode' n/dc
+    if ne 0 count an/temp
+        set n/res firstCharOfUtf8String an/temp
+    else
+        set n/res ( )
+    return n/res
+
 r/an/dcaToDcbnbUtf8 an/content
     # convenience wrapper
     new an/res
