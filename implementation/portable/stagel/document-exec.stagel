@@ -17,19 +17,26 @@ r/b/isExecId n/execId
         return true
     return false
 
-r/n/startDocumentExec n/execId
+r/b/getCurrentExecPtrPos n/execId
+    # FIXME stub
+    new n/res
+    set n/res 0
+    return n/res
+
+r/v/startDocumentExec n/execId
     assertIsExecId n/execId
     new b/continue
     set b/continue true
     new n/currentPtrPos
     new an/wipFrame
-    # for now
-    set b/continue false
-    set an/wipFrame get as/documentExecData n/execId
     while b/continue
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         if gt 0 n/currentPtrPos
             # Pointer's been set to a negative position, so we're done with the document
             set b/continue false
-    # Just copy it over for now
-    setElement as/documentExecFrames n/execId an/wipFrame
+        # Just copy it over for now
+        set an/wipFrame get as/documentExecData n/execId
+        set b/continue false
+        # Frame is done, so convert it to the environment-appropriate format and output it
+        setElement as/documentExecFrames n/execId an/wipFrame
+       
