@@ -1900,9 +1900,17 @@ async function isExecId(intExecId) {
 async function getCurrentExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
-    /* FIXME stub */
     let intRes = 0;
-    intRes = 0;
+    intRes = await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getNextExecPtrPos(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getNextExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
+
+    let intRes = 0;
+    intRes = await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -2);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -1912,6 +1920,15 @@ async function getCurrentExecData(intExecId) {
 
     let intArrayRes = [];
     intArrayRes = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getCurrentExecFrame(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecFrame:document-exec'); await assertIsInt(intExecId); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await intArrFromStrPrintedArr(await get(strArrayDocumentExecFrames, intExecId));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
@@ -1936,7 +1953,7 @@ async function startDocumentExec(intExecId) {
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, intArrayWipFrame);
         intArrayWipFrame = [  ];
-        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await get(strArrayDocumentExecFrames, intExecId)));
+        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
     }
 
     await internalDebugStackExit();
@@ -1951,6 +1968,7 @@ async function runTestsOnly(boolV) {
     /*runTestsBits b/v */
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
+    await runTestsTypeConversion(boolV);
     /*runTestsWasm b/v */
     /* Core tests */
     await runTestsDcData(boolV);
@@ -3968,6 +3986,23 @@ async function prepareStrForEcho(strIn) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function runTestsTyeConversion(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTyeConversion:type-conversion-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'typeConversion');
+    await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
+    await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('aabbabc', 'ab')));
+    await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('aabbabcab', 'ab')));
+    await runTest(boolV, await arrEq([ '', 'c' ], await strSplit('abc', 'ab')));
+    await runTest(boolV, await arrEq([ '', '', 'baa' ], await strSplit('ababbaa', 'ab')));
+    await runTest(boolV, await arrEq([ 'a' ], await strSplit('aab', 'ab')));
+    await runTest(boolV, await arrEq([ '', 'a' ], await strSplit('abaab', 'ab')));
+    await runTest(boolV, await arrEq([ '', 'a', '' ], await strSplit('abaabab', 'ab')));
+    await runTest(boolV, await arrEq([ '', '' ], await strSplit('abab', 'ab')));
+
+    await internalDebugStackExit();
+}
+
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
@@ -4015,6 +4050,36 @@ async function printArr(genericArrayIn) {
     strRes = await strPrintArr(genericArrayIn);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strSplit(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strSplit:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+
+    let strArrayRes = [];
+    let intSeparLen = 0;
+    intSeparLen = await len(strSeparator);
+    let strRemaining = '';
+    strRemaining = strIn;
+    let strCurrentElem = '';
+    let strCurrentChar = '';
+    while (await implLt(0, await count(strRemaining))) {
+        if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
+            strArrayRes = await push(strArrayRes, strCurrentElem);
+            strCurrentElem = '';
+            strRemaining = await substr(strRemaining, intSeparLen, -1);
+        }
+        else {
+            strCurrentChar = await strChar(strRemaining, 0);
+            strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
+            strRemaining = await substr(strRemaining, 1, -1);
+        }
+    }
+    if (await ne('', strCurrentElem)) {
+        /* No trailing delimiter */
+        strArrayRes = await push(strArrayRes, strCurrentElem);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
 async function intArrFromStrPrintedArr(strInput) {
