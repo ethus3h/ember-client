@@ -1874,7 +1874,7 @@ async function prepareDocumentExec(intArrayContents) {
     let intExecId = 0;
     intExecId = -1;
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
-    intExecId = await count(intArrayDocumentExecPtrs);
+    intExecId = await count(strArrayDocumentExecPtrs);
     strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
     /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as a list of comma-prefixed ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
     strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
