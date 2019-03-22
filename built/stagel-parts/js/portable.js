@@ -3842,6 +3842,7 @@ async function dcFromFormat(strInFormat, intArrayContent) {
     await assertIsTrue(await isSupportedInternalFormat(strInFormat));
     let intArrayRes = [];
     let intDc = 0;
+    let strTemp = '';
     if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
         let intC = 0;
         intC = await get(intArrayContent, 0);
@@ -3851,12 +3852,13 @@ async function dcFromFormat(strInFormat, intArrayContent) {
             }
         }
         await assertIsNonnegative(intC);
-        if (await ge(intC, await dcDatasetLength('mappings/from/unicode'))) {
+        strTemp = await dcDataLookupByValue('mappings/from/unicode', 0, await decToHex(intC), 1);
+        if (await excep(strTemp)) {
             await implWarn(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
 
             intArrayReturn = [  ]; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
         }
-        intDc = await intFromIntStr(await dcDataLookupById('mappings/from/unicode', intC, 1));
+        intDc = await intFromIntStr(strTemp);
     }
     else {
         await implDie(await implCat('Unimplemented character source format: ', strInFormat));
