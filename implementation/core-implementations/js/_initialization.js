@@ -89,7 +89,7 @@ async function internalSetup() {
     }
     if (haveDom) {
         // Web browsers, etc.
-        envPreferredFormat = 'html';
+        envPreferredFormat = 'htmlFragment';
         envResolutionW = await eiteHostCall('internalEiteReqOutputWidth');
         envResolutionH = await eiteHostCall('internalEiteReqOutputHeight');
     }
