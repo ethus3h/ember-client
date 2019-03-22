@@ -3062,8 +3062,8 @@ async function utf8CharArrayFromByteArray(intArrayIn) {
     let intArrayRemaining = [];
     intArrayRemaining = intArrayIn;
     let intArrayTemp = [];
-    while (await implGt(0, await count(intArrayRemaining))) {
-        intArrayTemp = await firstCharOfUtf8String(intArrayIn);
+    while (await implLt(0, await count(intArrayRemaining))) {
+        intArrayTemp = await firstCharOfUtf8String(intArrayRemaining);
         intArrayRes = await append(intArrayRes, intArrayTemp);
         intArrayRemaining = await anSubset(intArrayRemaining, await count(intArrayTemp), -1);
     }

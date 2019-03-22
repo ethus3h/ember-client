@@ -348,8 +348,8 @@ r/an/utf8CharArrayFromByteArray an/in
     new an/remaining
     set an/remaining an/in
     new an/temp
-    while gt 0 count an/remaining
-        set an/temp firstCharOfUtf8String an/in
+    while lt 0 count an/remaining
+        set an/temp firstCharOfUtf8String an/remaining
         set an/res append an/res an/temp
         set an/remaining anSubset an/remaining count an/temp } -1
     return an/res
