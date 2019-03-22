@@ -1,4 +1,5 @@
-r/v/runTestsWasm b/v
-    testing b/v 'wasm'
-    runTest b/v eq 42 wasmCall 'fortytwo' 0
-    runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 )
+r/v/runTestsTyeConversion b/v
+    testing b/v 'typeConversion'
+    runTest b/v arrEq [ 'a' 'b' 'c' ] strSplit 'a,b,c' ','
+    runTest b/v arrEq [ 'a' 'b' 'c' ] strSplit 'aabbabc' 'ab'
+    runTest b/v arrEq [ 'a' 'b' 'c' ] strSplit 'aabbabcab' 'ab'
