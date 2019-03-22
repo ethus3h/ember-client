@@ -2,7 +2,8 @@
     append
     push
     get
-    set-element
+    getNext
+    setElement
     count
 */
 
