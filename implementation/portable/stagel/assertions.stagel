@@ -1,4 +1,4 @@
-r/v/warnOrDie s/msg b/strict
+r/v/warnOrDie b/strict s/msg
     if b/strict
         die s/msg
     warn s/msg
