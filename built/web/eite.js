@@ -1898,13 +1898,22 @@ async function isExecId(intExecId) {
 }
 
 async function getCurrentExecPtrPos(intExecId) {
-    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let boolReturn;
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     /* FIXME stub */
     let intRes = 0;
     intRes = 0;
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getCurrentExecData(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecData:document-exec'); await assertIsInt(intExecId); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function startDocumentExec(intExecId) {
@@ -2082,7 +2091,7 @@ async function dcaFromIntegerList(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromIntegerList:format-integerList'); await assertIsIntArray(intArrayContent); let intArrayReturn;
 
     await assertIsByteArray(intArrayContent);
-    let intArrayRet = [];
+    let intArrayRes = [];
     /* Accepts an array of bytes representing an ASCII list of integers representing Dcs. Returns an array of Dcs. This format is the same as sems but without supporting comments. */
     let strCurrentDc = '';
     strCurrentDc = '';
@@ -2097,7 +2106,7 @@ async function dcaFromIntegerList(intArrayContent) {
             strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentByte));
         }
         else if (await asciiIsSpace(intCurrentByte)) {
-            intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+            intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
             strCurrentDc = '';
         }
         else {
@@ -2110,11 +2119,11 @@ async function dcaFromIntegerList(intArrayContent) {
         if (await implEq('true', await getSettingForFormat('integerList', 'in', 'strict'))) {
             await implDie('No trailing space present in integerList format while importing. This is not allowed in strict mode.');
         }
-        intArrayRet = await push(intArrayRet, await intFromIntStr(strCurrentDc));
+        intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
     }
-    await assertIsDcArray(intArrayRet);
+    await assertIsDcArray(intArrayRes);
 
-    intArrayReturn = intArrayRet; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function dcaToIntegerList(intArrayDcIn) {
@@ -3962,6 +3971,7 @@ async function prepareStrForEcho(strIn) {
 async function strPrintArr(genericArrayInput) {
     await internalDebugCollect('genericArray Input = ' + genericArrayInput + '; '); await internalDebugStackEnter('strPrintArr:type-conversion'); await assertIsGenericArray(genericArrayInput); let strReturn;
 
+    /* The reverse of this for an/ input is intArrFromStrPrintedArr. */
     /* Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :) */
     let intCount = 0;
     intCount = await count(genericArrayInput);
@@ -4005,6 +4015,42 @@ async function printArr(genericArrayIn) {
     strRes = await strPrintArr(genericArrayIn);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function intArrFromStrPrintedArr(strInput) {
+    await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('intArrFromStrPrintedArr:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
+
+    /* Reverse of strPrintArr with an an/ parameter. */
+    let intArrayRes = [];
+    let intArrayContent = [];
+    intArrayContent = await strToByteArray(strInput);
+    let strCurrentInt = '';
+    strCurrentInt = '';
+    let intContentLength = 0;
+    intContentLength = await count(intArrayContent);
+    let intByteOffset = 0;
+    let intCurrentByte = 0;
+    while (await implLt(intByteOffset, intContentLength)) {
+        /* do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are ints represented as ASCII text bytes, rather than an array of ints. */
+        intCurrentByte = await get(intArrayContent, intByteOffset);
+        if (await asciiIsDigit(intCurrentByte)) {
+            strCurrentInt = await implCat(strCurrentInt, await charFromByte(intCurrentByte));
+        }
+        else if (await asciiIsSpace(intCurrentByte)) {
+            intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentInt));
+            strCurrentInt = '';
+        }
+        else {
+            await implDie('Unexpected parser state in intArrFromStrPrintedArr.');
+        }
+        intByteOffset = await implAdd(intByteOffset, 1);
+    }
+    if (await ne(0, await len(strCurrentInt))) {
+        /* Ended without a trailing space */
+        intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentInt));
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function charFromHexByte(strHexByte) {
