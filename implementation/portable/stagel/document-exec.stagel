@@ -34,9 +34,10 @@ r/v/startDocumentExec n/execId
         if gt 0 n/currentPtrPos
             # Pointer's been set to a negative position, so we're done with the document
             set b/continue false
-        # Just copy it over for now
+        # Just copy the input document over for now
         set an/wipFrame get as/documentExecData n/execId
         set b/continue false
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId an/wipFrame
-       
+        set an/wipFrame ( )
+        renderDrawContents(await dcaToFormat(outFormat, strArrayDocumentExecData[execId]));
