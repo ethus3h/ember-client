@@ -296,6 +296,9 @@ r/as/utf8VariantSettings s/direction
 r/n/dcFromUnicodeChar n/char
     # Takes a character number, not a byte array.
     new n/res
+    new an/temp
+    set an/temp dcFromFormat 'unicode' anFromN n/char
+    if 
     set n/res get dcFromFormat 'unicode' anFromN n/char } } 0
     return n/res
 
