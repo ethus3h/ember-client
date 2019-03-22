@@ -1889,7 +1889,7 @@ async function prepareDocumentExec(intArrayContents) {
 async function isExecId(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
 
-    if (await implLt(intExecId, await count(intArrayDocumentExecPtrs))) {
+    if (await implLt(intExecId, await count(strArrayDocumentExecPtrs))) {
 
         boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
     }

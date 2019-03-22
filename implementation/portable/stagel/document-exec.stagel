@@ -13,7 +13,7 @@ r/n/prepareDocumentExec an/contents
     return n/execId
 
 r/b/isExecId n/execId
-    if lt n/execId count an/documentExecPtrs
+    if lt n/execId count as/documentExecPtrs
         return true
     return false
 
