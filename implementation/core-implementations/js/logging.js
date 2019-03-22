@@ -130,7 +130,18 @@ async function internalDebugStackEnter(strBlockName) {
 
     if (2 <= STAGEL_DEBUG) {
         let callstackLevel=stagelDebugCallstack.length;
-        let callstackLevelStr=":".repeat(callstackLevel);
+        let callstackLevelStr='';
+        let i=0;
+        while (i<callstackLevel) {
+            if (i%4 === 0) {
+                callstackLevelStr=callstackLevelStr+'|';
+            }
+            else {
+                callstackLevelStr=callstackLevelStr+':';
+            }
+            i=i+1;
+        }
+        //let callstackLevelStr=":".repeat(callstackLevel);
         await internalDebugQuiet(callstackLevelStr+"Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
     }
 }
