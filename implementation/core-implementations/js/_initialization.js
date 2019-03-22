@@ -22,7 +22,7 @@ let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
 let intTotalTests = 0;
-let intArrayFrameBuffer = []; // an
+let strArrayFrameBuffer = []; // as: holds space-terminated integers representing Dcs to be rendered.
 let intArrayTestFrameBuffer = []; // an
 let eiteWasmModule;
 let strArrayImportDeferredSettingsStack = []; // as
