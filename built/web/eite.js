@@ -4067,9 +4067,9 @@ async function strSplit(strIn, strSeparator) {
     while (await implLt(0, intRemainingLen)) {
         console.log('Run '+intRemainingLen+' str is '+strRemaining);
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
-            console.log('into if');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
+            console.log('if substr of "'+strRemaining+'" starting at '+intSeparLen)
             strRemaining = await substr(strRemaining, intSeparLen - 1, -1);
         }
         else {
