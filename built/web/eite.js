@@ -4084,7 +4084,7 @@ async function strSplit(strIn, strSeparator) {
             }
         }
         intRemainingLen = await len(strRemaining);
-        await console.log('Len Remaining of "'+strRemaining+'" '+intRemainingLen+' and js says it is '+strRemaining.length+' separ is "'+strSeparator+'" substr is "'+await substr(strRemaining, 0, intSeparLen)+'" compar is '+await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))+''.');
+        await console.log('Len Remaining of "'+strRemaining+'" '+intRemainingLen+' and js says it is '+strRemaining.length+' separ is "'+strSeparator+'" substr is "'+await substr(strRemaining, 0, intSeparLen)+'" compar is '+await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))+'.');
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */
