@@ -1944,6 +1944,7 @@ async function startDocumentExec(intExecId) {
     console.log('ok');
     let intArrayWipFrame = [];
     while (boolContinue) {
+        console.log('loop iter at '+intCurrentPtrPos);
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
     console.log('ok2');
     await implDie('ok2');
@@ -1951,8 +1952,12 @@ async function startDocumentExec(intExecId) {
             /* Pointer's been set to a negative position, so we're done with the document */
             boolContinue = false;
         }
+    console.log('okb');
+    await implDie('okb');
         /* FIXME Just copy the input document over for now */
         intArrayWipFrame = await get(strArrayDocumentExecData, intExecId);
+    console.log('okc');
+    await implDie('okc');
         boolContinue = false;
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, intArrayWipFrame);
