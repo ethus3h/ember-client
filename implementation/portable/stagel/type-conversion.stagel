@@ -36,9 +36,11 @@ r/as/strSplit s/in s/separator
     set n/separLen len s/separator
     new s/remaining
     set s/remaining s/in
+    new n/remainingLen
+    set n/remainingLen len s/remaining
     new s/currentElem
     new s/currentChar
-    while lt 0 len s/remaining
+    while lt 0 n/remainingLen
         if eq s/separator substr s/remaining 0 n/separLen
             set as/res push as/res s/currentElem
             set s/currentElem ''
@@ -47,6 +49,7 @@ r/as/strSplit s/in s/separator
             set s/currentChar strChar s/remaining 0
             set s/currentElem cat s/currentElem s/currentChar
             set s/remaining substr s/remaining 1 -1
+        set n/remainingLen len s/remaining
     if ne '' s/currentElem
         # No trailing delimiter
         set as/res push as/res s/currentElem
