@@ -1942,9 +1942,12 @@ async function startDocumentExec(intExecId) {
     boolContinue = true;
     let intCurrentPtrPos = 0;
     console.log('ok');
+    await implDie('ok');
     let intArrayWipFrame = [];
     while (boolContinue) {
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
+    console.log('ok2');
+    await implDie('ok2');
         if (await implGt(0, intCurrentPtrPos)) {
             /* Pointer's been set to a negative position, so we're done with the document */
             boolContinue = false;
@@ -1955,8 +1958,14 @@ async function startDocumentExec(intExecId) {
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, intArrayWipFrame);
         intArrayWipFrame = [  ];
+    console.log('ok3');
+    await implDie('ok3');
         await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
+    console.log('ok4');
+    await implDie('ok4');
     }
+    console.log('ok5');
+    await implDie('ok5');
 
     await internalDebugStackExit();
 }
