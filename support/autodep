@@ -44,6 +44,6 @@ mkdir .buildsystem-temp
     cd ember-information-technology-environment
     ./configure
     make wasm-toolchain
-    make install || true
+    make wasm-toolchain-install || true
 )
 
