@@ -4074,13 +4074,17 @@ async function strSplit(strIn, strSeparator) {
     let strCurrentChar = '';
     while (await implLt(0, intRemainingLen)) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
+            console.log('Working on the separetor');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
             strRemaining = await substr(strRemaining, await implAdd(-1, intSeparLen), -1);
         }
         else {
+            console.log('Working on a character of a fragment');
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
+            console.log('The character was '+strCurrentChar);
+            console.log('The fragment was was '+await implCat(strCurrentElem, strCurrentChar));
             if (await implGt(1, intRemainingLen)) {
                 strRemaining = await substr(strRemaining, 2, -1);
             }
