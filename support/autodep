@@ -43,7 +43,10 @@ mkdir .buildsystem-temp
     git clone --depth 1 https://github.com/ethus3h/ember-information-technology-environment.git
     cd ember-information-technology-environment
     ./configure
+    ./support/build-scripts/dist-fetch
     make wasm-toolchain
     make wasm-toolchain-install || true
 )
 
+# Run dist-fetch
+./support/build-scripts/dist-fetch
