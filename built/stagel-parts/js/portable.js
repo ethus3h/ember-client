@@ -33,7 +33,7 @@ async function getCurrentExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
-    intRes = await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1);
+    intRes = await intFromIntStr(await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -42,7 +42,7 @@ async function getNextExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getNextExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
-    intRes = await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -2);
+    intRes = await intFromIntStr(await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -2));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -2200,7 +2200,7 @@ async function strSplit(strIn, strSeparator) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
-            strRemaining = await substr(strRemaining, intSeparLen, -1);
+            strRemaining = await substr(strRemaining, await implAdd(-1, intSeparLen), -1);
         }
         else {
             strCurrentChar = await strChar(strRemaining, 0);
