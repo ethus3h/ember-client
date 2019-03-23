@@ -978,7 +978,7 @@ async function substring(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
     if (intLength < 0) {
-        intLength = str.length + intLength;
+        intLength = str.length + 1 + intLength;
     }
 
     return str.substring(intStart, intStart + intLength);
