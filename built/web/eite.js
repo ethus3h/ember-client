@@ -4067,11 +4067,13 @@ async function strSplit(strIn, strSeparator) {
     while (await implLt(0, intRemainingLen)) {
         console.log('Run '+intRemainingLen+' str is '+strRemaining);
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
+            console.log('into if');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
             strRemaining = await substr(strRemaining, intSeparLen, -1);
         }
         else {
+            console.log('into else');
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
             if (await implGt(1, intRemainingLen)) {
@@ -4082,7 +4084,7 @@ async function strSplit(strIn, strSeparator) {
             }
         }
         intRemainingLen = await len(strRemaining);
-        await implDie('Len Remaining of "'+strRemaining+'" '+intRemainingLen+' and js says it is '+strRemaining.length);
+        await console.log('Len Remaining of "'+strRemaining+'" '+intRemainingLen+' and js says it is '+strRemaining.length+' separ is "'+strSeparator+'" substr is "'+await substr(strRemaining, 0, intSeparLen)+'" compar is '+await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))+''.');
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */
