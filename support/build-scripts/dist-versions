@@ -4,7 +4,6 @@ myUnicodeVersion="12.0.0"
 
 myEmscriptenCommit="99d6e92d6c823bfc38199eceb5a8c32bd2bd7088"
 myBinaryenVersion="68"
-mySyslibBuilderCommit="332b16bb1bc430673b26fca10d5a07569a7c8d13"
 
 myWabtVersion="1.0.8"
 myGoogletestVersion="1.8.1"
