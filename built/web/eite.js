@@ -1905,6 +1905,10 @@ async function getCurrentExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
+    console.log('gcepp pointers for doc = '+await get(strArrayDocumentExecPtrs, intExecId));
+    console.log('gcepp split = '+await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','));
+    console.log(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','));
+    console.log('gcepp get = '+await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
     intRes = await intFromIntStr(await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
     console.log('gcepp got '+intRes);
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
