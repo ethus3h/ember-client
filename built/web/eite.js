@@ -4064,7 +4064,6 @@ async function strSplit(strIn, strSeparator) {
     intRemainingLen = await len(strRemaining);
     let strCurrentElem = '';
     let strCurrentChar = '';
-    await implDie('Ok Got Here');
     while (await implLt(0, intRemainingLen)) {
         console.log('Run '+intRemainingLen+' str is '+strRemaining);
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
@@ -4083,7 +4082,7 @@ async function strSplit(strIn, strSeparator) {
             }
         }
         intRemainingLen = await len(strRemaining);
-        await implDie('Len Remainingh '+intRemainingLen);
+        await implDie('Len Remaining of "'+strRemaining+'" '+intRemainingLen+' and js says it is '+strRemaining.length);
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */
