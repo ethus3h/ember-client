@@ -4070,7 +4070,7 @@ async function strSplit(strIn, strSeparator) {
             console.log('into if');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
-            strRemaining = await substr(strRemaining, intSeparLen, -1);
+            strRemaining = await substr(strRemaining, intSeparLen + 1, -1);
         }
         else {
             console.log('into else');
