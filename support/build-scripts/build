@@ -38,13 +38,13 @@ fi
 
 distBuild="--dist-build"
 if [[ "$1" == "--dist-build" ]]; then
-    distBuild="true"
+    distBuild="--dist-build"
     shift
-elif [[ "$1" == "--dist-build" ]]; then
-    distBuild="true"
+elif [[ "$1" == "--no-dist-build" ]]; then
+    distBuild="--no-dist-build"
     shift
-elif [[ "$1" == "--dist-build" ]]; then
-    distBuild="true"
+elif [[ "$1" == "--wasm-dist-build" ]]; then
+    distBuild="--wasm-dist-build"
     shift
 fi
 
