@@ -4065,6 +4065,7 @@ async function strSplit(strIn, strSeparator) {
     let strCurrentElem = '';
     let strCurrentChar = '';
     while (await implLt(0, intRemainingLen)) {
+        console.log('Run '+intRemainingLen+' str is '+strRemaining);
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
