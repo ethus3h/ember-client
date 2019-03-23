@@ -5,52 +5,185 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-[[ -f ./build-temp/dist-build-ready ]] || die "Please run build-scripts/dist-build to prepare dependencies."
+# Build third-party components
+[[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run build-scripts/dist-fetch to get them from your /usr/portage."
 
-source ./support/build-scripts/dist-versions
+rm -rf ./build-temp/unpacked
+cp -r ./build-temp/distfiles ./build-temp/unpacked
 
-#rm -rf ./built/wasm-sources
-rm -rf ./built/wasm-common
-cp -ra ./implementation/portable/wasm-sources ./built/
-mv ./built/wasm-sources ./built/wasm-common
-cd ./built/wasm-common/
+source ./support/build-scripts/dist-versions || die
 
-# Copy built library files
+# Unpack distfiles
 
-mkdir -p temp
-cp -ra ../wasm-dist-built/include ./temp
-cp -ra ../wasm-dist-built/lib ./temp
+(
+cd ./build-temp/unpacked || die
 
-# Build WASM components
+echo "Unpacking Unicode"
+mkdir "./ucd.all.flat-${myUnicodeVersion}/"
+unzip "./ucd.all.flat-${myUnicodeVersion}.zip" -d "./ucd.all.flat-${myUnicodeVersion}/"
+rm "./ucd.all.flat-${myUnicodeVersion}.zip"
 
-cToWasm() {
-    echo "Building WASM file: $1"
-    # https://web.archive.org/web/20190212131643/https://stackoverflow.com/questions/45295339/can-i-somehow-build-webassembly-code-without-the-emscripten-glue
-    clang "$1" -o "$1".o -ansi -pedantic -Werror -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration -ffunction-sections -fdata-sections -nostdinc -I./temp/include/libc -I./temp/include -I./temp/lib --target=wasm32-unknown-unknown-wasm -c -Ofast
-    mkdir -p temp
-    [[ -d "temp/lib" ]] || cp -ra ../wasm-dist-built/lib ./temp/
-    [[ -d "temp/include" ]] || cp -ra ../wasm-dist-built/include ./temp/
-    mv "$1".o temp/
+echo "Unpacking Binaryen"
+tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
+rm ./binaryen-"$myBinaryenVersion".tar.gz
+# Leave the .zip version alone; that's for pretending to be the Emscripten port system
+
+echo "Unpacking Emscripten"
+tar xozf ./emscripten-"$myEmscriptenCommit".tar.gz
+rm ./emscripten-"$myEmscriptenCommit".tar.gz
+rm -r ./emscripten-"$myEmscriptenCommit"/tools/node_modules
+rm -r ./emscripten-"$myEmscriptenCommit"/tools/eliminator
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/closure-compiler
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/html-minifier
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/ply
+rm -r ./emscripten-"$myEmscriptenCommit"/third_party/websockify
+rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-full.js
+rm ./emscripten-"$myEmscriptenCommit"/third_party/lzma.js/lzma-decoder.js
+
+echo "Unpacking wabt dependencies"
+tar xozf ./googletest-"$myGoogletestVersion".tar.gz
+rm ./googletest-"$myGoogletestVersion".tar.gz
+tar xozf ./python-lex-yacc-"$myPlyVersion".tar.gz
+rm ./python-lex-yacc-"$myPlyVersion".tar.gz
+tar xozf ./WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+rm WebAssembly-testsuite-"$myTestsuiteCommit".tar.gz
+
+echo "Unpacking wabt"
+tar xozf ./wabt-"$myWabtVersion".tar.gz
+rm ./wabt-"$myWabtVersion".tar.gz
+rm -r ./wabt-"$myWabtVersion"/src/prebuilt
+rm -r ./wabt-"$myWabtVersion"/third_party
+rm -r ./wabt-"$myWabtVersion"/demo/third_party
+rm ./wabt-"$myWabtVersion"/demo/libwabt.js
+)
+
+(
+
+rm -rf ./build-temp/build
+mkdir -p ./build-temp/build
+
+cd ./build-temp/build || die
+
+unpackedDir="$(readlink -f .)/../unpacked"
+
+echo "Building wat2wasm"
+cp -r "$unpackedDir/wabt-$myWabtVersion" ./
+cd ./wabt-"$myWabtVersion" || die
+
+echo "Building wat2wasm: Preparing dependencies"
+cp -r "$unpackedDir/emscripten-$myEmscriptenCommit" "./emscripten" || die
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./emscripten/third_party/ply" || die
+rm -rf "./third_party"
+mkdir "./third_party" || die "Error creating empty third_party directory"
+cp -r "$unpackedDir/googletest-release-${myGoogletestVersion}" "./third_party/gtest" || die
+cp -r "$unpackedDir/ply-${myPlyVersion}" "./third_party/ply" || die
+cp -r "$unpackedDir/testsuite-${myTestsuiteCommit}" "./third_party/testsuite" || die
+
+rm -rf "./src/prebuilt"
+mkdir "./src/prebuilt" || die "Error creating empty src/prebuilt directory"
+re2c -W -Werror --no-generation-date -bc8 -o src/wast-lexer-gen.cc src/wast-lexer.cc
+src/wasm2c_tmpl.py -o src/wasm2c.include.c src/wasm2c.c.tmpl
+src/wasm2c_tmpl.py -o src/wasm2c.include.h src/wasm2c.h.tmpl
+rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
+(
+    cd "$(readlink -f .)" || die
+
+    EM_CONFIG="$(readlink -f .)/.emscripten"
+    export EM_CONFIG
+    EM_CACHE="$(readlink -f .)/.emscripten_cache"
+    export EM_CACHE
+    #EMCC_DEBUG="1"
+    #export EMCC_DEBUG
+    EM_PORTS="$(readlink -f .)/.emscripten_ports"
+    export EM_PORTS
+    EMCC_TEMP_DIR="$(readlink -f .)"/.emscripten_temp
+    export EMCC_TEMP_DIR
+    TEMP_DIR="$EMCC_TEMP_DIR"
+    export TEMP_DIR
+    # Unset flags if they're set (should only apply to this subshell)
+    CFLAGS=""
+    export CFLAGS
+    CXXFLAGS=""
+    export CXXFLAGS
+    LDFLAGS=""
+    export LDFLAGS
+
+    rm -f "$EM_CONFIG"
+    rm -f ./emscripten/.emscripten
+    ln -s "$EM_CONFIG" ./emscripten/.emscripten # shared:ERROR: File /nvme0n1p5/build-temp/build/wabt-1.0.8/emscripten/.emscripten passed to --em-config does not exist!
+    rm -rf "$EM_CACHE"
+    mkdir "$EM_CACHE"
+    mkdir "$EM_CACHE/wasm_o"
+    rm -rf "$EM_PORTS"
+    mkdir "$EM_PORTS"
+    mkdir "$EM_PORTS/binaryen"
+    mkdir -p "$EMCC_TEMP_DIR"
+
+    # Based on https://github.com/emscripten-core/emscripten/blob/c53838be5d58a03d947d19047e12ac07a02afa7d/tools/ports/binaryen.py and https://github.com/emscripten-core/emscripten/blob/ef230f55772b7a2b2d4c6a29b8f1cde915bd8e3f/tools/system_libs.py
+    cp -r "$unpackedDir/binaryen-version_${myBinaryenVersion}" "$EM_PORTS/binaryen/"
     (
-        cd temp
-        # Link with libc:
-        #src/work/wasm-install/bin/lld -flavor wasm -entry=main --allow-undefined-file=src/work/wasm-install/sysroot/lib/wasm.syms -o src/work/torture-lld-musl/20020510-1.c.o.wasm src/work/torture-o/20020510-1.c.o src/work/wasm-install/sysroot/lib/libc.a
-        # Or without a libc (you need to provide one somehow):
-        # --allow-undefined allows undefined symbols in the linked executable. E.g. "extern" declarations. Should I remove that flag?
-        # All the -u symbolname stuff is needed since it uses the Emscripten libc etc. which depend on some JavaScript implementations of some stuff.
-        #wasm-ld -L./lib -lc-wasm -lc -ldlmalloc -lcompiler_rt_wasm -lcompiler_rt -lc_rt_wasm -lc-extras -lpthreads_stub -u sbrk -u __syscall6 -u __syscall146 -u __syscall140 -u __lock -u __unlock -u emscripten_memcpy_big -u __buildEnvironment --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
-        # Crashes while Web page is loading with out of memory:
-        #wasm-ld -L./lib -lc-wasm -lc -ldlmalloc -lcompiler_rt_wasm -lcompiler_rt -lc_rt_wasm -lc-extras -lpthreads_stub --allow-undefined --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
-        wasm-ld --export-dynamic --print-gc-sections --no-gc-sections --no-entry -o "$1".o.wasm "$1".o # -u _start #  --allow-undefined
-        wasm2wat --inline-exports --inline-imports -f --generate-names -o "$1".wat "$1".o.wasm
-        mv "$1".wat ../
+        echo "Building wat2wasm: Building binaryen"
+        cd "$EM_PORTS/binaryen/binaryen-version_${myBinaryenVersion}/"
+        cmake -DCMAKE_BUILD_TYPE=Release .
+        cmake --build .
+        echo "${myBinaryenVersion}" > ../tag.txt
+        echo "${myBinaryenVersion}" > "$EM_CACHE/wasm_o/binaryen_tag_version_${myBinaryenVersion}.txt"
+        cp "$unpackedDir/binaryen-${myBinaryenVersion}.zip" "$EM_PORTS/binaryen.zip"
+    )
 
-        # Or, if you want an assembly file instead:
-        #src/work/wasm-install/bin/clang src/work/gcc/gcc/testsuite/gcc.c-torture/execute/20020227-1.c -o src/work/torture-s/20020227-1.c.s --std=gnu89 -DSTACK_SIZE=1044480 -w -Wno-implicit-function-declaration --target=wasm32-unknown-unknown -S -O2 --sysroot=src/work/wasm-install/sysroot
-        # And get the binary file:
-        #src/work/wasm-install/bin/wast2wasm src/work/torture-s2wasm/loop-6.c.s.wast -o src/work/torture-wast2wasm/loop-6.c.s.wast.wasm
-    ) || die
-}
+    echo 'import os' >> "$EM_CONFIG"
+    echo 'EMSCRIPTEN_ROOT = '\'"$(readlink -f .)"\' >> "$EM_CONFIG"
+    echo 'LLVM_ROOT = '\''/usr/lib/llvm/9/bin'\' >> "$EM_CONFIG"
+    echo 'BINARYEN_ROOT = '\'\' >> "$EM_CONFIG"
+    echo 'TEMP_DIR = '\'"$EMCC_TEMP_DIR"\' >> "$EM_CONFIG"
+    echo 'NODE_JS = '\''/usr/bin/node'\' >> "$EM_CONFIG"
+    echo 'JS_ENGINES = [NODE_JS]' >> "$EM_CONFIG"
+    echo 'COMPILER_ENGINE = NODE_JS' >> "$EM_CONFIG" # Does it really need this
+    echo "COMPILER_OPTS = ['-O0']" >> "$EM_CONFIG"
 
-cToWasm simple.c
-rm -r temp
+    # Stub out minify_wasm_js method to remove (some of the) node.js dependency
+    sed '/def\ minify_wasm_js/,/return\ js_file/{//!d}' ./emscripten/tools/shared.py | sponge ./emscripten/tools/shared.py
+
+    # Confirm that a broken binaryen build isn't causing all the headache
+    echo "Building wat2wasm: Building emscripten built-in packages (libc etc)"
+    ./emscripten/embuilder.py build libc
+    ./emscripten/embuilder.py build libc-wasm
+    ./emscripten/embuilder.py build libc++_noexcept
+    ./emscripten/embuilder.py build libc++abi
+    ./emscripten/embuilder.py build compiler_rt_wasm
+    ./emscripten/embuilder.py build dlmalloc
+    ./emscripten/embuilder.py build pthreads_stub
+    ./emscripten/embuilder.py build libc-extras
+
+    echo "Building wat2wasm: Compiling"
+    #EMCC_DEBUG="1"
+    #export EMCC_DEBUG
+    EMCC_CORES="1"
+    export EMCC_CORES
+    make -j1 demo
+)
+
+)
+
+mkdir -p ./build-temp/out/wabt
+
+cp -a ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
+cp -a ./build-temp/build/wabt-"${myWabtVersion}"/out/emscripten/Release/libwabt.wasm ./build-temp/out/wabt/
+
+rm -rf ./build-temp/out/lib
+rm -rf ./build-temp/out/wasm_o
+cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/.emscripten_cache/wasm_o ./build-temp/out/
+mv ./build-temp/out/wasm_o ./build-temp/out/lib
+
+rm -rf ./build-temp/out/include
+cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/include ./build-temp/out/
+rm ./build-temp/out/include/libc/bits
+cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/lib/libc/musl/arch/emscripten/bits ./build-temp/out/include/libc/
+
+rm -r ./build-temp/unpacked
+rm -r ./build-temp/build
+touch ./build-temp/dist-build-ready
+
+rm -rf ./built/dist-built
+cp -ra ./build-temp/out ./build-temp/dist-built
+mv ./build-temp/dist-built ./built/
