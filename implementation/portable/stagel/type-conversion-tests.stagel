@@ -1,4 +1,4 @@
-r/v/runTestsTyeConversion b/v
+r/v/runTestsTypeConversion b/v
     testing b/v 'typeConversion'
     runTest b/v arrEq [ 'a' 'b' 'c' ] strSplit 'a,b,c' ','
     runTest b/v arrEq [ 'a' 'b' 'c' ] strSplit 'aabbabc' 'ab'
