@@ -1880,9 +1880,9 @@ async function prepareDocumentExec(intArrayContents) {
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
     intExecId = await count(strArrayDocumentExecPtrs);
     strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
-    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as a list of comma-prefixed ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
+    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
     strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
-    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, ',0');
+    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, '0,');
     strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
     strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
     await assertIsExecId(intExecId);
@@ -1905,12 +1905,8 @@ async function getCurrentExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
-    console.log('gcepp pointers for doc = '+await get(strArrayDocumentExecPtrs, intExecId));
-    console.log('gcepp split = '+await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','));
-    console.log(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','));
-    console.log('gcepp get = '+await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
     intRes = await intFromIntStr(await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
-    console.log('gcepp got '+intRes);
+
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
@@ -4074,17 +4070,13 @@ async function strSplit(strIn, strSeparator) {
     let strCurrentChar = '';
     while (await implLt(0, intRemainingLen)) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
-            console.log('Working on the separetor is "'+strSeparator+'" of string is "'+strRemaining+'"');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
-            strRemaining = await substr(strRemaining, await implAdd(0, intSeparLen), -1);
+            strRemaining = await substr(strRemaining, intSeparLen, -1);
         }
         else {
-            console.log('Working on a character of a fragment');
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
-            console.log('The character was '+strCurrentChar);
-            console.log('The fragment was was '+await implCat(strCurrentElem, strCurrentChar));
             if (await implGt(1, intRemainingLen)) {
                 strRemaining = await substr(strRemaining, 2, -1);
             }

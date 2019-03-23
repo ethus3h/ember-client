@@ -8,9 +8,9 @@ async function prepareDocumentExec(intArrayContents) {
     /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
     intExecId = await count(strArrayDocumentExecPtrs);
     strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
-    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as a list of comma-prefixed ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
+    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
     strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
-    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, ',0');
+    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, '0,');
     strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
     strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
     await assertIsExecId(intExecId);
@@ -2200,7 +2200,7 @@ async function strSplit(strIn, strSeparator) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
-            strRemaining = await substr(strRemaining, await implAdd(-1, intSeparLen), -1);
+            strRemaining = await substr(strRemaining, intSeparLen, -1);
         }
         else {
             strCurrentChar = await strChar(strRemaining, 0);
