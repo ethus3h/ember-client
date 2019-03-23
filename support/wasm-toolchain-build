@@ -179,6 +179,6 @@ rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
 touch ./build-temp/wasm-dist-build-ready
 
-rm -rf ./built/dist-built
-cp -ra ./build-temp/out ./build-temp/dist-built
-mv ./build-temp/dist-built ./built/
+rm -rf ./built/wasm-dist-built
+cp -ra ./build-temp/out ./build-temp/wasm-dist-built
+mv ./build-temp/wasm-dist-built ./built/
