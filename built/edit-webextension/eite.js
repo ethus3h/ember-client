@@ -3986,8 +3986,8 @@ async function prepareStrForEcho(strIn) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function runTestsTyeConversion(boolV) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTyeConversion:type-conversion-tests'); await assertIsBool(boolV);
+async function runTestsTypeConversion(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTypeConversion:type-conversion-tests'); await assertIsBool(boolV);
 
     await testing(boolV, 'typeConversion');
     await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
@@ -4060,9 +4060,11 @@ async function strSplit(strIn, strSeparator) {
     intSeparLen = await len(strSeparator);
     let strRemaining = '';
     strRemaining = strIn;
+    let intRemainingLen = 0;
+    intRemainingLen = await len(strRemaining);
     let strCurrentElem = '';
     let strCurrentChar = '';
-    while (await implLt(0, await count(strRemaining))) {
+    while (await implLt(0, intRemainingLen)) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
@@ -4071,8 +4073,14 @@ async function strSplit(strIn, strSeparator) {
         else {
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
-            strRemaining = await substr(strRemaining, 1, -1);
+            if (await implGt(1, intRemainingLen)) {
+                strRemaining = await substr(strRemaining, 2, -1);
+            }
+            else {
+                strRemaining = '';
+            }
         }
+        intRemainingLen = await len(strRemaining);
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */

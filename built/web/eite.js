@@ -1887,7 +1887,6 @@ async function prepareDocumentExec(intArrayContents) {
 }
 
 async function isExecId(intExecId) {
-    console.log('isexecid'+intExecId);
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
 
     if (await implLt(intExecId, await count(strArrayDocumentExecPtrs))) {
@@ -1941,35 +1940,21 @@ async function startDocumentExec(intExecId) {
     let boolContinue = false;
     boolContinue = true;
     let intCurrentPtrPos = 0;
-    console.log('ok');
     let intArrayWipFrame = [];
     while (boolContinue) {
-        console.log('loop iter at '+intCurrentPtrPos);
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
-    console.log('ok2');
-    await implDie('ok2');
         if (await implGt(0, intCurrentPtrPos)) {
             /* Pointer's been set to a negative position, so we're done with the document */
             boolContinue = false;
         }
-    console.log('okb');
-    await implDie('okb');
         /* FIXME Just copy the input document over for now */
         intArrayWipFrame = await get(strArrayDocumentExecData, intExecId);
-    console.log('okc');
-    await implDie('okc');
         boolContinue = false;
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, intArrayWipFrame);
         intArrayWipFrame = [  ];
-    console.log('ok3');
-    await implDie('ok3');
         await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
-    console.log('ok4');
-    await implDie('ok4');
     }
-    console.log('ok5');
-    await implDie('ok5');
 
     await internalDebugStackExit();
 }
@@ -4001,8 +3986,8 @@ async function prepareStrForEcho(strIn) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function runTestsTyeConversion(boolV) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTyeConversion:type-conversion-tests'); await assertIsBool(boolV);
+async function runTestsTypeConversion(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTypeConversion:type-conversion-tests'); await assertIsBool(boolV);
 
     await testing(boolV, 'typeConversion');
     await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
@@ -4075,10 +4060,11 @@ async function strSplit(strIn, strSeparator) {
     intSeparLen = await len(strSeparator);
     let strRemaining = '';
     strRemaining = strIn;
+    let intRemainingLen = 0;
+    intRemainingLen = await len(strRemaining);
     let strCurrentElem = '';
     let strCurrentChar = '';
-    while (await implLt(0, await len(strRemaining))) {
-        console.log('u'+await len(strRemaining)+';'+await implLt(0, await len(strRemaining)));
+    while (await implLt(0, intRemainingLen)) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
@@ -4087,8 +4073,14 @@ async function strSplit(strIn, strSeparator) {
         else {
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
-            strRemaining = await substr(strRemaining, 1, -1);
+            if (await implGt(1, intRemainingLen)) {
+                strRemaining = await substr(strRemaining, 2, -1);
+            }
+            else {
+                strRemaining = '';
+            }
         }
+        intRemainingLen = await len(strRemaining);
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */
