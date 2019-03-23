@@ -19,12 +19,12 @@ r/b/isExecId n/execId
 
 r/n/getCurrentExecPtrPos n/execId
     new n/res
-    set n/res get strSplit get as/documentExecPtrs n/execId } ',' } -1
+    set n/res intFromIntStr get strSplit get as/documentExecPtrs n/execId } ',' } -1
     return n/res
 
 r/n/getNextExecPtrPos n/execId
     new n/res
-    set n/res get strSplit get as/documentExecPtrs n/execId } ',' } -2
+    set n/res intFromIntStr get strSplit get as/documentExecPtrs n/execId } ',' } -2
     return n/res
 
 r/an/getCurrentExecData n/execId
