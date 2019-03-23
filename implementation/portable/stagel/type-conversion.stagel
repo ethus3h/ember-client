@@ -44,7 +44,7 @@ r/as/strSplit s/in s/separator
         if eq s/separator substr s/remaining 0 n/separLen
             set as/res push as/res s/currentElem
             set s/currentElem ''
-            set s/remaining substr s/remaining add -1 n/separLen } -1
+            set s/remaining substr s/remaining n/separLen -1
         else
             set s/currentChar strChar s/remaining 0
             set s/currentElem cat s/currentElem s/currentChar

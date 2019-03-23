@@ -4,9 +4,9 @@ r/n/prepareDocumentExec an/contents
     # documentExecData is a global, created during initialization. It holds the current document state for any documents being executed.
     set n/execId count as/documentExecPtrs
     set as/documentExecData push as/documentExecData strPrintArr an/contents
-    # documentExecPtrs is also a global created during init; it holds the current execution state of each document as a list of comma-prefixed ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack).
+    # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack).
     set as/documentExecSymbolIndex push as/documentExecSymbolIndex ''
-    set as/documentExecPtrs push as/documentExecPtrs ',0'
+    set as/documentExecPtrs push as/documentExecPtrs '0,'
     set as/documentExecFrames push as/documentExecFrames ''
     set as/documentExecEvents push as/documentExecEvents ''
     assertIsExecId n/execId
