@@ -6,10 +6,9 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 source ./support/build-scripts/dist-versions || die
+./support/build-scripts/dist-unpack || die "Could not run dist-unpack."
 
 # Build third-party components
-
-./support/build-scripts/dist-unpack || die "Could not run dist-unpack."
 
 (
 
