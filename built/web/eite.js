@@ -4083,6 +4083,7 @@ async function strSplit(strIn, strSeparator) {
             }
         }
         intRemainingLen = await len(strRemaining);
+        await implDie('')
     }
     if (await ne('', strCurrentElem)) {
         /* No trailing delimiter */
