@@ -1906,7 +1906,7 @@ async function getCurrentExecPtrPos(intExecId) {
 
     let intRes = 0;
     intRes = await intFromIntStr(await get(await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ','), -1));
-
+    console.log('gcepp got '+intRes);
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
