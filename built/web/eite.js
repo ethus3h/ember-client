@@ -4074,7 +4074,7 @@ async function strSplit(strIn, strSeparator) {
     let strCurrentChar = '';
     while (await implLt(0, intRemainingLen)) {
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
-            console.log('Working on the separetor');
+            console.log('Working on the separetor is "'+strSeparator+'" of string is "'+strRemaining+'"');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
             strRemaining = await substr(strRemaining, await implAdd(-1, intSeparLen), -1);
