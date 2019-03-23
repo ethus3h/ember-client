@@ -13,6 +13,10 @@ async function implCat(strA, strB) {
 async function substring(str, intStart, intLength) {
     assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
 
+    if (intLength < 0) {
+        intLength = str.length + intLength;
+    }
+
     return str.substring(intStart, intStart + intLength);
 }
 
