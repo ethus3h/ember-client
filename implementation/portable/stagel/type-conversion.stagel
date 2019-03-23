@@ -48,7 +48,10 @@ r/as/strSplit s/in s/separator
         else
             set s/currentChar strChar s/remaining 0
             set s/currentElem cat s/currentElem s/currentChar
-            set s/remaining substr s/remaining 1 -1
+            if gt 1 n/remainingLen
+                set s/remaining substr s/remaining 2 -1
+            else
+                set s/remaining ''
         set n/remainingLen len s/remaining
     if ne '' s/currentElem
         # No trailing delimiter
