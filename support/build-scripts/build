@@ -36,8 +36,14 @@ if [[ "$1" == "--fast" ]]; then
     shift
 fi
 
-distBuild="false"
+distBuild="--dist-build"
 if [[ "$1" == "--dist-build" ]]; then
+    distBuild="true"
+    shift
+elif [[ "$1" == "--dist-build" ]]; then
+    distBuild="true"
+    shift
+elif [[ "$1" == "--dist-build" ]]; then
     distBuild="true"
     shift
 fi
