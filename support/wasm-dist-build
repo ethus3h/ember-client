@@ -18,11 +18,6 @@ source ./support/build-scripts/dist-versions || die
 (
 cd ./build-temp/unpacked || die
 
-echo "Unpacking Unicode"
-mkdir "./ucd.all.flat-${myUnicodeVersion}/"
-unzip "./ucd.all.flat-${myUnicodeVersion}.zip" -d "./ucd.all.flat-${myUnicodeVersion}/"
-rm "./ucd.all.flat-${myUnicodeVersion}.zip"
-
 echo "Unpacking Binaryen"
 tar xozf ./binaryen-"$myBinaryenVersion".tar.gz
 rm ./binaryen-"$myBinaryenVersion".tar.gz
@@ -182,7 +177,7 @@ cp -ra ./build-temp/build/wabt-"${myWabtVersion}"/emscripten/system/lib/libc/mus
 
 rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
-touch ./build-temp/dist-build-ready
+touch ./build-temp/wasm-dist-build-ready
 
 rm -rf ./built/dist-built
 cp -ra ./build-temp/out ./build-temp/dist-built
