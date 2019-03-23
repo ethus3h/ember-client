@@ -44,10 +44,13 @@ r/v/startDocumentExec n/execId
     new n/currentPtrPos
     new an/wipFrame
     while b/continue
+        # This loop goes through each Dc in the document, running it.
+        # Where are we in the document? Store it in n/currentPtrPos.
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         if gt 0 n/currentPtrPos
             # Pointer's been set to a negative position, so we're done with the document
             set b/continue false
+        # 
         # FIXME Just copy the input document over for now
         set an/wipFrame get as/documentExecData n/execId
         set b/continue false
