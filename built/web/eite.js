@@ -1942,7 +1942,6 @@ async function startDocumentExec(intExecId) {
     boolContinue = true;
     let intCurrentPtrPos = 0;
     console.log('ok');
-    await implDie('ok');
     let intArrayWipFrame = [];
     while (boolContinue) {
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
