@@ -28,5 +28,5 @@ def decode(encoded):
 	print enc
 	print dec
 
-for line in sys.stdin:
+for line in sys.stdin.buffer.read():
     print encode(line)
