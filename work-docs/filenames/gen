@@ -3,5 +3,5 @@ dir="$1"
 cd "$dir" || die
 i=0
 while [[ "$i" -lt 500 ]]; do
-    bash -c 'mkdir $'\'"$i"\''
+    bash -c 'mkdir $'\'"$i"\'
 done
