@@ -37,6 +37,7 @@ r/an/getCurrentExecFrame n/execId
     set an/res intArrFromStrPrintedArr get as/documentExecFrames n/execId
     return an/res
 
+r/s/
 r/v/startDocumentExec n/execId
     assertIsExecId n/execId
     new b/continue
@@ -46,8 +47,8 @@ r/v/startDocumentExec n/execId
     new n/dc
     new an/documentWorkingCopyData
     set an/documentWorkingCopyData intArrFromStrPrintedArr get as/documentExecData n/execId
-    new s/state
-    set s/state 'normal'
+    new as/state
+    set as/state [ 'normal' ]
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
@@ -62,13 +63,20 @@ r/v/startDocumentExec n/execId
                 if in n/dc ( 246 247 )
                     set s/state 'single-line source comment'
                 elif in n/dc ( 249 250 )
-                    set s/state 'single-line source comment'
+                    set s/state 'block source comment'
                 if dcIsELCode n/dc
                     
                 elif eq n/dc 
                 else
                     # Normal Dc
                     set an/wipFrame push an/wipFrame n/dc
+            elif eq s/state 'single-line source comment'
+                if eq n/dc 248
+                    set s/state 'normal'
+            elif eq s/state 'block source comment'
+                if eq n/dc 251
+                    set s/state 'normal'
+            set n/currentPtrPos add 1 n/currentPtrPos
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
