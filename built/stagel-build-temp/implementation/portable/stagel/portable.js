@@ -2637,4 +2637,104 @@ async function dcaToAscii(intArrayContent) {
     }
     await assertIsByteArray(intArrayRes);
 
-    
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function isAsciiByte(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('isAsciiByte:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 0, 127);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsDigit(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsDigit:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 48, 57);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsPrintable(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsPrintable:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 32, 126);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsSpace(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsSpace:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await implEq(intN, 32);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsNewline(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsNewline:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolT1 = false;
+    boolT1 = await implEq(intN, 10);
+    let boolT2 = false;
+    boolT2 = await or(boolT1, await implEq(intN, 13));
+
+    boolReturn = boolT2; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetterUpper(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetterUpper:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 65, 90);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetterLower(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetterLower:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await intIsBetween(intN, 97, 122);
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsLetter(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsLetter:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await asciiIsLetterLower(intN);
+    boolTemp = await or(boolTemp, await asciiIsLetterUpper(intN));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function asciiIsAlphanum(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('asciiIsAlphanum:format-ascii'); await assertIsInt(intN); let boolReturn;
+
+    let boolTemp = false;
+    boolTemp = await asciiIsLetter(intN);
+    boolTemp = await or(boolTemp, await asciiIsDigit(intN));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function crlf() {
+    await internalDebugStackEnter('crlf:format-ascii'); let intArrayReturn;
+
+    let intArrayTemp = [];
+    intArrayTemp = [ 13, 10 ];
+
+    intArrayReturn = intArrayTemp; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+/* 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p */
+/* 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q */
+/* 2  STX    18 DC2    34 "    50 2    66 B    82 R    98  b    114 r */
+/* 3  ETX    19 DC3    35 #    51 3    67 C    83 S    99  c    115 s */
+/* 4  EOT    20 DC4    36 $    52 4    68 D    84 T    100 d    116 t */
