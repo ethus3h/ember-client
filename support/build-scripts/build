@@ -44,7 +44,7 @@ if [[ "$1" == "--fast" ]]; then
     shift
 fi
 
-distBuild="--dist-build"
+distBuild="--no-dist-build"
 if [[ "$1" == "--dist-build" ]]; then
     distBuild="--dist-build"
     shift
@@ -52,8 +52,6 @@ elif [[ "$1" == "--no-dist-build" ]]; then
     distBuild="--no-dist-build"
     shift
 fi
-# --dist-build is required I guess now
-distBuild="--dist-build"
 
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
