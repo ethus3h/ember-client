@@ -43,7 +43,7 @@ r/v/startDocumentExec n/execId
     set b/continue true
     new n/currentPtrPos
     new an/wipFrame
-    new n/currentDc
+    new n/dc
     new an/documentWorkingCopyData
     set an/documentWorkingCopyData intArrFromStrPrintedArr get as/documentExecData n/execId
     while b/continue
@@ -55,12 +55,12 @@ r/v/startDocumentExec n/execId
             set b/continue false
         else
             # The execution process basically is a big state machine.
-            set n/currentDc get an/documentWorkingCopyData n/currentPtrPos
-            if dcIsELCode n/currentDc
+            set n/dc get an/documentWorkingCopyData n/currentPtrPos
+            if dcIsELCode n/dc
                 
             else
                 # Normal Dc
-                set an/wipFrame push an/wipFrame n/currentDc
+                set an/wipFrame push an/wipFrame n/dc
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
