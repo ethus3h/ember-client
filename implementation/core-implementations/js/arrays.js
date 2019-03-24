@@ -1,8 +1,13 @@
 /* arrays, provides:
     append
+    subset
     push
+    pop
+    shift
     get
     getNext
+    first
+    last
     setElement
     count
 */
@@ -31,14 +36,15 @@ async function append(array1, array2) {
 
 async function subset(array, start, end) {
     await assertIsArray(array); await assertIsInt(start); await assertIsInt(end); let arrayReturn;
-    if (end < 0) {
-        end = await count(array) + 1 + end;
-    }
-    arrayReturn=array.slice()
-    return await append(array1, array2);
+
+    arrayReturn=array.slice(start, end);
+
+    await assertIsArray(arrayReturn); return arrayReturn;
 }
 
 async function push(array1, array2) {
+    // Not necessary since it just wraps append, which does this anyway: await assertIsArray(array1); await assertIsArray(array2);
+
     return await append(array1, array2);
 }
 
@@ -75,6 +81,14 @@ async function first(array) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
     returnVal=array[0];
+
+    await assertIsGeneric(returnVal); return returnVal;
+}
+
+async function last(array) {
+    await assertIsArray(array); await assertIsInt(index); let returnVal;
+
+    returnVal=array.slice(-1)[0];
 
     await assertIsGeneric(returnVal); return returnVal;
 }
