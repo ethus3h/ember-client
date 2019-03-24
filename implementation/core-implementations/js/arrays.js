@@ -30,10 +30,11 @@ async function append(array1, array2) {
 }
 
 async function subset(array, start, end) {
-    await assertIsArray(array); await assertIsGenericItem(array2); let arrayReturn;
+    await assertIsArray(array); await assertIsInt(start); await assertIsInt(end); let arrayReturn;
     if (end < 0) {
-        end = str.length + 1 + intLength;
+        end = await count(array) + 1 + end;
     }
+    arrayReturn=array.slice()
     return await append(array1, array2);
 }
 
