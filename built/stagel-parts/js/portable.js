@@ -2738,3 +2738,1383 @@ async function crlf() {
 /* 2  STX    18 DC2    34 "    50 2    66 B    82 R    98  b    114 r */
 /* 3  ETX    19 DC3    35 #    51 3    67 C    83 S    99  c    115 s */
 /* 4  EOT    20 DC4    36 $    52 4    68 D    84 T    100 d    116 t */
+/* 5  ENQ    21 NAK    37 %    53 5    69 E    85 U    101 e    117 u */
+/* 6  ACK    22 SYN    38 &    54 6    70 F    86 V    102 f    118 v */
+/* 7  BEL    23 ETB    39 '    55 7    71 G    87 W    103 g    119 w */
+/* 8  BS     24 CAN    40 (    56 8    72 H    88 X    104 h    120 x */
+/* 9  HT     25 EM     41 )    57 9    73 I    89 Y    105 i    121 y */
+/* 10 LF     26 SUB    42 *    58 :    74 J    90 Z    106 j    122 z */
+/* 11 VT     27 ESC    43 +    59 ;    75 K    91 [    107 k    123 { */
+/* 12 FF     28 FS     44 ,    60 <    76 L    92 \    108 l    124 | */
+/* 13 CR     29 GS     45 -    61 =    77 M    93 ]    109 m    125 } */
+/* 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~ */
+/* 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL */
+
+async function abSubset(boolArrayIn, intStart, intEnd) {
+    await internalDebugCollect('boolArray In = ' + boolArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('abSubset:arrays'); await assertIsBoolArray(boolArrayIn); await assertIsInt(intStart); await assertIsInt(intEnd); let boolArrayReturn;
+
+    let intCount = 0;
+    intCount = await count(boolArrayIn);
+    if (await implLt(intStart, 0)) {
+        intStart = await implAdd(intCount, intStart);
+    }
+    if (await implLt(intEnd, 0)) {
+        intEnd = await implAdd(intCount, intEnd);
+    }
+    let intI = 0;
+    intI = intStart;
+    intCount = intEnd;
+    let boolArrayRes = [];
+    while (await le(intI, intCount)) {
+        boolArrayRes = await push(boolArrayRes, await get(boolArrayIn, intI));
+        intI = await implAdd(intI, 1);
+    }
+
+    boolArrayReturn = boolArrayRes; await assertIsBoolArray(boolArrayReturn); await internalDebugStackExit(); return boolArrayReturn;
+}
+
+async function anSubset(intArrayIn, intStart, intEnd) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('anSubset:arrays'); await assertIsIntArray(intArrayIn); await assertIsInt(intStart); await assertIsInt(intEnd); let intArrayReturn;
+
+    let intCount = 0;
+    intCount = await count(intArrayIn);
+    if (await implLt(intStart, 0)) {
+        intStart = await implAdd(intCount, intStart);
+    }
+    if (await implLt(intEnd, 0)) {
+        intEnd = await implAdd(intCount, intEnd);
+    }
+    let intI = 0;
+    intI = intStart;
+    intCount = intEnd;
+    let intArrayRes = [];
+    while (await le(intI, intCount)) {
+        intArrayRes = await push(intArrayRes, await get(intArrayIn, intI));
+        intI = await implAdd(intI, 1);
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function asSubset(strArrayIn, intStart, intEnd) {
+    await internalDebugCollect('strArray In = ' + strArrayIn + '; '); await internalDebugCollect('int Start = ' + intStart + '; '); await internalDebugCollect('int End = ' + intEnd + '; '); await internalDebugStackEnter('asSubset:arrays'); await assertIsStrArray(strArrayIn); await assertIsInt(intStart); await assertIsInt(intEnd); let strArrayReturn;
+
+    let intCount = 0;
+    intCount = await count(strArrayIn);
+    if (await implLt(intStart, 0)) {
+        intStart = await implAdd(intCount, intStart);
+    }
+    if (await implLt(intEnd, 0)) {
+        intEnd = await implAdd(intCount, intEnd);
+    }
+    let intI = 0;
+    intI = intStart;
+    intCount = intEnd;
+    let strArrayRes = [];
+    while (await le(intI, intCount)) {
+        strArrayRes = await push(strArrayRes, await get(strArrayIn, intI));
+        intI = await implAdd(intI, 1);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function abFromB(boolIn) {
+    await internalDebugCollect('bool In = ' + boolIn + '; '); await internalDebugStackEnter('abFromB:arrays'); await assertIsBool(boolIn); let boolArrayReturn;
+
+    let boolArrayRes = [];
+    boolArrayRes = await push(boolArrayRes, boolIn);
+
+    boolArrayReturn = boolArrayRes; await assertIsBoolArray(boolArrayReturn); await internalDebugStackExit(); return boolArrayReturn;
+}
+
+async function anFromN(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('anFromN:arrays'); await assertIsInt(intIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await push(intArrayRes, intIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function asFromS(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('asFromS:arrays'); await assertIsStr(strIn); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await push(strArrayRes, strIn);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function contains(genericArrayIn, genericValue) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('contains:arrays'); await assertIsGenericArray(genericArrayIn); await assertIsGeneric(genericValue); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implEq(genericElem, genericValue)) {
+
+            boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function implIn(genericValue, genericArrayIn) {
+    await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('implIn:arrays'); await assertIsGeneric(genericValue); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    /* Convenience wrapper */
+    let boolRes = false;
+    boolRes = await contains(genericArrayIn, genericValue);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function indexOf(genericArrayIn, genericValue) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('generic Value = ' + genericValue + '; '); await internalDebugStackEnter('indexOf:arrays'); await assertIsGenericArray(genericArrayIn); await assertIsGeneric(genericValue); let intReturn;
+
+    let intCount = 0;
+    intCount = await count(genericArrayIn);
+    let intCounter = 0;
+    intCounter = 0;
+    let genericElem;
+    while (await implLt(intCounter, intCount)) {
+        genericElem = await get(genericArrayIn, intCounter);
+        if (await implEq(genericElem, genericValue)) {
+
+            intReturn = intCounter; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+        }
+        intCounter = await implAdd(intCounter, 1);
+    }
+
+    intReturn = -1; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function arrEmpty(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('arrEmpty:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implEq(0, await count(genericArrayIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function arrNonempty(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('arrNonempty:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implNot(await arrEmpty(genericArrayIn));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isArray(genericItemIn) {
+    await internalDebugCollect('genericItem In = ' + genericItemIn + '; '); await internalDebugStackEnter('isArray:arrays'); await assertIsGenericItem(genericItemIn); let boolReturn;
+
+    /* Just a convenience wrapper */
+    let boolRes = false;
+    boolRes = await isGenericArray(genericItemIn);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function arrEq(genericArrayA, genericArrayB) {
+    await internalDebugCollect('genericArray A = ' + genericArrayA + '; '); await internalDebugCollect('genericArray B = ' + genericArrayB + '; '); await internalDebugStackEnter('arrEq:arrays'); await assertIsGenericArray(genericArrayA); await assertIsGenericArray(genericArrayB); let boolReturn;
+
+    let intCount = 0;
+    intCount = await count(genericArrayA);
+    if (await ne(intCount, await count(genericArrayB))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let genericElem;
+    let intI = 0;
+    while (await implLt(intI, intCount)) {
+        genericElem = await get(genericArrayA, intI);
+        if (await ne(genericElem, await get(genericArrayB, intI))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intI = await implAdd(intI, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isIntArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isInt(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isStrArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isStrArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isStr(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBoolArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isBoolArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isBool(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isCharArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isChar(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isByteArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isByteArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isByte(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isIntBitArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isIntBitArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isIntBit(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isDcArray(genericArrayIn) {
+    await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugStackEnter('isDcArray:arrays'); await assertIsGenericArray(genericArrayIn); let boolReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(genericArrayIn), 1);
+    let genericElem;
+    while (await ge(intCount, 0)) {
+        genericElem = await get(genericArrayIn, intCount);
+        if (await implNot(await isDc(genericElem))) {
+
+            boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+        }
+        intCount = await implSub(intCount, 1);
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function sumArray(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('sumArray:arrays'); await assertIsIntArray(intArrayIn); let intReturn;
+
+    let intCount = 0;
+    intCount = await implSub(await count(intArrayIn), 1);
+    let intRes = 0;
+    while (await ge(intCount, 0)) {
+        intRes = await implAdd(intRes, await get(intArrayIn, intCount));
+        intCount = await implSub(intCount, 1);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function isNonnegative(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonnegative:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await implLt(intIn, 0)) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function intIsBetween(intN, intA, intB) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intIsBetween:math'); await assertIsInt(intN); await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    /* Checks whether N is within the range A and B, including endpoints */
+    /* Can't do it this way since it can use ints intermediately that are outside of 32 bit */
+    /*new n/t1 */
+    /*set n/t1 sub n/n n/a */
+    /*new n/t2 */
+    /*set n/t2 sub n/n n/b */
+    /*new n/t3 */
+    /*set n/t3 mul n/t1 n/t2 */
+    /*new b/temp */
+    /*set b/temp le n/t3 0 */
+    /* So instead implement using gt/lt */
+    boolTemp = await implAnd(await ge(intN, intA), await le(intN, intB));
+
+    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function intToBase36Char(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('intToBase36Char:math'); await assertIsInt(intN); let strReturn;
+
+    /* Returns the nth digit in base 36 or less (using capitalized digits). */
+    if (await implNot(await intIsBetween(intN, 0, 36))) {
+        let strTemp = '';
+        strTemp = await strFrom(intN);
+        await implDie(await implCat(await strFrom(strTemp, ' is not within the supported range of numbers between 0 and 36 (Z).')));
+    }
+    let strRes = '';
+    if (await le(intN, 9)) {
+        strRes = await charFromByte(await implAdd(intN, 48));
+    }
+    else {
+        strRes = await charFromByte(await implAdd(intN, 55));
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function intFromBase36Char(strN) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugStackEnter('intFromBase36Char:math'); await assertIsStr(strN); let intReturn;
+
+    /* Returns an int given the nth digit in base 36 or less (using capitalized digits). */
+    await assertIsChar(strN);
+    let strUc = '';
+    strUc = await strToUpper(strN);
+    let intRes = 0;
+    intRes = await byteFromChar(strUc);
+    if (await ge(intRes, 65)) {
+        if (await implGt(intRes, 90)) {
+            await implDie(await implCat(strUc, ' is not within the supported range of digits between 0 and Z (36).'));
+        }
+        intRes = await implSub(intRes, 55);
+    }
+    else {
+        if (await implNot(await intIsBetween(intRes, 48, 57))) {
+            await implDie(await implCat(strN, ' is not within the supported range of digits between 0 and Z (36).'));
+        }
+        intRes = await implSub(intRes, 48);
+    }
+    if (await implNot(await intIsBetween(intRes, 0, 36))) {
+        await implDie(await implCat('Internal error in intFromBase36Char called with n=', await implCat(strN, '.')));
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function intFromBaseStr(strN, intB) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intFromBaseStr:math'); await assertIsStr(strN); await assertIsInt(intB); let intReturn;
+
+    /* Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    await assertIsBaseStr(strN, intB);
+    let strUc = '';
+    strUc = await strToUpper(strN);
+    let intRes = 0;
+    intRes = 0;
+    let intLen = 0;
+    intLen = await len(strUc);
+    let intInt = 0;
+    intInt = 0;
+    let intPow = 0;
+    intPow = 1;
+    while (await implGt(intLen, 0)) {
+        intLen = await implSub(intLen, 1);
+        intInt = await intFromBase36Char(await strCharAtPos(strUc, intLen));
+        await assertIsTrue(await implLt(intInt, intB));
+        intRes = await implAdd(intRes, await implMul(intInt, intPow));
+        intPow = await implMul(intPow, intB);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function hexToDec(strN) {
+    await internalDebugCollect('str N = ' + strN + '; '); await internalDebugStackEnter('hexToDec:math'); await assertIsStr(strN); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromBaseStr(strN, 16);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function decToHex(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('decToHex:math'); await assertIsInt(intN); let strReturn;
+
+    let strRes = '';
+    strRes = await intToBaseStr(intN, 16);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function intToBaseStr(intN, intB) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('intToBaseStr:math'); await assertIsInt(intN); await assertIsInt(intB); let strReturn;
+
+    /* Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ */
+    let strRes = '';
+    if (await implEq(0, intN)) {
+        strRes = '0';
+    }
+    else {
+        while (await implGt(intN, 0)) {
+            strRes = await implCat(strRes, await intToBase36Char(await implMod(intN, intB)));
+            intN = await implDiv(intN, intB);
+        }
+        strRes = await reverseStr(strRes);
+    }
+    await assertIsBaseStr(strRes, intB);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function isSupportedBase(intB) {
+    await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isSupportedBase:math'); await assertIsInt(intB); let boolReturn;
+
+    /* StageL base conversion routines support base 1 to base 36. */
+    let boolRes = false;
+    boolRes = await intIsBetween(intB, 1, 36);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseDigit(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseDigit:math'); await assertIsStr(strIn); await assertIsInt(intB); let boolReturn;
+
+    await assertIsChar(strIn);
+    await assertIsSupportedBase(intB);
+    if (await implNot(await asciiIsAlphanum(await byteFromChar(strIn)))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intDigitVal = 0;
+    intDigitVal = await intFromBase36Char(strIn);
+    let boolRes = false;
+    boolRes = await implLt(intDigitVal, intB);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isBaseStr(strIn, intB) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('isBaseStr:math'); await assertIsStr(strIn); await assertIsInt(intB); let boolReturn;
+
+    let intLen = 0;
+    intLen = await len(strIn);
+    intLen = await implSub(intLen, 1);
+    await assertIsNonnegative(intLen);
+    let strChr = '';
+    let boolRes = false;
+    boolRes = true;
+    while (await ge(intLen, 0)) {
+        strChr = await strCharAtPos(strIn, intLen);
+        boolRes = await implAnd(boolRes, await isBaseDigit(strChr, intB));
+        intLen = await implSub(intLen, 1);
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function formatPercentage(intA, intB) {
+    await internalDebugCollect('int A = ' + intA + '; '); await internalDebugCollect('int B = ' + intB + '; '); await internalDebugStackEnter('formatPercentage:math'); await assertIsInt(intA); await assertIsInt(intB); let strReturn;
+
+    if (await implEq(0, intA)) {
+
+        strReturn = '0.000'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    let intPercentageN = 0;
+    intPercentageN = await implMul(100, await implDiv(await implMul(intA, 100000), intB));
+    let strPercentageTemp = '';
+    strPercentageTemp = await strFrom(intPercentageN);
+    let intCount = 0;
+    intCount = await implSub(await len(strPercentageTemp), 2);
+    let intCounter = 0;
+    intCounter = intCount;
+    let strPercentage = '';
+    let intDecimLoc = 0;
+    intDecimLoc = await implSub(intCount, 3);
+    while (await implGt(intCounter, 0)) {
+        if (await implEq(intCounter, await implSub(intCount, intDecimLoc))) {
+            strPercentage = await implCat(strPercentage, '.');
+        }
+        strPercentage = await implCat(strPercentage, await strChar(strPercentageTemp, await implSub(intCount, intCounter)));
+        intCounter = await implSub(intCounter, 1);
+    }
+
+    strReturn = strPercentage; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function isDc(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intNum = 0;
+    intNum = genericIn;
+    let boolRes = false;
+    boolRes = await isNonnegative(intNum);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isKnownDc(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isKnownDc:format-dc'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isDc(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    if (await implGt(genericIn, await maximumKnownDc())) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function maximumKnownDc() {
+    await internalDebugStackEnter('maximumKnownDc:format-dc'); let intReturn;
+
+    let strRes = '';
+    strRes = await dcDatasetLength('DcData');
+
+    intReturn = strRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function dcIsNewline(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsNewline:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    /* This function returns whether a character should be treated as a newline, in general. Individual characters may have more complex or ambiguous meanings (see details in DcData.csv), but this is useful as a general guide. */
+    /* We can't just use: */
+    /*if eq 'B' dcGetBidiClass n/dc */
+    /*    return true */
+    /* because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator). */
+    if (await contains([ 119, 120, 121, 240, 294, 295 ], intDc)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function dcIsSpace(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsSpace:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    if (await implEq('Zs', await dcGetType(intDc))) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function dcIsPrintable(intDc) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcIsPrintable:format-dc'); await assertIsInt(intDc); let boolReturn;
+
+    await assertIsDc(intDc);
+    let strType = '';
+    strType = await dcGetType(intDc);
+    let strGeneralType = '';
+    strGeneralType = await strChar(strType, 0);
+    if (await or(await implEq('Zl', strType), await implEq('Zp', strType))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    if (await or(await implEq('!', strGeneralType), await implEq('C', strGeneralType))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function getSettingForFormat(strFormat, strDirection, strSettingKey) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugCollect('str SettingKey = ' + strSettingKey + '; '); await internalDebugStackEnter('getSettingForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); await assertIsStr(strSettingKey); let strReturn;
+
+    /* s/direction can be "in" for import settings or "out" for export settings. */
+    let strArrayTemp = [];
+    strArrayTemp = await getSettingsForFormat(strFormat, strDirection);
+    let strRes = '';
+    if (await contains(strArrayTemp, strSettingKey)) {
+        strRes = await getNext(strArrayTemp, await indexOf(strArrayTemp, strSettingKey));
+    }
+    else {
+        strRes = '';
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getSettingsForFormat(strFormat, strDirection) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('getSettingsForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); let strArrayReturn;
+
+    /* Returns an array of setting key/value pairs. A format setting string looks like, which should be fairly parseable (keys and vals follow StageL ident naming rules): key1:val1,key2:val2, */
+    let intFormatId = 0;
+    intFormatId = await getFormatId(strFormat);
+    let strArrayRes = [];
+    if (await implEq(strDirection, 'in')) {
+        strArrayRes = await settingStringToArray(await getImportSettings(intFormatId));
+    }
+    else {
+        strArrayRes = await settingStringToArray(await getExportSettings(intFormatId));
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getImportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    if (await implLt(intFormatId, await count(await getImportSettingsArr()))) {
+        strRes = await get(await getImportSettingsArr(), intFormatId);
+    }
+    else {
+        strRes = '';
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getExportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
+
+    let strRes = '';
+    if (await implLt(intFormatId, await count(await getExportSettingsArr()))) {
+        strRes = await get(await getExportSettingsArr(), intFormatId);
+    }
+    else {
+        strRes = '';
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function pushImportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushImportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack). */
+    strArrayImportDeferredSettingsStack = await push(strArrayImportDeferredSettingsStack, await getImportSettings(intFormatId));
+    await setImportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function pushExportSettings(intFormatId, strNewSettingString) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushExportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
+
+    /* Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack). */
+    strArrayExportDeferredSettingsStack = await push(strArrayExportDeferredSettingsStack, await getExportSettings(intFormatId));
+    await setExportSettings(intFormatId, strNewSettingString);
+
+    await internalDebugStackExit();
+}
+
+async function popImportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popImportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setImportSettings(intFormatId, await get(strArrayImportDeferredSettingsStack, -1));
+    strArrayImportDeferredSettingsStack = await asSubset(strArrayImportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
+}
+
+async function popExportSettings(intFormatId) {
+    await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popExportSettings:formats-settings'); await assertIsInt(intFormatId);
+
+    await setExportSettings(intFormatId, await get(strArrayExportDeferredSettingsStack, -1));
+    strArrayExportDeferredSettingsStack = await asSubset(strArrayExportDeferredSettingsStack, 0, -2);
+
+    await internalDebugStackExit();
+}
+
+async function settingStringToArray(strSettings) {
+    await internalDebugCollect('str Settings = ' + strSettings + '; '); await internalDebugStackEnter('settingStringToArray:formats-settings'); await assertIsStr(strSettings); let strArrayReturn;
+
+    let strArrayRes = [];
+    intCount = await len(strSettings);
+    let intCounter = 0;
+    intCounter = 0;
+    let strElem = '';
+    let strState = '';
+    strState = 'key';
+    let strChar = '';
+    while (await implLt(intCounter, intCount)) {
+        strChar = await charAt(strSettings, intCounter);
+        if (await implEq(strState, 'key')) {
+            if (await implEq(strChar, ':')) {
+                strArrayRes = await push(strArrayRes, strElem);
+                strElem = '';
+                strState = 'val';
+            }
+            else {
+                strElem = await implCat(strElem, strChar);
+            }
+        }
+        else {
+            if (await implEq(strChar, ',')) {
+                strArrayRes = await push(strArrayRes, strElem);
+                strElem = '';
+                strState = 'key';
+            }
+            else {
+                strElem = await implCat(strElem, strChar);
+            }
+        }
+        intCounter = await implAdd(intCounter, 1);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function settingArrayToString(strArraySettings) {
+    await internalDebugCollect('strArray Settings = ' + strArraySettings + '; '); await internalDebugStackEnter('settingArrayToString:formats-settings'); await assertIsStrArray(strArraySettings); let strReturn;
+
+    let strRes = '';
+    intCount = await count(strArraySettings);
+    let intCounter = 0;
+    intCounter = 0;
+    let strElem = '';
+    while (await implLt(intCounter, intCount)) {
+        strElem = await get(strArraySettings, intCounter);
+        await assertIsTrue(await isValidIdent(strElem));
+        if (await implEq(0, await implMod(intCounter, 2))) {
+            strRes = await implCat(strRes, await implCat(strElem, ','));
+        }
+        else {
+            strRes = await implCat(strRes, await implCat(strElem, ':'));
+        }
+        intCounter = await implAdd(intCounter, 1);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcaToHtml(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHtml:format-html'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    intArrayOut = await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body>');
+    intArrayOut = await append(intArrayOut, await dcaToHtmlFragment(intArrayDcIn));
+    intArrayOut = await append(intArrayOut, await strToByteArray('</body></html>'));
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsMath(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsMath:math-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'math');
+    await runTest(boolV, await implEq(4, await implAdd(2, 2)));
+    await runTest(boolV, await ne(4, await implAdd(2, 3)));
+    await runTest(boolV, await implEq('26BD', await decToHex(9917)));
+    await runTest(boolV, await implEq(9917, await hexToDec('26BD')));
+
+    await internalDebugStackExit();
+}
+
+async function isByte(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 0, 255);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isIntBit(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isIntBit:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 0, 1);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isChar(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isChar:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    if (await implNot(await isStr(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let strVal = '';
+    strVal = genericIn;
+    let boolRes = false;
+    boolRes = await isCharByte(await byteFromChar(strVal));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isCharByte(genericIn) {
+    await internalDebugCollect('generic In = ' + genericIn + '; '); await internalDebugStackEnter('isCharByte:type-tools'); await assertIsGeneric(genericIn); let boolReturn;
+
+    /* Bear in mind that StageL doesn't attempt to support Unicode. */
+    if (await implNot(await isInt(genericIn))) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+    let intVal = 0;
+    intVal = genericIn;
+    let boolRes = false;
+    boolRes = await intIsBetween(intVal, 32, 126);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function dcaFromAsciiSafeSubset(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    let intLen = 0;
+    intLen = await count(intArrayContent);
+    let intCounter = 0;
+    intCounter = 0;
+    let strState = '';
+    strState = 'normal';
+    let intArrayPrefilter = [];
+    let intCurrentChar = 0;
+    let boolStrict = false;
+    boolStrict = false;
+    if (await implEq('true', await getSettingForFormat('asciiSafeSubset', 'in', 'strict'))) {
+        boolStrict = true;
+    }
+    while (await implLt(intCounter, intLen)) {
+        intCurrentChar = await get(intArrayContent, intCounter);
+        await assertIsTrue(await isAsciiSafeSubsetChar(intCurrentChar));
+        if (await implAnd(boolStrict, await implAnd(await implEq(strState, 'normal'), await implEq(intCurrentChar, 10)))) {
+            await implDie('LF without preceding CR not allowed in asciiSafeSubset strict mode.');
+        }
+        if (await implAnd(await implEq(strState, 'normal'), await implEq(intCurrentChar, 13))) {
+            /* Wait to see if there's a lf after this cr. If so, treat them as a unit. */
+            strState = 'crlf';
+        }
+        else if (await implEq(strState, 'crlf')) {
+            strState = 'normal';
+            intArrayPrefilter = await append(intArrayPrefilter, await crlf());
+            if (await ne(intCurrentChar, 10)) {
+                if (boolStrict) {
+                    await implDie('CR followed by non-LF byte not allowed in asciiSafeSubset strict mode.');
+                }
+                /* Reparse the current character */
+                intCounter = await implSub(intCounter, 1);
+            }
+        }
+        else {
+            intArrayPrefilter = await push(intArrayPrefilter, intCurrentChar);
+        }
+        intCounter = await implAdd(intCounter, 1);
+    }
+    intArrayPrefilter = await dcaFromAscii(intArrayPrefilter);
+
+    intArrayReturn = intArrayPrefilter; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToAsciiSafeSubset(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    let intArrayTemp = [];
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    let intDcAtIndex = 0;
+    let strState = '';
+    strState = 'normal';
+    let intArrayMapTemp = [];
+    while (await implLt(intInputIndex, intLen)) {
+        intArrayMapTemp = await dcToFormat('utf8', await get(intArrayDcIn, intInputIndex));
+        if (await implEq(0, await count(intArrayMapTemp))) {
+            intArrayTemp = await setElement(intArrayTemp, intInputIndex, -1);
+        }
+        else {
+            intArrayTemp = await setElement(intArrayTemp, intInputIndex, await get(intArrayMapTemp, 0));
+        }
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    intInputIndex = 0;
+    let intArrayTempChar = [];
+    while (await implLt(intInputIndex, intLen)) {
+        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        if (await implEq(intDcAtIndex, 121)) {
+            strState = 'crlf';
+            intInputIndex = await implAdd(intInputIndex, 1);
+            intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        }
+        if (await implEq(strState, 'normal')) {
+            intArrayTempChar = await dcToFormat('utf8', intDcAtIndex);
+            if (await implEq(0, await count(intArrayTempChar))) {
+                await exportWarningUnmappable(intInputIndex, intDcAtIndex);
+            }
+            else {
+                if (await dcIsNewline(intDcAtIndex)) {
+                    intArrayOut = await append(intArrayOut, await crlf());
+                }
+                else if (await isAsciiSafeSubsetChar(await get(intArrayTempChar, 0))) {
+                    intArrayOut = await push(intArrayOut, intArrayTempChar);
+                }
+                else {
+                    await exportWarningUnmappable(intInputIndex, intDcAtIndex);
+                }
+            }
+        }
+        else if (await implEq(strState, 'crlf')) {
+            strState = 'normal';
+            if (await implEq(intDcAtIndex, 120)) {
+                /* Found ambiguous cr, lf in a row, so only output one crlf */
+                intArrayOut = await append(intArrayOut, await crlf());
+            }
+            else {
+                /* Reprocess the current character with 'normal' state */
+                intInputIndex = await implSub(intInputIndex, 1);
+            }
+        }
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function isAsciiSafeSubsetChar(intChar) {
+    await internalDebugCollect('int Char = ' + intChar + '; '); await internalDebugStackEnter('isAsciiSafeSubsetChar:format-asciiSafeSubset'); await assertIsInt(intChar); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await or(await asciiIsPrintable(intChar), await asciiIsNewline(intChar));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function runTestsPack32(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsPack32:pack32-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'pack32');
+    await runTest(boolV, await implEq(0, await unpack32(await pack32(0))));
+    await runTest(boolV, await implEq(10, await unpack32(await pack32(10))));
+    await runTest(boolV, await implEq(100, await unpack32(await pack32(100))));
+    await runTest(boolV, await implEq(1000, await unpack32(await pack32(1000))));
+    await runTest(boolV, await implEq(10000, await unpack32(await pack32(10000))));
+
+    await internalDebugStackExit();
+}
+
+async function dcaFromFormat(strInFormat, intArrayContentBytes) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray ContentBytes = ' + intArrayContentBytes + '; '); await internalDebugStackEnter('dcaFromFormat:formats'); await assertIsStr(strInFormat); await assertIsIntArray(intArrayContentBytes); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsByteArray(intArrayContentBytes);
+    let intArrayRes = [];
+    if (await implEq(strInFormat, 'sems')) {
+        intArrayRes = await dcaFromSems(intArrayContentBytes);
+    }
+    else if (await implEq(strInFormat, 'integerList')) {
+        intArrayRes = await dcaFromIntegerList(intArrayContentBytes);
+    }
+    else if (await implEq(strInFormat, 'ascii')) {
+        intArrayRes = await dcaFromAscii(intArrayContentBytes);
+    }
+    else if (await implEq(strInFormat, 'asciiSafeSubset')) {
+        intArrayRes = await dcaFromAsciiSafeSubset(intArrayContentBytes);
+    }
+    else if (await implEq(strInFormat, 'utf8')) {
+        intArrayRes = await dcaFromUtf8(intArrayContentBytes);
+    }
+    else {
+        await implError(await implCat('Unimplemented document parsing format: ', strInFormat));
+    }
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
+    await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray DcArrayIn = ' + intArrayDcArrayIn + '; '); await internalDebugStackEnter('dcaToFormat:formats'); await assertIsStr(strOutFormat); await assertIsIntArray(intArrayDcArrayIn); let intArrayReturn;
+
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsDcArray(intArrayDcArrayIn);
+    let intArrayRes = [];
+    if (await implEq(strOutFormat, 'integerList')) {
+        intArrayRes = await dcaToIntegerList(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'ascii')) {
+        intArrayRes = await dcaToAscii(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'asciiSafeSubset')) {
+        intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'utf8')) {
+        intArrayRes = await dcaToUtf8(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'html')) {
+        intArrayRes = await dcaToHtml(intArrayDcArrayIn);
+    }
+    else if (await implEq(strOutFormat, 'htmlFragment')) {
+        intArrayRes = await dcaToHtmlFragment(intArrayDcArrayIn);
+    }
+    else {
+        await implDie(await implCat('Unimplemented document render output format: ', strOutFormat));
+    }
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function convertFormats(strInFormat, strOutFormat, intArrayIn) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('convertFormats:formats'); await assertIsStr(strInFormat); await assertIsStr(strOutFormat); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsSupportedInputFormat(strInFormat);
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsByteArray(intArrayIn);
+    let intArrayOut = [];
+    intArrayOut = await dcaToFormat(strOutFormat, await dcaFromFormat(strInFormat, intArrayIn));
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getExportExtension(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getExportExtension:formats'); await assertIsStr(strFormat); let strReturn;
+
+    /* Produces the actual file extension to be used for a file exported in the given format, with the current configured format options. */
+    let strRes = '';
+    if (await isSupportedCharEncoding(strFormat)) {
+        strRes = await implCat(await getFormatExtension(strFormat), '.txt');
+
+        strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    }
+    strRes = await getFormatExtension(strFormat);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function dcToFormat(strOutFormat, intDc) {
+    await internalDebugCollect('str OutFormat = ' + strOutFormat + '; '); await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugStackEnter('dcToFormat:formats'); await assertIsStr(strOutFormat); await assertIsInt(intDc); let intArrayReturn;
+
+    /* Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure. */
+    await assertIsSupportedOutputFormat(strOutFormat);
+    await assertIsDc(intDc);
+    let intArrayRes = [];
+    if (await implEq(strOutFormat, 'utf8')) {
+        let strLookup = '';
+        strLookup = await dcDataLookupById('mappings/to/unicode', intDc, 1);
+        if (await excOrEmpty(strLookup)) {
+            strLookup = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+        }
+        if (await notExcep(strLookup)) {
+            intArrayRes = await utf8BytesFromDecimalChar(await hexToDec(strLookup));
+        }
+    }
+    else if (await implEq(strOutFormat, 'html')) {
+        strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
+        if (await strNonempty(strRes)) {
+            intArrayRes = await strToByteArray(strRes);
+        }
+        else {
+            strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+            if (await isBaseStr(strRes, 16)) {
+                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+            }
+        }
+    }
+    else {
+        await implDie(await implCat('Unimplemented character output format: ', strOutFormat));
+    }
+    /* Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc. */
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcFromFormat(strInFormat, intArrayContent) {
+    await internalDebugCollect('str InFormat = ' + strInFormat + '; '); await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcFromFormat:formats'); await assertIsStr(strInFormat); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    /* Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure. */
+    await assertIsTrue(await isSupportedInternalFormat(strInFormat));
+    let intArrayRes = [];
+    let intDc = 0;
+    let strTemp = '';
+    if (await or(await implEq(strInFormat, 'ascii'), await implEq(strInFormat, 'unicode'))) {
+        let intC = 0;
+        intC = await get(intArrayContent, 0);
+        if (await implEq(strInFormat, 'ascii')) {
+            if (await implNot(await isAsciiByte(intC))) {
+                await implDie(await implCat('The character number ', await implCat(await strFrom(intC), ' is not a 7-bit ASCII character.')));
+            }
+        }
+        await assertIsNonnegative(intC);
+        strTemp = await dcDataLookupByValue('mappings/from/unicode', 0, await decToHex(intC), 1);
+        if (await excep(strTemp)) {
+            await implWarn(await implCat('FIXME: save unmapped unicode char ', await strFrom(intC)));
+
+            intArrayReturn = [  ]; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+        }
+        intDc = await intFromIntStr(strTemp);
+    }
+    else {
+        await implDie(await implCat('Unimplemented character source format: ', strInFormat));
+    }
+    intArrayRes = await setElement(intArrayRes, 0, intDc);
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function importWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('importWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
+
+    let strWarning = '';
+    strWarning = await implCat('A problem was encountered while importing at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem)));
+    strArrayImportWarnings = await push(strArrayImportWarnings, strWarning);
+    await implWarn(strWarning);
+
+    await internalDebugStackExit();
+}
+
+async function exportWarning(intIndex, strProblem) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Problem = ' + strProblem + '; '); await internalDebugStackEnter('exportWarning:formats'); await assertIsInt(intIndex); await assertIsStr(strProblem);
+
+    let strWarning = '';
+    strWarning = await implCat('A problem was encountered while exporting at character ', await implCat(await strFrom(intIndex), await implCat(': ', strProblem)));
+    strArrayExportWarnings = await push(strArrayExportWarnings, strWarning);
+    await implWarn(strWarning);
+
+    await internalDebugStackExit();
+}
+
+async function getImportWarnings() {
+    await internalDebugStackEnter('getImportWarnings:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = strArrayImportWarnings;
+    strArrayImportWarnings = [  ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getExportWarnings() {
+    await internalDebugStackEnter('getExportWarnings:formats'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = strArrayExportWarnings;
+    strArrayExportWarnings = [  ];
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function exportWarningUnmappable(intIndex, intProblemDc) {
+    await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('int ProblemDc = ' + intProblemDc + '; '); await internalDebugStackEnter('exportWarningUnmappable:formats'); await assertIsInt(intIndex); await assertIsInt(intProblemDc);
+
+    await exportWarning(intIndex, await implCat('The character ', await implCat(await strFrom(intProblemDc), ' could not be represented in the chosen export format.')));
+
+    await internalDebugStackExit();
+}
+
+async function dcaFromSems(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcaFromSems:format-sems'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    /* Accepts an array of bytes of a SEMS format document. Returns an array of Dcs. */
+    let intArrayContent = [];
+    intArrayContent = await utf8CharArrayFromByteArray(intArrayIn);
+    let strParserState = '';
+    strParserState = 'dc';
+    let strCurrentDc = '';
+    strCurrentDc = '';
+    let intContentLength = 0;
+    intContentLength = await count(intArrayContent);
+    let intCharOffset = 0;
+    let intCurrentChar = 0;
+    let boolStrict = false;
+    boolStrict = await implEq('true', await getSettingForFormat('sems', 'in', 'strict'));
+    while (await implLt(intCharOffset, intContentLength)) {
+        /* do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs. */
+        intCurrentChar = await get(intArrayContent, intCharOffset);
+        if (await implEq(strParserState, 'dc')) {
+            if (await asciiIsDigit(intCurrentChar)) {
+                strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentChar));
+            }
+            else if (await asciiIsSpace(intCurrentChar)) {
+                intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
+                strCurrentDc = '';
+            }
+            else if (await implEq(35, intCurrentChar)) {
+                /* pound sign: start comment */
+                if (await ne(0, await len(strCurrentDc))) {
+                    /* Comment was not preceded by a space */
+                    await warnOrDie(boolStrict, 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
+                    intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
+                }
+                intArrayRes = await push(intArrayRes, 246);
+                strParserState = 'comment';
+            }
+            else {
+                await implDie('Unexpected parser state in SEMS document.');
+            }
+        }
+        else if (await implEq(strParserState, 'comment')) {
+            if (await asciiIsNewline(intCurrentChar)) {
+                intArrayRes = await push(intArrayRes, 248);
+                strParserState = 'dc';
+            }
+            else {
+                intArrayRes = await append(intArrayRes, await dcaFromUnicodeChar(intCurrentChar));
+            }
+        }
+        else {
+            await implDie('Internal error: unexpected parser state while parsing SEMS document');
+        }
+        intCharOffset = await implAdd(intCharOffset, 1);
+    }
+    if (await implEq(strParserState, 'comment')) {
+        /* Document ended with a comment and no newline at the end */
+        if (await ne(0, await len(strCurrentDc))) {
+            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.');
+        }
+        intArrayRes = await push(intArrayRes, 248);
+    }
+    else if (await ne(0, await len(strCurrentDc))) {
+        await warnOrDie(boolStrict, 'No trailing space present in sems format while importing. This is not allowed in strict mode.');
+        /* Ended without a trailing space */
+        intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
+    }
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToSems(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToSems:format-sems'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    /* TODO: Support SEMS comment roundtripping */
+    let intArrayOut = [];
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    while (await implLt(intInputIndex, intLen)) {
+        intArrayOut = await push(intArrayOut, await strToByteArray(await implCat(await strFrom(await get(intArrayDcIn, intInputIndex), ), ' ')));
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function runTestsFormatIntegerList(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatIntegerList:format-integerlist-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'formatIntegerList');
+    await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromIntegerList([ 49, 32, 50 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToIntegerList([ 1, 2 ])));
+
+    await internalDebugStackExit();
+}
+
+async function runTestsFormatSems(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatSems:format-sems-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'formatSems');
+    /* No trailing space, will fail in strict mode. */
+    await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
+    /* Should fail but I don't have a way to test to ensure failure yet: runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 32 50 ) */
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
+    /* Comment preservation */
+    await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
+    /* UTF-8 comments */
+    await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 246, 18, 100, 82, 106, 18, 20, 57, 86, 93, 93, 96, 30, 18, 33, 72, 96, 99, 93, 85, 33, 19, 18, 281, 20, 248, 1, 2, 246, 18, 281, 248 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
+
+    await internalDebugStackExit();
+}
+
+async function runTestsFormatAsciiSafeSubset(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsFormatAsciiSafeSubset:format-asciiSafeSubset-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'formatAsciiSafeSubset');
+    await runTest(boolV, await arrEq([ 121, 120, 21, 26 ], await dcaFromAsciiSafeSubset([ 13, 10, 35, 40 ])));
+    await runTest(boolV, await arrEq([ 13, 10, 35, 13, 10, 40 ], await dcaToAsciiSafeSubset([ 0, 212, 120, 216, 291, 221, 226, 231, 21, 121, 120, 26 ])));
+
+    await internalDebugStackExit();
+}
+
+
+// @license-end
