@@ -52,5 +52,5 @@ cToWasm() {
     ) || die
 }
 
-cToWasm simple.c
+cToWasm eite-c-exts.c
 rm -r temp
