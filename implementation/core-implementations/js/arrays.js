@@ -54,6 +54,19 @@ async function getNext(array, index) {
     await assertIsGeneric(returnVal); return returnVal;
 }
 
+async function first(array) {
+    await assertIsArray(array); await assertIsInt(index); let returnVal;
+
+    if (index < 0) {
+        /* JavaScript arrays don't allow negative indices without doing it this way */
+        returnVal = array.slice(index)[0];
+    }
+    else {
+        returnVal=array[index];
+    }
+    await assertIsGeneric(returnVal); return returnVal;
+}
+
 async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 
