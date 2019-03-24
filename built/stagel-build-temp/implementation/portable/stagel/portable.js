@@ -2590,3 +2590,51 @@ async function wasmCallArrInOut(strRoutine, intArrayVals) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function dcaFromAscii(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    await assertIsByteArray(intArrayContent);
+    let intArrayRes = [];
+    let intL = 0;
+    intL = await count(intArrayContent);
+    let intC = 0;
+    intC = 0;
+    while (await implLt(intC, intL)) {
+        intArrayRes = await append(intArrayRes, await dcFromFormat('ascii', await anFromN(await get(intArrayContent, intC))));
+        intC = await implAdd(intC, 1);
+    }
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToAscii(intArrayContent) {
+    await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaToAscii:format-ascii'); await assertIsIntArray(intArrayContent); let intArrayReturn;
+
+    await assertIsDcArray(intArrayContent);
+    let intArrayRes = [];
+    let intL = 0;
+    intL = await count(intArrayContent);
+    let intC = 0;
+    intC = 0;
+    let intArrayTemp = [];
+    let intDcAtIndex = 0;
+    while (await implLt(intC, intL)) {
+        intDcAtIndex = await get(intArrayContent, intC);
+        intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
+        if (await arrNonempty(intArrayTemp)) {
+            if (await isAsciiByte(await get(intArrayTemp, 0))) {
+                intArrayRes = await append(intArrayRes, intArrayTemp);
+            }
+            else {
+                await exportWarningUnmappable(intC, intDcAtIndex);
+            }
+        }
+        else {
+            await exportWarningUnmappable(intC, intDcAtIndex);
+        }
+        intC = await implAdd(intC, 1);
+    }
+    await assertIsByteArray(intArrayRes);
+
+    
