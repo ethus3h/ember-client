@@ -93,3 +93,5 @@ mkdir -p "$emberDatadir/eite"
 cp -r built/* "$emberDatadir/eite/"
 rm -r support
 mv support.wasm-toolchain-build-temp support
+rm package-name
+mv package-name.wasm-toolchain-build-temp package-name
