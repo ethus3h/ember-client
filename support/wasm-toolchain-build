@@ -149,6 +149,3 @@ mv support.wasm-toolchain-build-temp-a support
 touch support/.no-build-data
 touch support/.no-build-scripts
 touch support/.no-build-docs
-
-mv package-name package-name.wasm-toolchain-build-temp
-echo 'eite-wasm-toolchain' > package-name

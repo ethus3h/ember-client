@@ -88,10 +88,8 @@ fi
 
 # Any extra installation logic goes here.
 
-mkdir -p "$emberDatadir/eite"
+mkdir -p "$emberDatadir/eite-wasm-toolchain"
 
-cp -r built/* "$emberDatadir/eite/"
+cp -r built/* "$emberDatadir/eite-wasm-toolchain/"
 rm -r support
 mv support.wasm-toolchain-build-temp support
-rm package-name
-mv package-name.wasm-toolchain-build-temp package-name
