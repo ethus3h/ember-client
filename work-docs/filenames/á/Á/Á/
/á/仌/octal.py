@@ -4,7 +4,7 @@ import re
 def encode(source):
 	encoded = ""
 	for character in source:
-		if (ord(character) < 32) or (ord(character) 128):
+		if (ord(character) < 32) or (ord(character) > 128):
 			for byte in character.encode('utf8'):
 				encoded += ("\%03o" % ord(byte))
 		else:
