@@ -9,10 +9,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 rm -rf ./built
 mkdir ./built
+mkdir -p ./build-temp
 
 [[ -d /usr/share/eite/wasm-dist-built ]] || die "Couldn't find the WebAssembly toolchain for EITE! Have you installed it yet? (If there's not a package available, you can run make autodep to try to install dependencies. Or, to build and install it by hand, you can make a fresh clone of the ember-information-technology-environment repository and run ./configure; ./support/build-scripts/dist-fetch; make wasm-toolchain; make wasm-toolchain-install)"
 
 cp -r /usr/share/eite/wasm-dist-built ./built/ || die "Couldn't copy the WebAssembly toolchain for EITE!"
+touch ./build-temp/wasm-dist-build-ready
 
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
@@ -48,6 +50,8 @@ elif [[ "$1" == "--no-dist-build" ]]; then
     distBuild="--no-dist-build"
     shift
 fi
+# --dist-build is required I guess now
+distBuild="--dist-build"
 
 echo "Building, please wait..."
 if [[ "$1" == "-v" ]]; then
