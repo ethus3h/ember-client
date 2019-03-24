@@ -121,4 +121,28 @@ async function startDocumentExec(intExecId) {
                             strArrayState = await pop(strArrayState);
                         }
                     }
-                    else if (await implEq(
+                    else if (await implEq('block source comment', await last(strArrayState))) {
+                        if (await implEq(intDc, 251)) {
+                            strArrayState = await pop(strArrayState);
+                        }
+                    }
+                    intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
+                }
+            }
+        }
+        /* FIXME Just copy the input document over for now */
+        intArrayWipFrame = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+        boolContinue = false;
+        /* Frame is done, so convert it to the environment-appropriate format and output it */
+        await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
+        intArrayWipFrame = [  ];
+        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
+    }
+
+    await internalDebugStackExit();
+}
+
+async function runTestsOnly(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsOnly:unit-testing'); await assertIsBool(boolV); let boolReturn;
+
+    /* Run tests without report. b/v=verbose: true=print test result lines; false=return value only */
