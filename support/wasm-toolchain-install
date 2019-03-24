@@ -91,3 +91,6 @@ fi
 mkdir -p "$emberDatadir/eite"
 
 cp -r built/* "$emberDatadir/eite/"
+rm support/.no-build-data
+rm support/.no-build-scripts
+rm support/.no-build-docs
