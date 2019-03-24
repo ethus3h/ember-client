@@ -78,7 +78,4 @@ cp -ra ./implementation/portable/eite ./built/
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
 
-rm ./build-temp/wasm-dist-build-ready
-rm -r ./built/wasm-dist-built
-
 echo "Done."
