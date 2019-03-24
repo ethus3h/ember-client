@@ -50,8 +50,9 @@ r/v/startDocumentExec n/execId
         if gt 0 n/currentPtrPos
             # Pointer's been set to a negative position, so we're done with the document
             set b/continue false
-        # The execution process basically is a big state machine.
-        
+        else
+            # The execution process basically is a big state machine.
+            
         # FIXME Just copy the input document over for now
         set an/wipFrame get as/documentExecData n/execId
         set b/continue false
