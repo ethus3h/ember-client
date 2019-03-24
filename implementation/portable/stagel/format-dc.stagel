@@ -53,3 +53,9 @@ r/b/dcIsELCode n/dc
     new b/res
     set b/res eq 'EL ' substr dcGetScript n/dc } 0 3
     return b/res
+
+r/b/dcGetELClass n/dc
+    assertIsDc n/dc
+    new b/res
+    set b/res eq 'EL ' substr dcGetScript n/dc } 0 3
+    return b/res
