@@ -2,11 +2,11 @@
 dir="$1"
 cmd="$2"
 if [[ "" == "$cmd" ]]; then
-    cmd="mkdir"
+    cmd="mkdir -p"
 fi
 cd "$dir" || die
 i=0
 while [[ "$i" -lt 500 ]]; do
-    bash -c "$cmd"' $'\'"$i"\''; cd $'\'"$i"\''; ../../gen "$(pwd)" "touch"'
+    bash -c "$cmd"' $'\'"$i"\''; cd $'\'"$i"\''; pwd; ../../gen "$(pwd)" "touch"'
     i=$(( i + 1 ))
 done
