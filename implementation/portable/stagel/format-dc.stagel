@@ -48,8 +48,8 @@ r/b/dcIsPrintable n/dc
         return false
     return true
 
-r/s/dcGetScript n/dc
+r/b/dcIsELCode n/dc
     assertIsDc n/dc
-    new s/res
-    set s/res dcGetField n/dc 6
-    return s/res
+    new b/res
+    set b/res eq 'EL ' substr dcGetScript n/dc } 0 3
+    return b/res
