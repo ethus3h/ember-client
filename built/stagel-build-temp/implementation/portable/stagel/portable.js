@@ -56,4 +56,67 @@ async function runTest(boolV, boolTestReturn) {
         if (boolV) {
             intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), ' failed.'))));
         }
-        intFailedTests = await implAdd(
+        intFailedTests = await implAdd(intFailedTests, 1);
+    }
+    if (boolV) {
+        await renderDrawContents(intArrayTestFrameBuffer);
+    }
+
+    boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function runTestNamed(boolV, strTestName, boolTestReturn) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('bool TestReturn = ' + boolTestReturn + '; '); await internalDebugStackEnter('runTestNamed:unit-testing'); await assertIsBool(boolV); await assertIsStr(strTestName); await assertIsBool(boolTestReturn); let boolReturn;
+
+    intTotalTests = await implAdd(intTotalTests, 1);
+    if (boolTestReturn) {
+        if (boolV) {
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' passed.')))));
+        }
+        intPassedTests = await implAdd(intPassedTests, 1);
+    }
+    else {
+        if (boolV) {
+            intArrayTestFrameBuffer = await append(intArrayTestFrameBuffer, await prepareStrForEcho(await implCat('Test #', await implCat(await strFrom(intTotalTests), await implCat(strTestName, ' failed.')))));
+        }
+        intFailedTests = await implAdd(intFailedTests, 1);
+    }
+    if (boolV) {
+        await renderDrawContents(intArrayTestFrameBuffer);
+    }
+
+    boolReturn = boolTestReturn; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function clearTestStats() {
+    await internalDebugStackEnter('clearTestStats:unit-testing');
+
+    intTotalTests = 0;
+    intPassedTests = 0;
+    intFailedTests = 0;
+
+    await internalDebugStackExit();
+}
+
+async function reportTests() {
+    await internalDebugStackEnter('reportTests:unit-testing'); let boolReturn;
+
+    let strPassedWord = '';
+    strPassedWord = 'tests';
+    if (await implEq(intPassedTests, 1)) {
+        strPassedWord = 'test';
+    }
+    let strFailedWord = '';
+    strFailedWord = 'tests';
+    if (await implEq(intFailedTests, 1)) {
+        strFailedWord = 'test';
+    }
+    let strTotalWord = '';
+    strTotalWord = 'tests';
+    if (await implEq(intTotalTests, 1)) {
+        strTotalWord = 'test';
+    }
+    let strPassedPercentage = '';
+    strPassedPercentage = await formatPercentage(intPassedTests, intTotalTests);
+    let strFailedPercentage = '';
+    strFailedPercentage = await formatPercentage(
