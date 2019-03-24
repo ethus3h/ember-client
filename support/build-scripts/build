@@ -16,6 +16,8 @@ mkdir -p ./build-temp
 cp -r /usr/share/eite/wasm-dist-built ./built/ || die "Couldn't copy the WebAssembly toolchain for EITE!"
 touch ./build-temp/wasm-dist-build-ready
 
+[[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run support/dist-fetch to get them from your /usr/portage."
+
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 

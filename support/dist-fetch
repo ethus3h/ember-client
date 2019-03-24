@@ -40,5 +40,3 @@ else
         wget "https://github.com/WebAssembly/testsuite/archive/${myTestsuiteCommit}.tar.gz" -O "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz"
     )
 fi
-
-./support/dist-build
