@@ -27,6 +27,7 @@ cd "./ucd.all.flat-${myUnicodeVersion}" || die
 splitUcd() {
     chunk="$1"
     char="$2"
+    # requires gawk or compatible
     awk '{print $0 > "file" NR}' RS='      <char cp="'"$char"'"' ucd.all.flat.xml."$chunk"
     nextChunk=$(( chunk + 1 ))
     mv file1 ucd.all.flat.xml."$chunk"
