@@ -56,7 +56,10 @@ r/v/startDocumentExec n/execId
         else
             # The execution process basically is a big state machine.
             set n/currentDc get an/documentWorkingCopyData n/currentPtrPos
-            if 
+            if eq
+            else
+                # Normal Dc
+                set an/wipFrame push an/wipFrame n/currentDc
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
