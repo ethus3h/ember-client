@@ -46,6 +46,8 @@ r/v/startDocumentExec n/execId
     new n/dc
     new an/documentWorkingCopyData
     set an/documentWorkingCopyData intArrFromStrPrintedArr get as/documentExecData n/execId
+    new s/state
+    set s/state 'normal'
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
@@ -56,8 +58,10 @@ r/v/startDocumentExec n/execId
         else
             # The execution process basically is a big state machine.
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
+            if eq n/dc
             if dcIsELCode n/dc
                 
+            elif eq n/dc 
             else
                 # Normal Dc
                 set an/wipFrame push an/wipFrame n/dc
