@@ -140,7 +140,6 @@ rm -rf ./built/wasm-dist-built
 cp -ra ./build-temp/out ./build-temp/wasm-dist-built
 mv ./build-temp/wasm-dist-built ./built/
 
-mkdir ./built/wasm-dist-built
 cp -r support support.wasm-toolchain-build-temp-a
 mv support support.wasm-toolchain-build-temp
 mv support.wasm-toolchain-build-temp-a support
