@@ -7,7 +7,7 @@ fi
 cd "$dir" || die
 i=0
 gencmd="../gen"
-[[ -e "$gencmd" ]] || gencmd="../../gen"
+[[ -e "./gen" ]] || gencmd="../../gen"
 while [[ "$i" -lt 500 ]]; do
     bash -c "$cmd"' $'\'"$i"\''; cd $'\'"$i"\''; pwd; '"$gencmd"' "$(pwd)" "touch"'
     i=$(( i + 1 ))
