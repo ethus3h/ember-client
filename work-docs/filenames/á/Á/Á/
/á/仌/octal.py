@@ -29,4 +29,4 @@ def decode(encoded):
 	print dec
 
 for line in sys.stdin:
-    print decode(line)
+    print encode(line)
