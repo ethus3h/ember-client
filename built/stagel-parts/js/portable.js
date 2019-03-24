@@ -10,7 +10,7 @@ async function runTestsOnly(boolV) {
     await runTestsMath(boolV);
     await runTestsPack32(boolV);
     await runTestsTypeConversion(boolV);
-    /*runTestsWasm b/v */
+    await runTestsWasm(boolV);
     /* Core tests */
     await runTestsDcData(boolV);
     await runTestsFormatDc(boolV);
