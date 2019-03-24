@@ -30,6 +30,7 @@ splitUcd() {
     awk '{print $0 > "file" NR}' RS='      <char cp="'"$char"'"' ucd.all.flat.xml."$chunk"
     nextChunk=$(( chunk + 1 ))
     mv file1 ucd.all.flat.xml."$chunk"
+    truncate -s -1 ucd.all.flat.xml."$chunk"
     mv file2 ucd.all.flat.xml."$nextChunk"
     print '      <char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
 }
