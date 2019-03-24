@@ -35,9 +35,22 @@ splitUcd() {
     print '      <char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
 }
 cp ucd.all.flat.xml ucd.all.flat.xml.1
-splitUcd "1" "0000"
-splitUcd "2" "0002"
-splitUcd "3" "0003"
+splitUcd "1" "FFFF"
+splitUcd "2" "1FFFF"
+splitUcd "3" "2FFFF"
+splitUcd "4" "3FFFF"
+splitUcd "5" "4FFFF"
+splitUcd "6" "5FFFF"
+splitUcd "7" "6FFFF"
+splitUcd "8" "7FFFF"
+splitUcd "9" "8FFFF"
+splitUcd "10" "9FFFF"
+splitUcd "11" "AFFFF"
+splitUcd "12" "BFFFF"
+splitUcd "13" "CFFFF"
+splitUcd "14" "DFFFF"
+splitUcd "15" "EFFFF"
+splitUcd "16" "FFFFF"
 awk '{print $0 > "file" NR}' RS='<char cp="0001"' work-docs/2019mar23-test.xml
 '<char cp="0001"'
 
