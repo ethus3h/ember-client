@@ -17,7 +17,7 @@ mkdir -p ./build-temp/build
 cd ./build-temp/build || die
 
 unpackedDir="$(readlink -f .)/../unpacked"
-if false; then
+
 echo "Building wat2wasm"
 cp -r "$unpackedDir/wabt-$myWabtVersion" ./
 cd ./wabt-"$myWabtVersion" || die
@@ -114,9 +114,9 @@ rm src/wasm2c.{c,h}.tmpl src/wasm2c_tmpl.py
     export EMCC_CORES
     make -j1 demo
 )
-fi
+
 )
-if false; then
+
 mkdir -p ./build-temp/out/wabt
 
 cp -a ./build-temp/build/wabt-"${myWabtVersion}"/demo/libwabt.js ./build-temp/out/wabt/
@@ -139,7 +139,7 @@ touch ./build-temp/wasm-dist-build-ready
 rm -rf ./built/wasm-dist-built
 cp -ra ./build-temp/out ./build-temp/wasm-dist-built
 mv ./build-temp/wasm-dist-built ./built/
-fi
+
 mkdir ./built/wasm-dist-built
 cp -r support support.wasm-toolchain-build-temp-a
 mv support support.wasm-toolchain-build-temp
