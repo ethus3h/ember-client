@@ -29,6 +29,7 @@ slcmd="./support/build-scripts/build-stagel-inner"
 srcmd="./support/build-scripts/build-stager-inner"
 #[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
+rm -rf ./built/stagel-parts
 mkdir ./built/stagel-parts
 
 targets=(js sh)

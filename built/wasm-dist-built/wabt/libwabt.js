@@ -313,7 +313,7 @@ var asm2wasmImports = { // special asm2wasm imports
 
 
 
-var jsCallStartIndex = 828;
+var jsCallStartIndex = 877;
 var jsCallSigOrder = {"ii":0,"iii":1,"iiii":2,"iiiii":3,"iiiiii":4,"iiiiiii":5,"iiiiiiii":6,"iiij":7,"iij":8,"v":9,"vi":10,"vii":11,"viii":12,"viiii":13,"viiiii":14,"viiiiii":15};
 var jsCallNumSigs = Object.keys(jsCallSigOrder).length;
 var functionPointers = new Array(jsCallNumSigs * 10);
@@ -1112,11 +1112,11 @@ function updateGlobalBufferViews() {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5574592,
+    STACK_BASE = 5576720,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 331712,
-    DYNAMIC_BASE = 5574592,
-    DYNAMICTOP_PTR = 331456;
+    STACK_MAX = 333840,
+    DYNAMIC_BASE = 5576720,
+    DYNAMICTOP_PTR = 333584;
 
 
 
@@ -1476,8 +1476,8 @@ Module['asm'] = function(global, env, providedBuffer) {
   ;
   // import table
   env['table'] = wasmTable = new WebAssembly.Table({
-    'initial': 988,
-    'maximum': 988,
+    'initial': 1037,
+    'maximum': 1037,
     'element': 'anyfunc'
   });
   env['__memory_base'] = 1024; // tell the memory segments where to place themselves
@@ -1494,13 +1494,13 @@ var ASM_CONSTS = [];
 
 
 
-// STATICTOP = STATIC_BASE + 330688;
+// STATICTOP = STATIC_BASE + 332816;
 /* global initializers */  __ATINIT__.push({ func: function() { ___post_instantiate() } });
 
 
 
 /* no memory initializer */
-var tempDoublePtr = 331696
+var tempDoublePtr = 333824
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
   HEAP8[tempDoublePtr] = HEAP8[ptr];
@@ -1961,6 +1961,7 @@ var __get_environ = Module["__get_environ"] = function() {  return Module["asm"]
 var __malloc = Module["__malloc"] = function() {  return Module["asm"]["_malloc"].apply(null, arguments) };
 var __setThrew = Module["__setThrew"] = function() {  return Module["asm"]["_setThrew"].apply(null, arguments) };
 var __wabt_apply_names_module = Module["__wabt_apply_names_module"] = function() {  return Module["asm"]["_wabt_apply_names_module"].apply(null, arguments) };
+var __wabt_bulk_memory_enabled = Module["__wabt_bulk_memory_enabled"] = function() {  return Module["asm"]["_wabt_bulk_memory_enabled"].apply(null, arguments) };
 var __wabt_destroy_errors = Module["__wabt_destroy_errors"] = function() {  return Module["asm"]["_wabt_destroy_errors"].apply(null, arguments) };
 var __wabt_destroy_features = Module["__wabt_destroy_features"] = function() {  return Module["asm"]["_wabt_destroy_features"].apply(null, arguments) };
 var __wabt_destroy_module = Module["__wabt_destroy_module"] = function() {  return Module["asm"]["_wabt_destroy_module"].apply(null, arguments) };
@@ -1989,11 +1990,14 @@ var __wabt_parse_wat_result_release_module = Module["__wabt_parse_wat_result_rel
 var __wabt_read_binary = Module["__wabt_read_binary"] = function() {  return Module["asm"]["_wabt_read_binary"].apply(null, arguments) };
 var __wabt_read_binary_result_get_result = Module["__wabt_read_binary_result_get_result"] = function() {  return Module["asm"]["_wabt_read_binary_result_get_result"].apply(null, arguments) };
 var __wabt_read_binary_result_release_module = Module["__wabt_read_binary_result_release_module"] = function() {  return Module["asm"]["_wabt_read_binary_result_release_module"].apply(null, arguments) };
+var __wabt_reference_types_enabled = Module["__wabt_reference_types_enabled"] = function() {  return Module["asm"]["_wabt_reference_types_enabled"].apply(null, arguments) };
 var __wabt_resolve_names_module = Module["__wabt_resolve_names_module"] = function() {  return Module["asm"]["_wabt_resolve_names_module"].apply(null, arguments) };
 var __wabt_sat_float_to_int_enabled = Module["__wabt_sat_float_to_int_enabled"] = function() {  return Module["asm"]["_wabt_sat_float_to_int_enabled"].apply(null, arguments) };
+var __wabt_set_bulk_memory_enabled = Module["__wabt_set_bulk_memory_enabled"] = function() {  return Module["asm"]["_wabt_set_bulk_memory_enabled"].apply(null, arguments) };
 var __wabt_set_exceptions_enabled = Module["__wabt_set_exceptions_enabled"] = function() {  return Module["asm"]["_wabt_set_exceptions_enabled"].apply(null, arguments) };
 var __wabt_set_multi_value_enabled = Module["__wabt_set_multi_value_enabled"] = function() {  return Module["asm"]["_wabt_set_multi_value_enabled"].apply(null, arguments) };
 var __wabt_set_mutable_globals_enabled = Module["__wabt_set_mutable_globals_enabled"] = function() {  return Module["asm"]["_wabt_set_mutable_globals_enabled"].apply(null, arguments) };
+var __wabt_set_reference_types_enabled = Module["__wabt_set_reference_types_enabled"] = function() {  return Module["asm"]["_wabt_set_reference_types_enabled"].apply(null, arguments) };
 var __wabt_set_sat_float_to_int_enabled = Module["__wabt_set_sat_float_to_int_enabled"] = function() {  return Module["asm"]["_wabt_set_sat_float_to_int_enabled"].apply(null, arguments) };
 var __wabt_set_sign_extension_enabled = Module["__wabt_set_sign_extension_enabled"] = function() {  return Module["asm"]["_wabt_set_sign_extension_enabled"].apply(null, arguments) };
 var __wabt_set_simd_enabled = Module["__wabt_set_simd_enabled"] = function() {  return Module["asm"]["_wabt_set_simd_enabled"].apply(null, arguments) };
@@ -2034,6 +2038,7 @@ var stackAlloc = Module["stackAlloc"] = function() {  return Module["asm"]["stac
 var stackRestore = Module["stackRestore"] = function() {  return Module["asm"]["stackRestore"].apply(null, arguments) };
 var stackSave = Module["stackSave"] = function() {  return Module["asm"]["stackSave"].apply(null, arguments) };
 var _wabt_apply_names_module = Module["_wabt_apply_names_module"] = function() {  return Module["asm"]["wabt_apply_names_module"].apply(null, arguments) };
+var _wabt_bulk_memory_enabled = Module["_wabt_bulk_memory_enabled"] = function() {  return Module["asm"]["wabt_bulk_memory_enabled"].apply(null, arguments) };
 var _wabt_destroy_errors = Module["_wabt_destroy_errors"] = function() {  return Module["asm"]["wabt_destroy_errors"].apply(null, arguments) };
 var _wabt_destroy_features = Module["_wabt_destroy_features"] = function() {  return Module["asm"]["wabt_destroy_features"].apply(null, arguments) };
 var _wabt_destroy_module = Module["_wabt_destroy_module"] = function() {  return Module["asm"]["wabt_destroy_module"].apply(null, arguments) };
@@ -2062,11 +2067,14 @@ var _wabt_parse_wat_result_release_module = Module["_wabt_parse_wat_result_relea
 var _wabt_read_binary = Module["_wabt_read_binary"] = function() {  return Module["asm"]["wabt_read_binary"].apply(null, arguments) };
 var _wabt_read_binary_result_get_result = Module["_wabt_read_binary_result_get_result"] = function() {  return Module["asm"]["wabt_read_binary_result_get_result"].apply(null, arguments) };
 var _wabt_read_binary_result_release_module = Module["_wabt_read_binary_result_release_module"] = function() {  return Module["asm"]["wabt_read_binary_result_release_module"].apply(null, arguments) };
+var _wabt_reference_types_enabled = Module["_wabt_reference_types_enabled"] = function() {  return Module["asm"]["wabt_reference_types_enabled"].apply(null, arguments) };
 var _wabt_resolve_names_module = Module["_wabt_resolve_names_module"] = function() {  return Module["asm"]["wabt_resolve_names_module"].apply(null, arguments) };
 var _wabt_sat_float_to_int_enabled = Module["_wabt_sat_float_to_int_enabled"] = function() {  return Module["asm"]["wabt_sat_float_to_int_enabled"].apply(null, arguments) };
+var _wabt_set_bulk_memory_enabled = Module["_wabt_set_bulk_memory_enabled"] = function() {  return Module["asm"]["wabt_set_bulk_memory_enabled"].apply(null, arguments) };
 var _wabt_set_exceptions_enabled = Module["_wabt_set_exceptions_enabled"] = function() {  return Module["asm"]["wabt_set_exceptions_enabled"].apply(null, arguments) };
 var _wabt_set_multi_value_enabled = Module["_wabt_set_multi_value_enabled"] = function() {  return Module["asm"]["wabt_set_multi_value_enabled"].apply(null, arguments) };
 var _wabt_set_mutable_globals_enabled = Module["_wabt_set_mutable_globals_enabled"] = function() {  return Module["asm"]["wabt_set_mutable_globals_enabled"].apply(null, arguments) };
+var _wabt_set_reference_types_enabled = Module["_wabt_set_reference_types_enabled"] = function() {  return Module["asm"]["wabt_set_reference_types_enabled"].apply(null, arguments) };
 var _wabt_set_sat_float_to_int_enabled = Module["_wabt_set_sat_float_to_int_enabled"] = function() {  return Module["asm"]["wabt_set_sat_float_to_int_enabled"].apply(null, arguments) };
 var _wabt_set_sign_extension_enabled = Module["_wabt_set_sign_extension_enabled"] = function() {  return Module["asm"]["wabt_set_sign_extension_enabled"].apply(null, arguments) };
 var _wabt_set_simd_enabled = Module["_wabt_set_simd_enabled"] = function() {  return Module["asm"]["wabt_set_simd_enabled"].apply(null, arguments) };
@@ -2415,6 +2423,8 @@ var FEATURES = [
   'threads',
   'multi_value',
   'tail_call',
+  'bulk_memory',
+  'reference_types',
 ];
 
 /// If value is not undefined, return it. Otherwise return default_.
@@ -2538,7 +2548,7 @@ OutputBuffer.prototype.toString = function() {
 
   var addr = Module._wabt_output_buffer_get_data(this.addr);
   var size = Module._wabt_output_buffer_get_size(this.addr);
-  return Pointer_stringify(addr, size);
+  return UTF8ToString(addr, size);
 };
 
 OutputBuffer.prototype.destroy = function() {
