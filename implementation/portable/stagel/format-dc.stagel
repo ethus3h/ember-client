@@ -47,3 +47,9 @@ r/b/dcIsPrintable n/dc
     if or eq '!' s/generalType } eq 'C' s/generalType
         return false
     return true
+
+r/s/dcGetScript n/dc
+    assertIsDc n/dc
+    new s/res
+    set s/res dcGetField n/dc 6
+    return s/res
