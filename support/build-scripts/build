@@ -50,7 +50,7 @@ mkdir -p ./build-temp
 
 # Test xattrs
 val="27b9972c-b850-49c5-be68-8990ace4791c"
-fn="94ba7f80-2119-400c-9220-d389ebc2252c"
+fn="94ba7f80-2119-400c-9220-d389ebc2252c"$'\x0aa'
 an="a27c619729c84425c8e64ec38d05244e4"
 touch "$fn"
 setfattr -n "user.$an" -v "$val" "$fn"
