@@ -1731,3 +1731,55 @@ async function byteArrayFromBasenbUtf8(intArrayIn) {
 
     await assertIsByteArray(intArrayIn);
     let intArrayRes = [];
+    /* Extract remainder length */
+    let intRemainder = 0;
+    let intArrayRemainderArr = [];
+    /* last 3 bytes (1 character), which represent the remainder */
+    intArrayRemainderArr = await anSubset(intArrayIn, -3, -1);
+    if (await implNot(await isBasenbDistinctRemainderChar(intArrayRemainderArr))) {
+        /* last 4 bytes (1 character), which represent the remainder */
+        intArrayRemainderArr = await anSubset(intArrayIn, -4, -1);
+        let intArrayRemainderDecodedArr = [];
+        intArrayRemainderDecodedArr = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(intArrayRemainderArr, 8));
+        intRemainder = await implAdd(-2, await get(intArrayRemainderDecodedArr, 0));
+    }
+    else {
+        intRemainder = await implSub(63497, await unpack32(intArrayRemainderArr));
+    }
+    if (await ngt(await count(intArrayIn), await count(intArrayRemainderArr))) {
+        /* All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037) */
+        intArrayRes = [ 51, 98, 218, 163, 23, 5, 64, 236, 154, 151, 89, 208, 82, 253, 64, 55 ];
+
+        intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+    }
+    intArrayRes = await byteArrayFromIntBitArray(await internalIntBitArrayFromBasenbString(await anSubset(intArrayIn, 0, await implAdd(-1, await implMul(-1, await count(intArrayRemainderArr), ), ), ), intRemainder));
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayToBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayToBase17bUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Convenience wrapper */
+    let intArrayRes = [];
+    intArrayRes = await byteArrayToBasenbUtf8(17, intArrayIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function byteArrayFromBase17bUtf8(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('byteArrayFromBase17bUtf8:basenb-utf8'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    /* Convenience wrapper */
+    let intArrayRes = [];
+    intArrayRes = await byteArrayFromBasenbUtf8(intArrayIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getArmoredUtf8EmbeddedStartUuid() {
+    await internalDebugStackEnter('getArmoredUtf8EmbeddedStartUuid:basenb-utf8'); let intArrayReturn;
+
+    /* start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f */
+    /*new an/startUuid */
