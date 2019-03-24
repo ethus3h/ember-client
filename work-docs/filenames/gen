@@ -8,8 +8,8 @@ cd "$dir" || die
 i=0
 gencmd="../gen"
 [[ -e "./gen" ]] || gencmd="../../gen"
-a=$'150'; mkdir "$a"
+#a=$'150'; mkdir "$a"
 while [[ "$i" -lt 500 ]]; do
-    bash -c 'a=$'\'"$i"\''; xxd <<< "$a"; '"$cmd"' "$a"; cd "$a"; pwd; #'"$gencmd"' "$(pwd)" "touch"'
+    bash -c 'a=$'\'\\"$i"\''; xxd <<< "$a"; '"$cmd"' "$a"; cd "$a"; pwd; #'"$gencmd"' "$(pwd)" "touch"'
     i=$(( i + 1 ))
 done
