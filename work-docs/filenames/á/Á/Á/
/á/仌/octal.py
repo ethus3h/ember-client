@@ -1,4 +1,4 @@
-
+#https://bytes.com/topic/python/answers/743965-converting-octal-escaped-utf-8-a
 import re
 
 def encode(source):
