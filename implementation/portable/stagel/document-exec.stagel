@@ -65,11 +65,8 @@ r/v/startDocumentExec n/execId
                 set n/currentPtrPos add 1 n/currentPtrPos
             else
                 if eq n/dc 255
-                    if b/lastCharacterWasEscape
-                        set b/lastCharacterWasEscape false
-                    else
-                        set b/lastCharacterWasEscape true
-                        set n/currentPtrPos add 1 n/currentPtrPos
+                    set b/lastCharacterWasEscape true
+                    set n/currentPtrPos add 1 n/currentPtrPos
                 else
                     if eq 'normal' last as/state
                         if in n/dc ( 246 247 )

@@ -41,3 +41,5 @@ Each Dc will need  more work to be implemented in each input and output format, 
 
 Web extension for input into text field and display of selected text
 # FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness; are script tags executed in order
+
+Idea for StageL: Make things like "set as/arr push as/arr s/val" nicer to write: how about: ": push as/arr val"
