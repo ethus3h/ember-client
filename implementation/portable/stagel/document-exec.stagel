@@ -37,7 +37,6 @@ r/an/getCurrentExecFrame n/execId
     set an/res intArrFromStrPrintedArr get as/documentExecFrames n/execId
     return an/res
 
-r/s/
 r/v/startDocumentExec n/execId
     assertIsExecId n/execId
     new b/continue
@@ -49,6 +48,8 @@ r/v/startDocumentExec n/execId
     set an/documentWorkingCopyData intArrFromStrPrintedArr get as/documentExecData n/execId
     new as/state
     set as/state [ 'normal' ]
+    new b/lastCharacterWasEscape
+    set b/lastCharacterWasEscape false
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
@@ -59,24 +60,32 @@ r/v/startDocumentExec n/execId
         else
             # The execution process basically is a big state machine.
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
-            if eq s/state 'normal'
-                if in n/dc ( 246 247 )
-                    set s/state 'single-line source comment'
-                elif in n/dc ( 249 250 )
-                    set s/state 'block source comment'
-                if dcIsELCode n/dc
-                    
-                elif eq n/dc 
+            if b/lastCharacterWasEscape
+                set n/currentPtrPos add 1 n/currentPtrPos
+            if eq n/dc 255
+                if b/lastCharacterWasEscape
+                    set b/lastCharacterWasEscape false
                 else
-                    # Normal Dc
-                    set an/wipFrame push an/wipFrame n/dc
-            elif eq s/state 'single-line source comment'
-                if eq n/dc 248
-                    set s/state 'normal'
-            elif eq s/state 'block source comment'
-                if eq n/dc 251
-                    set s/state 'normal'
-            set n/currentPtrPos add 1 n/currentPtrPos
+                    set b/lastCharacterWasEscape true
+                    set n/currentPtrPos add 1 n/currentPtrPos
+            else
+                if eq 'normal' last as/state
+                    if in n/dc ( 246 247 )
+                        set as/state push as/state 'single-line source comment'
+                    elif in n/dc ( 249 250 )
+                        set as/state push as/state 'block source comment'
+                    if dcIsELCode n/dc
+                        # FIXME unimplemented
+                    else
+                        # Normal Dc
+                        set an/wipFrame push an/wipFrame n/dc
+                elif eq 'single-line source comment' last as/state
+                    if eq n/dc 248
+                        set as/state pop as/state
+                elif eq 'block source comment' last as/state
+                    if eq n/dc 251
+                        set as/state pop as/state
+                set n/currentPtrPos add 1 n/currentPtrPos
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
