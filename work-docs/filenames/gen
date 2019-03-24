@@ -4,4 +4,5 @@ cd "$dir" || die
 i=0
 while [[ "$i" -lt 500 ]]; do
     bash -c 'mkdir $'\'"$i"\'
+    i=$(( i + 1 ))
 done
