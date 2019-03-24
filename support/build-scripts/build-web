@@ -13,8 +13,9 @@ cp -r ./implementation/platform-support/web/* ./built/web/
 cp ./built/wasm-dist-built/wabt/* ./built/web/
 cp ./built/eite/* ./built/web/
 rm -rf ./built/web/data
-cp ./built/stagel-parts/js/eite.js ./built/web/
 cp -r ./data ./built/web/
+cp ./built/dist-built/ucd ./built/web/data/
+cp ./built/stagel-parts/js/eite.js ./built/web/
 cp -r ./built/wasm-common ./built/web/
 cp /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp ./LICENSE* ./built/web/
