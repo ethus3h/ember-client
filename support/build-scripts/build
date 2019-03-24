@@ -10,9 +10,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 rm -rf ./built
 mkdir ./built
 
-[[ -d ./built/wasm-dist-built ]] || die "Couldn't find the WebAssembly toolchain! Have you installed it yet? (If there's not a package available, you can run make autodep to try to install dependencies. Or, to build and install it by hand, you can make a fresh clone of the ember-information-technology-environment repository and run ./configure; ./support/build-scripts/dist-fetch; make wasm-toolchain; make wasm-toolchain-install)"
+[[ -d /usr/share/eite/wasm-dist-built ]] || die "Couldn't find the WebAssembly toolchain for EITE! Have you installed it yet? (If there's not a package available, you can run make autodep to try to install dependencies. Or, to build and install it by hand, you can make a fresh clone of the ember-information-technology-environment repository and run ./configure; ./support/build-scripts/dist-fetch; make wasm-toolchain; make wasm-toolchain-install)"
 
-cp -r 
+cp -r /usr/share/eite/wasm-dist-built ./built/ || die "Couldn't copy the WebAssembly toolchain for EITE!"
 
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
