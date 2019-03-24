@@ -14,6 +14,7 @@ source ./support/build-scripts/dist-versions || die
 
 rm -rf ./build-temp/build
 mkdir -p ./build-temp/build
+rm -rf ./build-temp/out
 mkdir ./build-temp/out
 
 cd ./build-temp/build || die
