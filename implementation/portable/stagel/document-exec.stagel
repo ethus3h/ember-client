@@ -61,31 +61,33 @@ r/v/startDocumentExec n/execId
             # The execution process basically is a big state machine.
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
             if b/lastCharacterWasEscape
+                set b/lastCharacterWasEscape false
                 set n/currentPtrPos add 1 n/currentPtrPos
-            if eq n/dc 255
-                if b/lastCharacterWasEscape
-                    set b/lastCharacterWasEscape false
-                else
-                    set b/lastCharacterWasEscape true
-                    set n/currentPtrPos add 1 n/currentPtrPos
             else
-                if eq 'normal' last as/state
-                    if in n/dc ( 246 247 )
-                        set as/state push as/state 'single-line source comment'
-                    elif in n/dc ( 249 250 )
-                        set as/state push as/state 'block source comment'
-                    if dcIsELCode n/dc
-                        # FIXME unimplemented
+                if eq n/dc 255
+                    if b/lastCharacterWasEscape
+                        set b/lastCharacterWasEscape false
                     else
-                        # Normal Dc
-                        set an/wipFrame push an/wipFrame n/dc
-                elif eq 'single-line source comment' last as/state
-                    if eq n/dc 248
-                        set as/state pop as/state
-                elif eq 'block source comment' last as/state
-                    if eq n/dc 251
-                        set as/state pop as/state
-                set n/currentPtrPos add 1 n/currentPtrPos
+                        set b/lastCharacterWasEscape true
+                        set n/currentPtrPos add 1 n/currentPtrPos
+                else
+                    if eq 'normal' last as/state
+                        if in n/dc ( 246 247 )
+                            set as/state push as/state 'single-line source comment'
+                        elif in n/dc ( 249 250 )
+                            set as/state push as/state 'block source comment'
+                        if dcIsELCode n/dc
+                            # FIXME unimplemented
+                        else
+                            # Normal Dc
+                            set an/wipFrame push an/wipFrame n/dc
+                    elif eq 'single-line source comment' last as/state
+                        if eq n/dc 248
+                            set as/state pop as/state
+                    elif eq 'block source comment' last as/state
+                        if eq n/dc 251
+                            set as/state pop as/state
+                    set n/currentPtrPos add 1 n/currentPtrPos
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
