@@ -22,7 +22,7 @@ cd ./build-temp/build || die
 unpackedDir="$(readlink -f .)/../unpacked"
 
 echo "Building Unicode data"
-cp -r "$unpackedDir/ucd.all.flat-${myUnicodeVersion}" ./
+cp -ra "$unpackedDir/ucd.all.flat-${myUnicodeVersion}" ./
 cd "./ucd.all.flat-${myUnicodeVersion}" || die
 # Split it into mulitple files based on https://web.archive.org/web/20190110070242/https://stackoverflow.com/questions/11313852/split-one-file-into-multiple-files-based-on-delimiter
 splitUcd() {
