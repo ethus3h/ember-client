@@ -29,8 +29,24 @@ async function append(array1, array2) {
     await assertIsArray(arrayReturn); return arrayReturn;
 }
 
+async function subset(array, start, end) {
+    await assertIsArray(array); await assertIsGenericItem(array2); let arrayReturn;
+    if (end < 0) {
+        end = str.length + 1 + intLength;
+    }
+    return await append(array1, array2);
+}
+
 async function push(array1, array2) {
     return await append(array1, array2);
+}
+
+async function pop(array) {
+    return await subset(array, 0, -2);
+}
+
+async function shift(array) {
+    return await subset(array, 1, -1);
 }
 
 async function get(array, index) {
@@ -57,13 +73,8 @@ async function getNext(array, index) {
 async function first(array) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
-    if (index < 0) {
-        /* JavaScript arrays don't allow negative indices without doing it this way */
-        returnVal = array.slice(index)[0];
-    }
-    else {
-        returnVal=array[index];
-    }
+    returnVal=array[0];
+
     await assertIsGeneric(returnVal); return returnVal;
 }
 
