@@ -58,13 +58,17 @@ r/v/startDocumentExec n/execId
         else
             # The execution process basically is a big state machine.
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
-            if eq n/dc
-            if dcIsELCode n/dc
-                
-            elif eq n/dc 
-            else
-                # Normal Dc
-                set an/wipFrame push an/wipFrame n/dc
+            if eq s/state 'normal'
+                if in n/dc ( 246 247 )
+                    set s/state 'single-line source comment'
+                elif in n/dc ( 249 250 )
+                    set s/state 'single-line source comment'
+                if dcIsELCode n/dc
+                    
+                elif eq n/dc 
+                else
+                    # Normal Dc
+                    set an/wipFrame push an/wipFrame n/dc
         # FIXME Just copy the input document over for now
         set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
