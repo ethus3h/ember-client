@@ -23,7 +23,8 @@ unpackedDir="$(readlink -f .)/../unpacked"
 echo "Building Unicode data"
 cp -r "$unpackedDir/ucd.all.flat-${myUnicodeVersion}" ./
 cd "./ucd.all.flat-${myUnicodeVersion}" || die
-
+# Split it into mulitple <char cp="0001"
+awk '{print $0 " -|"> "file" NR}' RS='-\\|'  input-file
 
 )
 
