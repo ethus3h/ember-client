@@ -43,6 +43,9 @@ r/v/startDocumentExec n/execId
     set b/continue true
     new n/currentPtrPos
     new an/wipFrame
+    new n/currentDc
+    new an/documentWorkingCopyData
+    set an/documentWorkingCopyData get as/documentExecData n/execId
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
@@ -52,11 +55,11 @@ r/v/startDocumentExec n/execId
             set b/continue false
         else
             # The execution process basically is a big state machine.
-            
+            set n/currentDc 
         # FIXME Just copy the input document over for now
-        set an/wipFrame get as/documentExecData n/execId
+        set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
         set b/continue false
         # Frame is done, so convert it to the environment-appropriate format and output it
-        setElement as/documentExecFrames n/execId an/wipFrame
+        setElement as/documentExecFrames n/execId printArr an/wipFrame
         set an/wipFrame ( )
         renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId
