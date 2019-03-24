@@ -28,8 +28,10 @@ splitUcd() {
     char="$1"
     chunk="$2"
     awk '{print $0 > "file" NR}' RS='<char cp="'"$char"'"' ucd.all.flat.xml."$chunk"
-    firstNewChunk=$(( lineNumber + 1 ))
-    mv file1 
+    firstNewChunk=$(( chunk + 1 ))
+    secondNewChunk=$(( firstNewChunk + 1 ))
+    mv file1 ucd.all.flat.xml."$firstNewChunk"
+    mv file2 ucd.all.flat.xml."$secondNewChunk"
 }
 mv ucd.all.flat.xml ucd.all.flat.xml.0
 splitUcd ""
