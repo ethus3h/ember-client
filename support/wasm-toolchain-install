@@ -48,9 +48,11 @@ source support/getDirs
 mkdir -p "$emberEmberdir"
 mkdir -p "$emberBindir"
 
-if [[ -e data ]]; then
-    mkdir -p "$emberDatadir/$packageName"
-    cp -r data "$emberDatadir/$packageName/"
+if ! [[ -e "support/.no-build-data" ]]; then
+    if [[ -e data ]]; then
+        mkdir -p "$emberDatadir/$packageName"
+        cp -r data "$emberDatadir/$packageName/"
+    fi
 fi
 
 if ! [[ -e "support/.no-build-scripts" ]]; then

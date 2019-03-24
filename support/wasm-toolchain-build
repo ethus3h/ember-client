@@ -140,3 +140,6 @@ touch ./build-temp/wasm-dist-build-ready
 rm -rf ./built/wasm-dist-built
 cp -ra ./build-temp/out ./build-temp/wasm-dist-built
 mv ./build-temp/wasm-dist-built ./built/
+
+touch support/.no-build-scripts
+touch support/.no-build-docs
