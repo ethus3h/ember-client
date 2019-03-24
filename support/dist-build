@@ -37,7 +37,8 @@ splitUcd() {
     print '      <char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
 }
 cp ucd.all.flat.xml ucd.all.flat.xml.1
-splitUcd "1" "FFFF"
+splitUcd "1" "0001"
+#splitUcd "1" "FFFF"
 splitUcd "2" "1FFFF"
 splitUcd "3" "2FFFF"
 splitUcd "4" "3FFFF"
