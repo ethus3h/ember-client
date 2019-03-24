@@ -27,13 +27,13 @@ cd "./ucd.all.flat-${myUnicodeVersion}" || die
 splitUcd() {
     chunk="$1"
     char="$2"
-    awk '{print $0 > "file" NR}' RS='<char cp="'"$char"'"' ucd.all.flat.xml."$chunk"
+    awk '{print $0 > "file" NR}' RS='      <char cp="'"$char"'"' ucd.all.flat.xml."$chunk"
     nextChunk=$(( chunk + 1 ))
     mv file1 ucd.all.flat.xml."$chunk"
     mv file2 ucd.all.flat.xml."$nextChunk"
-    print '<char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
+    print '      <char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
 }
-mv ucd.all.flat.xml ucd.all.flat.xml.1
+cp ucd.all.flat.xml ucd.all.flat.xml.1
 splitUcd "1" "0000"
 splitUcd "2" "0002"
 splitUcd "3" "0003"
