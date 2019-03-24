@@ -52,6 +52,8 @@ splitUcd "13" "CFFFF"
 splitUcd "14" "DFFFF"
 splitUcd "15" "EFFFF"
 splitUcd "16" "FFFFF"
+mkdir ../../../build-temp/out/ucd
+mv ./ucd.all.flat.xml.* ../../../build-temp/out/ucd/
 
 )
 
