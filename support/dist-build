@@ -31,6 +31,7 @@ splitUcd() {
     nextChunk=$(( chunk + 1 ))
     mv file1 ucd.all.flat.xml."$chunk"
     mv file2 ucd.all.flat.xml."$nextChunk"
+    print '<char cp="'"$char"'"' >> ucd.all.flat.xml."$chunk"
 }
 mv ucd.all.flat.xml ucd.all.flat.xml.1
 splitUcd "1" "0000"
