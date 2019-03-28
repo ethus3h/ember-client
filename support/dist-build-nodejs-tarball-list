@@ -27,6 +27,8 @@ mkdir -p support/build-nodejs-tarballs-process
 
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js license-checker > support/build-nodejs-tarballs-process/npm-remote-ls.deps
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-offline-packager > support/build-nodejs-tarballs-process/npm-offline-packager.deps
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js verdaccio > support/build-nodejs-tarballs-process/verdaccio.deps
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
 
 (
@@ -45,6 +47,12 @@ grep 'licenses:' support/build-nodejs-tarballs-process/licenses-unfiltered.lst |
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-sed
+
+while read package; do
+    npm view "$package" >> support/build-nodejs-tarballs-process/all.deps-urls
+done <<< support/build-nodejs-tarballs-process/all.deps-merged-filtered
+
+
 sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> npm-\1-\2.tar.gz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls
 sed -E 's/^([^@]+)@(.+)$/        wget "https:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz" -O "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-wgets
 sed -E 's/^([^@]+)@(.+)$/eiteEbuildDistfileCopy "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-copy-cmds
