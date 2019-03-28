@@ -25,6 +25,6 @@ mkdir -p support/build-nodejs-tarballs-process
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed 's/^[ ─└├]//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-filtered
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
+sed -E 's/-(.)/\U\1/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
 sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-merged-versions
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-urls
