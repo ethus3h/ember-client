@@ -22,7 +22,7 @@ else
     fi
 fi
 
-#rm -rf support/build-nodejs-tarballs-process
+rm -rf support/build-nodejs-tarballs-process
 mkdir -p support/build-nodejs-tarballs-process
 
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
@@ -30,9 +30,9 @@ mkdir -p support/build-nodejs-tarballs-process
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
 
 (
-    #rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
-    mkdir -p ./build-temp/nodejs-build-temp/license-checker-dir
-    cd ./build-temp/nodejs-build-temp/license-checker-dir || die
+    rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
+    mkdir -p ./build-temp/nodejs-build-temp-license-checker-dir
+    cd ./build-temp/nodejs-build-temp-license-checker-dir || die
     npm i npm-remote-ls
     npm i license-checker
     npm i ipfs
@@ -40,7 +40,7 @@ mkdir -p support/build-nodejs-tarballs-process
     ./node_modules/license-checker/bin/license-checker > licenses.txt
 )
 
-cp ./build-temp/nodejs-build-temp/license-checker-dir/licenses.txt support/build-nodejs-tarballs-process/licenses-unfiltered.lst
+cp ./build-temp/nodejs-build-temp-license-checker-dir/licenses.txt support/build-nodejs-tarballs-process/licenses-unfiltered.lst
 sort -u -o support/build-nodejs-tarballs-process/licenses.lst support/build-nodejs-tarballs-process/licenses-unfiltered.lst
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
