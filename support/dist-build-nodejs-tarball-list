@@ -52,8 +52,9 @@ while read package; do
     npm view "$package" >> support/build-nodejs-tarballs-process/all.deps-urls
 done <<< support/build-nodejs-tarballs-process/all.deps-merged-filtered
 
-
-sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> npm-\1-\2.tar.gz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/^(.+)$/\t\1/g' support/build-nodejs-tarballs-process/all.deps-urls > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/^(.+)$/        wget "\1"/g' support/build-nodejs-tarballs-process/all.deps-urls > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/.*\/(.+)$/eiteEbuildDistfileCopy "\1"/g' support/build-nodejs-tarballs-process/all.deps-urls > support/build-nodejs-tarballs-process/all.deps-dist-urls
 sed -E 's/^([^@]+)@(.+)$/        wget "https:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz" -O "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-wgets
 sed -E 's/^([^@]+)@(.+)$/eiteEbuildDistfileCopy "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-copy-cmds
 
