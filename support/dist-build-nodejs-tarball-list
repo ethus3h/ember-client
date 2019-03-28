@@ -7,3 +7,17 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # This generates the list of tarballs for node.js dependencies.
 
+(
+    mkdir -p ./build-temp/nodejs-build-temp
+    cd ./build-temp/nodejs-build-temp
+    npm i npm-remote-ls
+)
+
+mkdir -p support/build-nodejs-tarballs-process
+
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js js-ipfs > support/build-nodejs-tarballs-process/js-ipfs.deps
+
+cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
+cp support/build-nodejs-tarballs-process/all.deps-merged-pre support/build-nodejs-tarballs-process/all.deps-merged-filtered
+sed 's/^[ ─└├]//g' 
