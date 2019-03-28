@@ -37,6 +37,7 @@ sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-proce
 sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-wgets
 sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds
 
+if false; then
 if [[ "$1" != "--debug" ]]; then
     rm support/build-nodejs-tarballs-process/npm-remote-ls.deps
     rm support/build-nodejs-tarballs-process/js-ipfs.deps
@@ -44,4 +45,5 @@ if [[ "$1" != "--debug" ]]; then
     rm support/build-nodejs-tarballs-process/all.deps-merged-sed
     rm support/build-nodejs-tarballs-process/all.deps-merged-filtered
     rm support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
+fi
 fi
