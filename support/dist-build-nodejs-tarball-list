@@ -32,7 +32,8 @@ sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-m
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-sed
 sed -E 's/-(.)/\U\1/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
 sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-merged-versions
-sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> \1-\$\{my\1Version\}.tar.gz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> \1-\$\{my\1Version\}.tar.gz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls-temp
+sed -E 's/my(-(.))+Version/\U\2/g' support/build-nodejs-tarballs-process/all.deps-dist-urls-temp > support/build-nodejs-tarballs-process/all.deps-dist-urls
 sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-wgets
 sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds
 
@@ -44,5 +45,6 @@ if [[ "$1" != "--debug" ]]; then
     rm support/build-nodejs-tarballs-process/all.deps-merged-sed
     rm support/build-nodejs-tarballs-process/all.deps-merged-filtered
     rm support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
+    rm support/build-nodejs-tarballs-process/all.deps-dist-urls-temp
 fi
 fi
