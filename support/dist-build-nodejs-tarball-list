@@ -15,7 +15,7 @@ if [[ "$1" == "--bootstrap" ]]; then
         npm i npm-remote-ls
     )
 else
-    if [[ "$1" == "--quick" ]]; then
+    if [[ "$1" != "--quick" ]]; then
         ./support/dist-build
     fi
 fi
