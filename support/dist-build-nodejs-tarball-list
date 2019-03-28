@@ -41,7 +41,7 @@ mkdir -p support/build-nodejs-tarballs-process
 )
 
 cp ./build-temp/nodejs-build-temp-license-checker-dir/licenses.txt support/build-nodejs-tarballs-process/licenses-unfiltered.lst
-sort -u -o support/build-nodejs-tarballs-process/licenses.lst support/build-nodejs-tarballs-process/licenses-unfiltered.lst
+grep 'licenses:' support/build-nodejs-tarballs-process/licenses-unfiltered.lst | sort -u -o support/build-nodejs-tarballs-process/licenses.lst -
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-sed
