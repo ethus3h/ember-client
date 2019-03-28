@@ -30,11 +30,9 @@ mkdir -p support/build-nodejs-tarballs-process
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-sed
-sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> npm-\1-\2.tgz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls-temp
-sed -E 's/^([^@]+)@(.+)$/        wget "https:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz" -O "\1-\$\{my\1Version\}.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-wgets-temp
-sed -E 's/my(-(.))+Version/\U\2/g' support/build-nodejs-tarballs-process/all.deps-dist-wgets-temp > support/build-nodejs-tarballs-process/all.deps-dist-wgets
-sed -E 's/^([^@]+)@(.+)$/eiteEbuildDistfileCopy "\1-\$\{my\1Version\}.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds-temp
-sed -E 's/my(-(.))+Version/\U\2/g' support/build-nodejs-tarballs-process/all.deps-copy-cmds-temp > support/build-nodejs-tarballs-process/all.deps-copy-cmds
+sed -E 's/^([^@]+)@(.+)$/\thttps:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz -> npm-\1-\2.tar.gz/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/^([^@]+)@(.+)$/        wget "https:\/\/registry.npmjs.org\/\1\/-\/\1-\2.tgz" -O "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-dist-wgets
+sed -E 's/^([^@]+)@(.+)$/eiteEbuildDistfileCopy "npm-\1-\2.tar.gz"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-copy-cmds
 
 if false; then
 if [[ "$1" != "--debug" ]]; then
@@ -43,9 +41,5 @@ if [[ "$1" != "--debug" ]]; then
     rm support/build-nodejs-tarballs-process/all.deps-merged-pre
     rm support/build-nodejs-tarballs-process/all.deps-merged-sed
     rm support/build-nodejs-tarballs-process/all.deps-merged-filtered
-    rm support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
-    rm support/build-nodejs-tarballs-process/all.deps-dist-urls-temp
-    rm support/build-nodejs-tarballs-process/all.deps-dist-wgets-temp
-    rm support/build-nodejs-tarballs-process/all.deps-copy-cmds-temp
 fi
 fi
