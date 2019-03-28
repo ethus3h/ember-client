@@ -31,13 +31,14 @@ mkdir -p support/build-nodejs-tarballs-process
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
 
 (
-rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
-mkdir -p ./build-temp/nodejs-build-temp/license-checker-dir
-cd ./build-temp/nodejs-build-temp/license-checker-dir || die
-        npm i npm-remote-ls
-        npm i license-checker
-
-        npm i ipfs
+    rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
+    mkdir -p ./build-temp/nodejs-build-temp/license-checker-dir
+    cd ./build-temp/nodejs-build-temp/license-checker-dir || die
+    npm i npm-remote-ls
+    npm i license-checker
+    npm i ipfs
+    # http://web.archive.org/web/20190328153031/https://medium.com/@fokusman/the-easiest-way-to-check-all-your-npm-dependency-licenses-753075ef1d9d
+    ./node_modules/license-checker/bin/license-checker.js > licenses.txt
 )
 
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
