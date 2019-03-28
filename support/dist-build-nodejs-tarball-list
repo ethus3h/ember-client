@@ -15,7 +15,9 @@ if [[ "$1" == "--bootstrap" ]]; then
         npm i npm-remote-ls
     )
 else
-    ./support/dist-build
+    if [[ "$1" == "--quick" ]]; then
+        ./support/dist-build
+    fi
 fi
 
 mkdir -p support/build-nodejs-tarballs-process
