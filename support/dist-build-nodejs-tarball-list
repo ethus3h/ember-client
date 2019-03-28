@@ -16,8 +16,9 @@ if [[ "$1" == "--bootstrap" ]]; then
     )
 else
     if [[ "$1" != "--quick" ]]; then
-        shift
         ./support/dist-build
+    else
+        shift
     fi
 fi
 
