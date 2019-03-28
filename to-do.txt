@@ -33,3 +33,4 @@ Idea for StageL: Make things like "set as/arr push as/arr s/val" nicer to write:
 Import in editor is broken.
 
 # WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
+Hi! I'm starting work on using IPFS-JS in a project I'm developing. The project needs to have multiple computers able to share and keep synchronized with each other a large (in both number and size) ordered set of blobs, without a centralized server, 
