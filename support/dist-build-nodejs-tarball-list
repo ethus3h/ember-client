@@ -10,11 +10,6 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 if [[ "$1" == "--bootstrap" ]]; then
     boostrap="true"
     shift
-    (
-        mkdir -p ./build-temp/nodejs-build-temp
-        cd ./build-temp/nodejs-build-temp || die
-        npm i npm-remote-ls
-    )
 else
     if [[ "$1" != "--quick" ]]; then
         ./support/dist-build
@@ -25,12 +20,6 @@ fi
 
 [[ "$bootstrap" == "true" ]] && rm -rf support/build-nodejs-tarballs-process
 mkdir -p support/build-nodejs-tarballs-process
-
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js license-checker > support/build-nodejs-tarballs-process/npm-remote-ls.deps
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-offline-packager > support/build-nodejs-tarballs-process/npm-offline-packager.deps
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js verdaccio > support/build-nodejs-tarballs-process/verdaccio.deps
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
 
 (
     [[ "$bootstrap" == "true" ]] && rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
@@ -45,6 +34,12 @@ mkdir -p support/build-nodejs-tarballs-process
     ./node_modules/license-checker/bin/license-checker > licenses.txt
 )
 
+./build-temp/nodejs-build-temp-license-checker-dir/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
+./build-temp/nodejs-build-temp-license-checker-dir/node_modules/npm-remote-ls/bin/npm-remote-ls.js license-checker > support/build-nodejs-tarballs-process/npm-remote-ls.deps
+./build-temp/nodejs-build-temp-license-checker-dir/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-offline-packager > support/build-nodejs-tarballs-process/npm-offline-packager.deps
+./build-temp/nodejs-build-temp-license-checker-dir/node_modules/npm-remote-ls/bin/npm-remote-ls.js verdaccio > support/build-nodejs-tarballs-process/verdaccio.deps
+./build-temp/nodejs-build-temp-license-checker-dir/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
+
 cp ./build-temp/nodejs-build-temp-license-checker-dir/licenses.txt support/build-nodejs-tarballs-process/licenses-unfiltered.lst
 grep 'licenses:' support/build-nodejs-tarballs-process/licenses-unfiltered.lst | sort -u -o support/build-nodejs-tarballs-process/licenses.lst -
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
@@ -53,7 +48,7 @@ sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered suppor
 
 while read package; do
     npm view "$package" >> support/build-nodejs-tarballs-process/all.deps-urls
-done <<< support/build-nodejs-tarballs-process/all.deps-merged-filtered
+done < support/build-nodejs-tarballs-process/all.deps-merged-filtered
 
 sed -E 's/^(.+)$/\t\1/g' support/build-nodejs-tarballs-process/all.deps-urls > support/build-nodejs-tarballs-process/all.deps-dist-urls
 sed -E 's/^(.+)$/        wget "\1"/g' support/build-nodejs-tarballs-process/all.deps-urls > support/build-nodejs-tarballs-process/all.deps-dist-urls
