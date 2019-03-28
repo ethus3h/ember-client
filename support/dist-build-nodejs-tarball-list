@@ -26,14 +26,14 @@ mkdir -p support/build-nodejs-tarballs-process
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js js-ipfs > support/build-nodejs-tarballs-process/js-ipfs.deps
 
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
-sed 's/^[ ─└├]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
+sed -E 's/^[ ─└├]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
 sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered support/build-nodejs-tarballs-process/all.deps-merged-sed
 sed -E 's/-(.)/\U\1/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-merged-versions
+sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-merged-versions
 
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-urls
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-wgets
-sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds
+sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-wgets
+sed -E 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds
 
 if [[ "$1" != "--debug" ]]; then
     rm support/build-nodejs-tarballs-process/npm-remote-ls.deps
