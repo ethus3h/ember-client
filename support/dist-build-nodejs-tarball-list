@@ -11,8 +11,9 @@ if [[ "$1" == "--bootstrap" ]]; then
     shift
     (
         mkdir -p ./build-temp/nodejs-build-temp
-        cd ./build-temp/nodejs-build-temp
+        cd ./build-temp/nodejs-build-temp || die
         npm i npm-remote-ls
+        npm i license-checker
     )
 else
     if [[ "$1" != "--quick" ]]; then
@@ -22,10 +23,22 @@ else
     fi
 fi
 
+rm -rf support/build-nodejs-tarballs-process
 mkdir -p support/build-nodejs-tarballs-process
 
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
-./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js js-ipfs > support/build-nodejs-tarballs-process/js-ipfs.deps
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js license-checker > support/build-nodejs-tarballs-process/npm-remote-ls.deps
+./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
+
+(
+rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
+mkdir -p ./build-temp/nodejs-build-temp/license-checker-dir
+cd ./build-temp/nodejs-build-temp/license-checker-dir || die
+        npm i npm-remote-ls
+        npm i license-checker
+
+        npm i ipfs
+)
 
 cat support/build-nodejs-tarballs-process/*.deps > support/build-nodejs-tarballs-process/all.deps-merged-pre
 sed -E 's/^[ ─└├│]+//g' support/build-nodejs-tarballs-process/all.deps-merged-pre > support/build-nodejs-tarballs-process/all.deps-merged-sed
