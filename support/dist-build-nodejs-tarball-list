@@ -8,6 +8,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # This generates the list of tarballs for node.js dependencies.
 
 if [[ "$1" == "--bootstrap" ]]; then
+    boostrap="true"
     shift
     (
         mkdir -p ./build-temp/nodejs-build-temp
@@ -22,7 +23,7 @@ else
     fi
 fi
 
-rm -rf support/build-nodejs-tarballs-process
+[[ "$bootstrap" == "true" ]] && rm -rf support/build-nodejs-tarballs-process
 mkdir -p support/build-nodejs-tarballs-process
 
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js npm-remote-ls > support/build-nodejs-tarballs-process/npm-remote-ls.deps
@@ -32,7 +33,7 @@ mkdir -p support/build-nodejs-tarballs-process
 ./build-temp/nodejs-build-temp/node_modules/npm-remote-ls/bin/npm-remote-ls.js ipfs > support/build-nodejs-tarballs-process/ipfs.deps
 
 (
-    rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
+    [[ "$bootstrap" == "true" ]] && rm -rf ./build-temp/nodejs-build-temp/license-checker-dir
     mkdir -p ./build-temp/nodejs-build-temp-license-checker-dir
     cd ./build-temp/nodejs-build-temp-license-checker-dir || die
     npm i npm-remote-ls
