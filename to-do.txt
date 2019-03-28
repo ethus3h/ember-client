@@ -33,4 +33,4 @@ Idea for StageL: Make things like "set as/arr push as/arr s/val" nicer to write:
 Import in editor is broken.
 
 # WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
-Hi! I'm starting work on using IPFS-JS in a project I'm developing. The project needs to have multiple computers able to share and keep synchronized with each other a large (in both number and size) ordered set of blobs, without a centralized server, 
+Hi! I'm starting work on using IPFS-JS in a project I'm developing. The project relies on a large (in both number and size) ordered set of blobs. It needs multiple computers share, append to, and keep synchronized this data set, and for all computers in this network to retain the ability to write and share the data set independently and then merge their forks of the dataset when connectivity is available. Only some computers should be able to append to it. The computers should be able to connect to each other without centralized infrastructure, and without knowing each others' addresses. How much of this problem space is targeted by IPFS, and how much of it is implemented? Thanks!
