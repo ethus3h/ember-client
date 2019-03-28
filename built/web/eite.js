@@ -6179,6 +6179,7 @@ async function startDocumentExec(intExecId) {
         }
         /* FIXME Just copy the input document over for now */
         intArrayWipFrame = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+        console.log('copied frame data '+intArrayWipFrame);
         boolContinue = false;
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
