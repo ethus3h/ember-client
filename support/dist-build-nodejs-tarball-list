@@ -8,6 +8,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # This generates the list of tarballs for node.js dependencies.
 
 if [[ "$1" == "--bootstrap" ]]; then
+    shift
     (
         mkdir -p ./build-temp/nodejs-build-temp
         cd ./build-temp/nodejs-build-temp
@@ -28,3 +29,13 @@ sort -u -o support/build-nodejs-tarballs-process/all.deps-merged-filtered suppor
 sed -E 's/-(.)/\U\1/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered > support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
 sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-merged-versions
 sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-dist-urls
+sed 's/^([^@]+)@(.+)$/my\1Version="\2"/g' support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase > support/build-nodejs-tarballs-process/all.deps-copy-cmds
+
+if [[ "$1" != "--debug" ]]; then
+    rm support/build-nodejs-tarballs-process/npm-remote-ls.deps
+    rm support/build-nodejs-tarballs-process/js-ipfs.deps
+    rm support/build-nodejs-tarballs-process/all.deps-merged-pre
+    rm support/build-nodejs-tarballs-process/all.deps-merged-sed
+    rm support/build-nodejs-tarballs-process/all.deps-merged-filtered
+    rm support/build-nodejs-tarballs-process/all.deps-merged-filtered-camelcase
+fi
