@@ -9,7 +9,7 @@ async function storageSetup() {
 
 async function storageSave(data) {
     await assertIsIntArray(data);
-    ipfsNode.files.add(ipfsNode.types.Buffer.from(new UInt8Array.from(data)), (err, files) => {
+    ipfsNode.files.add(ipfsNode.types.Buffer.from(new Uint8Array(data)), (err, files) => {
         if (err) {
             await implDie(err.toString());
         }
@@ -23,6 +23,6 @@ async function storageRetrieve(id) {
         if (err) {
             await implDie(err.toString());
         }
-        return new UInt8Array.from(data);
+        return new Uint8Array(data);
     });
 }
