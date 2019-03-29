@@ -9,7 +9,7 @@ async function storageSetup() {
 }
 
 async function storageSave(data) {
-    await assertIsIntArray(data);
+    await assertIsIntArray(data); let intRes;
     if (data.constructor.name !== 'Uint8Array') {
         data = new Uint8Array(data);
     }
@@ -20,13 +20,16 @@ async function storageSave(data) {
         // "'hash', known as CID, is a string uniquely addressing the data and can be used to get it again. 'files' is an array because 'add' supports multiple additions, but we only added one entry" —https://js.ipfs.io/
         return files[0].hash;
     }); */
+    await assertIsInt(intRes); return intRes;
 }
 
 async function storageRetrieve(id) {
+    await assertIsInt(id); let intArrayRes;
     /* ipfsNode.files.cat(id, (err, data) => {
         if (err) {
             await implDie(err.toString());
         }
         return new Uint8Array(data);
     }); */
+    await assertIsIntArray(intArrayRes); return intArrayRes;
 }
