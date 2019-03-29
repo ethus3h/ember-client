@@ -9,7 +9,10 @@ async function storageSetup() {
 
 async function storageSave(data) {
     await assertIsIntArray(data);
-    ipfsNode.files.add(ipfsNode.types.Buffer.from(new Uint8Array(data)), (err, files) => {
+    if (data.constructor.name !== 'Uint8Array') {
+        data = new Uint8Array(data);
+    }
+    ipfsNode.files.add(ipfsNode.types.Buffer.from(data), (err, files) => {
         if (err) {
             await implDie(err.toString());
         }
