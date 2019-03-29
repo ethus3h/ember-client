@@ -19,9 +19,9 @@ async function storageSave(data) {
 
 async function storageRetrieve(id) {
     ipfsNode.files.cat(id, (err, data) => {
-    if (err) return console.error(err)
-
-    // convert Buffer back to string
-    console.log(data.toString())
-  })
+        if (err) {
+            await implDie(err.toString());
+        }
+        console.log(data.toString())
+    });
 }
