@@ -6,3 +6,11 @@ async function storageSetup() {
         });
     });
 }
+
+async function storageSave(data) {
+    
+}
+
+async function storageRetrieve(id) {
+    
+}
