@@ -29,6 +29,7 @@ let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
 let strArrayImportWarnings = []; // as
 let strArrayExportWarnings = []; // as
+let ipfsNode;
 
 // Global environment
 let haveDom = false;
@@ -131,6 +132,10 @@ async function internalSetup() {
             exportSettings[settingsCounter] = '';
         }
     }
+
+    // Set up storage
+
+    await storageSetup();
 
     // Other startup stuff.
 
