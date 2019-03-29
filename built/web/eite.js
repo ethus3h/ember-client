@@ -6158,7 +6158,7 @@ async function startDocumentExec(intExecId) {
         console.log('7');
                 }
                 else {
-        console.log('8');
+        console.log('8'+strArrayState+','+await last(strArrayState));
                     if (await implEq('normal', await last(strArrayState))) {
         console.log('9');
                         if (await implIn(intDc, [ 246, 247 ])) {
