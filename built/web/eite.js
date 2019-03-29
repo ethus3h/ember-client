@@ -6129,15 +6129,18 @@ async function startDocumentExec(intExecId) {
     boolLastCharacterWasEscape = false;
         console.log('copied fmemumum');
     while (boolContinue) {
+        console.log('ecucecfmemumum');
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
         /* The execution process basically is a big state machine. */
         if (await implGt(0, intCurrentPtrPos)) {
+        console.log('beb');
             /* Pointer's been set to a negative position, so we're done with the document */
             boolContinue = false;
         }
         else {
+        console.log('bab');
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
@@ -6179,6 +6182,7 @@ async function startDocumentExec(intExecId) {
             }
         }
         /* FIXME Just copy the input document over for now */
+        console.log('bub');
         intArrayWipFrame = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
         console.log('copied frame data '+intArrayWipFrame);
         boolContinue = false;
