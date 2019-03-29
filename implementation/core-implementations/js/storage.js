@@ -8,7 +8,7 @@ async function storageSetup() {
 }
 
 async function storageSave(data) {
-    node.files.add(node.types.Buffer.from(data), (err, files) => {
+    ipfsNode.files.add(ipfsNode.types.Buffer.from(data), (err, files) => {
         if (err) {
             await implDie(err.toString());
         }
@@ -18,7 +18,7 @@ async function storageSave(data) {
 }
 
 async function storageRetrieve(id) {
-    node.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', (err, data) => {
+    ipfsNode.files.cat(id, (err, data) => {
     if (err) return console.error(err)
 
     // convert Buffer back to string
