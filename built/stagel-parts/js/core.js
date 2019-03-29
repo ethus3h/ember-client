@@ -84,6 +84,42 @@ async function internalRunDocument(execId) {
     // FIXME Unimplemented
 }
 
+async function storageSetup() {
+    // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
+    /* ipfsNode = new IPFS();
+    await new Promise(resolve => {
+        ipfsNode.once('ready', () => {
+            resolve()
+        });
+    }); */
+}
+
+async function storageSave(data) {
+    await assertIsIntArray(data); let intRes;
+    if (data.constructor.name !== 'Uint8Array') {
+        data = new Uint8Array(data);
+    }
+    /* ipfsNode.files.add(ipfsNode.types.Buffer.from(data), (err, files) => {
+        if (err) {
+            await implDie(err.toString());
+        }
+        // "'hash', known as CID, is a string uniquely addressing the data and can be used to get it again. 'files' is an array because 'add' supports multiple additions, but we only added one entry" —https://js.ipfs.io/
+        return files[0].hash;
+    }); */
+    await assertIsInt(intRes); return intRes;
+}
+
+async function storageRetrieve(id) {
+    await assertIsInt(id); let intArrayRes;
+    /* ipfsNode.files.cat(id, (err, data) => {
+        if (err) {
+            await implDie(err.toString());
+        }
+        return new Uint8Array(data);
+    }); */
+    await assertIsIntArray(intArrayRes); return intArrayRes;
+}
+
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
 var STAGEL_DEBUG;
@@ -115,6 +151,7 @@ let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
 let strArrayImportWarnings = []; // as
 let strArrayExportWarnings = []; // as
+let ipfsNode;
 
 // Global environment
 let haveDom = false;
@@ -217,6 +254,10 @@ async function internalSetup() {
             exportSettings[settingsCounter] = '';
         }
     }
+
+    // Set up storage
+
+    await storageSetup();
 
     // Other startup stuff.
 
@@ -963,7 +1004,7 @@ async function getNext(array, index) {
 }
 
 async function first(array) {
-    await assertIsArray(array); await assertIsInt(index); let returnVal;
+    await assertIsArray(array); let returnVal;
 
     returnVal=array[0];
 
@@ -971,7 +1012,7 @@ async function first(array) {
 }
 
 async function last(array) {
-    await assertIsArray(array); await assertIsInt(index); let returnVal;
+    await assertIsArray(array); let returnVal;
 
     returnVal=array.slice(-1)[0];
 

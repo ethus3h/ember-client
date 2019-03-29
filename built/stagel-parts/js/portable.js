@@ -4221,8 +4221,8 @@ async function startDocumentExec(intExecId) {
         /* Where are we in the document? Store it in n/currentPtrPos. */
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
         /* The execution process basically is a big state machine. */
-        if (await implGt(0, intCurrentPtrPos)) {
-            /* Pointer's been set to a negative position, so we're done with the document */
+        if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
+            /* We're done with the document */
             boolContinue = false;
         }
         else {
@@ -4248,7 +4248,7 @@ async function startDocumentExec(intExecId) {
                             /* FIXME unimplemented */
                         }
                         else {
-                            /* Normal Dc */
+                            /* Normal Dc, or at least we don't know what it is */
                             intArrayWipFrame = await push(intArrayWipFrame, intDc);
                         }
                     }
@@ -4266,9 +4266,6 @@ async function startDocumentExec(intExecId) {
                 }
             }
         }
-        /* FIXME Just copy the input document over for now */
-        intArrayWipFrame = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
-        boolContinue = false;
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
         intArrayWipFrame = [  ];

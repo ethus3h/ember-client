@@ -84,6 +84,42 @@ async function internalRunDocument(execId) {
     // FIXME Unimplemented
 }
 
+async function storageSetup() {
+    // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
+    /* ipfsNode = new IPFS();
+    await new Promise(resolve => {
+        ipfsNode.once('ready', () => {
+            resolve()
+        });
+    }); */
+}
+
+async function storageSave(data) {
+    await assertIsIntArray(data); let intRes;
+    if (data.constructor.name !== 'Uint8Array') {
+        data = new Uint8Array(data);
+    }
+    /* ipfsNode.files.add(ipfsNode.types.Buffer.from(data), (err, files) => {
+        if (err) {
+            await implDie(err.toString());
+        }
+        // "'hash', known as CID, is a string uniquely addressing the data and can be used to get it again. 'files' is an array because 'add' supports multiple additions, but we only added one entry" —https://js.ipfs.io/
+        return files[0].hash;
+    }); */
+    await assertIsInt(intRes); return intRes;
+}
+
+async function storageRetrieve(id) {
+    await assertIsInt(id); let intArrayRes;
+    /* ipfsNode.files.cat(id, (err, data) => {
+        if (err) {
+            await implDie(err.toString());
+        }
+        return new Uint8Array(data);
+    }); */
+    await assertIsIntArray(intArrayRes); return intArrayRes;
+}
+
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
 var STAGEL_DEBUG;
@@ -115,6 +151,7 @@ let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
 let strArrayImportWarnings = []; // as
 let strArrayExportWarnings = []; // as
+let ipfsNode;
 
 // Global environment
 let haveDom = false;
@@ -217,6 +254,10 @@ async function internalSetup() {
             exportSettings[settingsCounter] = '';
         }
     }
+
+    // Set up storage
+
+    await storageSetup();
 
     // Other startup stuff.
 
@@ -6127,82 +6168,56 @@ async function startDocumentExec(intExecId) {
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
-        console.log('copied fmemumum');
     while (boolContinue) {
-        console.log('ecucecfmemumum');
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
         /* The execution process basically is a big state machine. */
-        if (await implGt(0, intCurrentPtrPos)) {
-        console.log('beb');
-            /* Pointer's been set to a negative position, so we're done with the document */
+        if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
+            /* We're done with the document */
             boolContinue = false;
         }
         else {
-        console.log('bab');
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-        console.log('2');
             if (boolLastCharacterWasEscape) {
-        console.log('3');
                 boolLastCharacterWasEscape = false;
                 intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
-        console.log('4');
             }
             else {
-        console.log('5');
                 if (await implEq(intDc, 255)) {
-        console.log('6');
                     boolLastCharacterWasEscape = true;
                     intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
-        console.log('7');
                 }
                 else {
-        console.log('8'+strArrayState+','+await last(strArrayState));
                     if (await implEq('normal', await last(strArrayState))) {
-        console.log('9');
                         if (await implIn(intDc, [ 246, 247 ])) {
-        console.log('10');
                             strArrayState = await push(strArrayState, 'single-line source comment');
                         }
                         else if (await implIn(intDc, [ 249, 250 ])) {
-        console.log('11');
                             strArrayState = await push(strArrayState, 'block source comment');
                         }
                         if (await dcIsELCode(intDc)) {
-        console.log('12');
                             /* FIXME unimplemented */
                         }
                         else {
-        console.log('13');
-                            /* Normal Dc */
+                            /* Normal Dc, or at least we don't know what it is */
                             intArrayWipFrame = await push(intArrayWipFrame, intDc);
                         }
                     }
                     else if (await implEq('single-line source comment', await last(strArrayState))) {
-        console.log('14');
                         if (await implEq(intDc, 248)) {
-        console.log('15');
                             strArrayState = await pop(strArrayState);
                         }
                     }
                     else if (await implEq('block source comment', await last(strArrayState))) {
-        console.log('16');
                         if (await implEq(intDc, 251)) {
-        console.log('17');
                             strArrayState = await pop(strArrayState);
                         }
                     }
-        console.log('18');
                     intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
                 }
             }
         }
-        /* FIXME Just copy the input document over for now */
-        console.log('bub');
-        intArrayWipFrame = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
-        console.log('copied frame data '+intArrayWipFrame);
-        boolContinue = false;
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
         intArrayWipFrame = [  ];
