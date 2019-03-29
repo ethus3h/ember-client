@@ -55,8 +55,8 @@ r/v/startDocumentExec n/execId
         # Where are we in the document? Store it in n/currentPtrPos.
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         # The execution process basically is a big state machine.
-        if gt 0 n/currentPtrPos
-            # Pointer's been set to a negative position, so we're done with the document
+        if ge n/currentPtrPos count an/documentWorkingCopyData
+            # We're done with the document
             set b/continue false
         else
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
@@ -76,7 +76,7 @@ r/v/startDocumentExec n/execId
                         if dcIsELCode n/dc
                             # FIXME unimplemented
                         else
-                            # Normal Dc
+                            # Normal Dc, or at least we don't know what it is
                             set an/wipFrame push an/wipFrame n/dc
                     elif eq 'single-line source comment' last as/state
                         if eq n/dc 248
@@ -85,9 +85,6 @@ r/v/startDocumentExec n/execId
                         if eq n/dc 251
                             set as/state pop as/state
                     set n/currentPtrPos add 1 n/currentPtrPos
-        # FIXME Just copy the input document over for now
-        set an/wipFrame intArrFromStrPrintedArr get as/documentExecData n/execId
-        set b/continue false
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId printArr an/wipFrame
         set an/wipFrame ( )
