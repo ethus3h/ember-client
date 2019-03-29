@@ -78,7 +78,7 @@ async function getNext(array, index) {
 }
 
 async function first(array) {
-    await assertIsArray(array); await assertIsInt(index); let returnVal;
+    await assertIsArray(array); let returnVal;
 
     returnVal=array[0];
 
@@ -86,7 +86,7 @@ async function first(array) {
 }
 
 async function last(array) {
-    await assertIsArray(array); await assertIsInt(index); let returnVal;
+    await assertIsArray(array); let returnVal;
 
     returnVal=array.slice(-1)[0];
 
