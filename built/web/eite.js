@@ -6142,41 +6142,58 @@ async function startDocumentExec(intExecId) {
         else {
         console.log('bab');
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
+        console.log('2');
             if (boolLastCharacterWasEscape) {
+        console.log('3');
                 boolLastCharacterWasEscape = false;
                 intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
+        console.log('4');
             }
             else {
+        console.log('5');
                 if (await implEq(intDc, 255)) {
+        console.log('6');
                     boolLastCharacterWasEscape = true;
                     intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
+        console.log('7');
                 }
                 else {
+        console.log('8');
                     if (await implEq('normal', await last(strArrayState))) {
+        console.log('9');
                         if (await implIn(intDc, [ 246, 247 ])) {
+        console.log('10');
                             strArrayState = await push(strArrayState, 'single-line source comment');
                         }
                         else if (await implIn(intDc, [ 249, 250 ])) {
+        console.log('11');
                             strArrayState = await push(strArrayState, 'block source comment');
                         }
                         if (await dcIsELCode(intDc)) {
+        console.log('12');
                             /* FIXME unimplemented */
                         }
                         else {
+        console.log('13');
                             /* Normal Dc */
                             intArrayWipFrame = await push(intArrayWipFrame, intDc);
                         }
                     }
                     else if (await implEq('single-line source comment', await last(strArrayState))) {
+        console.log('14');
                         if (await implEq(intDc, 248)) {
+        console.log('15');
                             strArrayState = await pop(strArrayState);
                         }
                     }
                     else if (await implEq('block source comment', await last(strArrayState))) {
+        console.log('16');
                         if (await implEq(intDc, 251)) {
+        console.log('17');
                             strArrayState = await pop(strArrayState);
                         }
                     }
+        console.log('18');
                     intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
                 }
             }
