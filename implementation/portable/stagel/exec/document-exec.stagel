@@ -53,7 +53,7 @@ r/v/startDocumentExec n/execId
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
-        # console.log("Starting exec loop with data "+strArrayState+" and at position "+intCurrentPtrPos);
+        debug cat "Starting exec loop with data " cat strPrintArr as/state } cat " and at position " n/currentPtrPos
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         # The execution process basically is a big state machine.
         if ge n/currentPtrPos count an/documentWorkingCopyData
