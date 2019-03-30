@@ -29,13 +29,13 @@ r/n/getCurrentExecPtrPos n/execId
 
 r/v/setExecPtrPos n/execId n/pos
     new s/newPosStr
-    set s/newPosStr setElem as/getCurrentExecPtrPos 
-    set as/documentExecPtrs setElem as/documentExecPtrs n/execId strJoin setElem get as/documentExecPtrs -1 n/pos
+    set s/newPosStr strJoin setElem as/getCurrentExecPtrs -1 n/pos } ','
+    set as/documentExecPtrs setElem as/documentExecPtrs n/execId s/newPosStr
 
 r/v/incrExecPtrPos n/execId
     r/v/setExecPtrPos n/execId add 1 getCurrentExecPtrPos n/execId
 
-r/n/getNextExecPtrPos n/execId
+r/n/getNextLevelExecPtrPos n/execId
     new n/res
     set n/res intFromIntStr get getCurrentExecPtrs n/execId } -2
     return n/res
@@ -66,6 +66,7 @@ r/v/startDocumentExec n/execId
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
+        # n/currentPtrPos is a read-only copy! For changing it, call setExecPtrPos or incrExecPtrPos
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         # The execution process basically is a big state machine.
         if ge n/currentPtrPos count an/documentWorkingCopyData
@@ -76,7 +77,7 @@ r/v/startDocumentExec n/execId
             debug cat "Starting exec loop with data " cat strPrintArr an/documentWorkingCopyData } cat " and at position " cat strFrom n/currentPtrPos } cat " with current Dc " cat strFrom n/dc } cat "; in state " strPrintArr as/state
             if b/lastCharacterWasEscape
                 set b/lastCharacterWasEscape false
-                set n/currentPtrPos add 1 n/currentPtrPos
+                incrExecPtrPos n/execId
             else
                 # Char isn't escaped, so process it normally
                 if eq n/dc 255
@@ -98,7 +99,7 @@ r/v/startDocumentExec n/execId
                     elif eq 'block source comment' last as/state
                         if eq n/dc 251
                             set as/state pop as/state
-                set n/currentPtrPos add 1 n/currentPtrPos
+                incrExecPtrPos n/execId
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId printArr an/wipFrame
         set an/wipFrame ( )
