@@ -25,6 +25,7 @@ r/n/getCurrentExecPtrPos n/execId
 r/v/incrExecPtrPos n/execId
     new n/temp
     set n/temp getCurrentExecPtrPos n/execId
+    set as/documentExecPtrs setElem as/documentExecPtrs -1 add n/temp
     new n/res
     set n/res intFromIntStr get strSplit get as/documentExecPtrs n/execId } ',' } -1
     return n/res
