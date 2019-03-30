@@ -65,9 +65,9 @@ r/v/startDocumentExec n/execId
                 set b/lastCharacterWasEscape false
                 set n/currentPtrPos add 1 n/currentPtrPos
             else
+                # Char isn't escaped, so process it normally
                 if eq n/dc 255
                     set b/lastCharacterWasEscape true
-                    set n/currentPtrPos add 1 n/currentPtrPos
                 else
                     if eq 'normal' last as/state
                         if in n/dc ( 246 247 )
@@ -85,7 +85,7 @@ r/v/startDocumentExec n/execId
                     elif eq 'block source comment' last as/state
                         if eq n/dc 251
                             set as/state pop as/state
-                    set n/currentPtrPos add 1 n/currentPtrPos
+                set n/currentPtrPos add 1 n/currentPtrPos
         # Frame is done, so convert it to the environment-appropriate format and output it
         setElement as/documentExecFrames n/execId printArr an/wipFrame
         set an/wipFrame ( )
