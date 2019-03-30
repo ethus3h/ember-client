@@ -6171,6 +6171,7 @@ async function startDocumentExec(intExecId) {
     while (boolContinue) {
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
+        console.log("Starting exec loop with data "+strArrayState+" and at position "+intCurrentPtrPos);
         intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
         /* The execution process basically is a big state machine. */
         if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
