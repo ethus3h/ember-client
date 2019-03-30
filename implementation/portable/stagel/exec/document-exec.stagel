@@ -53,7 +53,6 @@ r/v/startDocumentExec n/execId
     while b/continue
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
-        debug cat "Starting exec loop with data " cat strPrintArr as/state } cat " and at position " n/currentPtrPos
         set n/currentPtrPos getCurrentExecPtrPos n/execId
         # The execution process basically is a big state machine.
         if ge n/currentPtrPos count an/documentWorkingCopyData
@@ -61,6 +60,7 @@ r/v/startDocumentExec n/execId
             set b/continue false
         else
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
+            debug cat "Starting exec loop with data " cat strPrintArr as/state } cat " and at position " cat strFrom n/currentPtrPos } cat " with current Dc " n/dc
             if b/lastCharacterWasEscape
                 set b/lastCharacterWasEscape false
                 set n/currentPtrPos add 1 n/currentPtrPos
