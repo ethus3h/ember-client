@@ -1,6 +1,8 @@
-r/s/strPrintArr ga/input
+r/s/strPrintArr ga/in
     # The reverse of this for an/ input is intArrFromStrPrintedArr.
     # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
+    new s/out
+    set s/out strJoin ga/in ' '
     new n/count
     set n/count count ga/input
     new n/i
@@ -59,16 +61,15 @@ r/as/strSplit s/in s/separator
     return as/res
 
 r/s/strJoin ga/in s/separator
-    # The reverse of this for an/ input is intArrFromStrPrintedArr.
-    # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
+    # Opposite of strSplit (always gives a trailing delimiter, though)
     new n/count
-    set n/count count ga/input
+    set n/count count ga/in
     new n/i
     set n/i 0
     new s/out
     while lt n/i n/count
-        set s/out cat s/out strFrom get ga/input n/i
-        set s/out cat s/out ' '
+        set s/out cat s/out strFrom get ga/in n/i
+        set s/out cat s/out s/separator
         set n/i add n/i 1
     return s/out
 
