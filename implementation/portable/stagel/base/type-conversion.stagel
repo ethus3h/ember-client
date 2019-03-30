@@ -58,7 +58,7 @@ r/as/strSplit s/in s/separator
         set as/res push as/res s/currentElem
     return as/res
 
-r/s/strPrintArr ga/input
+r/s/strJoin ga/in s/separator
     # The reverse of this for an/ input is intArrFromStrPrintedArr.
     # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
     new n/count
