@@ -6179,7 +6179,7 @@ async function startDocumentExec(intExecId) {
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-            console.log("Starting exec loop with data "+strArrayState+" and at position "+intCurrentPtrPos+ " with current Dc "+intDc);
+            console.log("Starting exec loop with data "+intArrayDocumentWorkingCopyData+" and at position "+intCurrentPtrPos+ " with current Dc "+intDc + "; in state "+strArrayState);
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
                 intCurrentPtrPos = await implAdd(1, intCurrentPtrPos);
