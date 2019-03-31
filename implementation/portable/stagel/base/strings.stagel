@@ -23,13 +23,11 @@ r/s/charAt s/str n/index
 
 r/s/setCharAt s/str n/index s/char
     new s/res
-    new n/firstStart
     new n/firstEnd
     new n/lastStart
-    new n/lastEnd
-    set n/firstStart sub len s/str } inc n/index
-    
-    set s/res cat substr s/str 0 sub len s/str } inc n/index } } } s/char
+    set n/firstEnd sub len s/str } dec n/index
+    set n/lastStart sub len s/str } inc n/index
+    set s/res cat substr s/str 0 n/firstEnd } cat s/char substr s/str n/lastStart 
     return s/res
 
 r/s/reverseStr s/str
