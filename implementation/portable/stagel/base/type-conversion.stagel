@@ -84,7 +84,7 @@ r/as/strSplitEscaped s/in s/separator
                 set b/continue false
             set s/temp setCharAt get as/exploded n/k } dec len get as/exploded n/k } } } s/separator
             setElem as/exploded n/k s/temp
-            #array_splice($exploded, $k + 1, 1);
+            #array_splice($exploded, $k + 1, 1); // https://www.php.net/manual/en/function.array-splice.php
             set as/tempSubset subset as/exploded add 1 n/k } add 2 n/k
             set as/exploded append as/tempSubset subset as/exploded add 2 n/k } -1
             set n/l dec n/l
