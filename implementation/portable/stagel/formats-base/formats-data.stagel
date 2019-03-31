@@ -95,7 +95,7 @@ r/s/normalizeFormat s/format
 
 r/s/getFormatName s/format
     new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 1
     return s/res
 
 r/s/getFormatExtension s/format
@@ -105,32 +105,32 @@ r/s/getFormatExtension s/format
 
 r/n/getFormatImportSupport s/format
     new n/res
-    set n/res dcDataLookupById 'formats' getFormatId s/format } 2
+    set n/res intFromIntStr dcDataLookupById 'formats' getFormatId s/format } 3
+    return n/res
+
+r/n/getFormatExportSupport s/format
+    new n/res
+    set n/res intFromIntStr dcDataLookupById 'formats' getFormatId s/format } 4
+    return n/res
+
+r/n/getFormatTestsStatus s/format
+    new n/res
+    set n/res intFromIntStr dcDataLookupById 'formats' getFormatId s/format } 5
+    return n/res
+
+r/s/getFormatType s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 6
     return s/res
 
-r/s/getFormatExportSupport s/format
+r/s/getFormatLabel s/format
     new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 7
     return s/res
 
-r/s/getFormatExtension s/format
+r/s/getFormatComments s/format
     new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
-    return s/res
-
-r/s/getFormatExtension s/format
-    new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
-    return s/res
-
-r/s/getFormatExtension s/format
-    new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
-    return s/res
-
-r/s/getFormatExtension s/format
-    new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 8
     return s/res
 
 r/s/getFormatMetricsType s/format
