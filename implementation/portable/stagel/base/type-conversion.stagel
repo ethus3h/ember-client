@@ -66,27 +66,44 @@ r/s/strJoin ga/in s/separator
 
 # FIXME: Implement strSplitEscaped and strJoinEscaped.
 r/as/strSplitEscaped s/in s/separator
-//explode_escaped (not written by me)
-function explode_esc($delimiter, $string)
-{
-    $exploded = explode($delimiter, $string);
-    $fixed    = array();
-    for ($k = 0, $l = count($exploded); $k < $l; ++$k) {
-        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') {
-            if ($k + 1 >= $l) {
-                $fixed[] = trim($exploded[$k]);
-                break;
-            }
-            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter;
-            $exploded[$k] .= $exploded[$k + 1];
-            array_splice($exploded, $k + 1, 1);
-            --$l;
-            --$k;
-        } else
-            $fixed[] = trim($exploded[$k]);
-    }
-    return $fixed;
-}
+    new as/res
+    new as/temp
+    set as/temp strSplit s/in s/separator
+    set as/res [ ]
+    new n/k
+    new n/l
+    set n/k 0
+    set n/l count as/temp
+    while lt n/k n/l
+        if eq '\\' charAt get as/temp n/k } add -1 len get as/temp n/k
+            if ge add 1 n/k } n/l
+                set as/res get as/temp n/k
+            #    break
+            #
+        set n/k add 1 n/k
+    return as/res
+    # Based on the explode_esc PHP function:
+    #//explode_escaped (not written by me)
+    #function explode_esc($delimiter, $string)
+    #{
+    #    $exploded = explode($delimiter, $string);
+    #    $fixed    = array();
+    #    for ($k = 0, $l = count($exploded); $k < $l; ++$k) {
+    #        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') {
+    #            if ($k + 1 >= $l) {
+    #                $fixed[] = trim($exploded[$k]);
+    #                break;
+    #            }
+    #            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter;
+    #            $exploded[$k] .= $exploded[$k + 1];
+    #            array_splice($exploded, $k + 1, 1);
+    #            --$l;
+    #            --$k;
+    #        } else
+    #            $fixed[] = trim($exploded[$k]);
+    #    }
+    #    return $fixed;
+    #}
 
 r/as/strJoinEscaped s/in s/separator
 
