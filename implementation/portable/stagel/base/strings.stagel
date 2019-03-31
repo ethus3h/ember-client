@@ -26,8 +26,8 @@ r/s/setCharAt s/str n/index s/char
     new n/firstEnd
     new n/lastStart
     set n/firstEnd sub len s/str } dec n/index
-    set n/lastStart add n/firstEnd 
-    set s/res cat substr s/str 0 n/firstEnd } cat s/char substr s/str n/lastStart 
+    set n/lastStart sub len s/str } inc n/index
+    set s/res cat substr s/str 0 n/firstEnd } cat s/char substr s/str n/lastStart -1
     return s/res
 
 r/s/reverseStr s/str

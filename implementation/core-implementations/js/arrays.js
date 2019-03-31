@@ -108,6 +108,10 @@ async function setElement(array, index, value) {
     await assertIsArray(array); return array;
 }
 
+async function setElem(array, index, value) {
+    return await setElement(array, index, value);
+}
+
 async function count(array) {
     if (array.constructor.name === 'Uint8Array') {
         return array.byteLength;
