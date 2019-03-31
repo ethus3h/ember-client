@@ -167,10 +167,15 @@ r/s/formatGetVariantType s/format
 
 r/b/formatSupportsVariantType s/format s/variantType
     assertIsFormat s/format
-    assertIsTrue isVariantType s/variantType
-    new s/res
-    set s/res in s/variantType getFormatVariantTypes s/format
-    return s/res
+    new b/res
+    set b/res in s/variantType getFormatVariantTypes s/format
+    return b/res
+
+r/b/formatSupportsVariant s/format s/variant
+    assertIsFormat s/format
+    new b/res
+    set b/res formatSupportsVariantType s/format formatGetVariantType s/variant
+    return b/res
 
 r/s/getFormatMetricsType s/format
     assertIsFormat s/format

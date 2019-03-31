@@ -51,8 +51,6 @@ r/as/strSplit s/in s/separator
         set as/res push as/res s/currentElem
     return as/res
 
-# FIXME: Add strSplitEscaped and strJoinEscaped.
-
 r/s/strJoin ga/in s/separator
     # Opposite of strSplit for a given separator (always gives a trailing delimiter, though, and remember that delimiters are in-band signalling)
     new n/count
@@ -65,6 +63,11 @@ r/s/strJoin ga/in s/separator
         set s/out cat s/out s/separator
         set n/i add n/i 1
     return s/out
+
+# FIXME: Implement strSplitEscaped and strJoinEscaped.
+r/as/strSplitEscaped s/in s/separator
+
+r/as/strJoinEscaped s/in s/separator
 
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.
