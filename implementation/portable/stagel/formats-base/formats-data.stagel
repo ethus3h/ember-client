@@ -139,10 +139,18 @@ r/b/formatIsVariant s/format
     set b/res eq 'v:' substr getFormatType s/format } 0 2
     return s/res
 
-r/b/formatGetVariantType s/format
+r/s/formatGetVariantType s/format
     # Return the string indicating the type of format variant this is.
-    new b/res
-    set b/res eq 'v:' substr getFormatType s/format } 0 2
+    assertIsTrue formatIsVariant s/format
+    new s/res
+    set s/res substr getFormatType s/format } 2 -1
+    return s/res
+
+r/b/variant s/format
+    # Return the string indicating the type of format variant this is.
+    assertIsTrue formatIsVariant s/format
+    new s/res
+    set s/res substr getFormatType s/format } 2 -1
     return s/res
 
 r/s/getFormatMetricsType s/format
