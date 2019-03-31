@@ -74,12 +74,15 @@ r/as/strSplitEscaped s/in s/separator
     new n/l
     set n/k 0
     set n/l count as/temp
-    while lt n/k n/l
+    new b/continue
+    set b/continue true
+    new s/temp
+    while and b/continue lt n/k n/l
         if eq '\\' charAt get as/temp n/k } add -1 len get as/temp n/k
             if ge add 1 n/k } n/l
                 set as/res get as/temp n/k
-            #    break
-            #
+                set b/continue false
+            
         set n/k add 1 n/k
     return as/res
     # Based on the explode_esc PHP function:
