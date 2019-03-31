@@ -133,7 +133,14 @@ r/s/getFormatComments s/format
     set s/res dcDataLookupById 'formats' getFormatId s/format } 8
     return s/res
 
+r/b/formatIsVariant s/format
+    # Return true if the format is a variant of another format, rather than its own format.
+    new b/res
+    set b/res dcDataLookupById 'formats' getFormatId s/format } 6
+    return s/res
+
 r/s/getFormatMetricsType s/format
     new s/res
     new s/type
-    set s/type getFormatType 
+    set s/type getFormatType s/format
+    if in s/type [ '' ]
