@@ -76,18 +76,21 @@ r/as/strSplitEscaped s/in s/separator
     new b/continue
     set b/continue true
     new s/temp
+    new as/tempSubset
     while and b/continue lt n/k n/l
         if eq '\\' charAt get as/exploded n/k } add -1 len get as/exploded n/k
             if ge add 1 n/k } n/l
-                set as/res get as/exploded n/k
+                set as/res push as/res get as/exploded n/k
                 set b/continue false
             set s/temp setCharAt get as/exploded n/k } dec len get as/exploded n/k } } } s/separator
             setElem as/exploded n/k s/temp
-            #array_splice($exploded, $k + 1, 1);
+            #array_splice($exploded, $k + 1, 1); // https://www.php.net/manual/en/function.array-splice.php
+            set as/tempSubset subset as/exploded add 1 n/k } add 2 n/k
+            set as/exploded append as/tempSubset subset as/exploded add 2 n/k } -1
             set n/l dec n/l
             set n/k dec n/k
         else
-            set as/res get as/exploded n/k
+            set as/res push as/res get as/exploded n/k
         set n/k add 1 n/k
     return as/res
     # Based on the explode_esc PHP function:
