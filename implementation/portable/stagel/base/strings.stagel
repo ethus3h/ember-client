@@ -21,6 +21,11 @@ r/s/charAt s/str n/index
     set s/temp strChar s/str n/index
     return s/temp
 
+r/s/setCharAt s/str n/index s/char
+    new s/res
+    set s/res cat substr s/str 0 -2 } s/char
+    return s/res
+
 r/s/reverseStr s/str
     new n/l
     set n/l len s/str

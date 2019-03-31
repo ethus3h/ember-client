@@ -67,22 +67,22 @@ r/s/strJoin ga/in s/separator
 # FIXME: Implement strSplitEscaped and strJoinEscaped.
 r/as/strSplitEscaped s/in s/separator
     new as/res
-    new as/temp
-    set as/temp strSplit s/in s/separator
+    new as/exploded
+    set as/exploded strSplit s/in s/separator
     set as/res [ ]
     new n/k
     new n/l
     set n/k 0
-    set n/l count as/temp
+    set n/l count as/exploded
     new b/continue
     set b/continue true
     new s/temp
     while and b/continue lt n/k n/l
-        if eq '\\' charAt get as/temp n/k } add -1 len get as/temp n/k
+        if eq '\\' charAt get as/exploded n/k } add -1 len get as/exploded n/k
             if ge add 1 n/k } n/l
-                set as/res get as/temp n/k
+                set as/res get as/exploded n/k
                 set b/continue false
-            
+            set s/temp setCharAt get as/exploded n/k } -1 
         set n/k add 1 n/k
     return as/res
     # Based on the explode_esc PHP function:
