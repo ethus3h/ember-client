@@ -136,7 +136,13 @@ r/s/getFormatComments s/format
 r/b/formatIsVariant s/format
     # Return true if the format is a variant of another format, rather than its own format.
     new b/res
-    set b/res dcDataLookupById 'formats' getFormatId s/format } 6
+    set b/res eq 'v:' substr getFormatType s/format } 0 2
+    return s/res
+
+r/b/formatGetVariantType s/format
+    # Return the string indicating the type of format variant this is.
+    new b/res
+    set b/res eq 'v:' substr getFormatType s/format } 0 2
     return s/res
 
 r/s/getFormatMetricsType s/format
