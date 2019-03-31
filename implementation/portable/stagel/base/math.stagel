@@ -145,3 +145,13 @@ r/s/formatPercentage n/a n/b
         set s/percentage cat s/percentage strChar s/percentageTemp sub n/count n/counter
         set n/counter sub n/counter 1
     return s/percentage
+
+r/n/inc n/n
+    new n/res
+    set n/res add 1 n/n
+    return n/res
+
+r/n/dec n/n
+    new n/res
+    set n/res add -1 n/n
+    return n/res
