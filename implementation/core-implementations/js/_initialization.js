@@ -19,6 +19,7 @@ let strArrayDocumentExecSymbolIndex = []; // as: holds a key-value-pair list of 
 let strArrayDocumentExecPtrs = []; // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
 let strArrayDocumentExecFrames = []; // as: holds strings of space-terminated integers representing Dcs to be rendered.
 let strArrayDocumentExecEvents = []; // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
+let strArrayDocumentExecLogs = []; // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
 let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
