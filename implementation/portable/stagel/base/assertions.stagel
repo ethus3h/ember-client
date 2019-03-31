@@ -72,6 +72,9 @@ r/v/assertIsDcArray gi/in
 r/v/assertIsDcDataset s/in
     assertIsTrue isDcDataset s/in
 
+r/v/assertIsFormat s/in
+    assertIsTrue isFormat s/in
+
 r/v/assertIsSupportedInputFormat s/in
     if not isSupportedInputFormat s/in
         die cat s/in ' is not a supported input format.'

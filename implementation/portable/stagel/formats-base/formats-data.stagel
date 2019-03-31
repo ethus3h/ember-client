@@ -3,6 +3,11 @@ r/as/listFormats
     set as/res dcGetColumn 'formats' 1
     return as/res
 
+r/b/isFormat s/format
+    new b/res
+    set b/res in s/format listFormats
+    return b/res
+
 r/as/listInputFormats
     new as/res
     set as/res dcDataFilterByValueGreater 'formats' 3 0 1
@@ -61,6 +66,7 @@ r/as/listDataTypes
     return as/res
 
 r/as/listVariantsForFormat s/format
+    assertIsFormat s/format
     new s/normalizedFmt
     set s/normalizedFmt normalizeFormat s/format
     new as/formats
@@ -84,11 +90,13 @@ r/as/listVariantsForFormat s/format
     return as/res
 
 r/n/getFormatId s/format
+    assertIsFormat s/format
     new n/res
     set n/res intFromIntStr dcDataLookupByValue 'formats' 1 s/format 0
     return n/res
 
 r/s/normalizeFormat s/format
+    assertIsFormat s/format
     if eq s/format 'utf8'
         return 'unicode'
     return s/format
@@ -128,16 +136,27 @@ r/s/getFormatLabel s/format
     set s/res dcDataLookupById 'formats' getFormatId s/format } 7
     return s/res
 
+r/as/getFormatVariantTypes s/format
+    new as/res
+    set as/res strSplit dcDataLookupById 'formats' getFormatId s/format } 8 } ','
+    return as/res
+
 r/s/getFormatComments s/format
     new s/res
-    set s/res dcDataLookupById 'formats' getFormatId s/format } 8
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 9
     return s/res
 
 r/b/formatIsVariant s/format
     # Return true if the format is a variant of another format, rather than its own format.
+    assertIsFormat s/format
     new b/res
     set b/res eq 'v:' substr getFormatType s/format } 0 2
     return s/res
+
+r/s/isVariantType s/variantType
+    new b/res
+    set b/res in s/variantType [ 'encoding' 'unicodePua' ]
+    return b/res
 
 r/s/formatGetVariantType s/format
     # Return the string indicating the type of format variant this is.
@@ -146,14 +165,15 @@ r/s/formatGetVariantType s/format
     set s/res substr getFormatType s/format } 2 -1
     return s/res
 
-r/b/variant s/format
-    # Return the string indicating the type of format variant this is.
-    assertIsTrue formatIsVariant s/format
+r/b/formatSupportsVariantType s/format s/variantType
+    assertIsFormat s/format
+    assertIsTrue isVariantType s/variantType
     new s/res
-    set s/res substr getFormatType s/format } 2 -1
+    set s/res in s/variantType getFormatVariantTypes s/format
     return s/res
 
 r/s/getFormatMetricsType s/format
+    assertIsFormat s/format
     new s/res
     new s/type
     set s/type getFormatType s/format
