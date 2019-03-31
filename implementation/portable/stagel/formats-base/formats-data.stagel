@@ -93,7 +93,47 @@ r/s/normalizeFormat s/format
         return 'unicode'
     return s/format
 
+r/s/getFormatName s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
 r/s/getFormatExtension s/format
     new s/res
     set s/res dcDataLookupById 'formats' getFormatId s/format } 2
     return s/res
+
+r/n/getFormatImportSupport s/format
+    new n/res
+    set n/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatExportSupport s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatExtension s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatExtension s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatExtension s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatExtension s/format
+    new s/res
+    set s/res dcDataLookupById 'formats' getFormatId s/format } 2
+    return s/res
+
+r/s/getFormatMetricsType s/format
+    new s/res
+    new s/type
+    set s/type getFormatType 
