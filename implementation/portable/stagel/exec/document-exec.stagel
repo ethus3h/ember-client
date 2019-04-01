@@ -35,7 +35,7 @@ r/v/setExecPtrPos n/execId n/pos
     set as/documentExecPtrs setElem as/documentExecPtrs n/execId s/newPosStr
 
 r/v/incrExecPtrPos n/execId
-    r/v/setExecPtrPos n/execId add 1 getCurrentExecPtrPos n/execId
+    setExecPtrPos n/execId add 1 getCurrentExecPtrPos n/execId
 
 r/n/getNextLevelExecPtrPos n/execId
     new n/res
