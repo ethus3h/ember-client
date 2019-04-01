@@ -148,6 +148,39 @@ codegenType() {
     esac
 }
 
+codegenStringLiteralDelim() {
+        case "$targetLang" in
+    "js"|c)
+        case "$1" in
+        "literal-s")
+            tempSubstitution="$(asciiDecListToText "$2")"
+            if [[ "c" == "$targetLang" ]]; then
+                codegenOutput \"
+            else
+                codegenOutput \'
+            fi
+            codegenOutput "${tempSubstitution//\\/\\\\}"
+            if [[ "c" == "$targetLang" ]]; then
+                codegenOutput \"
+            else
+                codegenOutput \'
+            fi
+            ;;
+        "literal-n"|"literal-b")
+            codegenOutput "$2"
+            ;;
+        literal-a*)
+            codegenOutput "$2"
+            ;;
+        esac
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+
+}
+
 codegenLiteral() {
     codegenDebug "Literal" "${@}" >&2
     # First arg: type; second arg: value
