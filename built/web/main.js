@@ -3,9 +3,9 @@
 window.onload = function() {
     //eiteCall('startEite');
     let doc = await eiteCall('loadStoredDocument', ['sems', 'eite.sems']));
-    let execId = await eiteCall('runDocumentPrep', [doc]);
-    await eiteCall('setExecOption', ['stopExecAtTick', 30]);
-    await eiteCall('runDocumentStart', [execId]);
+    let execId = await eiteCall('runDocumentPrepare', [doc]);
+    await eiteCall('setExecOption', ['stopExecAtTick', '30']);
+    await eiteCall('runDocumentGo', [execId]);
 };
 
 // @license-end
