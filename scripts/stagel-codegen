@@ -109,7 +109,46 @@ codegenDebug() {
     #print_r "${blockStack[@]}" >&2
 }
 
-codegenType() {
+codegenFormatType() {
+    codegenDebug "Type" "${@}" >&2
+    # First arg: type; second arg: "true" for uppercase first letter
+    local result=""
+    case "$targetLang" in
+    js|c)
+        [[ "$1" == "literal-b" ]] && result='bool'
+        [[ "$1" == "literal-n" ]] && result='int'
+        [[ "$1" == "literal-s" ]] && result='str'
+        [[ "$1" == "ident-b" ]] && result='bool'
+        [[ "$1" == "ident-g" ]] && result='generic'
+        [[ "$1" == "ident-n" ]] && result='int'
+        [[ "$1" == "ident-s" ]] && result='str'
+        [[ "$1" == "ident-ab" ]] && result='boolArray'
+        [[ "$1" == "ident-an" ]] && result='intArray'
+        [[ "$1" == "ident-as" ]] && result='strArray'
+        [[ "$1" == "ident-ga" ]] && result='genericArray'
+        [[ "$1" == "ident-gi" ]] && result='genericItem'
+        [[ "$1" == "ident-r-b" ]] && result='bool'
+        [[ "$1" == "ident-r-n" ]] && result='int'
+        [[ "$1" == "ident-r-s" ]] && result='str'
+        [[ "$1" == "ident-r-v" ]] && result='void'
+        [[ "$1" == "ident-r-ab" ]] && result='boolArray'
+        [[ "$1" == "ident-r-an" ]] && result='intArray'
+        [[ "$1" == "ident-r-as" ]] && result='strArray'
+        #[[ -z "$result" ]] && result="$1"
+        [[ -z "$result" ]] && die "$1 is not a recognized type!"
+        if [[ "$2" == "true" ]]; then
+            codegenOutput "${result^}"
+        else
+            codegenOutput "$result"
+        fi
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
+codegenFormatType() {
     codegenDebug "Type" "${@}" >&2
     # First arg: type; second arg: "true" for uppercase first letter
     local result=""
@@ -194,7 +233,7 @@ codegenReference() {
     # First arg: type; second arg: name
     case "$targetLang" in
     js|c)
-        codegenType "$1"
+        codegenFormatType "$1"
         codegenOutput "${2^}"
         ;;
     *)
@@ -291,7 +330,7 @@ codegenArglistHasInvocation() {
 codegenGetCurrentRoutineType() {
     local counter="${#blockStack[@]}"
     while [[ "$counter" -ge 0 ]]; do
-        if ( codegenType "${blockStack[$counter]}" &> /dev/null; ); then
+        if ( codegenFormatType "${blockStack[$counter]}" &> /dev/null; ); then
             codegenOutput "${blockStack[$counter]}"
             return 0
         fi
@@ -382,8 +421,13 @@ codegenCommandInvocationStart() {
         fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        js)
-            codegenOutput "let "
+        js|c)
+            if [[ "c" == "$targetLang" ]]; then
+                codegenType "${codegenArgList[-2]}"
+                codegenOutput ' '
+            else
+                codegenOutput "let "
+            fi
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 codegenOutput ' = '
@@ -396,17 +440,12 @@ codegenCommandInvocationStart() {
                     tokenLookahead=""
                 else
                     local type
-                    type="$(codegenType "${codegenArgList[-2]}")"
+                    type="$(codegenFormatType "${codegenArgList[-2]}")"
                     [[ "$type" =~ ^(generic|genericItem)$ ]] || codegenInitializeType "$type"
                 fi
                 #set +x
             fi
             ;;
-        c)
-            local type
-            type="$(codegenType "${codegenArgList[-2]}")"
-            codegenOutput ' '
-            
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
             ;;
@@ -423,7 +462,7 @@ codegenCommandInvocationStart() {
             local returnType
             returnType="$(codegenGetCurrentRoutineType)" || true
             [[ -z "$returnType" ]] && die "Tried to return, but was not inside a routine!"
-            codegenType "$returnType"
+            codegenFormatType "$returnType"
             codegenOutput "Return = "
             if [[ "${codegenArgList[-2]}" == ident-* ]]; then
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
@@ -432,16 +471,16 @@ codegenCommandInvocationStart() {
             fi
             if generateRuntimeTypeCheckCode; then
                 codegenOutput "; await assertIs"
-                codegenType "$returnType" true
+                codegenFormatType "$returnType" true
                 codegenOutput "("
-                codegenType "$returnType"
+                codegenFormatType "$returnType"
                 codegenOutput "Return); "
             else
                 codegenOutput "; "
             fi
             codegenRoutineDefinitionPreEnd
             codegenOutput "return "
-            codegenType "$returnType"
+            codegenFormatType "$returnType"
             codegenOutput "Return;"$'\n'
             ;;
         *)
@@ -608,7 +647,7 @@ codegenRoutineDefinitionStart() {
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
             if (( k % 2 )); then
-                codegenType "${codegenArgList[$k - 1]}"
+                codegenFormatType "${codegenArgList[$k - 1]}"
                 if [[ "$k" == $((argumentCount - 1)) ]]; then
                     codegenOutput "${codegenArgList[$k]^}"
                 else
@@ -624,9 +663,9 @@ codegenRoutineDefinitionStart() {
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
                     codegenOutput "await internalDebugCollect('"
-                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenFormatType "${codegenArgList[$k - 1]}"
                     codegenOutput " ${codegenArgList[$k]^} = ' + "
-                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenFormatType "${codegenArgList[$k - 1]}"
                     codegenOutput "${codegenArgList[$k]^} + '; '); "
                 fi
             done
@@ -640,9 +679,9 @@ codegenRoutineDefinitionStart() {
                 if (( k % 2 )); then
                     [[ "$k" != 1 ]] && codegenOutput ' '
                     codegenOutput "await assertIs"
-                    codegenType "${codegenArgList[$k - 1]}" "true"
+                    codegenFormatType "${codegenArgList[$k - 1]}" "true"
                     codegenOutput "("
-                    codegenType "${codegenArgList[$k - 1]}"
+                    codegenFormatType "${codegenArgList[$k - 1]}"
                     codegenOutput "${codegenArgList[$k]^});"
                 fi
             done
@@ -652,7 +691,7 @@ codegenRoutineDefinitionStart() {
         fi
         if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput "let "
-            codegenType "$codegenRoutineType"
+            codegenFormatType "$codegenRoutineType"
             codegenOutput "Return;"
         fi
         codegenOutput $'\n\n'
