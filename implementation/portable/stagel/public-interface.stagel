@@ -32,6 +32,14 @@ r/v/runDocument an/contents
     set n/execId startDocument an/contents
     internalRunDocument n/execId
 
+r/v/runDocumentPrep an/contents
+    # Prepare to run the specified document.
+    setupIfNeeded
+    assertIsDcArray an/contents
+    new n/execId
+    set n/execId startDocument an/contents
+    internalRunDocument n/execId
+
 r/an/exportDocument s/format an/contents
     assertIsSupportedOutputFormat s/format
     # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
