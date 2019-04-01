@@ -4,7 +4,7 @@ window.onload = async function() {
     //eiteCall('startEite');
     let doc = await eiteCall('loadStoredDocument', ['sems', 'eite.sems']);
     let execId = await eiteCall('runDocumentPrepare', [doc]);
-    await eiteCall('setExecOption', ['stopExecAtTick', 30]);
+    await eiteCall('setExecOption', [execId, 'stopExecAtTick', 30]);
     await eiteCall('runDocumentGo', [execId]);
 };
 
