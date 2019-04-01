@@ -26,18 +26,18 @@ r/an/loadAndConvert s/inputFormat s/outputFormat s/path
 
 r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
-    runDocumentStart runDocumentPrep an/contents
+    runDocumentStart startDocument an/contents
 
-r/n/runDocumentPrep an/contents
+r/n/startDocument an/contents
     # Prepare to run the specified document. Use this followed by runDocumentStart if you want to configure execution settings before starting the document.
     setupIfNeeded
     assertIsDcArray an/contents
     new n/execId
-    set n/execId startDocument an/contents
+    set n/execId prepareDocumentExec an/contents
     assertIsExecId n/execId
     return n/execId
 
-r/v/runDocumentStart n/execId
+r/v/runDocumentGo n/execId
     internalRunDocument n/execId
 
 r/an/exportDocument s/format an/contents
@@ -75,13 +75,6 @@ r/an/loadStoredDocument s/format s/path
     new an/res
     set an/res dcaFromFormat s/format getFileFromPath s/path
     return an/res
-
-r/n/startDocument an/contents
-    # Start execution of the provided document and return an ID for it.
-    setupIfNeeded
-    new n/execId
-    set n/execId prepareDocumentExec an/contents
-    return n/execId
 
 r/as/getDesiredEventNotifications n/execId
     # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
