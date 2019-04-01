@@ -3229,9 +3229,9 @@ async function getExecOption(intExecId, strKey) {
     let strRes = '';
     strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
 
-return strRes;
 
     await internalDebugStackExit();
+return strRes;
 }
 
 async function setExecOption(intExecId, strKey, strValue) {
