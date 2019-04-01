@@ -1,40 +1,51 @@
 r/b/kvHasValue as/data s/key
     new b/res
+    set n/count count as/settings
+    new n/counter
+    set n/counter 0
+    new s/elem
+    while lt n/counter n/count
+        set s/elem get as/settings n/counter
+        assertIsTrue isValidIdent s/elem
+        if eq 0 mod n/counter 2
+            set s/res cat s/res cat s/elem ','
+        else
+            set s/res cat s/res cat s/elem ':'
+        set n/counter add n/counter 1
     return b/res
 
 r/s/kvGetValue as/data s/key
     # data format: [ 'a' 'b' 'c' 'd' ... ]
-    assertKvHasValue as/data
+    # Returns empty if value not set
     new s/res
     return s/res
 
 r/s/kvGetDefinedValue as/data s/key
-    # data format: [ 'a' 'b' 'c' 'd' ... ]
     assertKvHasValue as/data
     new s/res
+    set s/res kvGetValue as/data s/key
     return s/res
 
 r/as/kvSetValue as/data s/key s/val
     new as/res
     return as/res
 
-r/s/kvsHasValue s/data s/key
-    # data format: [ 'a:b,c:d,' ... ]
-    assertKvsHasValue as/data
-    new s/res
-    set s/res kvGetValue kvSplit s/data } s/key
-    return s/res
+r/b/kvsHasValue s/data s/key
+    new b/res
+    set b/res kvHasValue kvSplit s/data } s/key
+    return b/res
 
 r/s/kvsGetValue s/data s/key
     # data format: [ 'a:b,c:d,' ... ]
+    # Returns empty if value not set
     new s/res
     set s/res kvGetValue kvSplit s/data } s/key
     return s/res
 
 r/s/kvsGetDefinedValue s/data s/key
-    # data format: [ 'a:b,c:d,' ... ]
+    assertKvsHasValue s/data
     new s/res
-    set s/res kvGetValue kvSplit s/data } s/key
+    set s/res kvsGetValue s/data s/key
     return s/res
 
 r/s/kvsSetValue s/data s/key s/val
