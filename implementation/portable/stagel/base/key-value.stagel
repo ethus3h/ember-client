@@ -1,1 +1,2 @@
- 
+s/kvGetValue s/pack s/key
+s/kvSetValue s/pack s/key
