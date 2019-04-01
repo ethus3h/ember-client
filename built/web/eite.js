@@ -6876,7 +6876,7 @@ async function startDocumentExec(intExecId) {
         intStopExecAtTick = await intFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     }
     else {
-        intStopExecAtTick = -1;
+        intStopExecAtTick = 20;
     }
     let intCurrentTick = 0;
     intCurrentTick = 0;
