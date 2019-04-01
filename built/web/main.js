@@ -6,7 +6,7 @@ window.onload = async function() {
     let execId = await eiteCall('runDocumentPrepare', [doc]);
     await eiteCall('setDebugLevel', [2]);
     await eiteCall('setExecOption', [execId, 'stopExecAtTick', '30']);
-    alert(await eiteCall('getExecSettings', [execId]));
+    console.log(await eiteCall('getExecSettings', [execId]));
     await eiteCall('setDebugLevel', [1]);
     await eiteCall('runDocumentGo', [execId]);
 };
