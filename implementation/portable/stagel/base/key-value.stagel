@@ -142,7 +142,7 @@ r/s/kvJoin as/data
                 set as/tempA [ ]
                 set as/tempA push as/tempA get as/data n/c
                 set as/tempA push as/tempA get as/data add 1 n/c
-                set as/tempB push as/tempB strJoinEsc as/tempA ':'
+                set as/tempB push as/tempB strJoinEscNoTrailing as/tempA ':'
             set n/c inc n/c
         set s/res strJoinEsc as/tempB ','
     return s/res
