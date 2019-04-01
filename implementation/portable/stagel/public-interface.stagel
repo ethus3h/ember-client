@@ -41,7 +41,13 @@ r/v/runDocumentGo n/execId
     # Run a document, once it's been prepared to run by calling runDocumentPrepare.
     internalRunDocument n/execId
 
+r/v/getExecOption n/execId s/key
+    # get an execution option for a document.
+    assertIsExecId n/execId
+    internalRunDocument n/execId
+
 r/v/setExecOption n/execId s/key s/value
+    # Set an execution option for a document.
     assertIsExecId n/execId
     internalRunDocument n/execId
 
