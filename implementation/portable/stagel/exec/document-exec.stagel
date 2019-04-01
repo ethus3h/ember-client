@@ -77,10 +77,7 @@ r/v/startDocumentExec n/execId
     new b/lastCharacterWasEscape
     set b/lastCharacterWasEscape false
     new n/stopExecAtTick
-    if kvHasValue getExecSettings n/execId } 'stopExecAtTick'
-        set n/stopExecAtTick intFromIntStr getExecOption n/execId 'stopExecAtTick'
-    else
-        set n/stopExecAtTick positiveIntFromIntStr getExecOption n/execId 'stopExecAtTick'
+    set n/stopExecAtTick positiveIntFromIntStr getExecOption n/execId 'stopExecAtTick'
     new n/currentTick
     set n/currentTick 0
     if isNonnegative n/stopExecAtTick

@@ -184,12 +184,10 @@ r/n/positiveIntFromIntStr s/in
         set n/res intFromIntStr s/in
     return n/res
 
-r/n/positiveIntFromIntStr s/in
+r/n/posIntFromIntStr s/in
+    # Convenience wrapper
     new n/res
-    if eq 0 len s/in
-        set n/res -1
-    else
-        set n/res intFromIntStr s/in
+    set n/res positiveFromIntStr s/in
     return n/res
 
 r/s/charFromHexByte s/hexByte
