@@ -149,36 +149,17 @@ codegenType() {
 }
 
 codegenStringLiteralDelim() {
-        case "$targetLang" in
-    "js"|c)
-        case "$1" in
-        "literal-s")
-            tempSubstitution="$(asciiDecListToText "$2")"
-            if [[ "c" == "$targetLang" ]]; then
-                codegenOutput \"
-            else
-                codegenOutput \'
-            fi
-            codegenOutput "${tempSubstitution//\\/\\\\}"
-            if [[ "c" == "$targetLang" ]]; then
-                codegenOutput \"
-            else
-                codegenOutput \'
-            fi
-            ;;
-        "literal-n"|"literal-b")
-            codegenOutput "$2"
-            ;;
-        literal-a*)
-            codegenOutput "$2"
-            ;;
-        esac
+    case "$targetLang" in
+    js)
+        codegenOutput \'
+        ;;
+    c)
+        codegenOutput \"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
     esac
-
 }
 
 codegenLiteral() {
@@ -189,17 +170,9 @@ codegenLiteral() {
         case "$1" in
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
-            if [[ "c" == "$targetLang" ]]; then
-                codegenOutput \"
-            else
-                codegenOutput \'
-            fi
+            codegenStringLiteralDelim
             codegenOutput "${tempSubstitution//\\/\\\\}"
-            if [[ "c" == "$targetLang" ]]; then
-                codegenOutput \"
-            else
-                codegenOutput \'
-            fi
+            codegenStringLiteralDelim
             ;;
         "literal-n"|"literal-b")
             codegenOutput "$2"
@@ -329,7 +302,7 @@ codegenGetCurrentRoutineType() {
 codegenInitializeType() {
     codegenDebug "Initialize type" "${@}" >&2
     case "$targetLang" in
-    "js"|c)
+    js|c)
         codegenOutput " = "
         case "$1" in
         "bool")
@@ -339,7 +312,8 @@ codegenInitializeType() {
             codegenOutput '0'
             ;;
         "str")
-            codegenOutput "''"
+            codegenStringLiteralDelim
+            codegenStringLiteralDelim
             ;;
         "boolArray")
             codegenOutput "[]"
