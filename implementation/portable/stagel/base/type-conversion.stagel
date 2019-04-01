@@ -139,7 +139,7 @@ r/s/strJoinEscaped as/in s/separator
     set n/c 0
     set n/l count as/in
     while lt n/c n/l
-        set s/res cat s/res cat strReplace get as/in n/c } s/separator cat '\' s/separator } } } s/separator
+        set s/res cat s/res cat strReplace get as/in n/c } s/separator cat '\' s/separator } } s/separator
         set n/c inc n/c
     return s/res
 

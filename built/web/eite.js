@@ -5086,7 +5086,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     intC = 0;
     intL = await count(strArrayIn);
     while (await implLt(intC, intL)) {
-        strRes = await implCat(strRes, await implCat(await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), ), strSeparator);
+        strRes = await implCat(strRes, await implCat(await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator));
         intC = await inc(intC);
     }
 
