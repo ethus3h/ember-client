@@ -160,7 +160,7 @@ codegenType() {
         [[ "$1" == "ident-s" ]] && result='char[]'
         [[ "$1" == "ident-ab" ]] && result='bool[]'
         [[ "$1" == "ident-an" ]] && result='long[]'
-        [[ "$1" == "ident-as" ]] && result='char[][]'
+        [[ "$1" == "ident-as" ]] && result='char[][]' # FIXME https://github.com/antirez/sds
         [[ "$1" == "ident-ga" ]] && result='genericArray'
         [[ "$1" == "ident-gi" ]] && result='genericItem'
         [[ "$1" == "ident-r-b" ]] && result='bool'
