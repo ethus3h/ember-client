@@ -8,6 +8,12 @@ r/s/kvGetValue as/data s/key
     new s/res
     return s/res
 
+r/s/kvGetDefinedValue as/data s/key
+    # data format: [ 'a' 'b' 'c' 'd' ... ]
+    assertKvHasValue as/data
+    new s/res
+    return s/res
+
 r/as/kvSetValue as/data s/key s/val
     new as/res
     return as/res
@@ -25,7 +31,7 @@ r/s/kvsGetValue s/data s/key
     set s/res kvGetValue kvSplit s/data } s/key
     return s/res
 
-r/s/kvsGetValueOrEmpty s/data s/key
+r/s/kvsGetDefinedValue s/data s/key
     # data format: [ 'a:b,c:d,' ... ]
     new s/res
     set s/res kvGetValue kvSplit s/data } s/key
