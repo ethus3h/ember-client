@@ -4,13 +4,22 @@ s/kvGetValue as/data s/key
     
 as/kvSetValue as/data s/key
 
-s/kvsSplit
 s/kvsGetValue s/data s/key
     # data format: [ 'a:b,b:c,' ... ]
     new s/res
-    set s/res kvGetValue strSplit s/data ',' } s/key
+    set s/res kvGetValue kvSplit s/data ',' } s/key
     return s/res
 
 s/kvsSetValue s/data s/key s/val
     new s/res
     set s/res strJoin kvSetValue 
+
+as/kvsSplit s/data
+    new as/res
+    set as/res strSplit s/data ','
+    return as/res
+
+s/kvsJoin as/data
+    new s/res
+    set s/res strJoin as/data ','
+    return s/res
