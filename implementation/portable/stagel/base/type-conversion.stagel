@@ -116,7 +116,7 @@ r/as/strSplitEscaped s/in s/separator
     #    return $fixed;
     #}
 
-r/as/strSplitEsc as/in s/separator
+r/as/strSplitEsc s/in s/separator
     # Convenience wrapper
     new as/res
     set as/res strSplitEscaped s/in s/separator
