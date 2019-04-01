@@ -1,4 +1,6 @@
 HIGH PRIORITY EITE
+- Show a button. Do something when button is clicked.
+- Show a text field and a button. If/else to do something when button is clicked depending on text field contents.
 - Get document rendering to be a bit more sophisticated (support variables and function calls inside documents)
 - Get rendering through time working (right now it draws the completed document and stops running, rather than keeping it idle and having an event handling system, although I have started on the APIs for that)
 - Provide a way for an EITE document to start a sub-document in its own thread
