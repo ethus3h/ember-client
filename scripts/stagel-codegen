@@ -187,7 +187,7 @@ codegenReference() {
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
-    "js")
+    "js"|c)
         codegenType "$1"
         codegenOutput "${2^}"
         ;;
@@ -209,7 +209,7 @@ codegenPrintIndentationSpaces() {
 codegenStartDocument() {
     codegenDebug "Start document" "${@}" >&2
     case "$targetLang" in
-    "js")
+    "js"|c)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -220,7 +220,7 @@ codegenStartDocument() {
 codegenEndDocument() {
     codegenDebug "End document" "${@}" >&2
     case "$targetLang" in
-    "js")
+    "js"|c)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -232,7 +232,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
     case "$targetLang" in
-    "js")
+    "js"|c)
         codegenOnNewLine || codegenOutput ' '
         codegenOutput '{'$'\n'
         ;;
@@ -248,7 +248,7 @@ codegenDedent() {
     codegenPrintIndentationSpaces
     #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
-    "js")
+    "js"|c)
         codegenOutput '}'$'\n'
         ;;
     *)
@@ -262,7 +262,7 @@ codegenComment() {
     codegenDebug "Comment" "${@}" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
-    "js")
+    "js"|c)
         codegenOutput "/*""$1 */"$'\n'
         ;;
     *)
@@ -296,7 +296,7 @@ codegenGetCurrentRoutineType() {
 codegenInitializeType() {
     codegenDebug "Initialize type" "${@}" >&2
     case "$targetLang" in
-    "js")
+    "js"|c)
         codegenOutput " = "
         case "$1" in
         "bool")
