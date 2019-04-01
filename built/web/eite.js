@@ -6505,7 +6505,6 @@ async function startDocumentExec(intExecId) {
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
-    STAGEL_DEBUG=2;
     while (boolContinue) {
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
@@ -6560,7 +6559,6 @@ async function startDocumentExec(intExecId) {
         }
         /* Frame is done, so convert it to the environment-appropriate format and output it */
         await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
-        intArrayWipFrame = [  ];
         await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
     }
 
