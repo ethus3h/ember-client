@@ -4977,7 +4977,7 @@ async function strSplitEscaped(strIn, strSeparator) {
     let strTemp = '';
     let strArrayTempSubset = [];
     while (await implAnd(boolContinue, await implLt(intK, intL))) {
-        if (await implEq('\\', await charAt(await get(strArrayExploded, intK), await implAdd(-1, await len(await get(strArrayExploded, intK)))))) {
+        if (await implEq('\\\\', await charAt(await get(strArrayExploded, intK), await implAdd(-1, await len(await get(strArrayExploded, intK)))))) {
             if (await ge(await implAdd(1, intK), intL)) {
                 strArrayRes = await push(strArrayRes, await get(strArrayExploded, intK));
                 boolContinue = false;
@@ -5048,7 +5048,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     intC = 0;
     intL = await count(strArrayIn);
     while (await le(intC, intL)) {
-        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\', strSeparator), ), strSeparator);
+        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator);
         intC = await inc(intC);
     }
 }
