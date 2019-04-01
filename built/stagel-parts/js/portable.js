@@ -3123,7 +3123,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     intC = 0;
     intL = await count(strArrayIn);
     while (await implLt(intC, intL)) {
-        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator);
+        strRes = await implCat(strRes, await implCat(await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), ), strSeparator);
         intC = await inc(intC);
     }
 
@@ -3136,6 +3136,19 @@ async function strJoinEsc(strArrayIn, strSeparator) {
     /* Convenience wrapper */
     let strRes = '';
     strRes = await strJoinEscaped(strArrayIn, strSeparator);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function strJoinEscNoTrailing(strArrayIn, strSeparator) {
+    await internalDebugCollect('strArray In = ' + strArrayIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoinEscNoTrailing:type-conversion'); await assertIsStrArray(strArrayIn); await assertIsStr(strSeparator); let strReturn;
+
+    /* a,b instead of a,b, */
+    let strRes = '';
+    let intSeparLen = 0;
+    intSeparLen = await len(strSeparator);
+    intSeparLen = await implSub(-1, strSeparLen);
+    strRes = await substr(await strJoinEscaped(strArrayIn, strSeparator), 0, intSeparLen);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -4232,7 +4245,7 @@ async function kvJoin(strArrayData) {
                 strArrayTempA = [  ];
                 strArrayTempA = await push(strArrayTempA, await get(strArrayData, intC));
                 strArrayTempA = await push(strArrayTempA, await get(strArrayData, await implAdd(1, intC)));
-                strArrayTempB = await push(strArrayTempB, await strJoinEsc(strArrayTempA, ':'));
+                strArrayTempB = await push(strArrayTempB, await strJoinEscNoTrailing(strArrayTempA, ':'));
             }
             intC = await inc(intC);
         }
