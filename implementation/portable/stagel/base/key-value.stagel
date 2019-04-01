@@ -1,2 +1,10 @@
-s/kvGetValue s/pack s/key
-s/kvSetValue s/pack s/key
+s/kvGetValue as/data s/key
+    # data format: [ 'a:b' 'b:c' ... ]
+    new s/res
+    
+as/kvSetValue as/data s/key
+s/kvGetValue as/data s/key
+    # data format: [ 'a:b' 'b:c' ... ]
+    new s/res
+    
+as/kvSetValue as/data s/key
