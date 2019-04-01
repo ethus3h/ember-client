@@ -5110,7 +5110,7 @@ async function strJoinEscNoTrailing(strArrayIn, strSeparator) {
     let strRes = '';
     let intSeparLen = 0;
     intSeparLen = await len(strSeparator);
-    intSeparLen = await implSub(-1, strSeparLen);
+    intSeparLen = await implSub(-1, intSeparLen);
     strRes = await substr(await strJoinEscaped(strArrayIn, strSeparator), 0, intSeparLen);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;

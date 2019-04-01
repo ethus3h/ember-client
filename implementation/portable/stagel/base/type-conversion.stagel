@@ -154,7 +154,7 @@ r/s/strJoinEscNoTrailing as/in s/separator
     new s/res
     new n/separLen
     set n/separLen len s/separator
-    set n/separLen sub -1 s/separLen
+    set n/separLen sub -1 n/separLen
     set s/res substr strJoinEscaped as/in s/separator } 0 n/separLen
     return s/res
 
