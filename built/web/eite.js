@@ -6038,13 +6038,13 @@ async function kvSplit(strData) {
 
     let strArrayRes = [];
     let strArrayTemp = [];
-    strArrayTemp = await strSplitEsc(strData, ',');
+    strArrayTemp = await strSplitEscaped(strData, ',');
     let intC = 0;
     let intL = 0;
     intC = 0;
     intL = await count(strArrayTemp);
     while (await implLt(intC, intL)) {
-        strArrayTemp = await append(strArrayTemp, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+        strArrayTemp = await append(strArrayTemp, await strSplitEscaped(await get(strArrayTemp, intC), ':'));
         intC = await inc(intC);
     }
 
@@ -6067,11 +6067,11 @@ async function kvJoin(strArrayData) {
             strArrayTempA = [  ];
             strArrayTempA = await push(strArrayTempA, await get(strArrayData, intC));
             strArrayTempA = await push(strArrayTempA, await get(strArrayData, await implAdd(1, intC)));
-            strArrayTempB = await push(strArrayTempB, await strJoinEsc(strArrayTempA, ':'));
+            strArrayTempB = await push(strArrayTempB, await strJoinEscaped(strArrayTempA, ':'));
         }
         intC = await inc(intC);
     }
-    strRes = await strJoinEsc(strArrayTempB, ',');
+    strRes = await strJoinEscaped(strArrayTempB, ',');
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
@@ -6699,7 +6699,7 @@ async function getExecPtrs(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getExecPtrs:document-exec'); await assertIsInt(intExecId); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = await strSplitEsc(await get(strArrayDocumentExecPtrs, intExecId), ',');
+    strArrayRes = await strSplitEscaped(await get(strArrayDocumentExecPtrs, intExecId), ',');
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -6708,7 +6708,7 @@ async function setExecPtrs(intExecId, strArrayVal) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('strArray Val = ' + strArrayVal + '; '); await internalDebugStackEnter('setExecPtrs:document-exec'); await assertIsInt(intExecId); await assertIsStrArray(strArrayVal);
 
     /* Replace the entire exec pointer array for this exec. */
-    strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, await strJoinEsc(strArrayVal, ','));
+    strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, await strJoinEscaped(strArrayVal, ','));
 
     await internalDebugStackExit();
 }
