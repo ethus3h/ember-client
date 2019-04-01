@@ -56,8 +56,9 @@ r/s/kvGetDefinedValue as/data s/key
 r/as/kvSetValue as/data s/key s/val
     assertIsKvArray as/data
     new as/res
+    set as/res as/data
     new n/l
-    set n/l count as/data
+    set n/l count as/res
     new b/found
     set b/found false
     if ne 0 n/l
@@ -67,17 +68,17 @@ r/as/kvSetValue as/data s/key s/val
         set b/continue true
         while b/continue
             if b/found
-                set as/data setElem as/data n/c s/val
+                set as/res setElem as/res n/c s/val
                 set b/continue false
             else
                 if not lt n/c n/l
                     set b/continue false
                 if eq 0 mod n/c 2
-                    if eq s/key get as/data n/c
+                    if eq s/key get as/res n/c
                         set b/found true
             set n/c add n/c 1
     if not b/found
-        set as/res push as/data s/key
+        set as/res push as/res s/key
         set as/res push as/res s/val
     return as/res
 
