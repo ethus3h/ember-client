@@ -3,6 +3,14 @@ r/b/isNonnegative n/in
         return false
     return true
 
+r/b/isEven n/in
+    if eq 0 mod n/in 2
+        return true
+    return false
+
+r/b/isOdd n/in
+    return not isEven n/in
+
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints
     # Can't do it this way since it can use ints intermediately that are outside of 32 bit
