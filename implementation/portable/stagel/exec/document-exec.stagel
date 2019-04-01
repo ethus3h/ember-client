@@ -76,7 +76,7 @@ r/v/startDocumentExec n/execId
             set b/continue false
         else
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
-            debug cat 'Starting exec loop with data ' cat strPrintArr an/documentWorkingCopyData } cat ' and at position ' cat strFrom n/currentPtrPos } cat ' with current Dc ' cat strFrom n/dc } cat '; in state ' strPrintArr as/state
+            debug cat 'Starting exec loop with data ' cat strPrintArr an/documentWorkingCopyData } cat ' and at position ' cat strFrom n/currentPtrPos } cat ' with current Dc ' cat strFrom n/dc } cat '; in state ' strPrintArr as/state } } } } } } } } 1
             if b/lastCharacterWasEscape
                 set b/lastCharacterWasEscape false
                 incrExecPtrPos n/execId
