@@ -153,15 +153,23 @@ codegenType() {
     local result=""
     case "$targetLang" in
     c)
+        [[ "$1" == "literal-n" ]] && result='long'
+        [[ "$1" == "literal-s" ]] && result='char[]'
         [[ "$1" == "ident-g" ]] && result='generic'
-        [[ "$1" == "ident-ab" ]] && result='boolArray'
-        [[ "$1" == "ident-an" ]] && result='intArray'
-        [[ "$1" == "ident-as" ]] && result='strArray'
+        [[ "$1" == "ident-n" ]] && result='long'
+        [[ "$1" == "ident-s" ]] && result='char[]'
+        [[ "$1" == "ident-ab" ]] && result='bool[]'
+        [[ "$1" == "ident-an" ]] && result='long[]'
+        [[ "$1" == "ident-as" ]] && result='char[][]'
         [[ "$1" == "ident-ga" ]] && result='genericArray'
         [[ "$1" == "ident-gi" ]] && result='genericItem'
-        [[ "$1" == "ident-r-ab" ]] && result='boolArray'
-        [[ "$1" == "ident-r-an" ]] && result='intArray'
-        [[ "$1" == "ident-r-as" ]] && result='strArray'
+        [[ "$1" == "ident-r-b" ]] && result='bool'
+        [[ "$1" == "ident-r-n" ]] && result='long'
+        [[ "$1" == "ident-r-s" ]] && result='char[]'
+        [[ "$1" == "ident-r-v" ]] && result='void'
+        [[ "$1" == "ident-r-ab" ]] && result='bool[]'
+        [[ "$1" == "ident-r-an" ]] && result='long[]'
+        [[ "$1" == "ident-r-as" ]] && result='char[][]'
         [[ -z "$result" ]] && result="$(codegenFormatType "$1" "" "true")"
         [[ -z "$result" ]] && die "$1 is not a recognized type!"
         ;;
