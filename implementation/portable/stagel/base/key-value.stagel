@@ -1,25 +1,44 @@
 s/kvGetValue as/data s/key
-    # data format: [ 'a:b' 'b:c' ... ]
+    # data format: [ 'a' 'b' 'c' 'd' ... ]
     new s/res
-    
-as/kvSetValue as/data s/key
+    return s/res
+
+b/kvHasValue
+as/kvSetValue as/data s/key s/val
+    new as/res
+    return as/res
+
+s/kvsHasValue s/data s/key
+    # data format: [ 'a:b,c:d,' ... ]
+    new s/res
+    set s/res kvGetValue kvSplit s/data } s/key
+    return s/res
 
 s/kvsGetValue s/data s/key
-    # data format: [ 'a:b,b:c,' ... ]
+    # data format: [ 'a:b,c:d,' ... ]
     new s/res
-    set s/res kvGetValue kvSplit s/data ',' } s/key
+    set s/res kvGetValue kvSplit s/data } s/key
     return s/res
 
 s/kvsSetValue s/data s/key s/val
     new s/res
-    set s/res strJoin kvSetValue 
+    set s/res kvJoin kvSetValue kvSplit s/data } s/key s/val
+    return s/res
 
-as/kvsSplit s/data
+as/kvSplit s/data
     new as/res
-    set as/res strSplit s/data ','
+    new as/temp
+    set as/temp strSplitEsc s/data ','
+    new n/c
+    new n/l
+    set n/c 0
+    set n/l count as/temp
+    while lt n/c n/l
+        set as/temp append as/temp strSplitEsc get as/temp n/c } ':'
+        set n/c inc n/c
     return as/res
 
-s/kvsJoin as/data
+s/kvJoin as/data
     new s/res
-    set s/res strJoin as/data ','
+    set s/res strJoinEsc as/data ','
     return s/res
