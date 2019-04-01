@@ -5,13 +5,18 @@ r/b/isNonnegative n/in
 
 r/b/isNegative n/in
     if lt n/in 0
+        return true
+    return false
+
+r/b/isPositive n/in
+    if le n/in 0
         return false
     return true
 
-r/b/isPositive n/in
-    if lt n/in 0
-        return false
-    return true
+r/b/isNonpositive n/in
+    if le n/in 0
+        return true
+    return false
 
 r/b/isEven n/in
     if eq 0 mod n/in 2
