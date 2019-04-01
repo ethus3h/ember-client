@@ -14,7 +14,8 @@ LOW PRIORITY EITE
 - Clone Weave functionality
 - Output format settings tests
 - possibly raster area output
-- WASM compatibility in StageL
+- WASM in EITE
+- StageL implementation in EITE
 - FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness
 - Decentralization/IPFS/OrbitDB integration
 - Output formats: Natlangs; auto-documentation
@@ -24,5 +25,8 @@ OTHER
 - StageL: fix "until" keyword
 - StageL: Output auto-documentation
 - StageL: Iteration operator
+- More StageL output languages
+- StageL transpiler in StageL (allows transpiler in EITE, and faster StageL transpilation using e.g. a transpiled-to-C version of the transpiler)
+- WASM compatibility in StageL
 - Import in editor is broken.
 - WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option

@@ -6779,7 +6779,20 @@ async function startDocumentExec(intExecId) {
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
+    let intStopExecAtTick = 0;
+    if (await kvHasValue(await getExecSettings(intExecId), 'stopExecAtTick')) {
+        intStopExecAtTick = await intFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
+    }
+    else {
+        intStopExecAtTick = -1;
+    }
+    let intCurrentTick = 0;
+    intCurrentTick = 0;
     while (boolContinue) {
+        if (await implEq(intCurrentTick, intStopExecAtTick)) {
+            boolContinue = false;
+        }
+        intCurrentTick = await inc(intCurrentTick);
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
         /* n/currentPtrPos is a read-only copy! For changing it, call setExecPtrPos or incrExecPtrPos */
@@ -6791,7 +6804,7 @@ async function startDocumentExec(intExecId) {
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-            await debugRev(1, await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))));
+            await debugRev(1, await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await implCat(await strPrintArr(strArrayState), await implCat(' at tick ', await implCat(await strFrom(intCurrentTick), '.')))))))))));
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
                 await incrExecPtrPos(intExecId);
