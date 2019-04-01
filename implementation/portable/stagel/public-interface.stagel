@@ -29,7 +29,7 @@ r/v/runDocument an/contents
     runDocumentGo runDocumentPrepare an/contents
 
 r/n/runDocumentPrepare an/contents
-    # Prepare to run the specified document. Use this followed by runDocumentStart if you want to configure execution settings before starting the document.
+    # Prepare to run the specified document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document.
     setupIfNeeded
     assertIsDcArray an/contents
     new n/execId
