@@ -48,6 +48,7 @@ echo "Building, please wait..."
 mkdir -p ./built
 mkdir -p ./build-temp
 
+if false; then
 # Test xattrs
 val="27b9972c-b850-49c5-be68-8990ace4791c"
 fn="94ba7f80-2119-400c-9220-d389ebc2252c"$'\x0aa'
@@ -55,6 +56,7 @@ an="a27c619729c84425c8e64ec38d05244e4"
 touch "$fn"
 setfattr -n "user.$an" -v "$val" "$fn"
 [[ "$val" == "$(getfattr --only-values -n "user.$an" "$fn")" ]] || die "Failed test xattrs"
+fi
 
 [[ -d /usr/share/eite-wasm-toolchain/wasm-dist-built ]] || die "Couldn't find the WebAssembly toolchain for EITE! Have you installed it yet? (If there's not a package available, you can run make autodep to try to install dependencies. Or, to build and install it by hand, you can make a fresh clone of the ember-information-technology-environment repository and run ./configure; ./support/build-scripts/dist-fetch; make wasm-toolchain; make wasm-toolchain-install)"
 
