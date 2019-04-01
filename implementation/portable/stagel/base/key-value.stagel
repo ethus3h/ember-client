@@ -1,4 +1,5 @@
 r/b/kvHasValue as/data s/key
+    assertIsKvArray as/data
     new b/res
     set b/res false
     new n/l
@@ -7,6 +8,8 @@ r/b/kvHasValue as/data s/key
     set n/c 0
     new b/continue
     set b/continue true
+    if eq n/l 0
+        set b/continue false
     while b/continue
         if not lt n/c n/l
             set b/continue false
@@ -20,6 +23,7 @@ r/b/kvHasValue as/data s/key
 r/s/kvGetValue as/data s/key
     # data format: [ 'a' 'b' 'c' 'd' ... ]
     # Returns empty if value not set
+    assertIsKvArray as/data
     new s/res
     set s/res ''
     new n/l
@@ -30,6 +34,8 @@ r/s/kvGetValue as/data s/key
     set b/continue true
     new b/found
     set b/found false
+    if eq n/l 0
+        set b/continue false
     while b/continue
         if b/found
             set s/res get as/data n/c
@@ -50,7 +56,7 @@ r/s/kvGetDefinedValue as/data s/key
     return s/res
 
 r/as/kvSetValue as/data s/key s/val
-    assertIsEven 
+    assertIsKvArray as/data
     new as/res
     new n/l
     set n/l count as/data
@@ -60,6 +66,8 @@ r/as/kvSetValue as/data s/key s/val
     set b/continue true
     new b/found
     set b/found false
+    if eq n/l 0
+        set b/continue false
     while b/continue
         if b/found
             set as/data setElem as/data n/c s/val
@@ -107,21 +115,25 @@ r/v/assertKvsHasValue as/data s/key
 
 r/as/kvSplit s/data
     new as/res
-    new as/temp
-    set as/temp strSplitEsc s/data ','
-    new n/c
+    set as/res [ ]
     new n/l
-    set n/c 0
     set n/l count as/temp
-    while lt n/c n/l
-        set as/temp append as/temp strSplitEsc get as/temp n/c } ':'
-        set n/c inc n/c
+    if ne n/l 0
+        new as/temp
+        set as/temp strSplitEsc s/data ','
+        new n/c
+        set n/c 0
+        while lt n/c n/l
+            set as/temp append as/temp strSplitEsc get as/temp n/c } ':'
+            set n/c inc n/c
     return as/res
 
 r/s/kvJoin as/data
     new s/res
+    set s/res ''
     new n/l
     set n/l count as/data
+    if ne n/l
     new n/c
     set n/c 0
     new as/tempA
