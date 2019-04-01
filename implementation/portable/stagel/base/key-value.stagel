@@ -122,13 +122,9 @@ r/s/kvJoin as/data
     set n/l count as/data
     new n/c
     set n/c 0
-    new b/continue
-    set b/continue true
-    while b/continue
-        if not lt n/c n/l
-            set b/continue false
+    while lt n/c n/l
         if eq 0 mod n/c 2
-
+            set s/res cat s/res strJoinEsc
             if eq s/key get as/data n/c
                 set b/res true
                 set b/continue false
