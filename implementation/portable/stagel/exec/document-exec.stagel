@@ -84,7 +84,7 @@ r/v/startDocumentExec n/execId
     new n/currentTick
     set n/currentTick 0
     while b/continue
-        if eq n/currentTick n/stopExecAtTick
+        if ge n/currentTick add -1 n/stopExecAtTick
             set b/continue false
         set n/currentTick inc n/currentTick
         # This loop goes through each Dc in the document, running it.
