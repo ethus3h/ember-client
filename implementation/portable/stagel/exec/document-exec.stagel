@@ -43,7 +43,7 @@ r/n/getCurrentExecPtrPos n/execId
     return n/res
 
 r/v/setExecPtrPos n/execId n/newPos
-    setExecPtrs setElem getExecPtrs n/execId } -1 n/newPos
+    setExecPtrs n/execId setElem getExecPtrs n/execId } -1 n/newPos
 
 r/v/incrExecPtrPos n/execId
     setExecPtrPos n/execId add 1 getCurrentExecPtrPos n/execId

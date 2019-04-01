@@ -6816,7 +6816,7 @@ async function getCurrentExecPtrPos(intExecId) {
 async function setExecPtrPos(intExecId, intNewPos) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int NewPos = ' + intNewPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intNewPos);
 
-    await setExecPtrs(await setElem(await getExecPtrs(intExecId), -1, intNewPos));
+    await setExecPtrs(intExecId, await setElem(await getExecPtrs(intExecId), -1, intNewPos));
 
     await internalDebugStackExit();
 }
