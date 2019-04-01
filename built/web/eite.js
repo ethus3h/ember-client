@@ -3194,11 +3194,54 @@ async function runDocument(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
 
     /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
+    await runDocumentGo(await runDocumentPrepare(intArrayContents));
+
+    await internalDebugStackExit();
+}
+
+async function runDocumentPrepare(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocumentPrepare:public-interface'); await assertIsIntArray(intArrayContents); let intReturn;
+
+    /* Prepare to run the specified document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document. */
     await setupIfNeeded();
     await assertIsDcArray(intArrayContents);
     let intExecId = 0;
-    intExecId = await startDocument(intArrayContents);
+    intExecId = await prepareDocumentExec(intArrayContents);
+    await assertIsExecId(intExecId);
+
+    intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function runDocumentGo(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('runDocumentGo:public-interface'); await assertIsInt(intExecId);
+
+    /* Run a document, once it's been prepared to run by calling runDocumentPrepare. */
     await internalRunDocument(intExecId);
+
+    await internalDebugStackExit();
+}
+
+async function getExecOption(intExecId, strKey) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey);
+
+    /* Get an execution option for a document. */
+    await assertIsExecId(intExecId);
+    let strRes = '';
+    strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
+
+    voidReturn = strRes; await assertIsVoid(voidReturn); 
+        await internalDebugStackExit();
+return voidReturn;
+
+    await internalDebugStackExit();
+}
+
+async function setExecOption(intExecId, strKey, strValue) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey); await assertIsStr(strValue);
+
+    /* Set an execution option for a document. */
+    await assertIsExecId(intExecId);
+    await setExecSettings(intExecId, await kvSetValue(await getExecSettings(intExecId), strKey, strValue));
 
     await internalDebugStackExit();
 }
@@ -3251,17 +3294,6 @@ async function loadStoredDocument(strFormat, strPath) {
     intArrayRes = await dcaFromFormat(strFormat, await getFileFromPath(strPath));
 
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
-}
-
-async function startDocument(intArrayContents) {
-    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('startDocument:public-interface'); await assertIsIntArray(intArrayContents); let intReturn;
-
-    /* Start execution of the provided document and return an ID for it. */
-    await setupIfNeeded();
-    let intExecId = 0;
-    intExecId = await prepareDocumentExec(intArrayContents);
-
-    intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
 async function getDesiredEventNotifications(intExecId) {
@@ -5588,6 +5620,15 @@ async function dec(intN) {
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
+async function debugRev(intLevel, strMessage) {
+    await internalDebugCollect('int Level = ' + intLevel + '; '); await internalDebugCollect('str Message = ' + strMessage + '; '); await internalDebugStackEnter('debugRev:logging'); await assertIsInt(intLevel); await assertIsStr(strMessage);
+
+    /* Just the debug routine with the arguments reversed to avoid needing to close a bunch of arglists for a dynamically constructed string. */
+    await implDebug(strMessage, intLevel);
+
+    await internalDebugStackExit();
+}
+
 async function warnOrDie(boolStrict, strMsg) {
     await internalDebugCollect('bool Strict = ' + boolStrict + '; '); await internalDebugCollect('str Msg = ' + strMsg + '; '); await internalDebugStackEnter('warnOrDie:assertions'); await assertIsBool(boolStrict); await assertIsStr(strMsg);
 
@@ -5824,6 +5865,213 @@ async function assertIsExecId(intIn) {
     await assertIsTrue(await isExecId(intIn));
 
     await internalDebugStackExit();
+}
+
+async function kvHasValue(strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+
+    let boolRes = false;
+    boolRes = false;
+    let intL = 0;
+    intL = await count(strArrayData);
+    let intC = 0;
+    intC = 0;
+    let boolContinue = false;
+    boolContinue = true;
+    while (boolContinue) {
+        if (await implNot(await implLt(intC, intL))) {
+            boolContinue = false;
+        }
+        if (await implEq(0, await implMod(intC, 2))) {
+            if (await implEq(strKey, await get(strArrayData, intC))) {
+                boolRes = true;
+                boolContinue = false;
+            }
+        }
+        intC = await implAdd(intC, 1);
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function kvGetValue(strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let strReturn;
+
+    /* data format: [ 'a' 'b' 'c' 'd' ... ] */
+    /* Returns empty if value not set */
+    let strRes = '';
+    strRes = '';
+    let intL = 0;
+    intL = await count(strArrayData);
+    let intC = 0;
+    intC = 0;
+    let boolContinue = false;
+    boolContinue = true;
+    let boolFound = false;
+    boolFound = false;
+    while (boolContinue) {
+        if (boolFound) {
+            strRes = await get(strArrayData, intC);
+            boolContinue = false;
+        }
+        else {
+            if (await implNot(await implLt(intC, intL))) {
+                boolContinue = false;
+            }
+            if (await implEq(0, await implMod(intC, 2))) {
+                if (await implEq(strKey, await get(strArrayData, intC))) {
+                    boolFound = true;
+                }
+            }
+        }
+        intC = await implAdd(intC, 1);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function kvGetDefinedValue(strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetDefinedValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let strReturn;
+
+    await assertKvHasValue(strArrayData);
+    let strRes = '';
+    strRes = await kvGetValue(strArrayData, strKey);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function kvSetValue(strArrayData, strKey, strVal) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Val = ' + strVal + '; '); await internalDebugStackEnter('kvSetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); await assertIsStr(strVal); let strArrayReturn;
+
+    let strArrayRes = [];
+    let intL = 0;
+    intL = await count(strArrayData);
+    let intC = 0;
+    intC = 0;
+    let boolContinue = false;
+    boolContinue = true;
+    let boolFound = false;
+    boolFound = false;
+    while (boolContinue) {
+        if (boolFound) {
+            strArrayData = await setElem(strArrayData, intC, strVal);
+            boolContinue = false;
+        }
+        else {
+            if (await implNot(await implLt(intC, intL))) {
+                boolContinue = false;
+            }
+            if (await implEq(0, await implMod(intC, 2))) {
+                if (await implEq(strKey, await get(strArrayData, intC))) {
+                    boolFound = true;
+                }
+            }
+        }
+        intC = await implAdd(intC, 1);
+    }
+    if (await implNot(boolFound)) {
+        strArrayData = await append(strArrayData, [ str 107 101 121, str 118 97 108 ]);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function kvsHasValue(strData, strKey) {
+    await internalDebugCollect('str Data = ' + strData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvsHasValue:key-value'); await assertIsStr(strData); await assertIsStr(strKey); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await kvHasValue(await kvSplit(strData), strKey);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function kvsGetValue(strData, strKey) {
+    await internalDebugCollect('str Data = ' + strData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvsGetValue:key-value'); await assertIsStr(strData); await assertIsStr(strKey); let strReturn;
+
+    /* data format: [ 'a:b,c:d,' ... ] */
+    /* Returns empty if value not set */
+    let strRes = '';
+    strRes = await kvGetValue(await kvSplit(strData), strKey);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function kvsGetDefinedValue(strData, strKey) {
+    await internalDebugCollect('str Data = ' + strData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvsGetDefinedValue:key-value'); await assertIsStr(strData); await assertIsStr(strKey); let strReturn;
+
+    await assertKvsHasValue(strData);
+    let strRes = '';
+    strRes = await kvsGetValue(strData, strKey);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function kvsSetValue(strData, strKey, strVal) {
+    await internalDebugCollect('str Data = ' + strData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Val = ' + strVal + '; '); await internalDebugStackEnter('kvsSetValue:key-value'); await assertIsStr(strData); await assertIsStr(strKey); await assertIsStr(strVal); let strReturn;
+
+    let strRes = '';
+    strRes = await kvJoin(await kvSetValue(await kvSplit(strData), strKey, strVal));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function assertKvHasValue(strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('assertKvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey);
+
+    await assertIsTrue(await kvHasValue(strArrayData, strKey));
+
+    await internalDebugStackExit();
+}
+
+async function assertKvsHasValue(strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('assertKvsHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey);
+
+    await assertIsTrue(await kvsHasValue(strArrayData, strKey));
+
+    await internalDebugStackExit();
+}
+
+async function kvSplit(strData) {
+    await internalDebugCollect('str Data = ' + strData + '; '); await internalDebugStackEnter('kvSplit:key-value'); await assertIsStr(strData); let strArrayReturn;
+
+    let strArrayRes = [];
+    let strArrayTemp = [];
+    strArrayTemp = await strSplitEsc(strData, ',');
+    let intC = 0;
+    let intL = 0;
+    intC = 0;
+    intL = await count(strArrayTemp);
+    while (await implLt(intC, intL)) {
+        strArrayTemp = await append(strArrayTemp, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+        intC = await inc(intC);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function kvJoin(strArrayData) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugStackEnter('kvJoin:key-value'); await assertIsStrArray(strArrayData); let strReturn;
+
+    let strRes = '';
+    let intL = 0;
+    intL = await count(strArrayData);
+    let intC = 0;
+    intC = 0;
+    let strArrayTempA = [];
+    let strArrayTempB = [];
+    strArrayTempB = [  ];
+    while (await implLt(intC, intL)) {
+        if (await implEq(0, await implMod(intC, 2))) {
+            strArrayTempA = [  ];
+            strArrayTempA = await push(strArrayTempA, await get(strArrayData, intC));
+            strArrayTempA = await push(strArrayTempA, await get(strArrayData, await implAdd(1, intC)));
+            strArrayTempB = await push(strArrayTempB, await strJoinEsc(strArrayTempA, ':'));
+        }
+        intC = await inc(intC);
+    }
+    strRes = await strJoinEsc(strArrayTempB, ',');
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 /* Calling a comparison with different types is an error. All types must be same type. */
@@ -6427,30 +6675,55 @@ async function isExecId(intExecId) {
     boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
-async function getCurrentExecPtrs(intExecId) {
-    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrs:document-exec'); await assertIsInt(intExecId); let strArrayReturn;
+async function getExecSettings(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getExecSettings:document-exec'); await assertIsInt(intExecId); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ',');
+    strArrayRes = await kvSplit(await get(strArrayDocumentExecSettings, intExecId));
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function setExecSettings(intExecId, strArrayVal) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('strArray Val = ' + strArrayVal + '; '); await internalDebugStackEnter('setExecSettings:document-exec'); await assertIsInt(intExecId); await assertIsStrArray(strArrayVal);
+
+    /* Replace the entire exec settings array for this exec. */
+    strArrayDocumentExecSettings = await setElem(strArrayDocumentExecSettings, intExecId, await kvJoin(strArrayVal));
+
+    await internalDebugStackExit();
+}
+
+async function getExecPtrs(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getExecPtrs:document-exec'); await assertIsInt(intExecId); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplitEsc(await get(strArrayDocumentExecPtrs, intExecId), ',');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function setExecPtrs(intExecId, strArrayVal) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('strArray Val = ' + strArrayVal + '; '); await internalDebugStackEnter('setExecPtrs:document-exec'); await assertIsInt(intExecId); await assertIsStrArray(strArrayVal);
+
+    /* Replace the entire exec pointer array for this exec. */
+    strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, await strJoinEsc(strArrayVal, ','));
+
+    await internalDebugStackExit();
 }
 
 async function getCurrentExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
-    intRes = await intFromIntStr(await get(await getCurrentExecPtrs(intExecId), -1));
+    intRes = await intFromIntStr(await get(await getExecPtrs(intExecId), -1));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
 
-async function setExecPtrPos(intExecId, intPos) {
-    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int Pos = ' + intPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intPos);
+async function setExecPtrPos(intExecId, intNewPos) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int NewPos = ' + intNewPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intNewPos);
 
-    let strNewPosStr = '';
-    strNewPosStr = await strJoin(await setElem(await getCurrentExecPtrs(intExecId), -1, intPos), ',');
-    strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, strNewPosStr);
+    await setExecPtrs(await setElem(await getExecPtrs(intExecId), -1, intNewPos));
 
     await internalDebugStackExit();
 }
@@ -6467,7 +6740,7 @@ async function getNextLevelExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getNextLevelExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
 
     let intRes = 0;
-    intRes = await intFromIntStr(await get(await getCurrentExecPtrs(intExecId), -2));
+    intRes = await intFromIntStr(await get(await getExecPtrs(intExecId), -2));
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
@@ -6517,7 +6790,7 @@ async function startDocumentExec(intExecId) {
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-            await implDebug(await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))), 1);
+            await debugRev(1, await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))));
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
                 await incrExecPtrPos(intExecId);
@@ -6557,7 +6830,7 @@ async function startDocumentExec(intExecId) {
                 await incrExecPtrPos(intExecId);
             }
         }
-        /* Frame is done, so convert it to the environment-appropriate format and output it */
+        /* Convert the frame data to the environment-appropriate format and output it. Ideally this wouldn't happen on every Dc, but this is easy to implement... */
         await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
         await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
     }
