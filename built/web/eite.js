@@ -4959,7 +4959,7 @@ async function strSplit(strIn, strSeparator) {
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
             if (await implLt(1, intRemainingLen)) {
                 console.log('There is things remaining');
-                strRemaining = await substr(strRemaining, 2, -1);
+                strRemaining = await substr(strRemaining, 1, -1);
             }
             else {
                 console.log('Only 1 remaining');
