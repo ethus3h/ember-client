@@ -51,6 +51,27 @@ r/s/kvGetDefinedValue as/data s/key
 
 r/as/kvSetValue as/data s/key s/val
     new as/res
+    new n/l
+    set n/l count as/data
+    new n/c
+    set n/c 0
+    new b/continue
+    set b/continue true
+    new b/found
+    set b/found false
+    while b/continue
+        if b/found
+            set as/data setElem as/data n/c s/val
+            set b/continue false
+        else
+            if not lt n/c n/l
+                set b/continue false
+            if eq 0 mod n/c 2
+                if eq s/key get as/data n/c
+                    set b/found true
+        set n/c add n/c 1
+    if not b/found
+        set as/data append as/data [ s/key s/val ]
     return as/res
 
 r/b/kvsHasValue s/data s/key

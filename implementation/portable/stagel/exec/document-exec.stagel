@@ -19,19 +19,34 @@ r/b/isExecId n/execId
         return true
     return false
 
-r/as/getCurrentExecPtrs n/execId
+r/as/getExecPtrs n/execId
     new as/res
     set as/res strSplit get as/documentExecPtrs n/execId } ','
     return as/res
 
+r/as/setExecPtrs n/execId
+    new as/res
+    set as/res strSplit get as/documentExecPtrs n/execId } ','
+    return as/res
+
+r/as/getExecSettings n/execId
+    new as/res
+    set as/res kvSplit get as/documentExecSettings n/execId
+    return as/res
+
+r/v/setExecSettings n/execId
+    new as/res
+    set as/res kvSplit get as/documentExecSettings n/execId
+    return as/res
+
 r/n/getCurrentExecPtrPos n/execId
     new n/res
-    set n/res intFromIntStr get getCurrentExecPtrs n/execId } -1
+    set n/res intFromIntStr get getExecPtrs n/execId } -1
     return n/res
 
 r/v/setExecPtrPos n/execId n/newPos
     new s/newPosStr
-    set s/newPosStr strJoin setElem getCurrentExecPtrs n/execId } -1 n/newPos } ','
+    set s/newPosStr strJoin setElem getExecPtrs n/execId } -1 n/newPos } ','
     set as/documentExecPtrs setElem as/documentExecPtrs n/execId s/newPosStr
 
 r/v/incrExecPtrPos n/execId
@@ -39,7 +54,7 @@ r/v/incrExecPtrPos n/execId
 
 r/n/getNextLevelExecPtrPos n/execId
     new n/res
-    set n/res intFromIntStr get getCurrentExecPtrs n/execId } -2
+    set n/res intFromIntStr get getExecPtrs n/execId } -2
     return n/res
 
 r/an/getCurrentExecData n/execId
