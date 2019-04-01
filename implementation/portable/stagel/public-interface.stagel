@@ -44,7 +44,8 @@ r/v/runDocumentGo n/execId
 r/v/getExecOption n/execId s/key
     # Get an execution option for a document.
     assertIsExecId n/execId
-    internalRunDocument n/execId
+    new s/res
+    set s/res last getExecSettings n/execId
 
 r/v/setExecOption n/execId s/key s/value
     # Set an execution option for a document.
