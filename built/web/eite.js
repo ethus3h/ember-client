@@ -4957,7 +4957,7 @@ async function strSplit(strIn, strSeparator) {
             console.log('Sepa not found');
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
-            if (await implGt(1, intRemainingLen)) {
+            if (await implLt(1, intRemainingLen)) {
                 console.log('There is things remaining');
                 strRemaining = await substr(strRemaining, 2, -1);
             }
