@@ -114,7 +114,7 @@ codegenType() {
     # First arg: type; second arg: "true" for uppercase first letter
     local result=""
     case "$targetLang" in
-    "js"|c)
+    js|c)
         [[ "$1" == "literal-b" ]] && result='bool'
         [[ "$1" == "literal-n" ]] && result='int'
         [[ "$1" == "literal-s" ]] && result='str'
@@ -166,7 +166,7 @@ codegenLiteral() {
     codegenDebug "Literal" "${@}" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
-    "js"|c)
+    js|c)
         case "$1" in
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
@@ -193,7 +193,7 @@ codegenReference() {
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
-    "js"|c)
+    js|c)
         codegenType "$1"
         codegenOutput "${2^}"
         ;;
@@ -215,7 +215,7 @@ codegenPrintIndentationSpaces() {
 codegenStartDocument() {
     codegenDebug "Start document" "${@}" >&2
     case "$targetLang" in
-    "js"|c)
+    js|c)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -226,7 +226,7 @@ codegenStartDocument() {
 codegenEndDocument() {
     codegenDebug "End document" "${@}" >&2
     case "$targetLang" in
-    "js"|c)
+    js|c)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -238,7 +238,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
     case "$targetLang" in
-    "js"|c)
+    js|c)
         codegenOnNewLine || codegenOutput ' '
         codegenOutput '{'$'\n'
         ;;
@@ -254,7 +254,7 @@ codegenDedent() {
     codegenPrintIndentationSpaces
     #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
-    "js"|c)
+    js|c)
         codegenOutput '}'$'\n'
         ;;
     *)
@@ -268,7 +268,7 @@ codegenComment() {
     codegenDebug "Comment" "${@}" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
-    "js"|c)
+    js|c)
         codegenOutput "/*""$1 */"$'\n'
         ;;
     *)
@@ -340,7 +340,7 @@ codegenInitializeType() {
 codegenStartArray() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js|c)
         codegenOutput '[ '
         ;;
     *)
@@ -352,7 +352,7 @@ codegenStartArray() {
 codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js|c)
         codegenOutput ', '
         ;;
     *)
@@ -364,7 +364,7 @@ codegenArrayEntryDelimiter() {
 codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js|c)
         codegenOutput ' ]'
         ;;
     *)
@@ -382,7 +382,7 @@ codegenCommandInvocationStart() {
         fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        "js")
+        js)
             codegenOutput "let "
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
@@ -402,6 +402,11 @@ codegenCommandInvocationStart() {
                 #set +x
             fi
             ;;
+        c)
+            local type
+            type="$(codegenType "${codegenArgList[-2]}")"
+            codegenOutput ' '
+            
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
             ;;
@@ -414,7 +419,7 @@ codegenCommandInvocationStart() {
         codegenOutput $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        "js")
+        js)
             local returnType
             returnType="$(codegenGetCurrentRoutineType)" || true
             [[ -z "$returnType" ]] && die "Tried to return, but was not inside a routine!"
@@ -468,7 +473,7 @@ codegenCommandInvocationStart() {
         # These commands are implemented with impl* calls
         # The only purpose of using "impl" now is to prevent collisions with things that are likely to be reserved words in target languages; so, e.g. "implFIXMEUnimplemented" is unnecessary since it can just be "FIXMEUnimplemented" and be unlikely to collide.
         case "$targetLang" in
-        "js")
+        js)
             codegenOutput "await impl${codegenRoutineName^}("
             ;;
         *)
@@ -479,7 +484,7 @@ codegenCommandInvocationStart() {
     set)
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        "js")
+        js)
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 codegenOutput ' = '
@@ -501,7 +506,7 @@ codegenCommandInvocationStart() {
     *)
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        "js")
+        js)
             codegenOutput "await $codegenRoutineName("
             ;;
         *)
@@ -518,7 +523,7 @@ codegenCommandInvocationStart() {
 codegenCommandInvocationArgSeparator() {
     codegenDebug "Command invocation argument separator" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js)
         codegenOutput ", "
         ;;
     *)
@@ -530,7 +535,7 @@ codegenCommandInvocationArgSeparator() {
 codegenCommandInvocationArglist() {
     codegenDebug "Command invocation argument list" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js)
     #set -x
         argumentCount="${#codegenArgList[@]}"
         codegenLastKnownArglistCount="$argumentCount"
@@ -566,7 +571,7 @@ codegenCommandInvocationEnd() {
     add|eq|mod)
         # These commands are implemented with impl* calls
         case "$targetLang" in
-        "js")
+        js)
             codegenOutput ")"
             ;;
         *)
@@ -577,7 +582,7 @@ codegenCommandInvocationEnd() {
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
-        "js")
+        js)
             { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else|debugger)$ ]]; } || codegenOutput ")"
             ;;
         *)
@@ -598,7 +603,7 @@ codegenCommandInvocationEnd() {
 codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js)
         codegenOutput "async function $codegenRoutineName("
         argumentCount="${#codegenArgList[@]}"
         for (( k=0; k<argumentCount; k++ )); do
@@ -664,7 +669,7 @@ codegenRoutineDefinitionStart() {
 codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js)
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
             codegenIndent=$(( codegenIndent + 1 ))
@@ -687,7 +692,7 @@ codegenRoutineDefinitionPreEnd() {
 codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
-    "js")
+    js)
         # codegenOutput "}"$'\n'
         ;;
     *)
