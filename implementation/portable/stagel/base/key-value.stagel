@@ -1,17 +1,20 @@
 r/b/kvHasValue as/data s/key
     new b/res
-    set n/count count as/settings
-    new n/counter
-    set n/counter 0
-    new s/elem
-    while lt n/counter n/count
-        set s/elem get as/settings n/counter
-        assertIsTrue isValidIdent s/elem
-        if eq 0 mod n/counter 2
-            set s/res cat s/res cat s/elem ','
-        else
-            set s/res cat s/res cat s/elem ':'
-        set n/counter add n/counter 1
+    set b/res false
+    new n/l
+    set n/l count as/data
+    new n/c
+    set n/c 0
+    new b/continue
+    set b/continue true
+    while b/continue
+        if not lt n/c n/l
+            set b/continue false
+        if eq 0 mod n/c 2
+            if eq s/key get as/data n/c
+                set b/res true
+                set b/continue false
+        set n/c add n/c 1
     return b/res
 
 r/s/kvGetValue as/data s/key
