@@ -25,6 +25,12 @@ r/s/kvsGetValue s/data s/key
     set s/res kvGetValue kvSplit s/data } s/key
     return s/res
 
+r/s/kvsGetValueOrEmpty s/data s/key
+    # data format: [ 'a:b,c:d,' ... ]
+    new s/res
+    set s/res kvGetValue kvSplit s/data } s/key
+    return s/res
+
 r/s/kvsSetValue s/data s/key s/val
     new s/res
     set s/res kvJoin kvSetValue kvSplit s/data } s/key s/val
