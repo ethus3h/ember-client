@@ -155,7 +155,7 @@ codegenLiteral() {
     "js")
         case "$1" in
         "literal-s")
-            codegenOutput \'"$(asciiDecListToText "$2")"\'
+            codegenOutput \'"$(asciiDecListToText "${2//\/\\}")"\'
             ;;
         "literal-n"|"literal-b")
             codegenOutput "$2"

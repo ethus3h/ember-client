@@ -38,6 +38,7 @@ runTest stagel/js/generic-parameter
 runTest stagel/js/array-s
 runTest stagel/js/array-zero-only
 runTest stagel/js/bool-literal
+runTest stagel/js/str-escape-literal
 runTest stagel/js/else
 runTest stagel/js/elif
 runTest stagel/js/arglist-inline-end
