@@ -136,6 +136,12 @@ r/as/strJoinEscaped as/in s/separator
         set s/res cat s/res strReplace get as/in n/c } s/separator cat '\' s/separator } } s/separator
         set n/c inc n/c
 
+r/as/strJoinEsc as/in s/separator
+    # Convenience wrapper
+    new as/res
+    set as/res strJoinEscaped as/in s/separator
+    return as/res
+
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.
     new an/res
