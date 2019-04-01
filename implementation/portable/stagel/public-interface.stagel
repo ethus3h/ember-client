@@ -26,18 +26,18 @@ r/an/loadAndConvert s/inputFormat s/outputFormat s/path
 
 r/v/runDocument an/contents
     # Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically.
-    setupIfNeeded
-    assertIsDcArray an/contents
-    new n/execId
-    set n/execId startDocument an/contents
-    internalRunDocument n/execId
+    runDocumentStart runDocumentPrep an/contents
 
-r/v/runDocumentPrep an/contents
-    # Prepare to run the specified document.
+r/n/runDocumentPrep an/contents
+    # Prepare to run the specified document. Use this followed by runDocumentStart if you want to configure execution settings before starting the document.
     setupIfNeeded
     assertIsDcArray an/contents
     new n/execId
     set n/execId startDocument an/contents
+    assertIsExecId n/execId
+    return n/execId
+
+r/v/runDocumentStart n/execId
     internalRunDocument n/execId
 
 r/an/exportDocument s/format an/contents
