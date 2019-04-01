@@ -4946,18 +4946,23 @@ async function strSplit(strIn, strSeparator) {
     let strCurrentElem = '';
     let strCurrentChar = '';
     while (await implLt(0, intRemainingLen)) {
+        console.log('Loop entry with remiaining '+intRemainingLen+' str '+strRemaining);
         if (await implEq(strSeparator, await substr(strRemaining, 0, intSeparLen))) {
+            console.log('Separetor was found');
             strArrayRes = await push(strArrayRes, strCurrentElem);
             strCurrentElem = '';
             strRemaining = await substr(strRemaining, intSeparLen, -1);
         }
         else {
+            console.log('Sepa not found');
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
             if (await implGt(1, intRemainingLen)) {
+                console.log('There is things remaining');
                 strRemaining = await substr(strRemaining, 2, -1);
             }
             else {
+                console.log('Only 1 remaining');
                 strRemaining = '';
             }
         }
