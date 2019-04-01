@@ -114,7 +114,7 @@ codegenType() {
     # First arg: type; second arg: "true" for uppercase first letter
     local result=""
     case "$targetLang" in
-    "js")
+    "js"|c)
         [[ "$1" == "literal-b" ]] && result='bool'
         [[ "$1" == "literal-n" ]] && result='int'
         [[ "$1" == "literal-s" ]] && result='str'
@@ -152,11 +152,21 @@ codegenLiteral() {
     codegenDebug "Literal" "${@}" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
-    "js")
+    "js"|c)
         case "$1" in
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
-            codegenOutput \'"${tempSubstitution//\\/\\\\}"\'
+            if [[ "c" == "$targetLang" ]]; then
+                codegenOutput \"
+            else
+                codegenOutput \'
+            fi
+            codegenOutput "${tempSubstitution//\\/\\\\}"
+            if [[ "c" == "$targetLang" ]]; then
+                codegenOutput \"
+            else
+                codegenOutput \'
+            fi
             ;;
         "literal-n"|"literal-b")
             codegenOutput "$2"

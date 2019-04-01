@@ -5418,6 +5418,39 @@ async function isNonnegative(intIn) {
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function isNegative(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNegative:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await implLt(intIn, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isPositive(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isPositive:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await le(intIn, 0)) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isNonpositive(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonpositive:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await le(intIn, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function isEven(intIn) {
     await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isEven:math'); await assertIsInt(intIn); let boolReturn;
 
@@ -6876,13 +6909,20 @@ async function startDocumentExec(intExecId) {
         intStopExecAtTick = await intFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     }
     else {
-        intStopExecAtTick = 20;
+        intStopExecAtTick = -1;
     }
     let intCurrentTick = 0;
     intCurrentTick = 0;
-    while (boolContinue) {
-        if (await implEq(intCurrentTick, intStopExecAtTick)) {
+    if (await isNonnegative(intStopExecAtTick)) {
+        if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
             boolContinue = false;
+        }
+    }
+    while (boolContinue) {
+        if (await isNonnegative(intStopExecAtTick)) {
+            if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
+                boolContinue = false;
+            }
         }
         intCurrentTick = await inc(intCurrentTick);
         /* This loop goes through each Dc in the document, running it. */
@@ -6896,7 +6936,7 @@ async function startDocumentExec(intExecId) {
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-            await debugRev(1, await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await implCat(await strPrintArr(strArrayState), await implCat(' at (stop at '+intStopExecAtTick+') tick ', await implCat(await strFrom(intCurrentTick), '.')))))))))));
+            await debugRev(1, await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await implCat(await strPrintArr(strArrayState), await implCat(' at tick ', await implCat(await strFrom(intCurrentTick), '.')))))))))));
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
                 await incrExecPtrPos(intExecId);

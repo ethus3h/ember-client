@@ -5053,8 +5053,8 @@ async function strSplitEscaped(strIn, strSeparator) {
     /*} */
 }
 
-async function strSplitEsc(strArrayIn, strSeparator) {
-    await internalDebugCollect('strArray In = ' + strArrayIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strSplitEsc:type-conversion'); await assertIsStrArray(strArrayIn); await assertIsStr(strSeparator); let strArrayReturn;
+async function strSplitEsc(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strSplitEsc:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
 
     /* Convenience wrapper */
     let strArrayRes = [];
@@ -5089,7 +5089,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     let intL = 0;
     intC = 0;
     intL = await count(strArrayIn);
-    while (await le(intC, intL)) {
+    while (await implLt(intC, intL)) {
         strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator);
         intC = await inc(intC);
     }
@@ -5416,6 +5416,39 @@ async function isNonnegative(intIn) {
     }
 
     boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isNegative(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNegative:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await implLt(intIn, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isPositive(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isPositive:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await le(intIn, 0)) {
+
+        boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isNonpositive(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('isNonpositive:math'); await assertIsInt(intIn); let boolReturn;
+
+    if (await le(intIn, 0)) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
 async function isEven(intIn) {
@@ -6106,15 +6139,15 @@ async function kvSplit(strData) {
 
     let strArrayRes = [];
     strArrayRes = [  ];
+    let strArrayTemp = [];
+    strArrayTemp = await strSplitEsc(strData, ',');
     let intL = 0;
     intL = await count(strArrayTemp);
     if (await ne(0, intL)) {
-        let strArrayTemp = [];
-        strArrayTemp = await strSplitEsc(strData, ',');
         let intC = 0;
         intC = 0;
         while (await implLt(intC, intL)) {
-            strArrayTemp = await append(strArrayTemp, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+            strArrayRes = await append(strArrayRes, await strSplitEsc(await get(strArrayTemp, intC), ':'));
             intC = await inc(intC);
         }
     }
@@ -6816,7 +6849,7 @@ async function getCurrentExecPtrPos(intExecId) {
 async function setExecPtrPos(intExecId, intNewPos) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int NewPos = ' + intNewPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intNewPos);
 
-    await setExecPtrs(await setElem(await getExecPtrs(intExecId), -1, intNewPos));
+    await setExecPtrs(intExecId, await setElem(await getExecPtrs(intExecId), -1, await strFrom(intNewPos)));
 
     await internalDebugStackExit();
 }
@@ -6880,9 +6913,16 @@ async function startDocumentExec(intExecId) {
     }
     let intCurrentTick = 0;
     intCurrentTick = 0;
-    while (boolContinue) {
-        if (await implEq(intCurrentTick, intStopExecAtTick)) {
+    if (await isNonnegative(intStopExecAtTick)) {
+        if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
             boolContinue = false;
+        }
+    }
+    while (boolContinue) {
+        if (await isNonnegative(intStopExecAtTick)) {
+            if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
+                boolContinue = false;
+            }
         }
         intCurrentTick = await inc(intCurrentTick);
         /* This loop goes through each Dc in the document, running it. */
