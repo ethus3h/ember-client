@@ -1,31 +1,42 @@
-s/kvGetValue as/data s/key
+r/b/kvHasValue as/data s/key
+    new b/res
+    return b/res
+
+r/s/kvGetValue as/data s/key
     # data format: [ 'a' 'b' 'c' 'd' ... ]
+    assertKvHasValue as/data
     new s/res
     return s/res
 
-b/kvHasValue
-as/kvSetValue as/data s/key s/val
+r/as/kvSetValue as/data s/key s/val
     new as/res
     return as/res
 
-s/kvsHasValue s/data s/key
+r/s/kvsHasValue s/data s/key
+    # data format: [ 'a:b,c:d,' ... ]
+    assertKvsHasValue as/data
+    new s/res
+    set s/res kvGetValue kvSplit s/data } s/key
+    return s/res
+
+r/s/kvsGetValue s/data s/key
     # data format: [ 'a:b,c:d,' ... ]
     new s/res
     set s/res kvGetValue kvSplit s/data } s/key
     return s/res
 
-s/kvsGetValue s/data s/key
-    # data format: [ 'a:b,c:d,' ... ]
-    new s/res
-    set s/res kvGetValue kvSplit s/data } s/key
-    return s/res
-
-s/kvsSetValue s/data s/key s/val
+r/s/kvsSetValue s/data s/key s/val
     new s/res
     set s/res kvJoin kvSetValue kvSplit s/data } s/key s/val
     return s/res
 
-as/kvSplit s/data
+r/v/assertKvHasValue as/data s/key
+    assertIsTrue kvHasValue as/data s/key
+
+r/v/assertKvsHasValue as/data s/key
+    assertIsTrue kvsHasValue as/data s/key
+
+r/as/kvSplit s/data
     new as/res
     new as/temp
     set as/temp strSplitEsc s/data ','
@@ -38,7 +49,7 @@ as/kvSplit s/data
         set n/c inc n/c
     return as/res
 
-s/kvJoin as/data
+r/s/kvJoin as/data
     new s/res
     set s/res strJoinEsc as/data ','
     return s/res
