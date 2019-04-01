@@ -2112,7 +2112,7 @@ async function dcaFromSems(intArrayIn) {
             if (await asciiIsDigit(intCurrentChar)) {
                 strCurrentDc = await implCat(strCurrentDc, await charFromByte(intCurrentChar));
             }
-            else if (await asciiIsSpace(intCurrentChar)) {
+            else if (await implIn(intCurrentChar, [ 10, 13, 32 ])) {
                 intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
                 strCurrentDc = '';
             }
@@ -3222,16 +3222,14 @@ async function runDocumentGo(intExecId) {
 }
 
 async function getExecOption(intExecId, strKey) {
-    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey);
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey); let strReturn;
 
     /* Get an execution option for a document. */
     await assertIsExecId(intExecId);
     let strRes = '';
     strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
 
-
-    await internalDebugStackExit();
-return strRes;
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function setExecOption(intExecId, strKey, strValue) {
@@ -5141,6 +5139,31 @@ async function intArrFromStrPrintedArr(strInput) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
+async function positiveIntFromIntStr(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('positiveIntFromIntStr:type-conversion'); await assertIsStr(strIn); let intReturn;
+
+    /* Returns a negative value for an empty input string */
+    let intRes = 0;
+    if (await implEq(0, await len(strIn))) {
+        intRes = -1;
+    }
+    else {
+        intRes = await intFromIntStr(strIn);
+    }
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function posIntFromIntStr(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('posIntFromIntStr:type-conversion'); await assertIsStr(strIn); let intReturn;
+
+    /* Convenience wrapper */
+    let intRes = 0;
+    intRes = await positiveFromIntStr(strIn);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
 async function charFromHexByte(strHexByte) {
     await internalDebugCollect('str HexByte = ' + strHexByte + '; '); await internalDebugStackEnter('charFromHexByte:type-conversion'); await assertIsStr(strHexByte); let strReturn;
 
@@ -6042,8 +6065,9 @@ async function kvSetValue(strArrayData, strKey, strVal) {
 
     await assertIsKvArray(strArrayData);
     let strArrayRes = [];
+    strArrayRes = strArrayData;
     let intL = 0;
-    intL = await count(strArrayData);
+    intL = await count(strArrayRes);
     let boolFound = false;
     boolFound = false;
     if (await ne(0, intL)) {
@@ -6053,7 +6077,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
         boolContinue = true;
         while (boolContinue) {
             if (boolFound) {
-                strArrayData = await setElem(strArrayData, intC, strVal);
+                strArrayRes = await setElem(strArrayRes, intC, strVal);
                 boolContinue = false;
             }
             else {
@@ -6061,7 +6085,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
                     boolContinue = false;
                 }
                 if (await implEq(0, await implMod(intC, 2))) {
-                    if (await implEq(strKey, await get(strArrayData, intC))) {
+                    if (await implEq(strKey, await get(strArrayRes, intC))) {
                         boolFound = true;
                     }
                 }
@@ -6070,8 +6094,8 @@ async function kvSetValue(strArrayData, strKey, strVal) {
         }
     }
     if (await implNot(boolFound)) {
-        strArrayData = await push(strArrayData, strKey);
-        strArrayData = await push(strArrayData, strVal);
+        strArrayRes = await push(strArrayRes, strKey);
+        strArrayRes = await push(strArrayRes, strVal);
     }
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
@@ -6903,12 +6927,7 @@ async function startDocumentExec(intExecId) {
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
     let intStopExecAtTick = 0;
-    if (await kvHasValue(await getExecSettings(intExecId), 'stopExecAtTick')) {
-        intStopExecAtTick = await intFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
-    }
-    else {
-        intStopExecAtTick = 20;
-    }
+    intStopExecAtTick = await positiveIntFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     let intCurrentTick = 0;
     intCurrentTick = 0;
     if (await isNonnegative(intStopExecAtTick)) {
