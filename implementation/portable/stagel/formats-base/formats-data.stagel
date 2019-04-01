@@ -182,4 +182,11 @@ r/s/getFormatMetricsType s/format
     new s/res
     new s/type
     set s/type getFormatType s/format
-    if in s/type [ '' ]
+    set s/res cat 'complex-' s/format
+    if or eq 'text' s/type } in s/type [ 'encoding' 'terminal' ]
+        set s/res 'character'
+    elif in s/type [ ]
+        set s/res 'pixel'
+    elif in s/type [ 'internal' ]
+        set s/res cat 'internal-' s/format
+    return s/res

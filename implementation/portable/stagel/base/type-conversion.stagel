@@ -126,8 +126,15 @@ r/as/explodeEscaped s/in s/separator
     set as/res strSplitEscaped s/in s/separator
     return as/res
 
-# FIXME: Implement array_splice and strJoinEscaped.
-r/as/strJoinEscaped s/in s/separator
+r/as/strJoinEscaped as/in s/separator
+    new s/res
+    new n/c
+    new n/l
+    set n/c 0
+    set n/l count as/in
+    while le n/c n/l
+        set s/res cat s/res strReplace get as/in n/c } s/separator cat '\' s/separator } } s/separator
+        set n/c inc n/c
 
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.

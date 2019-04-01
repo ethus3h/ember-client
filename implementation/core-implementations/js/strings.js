@@ -5,13 +5,13 @@
 */
 
 async function implCat(strA, strB) {
-    assertIsStr(strA); assertIsStr(strB); let strReturn;
+    await assertIsStr(strA); await assertIsStr(strB); let strReturn;
 
     return strA + "" + strB;
 }
 
 async function substring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+    await assertIsStr(str); await assertIsInt(intStart); await assertIsInt(intLength); let strReturn;
 
     if (intLength < 0) {
         intLength = str.length + 1 + intLength;
@@ -21,8 +21,12 @@ async function substring(str, intStart, intLength) {
 }
 
 async function len(str) {
-    assertIsStr(str); let intReturn;
+    await assertIsStr(str); let intReturn;
 
     return str.length;
 }
 
+async function strReplace(str, find, replace) {
+    await assertIsStr(str); await assertIsStr(find); await assertIsStr(replace); let strReturn
+    
+}
