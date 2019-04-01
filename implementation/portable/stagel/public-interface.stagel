@@ -51,7 +51,7 @@ r/v/getExecOption n/execId s/key
 r/v/setExecOption n/execId s/key s/value
     # Set an execution option for a document.
     assertIsExecId n/execId
-    internalRunDocument n/execId
+    setExecSettings n/execId kvSetValue getExecSettings n/execId } s/key s/value
 
 r/an/exportDocument s/format an/contents
     assertIsSupportedOutputFormat s/format
