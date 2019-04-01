@@ -77,8 +77,8 @@ r/as/kvSetValue as/data s/key s/val
                         set b/found true
             set n/c add n/c 1
     if not b/found
-        set as/data push as/data s/key
-        set as/data push as/data s/val
+        set as/res push as/data s/key
+        set as/res push as/res s/val
     return as/res
 
 r/b/kvsHasValue s/data s/key
