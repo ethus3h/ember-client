@@ -6517,7 +6517,7 @@ async function startDocumentExec(intExecId) {
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
-            await implDebug(await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))));
+            await implDebug(await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))), 1);
             if (boolLastCharacterWasEscape) {
                 boolLastCharacterWasEscape = false;
                 await incrExecPtrPos(intExecId);
