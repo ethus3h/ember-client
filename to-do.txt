@@ -27,6 +27,7 @@ OTHER
 - StageL: Iteration operator
 - More StageL output languages
 - StageL transpiler in StageL (allows transpiler in EITE, and faster StageL transpilation using e.g. a transpiled-to-C version of the transpiler)
+- StageL transpiler to Dcs
 - WASM compatibility in StageL
 - Import in editor is broken.
 - WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
