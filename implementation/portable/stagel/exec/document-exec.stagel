@@ -76,7 +76,17 @@ r/v/startDocumentExec n/execId
     set as/state [ 'normal' ]
     new b/lastCharacterWasEscape
     set b/lastCharacterWasEscape false
+    new n/stopExecAtTick
+    if kvHasValue getExecSettings n/execId } 'stopExecAtTick'
+        set n/stopExecAtTick intFromIntStr getExecOption n/execId 'stopExecAtTick'
+    else
+        set n/stopExecAtTick -1
+    new n/currentTick
+    set n/currentTick 0
     while b/continue
+        if eq n/currentTick n/stopExecAtTick
+            set b/continue false
+        set n/currentTick inc n/currentTick
         # This loop goes through each Dc in the document, running it.
         # Where are we in the document? Store it in n/currentPtrPos.
         # n/currentPtrPos is a read-only copy! For changing it, call setExecPtrPos or incrExecPtrPos
@@ -87,7 +97,7 @@ r/v/startDocumentExec n/execId
             set b/continue false
         else
             set n/dc get an/documentWorkingCopyData n/currentPtrPos
-            debugRev 1 cat 'Starting exec loop with data ' cat strPrintArr an/documentWorkingCopyData } cat ' and at position ' cat strFrom n/currentPtrPos } cat ' with current Dc ' cat strFrom n/dc } cat '; in state ' strPrintArr as/state
+            debugRev 1 cat 'Starting exec loop with data ' cat strPrintArr an/documentWorkingCopyData } cat ' and at position ' cat strFrom n/currentPtrPos } cat ' with current Dc ' cat strFrom n/dc } cat '; in state ' cat strPrintArr as/state } cat ' at tick ' cat strFrom n/currentTick } '.'
             if b/lastCharacterWasEscape
                 set b/lastCharacterWasEscape false
                 incrExecPtrPos n/execId
