@@ -2081,7 +2081,19 @@ async function getFormatMetricsType(strFormat) {
     let strRes = '';
     let strType = '';
     strType = await getFormatType(strFormat);
-    if (await implIn(strType, [ '' ]))}
+    strRes = await implCat('complex-', strFormat);
+    if (await or(await implEq('text', strType), await implIn(strType, [ 'encoding', 'terminal' ]))) {
+        strRes = 'character';
+    }
+    else if (await implIn(strType, [  ])) {
+        strRes = 'pixel';
+    }
+    else if (await implIn(strType, [ 'internal' ])) {
+        strRes = await implCat('internal-', strFormat);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
 
 async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
@@ -3063,11 +3075,20 @@ async function explodeEscaped(strIn, strSeparator) {
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
-/* FIXME: Implement array_splice and strJoinEscaped. */
 
-async function strJoinEscaped(strIn, strSeparator) {
-    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoinEscaped:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+async function strJoinEscaped(strArrayIn, strSeparator) {
+    await internalDebugCollect('strArray In = ' + strArrayIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoinEscaped:type-conversion'); await assertIsStrArray(strArrayIn); await assertIsStr(strSeparator); let strArrayReturn;
 
+    let strRes = '';
+    let intC = 0;
+    let intL = 0;
+    intC = 0;
+    intL = await count(strArrayIn);
+    while (await le(intC, intL)) {
+        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\', strSeparator), ), strSeparator);
+        intC = await inc(intC);
+    }
+}
 
 async function intArrFromStrPrintedArr(strInput) {
     await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('intArrFromStrPrintedArr:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
@@ -3148,6 +3169,7 @@ async function strFromByteArray(intArrayInput) {
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
 /* Can check for exception as result like: if eq s/res dcDataNoResultException */
 
 async function dcDataNoResultException() {

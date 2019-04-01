@@ -142,6 +142,7 @@ let strArrayDocumentExecPtrs = []; // as: holds the current execution state of e
 let strArrayDocumentExecFrames = []; // as: holds strings of space-terminated integers representing Dcs to be rendered.
 let strArrayDocumentExecEvents = []; // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
 let strArrayDocumentExecLogs = []; // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
+let strArrayDocumentExecSettings = []; // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
 let setupFinished = false;
 let intPassedTests = 0;
 let intFailedTests = 0;
@@ -1054,13 +1055,13 @@ async function count(array) {
 */
 
 async function implCat(strA, strB) {
-    assertIsStr(strA); assertIsStr(strB); let strReturn;
+    await assertIsStr(strA); await assertIsStr(strB); let strReturn;
 
     return strA + "" + strB;
 }
 
 async function substring(str, intStart, intLength) {
-    assertIsStr(str); assertIsInt(intStart); assertIsInt(intLength); let strReturn;
+    await assertIsStr(str); await assertIsInt(intStart); await assertIsInt(intLength); let strReturn;
 
     if (intLength < 0) {
         intLength = str.length + 1 + intLength;
@@ -1070,11 +1071,16 @@ async function substring(str, intStart, intLength) {
 }
 
 async function len(str) {
-    assertIsStr(str); let intReturn;
+    await assertIsStr(str); let intReturn;
 
     return str.length;
 }
 
+async function strReplace(str, find, replace) {
+    await assertIsStr(str); await assertIsStr(find); await assertIsStr(replace);
+
+    return str.replace(find+'', replace+'');
+}
 
 /* logging, provides:
     implDie
