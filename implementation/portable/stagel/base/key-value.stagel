@@ -113,15 +113,15 @@ r/v/assertKvsHasValue as/data s/key
 r/as/kvSplit s/data
     new as/res
     set as/res [ ]
+    new as/temp
+    set as/temp strSplitEsc s/data ','
     new n/l
     set n/l count as/temp
     if ne 0 n/l
-        new as/temp
-        set as/temp strSplitEsc s/data ','
         new n/c
         set n/c 0
         while lt n/c n/l
-            set as/temp append as/temp strSplitEsc get as/temp n/c } ':'
+            set as/res append as/res strSplitEsc get as/temp n/c } ':'
             set n/c inc n/c
     return as/res
 

@@ -6106,15 +6106,15 @@ async function kvSplit(strData) {
 
     let strArrayRes = [];
     strArrayRes = [  ];
+    let strArrayTemp = [];
+    strArrayTemp = await strSplitEsc(strData, ',');
     let intL = 0;
     intL = await count(strArrayTemp);
     if (await ne(0, intL)) {
-        let strArrayTemp = [];
-        strArrayTemp = await strSplitEsc(strData, ',');
         let intC = 0;
         intC = 0;
         while (await implLt(intC, intL)) {
-            strArrayTemp = await append(strArrayTemp, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+            strArrayRes = await append(strArrayRes, await strSplitEsc(await get(strArrayTemp, intC), ':'));
             intC = await inc(intC);
         }
     }
