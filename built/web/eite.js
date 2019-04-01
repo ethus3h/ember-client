@@ -6449,7 +6449,7 @@ async function setExecPtrPos(intExecId, intPos) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int Pos = ' + intPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intPos);
 
     let strNewPosStr = '';
-    strNewPosStr = await strJoin(await setElem(await getCurrentExecPtrs(-1, intPos)), ',');
+    strNewPosStr = await strJoin(await setElem(await getCurrentExecPtrs(intExecId), -1, intPos), ',');
     strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, strNewPosStr);
 
     await internalDebugStackExit();
