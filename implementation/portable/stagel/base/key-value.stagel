@@ -122,10 +122,15 @@ r/s/kvJoin as/data
     set n/l count as/data
     new n/c
     set n/c 0
-    new as/temp
+    new as/tempA
+    new as/tempB
     while lt n/c n/l
         if eq 0 mod n/c 2
-            set as/temp push as/temp strJoinEsc get as/data n/c } get as/data add 1 n/c } } ':'
-        set n/c add n/c 1
+            set as/tempA [ ]
+            set as/tempA push as/tempA get as/data n/c
+            set as/tempA push as/tempA get as/data add 1 n/c
+            set as/tempB strJoinEsc 
+            set as/temp push as/temp strJoinEsc  }  } } ':'
+        set n/c inc n/c
     set s/res strJoinEsc 
     return s/res
