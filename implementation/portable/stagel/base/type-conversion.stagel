@@ -116,6 +116,12 @@ r/as/strSplitEscaped s/in s/separator
     #    return $fixed;
     #}
 
+r/as/strSplitEsc as/in s/separator
+    # Convenience wrapper
+    new as/res
+    set as/res strSplitEscaped s/in s/separator
+    return as/res
+
 r/as/explodeEsc s/in s/separator
     new as/res
     set as/res strSplitEscaped s/in s/separator
@@ -126,7 +132,7 @@ r/as/explodeEscaped s/in s/separator
     set as/res strSplitEscaped s/in s/separator
     return as/res
 
-r/as/strJoinEscaped as/in s/separator
+r/s/strJoinEscaped as/in s/separator
     new s/res
     new n/c
     new n/l
@@ -135,12 +141,13 @@ r/as/strJoinEscaped as/in s/separator
     while le n/c n/l
         set s/res cat s/res strReplace get as/in n/c } s/separator cat '\' s/separator } } s/separator
         set n/c inc n/c
+    return s/res
 
-r/as/strJoinEsc as/in s/separator
+r/s/strJoinEsc as/in s/separator
     # Convenience wrapper
-    new as/res
-    set as/res strJoinEscaped as/in s/separator
-    return as/res
+    new s/res
+    set s/res strJoinEscaped as/in s/separator
+    return s/res
 
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.

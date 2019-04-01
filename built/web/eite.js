@@ -5083,6 +5083,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
         strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator);
         intC = await inc(intC);
     }
+    return strRes;
 }
 
 async function intArrFromStrPrintedArr(strInput) {
