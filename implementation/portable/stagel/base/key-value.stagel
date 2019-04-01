@@ -118,5 +118,15 @@ r/as/kvSplit s/data
 
 r/s/kvJoin as/data
     new s/res
-    set s/res strJoinEsc as/data ','
+    new n/l
+    set n/l count as/data
+    new n/c
+    set n/c 0
+    while lt n/c n/l
+        if eq 0 mod n/c 2
+            set s/res cat s/res strJoinEsc
+            if eq s/key get as/data n/c
+                set b/res true
+                set b/continue false
+        set n/c add n/c 1
     return s/res
