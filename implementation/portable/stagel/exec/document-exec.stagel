@@ -31,7 +31,7 @@ r/n/getCurrentExecPtrPos n/execId
 
 r/v/setExecPtrPos n/execId n/pos
     new s/newPosStr
-    set s/newPosStr strJoin setElem as/getCurrentExecPtrs -1 n/pos } ','
+    set s/newPosStr strJoin setElem getCurrentExecPtrs -1 n/pos } ','
     set as/documentExecPtrs setElem as/documentExecPtrs n/execId s/newPosStr
 
 r/v/incrExecPtrPos n/execId
