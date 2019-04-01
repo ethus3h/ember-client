@@ -8,7 +8,7 @@ r/b/kvHasValue as/data s/key
     set n/c 0
     new b/continue
     set b/continue true
-    if eq n/l 0
+    if eq 0 n/l
         set b/continue false
     while b/continue
         if not lt n/c n/l
@@ -34,8 +34,6 @@ r/s/kvGetValue as/data s/key
     set b/continue true
     new b/found
     set b/found false
-    if eq n/l 0
-        set b/continue false
     while b/continue
         if b/found
             set s/res get as/data n/c
@@ -60,25 +58,24 @@ r/as/kvSetValue as/data s/key s/val
     new as/res
     new n/l
     set n/l count as/data
-    new n/c
-    set n/c 0
-    new b/continue
-    set b/continue true
     new b/found
     set b/found false
-    if eq n/l 0
-        set b/continue false
-    while b/continue
-        if b/found
-            set as/data setElem as/data n/c s/val
-            set b/continue false
-        else
-            if not lt n/c n/l
+    if ne 0 n/l
+        new n/c
+        set n/c 0
+        new b/continue
+        set b/continue true
+        while b/continue
+            if b/found
+                set as/data setElem as/data n/c s/val
                 set b/continue false
-            if eq 0 mod n/c 2
-                if eq s/key get as/data n/c
-                    set b/found true
-        set n/c add n/c 1
+            else
+                if not lt n/c n/l
+                    set b/continue false
+                if eq 0 mod n/c 2
+                    if eq s/key get as/data n/c
+                        set b/found true
+            set n/c add n/c 1
     if not b/found
         set as/data push as/data s/key
         set as/data push as/data s/val
@@ -118,7 +115,7 @@ r/as/kvSplit s/data
     set as/res [ ]
     new n/l
     set n/l count as/temp
-    if ne n/l 0
+    if ne 0 n/l
         new as/temp
         set as/temp strSplitEsc s/data ','
         new n/c
@@ -133,20 +130,20 @@ r/s/kvJoin as/data
     set s/res ''
     new n/l
     set n/l count as/data
-    if ne n/l
-    new n/c
-    set n/c 0
-    new as/tempA
-    new as/tempB
-    set as/tempB [ ]
-    while lt n/c n/l
-        if eq 0 mod n/c 2
-            set as/tempA [ ]
-            set as/tempA push as/tempA get as/data n/c
-            set as/tempA push as/tempA get as/data add 1 n/c
-            set as/tempB push as/tempB strJoinEsc as/tempA ':'
-        set n/c inc n/c
-    set s/res strJoinEsc as/tempB ','
+    if ne 0 n/l
+        new n/c
+        set n/c 0
+        new as/tempA
+        new as/tempB
+        set as/tempB [ ]
+        while lt n/c n/l
+            if eq 0 mod n/c 2
+                set as/tempA [ ]
+                set as/tempA push as/tempA get as/data n/c
+                set as/tempA push as/tempA get as/data add 1 n/c
+                set as/tempB push as/tempB strJoinEsc as/tempA ':'
+            set n/c inc n/c
+        set s/res strJoinEsc as/tempB ','
     return s/res
 
 r/b/isKvArray as/data
