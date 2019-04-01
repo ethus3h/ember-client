@@ -45,7 +45,8 @@ r/v/getExecOption n/execId s/key
     # Get an execution option for a document.
     assertIsExecId n/execId
     new s/res
-    set s/res last getExecSettings n/execId
+    set s/res kvGetValue getExecSettings n/execId } s/key
+    return s/res
 
 r/v/setExecOption n/execId s/key s/value
     # Set an execution option for a document.
