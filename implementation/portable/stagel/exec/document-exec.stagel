@@ -19,6 +19,15 @@ r/b/isExecId n/execId
         return true
     return false
 
+r/as/getExecSettings n/execId
+    new as/res
+    set as/res kvSplit get as/documentExecSettings n/execId
+    return as/res
+
+r/v/setExecSettings n/execId as/val
+    # Replace the entire exec settings array for this exec.
+    set as/documentExecSettings setElem as/documentExecSettings n/execId kvJoin as/val
+
 r/as/getExecPtrs n/execId
     new as/res
     set as/res strSplitEsc get as/documentExecPtrs n/execId } ','
@@ -28,24 +37,13 @@ r/v/setExecPtrs n/execId as/val
     # Replace the entire exec pointer array for this exec.
     set as/documentExecPtrs setElem as/documentExecPtrs n/execId strJoinEsc as/val ','
 
-r/as/getExecSettings n/execId
-    new as/res
-    set as/res kvSplit get as/documentExecSettings n/execId
-    return as/res
-
-r/v/setExecSettings n/execId as/val
-    # Replace the entire exec settings array for this exec.
-    set as/documentExecPtrs setElem as/documentExecPtrs n/execId strJoinEsc as/val ','
-
 r/n/getCurrentExecPtrPos n/execId
     new n/res
     set n/res intFromIntStr get getExecPtrs n/execId } -1
     return n/res
 
 r/v/setExecPtrPos n/execId n/newPos
-    new s/newPosStr
-    set s/newPosStr strJoin setElem getExecPtrs n/execId } -1 n/newPos } ','
-    set as/documentExecPtrs setElem as/documentExecPtrs n/execId s/newPosStr
+    setExecPtrs setElem getExecPtrs n/execId } -1 n/newPos
 
 r/v/incrExecPtrPos n/execId
     setExecPtrPos n/execId add 1 getCurrentExecPtrPos n/execId
