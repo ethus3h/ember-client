@@ -149,6 +149,15 @@ r/s/strJoinEsc as/in s/separator
     set s/res strJoinEscaped as/in s/separator
     return s/res
 
+r/s/strJoinEscNoTrailing as/in s/separator
+    # a,b instead of a,b,
+    new s/res
+    new n/separLen
+    set n/separLen len s/separator
+    set n/separLen sub -1 s/separLen
+    set s/res substr strJoinEscaped as/in s/separator } 0 
+    return s/res
+
 r/an/intArrFromStrPrintedArr s/input
     # Reverse of strPrintArr with an an/ parameter.
     new an/res
