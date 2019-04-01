@@ -177,6 +177,7 @@ r/an/intArrFromStrPrintedArr s/input
     return an/res
 
 r/n/positiveIntFromIntStr s/in
+    # Returns a negative value for an empty input string
     new n/res
     if eq 0 len s/in
         set n/res -1
