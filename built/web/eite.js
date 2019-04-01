@@ -1079,7 +1079,7 @@ async function len(str) {
 async function strReplace(str, find, replace) {
     await assertIsStr(str); await assertIsStr(find); await assertIsStr(replace);
 
-    return str.replace(find+'', replace+'');
+    return str.replace(find+'', replace+''.replace('$', '$$'));
 }
 
 /* logging, provides:
