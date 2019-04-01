@@ -6913,20 +6913,14 @@ async function startDocumentExec(intExecId) {
     }
     let intCurrentTick = 0;
     intCurrentTick = 0;
-        console.log('start tick'+intStopExecAtTick+','+intCurrentTick);
     if (await isNonnegative(intStopExecAtTick)) {
-        console.log('1');
         if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
-            console.log('2');
             boolContinue = false;
         }
     }
     while (boolContinue) {
-        console.log('in loop tick'+intStopExecAtTick+','+intCurrentTick);
         if (await isNonnegative(intStopExecAtTick)) {
-            console.log('3');
             if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
-                console.log('4');
                 boolContinue = false;
             }
         }
