@@ -6505,6 +6505,7 @@ async function startDocumentExec(intExecId) {
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
+    STAGEL_DEBUG=2;
     while (boolContinue) {
         /* This loop goes through each Dc in the document, running it. */
         /* Where are we in the document? Store it in n/currentPtrPos. */
