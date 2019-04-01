@@ -4977,7 +4977,7 @@ async function strSplitEscaped(strIn, strSeparator) {
     let strTemp = '';
     let strArrayTempSubset = [];
     while (await implAnd(boolContinue, await implLt(intK, intL))) {
-        if (await implEq('\\\\', await charAt(await get(strArrayExploded, intK), await implAdd(-1, await len(await get(strArrayExploded, intK)))))) {
+        if (await implEq('\\', await charAt(await get(strArrayExploded, intK), await implAdd(-1, await len(await get(strArrayExploded, intK)))))) {
             if (await ge(await implAdd(1, intK), intL)) {
                 strArrayRes = await push(strArrayRes, await get(strArrayExploded, intK));
                 boolContinue = false;
@@ -5048,7 +5048,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     intC = 0;
     intL = await count(strArrayIn);
     while (await le(intC, intL)) {
-        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator);
+        strRes = await implCat(strRes, await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\', strSeparator), ), strSeparator);
         intC = await inc(intC);
     }
 }
@@ -6458,6 +6458,113 @@ async function setExecPtrPos(intExecId, intPos) {
 async function incrExecPtrPos(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('incrExecPtrPos:document-exec'); await assertIsInt(intExecId);
 
+    await setExecPtrPos(intExecId, await implAdd(1, await getCurrentExecPtrPos(intExecId)));
+
+    await internalDebugStackExit();
+}
+
+async function getNextLevelExecPtrPos(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getNextLevelExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromIntStr(await get(await getCurrentExecPtrs(intExecId), -2));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getCurrentExecData(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecData:document-exec'); await assertIsInt(intExecId); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function getCurrentExecFrame(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecFrame:document-exec'); await assertIsInt(intExecId); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = await intArrFromStrPrintedArr(await get(strArrayDocumentExecFrames, intExecId));
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function startDocumentExec(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsInt(intExecId);
+
+    await assertIsExecId(intExecId);
+    let boolContinue = false;
+    boolContinue = true;
+    let intCurrentPtrPos = 0;
+    let intArrayWipFrame = [];
+    let intDc = 0;
+    let intArrayDocumentWorkingCopyData = [];
+    intArrayDocumentWorkingCopyData = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
+    let strArrayState = [];
+    strArrayState = [ 'normal' ];
+    let boolLastCharacterWasEscape = false;
+    boolLastCharacterWasEscape = false;
+    while (boolContinue) {
+        /* This loop goes through each Dc in the document, running it. */
+        /* Where are we in the document? Store it in n/currentPtrPos. */
+        /* n/currentPtrPos is a read-only copy! For changing it, call setExecPtrPos or incrExecPtrPos */
+        intCurrentPtrPos = await getCurrentExecPtrPos(intExecId);
+        /* The execution process basically is a big state machine. */
+        if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
+            /* We're done with the document */
+            boolContinue = false;
+        }
+        else {
+            intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
+            await implDebug(await implCat('Starting exec loop with data ', await implCat(await strPrintArr(intArrayDocumentWorkingCopyData), await implCat(' and at position ', await implCat(await strFrom(intCurrentPtrPos), await implCat(' with current Dc ', await implCat(await strFrom(intDc), await implCat('; in state ', await strPrintArr(strArrayState)))))))));
+            if (boolLastCharacterWasEscape) {
+                boolLastCharacterWasEscape = false;
+                await incrExecPtrPos(intExecId);
+            }
+            else {
+                /* Char isn't escaped, so process it normally */
+                if (await implEq(intDc, 255)) {
+                    boolLastCharacterWasEscape = true;
+                }
+                else {
+                    if (await implEq('normal', await last(strArrayState))) {
+                        if (await implIn(intDc, [ 246, 247 ])) {
+                            strArrayState = await push(strArrayState, 'single-line source comment');
+                        }
+                        else if (await implIn(intDc, [ 249, 250 ])) {
+                            strArrayState = await push(strArrayState, 'block source comment');
+                        }
+                        if (await dcIsELCode(intDc)) {
+                            /* FIXME unimplemented */
+                        }
+                        else {
+                            /* Normal Dc, or at least we don't know what it is */
+                            intArrayWipFrame = await push(intArrayWipFrame, intDc);
+                        }
+                    }
+                    else if (await implEq('single-line source comment', await last(strArrayState))) {
+                        if (await implEq(intDc, 248)) {
+                            strArrayState = await pop(strArrayState);
+                        }
+                    }
+                    else if (await implEq('block source comment', await last(strArrayState))) {
+                        if (await implEq(intDc, 251)) {
+                            strArrayState = await pop(strArrayState);
+                        }
+                    }
+                }
+                await incrExecPtrPos(intExecId);
+            }
+        }
+        /* Frame is done, so convert it to the environment-appropriate format and output it */
+        await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
+        intArrayWipFrame = [  ];
+        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
+    }
+
+    await internalDebugStackExit();
+}
 
 
 // @license-end
