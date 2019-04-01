@@ -8,13 +8,19 @@ HIGH PRIORITY EITE
 - Implement more Dc abilities, in sync with creating EITE interface and server documents (main loader and other documents) Each Dc will need  more work to be implemented in each input and output format, I guess. More work will be desirable for on how Dc data are represented.
 
 LOW PRIORITY EITE
+- How to test that problem inputs fail to convert correctly? Need a way to catch things that error without it killing the main thread. Maybe run them in a new thread?
+- Clone Weave functionality
+- Output format settings tests
 - possibly raster area output
 - WASM compatibility in StageL
 - FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness
 - Decentralization/IPFS/OrbitDB integration
+- Output formats: Natlangs; auto-documentation
 
 OTHER
 - Idea for StageL: Make things like "set as/arr push as/arr s/val" nicer to write: how about: ": push as/arr val"
-- Stagel: fix "until" keyword
+- StageL: fix "until" keyword
+- StageL: Output auto-documentation
+- StageL: Iteration operator
 - Import in editor is broken.
 - WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
