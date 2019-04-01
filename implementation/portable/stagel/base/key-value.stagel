@@ -4,20 +4,19 @@ r/b/kvHasValue as/data s/key
     set b/res false
     new n/l
     set n/l count as/data
-    new n/c
-    set n/c 0
-    new b/continue
-    set b/continue true
-    if eq 0 n/l
-        set b/continue false
-    while b/continue
-        if not lt n/c n/l
-            set b/continue false
-        if eq 0 mod n/c 2
-            if eq s/key get as/data n/c
-                set b/res true
+    if ne 0 n/l
+        new n/c
+        set n/c 0
+        new b/continue
+        set b/continue true
+        while b/continue
+            if not lt n/c n/l
                 set b/continue false
-        set n/c add n/c 1
+            if eq 0 mod n/c 2
+                if eq s/key get as/data n/c
+                    set b/res true
+                    set b/continue false
+            set n/c add n/c 1
     return b/res
 
 r/s/kvGetValue as/data s/key
@@ -28,23 +27,24 @@ r/s/kvGetValue as/data s/key
     set s/res ''
     new n/l
     set n/l count as/data
-    new n/c
-    set n/c 0
-    new b/continue
-    set b/continue true
-    new b/found
-    set b/found false
-    while b/continue
-        if b/found
-            set s/res get as/data n/c
-            set b/continue false
-        else
-            if not lt n/c n/l
+    if ne 0 n/l
+        new n/c
+        set n/c 0
+        new b/continue
+        set b/continue true
+        new b/found
+        set b/found false
+        while b/continue
+            if b/found
+                set s/res get as/data n/c
                 set b/continue false
-            if eq 0 mod n/c 2
-                if eq s/key get as/data n/c
-                    set b/found true
-        set n/c add n/c 1
+            else
+                if not lt n/c n/l
+                    set b/continue false
+                if eq 0 mod n/c 2
+                    if eq s/key get as/data n/c
+                        set b/found true
+            set n/c add n/c 1
     return s/res
 
 r/s/kvGetDefinedValue as/data s/key
