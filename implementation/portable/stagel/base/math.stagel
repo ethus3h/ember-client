@@ -9,7 +9,15 @@ r/b/isEven n/in
     return false
 
 r/b/isOdd n/in
-    return not isEven n/in
+    if eq 0 mod n/in 2
+        return false
+    return true
+
+r/v/assertIsEven n/in
+    assertIsTrue isEven n/in
+
+r/v/assertIsOdd n/in
+    assertIsTrue isOdd n/in
 
 r/b/intIsBetween n/n n/a n/b
     # Checks whether N is within the range A and B, including endpoints

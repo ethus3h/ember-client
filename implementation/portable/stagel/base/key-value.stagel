@@ -50,7 +50,7 @@ r/s/kvGetDefinedValue as/data s/key
     return s/res
 
 r/as/kvSetValue as/data s/key s/val
-    assertIsTrue eq 0 mod 
+    assertIsEven 
     new as/res
     new n/l
     set n/l count as/data
@@ -136,3 +136,11 @@ r/s/kvJoin as/data
         set n/c inc n/c
     set s/res strJoinEsc as/tempB ','
     return s/res
+
+r/b/isKvArray as/data
+    new b/res
+    set b/res isEven count as/data
+    return b/res
+
+r/v/assertIsKvArray as/data
+    assertIsTrue isKvArray as/data
