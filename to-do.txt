@@ -1,14 +1,20 @@
+HIGH PRIORITY EITE
 - Get document rendering to be a bit more sophisticated (support variables and function calls inside documents)
 - Get rendering through time working (right now it draws the completed document and stops running, rather than keeping it idle and having an event handling system, although I have started on the APIs for that)
 - Provide a way for an EITE document to start a sub-document in its own thread
 - Get data persistence
 - EITE-based GUI
 - EITE-based servers and service discovery
-- WASM compatibility in StageL
-- possibly raster area output
 - Implement more Dc abilities, in sync with creating EITE interface and server documents (main loader and other documents) Each Dc will need  more work to be implemented in each input and output format, I guess. More work will be desirable for on how Dc data are represented.
-- FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness; are script tags executed in order
+
+LOW PRIORITY EITE
+- possibly raster area output
+- WASM compatibility in StageL
+- FIXME: int32 in 8 bit cpu; comparison of bit operations by programming language; ceil/floor with negative numbers; effects of endianness
+- Decentralization/IPFS/OrbitDB integration
+
+OTHER
 - Idea for StageL: Make things like "set as/arr push as/arr s/val" nicer to write: how about: ": push as/arr val"
+- Stagel: fix "until" keyword
 - Import in editor is broken.
 - WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
-Hi! I'm starting work on using IPFS-JS in a project I'm developing. The project relies on a large (in both number and size) ordered set of blobs. It needs multiple computers share, append to, and keep synchronized this data set, and for all computers in this network to retain the ability to write and share the data set independently and then merge their forks of the dataset when connectivity is available. Only some computers should be able to append to it. The computers should be able to connect to each other without centralized infrastructure, and without knowing each others' addresses. How much of this problem space is targeted by IPFS, and how much of it is implemented? Thanks!
