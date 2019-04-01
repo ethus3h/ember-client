@@ -1778,6 +1778,15 @@ async function listFormats() {
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
 
+async function isFormat(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('isFormat:formats-data'); await assertIsStr(strFormat); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implIn(strFormat, await listFormats());
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
 async function listInputFormats() {
     await internalDebugStackEnter('listInputFormats:formats-data'); let strArrayReturn;
 
@@ -1882,6 +1891,7 @@ async function listDataTypes() {
 async function listVariantsForFormat(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('listVariantsForFormat:formats-data'); await assertIsStr(strFormat); let strArrayReturn;
 
+    await assertIsFormat(strFormat);
     let strNormalizedFmt = '';
     strNormalizedFmt = await normalizeFormat(strFormat);
     let strArrayFormats = [];
@@ -1913,6 +1923,7 @@ async function listVariantsForFormat(strFormat) {
 async function getFormatId(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatId:formats-data'); await assertIsStr(strFormat); let intReturn;
 
+    await assertIsFormat(strFormat);
     let intRes = 0;
     intRes = await intFromIntStr(await dcDataLookupByValue('formats', 1, strFormat, 0));
 
@@ -1922,12 +1933,22 @@ async function getFormatId(strFormat) {
 async function normalizeFormat(strFormat) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('normalizeFormat:formats-data'); await assertIsStr(strFormat); let strReturn;
 
+    await assertIsFormat(strFormat);
     if (await implEq(strFormat, 'utf8')) {
 
         strReturn = 'unicode'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
 
     strReturn = strFormat; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getFormatName(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatName:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    let strRes = '';
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 1);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function getFormatExtension(strFormat) {
@@ -1938,6 +1959,129 @@ async function getFormatExtension(strFormat) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
+async function getFormatImportSupport(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatImportSupport:formats-data'); await assertIsStr(strFormat); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromIntStr(await dcDataLookupById('formats', await getFormatId(strFormat), 3));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getFormatExportSupport(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExportSupport:formats-data'); await assertIsStr(strFormat); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromIntStr(await dcDataLookupById('formats', await getFormatId(strFormat), 4));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getFormatTestsStatus(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatTestsStatus:formats-data'); await assertIsStr(strFormat); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromIntStr(await dcDataLookupById('formats', await getFormatId(strFormat), 5));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function getFormatType(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatType:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    let strRes = '';
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 6);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getFormatLabel(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatLabel:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    let strRes = '';
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 7);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getFormatVariantTypes(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatVariantTypes:formats-data'); await assertIsStr(strFormat); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplit(await dcDataLookupById('formats', await getFormatId(strFormat), 8), ',');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getFormatComments(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatComments:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    let strRes = '';
+    strRes = await dcDataLookupById('formats', await getFormatId(strFormat), 9);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function formatIsVariant(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('formatIsVariant:formats-data'); await assertIsStr(strFormat); let boolReturn;
+
+    /* Return true if the format is a variant of another format, rather than its own format. */
+    await assertIsFormat(strFormat);
+    let boolRes = false;
+    boolRes = await implEq('v:', await substr(await getFormatType(strFormat), 0, 2));
+
+    boolReturn = strRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function isVariantType(strVariantType) {
+    await internalDebugCollect('str VariantType = ' + strVariantType + '; '); await internalDebugStackEnter('isVariantType:formats-data'); await assertIsStr(strVariantType); let strReturn;
+
+    let boolRes = false;
+    boolRes = await implIn(strVariantType, [ 'encoding', 'unicodePua' ]);
+
+    strReturn = boolRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function formatGetVariantType(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('formatGetVariantType:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    /* Return the string indicating the type of format variant this is. */
+    await assertIsTrue(await formatIsVariant(strFormat));
+    let strRes = '';
+    strRes = await substr(await getFormatType(strFormat), 2, -1);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function formatSupportsVariantType(strFormat, strVariantType) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str VariantType = ' + strVariantType + '; '); await internalDebugStackEnter('formatSupportsVariantType:formats-data'); await assertIsStr(strFormat); await assertIsStr(strVariantType); let boolReturn;
+
+    await assertIsFormat(strFormat);
+    let boolRes = false;
+    boolRes = await implIn(strVariantType, await getFormatVariantTypes(strFormat));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function formatSupportsVariant(strFormat, strVariant) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Variant = ' + strVariant + '; '); await internalDebugStackEnter('formatSupportsVariant:formats-data'); await assertIsStr(strFormat); await assertIsStr(strVariant); let boolReturn;
+
+    await assertIsFormat(strFormat);
+    let boolRes = false;
+    boolRes = await formatSupportsVariantType(strFormat, await formatGetVariantType(strVariant));
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function getFormatMetricsType(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatMetricsType:formats-data'); await assertIsStr(strFormat); let strReturn;
+
+    await assertIsFormat(strFormat);
+    let strRes = '';
+    let strType = '';
+    strType = await getFormatType(strFormat);
+    if (await implIn(strType, [ '' ]))}
 
 async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
@@ -2552,6 +2696,19 @@ async function charAt(strStr, intIndex) {
     strReturn = strTemp; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function setCharAt(strStr, intIndex, strChar) {
+    await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugCollect('int Index = ' + intIndex + '; '); await internalDebugCollect('str Char = ' + strChar + '; '); await internalDebugStackEnter('setCharAt:strings'); await assertIsStr(strStr); await assertIsInt(intIndex); await assertIsStr(strChar); let strReturn;
+
+    let strRes = '';
+    let intFirstEnd = 0;
+    let intLastStart = 0;
+    intFirstEnd = await implSub(await len(strStr), await dec(intIndex));
+    intLastStart = await implSub(await len(strStr), await inc(intIndex));
+    strRes = await implCat(await substr(strStr, 0, intFirstEnd), await implCat(strChar, await substr(strStr, intLastStart, -1)));
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
 async function reverseStr(strStr) {
     await internalDebugCollect('str Str = ' + strStr + '; '); await internalDebugStackEnter('reverseStr:strings'); await assertIsStr(strStr); let strReturn;
 
@@ -2814,7 +2971,7 @@ async function strSplit(strIn, strSeparator) {
 async function strJoin(genericArrayIn, strSeparator) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoin:type-conversion'); await assertIsGenericArray(genericArrayIn); await assertIsStr(strSeparator); let strReturn;
 
-    /* Opposite of strSplit for a given separator (always gives a trailing delimiter, though) */
+    /* Opposite of strSplit for a given separator (always gives a trailing delimiter, though, and remember that delimiters are in-band signalling) */
     let intCount = 0;
     intCount = await count(genericArrayIn);
     let intI = 0;
@@ -2828,6 +2985,89 @@ async function strJoin(genericArrayIn, strSeparator) {
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+
+async function strSplitEscaped(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strSplitEscaped:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+
+    let strArrayRes = [];
+    let strArrayExploded = [];
+    strArrayExploded = await strSplit(strIn, strSeparator);
+    strArrayRes = [  ];
+    let intK = 0;
+    let intL = 0;
+    intK = 0;
+    intL = await count(strArrayExploded);
+    let boolContinue = false;
+    boolContinue = true;
+    let strTemp = '';
+    let strArrayTempSubset = [];
+    while (await implAnd(boolContinue, await implLt(intK, intL))) {
+        if (await implEq('\\', await charAt(await get(strArrayExploded, intK), await implAdd(-1, await len(await get(strArrayExploded, intK)))))) {
+            if (await ge(await implAdd(1, intK), intL)) {
+                strArrayRes = await push(strArrayRes, await get(strArrayExploded, intK));
+                boolContinue = false;
+            }
+            strTemp = await setCharAt(await get(strArrayExploded, intK), await dec(await len(await get(strArrayExploded, intK), ), ), strSeparator);
+            await setElem(strArrayExploded, intK, strTemp);
+            /*array_splice($exploded, $k + 1, 1); // https://www.php.net/manual/en/function.array-splice.php */
+            strArrayTempSubset = await subset(strArrayExploded, await implAdd(1, intK), await implAdd(2, intK));
+            strArrayExploded = await append(strArrayTempSubset, await subset(strArrayExploded, await implAdd(2, intK), -1));
+            intL = await dec(intL);
+            intK = await dec(intK);
+        }
+        else {
+            strArrayRes = await push(strArrayRes, await get(strArrayExploded, intK));
+        }
+        intK = await implAdd(1, intK);
+    }
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+    /* Based on the explode_esc PHP function: */
+    /*//explode_escaped (not written by me) */
+    /*function explode_esc($delimiter, $string) */
+    /*{ */
+    /*    $exploded = explode($delimiter, $string); */
+    /*    $fixed    = array(); */
+    /*    for ($k = 0, $l = count($exploded); $k < $l; ++$k) { */
+    /*        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') { */
+    /*            if ($k + 1 >= $l) { */
+    /*                $fixed[] = trim($exploded[$k]); */
+    /*                break; */
+    /*            } */
+    /*            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter; */
+    /*            $exploded[$k] .= $exploded[$k + 1]; */
+    /*            array_splice($exploded, $k + 1, 1); */
+    /*            --$l; */
+    /*            --$k; */
+    /*        } else */
+    /*            $fixed[] = trim($exploded[$k]); */
+    /*    } */
+    /*    return $fixed; */
+    /*} */
+}
+
+async function explodeEsc(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('explodeEsc:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplitEscaped(strIn, strSeparator);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function explodeEscaped(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('explodeEscaped:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplitEscaped(strIn, strSeparator);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+/* FIXME: Implement array_splice and strJoinEscaped. */
+
+async function strJoinEscaped(strIn, strSeparator) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoinEscaped:type-conversion'); await assertIsStr(strIn); await assertIsStr(strSeparator); let strArrayReturn;
+
 
 async function intArrFromStrPrintedArr(strInput) {
     await internalDebugCollect('str Input = ' + strInput + '; '); await internalDebugStackEnter('intArrFromStrPrintedArr:type-conversion'); await assertIsStr(strInput); let intArrayReturn;
@@ -2908,7 +3148,6 @@ async function strFromByteArray(intArrayInput) {
 
     strReturn = strOut; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
-
 /* Can check for exception as result like: if eq s/res dcDataNoResultException */
 
 async function dcDataNoResultException() {
@@ -3346,6 +3585,24 @@ async function formatPercentage(intA, intB) {
     strReturn = strPercentage; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function inc(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('inc:math'); await assertIsInt(intN); let intReturn;
+
+    let intRes = 0;
+    intRes = await implAdd(1, intN);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function dec(intN) {
+    await internalDebugCollect('int N = ' + intN + '; '); await internalDebugStackEnter('dec:math'); await assertIsInt(intN); let intReturn;
+
+    let intRes = 0;
+    intRes = await implAdd(-1, intN);
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
 async function warnOrDie(boolStrict, strMsg) {
     await internalDebugCollect('bool Strict = ' + boolStrict + '; '); await internalDebugCollect('str Msg = ' + strMsg + '; '); await internalDebugStackEnter('warnOrDie:assertions'); await assertIsBool(boolStrict); await assertIsStr(strMsg);
 
@@ -3531,6 +3788,14 @@ async function assertIsDcDataset(strIn) {
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsDcDataset:assertions'); await assertIsStr(strIn);
 
     await assertIsTrue(await isDcDataset(strIn));
+
+    await internalDebugStackExit();
+}
+
+async function assertIsFormat(strIn) {
+    await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsFormat:assertions'); await assertIsStr(strIn);
+
+    await assertIsTrue(await isFormat(strIn));
 
     await internalDebugStackExit();
 }
@@ -4145,6 +4410,69 @@ async function isCharByte(genericIn) {
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
+
+async function prepareDocumentExec(intArrayContents) {
+    await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('prepareDocumentExec:document-exec'); await assertIsIntArray(intArrayContents); let intReturn;
+
+    let intExecId = 0;
+    intExecId = -1;
+    /* documentExecData is a global, created during initialization. It holds the current document state for any documents being executed. */
+    intExecId = await count(strArrayDocumentExecPtrs);
+    strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
+    /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
+    strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
+    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, '0,');
+    strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
+    strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
+    strArrayDocumentExecLogs = await push(strArrayDocumentExecLogs, '');
+    strArrayDocumentExecSettings = await push(strArrayDocumentExecSettings, '');
+    await assertIsExecId(intExecId);
+
+    intReturn = intExecId; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function isExecId(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('isExecId:document-exec'); await assertIsInt(intExecId); let boolReturn;
+
+    if (await implLt(intExecId, await count(strArrayDocumentExecPtrs))) {
+
+        boolReturn = true; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    }
+
+    boolReturn = false; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function getCurrentExecPtrs(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrs:document-exec'); await assertIsInt(intExecId); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplit(await get(strArrayDocumentExecPtrs, intExecId), ',');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getCurrentExecPtrPos(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getCurrentExecPtrPos:document-exec'); await assertIsInt(intExecId); let intReturn;
+
+    let intRes = 0;
+    intRes = await intFromIntStr(await get(await getCurrentExecPtrs(intExecId), -1));
+
+    intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
+}
+
+async function setExecPtrPos(intExecId, intPos) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('int Pos = ' + intPos + '; '); await internalDebugStackEnter('setExecPtrPos:document-exec'); await assertIsInt(intExecId); await assertIsInt(intPos);
+
+    let strNewPosStr = '';
+    strNewPosStr = await strJoin(await setElem(strArrayGetCurrentExecPtrs, -1, intPos), ',');
+    strArrayDocumentExecPtrs = await setElem(strArrayDocumentExecPtrs, intExecId, strNewPosStr);
+
+    await internalDebugStackExit();
+}
+
+async function incrExecPtrPos(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('incrExecPtrPos:document-exec'); await assertIsInt(intExecId);
+
 
 
 // @license-end
