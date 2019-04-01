@@ -176,6 +176,22 @@ r/an/intArrFromStrPrintedArr s/input
         set an/res push an/res intFromIntStr s/currentInt
     return an/res
 
+r/n/positiveIntFromIntStr s/in
+    new n/res
+    if eq 0 len s/in
+        set n/res -1
+    else
+        set n/res intFromIntStr s/in
+    return n/res
+
+r/n/positiveIntFromIntStr s/in
+    new n/res
+    if eq 0 len s/in
+        set n/res -1
+    else
+        set n/res intFromIntStr s/in
+    return n/res
+
 r/s/charFromHexByte s/hexByte
     # Bear in mind that StageL doesn't attempt to support Unicode.
     assertIsBaseStr s/hexByte 16

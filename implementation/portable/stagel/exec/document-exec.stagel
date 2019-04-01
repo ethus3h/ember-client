@@ -80,7 +80,7 @@ r/v/startDocumentExec n/execId
     if kvHasValue getExecSettings n/execId } 'stopExecAtTick'
         set n/stopExecAtTick intFromIntStr getExecOption n/execId 'stopExecAtTick'
     else
-        set n/stopExecAtTick -1
+        set n/stopExecAtTick positiveIntFromIntStr getExecOption n/execId 'stopExecAtTick'
     new n/currentTick
     set n/currentTick 0
     if isNonnegative n/stopExecAtTick
