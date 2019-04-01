@@ -110,8 +110,8 @@ codegenDebug() {
 }
 
 codegenFormatType() {
-    codegenDebug "Type" "${@}" >&2
-    # First arg: type; second arg: "true" for uppercase first letter
+    codegenDebug "FormatType" "${@}" >&2
+    # First arg: type; second arg: "true" for uppercase first letter; third arg "true" for don't die and return an empty string instead
     local result=""
     case "$targetLang" in
     js|c)
@@ -135,7 +135,7 @@ codegenFormatType() {
         [[ "$1" == "ident-r-an" ]] && result='intArray'
         [[ "$1" == "ident-r-as" ]] && result='strArray'
         #[[ -z "$result" ]] && result="$1"
-        [[ -z "$result" ]] && die "$1 is not a recognized type!"
+        [[ -z "$result" ]] && [[ "$3" != "true" ]] && die "$1 is not a recognized type!"
         if [[ "$2" == "true" ]]; then
             codegenOutput "${result^}"
         else
@@ -148,9 +148,8 @@ codegenFormatType() {
     esac
 }
 
-codegenFormatType() {
+codegenType() {
     codegenDebug "Type" "${@}" >&2
-    # First arg: type; second arg: "true" for uppercase first letter
     local result=""
     case "$targetLang" in
     js|c)
@@ -173,7 +172,7 @@ codegenFormatType() {
         [[ "$1" == "ident-r-ab" ]] && result='boolArray'
         [[ "$1" == "ident-r-an" ]] && result='intArray'
         [[ "$1" == "ident-r-as" ]] && result='strArray'
-        #[[ -z "$result" ]] && result="$1"
+        [[ -z "$result" ]] && result="$(codegenFormatType "$1" "true")"
         [[ -z "$result" ]] && die "$1 is not a recognized type!"
         if [[ "$2" == "true" ]]; then
             codegenOutput "${result^}"
@@ -188,6 +187,7 @@ codegenFormatType() {
 }
 
 codegenStringLiteralDelim() {
+    codegenDebug "LiteralDelim" "${@}" >&2
     case "$targetLang" in
     js)
         codegenOutput \'
