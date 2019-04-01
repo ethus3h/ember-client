@@ -1,3 +1,0 @@
-#!/bin/bash -eux
-
-echo "Hello from /bin/bash -eux!"
