@@ -5970,7 +5970,8 @@ async function kvSetValue(strArrayData, strKey, strVal) {
         intC = await implAdd(intC, 1);
     }
     if (await implNot(boolFound)) {
-        strArrayData = await append(strArrayData, [ str 107 101 121, str 118 97 108 ]);
+        strArrayData = await push(strArrayData, strKey);
+        strArrayData = await push(strArrayData, strVal);
     }
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
