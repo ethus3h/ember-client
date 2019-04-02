@@ -9,7 +9,7 @@ r/v/runExecTest b/v s/testName n/ticksNeeded
     setExecOption n/execId 'stopExecAtTick' strFrom n/ticksNeeded
     setExecOption n/execId 'runHeadless' 'true'
     runDocumentGo n/execId
-    
+    runTest b/v arrEq getCurrentExecFrame n/execId } loadStoredDocument 'sems' cat 'exec-tests/' cat s/testName '.out.sems'
     let execId = await eiteCall('runDocumentPrepare', [doc]);
     await eiteCall('setExecOption', [execId, 'stopExecAtTick', '30']);
     await eiteCall('runDocumentGo', [execId]);
