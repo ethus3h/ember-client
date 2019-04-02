@@ -7025,6 +7025,8 @@ async function startDocumentExec(intExecId) {
             await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
         }
     }
+    await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
+    await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
 
     await internalDebugStackExit();
 }

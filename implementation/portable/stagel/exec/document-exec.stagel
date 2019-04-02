@@ -130,3 +130,5 @@ r/v/startDocumentExec n/execId
             # Convert the frame data to the environment-appropriate format and output it. Ideally this would happen at more sensible intervals, but this is easy to implement...
             setElement as/documentExecFrames n/execId printArr an/wipFrame
             renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId
+    setElement as/documentExecFrames n/execId printArr an/wipFrame
+    renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId
