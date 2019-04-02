@@ -18,6 +18,8 @@ r/b/runTestsOnly b/v
     runTestsFormatIntegerList b/v
     runTestsFormatSems b/v
     runTestsFormatUtf8 b/v
+    # Document exec tests
+    runTestsDocumentExec b/v
     # Did anything fail?
     if eq n/failedTests 0
         return true
