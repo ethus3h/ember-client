@@ -56,7 +56,7 @@ if (envTerminalType === undefined) {
     envTerminalType = 'vt100'
 }
 if (envLanguage === undefined) {
-    envLanguage = 'asciiSafeSubset'
+    envLanguage = 'en-US'
 }
 if (envLocaleConfig === undefined) {
     envLocaleConfig = 'inherit:usa,'
