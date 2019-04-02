@@ -4954,8 +4954,8 @@ async function strSplit(strIn, strSeparator) {
         else {
             strCurrentChar = await strChar(strRemaining, 0);
             strCurrentElem = await implCat(strCurrentElem, strCurrentChar);
-            if (await implGt(1, intRemainingLen)) {
-                strRemaining = await substr(strRemaining, 2, -1);
+            if (await implLt(1, intRemainingLen)) {
+                strRemaining = await substr(strRemaining, 1, -1);
             }
             else {
                 strRemaining = '';
@@ -5086,7 +5086,7 @@ async function strJoinEscaped(strArrayIn, strSeparator) {
     intC = 0;
     intL = await count(strArrayIn);
     while (await implLt(intC, intL)) {
-        strRes = await implCat(strRes, await implCat(await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), ), strSeparator);
+        strRes = await implCat(strRes, await implCat(await strReplace(await get(strArrayIn, intC), strSeparator, await implCat('\\', strSeparator), ), strSeparator));
         intC = await inc(intC);
     }
 
@@ -5110,7 +5110,7 @@ async function strJoinEscNoTrailing(strArrayIn, strSeparator) {
     let strRes = '';
     let intSeparLen = 0;
     intSeparLen = await len(strSeparator);
-    intSeparLen = await implSub(-1, strSeparLen);
+    intSeparLen = await implSub(-1, intSeparLen);
     strRes = await substr(await strJoinEscaped(strArrayIn, strSeparator), 0, intSeparLen);
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
@@ -5317,6 +5317,8 @@ async function runTestsOnly(boolV) {
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
+    /* Document exec tests */
+    await runTestsDocumentExec(boolV);
     /* Did anything fail? */
     if (await implEq(intFailedTests, 0)) {
 
@@ -6941,6 +6943,8 @@ async function startDocumentExec(intExecId) {
     boolLastCharacterWasEscape = false;
     let intStopExecAtTick = 0;
     intStopExecAtTick = await positiveIntFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
+    let boolRunHeadless = false;
+    boolRunHeadless = await implEq('true', await getExecOption(intExecId, 'runHeadless'));
     let intCurrentTick = 0;
     intCurrentTick = 0;
     if (await isNonnegative(intStopExecAtTick)) {
@@ -7006,10 +7010,38 @@ async function startDocumentExec(intExecId) {
                 await incrExecPtrPos(intExecId);
             }
         }
-        /* Convert the frame data to the environment-appropriate format and output it. Ideally this wouldn't happen on every Dc, but this is easy to implement... */
-        await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
-        await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
+        if (await implAnd(await implNot(boolRunHeadless), await implEq(0, await implMod(intCurrentTick, 100)))) {
+            /* Convert the frame data to the environment-appropriate format and output it. Ideally this would happen at more sensible intervals, but this is easy to implement... */
+            await setElement(strArrayDocumentExecFrames, intExecId, await printArr(intArrayWipFrame));
+            await renderDrawContents(await dcaToFormat(await getEnvPreferredFormat(), await getCurrentExecFrame(intExecId)));
+        }
     }
+
+    await internalDebugStackExit();
+}
+
+async function runTestsDocumentExec(boolV) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsDocumentExec:document-exec-tests'); await assertIsBool(boolV);
+
+    await testing(boolV, 'documentExec');
+    await runExecTest(boolV, 'at-comment-no-space', 10);
+    await runExecTest(boolV, 'at-comment', 10);
+    await runExecTest(boolV, 'at-nl', 10);
+    await runExecTest(boolV, 'at-space-nl', 10);
+    await runExecTest(boolV, 'hello-world', 100);
+
+    await internalDebugStackExit();
+}
+
+async function runExecTest(boolV, strTestName, intTicksNeeded) {
+    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('str TestName = ' + strTestName + '; '); await internalDebugCollect('int TicksNeeded = ' + intTicksNeeded + '; '); await internalDebugStackEnter('runExecTest:document-exec-tests'); await assertIsBool(boolV); await assertIsStr(strTestName); await assertIsInt(intTicksNeeded);
+
+    let intExecId = 0;
+    intExecId = await runDocumentPrepare(await loadStoredDocument('sems', await implCat('exec-tests/', await implCat(strTestName, '.sems'))));
+    await setExecOption(intExecId, 'stopExecAtTick', await strFrom(intTicksNeeded));
+    await setExecOption(intExecId, 'runHeadless', 'true');
+    await runDocumentGo(intExecId);
+    await runTest(boolV, await arrEq(await getCurrentExecFrame(intExecId), await loadStoredDocument('sems', await implCat('exec-tests/', await implCat(strTestName, '.out.sems')))));
 
     await internalDebugStackExit();
 }
