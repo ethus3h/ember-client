@@ -6928,6 +6928,7 @@ async function getCurrentExecFrame(intExecId) {
 
 async function startDocumentExec(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsInt(intExecId);
+    console.log('0a');
 
     await assertIsExecId(intExecId);
     let boolContinue = false;
@@ -6935,9 +6936,11 @@ async function startDocumentExec(intExecId) {
     let intCurrentPtrPos = 0;
     let intArrayWipFrame = [];
     let intDc = 0;
+    console.log('0b');
     let intArrayDocumentWorkingCopyData = [];
     intArrayDocumentWorkingCopyData = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
     let strArrayState = [];
+    console.log('0c');
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
