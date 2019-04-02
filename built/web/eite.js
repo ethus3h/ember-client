@@ -6942,9 +6942,9 @@ async function startDocumentExec(intExecId) {
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
     let intStopExecAtTick = 0;
-    console.log('ok');
     intStopExecAtTick = await positiveIntFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     let boolRunHeadless = false;
+    console.log('ok');
     boolRunHeadless = await implEq('true', await getExecOption(intExecId, 'runHeadless'));
     let intCurrentTick = 0;
     intCurrentTick = 0;
