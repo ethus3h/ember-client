@@ -55,6 +55,12 @@ if (envCharEncoding === undefined) {
 if (envTerminalType === undefined) {
     envTerminalType = 'vt100'
 }
+if (envLanguage === undefined) {
+    envLanguage = 'asciiSafeSubset'
+}
+if (envLocaleConfig === undefined) {
+    envLocaleConfig = 'inherit:usa,'
+}
 if (envResolutionW === undefined) {
     envResolutionW = '0'
 }
