@@ -124,6 +124,7 @@ r/v/startDocumentExec n/execId
                         if eq n/dc 251
                             set as/state pop as/state
                 incrExecPtrPos n/execId
-        # Convert the frame data to the environment-appropriate format and output it. Ideally this wouldn't happen on every Dc, but this is easy to implement...
-        setElement as/documentExecFrames n/execId printArr an/wipFrame
-        renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId
+        if eq 0 mod n/currentTick 100
+            # Convert the frame data to the environment-appropriate format and output it. Ideally this would happen at more sensible intervals, but this is easy to implement...
+            setElement as/documentExecFrames n/execId printArr an/wipFrame
+            renderDrawContents dcaToFormat getEnvPreferredFormat } getCurrentExecFrame n/execId
