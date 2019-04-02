@@ -1,7 +1,10 @@
 r/v/runTestsDocumentExec b/v
     testing b/v 'documentExec'
-    runTest b/v arrEq ( 0 212 120 216 221 226 231 21 26 ) dcaFromAscii ( 0 5 10 15 20 25 30 35 40 )
-    runTest b/v arrEq ( 0 5 10 15 20 25 30 35 40 ) dcaToAscii ( 0 212 120 216 291 221 226 231 21 26 )
+    runExecTest b/v 'at-comment-no-space' 10
+    runExecTest b/v 'at-comment' 10
+    runExecTest b/v 'at-nl' 10
+    runExecTest b/v 'at-space-nl' 10
+    runExecTest b/v 'hello-world' 100
 
 r/v/runExecTest b/v s/testName n/ticksNeeded
     new n/execId
@@ -10,7 +13,3 @@ r/v/runExecTest b/v s/testName n/ticksNeeded
     setExecOption n/execId 'runHeadless' 'true'
     runDocumentGo n/execId
     runTest b/v arrEq getCurrentExecFrame n/execId } loadStoredDocument 'sems' cat 'exec-tests/' cat s/testName '.out.sems'
-    let execId = await eiteCall('runDocumentPrepare', [doc]);
-    await eiteCall('setExecOption', [execId, 'stopExecAtTick', '30']);
-    await eiteCall('runDocumentGo', [execId]);
-};
