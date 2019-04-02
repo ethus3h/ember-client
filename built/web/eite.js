@@ -6944,19 +6944,23 @@ async function startDocumentExec(intExecId) {
     let intStopExecAtTick = 0;
     intStopExecAtTick = await positiveIntFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     let boolRunHeadless = false;
-    console.log('ok');
+    console.log('a');
     boolRunHeadless = await implEq('true', await getExecOption(intExecId, 'runHeadless'));
     let intCurrentTick = 0;
     intCurrentTick = 0;
+    console.log('b');
     if (await isNonnegative(intStopExecAtTick)) {
         if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
             boolContinue = false;
         }
     }
+    console.log('ok');
     while (boolContinue) {
+    console.log('c');
         if (await isNonnegative(intStopExecAtTick)) {
             if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
                 boolContinue = false;
+    console.log('d');
             }
         }
         intCurrentTick = await inc(intCurrentTick);
@@ -6968,6 +6972,7 @@ async function startDocumentExec(intExecId) {
         if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
             /* We're done with the document */
             boolContinue = false;
+    console.log('e');
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
