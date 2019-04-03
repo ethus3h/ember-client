@@ -142,7 +142,9 @@ r/an/transformDocument an/inputDocument s/transformation
     # Apply one of the supported document transformations to the provided document, and return the result.
     setupIfNeeded
     assertIsSupportedDocumentTransformation s/transformation
-    
+    new an/result
+    set an/result applyDocumentTransformation an/inputDocument s/transformation
+    return an/result
 
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
