@@ -43,6 +43,7 @@ r/v/runDocumentGo n/execId
 
 r/s/getExecOption n/execId s/key
     # Get the value of an execution option for a document.
+    setupIfNeeded
     assertIsExecId n/execId
     new s/res
     set s/res kvGetValue getExecSettings n/execId } s/key
@@ -50,6 +51,7 @@ r/s/getExecOption n/execId s/key
 
 r/as/getExecOptions n/execId
     # Get the execution options set for a document.
+    setupIfNeeded
     assertIsExecId n/execId
     new as/res
     set as/res getExecSettings n/execId
@@ -57,10 +59,12 @@ r/as/getExecOptions n/execId
 
 r/v/setExecOption n/execId s/key s/value
     # Set an execution option for a document.
+    setupIfNeeded
     assertIsExecId n/execId
     setExecSettings n/execId kvSetValue getExecSettings n/execId } s/key s/value
 
 r/an/exportDocument s/format an/contents
+    setupIfNeeded
     assertIsSupportedOutputFormat s/format
     # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
     setupIfNeeded
@@ -69,6 +73,7 @@ r/an/exportDocument s/format an/contents
     return an/out
 
 r/an/importDocument s/format an/contents
+    setupIfNeeded
     assertIsSupportedInputFormat s/format
     # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
     setupIfNeeded
@@ -119,15 +124,11 @@ r/as/getFormatExportSettings n/formatId
     set as/res getSettingsForFormat s/format 'out'
     return as/res
 
-r/v/setFormatImportSettings s/format
-    new as/res
-    set as/res setSettingsForFormat s/format 'in'
-    return as/res
+r/v/setFormatImportSettings as/value s/format
+    setImportSettings getFormatId s/format } kvJoin as/value
 
-r/v/setFormatExportSettings n/formatId
-    new as/res
-    set as/res setSettingsForFormat s/format 'out'
-    return as/res
+r/v/setFormatExportSettings as/value n/formatId
+    setExportSettings getFormatId s/format } kvJoin as/value
 
 r/an/transformDocument an/inputDocument s/transformation
     assertIsSupportedDocumentTransformation s/format
