@@ -1,8 +1,10 @@
 r/an/dcaToUtf8 an/content
     assertIsDcArray an/content
     new an/res
+    new an/toOutput
+    set an/toOutput an/content
     new n/l
-    set n/l count an/content
+    set n/l count an/toOutput
     new n/c
     set n/c 0
     new an/temp
@@ -24,7 +26,7 @@ r/an/dcaToUtf8 an/content
     while le n/c n/l
         # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
-            set n/dcAtIndex get an/content n/c
+            set n/dcAtIndex get an/toOutput n/c
             set an/temp dcToFormat 'utf8' n/dcAtIndex
         # Could the character be mapped? If not, stick it in the unmappables array or warn as appropriate.
         if eq 0 count an/temp
