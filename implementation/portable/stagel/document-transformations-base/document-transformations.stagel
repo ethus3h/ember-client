@@ -1,5 +1,8 @@
 r/as/listSupportedDocumentTransformations
     new as/res
+    set as/res push as/res 'dc-preprocess-for-format'
+    set as/res push as/res 'semantic-to-text'
+    set as/res push as/res 'code-to-text'
     return as/res
 
 r/b/isSupportedDocumentTransformation s/transform
