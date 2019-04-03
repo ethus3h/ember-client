@@ -34,11 +34,16 @@ r/s/getPreferredLanguageForFormat s/format s/direction
     set n/c 0
     new n/l
     set n/l count as/temp
+    new b/continue
+    set b/continue true
     new n/item
-    while lt n/c n/l
-        set n/item get as/temp n/c
+    while b/continue
+        if not lt n/c n/l
+            set b/continue false
+        set s/item get as/temp n/c
         if eq 'lang_' substr n/item 0 5
-            set s/res 
+            set s/res s/item
+            set b/continue false
         set n/c inc n/c
     return s/res
 
