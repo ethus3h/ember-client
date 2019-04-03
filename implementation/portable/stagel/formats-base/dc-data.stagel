@@ -1,6 +1,6 @@
 r/as/listDcDatasets
     new as/res
-    set as/res [ 'DcData' 'formats' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' 'mappings/to/unicode' ]
+    set as/res [ 'DcData' 'formats' 'mappings/from/ascii' 'mappings/from/unicode' 'mappings/to/html' 'mappings/to/lang_en' 'mappings/to/unicode' ]
     return as/res
 
 r/as/dcGetColumn s/dataset n/column
@@ -75,3 +75,8 @@ r/s/dcGetDescription n/dc
     new s/res
     set s/res dcGetField n/dc 8
     return s/res
+
+r/s/dcGetMappingToFormat n/dc s/format
+    assertIsDc n/dc
+    new s/res
+    
