@@ -92,9 +92,10 @@ r/as/getFormatImportSetting s/format s/key
     return s/res
 
 r/as/getFormatExportSetting n/formatId s/key
-    new as/res
-    set as/res getSettingsForFormat s/format 'out'
-    return as/res
+    assertIsExecId n/execId
+    new s/res
+    set s/res kvGetValue getFormatImportSettings s/format } s/key
+    return s/res
 
 r/as/getFormatImportSettings s/format
     new as/res
