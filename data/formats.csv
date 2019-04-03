@@ -28,9 +28,9 @@ Import/export/tests support columns meaning:
 15,lang_en,en,,1,,language,English,,"Most formats have language variant types, for printing structured metadata where it’s not supported. Whether it should be printed by default is debateable."
 16,lang_en-US,en-US,,,,lv:en,English (US),,"Language variants aren’t handled as format variants of the languages they are variants of, since there aren’t tons of possible combinations (at least that are practical to support). Instead, the type is given as lv: followed by the language identifier of which they are a variant (without the lang_ prefix)."
 17,elad,elad,,1,,,EITE Language in ASCII documents (ELAD),,
-18,omit_lang_semantic,,,,,language,,,
-19,omit_lang_code,,,,,language,,,
-20,omit_lang_all,,,,,language,,,
+18,,,,,,,,,
+19,,,,,,,,,
+20,,,,,,,,,
 21,,,,,,,,,
 22,,,,,,,,,
 23,,,,,,,,,
