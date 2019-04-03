@@ -78,15 +78,16 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
 
-r/s/getImportSettings n/formatId
-    new s/res
+r/as/getFormatImportSettings s/format
+    new as/res
+    set as/res getSettingsForFormat s/format 'in'
     if lt n/formatId count getImportSettingsArr
         set s/res get getImportSettingsArr } n/formatId
     else
         set s/res ''
-    return s/res
+    return as/res
 
-r/s/getExportSettings n/formatId
+r/as/getFormatExportSettings n/formatId
 
 r/an/transformDocument an/inputDocument s/transformation
     assertIsSupportedDocumentTransformation s/format
