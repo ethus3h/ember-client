@@ -91,48 +91,53 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     return an/out
 
 r/as/getFormatImportSetting s/format s/key
-    assertIsExecId n/execId
+    setupIfNeeded
     new s/res
     set s/res kvGetValue getFormatImportSettings s/format } s/key
     return s/res
 
-r/as/getFormatExportSetting n/formatId s/key
-    assertIsExecId n/execId
+r/as/getFormatExportSetting s/format s/key
+    setupIfNeeded
     new s/res
     set s/res kvGetValue getFormatExportSettings s/format } s/key
     return s/res
 
 r/v/setFormatImportSetting s/format s/key
-    assertIsExecId n/execId
+    setupIfNeeded
     new s/res
     set s/res kvGetValue getFormatImportSettings s/format } s/key
     return s/res
 
-r/v/setFormatExportSetting n/formatId s/key
-    assertIsExecId n/execId
+r/v/setFormatExportSetting s/format s/key
+    setupIfNeeded
     new s/res
     set s/res kvGetValue getFormatExportSettings s/format } s/key
     return s/res
 
 r/as/getFormatImportSettings s/format
+    setupIfNeeded
     new as/res
     set as/res getSettingsForFormat s/format 'in'
     return as/res
 
-r/as/getFormatExportSettings n/formatId
+r/as/getFormatExportSettings s/format
+    setupIfNeeded
     new as/res
     set as/res getSettingsForFormat s/format 'out'
     return as/res
 
-r/v/setFormatImportSettings as/value s/format
+r/v/setFormatImportSettings as/settings s/format
+    setupIfNeeded
     setImportSettings getFormatId s/format } kvJoin as/value
 
-r/v/setFormatExportSettings as/value s/format
+r/v/setFormatExportSettings as/settings s/format
+    setupIfNeeded
     setExportSettings getFormatId s/format } kvJoin as/value
 
 r/an/transformDocument an/inputDocument s/transformation
-    assertIsSupportedDocumentTransformation s/format
     # Apply one of the supported document transformations to the provided document, and return the result.
+    setupIfNeeded
+    assertIsSupportedDocumentTransformation s/format
     
 
 
