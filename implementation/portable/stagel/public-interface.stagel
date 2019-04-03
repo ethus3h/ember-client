@@ -48,12 +48,12 @@ r/s/getExecOption n/execId s/key
     set s/res kvGetValue getExecSettings n/execId } s/key
     return s/res
 
-r/as/getExecOptions n/execId
-    # Get the execution options set for a document.
+r/s/getExecOption n/execId s/key
+    # Get the value of an execution option for a document.
     assertIsExecId n/execId
-    new as/res
-    set as/res getExecSettings n/execId
-    return as/res
+    new s/res
+    set s/res kvGetValue getExecSettings n/execId } s/key
+    return s/res
 
 r/v/setExecOption n/execId s/key s/value
     # Set an execution option for a document.
@@ -84,16 +84,6 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     new an/out
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
-
-r/as/getFormatImportSetting s/format s/key
-    new as/res
-    set as/res getSettingsForFormat s/format 'in'
-    return as/res
-
-r/as/getFormatExportSettings n/formatId
-    new as/res
-    set as/res getSettingsForFormat s/format 'out'
-    return as/res
 
 r/as/getFormatImportSettings s/format
     new as/res
