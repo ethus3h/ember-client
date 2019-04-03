@@ -1,15 +1,6 @@
-r/as/listSupportedDocumentTransformations
-    new as/res
-    new as/temp
-    set as/temp listInputFormats
-    if 
-    set as/res push as/res 'semantic-to-text'
-    set as/res push as/res 'code-to-text'
-    return as/res
-
 r/b/isSupportedDocumentTransformation s/transform
     new b/res
-    set b/res in s/transform as/listSupportedDocumentTransformations
+    set b/res in s/transform as/listDocumentTransformations
     return b/res
 
 r/v/assertIsSupportedDocumentTransformation s/transform

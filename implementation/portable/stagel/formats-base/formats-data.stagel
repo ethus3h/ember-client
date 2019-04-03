@@ -65,12 +65,6 @@ r/as/listDocumentTransformations
     set as/res dcDataFilterByValue 'formats' 6 'transformation' 1
     return as/res
 
-r/b/isSupportedDocumentTransformation s/in
-    # Specifically, is it a supported terminal type for the output environment.
-    new b/res
-    set b/res and contains listTerminalTypes } s/in } isSupportedOutputFormat s/in
-    return b/res
-
 r/as/listDataTypes
     new as/res
     set as/res dcDataFilterByValue 'formats' 6 'data' 1
