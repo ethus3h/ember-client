@@ -284,13 +284,12 @@ r/an/dcaFromUtf8 an/content
 
 r/as/utf8VariantSettings s/direction
     new as/res
-    new s/enabledVariants
-    set s/enabledVariants getSettingForFormat 'utf8' s/direction 'variants'
-    # TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants)
-    if eq 'dcBasenb' s/enabledVariants
-        set as/res push as/res s/enabledVariants
-    elif eq 'dcBasenb dcBasenbFragment' s/enabledVariants
-        set as/res push as/res [ 'dcBasenb' 'dcBasenbFragment' ]
+    new as/enabledVariants
+    set as/enabledVariants strSplit getSettingForFormat 'utf8' s/direction 'variants' } ' '
+    if in 'dcBasenb' as/enabledVariants
+        set as/res push as/res 'dcBasenb'
+    if in 'dcBasenbFragment' as/enabledVariants
+        set as/res push as/res [ 'dcBasenbFragment' ]
     return as/res
 
 r/an/dcaFromUnicodeChar n/char
