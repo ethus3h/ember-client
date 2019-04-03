@@ -2,7 +2,8 @@ r/an/dcaFromElad an/in
     assertIsByteArray an/in
     new an/res
 
-    # FIXME: Implement
+    # FIXME: actually implement
+    set an/res dcaFromAscii an/in
 
     return an/res
 

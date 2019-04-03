@@ -22,11 +22,11 @@ r/an/dcaToUtf8 an/content
     new b/dcBasenbFragmentEnabled
     set b/dcBasenbFragmentEnabled contains as/variantSettings 'dcBasenbFragment'
     new s/preferredLang
-    set s/pre
+    set s/preferredLang getPreferredLanguageForFormat 'utf8' 'out'
     if not in 'omit_lang_semantic' getSettingsForFormat 'utf8' 'out'
-        set an/toOutput dctSemanticToText an/toOutput getPreferredLanguageForFormat 'utf8' 'out'
+        set an/toOutput dctSemanticToText an/toOutput s/preferredLang
     if not in 'omit_lang_semantic' getSettingsForFormat 'utf8' 'out'
-        set an/toOutput dctSemanticToText an/toOutput getPreferredLanguageForFormat 'utf8' 'out'
+        set an/toOutput dctCodeToText an/toOutput s/preferredLang
     while le n/c n/l
         # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
