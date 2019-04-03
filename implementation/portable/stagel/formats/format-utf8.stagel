@@ -19,6 +19,8 @@ r/an/dcaToUtf8 an/content
     set b/dcBasenbEnabled contains as/variantSettings 'dcBasenb'
     new b/dcBasenbFragmentEnabled
     set b/dcBasenbFragmentEnabled contains as/variantSettings 'dcBasenbFragment'
+    if not in 'omit_lang_semantic' getSettingsForFormat 'utf8' 'out'
+        set 
     while le n/c n/l
         # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
