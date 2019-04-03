@@ -127,7 +127,7 @@ r/as/getFormatExportSettings n/formatId
 r/v/setFormatImportSettings as/value s/format
     setImportSettings getFormatId s/format } kvJoin as/value
 
-r/v/setFormatExportSettings as/value n/formatId
+r/v/setFormatExportSettings as/value s/format
     setExportSettings getFormatId s/format } kvJoin as/value
 
 r/an/transformDocument an/inputDocument s/transformation
