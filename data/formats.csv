@@ -25,8 +25,8 @@ Import/export/tests support columns meaning:
 12,basenb,basenb,,,,data,,,"data = format that can hold generic binary data (or at least, generic sequences of bytes; not all formats support generic numbers of bits)."
 13,htmlFragment,htmfrag,,1,1,,HTML fragment,,Variants: same as HTML
 14,text,txt,,,,,,encoding,HTML and text both should default to UTF8 as the default encoding. Encodings fill a somewhat odd role since they are both encodings and formats (with the text format plus a given encoding being the same thing as that encoding by itself).
-15,l:en,en,,,,language,English,,"Most formats have language variant types, for printing structured metadata where it’s not supported. Whether it should be printed by default is debateable."
-16,l:en-US,en-US,,,,language,English (US),,"Language variants aren’t handled as format variants, since there aren’t tons of possible combinations (at least that are practical to support)."
+15,lang_en,en,,,,language,English,,"Most formats have language variant types, for printing structured metadata where it’s not supported. Whether it should be printed by default is debateable."
+16,lang_en-US,en-US,,,,language,English (US),,"Language variants aren’t handled as format variants, since there aren’t tons of possible combinations (at least that are practical to support)."
 17,,,,,,,,,
 18,,,,,,,,,
 19,,,,,,,,,
