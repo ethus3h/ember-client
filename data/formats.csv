@@ -34,7 +34,7 @@ Import/export/tests support columns meaning:
 16,lang_en-US,en-US,,,,lv:en,English (US),,"Language variants aren’t handled as format variants of the languages they are variants of, since there aren’t tons of possible combinations (at least that are practical to support). Instead, the type is given as lv: followed by the language identifier of which they are a variant (without the lang_ prefix)."
 17,elad,elad,,1,,,EITE Language in ASCII documents (ELAD),,
 18,pl_javascript,js,,,,programming,JavaScript,,
-19,trans_semanticToText,,1,,,transformation,Semantic Dcs to text,,
+19,trans_semanticToText,,1,,,transformation,Semantic Dcs to text,,“transformation” types operate on documents stored as arrays of Dcs.
 20,trans_codeToText,,1,,,transformation,Programmatic Dcs to text,,
 21,,,,,,,,,
 22,,,,,,,,,
