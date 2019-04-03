@@ -1,1 +1,6 @@
- 
+    new s/preferredLang
+    set s/preferredLang getPreferredLanguageForFormat 'utf8' 'out'
+    if not in 'omit_lang_semantic' getSettingsForFormat 'utf8' 'out'
+        set an/toOutput dctSemanticToText an/toOutput s/preferredLang
+    if not in 'omit_lang_semantic' getSettingsForFormat 'utf8' 'out'
+        set an/toOutput dctCodeToText an/toOutput s/preferredLang
