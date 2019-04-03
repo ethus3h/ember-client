@@ -78,6 +78,11 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
 
+r/an/transformDocument an/inputDocument s/transformation
+    assertIsSupportedDocumentTransformation s/format
+    # Apply one of the supported document transformations to the provided document, and return the result.
+    
+
 
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
