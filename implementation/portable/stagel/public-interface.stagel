@@ -143,7 +143,7 @@ r/an/transformDocument an/inputDocument s/transformation
     setupIfNeeded
     assertIsSupportedDocumentTransformation s/transformation
     new an/result
-    set an/result applyDocumentTransformation an/inputDocument s/transformation
+    set an/result applyDocumentTransformation s/transformation an/inputDocument
     return an/result
 
 
