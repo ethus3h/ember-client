@@ -102,7 +102,6 @@ r/s/getFormatExportSetting s/format s/key
 
 r/v/setFormatImportSetting s/format s/key s/value
     setFormatImportSettings s/format kvSetValue getFormatImportSettings s/format } s/key } s/key s/value
-    return s/res
 
 r/v/setFormatExportSetting s/format s/key
     setupIfNeeded
