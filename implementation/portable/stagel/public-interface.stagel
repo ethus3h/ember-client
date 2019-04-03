@@ -100,9 +100,8 @@ r/s/getFormatExportSetting s/format s/key
     set s/res kvGetValue getFormatExportSettings s/format } s/key
     return s/res
 
-r/v/setFormatImportSetting s/format s/key
-    new as/temp
-    set as/temp kvGetValue getFormatImportSettings s/format } s/key
+r/v/setFormatImportSetting s/format s/key s/value
+    setFormatImportSettings s/format kvSetValue getFormatImportSettings s/format } s/key } s/key s/value
     return s/res
 
 r/v/setFormatExportSetting s/format s/key
@@ -125,11 +124,11 @@ r/as/getFormatExportSettings s/format
     set as/res getSettingsForFormat s/format 'out'
     return as/res
 
-r/v/setFormatImportSettings as/settings s/format
+r/v/setFormatImportSettings s/format as/settings
     setupIfNeeded
     setImportSettings getFormatId s/format } kvJoin as/value
 
-r/v/setFormatExportSettings as/settings s/format
+r/v/setFormatExportSettings s/format as/settings
     setupIfNeeded
     setExportSettings getFormatId s/format } kvJoin as/value
 
