@@ -90,22 +90,19 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
 
-r/as/getFormatImportSetting s/format s/key
-    setupIfNeeded
+r/s/getFormatImportSetting s/format s/key
     new s/res
     set s/res kvGetValue getFormatImportSettings s/format } s/key
     return s/res
 
-r/as/getFormatExportSetting s/format s/key
-    setupIfNeeded
+r/s/getFormatExportSetting s/format s/key
     new s/res
     set s/res kvGetValue getFormatExportSettings s/format } s/key
     return s/res
 
 r/v/setFormatImportSetting s/format s/key
-    setupIfNeeded
-    new s/res
-    set s/res kvGetValue getFormatImportSettings s/format } s/key
+    new as/temp
+    set as/temp kvGetValue getFormatImportSettings s/format } s/key
     return s/res
 
 r/v/setFormatExportSetting s/format s/key
