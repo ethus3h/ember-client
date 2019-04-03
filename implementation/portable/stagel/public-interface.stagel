@@ -116,12 +116,14 @@ r/v/setFormatExportSetting s/format s/key
 
 r/as/getFormatImportSettings s/format
     setupIfNeeded
+    assertIsSupportedInputFormat s/format
     new as/res
     set as/res getSettingsForFormat s/format 'in'
     return as/res
 
 r/as/getFormatExportSettings s/format
     setupIfNeeded
+    assertIsSupportedOutputFormat s/format
     new as/res
     set as/res getSettingsForFormat s/format 'out'
     return as/res
@@ -144,9 +146,9 @@ r/an/transformDocument an/inputDocument s/transformation
 # If you want more control over the document loading and execution, you can use these lower-level functions.
 
 r/an/loadStoredDocument s/format s/path
+    # Load and return the specified document as a Dc array.
     setupIfNeeded
     assertIsSupportedInputFormat s/format
-    # Load and return the specified document as a Dc array.
     new an/res
     set an/res dcaFromFormat s/format getFileFromPath s/path
     return an/res
