@@ -141,7 +141,7 @@ r/v/setFormatExportSettings s/format as/settings
 r/an/transformDocument an/inputDocument s/transformation
     # Apply one of the supported document transformations to the provided document, and return the result.
     setupIfNeeded
-    assertIsSupportedDocumentTransformation s/format
+    assertIsSupportedDocumentTransformation s/transformation
     
 
 
