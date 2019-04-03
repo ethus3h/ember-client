@@ -20,15 +20,21 @@ r/as/getSettingsForFormat s/format s/direction
         set as/res settingStringToArray getExportSettings n/formatId
     return as/res
 
-r/as/getVariantSettingsForFormat s/format s/direction
+r/as/getEnabledVariantsForFormat s/format s/direction
     new as/res
-    new as/enabledVariants
-    set as/enabledVariants strSplit getSettingForFormat 'utf8' s/direction 'variants' } ' '
-    if in 'dcBasenb' as/enabledVariants
-        set as/res push as/res 'dcBasenb'
-    if in 'dcBasenbFragment' as/enabledVariants
-        set as/res push as/res [ 'dcBasenbFragment' ]
+    set as/res strSplit getSettingForFormat s/format s/direction 'variants' } ' '
     return as/res
+
+r/s/getPreferredLanguageForFormat s/format s/direction
+    new s/res
+    new as/temp
+    set as/temp getEnabledVariantsForFormat s/format s/direction
+    new n/c
+    set n/c 0
+    new n/l
+    set n/l count as/temp
+    while lt n/c n/l
+        set n/c inc n/c
 
 r/s/getImportSettings n/formatId
     new s/res

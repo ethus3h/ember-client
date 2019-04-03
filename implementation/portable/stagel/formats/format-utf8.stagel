@@ -284,12 +284,7 @@ r/an/dcaFromUtf8 an/content
 
 r/as/utf8VariantSettings s/direction
     new as/res
-    new as/enabledVariants
-    set as/enabledVariants strSplit getSettingForFormat 'utf8' s/direction 'variants' } ' '
-    if in 'dcBasenb' as/enabledVariants
-        set as/res push as/res 'dcBasenb'
-    if in 'dcBasenbFragment' as/enabledVariants
-        set as/res push as/res [ 'dcBasenbFragment' ]
+    set as/res getEnabledVariantsForFormat 'utf8' s/direction
     return as/res
 
 r/an/dcaFromUnicodeChar n/char

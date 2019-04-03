@@ -14,6 +14,7 @@ r/an/dctSemanticToText an/in s/targetLanguage
                 set an/res append an/res dcaFromElad s/temp
             else
                 set an/res push an/res n/currentDc
+        set n/c inc n/c
     return an/res
 
 r/an/dctCodeToText an/in s/targetLanguage
