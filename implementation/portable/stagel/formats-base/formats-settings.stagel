@@ -27,14 +27,20 @@ r/as/getEnabledVariantsForFormat s/format s/direction
 
 r/s/getPreferredLanguageForFormat s/format s/direction
     new s/res
+    set s/res getEnvLanguage
     new as/temp
     set as/temp getEnabledVariantsForFormat s/format s/direction
     new n/c
     set n/c 0
     new n/l
     set n/l count as/temp
+    new n/item
     while lt n/c n/l
+        set n/item get as/temp n/c
+        if eq 'lang_' substr n/item 0 5
+            set s/res 
         set n/c inc n/c
+    return s/res
 
 r/s/getImportSettings n/formatId
     new s/res

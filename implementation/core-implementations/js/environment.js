@@ -17,6 +17,18 @@ async function getEnvCharEncoding() {
     return envCharEncoding;
 }
 
+async function getEnvTerminalType() {
+    return envTerminalType;
+}
+
+async function getEnvLanguage() {
+    return envLanguage;
+}
+
+async function getEnvLocaleConfig() {
+    return envLocaleConfig;
+}
+
 async function renderDrawContents(renderBuffer) {
     // Whether it appends to or replaces the frame would depend on the environment. In this implementation, HTML replaces, and terminal appends.
     // The input is an array of bytes of the rendered document, either of HTML or text.
