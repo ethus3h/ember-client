@@ -1,1 +1,15 @@
- 
+r/an/dcaFromElad an/in
+    assertIsByteArray an/in
+    new an/res
+
+    # FIXME: Implement
+
+    return an/res
+
+r/an/dcaToElad an/in
+    new an/res
+
+    # FIXME: Implement
+
+    assertIsByteArray an/res
+    return an/res
