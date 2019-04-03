@@ -190,3 +190,9 @@ r/s/getFormatMetricsType s/format
     elif in s/type [ 'internal' ]
         set s/res cat 'internal-' s/format
     return s/res
+
+r/s/dcGetMappingToFormat n/dc s/format
+    assertIsDc n/dc
+    assertIsSupportedOutputFormat s/format
+    new s/res
+    set s/res 
