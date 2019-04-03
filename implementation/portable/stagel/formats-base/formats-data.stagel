@@ -195,4 +195,5 @@ r/s/dcGetMappingToFormat n/dc s/format
     assertIsDc n/dc
     assertIsSupportedOutputFormat s/format
     new s/res
-    set s/res 
+    set s/res dcDataLookupById cat 'mappings/to/' s/format } n/dc 1
+    return s/res
