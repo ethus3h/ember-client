@@ -91,25 +91,27 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     return an/out
 
 r/s/getFormatImportSetting s/format s/key
+    # Return the value of the specified import setting for the specified format.
     new s/res
     set s/res kvGetValue getFormatImportSettings s/format } s/key
     return s/res
 
 r/s/getFormatExportSetting s/format s/key
+    # Return the value of the specified export setting for the specified format.
     new s/res
     set s/res kvGetValue getFormatExportSettings s/format } s/key
     return s/res
 
 r/v/setFormatImportSetting s/format s/key s/value
+    # Set the value of the specified import setting for the specified format.
     setFormatImportSettings s/format kvSetValue getFormatImportSettings s/format } s/key } s/key s/value
 
-r/v/setFormatExportSetting s/format s/key
-    setupIfNeeded
-    new s/res
-    set s/res kvGetValue getFormatExportSettings s/format } s/key
-    return s/res
+r/v/setFormatExportSetting s/format s/key s/value
+    # Set the value of the specified export setting for the specified format.
+    setFormatExportSettings s/format kvSetValue getFormatExportSettings s/format } s/key } s/key s/value
 
 r/as/getFormatImportSettings s/format
+    # Return the import settings array for the specified format.
     setupIfNeeded
     assertIsSupportedInputFormat s/format
     new as/res
@@ -117,6 +119,7 @@ r/as/getFormatImportSettings s/format
     return as/res
 
 r/as/getFormatExportSettings s/format
+    # Return the export settings array for the specified format.
     setupIfNeeded
     assertIsSupportedOutputFormat s/format
     new as/res
@@ -124,11 +127,15 @@ r/as/getFormatExportSettings s/format
     return as/res
 
 r/v/setFormatImportSettings s/format as/settings
+    # Replace the import settings array for the specified format.
     setupIfNeeded
+    assertIsSupportedInputFormat s/format
     setImportSettings getFormatId s/format } kvJoin as/value
 
 r/v/setFormatExportSettings s/format as/settings
+    # Replace the export settings array for the specified format.
     setupIfNeeded
+    assertIsSupportedOutputFormat s/format
     setExportSettings getFormatId s/format } kvJoin as/value
 
 r/an/transformDocument an/inputDocument s/transformation
