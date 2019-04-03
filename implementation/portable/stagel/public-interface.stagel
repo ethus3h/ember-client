@@ -85,12 +85,13 @@ r/an/importAndExport s/inputFormat s/outputFormat an/contents
     set an/out convertFormats s/inputFormat s/outputFormat an/contents
     return an/out
 
-r/as/setFormatImportSetting s/format
-    new as/res
-    set as/res getSettingsForFormat s/format 'in'
-    return as/res
+r/as/getFormatImportSetting s/format s/key
+    assertIsExecId n/execId
+    new s/res
+    set s/res kvGetValue getFormatImportSettings s/format } s/key
+    return s/res
 
-r/as/getFormatExportSettings n/formatId
+r/as/getFormatExportSetting n/formatId s/key
     new as/res
     set as/res getSettingsForFormat s/format 'out'
     return as/res
