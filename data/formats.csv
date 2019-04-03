@@ -1,4 +1,9 @@
-ID,Format name,Extension,Import support,Export support,Tests,"Type
+ID,Format name,Extension,"Import support
+(for trans_:
+  =run the tr.)","Export support
+(for trans_:
+  =reverse the
+    tr.)",Tests,"Type
 (blank=normal)",Label,"Variant Types
 (comma-
   delimited)","Comments. The “Format name” is an ID, and should conform to StageL ident naming.
@@ -28,9 +33,9 @@ Import/export/tests support columns meaning:
 15,lang_en,en,,1,,language,English,,"Most formats have language variant types, for printing structured metadata where it’s not supported. Whether it should be printed by default is debateable."
 16,lang_en-US,en-US,,,,lv:en,English (US),,"Language variants aren’t handled as format variants of the languages they are variants of, since there aren’t tons of possible combinations (at least that are practical to support). Instead, the type is given as lv: followed by the language identifier of which they are a variant (without the lang_ prefix)."
 17,elad,elad,,1,,,EITE Language in ASCII documents (ELAD),,
-18,pl_javascript,,,,,,,,
-19,trans_semanticToText,,,,,,,,
-20,trans_codeToText,,,,,,,,
+18,pl_javascript,js,,,,programming,JavaScript,,
+19,trans_semanticToText,,1,,,transformation,Semantic Dcs to text,,
+20,trans_codeToText,,1,,,transformation,Programmatic Dcs to text,,
 21,,,,,,,,,
 22,,,,,,,,,
 23,,,,,,,,,
