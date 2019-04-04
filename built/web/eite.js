@@ -2207,6 +2207,7 @@ async function dcaFromSems(intArrayIn) {
                     /* Comment was not preceded by a space */
                     await warnOrDie(boolStrict, 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
                     intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
+                    strCurrentDc = '';
                 }
                 intArrayRes = await push(intArrayRes, 246);
                 strParserState = 'comment';

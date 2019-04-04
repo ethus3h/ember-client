@@ -31,6 +31,7 @@ r/an/dcaFromSems an/in
                     # Comment was not preceded by a space
                     warnOrDie b/strict 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
                     set an/res push an/res intFromIntStr s/currentDc
+                    set s/currentDc ''
                 set an/res push an/res 246
                 set s/parserState 'comment'
             else
