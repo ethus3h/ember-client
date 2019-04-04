@@ -61,7 +61,15 @@ async function hasIndex(array, index) {
     if ((-1 * index) - 1) > await count(array)
     let len = await count(array);
     if (index > count) {
-        await implDie("Cannot insert to a position greater than appending to the length of the array.");
+        await implDie("Cannot access a position greater than the length of the array.");
+    }
+}
+
+async function hasPossibleIndex(array, index) {
+    if ((-1 * index) - 1) > await count(array)
+    let len = await count(array);
+    if (index > count) {
+        await implDie("Cannot insert or set to a position greater than appending to the length of the array.");
     }
 }
 
@@ -107,7 +115,7 @@ async function last(array) {
 async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 
-    await assertHasIndex(array, index);
+    await assertHasPossibleIndex(array, index);
     if (index < 0) {
         index = len + index;
     }
