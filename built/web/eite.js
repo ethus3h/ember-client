@@ -2293,7 +2293,9 @@ async function dcaToSems(intArrayDcIn) {
         else if (await implEq(248, intCurrentDc)) {
             boolInComment = false;
             boolAtCommentEnd = true;
+            console.log('Appending to out was '+intArrayOut);
             intArrayOut = await append(intArrayOut, await dcaToDcbnbUtf8(intArrayCurrentComment));
+            console.log('Appended to out now is '+intArrayOut);
             intArrayCurrentComment = [  ];
             intArrayOut = await append(intArrayOut, await crlf());
         }
