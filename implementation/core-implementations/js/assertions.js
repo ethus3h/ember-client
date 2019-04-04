@@ -60,12 +60,6 @@ async function assertHasIndex(array, index) {
     }
 }
 
-async function assertHasIndex(array, index) {
-    if (!await hasIndex(array, index)) {
-        await assertionFailed("Array does not have the requested index "+index+".");
-    }
-}
-
 async function isGeneric(v) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
     if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {

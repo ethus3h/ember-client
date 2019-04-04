@@ -58,11 +58,11 @@ async function shift(array) {
 }
 
 async function hasIndex(array, index) {
-    if ((-1 * index) - 1) > await count(array)
     let len = await count(array);
-    if (index > count) {
-        await implDie();
+    if (index > count - 1) {
+        return false;
     }
+    return true;
 }
 
 async function get(array, index) {
