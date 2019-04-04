@@ -113,12 +113,16 @@ r/v/setFormatExportSetting s/format s/key s/value
 r/s/pushFormatImportSetting s/format s/key s/value
     # Temporarily set the value of the specified import setting for the specified format. Call setFormatImportSetting with the value this returns when you want to put the setting back.
     new s/result
-    set s/result getFormatImportSetting 
+    set s/result getFormatImportSetting s/format s/key
     setFormatImportSettings s/format kvSetValue getFormatImportSettings s/format } s/key } s/key s/value
+    return s/result
 
-r/v/pushFormatExportSetting s/format s/key s/value
-    # Set the value of the specified export setting for the specified format.
+r/s/pushFormatExportSetting s/format s/key s/value
+    # Temporarily set the value of the specified export setting for the specified format. Call setFormatExportSetting with the value this returns when you want to put the setting back.
+    new s/result
+    set s/result getFormatExportSetting s/format s/key
     setFormatExportSettings s/format kvSetValue getFormatExportSettings s/format } s/key } s/key s/value
+    return s/result
 
 r/as/getFormatImportSettings s/format
     # Return the import settings array for the specified format.
