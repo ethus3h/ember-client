@@ -3536,7 +3536,7 @@ async function setFormatImportSettings(strFormat, strArraySettings) {
     /* Replace the import settings array for the specified format. */
     await setupIfNeeded();
     await assertIsSupportedInputFormat(strFormat);
-    await setImportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+    await setImportSettings(await getFormatId(strFormat), await kvJoin(strArraySettings));
 
     await internalDebugStackExit();
 }
@@ -3547,7 +3547,7 @@ async function setFormatExportSettings(strFormat, strArraySettings) {
     /* Replace the export settings array for the specified format. */
     await setupIfNeeded();
     await assertIsSupportedOutputFormat(strFormat);
-    await setExportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+    await setExportSettings(await getFormatId(strFormat), await kvJoin(strArraySettings));
 
     await internalDebugStackExit();
 }

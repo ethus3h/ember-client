@@ -144,13 +144,13 @@ r/v/setFormatImportSettings s/format as/settings
     # Replace the import settings array for the specified format.
     setupIfNeeded
     assertIsSupportedInputFormat s/format
-    setImportSettings getFormatId s/format } kvJoin as/value
+    setImportSettings getFormatId s/format } kvJoin as/settings
 
 r/v/setFormatExportSettings s/format as/settings
     # Replace the export settings array for the specified format.
     setupIfNeeded
     assertIsSupportedOutputFormat s/format
-    setExportSettings getFormatId s/format } kvJoin as/value
+    setExportSettings getFormatId s/format } kvJoin as/settings
 
 r/an/transformDocument an/inputDocument s/transformation
     # Apply one of the supported document transformations to the provided document, and return the result.
