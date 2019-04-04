@@ -177,6 +177,15 @@ if (envCharEncoding === undefined) {
 if (envTerminalType === undefined) {
     envTerminalType = 'vt100'
 }
+if (envLanguage === undefined) {
+    envLanguage = 'en-US'
+}
+if (envLocaleConfig === undefined) {
+    envLocaleConfig = 'inherit:usa,'
+}
+if (envCodeLanguage === undefined) {
+    envCodeLanguage = 'javascript'
+}
 if (envResolutionW === undefined) {
     envResolutionW = '0'
 }
@@ -1928,6 +1937,22 @@ async function getEnvCharEncoding() {
     return envCharEncoding;
 }
 
+async function getEnvTerminalType() {
+    return envTerminalType;
+}
+
+async function getEnvLanguage() {
+    return envLanguage;
+}
+
+async function getEnvCodeLanguage() {
+    return envCodeLanguage;
+}
+
+async function getEnvLocaleConfig() {
+    return envLocaleConfig;
+}
+
 async function renderDrawContents(renderBuffer) {
     // Whether it appends to or replaces the frame would depend on the environment. In this implementation, HTML replaces, and terminal appends.
     // The input is an array of bytes of the rendered document, either of HTML or text.
@@ -1962,6 +1987,60 @@ async function intBytearrayLength(bytearray) {
 // @license-end
 
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
+
+async function dctCodeToText(intArrayIn, strTargetLanguage) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctCodeToText:code-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+
+    let intArrayRes = [];
+    let intC = 0;
+    intC = 0;
+    let intL = 0;
+    intL = await count(intArrayIn);
+    let intCurrentDc = 0;
+    let strTemp = '';
+    while (await implLt(intC, intL)) {
+        intCurrentDc = await get(intArrayIn, intC);
+        if (await dcIsELCode(intCurrentDc)) {
+            strTemp = await dcGetMappingToFormat(intCurrentDc, strTargetLanguage);
+            if (await ne(0, await len(strTemp))) {
+                intArrayRes = await append(intArrayRes, await dcaFromElad(strTemp));
+            }
+            else {
+                intArrayRes = await push(intArrayRes, intCurrentDc);
+            }
+        }
+        intC = await inc(intC);
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dctSemanticToText(intArrayIn, strTargetLanguage) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctSemanticToText:semantic-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+
+    let intArrayRes = [];
+    let intC = 0;
+    intC = 0;
+    let intL = 0;
+    intL = await count(intArrayIn);
+    let intCurrentDc = 0;
+    let strTemp = '';
+    while (await implLt(intC, intL)) {
+        intCurrentDc = await get(intArrayIn, intC);
+        if (await implEq('Semantic', await dcGetScript(intCurrentDc))) {
+            strTemp = await dcGetMappingToFormat(intCurrentDc, strTargetLanguage);
+            if (await ne(0, await len(strTemp))) {
+                intArrayRes = await append(intArrayRes, await dcaFromElad(strTemp));
+            }
+            else {
+                intArrayRes = await push(intArrayRes, intCurrentDc);
+            }
+        }
+        intC = await inc(intC);
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
 
 async function dcaFromAsciiSafeSubset(intArrayContent) {
     await internalDebugCollect('intArray Content = ' + intArrayContent + '; '); await internalDebugStackEnter('dcaFromAsciiSafeSubset:format-asciiSafeSubset'); await assertIsIntArray(intArrayContent); let intArrayReturn;
@@ -2531,8 +2610,10 @@ async function dcaToUtf8(intArrayContent) {
 
     await assertIsDcArray(intArrayContent);
     let intArrayRes = [];
+    let intArrayToOutput = [];
+    intArrayToOutput = intArrayContent;
     let intL = 0;
-    intL = await count(intArrayContent);
+    intL = await count(intArrayToOutput);
     let intC = 0;
     intC = 0;
     let intArrayTemp = [];
@@ -2549,10 +2630,11 @@ async function dcaToUtf8(intArrayContent) {
     boolDcBasenbEnabled = await contains(strArrayVariantSettings, 'dcBasenb');
     let boolDcBasenbFragmentEnabled = false;
     boolDcBasenbFragmentEnabled = await contains(strArrayVariantSettings, 'dcBasenbFragment');
+    intArrayToOutput = await dcPreprocessForFormat(intArrayToOutput, 'utf8', 'out');
     while (await le(intC, intL)) {
         /* Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8. */
         if (await implLt(intC, intL)) {
-            intDcAtIndex = await get(intArrayContent, intC);
+            intDcAtIndex = await get(intArrayToOutput, intC);
             intArrayTemp = await dcToFormat('utf8', intDcAtIndex);
         }
         /* Could the character be mapped? If not, stick it in the unmappables array or warn as appropriate. */
@@ -2914,15 +2996,7 @@ async function utf8VariantSettings(strDirection) {
     await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('utf8VariantSettings:format-utf8'); await assertIsStr(strDirection); let strArrayReturn;
 
     let strArrayRes = [];
-    let strEnabledVariants = '';
-    strEnabledVariants = await getSettingForFormat('utf8', strDirection, 'variants');
-    /* TODO: Support multiple variants enabled (chop up the value of the s/enabledVariants string into its constituent variants) */
-    if (await implEq('dcBasenb', strEnabledVariants)) {
-        strArrayRes = await push(strArrayRes, strEnabledVariants);
-    }
-    else if (await implEq('dcBasenb dcBasenbFragment', strEnabledVariants)) {
-        strArrayRes = await push(strArrayRes, [ 'dcBasenb', 'dcBasenbFragment' ]);
-    }
+    strArrayRes = await getEnabledVariantsForFormat('utf8', strDirection);
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -3136,6 +3210,27 @@ async function runTestsFormatHtml(boolV) {
     await internalDebugStackExit();
 }
 
+async function dcaFromElad(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcaFromElad:format-elad'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    await assertIsByteArray(intArrayIn);
+    let intArrayRes = [];
+    /* FIXME: actually implement; make sure it doesn't recurse since elad parsing is needed to load language translation tables; presumably refactor logic into a separate routine and provide a separate routine for FromElad and FromEladWithoutLangSupport (if language support ever even ends up in the "From" parsers, where it makes little sense as it would only be guessing)... */
+    intArrayRes = await dcaFromAscii(intArrayIn);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToElad(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcaToElad:format-elad'); await assertIsIntArray(intArrayIn); let intArrayReturn;
+
+    let intArrayRes = [];
+    /* FIXME: Implement */
+    await assertIsByteArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function dcaToHtmlFragment(intArrayDcIn) {
     await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToHtmlFragment:format-htmlFragment'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
 
@@ -3193,7 +3288,7 @@ async function loadAndConvert(strInputFormat, strOutputFormat, strPath) {
 async function runDocument(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocument:public-interface'); await assertIsIntArray(intArrayContents);
 
-    /* Run the specified document. Does not return while the document is still running. Takes care of events and I/O automatically. */
+    /* Run the provided document. Does not return while the document is still running. Takes care of events and I/O automatically. */
     await runDocumentGo(await runDocumentPrepare(intArrayContents));
 
     await internalDebugStackExit();
@@ -3202,7 +3297,7 @@ async function runDocument(intArrayContents) {
 async function runDocumentPrepare(intArrayContents) {
     await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('runDocumentPrepare:public-interface'); await assertIsIntArray(intArrayContents); let intReturn;
 
-    /* Prepare to run the specified document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document. */
+    /* Prepare to run the provided document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document. */
     await setupIfNeeded();
     await assertIsDcArray(intArrayContents);
     let intExecId = 0;
@@ -3224,7 +3319,8 @@ async function runDocumentGo(intExecId) {
 async function getExecOption(intExecId, strKey) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey); let strReturn;
 
-    /* Get an execution option for a document. */
+    /* Get the value of an execution option for a document. */
+    await setupIfNeeded();
     await assertIsExecId(intExecId);
     let strRes = '';
     strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
@@ -3232,10 +3328,23 @@ async function getExecOption(intExecId, strKey) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function getExecOptions(intExecId) {
+    await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('getExecOptions:public-interface'); await assertIsInt(intExecId); let strArrayReturn;
+
+    /* Get the execution options set for a document. */
+    await setupIfNeeded();
+    await assertIsExecId(intExecId);
+    let strArrayRes = [];
+    strArrayRes = await getExecSettings(intExecId);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
 async function setExecOption(intExecId, strKey, strValue) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setExecOption:public-interface'); await assertIsInt(intExecId); await assertIsStr(strKey); await assertIsStr(strValue);
 
     /* Set an execution option for a document. */
+    await setupIfNeeded();
     await assertIsExecId(intExecId);
     await setExecSettings(intExecId, await kvSetValue(await getExecSettings(intExecId), strKey, strValue));
 
@@ -3245,6 +3354,7 @@ async function setExecOption(intExecId, strKey, strValue) {
 async function exportDocument(strFormat, intArrayContents) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('exportDocument:public-interface'); await assertIsStr(strFormat); await assertIsIntArray(intArrayContents); let intArrayReturn;
 
+    await setupIfNeeded();
     await assertIsSupportedOutputFormat(strFormat);
     /* Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes. */
     await setupIfNeeded();
@@ -3257,6 +3367,7 @@ async function exportDocument(strFormat, intArrayContents) {
 async function importDocument(strFormat, intArrayContents) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('intArray Contents = ' + intArrayContents + '; '); await internalDebugStackEnter('importDocument:public-interface'); await assertIsStr(strFormat); await assertIsIntArray(intArrayContents); let intArrayReturn;
 
+    await setupIfNeeded();
     await assertIsSupportedInputFormat(strFormat);
     /* Convert a document stored as an array of bytes in the specified format, and return it as an array of dc. */
     await setupIfNeeded();
@@ -3278,14 +3389,132 @@ async function importAndExport(strInputFormat, strOutputFormat, intArrayContents
 
     intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
+
+async function getFormatImportSetting(strFormat, strKey) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getFormatImportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); let strReturn;
+
+    /* Return the value of the specified import setting for the specified format. */
+    let strRes = '';
+    strRes = await kvGetValue(await getFormatImportSettings(strFormat), strKey);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getFormatExportSetting(strFormat, strKey) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('getFormatExportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); let strReturn;
+
+    /* Return the value of the specified export setting for the specified format. */
+    let strRes = '';
+    strRes = await kvGetValue(await getFormatExportSettings(strFormat), strKey);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function setFormatImportSetting(strFormat, strKey, strValue) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatImportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
+
+    /* Set the value of the specified import setting for the specified format. */
+    await setFormatImportSettings(strFormat, await kvSetValue(await getFormatImportSettings(strFormat), strKey), strKey, strValue);
+
+    await internalDebugStackExit();
+}
+
+async function setFormatExportSetting(strFormat, strKey, strValue) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatExportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
+
+    /* Set the value of the specified export setting for the specified format. */
+    await setFormatExportSettings(strFormat, await kvSetValue(await getFormatExportSettings(strFormat), strKey), strKey, strValue);
+
+    await internalDebugStackExit();
+}
+
+async function pushFormatImportSetting(strFormat, strKey, strValue) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('pushFormatImportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue); let strReturn;
+
+    /* Temporarily set the value of the specified import setting for the specified format. Call setFormatImportSetting with the value this returns when you want to put the setting back. */
+    let strResult = '';
+    strResult = await getFormatImportSetting(strFormat, strKey);
+    await setFormatImportSetting(strFormat, strKey, strValue);
+
+    strReturn = strResult; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function pushFormatExportSetting(strFormat, strKey, strValue) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('pushFormatExportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue); let strReturn;
+
+    /* Temporarily set the value of the specified export setting for the specified format. Call setFormatExportSetting with the value this returns when you want to put the setting back. */
+    let strResult = '';
+    strResult = await getFormatExportSetting(strFormat, strKey);
+    await setFormatExportSetting(strFormat, strKey, strValue);
+
+    strReturn = strResult; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getFormatImportSettings(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatImportSettings:public-interface'); await assertIsStr(strFormat); let strArrayReturn;
+
+    /* Return the import settings array for the specified format. */
+    await setupIfNeeded();
+    await assertIsSupportedInputFormat(strFormat);
+    let strArrayRes = [];
+    strArrayRes = await getSettingsForFormat(strFormat, 'in');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getFormatExportSettings(strFormat) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('getFormatExportSettings:public-interface'); await assertIsStr(strFormat); let strArrayReturn;
+
+    /* Return the export settings array for the specified format. */
+    await setupIfNeeded();
+    await assertIsSupportedOutputFormat(strFormat);
+    let strArrayRes = [];
+    strArrayRes = await getSettingsForFormat(strFormat, 'out');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function setFormatImportSettings(strFormat, strArraySettings) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('strArray Settings = ' + strArraySettings + '; '); await internalDebugStackEnter('setFormatImportSettings:public-interface'); await assertIsStr(strFormat); await assertIsStrArray(strArraySettings);
+
+    /* Replace the import settings array for the specified format. */
+    await setupIfNeeded();
+    await assertIsSupportedInputFormat(strFormat);
+    await setImportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+
+    await internalDebugStackExit();
+}
+
+async function setFormatExportSettings(strFormat, strArraySettings) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('strArray Settings = ' + strArraySettings + '; '); await internalDebugStackEnter('setFormatExportSettings:public-interface'); await assertIsStr(strFormat); await assertIsStrArray(strArraySettings);
+
+    /* Replace the export settings array for the specified format. */
+    await setupIfNeeded();
+    await assertIsSupportedOutputFormat(strFormat);
+    await setExportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+
+    await internalDebugStackExit();
+}
+
+async function transformDocument(intArrayInputDocument, strTransformation) {
+    await internalDebugCollect('intArray InputDocument = ' + intArrayInputDocument + '; '); await internalDebugCollect('str Transformation = ' + strTransformation + '; '); await internalDebugStackEnter('transformDocument:public-interface'); await assertIsIntArray(intArrayInputDocument); await assertIsStr(strTransformation); let intArrayReturn;
+
+    /* Apply one of the supported document transformations to the provided document, and return the result. */
+    await setupIfNeeded();
+    await assertIsSupportedDocumentTransformation(strTransformation);
+    let intArrayResult = [];
+    intArrayResult = await applyDocumentTransformation(strTransformation, intArrayInputDocument);
+
+    intArrayReturn = intArrayResult; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
 /* If you want more control over the document loading and execution, you can use these lower-level functions. */
 
 async function loadStoredDocument(strFormat, strPath) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Path = ' + strPath + '; '); await internalDebugStackEnter('loadStoredDocument:public-interface'); await assertIsStr(strFormat); await assertIsStr(strPath); let intArrayReturn;
 
+    /* Load and return the specified document as a Dc array. */
     await setupIfNeeded();
     await assertIsSupportedInputFormat(strFormat);
-    /* Load and return the specified document as a Dc array. */
     let intArrayRes = [];
     intArrayRes = await dcaFromFormat(strFormat, await getFileFromPath(strPath));
 
@@ -3374,6 +3603,73 @@ async function getSettingsForFormat(strFormat, strDirection) {
     }
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getEnabledVariantsForFormat(strFormat, strDirection) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('getEnabledVariantsForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await strSplit(await getSettingForFormat(strFormat, strDirection, 'variants'), ' ');
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
+async function getPreferredLanguageForFormat(strFormat, strDirection) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('getPreferredLanguageForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); let strReturn;
+
+    let strRes = '';
+    strRes = await getEnvLanguage();
+    let strArrayTemp = [];
+    strArrayTemp = await getEnabledVariantsForFormat(strFormat, strDirection);
+    let intC = 0;
+    intC = 0;
+    let intL = 0;
+    intL = await count(strArrayTemp);
+    let boolContinue = false;
+    boolContinue = true;
+    let intItem = 0;
+    while (boolContinue) {
+        if (await implNot(await implLt(intC, intL))) {
+            boolContinue = false;
+        }
+        strItem = await get(strArrayTemp, intC);
+        if (await implEq('lang_', await substr(intItem, 0, 5))) {
+            strRes = strItem;
+            boolContinue = false;
+        }
+        intC = await inc(intC);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
+async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
+    await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('getPreferredCodeLanguageForFormat:formats-settings'); await assertIsStr(strFormat); await assertIsStr(strDirection); let strReturn;
+
+    let strRes = '';
+    strRes = await getEnvCodeLanguage();
+    let strArrayTemp = [];
+    strArrayTemp = await getEnabledVariantsForFormat(strFormat, strDirection);
+    let intC = 0;
+    intC = 0;
+    let intL = 0;
+    intL = await count(strArrayTemp);
+    let boolContinue = false;
+    boolContinue = true;
+    let intItem = 0;
+    while (boolContinue) {
+        if (await implNot(await implLt(intC, intL))) {
+            boolContinue = false;
+        }
+        strItem = await get(strArrayTemp, intC);
+        if (await implEq('pl_', await substr(intItem, 0, 3))) {
+            strRes = await substr(strItem, 3, -1);
+            boolContinue = false;
+        }
+        intC = await inc(intC);
+    }
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
 async function getImportSettings(intFormatId) {
@@ -3870,6 +4166,15 @@ async function isSupportedTerminalType(strIn) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 }
 
+async function listDocumentTransformations() {
+    await internalDebugStackEnter('listDocumentTransformations:formats-data'); let strArrayReturn;
+
+    let strArrayRes = [];
+    strArrayRes = await dcDataFilterByValue('formats', 6, 'transformation', 1);
+
+    strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
+}
+
 async function listDataTypes() {
     await internalDebugStackEnter('listDataTypes:formats-data'); let strArrayReturn;
 
@@ -4086,11 +4391,22 @@ async function getFormatMetricsType(strFormat) {
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
 
+async function dcGetMappingToFormat(intDc, strFormat) {
+    await internalDebugCollect('int Dc = ' + intDc + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugStackEnter('dcGetMappingToFormat:formats-data'); await assertIsInt(intDc); await assertIsStr(strFormat); let strReturn;
+
+    await assertIsDc(intDc);
+    await assertIsSupportedOutputFormat(strFormat);
+    let strRes = '';
+    strRes = await dcDataLookupById(await implCat('mappings/to/', strFormat), intDc, 1);
+
+    strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+}
+
 async function listDcDatasets() {
     await internalDebugStackEnter('listDcDatasets:dc-data'); let strArrayReturn;
 
     let strArrayRes = [];
-    strArrayRes = [ 'DcData', 'formats', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html', 'mappings/to/unicode' ];
+    strArrayRes = [ 'DcData', 'formats', 'mappings/from/ascii', 'mappings/from/unicode', 'mappings/to/html', 'mappings/to/lang_en', 'mappings/to/unicode' ];
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -4595,6 +4911,67 @@ async function runTestsDcData(boolV) {
     await runTest(boolV, await implEq('B', await dcGetBidiClass(120)));
 
     await internalDebugStackExit();
+}
+
+async function isSupportedDocumentTransformation(strTransform) {
+    await internalDebugCollect('str Transform = ' + strTransform + '; '); await internalDebugStackEnter('isSupportedDocumentTransformation:document-transformations'); await assertIsStr(strTransform); let boolReturn;
+
+    let boolRes = false;
+    boolRes = await implIn(strTransform, strArrayListDocumentTransformations);
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+}
+
+async function assertIsSupportedDocumentTransformation(strTransform) {
+    await internalDebugCollect('str Transform = ' + strTransform + '; '); await internalDebugStackEnter('assertIsSupportedDocumentTransformation:document-transformations'); await assertIsStr(strTransform);
+
+    await assertIsTrue(await isSupportedDocumentTransformation(strTransform));
+
+    await internalDebugStackExit();
+}
+
+async function applyDocumentTransformation(strTransform, intArrayDcArrayIn) {
+    await internalDebugCollect('str Transform = ' + strTransform + '; '); await internalDebugCollect('intArray DcArrayIn = ' + intArrayDcArrayIn + '; '); await internalDebugStackEnter('applyDocumentTransformation:document-transformations'); await assertIsStr(strTransform); await assertIsIntArray(intArrayDcArrayIn); let intArrayReturn;
+
+    await assertIsSupportedDocumentTransformation(strTransform);
+    await assertIsDcArray(intArrayDcArrayIn);
+    let intArrayRes = [];
+    if (await implEq(strTransform, 'semanticToText')) {
+        intArrayRes = await dctSemanticToText(intArrayDcArrayIn);
+    }
+    else if (await implEq(strTransform, 'codeToText')) {
+        intArrayRes = await dctCodeToText(intArrayDcArrayIn);
+    }
+    else {
+        await implDie(await implCat('Unimplemented document transformation: ', strTransform));
+    }
+    await assertIsDcArray(intArrayRes);
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcPreprocessForFormat(intArrayIn, strFormat, strDirection) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Direction = ' + strDirection + '; '); await internalDebugStackEnter('dcPreprocessForFormat:dc-preprocess-for-format'); await assertIsIntArray(intArrayIn); await assertIsStr(strFormat); await assertIsStr(strDirection); let intArrayReturn;
+
+    let intArrayRes = [];
+    intArrayRes = intArrayIn;
+    let strPreferredLang = '';
+    strPreferredLang = await getPreferredLanguageForFormat(strFormat, strDirection);
+    let strPreferredCodeLang = '';
+    strPreferredCodeLang = await getPreferredCodeLanguageForFormat(strFormat, strDirection);
+    let strTemp = '';
+    if (await implNot(await implIn('skip_prefilter_semantic', await getSettingsForFormat(strFormat, strDirection)))) {
+        strTemp = await pushFormatImportSetting('semanticToText', 'language', strPreferredLang);
+        intArrayRes = await dctSemanticToText(intArrayRes);
+        await setFormatImportSetting('semanticToText', 'language', strTemp);
+    }
+    if (await implNot(await implIn('skip_prefilter_code', await getSettingsForFormat(strFormat, strDirection)))) {
+        strTemp = await pushFormatImportSetting('codeToText', 'language', strPreferredCodeLang);
+        intArrayRes = await dctCodeToText(intArrayRes);
+        await setFormatImportSetting('codeToText', 'language', strTemp);
+    }
+
+    intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
 async function or(boolA, boolB) {
@@ -6928,7 +7305,6 @@ async function getCurrentExecFrame(intExecId) {
 
 async function startDocumentExec(intExecId) {
     await internalDebugCollect('int ExecId = ' + intExecId + '; '); await internalDebugStackEnter('startDocumentExec:document-exec'); await assertIsInt(intExecId);
-    console.log('0a');
 
     await assertIsExecId(intExecId);
     let boolContinue = false;
@@ -6936,34 +7312,27 @@ async function startDocumentExec(intExecId) {
     let intCurrentPtrPos = 0;
     let intArrayWipFrame = [];
     let intDc = 0;
-    console.log('0b');
     let intArrayDocumentWorkingCopyData = [];
     intArrayDocumentWorkingCopyData = await intArrFromStrPrintedArr(await get(strArrayDocumentExecData, intExecId));
     let strArrayState = [];
-    console.log('0c');
     strArrayState = [ 'normal' ];
     let boolLastCharacterWasEscape = false;
     boolLastCharacterWasEscape = false;
     let intStopExecAtTick = 0;
     intStopExecAtTick = await positiveIntFromIntStr(await getExecOption(intExecId, 'stopExecAtTick'));
     let boolRunHeadless = false;
-    console.log('a');
     boolRunHeadless = await implEq('true', await getExecOption(intExecId, 'runHeadless'));
     let intCurrentTick = 0;
     intCurrentTick = 0;
-    console.log('b');
     if (await isNonnegative(intStopExecAtTick)) {
         if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
             boolContinue = false;
         }
     }
-    console.log('ok');
     while (boolContinue) {
-    console.log('c');
         if (await isNonnegative(intStopExecAtTick)) {
             if (await ge(intCurrentTick, await implAdd(-1, intStopExecAtTick))) {
                 boolContinue = false;
-    console.log('d');
             }
         }
         intCurrentTick = await inc(intCurrentTick);
@@ -6975,7 +7344,6 @@ async function startDocumentExec(intExecId) {
         if (await ge(intCurrentPtrPos, await count(intArrayDocumentWorkingCopyData))) {
             /* We're done with the document */
             boolContinue = false;
-    console.log('e');
         }
         else {
             intDc = await get(intArrayDocumentWorkingCopyData, intCurrentPtrPos);
