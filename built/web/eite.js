@@ -1294,6 +1294,7 @@ function internalDebugLogJSObject(obj) {
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     let func=getWindowOrSelf().eiteWasmModule.instance.exports[strRoutine];
+    let eiteWasmMemory;
     if (giVal === null) {
         return func();
     }
@@ -1303,7 +1304,9 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     else {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
-        let eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
+        if (typeof getWindowOrSelf().eiteWasmModule.instance.exports[memory] !== 'undefined') {
+            eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
+        }
     }
 }
 
