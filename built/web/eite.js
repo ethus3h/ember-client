@@ -2295,6 +2295,7 @@ async function dcaToSems(intArrayDcIn) {
             boolInComment = false;
             boolAtCommentEnd = true;
             console.log('Appending to out was '+intArrayOut);
+            console.log('Appending to out current comment '+intArrayCurrentComment);
             intArrayOut = await append(intArrayOut, await dcaToDcbnbUtf8(intArrayCurrentComment));
             console.log('Appended to out now is '+intArrayOut);
             intArrayCurrentComment = [  ];
@@ -2302,7 +2303,9 @@ async function dcaToSems(intArrayDcIn) {
         }
         else {
             if (boolInComment) {
+                console.log('Appending to comment '+intCurrentDc)
                 intArrayCurrentComment = await push(intArrayCurrentComment, intCurrentDc);
+                console.log('Comment now is '+intArrayCurrentComment);
             }
             else {
                 intArrayOut = await append(intArrayOut, await strToByteArray(await implCat(await strFrom(intCurrentDc), ' ')));
