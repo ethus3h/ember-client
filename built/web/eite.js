@@ -1305,7 +1305,8 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
         if (typeof getWindowOrSelf().eiteWasmModule.instance.exports[memory] !== 'undefined') {
-            eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
+            console.log('a');
+            //eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
         }
     }
 }
