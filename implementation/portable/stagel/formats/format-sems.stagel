@@ -66,13 +66,20 @@ r/an/dcaToSems an/dcIn
     new n/inputIndex
     set n/inputIndex 0
     new n/currentDc
+    new b/inComment
+    set b/inComment false
+    new an/currentComment
     while lt n/inputIndex n/len
         set n/currentDc get an/dcIn n/inputIndex
         if eq 246 n/currentDc
+            set b/inComment true
             set an/out append an/out strToByteArray '#'
         elif eq 248 n/currentDc
+            set b/inComment false
             set an/out append an/out ( 13 )
         else
+            if b/inComment
+                set an/out append an/out strToByteArray dcaToDcbnbUtf8
             set an/out append an/out strToByteArray cat strFrom n/currentDc } ' '
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
