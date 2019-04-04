@@ -5425,7 +5425,9 @@ async function strJoin(genericArrayIn, strSeparator) {
     let strOut = '';
     while (await implLt(intI, intCount)) {
         strOut = await implCat(strOut, await strFrom(await get(genericArrayIn, intI)));
-        strOut = await implCat(strOut, strSeparator);
+        if(intI!==intCount-1) {
+            strOut = await implCat(strOut, strSeparator);
+        }
         intI = await implAdd(intI, 1);
     }
 

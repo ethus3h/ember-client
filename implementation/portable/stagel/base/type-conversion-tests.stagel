@@ -9,3 +9,5 @@ r/v/runTestsTypeConversion b/v
     runTest b/v arrEq [ '' 'a' ] strSplit 'abaab' 'ab'
     runTest b/v arrEq [ '' 'a' '' ] strSplit 'abaabab' 'ab'
     runTest b/v arrEq [ '' '' ] strSplit 'abab' 'ab'
+    runTest b/v arrEq [ '' ] strSplit 'ab' 'ab'
+    runTest b/v arrEq [ '' ] strSplit strJoin strSplit 'abab' 'ab' } 'ab' } 'ab'
