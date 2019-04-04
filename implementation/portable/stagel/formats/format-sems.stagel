@@ -47,7 +47,7 @@ r/an/dcaFromSems an/in
     if eq s/parserState 'comment'
         # Document ended with a comment and no newline at the end
         if ne 0 len s/currentDc
-            die 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.'
+            die cat 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found: ' cat s/currentDc '.'
         set an/res push an/res 248
     elif ne 0 len s/currentDc
         warnOrDie b/strict 'No trailing space present in sems format while importing. This is not allowed in strict mode.'

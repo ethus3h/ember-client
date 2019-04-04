@@ -2232,7 +2232,7 @@ async function dcaFromSems(intArrayIn) {
     if (await implEq(strParserState, 'comment')) {
         /* Document ended with a comment and no newline at the end */
         if (await ne(0, await len(strCurrentDc))) {
-            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.');
+            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.'+strCurrentDc);
         }
         intArrayRes = await push(intArrayRes, 248);
     }
