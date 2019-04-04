@@ -60,12 +60,14 @@ async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
     if (index < 0) {
+        if ((-1 * index) - 1) > await count(array)
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
     }
     else {
         returnVal=array[index];
     }
+
     await assertIsGeneric(returnVal); return returnVal;
 }
 
