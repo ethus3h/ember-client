@@ -2283,7 +2283,7 @@ async function dcaToSems(intArrayDcIn) {
     boolAtCommentEnd = false;
     while (await implLt(intInputIndex, intLen)) {
         intCurrentDc = await get(intArrayDcIn, intInputIndex);
-        alert('found dc '+intCurrentDc);
+        console.log('found dc '+intCurrentDc);
         if (boolAtCommentEnd) {
             boolAtCommentEnd = false;
         }
