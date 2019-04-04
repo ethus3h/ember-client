@@ -5735,19 +5735,19 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsMath(boolV);
+    /*await runTestsMath(boolV);
     await runTestsPack32(boolV);
-    await runTestsTypeConversion(boolV);
+    await runTestsTypeConversion(boolV);*/
     await runTestsWasm(boolV);
     /* Core tests */
-    await runTestsDcData(boolV);
-    await runTestsFormatDc(boolV);
+/*    await runTestsDcData(boolV);
+    await runTestsFormatDc(boolV);*/
     /* Format tests */
-    await runTestsFormatAscii(boolV);
+/*    await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
-    await runTestsFormatIntegerList(boolV);
+    await runTestsFormatIntegerList(boolV);*/
     await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
     /* Document exec tests */
