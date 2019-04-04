@@ -15,6 +15,6 @@ r/an/applyDocumentTransformation s/transform an/dcArrayIn
     elif eq s/transform 'codeToText'
         set an/res dctCodeToText an/dcArrayIn
     else
-        die cat 'Unimplemented document transformation format: ' s/transform
+        die cat 'Unimplemented document transformation: ' s/transform
     assertIsDcArray an/res
     return an/res

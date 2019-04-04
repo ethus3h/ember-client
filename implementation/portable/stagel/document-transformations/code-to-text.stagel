@@ -16,3 +16,5 @@ r/an/dctCodeToText an/in s/targetLanguage
                 set an/res push an/res n/currentDc
         set n/c inc n/c
     return an/res
+
+r/an/overrideDctCodeToText an/in s/targetLanguage

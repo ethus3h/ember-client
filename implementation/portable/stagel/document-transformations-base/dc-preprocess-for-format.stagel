@@ -3,8 +3,10 @@ r/an/dcPreprocessForFormat an/in s/format s/direction
     set an/res an/in
     new s/preferredLang
     set s/preferredLang getPreferredLanguageForFormat s/format s/direction
-    if not in 'omit_lang_semantic' getSettingsForFormat s/format s/direction
+    new s/preferredCodeLang
+    set s/preferredCodeLang getPreferredCodeLanguageForFormat s/format s/direction
+    if not in 'skip_prefilter_semantic' getSettingsForFormat s/format s/direction
         set an/res dctSemanticToText an/res s/preferredLang
-    if not in 'omit_lang_semantic' getSettingsForFormat s/format s/direction
-        set an/res dctCodeToText an/res s/preferredLang
+    if not in 'skip_prefilter_code' getSettingsForFormat s/format s/direction
+        set an/res overrideDctCodeToText an/res s/preferredCodeLang
     return an/res

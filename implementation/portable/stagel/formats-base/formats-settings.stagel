@@ -47,6 +47,28 @@ r/s/getPreferredLanguageForFormat s/format s/direction
         set n/c inc n/c
     return s/res
 
+r/s/getPreferredCodeLanguageForFormat s/format s/direction
+    new s/res
+    set s/res getEnvCodeLanguage
+    new as/temp
+    set as/temp getEnabledVariantsForFormat s/format s/direction
+    new n/c
+    set n/c 0
+    new n/l
+    set n/l count as/temp
+    new b/continue
+    set b/continue true
+    new n/item
+    while b/continue
+        if not lt n/c n/l
+            set b/continue false
+        set s/item get as/temp n/c
+        if eq 'pl_' substr n/item 0 3
+            set s/res substr s/item 3 -1
+            set b/continue false
+        set n/c inc n/c
+    return s/res
+
 r/s/getImportSettings n/formatId
     new s/res
     if lt n/formatId count getImportSettingsArr

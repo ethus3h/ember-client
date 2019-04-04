@@ -25,6 +25,10 @@ async function getEnvLanguage() {
     return envLanguage;
 }
 
+async function getEnvCodeLanguage() {
+    return envCodeLanguage;
+}
+
 async function getEnvLocaleConfig() {
     return envLocaleConfig;
 }

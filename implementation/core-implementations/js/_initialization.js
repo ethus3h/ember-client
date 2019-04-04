@@ -61,6 +61,9 @@ if (envLanguage === undefined) {
 if (envLocaleConfig === undefined) {
     envLocaleConfig = 'inherit:usa,'
 }
+if (envCodeLanguage === undefined) {
+    envCodeLanguage = 'javascript'
+}
 if (envResolutionW === undefined) {
     envResolutionW = '0'
 }
