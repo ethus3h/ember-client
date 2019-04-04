@@ -3313,13 +3313,15 @@ async function runTestsTypeConversion(boolV) {
     await testing(boolV, 'typeConversion');
     await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
     await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('aabbabc', 'ab')));
-    await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('aabbabcab', 'ab')));
+    await runTest(boolV, await arrEq([ 'a', 'b', 'c', '' ], await strSplit('aabbabcab', 'ab')));
     await runTest(boolV, await arrEq([ '', 'c' ], await strSplit('abc', 'ab')));
     await runTest(boolV, await arrEq([ '', '', 'baa' ], await strSplit('ababbaa', 'ab')));
-    await runTest(boolV, await arrEq([ 'a' ], await strSplit('aab', 'ab')));
-    await runTest(boolV, await arrEq([ '', 'a' ], await strSplit('abaab', 'ab')));
-    await runTest(boolV, await arrEq([ '', 'a', '' ], await strSplit('abaabab', 'ab')));
-    await runTest(boolV, await arrEq([ '', '' ], await strSplit('abab', 'ab')));
+    await runTest(boolV, await arrEq([ 'a', '' ], await strSplit('aab', 'ab')));
+    await runTest(boolV, await arrEq([ '', 'a', '' ], await strSplit('abaab', 'ab')));
+    await runTest(boolV, await arrEq([ '', 'a', '', '' ], await strSplit('abaabab', 'ab')));
+    await runTest(boolV, await arrEq([ '', '', '' ], await strSplit('abab', 'ab')));
+    await runTest(boolV, await arrEq([ '', '' ], await strSplit('ab', 'ab')));
+    await runTest(boolV, await arrEq([ '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
 
     await internalDebugStackExit();
 }
@@ -3395,10 +3397,7 @@ async function strSplit(strIn, strSeparator) {
         }
         intRemainingLen = await len(strRemaining);
     }
-    if (await ne('', strCurrentElem)) {
-        /* No trailing delimiter */
-        strArrayRes = await push(strArrayRes, strCurrentElem);
-    }
+    strArrayRes = await push(strArrayRes, strCurrentElem);
 
     strArrayReturn = strArrayRes; await assertIsStrArray(strArrayReturn); await internalDebugStackExit(); return strArrayReturn;
 }
@@ -3406,7 +3405,7 @@ async function strSplit(strIn, strSeparator) {
 async function strJoin(genericArrayIn, strSeparator) {
     await internalDebugCollect('genericArray In = ' + genericArrayIn + '; '); await internalDebugCollect('str Separator = ' + strSeparator + '; '); await internalDebugStackEnter('strJoin:type-conversion'); await assertIsGenericArray(genericArrayIn); await assertIsStr(strSeparator); let strReturn;
 
-    /* Opposite of strSplit for a given separator (always gives a trailing delimiter, though, and remember that delimiters are in-band signalling) */
+    /* Opposite of strSplit for a given separator */
     let intCount = 0;
     intCount = await count(genericArrayIn);
     let intI = 0;
@@ -3414,7 +3413,9 @@ async function strJoin(genericArrayIn, strSeparator) {
     let strOut = '';
     while (await implLt(intI, intCount)) {
         strOut = await implCat(strOut, await strFrom(await get(genericArrayIn, intI)));
-        strOut = await implCat(strOut, strSeparator);
+        if (await ne(intI, await implAdd(-1, intCount))) {
+            strOut = await implCat(strOut, strSeparator);
+        }
         intI = await implAdd(intI, 1);
     }
 
