@@ -65,8 +65,17 @@ r/an/dcaToSems an/dcIn
     set n/len count an/dcIn
     new n/inputIndex
     set n/inputIndex 0
+    new n/currentDc
+    new s/state
+    set s/state 'dc'
     while lt n/inputIndex n/len
-        set an/out push an/out strToByteArray cat strFrom get an/dcIn n/inputIndex } } ' '
+        set n/currentDc get an/dcIn n/inputIndex
+        if eq 'normal' s/state
+        if eq 246 n/currentDc
+            set s/state 'comment'
+            set an/out push an/out strToByteArray '#'
+        else
+        set an/out push an/out strToByteArray cat strFrom n/currentDc } ' '
         set n/inputIndex add n/inputIndex 1
     assertIsByteArray an/out
     return an/out
