@@ -4,6 +4,7 @@
     push
     pop
     shift
+    hasIndex
     get
     getNext
     first
@@ -56,11 +57,19 @@ async function shift(array) {
     return await subset(array, 1, -1);
 }
 
+async function hasIndex(array, index) {
+    if ((-1 * index) - 1) > await count(array)
+    let len = await count(array);
+    if (index > count) {
+        await implDie("Cannot insert to a position greater than appending to the length of the array.");
+    }
+}
+
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
+    await assertHasIndex(array, index);
     if (index < 0) {
-        if ((-1 * index) - 1) > await count(array)
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
     }
@@ -98,10 +107,7 @@ async function last(array) {
 async function setElement(array, index, value) {
     await assertIsArray(array); await assertIsInt(index); await assertIsGeneric(value);
 
-    let len = await count(array);
-    if (index > count) {
-        await implDie("Cannot insert to a position greater than appending to the length of the array.");
-    }
+    await assertHasIndex(array, index);
     if (index < 0) {
         index = len + index;
     }
