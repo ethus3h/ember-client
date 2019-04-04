@@ -1325,3 +1325,663 @@ async function internalWasmCallArrInOut(strRoutine, intArrayVals) {
     return await eiteHostCall('internalEiteReqWasmCall', [strRoutine, intArrayVals, true]);
 }
 
+/* booleans, provides:
+    implAnd
+    implNot
+*/
+
+async function implAnd(a,b) {
+    if (typeof a === 'boolean' && typeof b === 'boolean') {
+        return a && b;
+    }
+    await assertIsBool(a); await assertIsBool(b);
+}
+
+async function implNot(a) {
+    if (typeof a === 'boolean') {
+        return !a;
+    }
+    await assertIsBool(a);
+}
+
+/* comparison, provides:
+    implEq
+    implGt
+    implLt
+*/
+
+async function implEq(genericA, genericB) {
+    await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
+
+    return genericA === genericB;
+}
+
+async function implGt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    return intA > intB;
+}
+
+async function implLt(intA, intB) {
+    await assertIsInt(intA); await assertIsInt(intB); let boolReturn;
+
+    return intA < intB;
+}
+
+// Note: Both rows and columns are zero-indexed from the perspective of callers of these routines. The header row is not counted for this purpose (the first row after the header is index 0), while the ID column (where present) *is* counted (so it is index 0).
+
+async function dcDatasetLength(dataset) {
+    assertIsDcDataset(dataset); let intReturn;
+
+    // - 2: one for the header; one for the last newline, which is (reasonably, looking at the newlines as separators rather than terminators) included as an extra line of data in the parse results
+    intReturn = await dcData[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
+}
+
+async function dcDataLookupById(dataset, rowNum, fieldNum) {
+    await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
+
+    // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
+    if (dcData[dataset] === undefined) {
+        await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
+    }
+
+    // Add 1 to account for header row
+    rowNum = rowNum + 1;
+
+    // and another 1 to account for last row
+    if (rowNum + 1 >= dcData[dataset].length) {
+        strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
+    }
+    else {
+        strReturn = dcData[dataset][rowNum][fieldNum];
+    }
+    await assertIsStr(strReturn); return strReturn;
+}
+
+async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
+
+    let intLength = dcData[dataset].length - 2;
+    // start at 1 to skip header row
+    let filterValue = await strFrom(genericFilterValue);
+    for (let row = 1; row <= intLength; row++) {
+        if(dcData[dataset][row][filterField] === filterValue) {
+            strReturn = dcData[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
+        }
+    }
+    //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
+    //await implDie('Could not find required dataset entry by value (parameters: '+dataset+'/'+filterField+'/'+genericFilterValue+'/'+desiredField+').');
+    // TODO: this should be available as a "lookupbyvalue" and a "lookupbyvalueForgiving" versions that do and don't die on this; the forgiving would return the exception UUID.
+    // If nothing was found, return this UUID.
+    strReturn="89315802-d53d-4d11-ba5d-bf505e8ed454"; await assertIsStr(strReturn); return strReturn;
+}
+
+async function dcDataFilterByValue(dataset, filterField, genericFilterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let asReturn;
+
+    // This routine returns an array of values of the desired column when the filter field matches the filter value. While dcDataLookupByValue gives a single (the first) result, this returns all matching results.
+
+    asReturn = [];
+
+    let intLength = dcData[dataset].length - 2;
+    // start at 1 to skip header row
+    let filterValue = await strFrom(genericFilterValue);
+    for (let row = 1; row <= intLength; row++) {
+        if(dcData[dataset][row][filterField] === filterValue) {
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
+        }
+    }
+    await assertIsStrArray(asReturn); return asReturn;
+}
+
+async function dcDataFilterByValueGreater(dataset, filterField, filterValue, desiredField) {
+    await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsInt(filterValue); await assertIsInt(desiredField); let asReturn;
+
+    // This routine returns an array of values of the desired column when the filter field is greater than the filter value. (e.g. filter for 1 will return rows with 2 and 3 but not 1 or 0) While dcDataLookupByValue gives a single (the first) result, this returns all matching results.
+
+    asReturn = [];
+
+    let intLength = dcData[dataset].length - 2;
+    // start at 1 to skip header row
+    for (let row = 1; row <= intLength; row++) {
+        if(parseInt(dcData[dataset][row][filterField], 10) > filterValue) {
+            asReturn = asReturn.concat(dcData[dataset][row][desiredField]);
+        }
+    }
+    await assertIsStrArray(asReturn); return asReturn;
+}
+
+async function getImportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().importSettings);
+
+    return getWindowOrSelf().importSettings;
+}
+
+async function getExportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().exportSettings);
+
+    return getWindowOrSelf().exportSettings;
+}
+
+async function setImportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings); getWindowOrSelf().importSettings[formatId]=strNewSettings;
+}
+
+async function setExportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+}
+
+// Based on https://web.archive.org/web/20190305073920/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/wtf-8.js
+// This code for wtf8 is included under the following license (from https://web.archive.org/web/20190305074047/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/LICENSE-MIT.txt):
+/*
+Copyright Mathias Bynens <https://mathiasbynens.be/>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+// Encoding
+function intArrayPackWtf8(intValue) {
+    let createByte = function(intValue, shift) {
+        return String.fromCharCode(((intValue >> shift) & 0x3F) | 0x80);
+    }
+
+    let symbol = '';
+    if ((intValue & 0xFFFFFF80) == 0) { // 1-byte sequence
+        symbol = String.fromCharCode(intValue);
+    }
+    else {
+        if ((intValue & 0xFFFFF800) == 0) { // 2-byte sequence
+            symbol = String.fromCharCode(((intValue >> 6) & 0x1F) | 0xC0);
+        }
+        else if ((intValue & 0xFFFF0000) == 0) { // 3-byte sequence
+            symbol = String.fromCharCode(((intValue >> 12) & 0x0F) | 0xE0);
+            symbol += createByte(intValue, 6);
+        }
+        else if ((intValue & 0xFFE00000) == 0) { // 4-byte sequence
+            symbol = String.fromCharCode(((intValue >> 18) & 0x07) | 0xF0);
+            symbol += createByte(intValue, 12);
+            symbol += createByte(intValue, 6);
+        }
+        symbol += String.fromCharCode((intValue & 0x3F) | 0x80);
+    }
+    let res = [];
+    let len = symbol.length;
+    let i = 0;
+    while (i<len) {
+        res.push(symbol.charCodeAt(i));
+        i = i+1;
+    }
+    return res;
+}
+
+//Decoding
+async function intUnpackWtf8(byteArrayInput) {
+    let byteIndex = 0;
+    let byteCount = byteArrayInput.length;
+    let readContinuationByte = async function() {
+        if (byteIndex >= byteCount) {
+            await implDie('Invalid byte index');
+        }
+
+        let continuationByte = byteArrayInput[byteIndex] & 0xFF;
+        byteIndex++;
+
+        if ((continuationByte & 0xC0) == 0x80) {
+            return continuationByte & 0x3F;
+        }
+
+        // If we end up here, it’s not a continuation byte.
+        await implDie('Invalid continuation byte');
+    }
+
+    let byte1;
+    let byte2;
+    let byte3;
+    let byte4;
+    let intValue;
+
+    if (byteIndex > byteCount) {
+        await implDie('Invalid byte index');
+    }
+
+    if (byteIndex == byteCount) {
+        return false;
+    }
+
+    // Read the first byte.
+    byte1 = byteArrayInput[byteIndex] & 0xFF;
+    byteIndex++;
+
+    // 1-byte sequence (no continuation bytes)
+    if ((byte1 & 0x80) == 0) {
+        return byte1;
+    }
+
+    // 2-byte sequence
+    if ((byte1 & 0xE0) == 0xC0) {
+        let byte2 = await readContinuationByte();
+        intValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (intValue >= 0x80) {
+            return intValue;
+        } else {
+            await implDie('Invalid continuation byte');
+        }
+    }
+
+    // 3-byte sequence (may include unpaired surrogates)
+    if ((byte1 & 0xF0) == 0xE0) {
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
+        intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (intValue >= 0x0800) {
+            return intValue;
+        } else {
+            await implDie('Invalid continuation byte');
+        }
+    }
+
+    // 4-byte sequence
+    if ((byte1 & 0xF8) == 0xF0) {
+        byte2 = await readContinuationByte();
+        byte3 = await readContinuationByte();
+        byte4 = await readContinuationByte();
+        intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+            (byte3 << 0x06) | byte4;
+        if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
+            return intValue;
+        }
+    }
+
+    await implDie('Invalid WTF-8 detected');
+}
+
+//Copy of the decoder that returns a boolean indicating whether the input was a valid char
+async function boolIsUnpackableWtf8(byteArrayInput) {
+    let byteIndex = 0;
+    let byteCount = byteArrayInput.length;
+    let readContinuationByte = async function() {
+        if (byteIndex >= byteCount) {
+            return false;
+        }
+
+        let continuationByte = byteArrayInput[byteIndex] & 0xFF;
+        byteIndex++;
+
+        if ((continuationByte & 0xC0) == 0x80) {
+            return continuationByte & 0x3F;
+        }
+
+        // If we end up here, it’s not a continuation byte.
+        return false;
+    }
+
+    let byte1;
+    let byte2;
+    let byte3;
+    let byte4;
+    let intValue;
+
+    if (byteIndex > byteCount) {
+        return false;
+    }
+
+    if (byteIndex == byteCount) {
+        return false;
+    }
+
+    // Read the first byte.
+    byte1 = byteArrayInput[byteIndex] & 0xFF;
+    byteIndex++;
+
+    // 1-byte sequence (no continuation bytes)
+    if ((byte1 & 0x80) == 0) {
+        return true;
+    }
+
+    // 2-byte sequence
+    if ((byte1 & 0xE0) == 0xC0) {
+        let byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x1F) << 6) | byte2;
+        if (intValue >= 0x80) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 3-byte sequence (may include unpaired surrogates)
+    if ((byte1 & 0xF0) == 0xE0) {
+        byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        byte3 = await readContinuationByte();
+        if (byte3 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x0F) << 12) | (byte2 << 6) | byte3;
+        if (intValue >= 0x0800) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // 4-byte sequence
+    if ((byte1 & 0xF8) == 0xF0) {
+        byte2 = await readContinuationByte();
+        if (byte2 === false) {
+            return false;
+        }
+        byte3 = await readContinuationByte();
+        if (byte3 === false) {
+            return false;
+        }
+        byte4 = await readContinuationByte();
+        if (byte4 === false) {
+            return false;
+        }
+        intValue = ((byte1 & 0x0F) << 0x12) | (byte2 << 0x0C) |
+            (byte3 << 0x06) | byte4;
+        if (intValue >= 0x010000 && intValue <= 0x10FFFF) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/* assertions, provides:
+    assertIsBool
+    assertIsTrue
+    assertIsFalse
+    assertIsInt
+    assertIsStr
+    assertIsGeneric
+    assertIsGenericArray
+    assertIsGenericItem
+    assertionFailed
+*/
+
+// Assertions that something is a given type
+
+async function isBool(bool) {
+    if (typeof bool === 'boolean') {
+        return true;
+    }
+    return false;
+}
+
+async function assertIsBool(bool) {
+    if (typeof bool === 'boolean') {
+        return;
+    }
+    await assertionFailed(bool+' is not a boolean.');
+}
+
+async function isInt(v) {
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return true;
+    }
+    return false;
+}
+
+async function assertIsInt(v) {
+    if (await Number.isInteger(v) && v >= -2147483648 && v <= 2147483647) {
+        return;
+    }
+    await assertionFailed(v+" is not an int, or is outside the currently allowed range of 32 bit signed (-2,147,483,648 to 2,147,483,647).");
+}
+
+async function isStr(str) {
+    if (typeof str === 'string') {
+        return true;
+    }
+    return false;
+}
+
+async function assertIsStr(str) {
+    if (typeof str === 'string') {
+        return;
+    }
+    await assertionFailed(str+" is not a string.");
+}
+
+async function isGeneric(v) {
+    // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
+    }
+    return false;
+}
+
+async function assertIsGeneric(v) {
+    if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
+        return true;
+    }
+    await assertionFailed(v+" cannot be used as a generic.");
+}
+
+async function isGenericArray(val) {
+    if (val === undefined) {
+        await assertionFailed('isGenericArray called with non-StageL-supported argument type.');
+    }
+    if (val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        return false;
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    return val.every(isGenericSync);
+}
+
+async function assertIsGenericArray(val) {
+    if (val === undefined) {
+        await assertionFailed('assertIsGenericArray called with non-StageL-supported argument type.');
+    }
+    if (val.constructor.name === 'Uint8Array') {
+        return;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if (val.every(isGenericSync)) {
+        return;
+    }
+    else {
+        await assertionFailed(val+" cannot be used as a generic array.");
+    }
+}
+
+async function isGenericItem(val) {
+    /* Should this support returning false for non-StageL-supported items? Otherwise it always returns true. I think probably not, since that wouldn't be consistent across languages; giving an assertion failure seems more sensible. */
+    if (val === undefined) {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
+    if (typeof val === 'boolean' || typeof val === 'string' || (Number.isInteger(val) && val >= -2147483648 && val <= 2147483647) || val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if (val.every(isGenericSync)) {
+        return true;
+    }
+    else {
+        await assertionFailed('isGenericItem called with non-StageL-supported argument type.');
+    }
+}
+
+async function assertIsGenericItem(val) {
+    if (val === undefined) {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
+    if (typeof val === 'boolean' || typeof val === 'string' || (Number.isInteger(val) && val >= -2147483648 && val <= 2147483647) || val.constructor.name === 'Uint8Array') {
+        return true;
+    }
+    if (val.constructor.name !== 'Array') {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
+    function isGenericSync(v) {
+        return (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647));
+    }
+    if (val.every(isGenericSync)) {
+        return true;
+    }
+    else {
+        await assertionFailed('assertIsGenericItem called with non-StageL-supported argument type.');
+    }
+}
+
+async function assertionFailed(message) {
+    await implDie("Assertion failed: "+message);
+}
+
+/* bits, provides:
+    bitAnd
+    bitNot
+*/
+
+// Note that bitwise operations in StageL operate on bytes rather than int32s. Consequently, C-style 8-bit bitwise operations must be emulated for the Javascript implementation. That said, C-style bitwise operators depend on the types being operated upon. So, there should probably be a set of functions like bitLshift8, bitLshift32, etc. maybe. Do these really make much sense in StageL, which is mostly higher-level? How would one implement these in languages that don't provide them natively? Mmh.
+
+async function bitAnd8(byteA, byteB) {
+    await assertIsByte(byteA); await assertIsByte(byteB); let byteReturn;
+
+    byteReturn = await internalBitwiseMask(byteA & byteB);
+
+    await assertIsByte(byteReturn); return byteReturn;
+}
+
+async function bitNot8(byteA) {
+    await assertIsByte(byteA); let byteReturn;
+
+    byteReturn = await internalBitwiseMask(~byteA);
+    await assertIsByte(byteReturn); return byteReturn;
+}
+
+async function bitLshift8(byteA, intPlaces) {
+    await assertIsByte(byteA); await assertIsInt(intPlaces); let byteReturn;
+
+    await assertIsBetween(intPlaces, 0, 8);
+
+    byteReturn = await internalBitwiseMask(byteA << intPlaces);
+
+    await assertIsByte(byteReturn); return byteReturn;
+}
+
+async function bitRshift8(byteA, intPlaces) {
+    await assertIsByte(byteA); await assertIsInt(intPlaces); let byteReturn;
+
+    await assertIsBetween(intPlaces, 0, 8);
+
+    byteReturn = await internalBitwiseMask(byteA >>> intPlaces); /* >>> is needed in JavaScript to make it fill zeroes behind it. >> does something else. */
+
+    await assertIsByte(byteReturn); return byteReturn;
+}
+
+// Internal function
+
+async function leastSignificantByte(int32input) {
+    let byteReturn;
+    let byteMask;
+    byteMask = 255;
+    byteReturn = int32input & byteMask; /* zero out all but the least significant bits, which are what we want */
+    return byteReturn;
+}
+
+async function getEnvPreferredFormat() {
+    // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
+    return envPreferredFormat;
+}
+
+async function getEnvResolutionW() {
+    // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available. If it's -1, it's unlimited (probably this would only occur if explicitly configured as such).
+    return envResolutionW;
+}
+
+async function getEnvResolutionH() {
+    // See getEnvResolutionW description.
+    return envResolutionH;
+}
+
+async function getEnvCharEncoding() {
+    return envCharEncoding;
+}
+
+async function getEnvTerminalType() {
+    return envTerminalType;
+}
+
+async function getEnvLanguage() {
+    return envLanguage;
+}
+
+async function getEnvCodeLanguage() {
+    return envCodeLanguage;
+}
+
+async function getEnvLocaleConfig() {
+    return envLocaleConfig;
+}
+
+async function renderDrawContents(renderBuffer) {
+    // Whether it appends to or replaces the frame would depend on the environment. In this implementation, HTML replaces, and terminal appends.
+    // The input is an array of bytes of the rendered document, either of HTML or text.
+    await assertIsByteArray(renderBuffer);
+    let utf8decoder = new TextDecoder('utf-8');
+    let string = utf8decoder.decode(Uint8Array.from(renderBuffer));
+    if (haveDom) {
+        await eiteHostCall('internalRequestRenderDrawHTMLToDOM', [string]);
+    }
+    else {
+        await console.log(string);
+    }
+}
+
+async function internalRequestRenderDrawHTMLToDOM(htmlString) {
+    let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
+    htmlOutputRootElement.innerHTML = htmlString;
+    htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+}
+
+/* type-tools, provides:
+    implIntBytearrayLength
+*/
+
+async function intBytearrayLength(bytearray) {
+    assertIsBytearray(bytearray); let intReturn;
+
+    intReturn = bytearray.byteLength; await assertIsInt(intReturn); return intReturn;
+}
+
+
+// @license-end
