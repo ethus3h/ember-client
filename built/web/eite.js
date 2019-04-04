@@ -3470,7 +3470,7 @@ async function setFormatImportSetting(strFormat, strKey, strValue) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatImportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
 
     /* Set the value of the specified import setting for the specified format. */
-    await setFormatImportSettings(strFormat, await kvSetValue(await getFormatImportSettings(strFormat), strKey), strKey, strValue);
+    await setFormatImportSettings(strFormat, await kvSetValue(await getFormatImportSettings(strFormat), strKey, strValue));
 
     await internalDebugStackExit();
 }
@@ -3479,7 +3479,7 @@ async function setFormatExportSetting(strFormat, strKey, strValue) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatExportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
 
     /* Set the value of the specified export setting for the specified format. */
-    await setFormatExportSettings(strFormat, await kvSetValue(await getFormatExportSettings(strFormat), strKey), strKey, strValue);
+    await setFormatExportSettings(strFormat, await kvSetValue(await getFormatExportSettings(strFormat), strKey, strValue));
 
     await internalDebugStackExit();
 }
