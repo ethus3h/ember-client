@@ -21,14 +21,14 @@ r/v/wasmCheckForError s/caller gi/arg
     # Next line seems to crash with intErr being a null object. Why????
     # await console.log(await ne(intErr, 0));
     # return;
-    if ne 0 n/err
-        die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.'
+    warn 'WASM error checking does not yet work.'
+    #if ne 0 n/err
+        #die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.'
 
 r/n/wasmCall s/routine n/val
     new n/res
     set n/res internalWasmCall s/routine n/val
-    warn 'WASM error checking does not yet work.'
-    #wasmCheckForError s/routine n/val
+    wasmCheckForError s/routine n/val
     return n/res
 
 r/n/wasmCallNoArgs s/routine

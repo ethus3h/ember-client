@@ -7059,9 +7059,9 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     /* Next line seems to crash with intErr being a null object. Why???? */
     /* await console.log(await ne(intErr, 0)); */
     /* return; */
-    if (await ne(0, intErr)) {
+    /*if (await ne(0, intErr)) {
         await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
-    }
+    }*/
 
     await internalDebugStackExit();
 }
@@ -7071,7 +7071,7 @@ async function wasmCall(strRoutine, intVal) {
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
-    //await wasmCheckForError(strRoutine, intVal);
+    await wasmCheckForError(strRoutine, intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
