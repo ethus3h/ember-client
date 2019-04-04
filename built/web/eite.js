@@ -3689,7 +3689,7 @@ async function getPreferredLanguageForFormat(strFormat, strDirection) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
-        if (await implEq('lang_', await substr(intItem, 0, 5))) {
+        if (await implEq('lang_', await substr(strItem, 0, 5))) {
             strRes = strItem;
             boolContinue = false;
         }
@@ -3718,7 +3718,7 @@ async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
-        if (await implEq('pl_', await substr(intItem, 0, 3))) {
+        if (await implEq('pl_', await substr(strItem, 0, 3))) {
             strRes = await substr(strItem, 3, -1);
             boolContinue = false;
         }
