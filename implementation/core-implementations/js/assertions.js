@@ -56,7 +56,13 @@ async function assertIsStr(str) {
 
 async function assertHasIndex(array, index) {
     if (!await hasIndex(array, index)) {
-        await assertionFailed(str+" is not a string.");
+        await assertionFailed("Array does not have the requested index "+index+".");
+    }
+}
+
+async function assertHasIndex(array, index) {
+    if (!await hasIndex(array, index)) {
+        await assertionFailed("Array does not have the requested index "+index+".");
     }
 }
 
