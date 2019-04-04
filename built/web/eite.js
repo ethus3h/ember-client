@@ -7071,7 +7071,7 @@ async function wasmCall(strRoutine, intVal) {
 
     let intRes = 0;
     intRes = await internalWasmCall(strRoutine, intVal);
-    await wasmCheckForError(strRoutine, intVal);
+    //await wasmCheckForError(strRoutine, intVal);
 
     intReturn = intRes; await assertIsInt(intReturn); await internalDebugStackExit(); return intReturn;
 }
