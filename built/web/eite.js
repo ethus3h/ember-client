@@ -6692,7 +6692,7 @@ async function runTestsWasm(boolV) {
 
     await testing(boolV, 'wasm');
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+    //await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
 
     await internalDebugStackExit();
 }
