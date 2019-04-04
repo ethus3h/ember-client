@@ -128,6 +128,9 @@ var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
 var envTerminalType;
+var envLanguage;
+var envLocaleConfig;
+var envCodeLanguage;
 var envResolutionW;
 var envResolutionH;
 
@@ -172,25 +175,25 @@ if (envPreferredFormat === undefined) {
     envPreferredFormat = '';
 }
 if (envCharEncoding === undefined) {
-    envCharEncoding = 'asciiSafeSubset'
+    envCharEncoding = 'asciiSafeSubset';
 }
 if (envTerminalType === undefined) {
-    envTerminalType = 'vt100'
+    envTerminalType = 'vt100';
 }
 if (envLanguage === undefined) {
-    envLanguage = 'en-US'
+    envLanguage = 'en-US';
 }
 if (envLocaleConfig === undefined) {
-    envLocaleConfig = 'inherit:usa,'
+    envLocaleConfig = 'inherit:usa,';
 }
 if (envCodeLanguage === undefined) {
-    envCodeLanguage = 'javascript'
+    envCodeLanguage = 'javascript';
 }
 if (envResolutionW === undefined) {
-    envResolutionW = '0'
+    envResolutionW = '0';
 }
 if (envResolutionH === undefined) {
-    envResolutionH = '0'
+    envResolutionH = '0';
 }
 
 async function isSetupFinished() {
@@ -941,6 +944,7 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
     push
     pop
     shift
+    hasIndex
     get
     getNext
     first
@@ -993,9 +997,18 @@ async function shift(array) {
     return await subset(array, 1, -1);
 }
 
+async function hasIndex(array, index) {
+    let len = await count(array);
+    if (index > count - 1) {
+        return false;
+    }
+    return true;
+}
+
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
+    await assertHasIndex(array, index);
     if (index < 0) {
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
@@ -1003,6 +1016,7 @@ async function get(array, index) {
     else {
         returnVal=array[index];
     }
+
     await assertIsGeneric(returnVal); return returnVal;
 }
 
@@ -1291,6 +1305,7 @@ function internalDebugLogJSObject(obj) {
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     let func=getWindowOrSelf().eiteWasmModule.instance.exports[strRoutine];
+    let eiteWasmMemory;
     if (giVal === null) {
         return func();
     }
@@ -1300,7 +1315,9 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     else {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
-        let memory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
+        if (typeof getWindowOrSelf().eiteWasmModule.instance.exports['memory'] !== 'undefined') {
+            eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports['memory'];
+        }
     }
 }
 
@@ -1765,6 +1782,12 @@ async function assertIsStr(str) {
         return;
     }
     await assertionFailed(str+" is not a string.");
+}
+
+async function assertHasIndex(array, index) {
+    if (!await hasIndex(array, index)) {
+        await assertionFailed("Array does not have the requested index "+index+".");
+    }
 }
 
 async function isGeneric(v) {

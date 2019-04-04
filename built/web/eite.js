@@ -175,25 +175,25 @@ if (envPreferredFormat === undefined) {
     envPreferredFormat = '';
 }
 if (envCharEncoding === undefined) {
-    envCharEncoding = 'asciiSafeSubset'
+    envCharEncoding = 'asciiSafeSubset';
 }
 if (envTerminalType === undefined) {
-    envTerminalType = 'vt100'
+    envTerminalType = 'vt100';
 }
 if (envLanguage === undefined) {
-    envLanguage = 'en-US'
+    envLanguage = 'en-US';
 }
 if (envLocaleConfig === undefined) {
-    envLocaleConfig = 'inherit:usa,'
+    envLocaleConfig = 'inherit:usa,';
 }
 if (envCodeLanguage === undefined) {
-    envCodeLanguage = 'javascript'
+    envCodeLanguage = 'javascript';
 }
 if (envResolutionW === undefined) {
-    envResolutionW = '0'
+    envResolutionW = '0';
 }
 if (envResolutionH === undefined) {
-    envResolutionH = '0'
+    envResolutionH = '0';
 }
 
 async function isSetupFinished() {
@@ -944,6 +944,7 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
     push
     pop
     shift
+    hasIndex
     get
     getNext
     first
@@ -996,9 +997,18 @@ async function shift(array) {
     return await subset(array, 1, -1);
 }
 
+async function hasIndex(array, index) {
+    let len = await count(array);
+    if (index > count - 1) {
+        return false;
+    }
+    return true;
+}
+
 async function get(array, index) {
     await assertIsArray(array); await assertIsInt(index); let returnVal;
 
+    await assertHasIndex(array, index);
     if (index < 0) {
         /* JavaScript arrays don't allow negative indices without doing it this way */
         returnVal = array.slice(index)[0];
@@ -1006,6 +1016,7 @@ async function get(array, index) {
     else {
         returnVal=array[index];
     }
+
     await assertIsGeneric(returnVal); return returnVal;
 }
 
@@ -1773,6 +1784,12 @@ async function assertIsStr(str) {
     await assertionFailed(str+" is not a string.");
 }
 
+async function assertHasIndex(array, index) {
+    if (!await hasIndex(array, index)) {
+        await assertionFailed("Array does not have the requested index "+index+".");
+    }
+}
+
 async function isGeneric(v) {
     // We have to do isGeneric in native code because otherwise the assertion at the start of the function would call it.
     if (typeof v === 'boolean' || typeof v === 'string' || (Number.isInteger(v) && v >= -2147483648 && v <= 2147483647)) {
@@ -2233,7 +2250,7 @@ async function dcaFromSems(intArrayIn) {
     if (await implEq(strParserState, 'comment')) {
         /* Document ended with a comment and no newline at the end */
         if (await ne(0, await len(strCurrentDc))) {
-            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.'+strCurrentDc);
+            await implDie(await implCat('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found: ', await implCat(strCurrentDc, '.')));
         }
         intArrayRes = await push(intArrayRes, 248);
     }
@@ -2257,9 +2274,41 @@ async function dcaToSems(intArrayDcIn) {
     intLen = await count(intArrayDcIn);
     let intInputIndex = 0;
     intInputIndex = 0;
+    let intCurrentDc = 0;
+    let boolInComment = false;
+    boolInComment = false;
+    let intArrayCurrentComment = [];
+    intArrayCurrentComment = [  ];
+    let boolAtCommentEnd = false;
+    boolAtCommentEnd = false;
     while (await implLt(intInputIndex, intLen)) {
-        intArrayOut = await push(intArrayOut, await strToByteArray(await implCat(await strFrom(await get(intArrayDcIn, intInputIndex), ), ' ')));
+        intCurrentDc = await get(intArrayDcIn, intInputIndex);
+        if (boolAtCommentEnd) {
+            boolAtCommentEnd = false;
+        }
+        if (await implEq(246, intCurrentDc)) {
+            boolInComment = true;
+            intArrayOut = await append(intArrayOut, await strToByteArray('#'));
+        }
+        else if (await implEq(248, intCurrentDc)) {
+            boolInComment = false;
+            boolAtCommentEnd = true;
+            intArrayOut = await append(intArrayOut, await dcaToDcbnbUtf8(intArrayCurrentComment));
+            intArrayCurrentComment = [  ];
+            intArrayOut = await append(intArrayOut, await crlf());
+        }
+        else {
+            if (boolInComment) {
+                intArrayCurrentComment = await push(intArrayCurrentComment, intCurrentDc);
+            }
+            else {
+                intArrayOut = await append(intArrayOut, await strToByteArray(await implCat(await strFrom(intCurrentDc), ' ')));
+            }
+        }
         intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    if (await implNot(boolAtCommentEnd)) {
+        intArrayOut = await append(intArrayOut, await crlf());
     }
     await assertIsByteArray(intArrayOut);
 
@@ -2436,7 +2485,7 @@ async function runTestsFormatSems(boolV) {
     await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
     /* Comment preservation */
     await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
-    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65, 13, 10 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
     /* UTF-8 comments */
     await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 246, 18, 100, 82, 106, 18, 20, 57, 86, 93, 93, 96, 30, 18, 33, 72, 96, 99, 93, 85, 33, 19, 18, 281, 20, 248, 1, 2, 246, 18, 281, 248 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
 
@@ -3636,7 +3685,7 @@ async function getPreferredLanguageForFormat(strFormat, strDirection) {
     boolContinue = true;
     let intItem = 0;
     while (boolContinue) {
-        if (await implNot(await implLt(intC, intL - 1))) {
+        if (await implNot(await implLt(intC, await implAdd(-1, intL)))) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
@@ -3665,7 +3714,7 @@ async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
     boolContinue = true;
     let intItem = 0;
     while (boolContinue) {
-        if (await implNot(await implLt(intC, intL - 1))) {
+        if (await implNot(await implLt(intC, await implAdd(-1, intL)))) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
@@ -5686,20 +5735,20 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-/*    await runTestsMath(boolV);
+    await runTestsMath(boolV);
     await runTestsPack32(boolV);
-    await runTestsTypeConversion(boolV);*/
-    //await runTestsWasm(boolV);
+    await runTestsTypeConversion(boolV);
+    await runTestsWasm(boolV);
     /* Core tests */
-    /*await runTestsDcData(boolV);
-    await runTestsFormatDc(boolV);*/
+    await runTestsDcData(boolV);
+    await runTestsFormatDc(boolV);
     /* Format tests */
-    /*await runTestsFormatAscii(boolV);
+    await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
-    await runTestsFormatIntegerList(boolV);*/
-    //await runTestsFormatSems(boolV);
+    await runTestsFormatIntegerList(boolV);
+    await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
     /* Document exec tests */
     await runTestsDocumentExec(boolV);
@@ -6693,7 +6742,7 @@ async function runTestsWasm(boolV) {
 
     await testing(boolV, 'wasm');
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
-    //await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+    /*runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 ) */
 
     await internalDebugStackExit();
 }
@@ -7060,9 +7109,11 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     /* Next line seems to crash with intErr being a null object. Why???? */
     /* await console.log(await ne(intErr, 0)); */
     /* return; */
-    /*if (await ne(0, intErr)) {
-        await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
-    }*/
+    await implWarn('WASM error checking does not yet work.');
+    /*if ne 0 n/err */
+    {
+        /*die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.' */
+    }
 
     await internalDebugStackExit();
 }

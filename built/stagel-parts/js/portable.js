@@ -213,6 +213,7 @@ async function dcaFromSems(intArrayIn) {
                     /* Comment was not preceded by a space */
                     await warnOrDie(boolStrict, 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.');
                     intArrayRes = await push(intArrayRes, await intFromIntStr(strCurrentDc));
+                    strCurrentDc = '';
                 }
                 intArrayRes = await push(intArrayRes, 246);
                 strParserState = 'comment';
@@ -238,7 +239,7 @@ async function dcaFromSems(intArrayIn) {
     if (await implEq(strParserState, 'comment')) {
         /* Document ended with a comment and no newline at the end */
         if (await ne(0, await len(strCurrentDc))) {
-            await implDie('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found.');
+            await implDie(await implCat('Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found: ', await implCat(strCurrentDc, '.')));
         }
         intArrayRes = await push(intArrayRes, 248);
     }
@@ -262,9 +263,41 @@ async function dcaToSems(intArrayDcIn) {
     intLen = await count(intArrayDcIn);
     let intInputIndex = 0;
     intInputIndex = 0;
+    let intCurrentDc = 0;
+    let boolInComment = false;
+    boolInComment = false;
+    let intArrayCurrentComment = [];
+    intArrayCurrentComment = [  ];
+    let boolAtCommentEnd = false;
+    boolAtCommentEnd = false;
     while (await implLt(intInputIndex, intLen)) {
-        intArrayOut = await push(intArrayOut, await strToByteArray(await implCat(await strFrom(await get(intArrayDcIn, intInputIndex), ), ' ')));
+        intCurrentDc = await get(intArrayDcIn, intInputIndex);
+        if (boolAtCommentEnd) {
+            boolAtCommentEnd = false;
+        }
+        if (await implEq(246, intCurrentDc)) {
+            boolInComment = true;
+            intArrayOut = await append(intArrayOut, await strToByteArray('#'));
+        }
+        else if (await implEq(248, intCurrentDc)) {
+            boolInComment = false;
+            boolAtCommentEnd = true;
+            intArrayOut = await append(intArrayOut, await dcaToDcbnbUtf8(intArrayCurrentComment));
+            intArrayCurrentComment = [  ];
+            intArrayOut = await append(intArrayOut, await crlf());
+        }
+        else {
+            if (boolInComment) {
+                intArrayCurrentComment = await push(intArrayCurrentComment, intCurrentDc);
+            }
+            else {
+                intArrayOut = await append(intArrayOut, await strToByteArray(await implCat(await strFrom(intCurrentDc), ' ')));
+            }
+        }
         intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    if (await implNot(boolAtCommentEnd)) {
+        intArrayOut = await append(intArrayOut, await crlf());
     }
     await assertIsByteArray(intArrayOut);
 
@@ -441,7 +474,7 @@ async function runTestsFormatSems(boolV) {
     await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
     /* Comment preservation */
     await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
-    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65, 13, 10 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
     /* UTF-8 comments */
     await runTest(boolV, await arrEq([ 256, 258, 260, 262, 264, 263, 57, 86, 93, 93, 96, 30, 18, 286, 72, 96, 99, 93, 85, 287, 19, 18, 284, 261, 259, 246, 18, 100, 82, 106, 18, 20, 57, 86, 93, 93, 96, 30, 18, 33, 72, 96, 99, 93, 85, 33, 19, 18, 281, 20, 248, 1, 2, 246, 18, 281, 248 ], await dcaFromSems([ 50, 53, 54, 32, 50, 53, 56, 32, 50, 54, 48, 32, 50, 54, 50, 32, 50, 54, 52, 32, 50, 54, 51, 32, 53, 55, 32, 56, 54, 32, 57, 51, 32, 57, 51, 32, 57, 54, 32, 51, 48, 32, 49, 56, 32, 50, 56, 54, 32, 55, 50, 32, 57, 54, 32, 57, 57, 32, 57, 51, 32, 56, 53, 32, 50, 56, 55, 32, 49, 57, 32, 49, 56, 32, 50, 56, 52, 32, 50, 54, 49, 32, 50, 53, 57, 32, 35, 32, 115, 97, 121, 32, 34, 72, 101, 108, 108, 111, 44, 32, 47, 87, 111, 114, 108, 100, 47, 33, 32, 226, 154, 189, 34, 10, 49, 32, 50, 32, 35, 32, 226, 154, 189, 10 ])));
 
@@ -1641,7 +1674,7 @@ async function getPreferredLanguageForFormat(strFormat, strDirection) {
     boolContinue = true;
     let intItem = 0;
     while (boolContinue) {
-        if (await implNot(await implLt(intC, intL))) {
+        if (await implNot(await implLt(intC, await implAdd(-1, intL)))) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
@@ -1670,7 +1703,7 @@ async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
     boolContinue = true;
     let intItem = 0;
     while (boolContinue) {
-        if (await implNot(await implLt(intC, intL))) {
+        if (await implNot(await implLt(intC, await implAdd(-1, intL)))) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
@@ -4698,7 +4731,7 @@ async function runTestsWasm(boolV) {
 
     await testing(boolV, 'wasm');
     await runTest(boolV, await implEq(42, await wasmCall('fortytwo', 0)));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+    /*runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 ) */
 
     await internalDebugStackExit();
 }
@@ -5065,8 +5098,10 @@ async function wasmCheckForError(strCaller, genericItemArg) {
     /* Next line seems to crash with intErr being a null object. Why???? */
     /* await console.log(await ne(intErr, 0)); */
     /* return; */
-    if (await ne(0, intErr)) {
-        await implDie(await implCat('WebAssembly call to ', await implCat(strCaller, await implCat(' with the argument ', await implCat(strArgStr, ' reported an error.')))));
+    await implWarn('WASM error checking does not yet work.');
+    /*if ne 0 n/err */
+    {
+        /*die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.' */
     }
 
     await internalDebugStackExit();
