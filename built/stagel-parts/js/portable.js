@@ -1,7 +1,7 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-async function dctCodeToText(intArrayIn, strTargetLanguage) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctCodeToText:code-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+async function dctCodeToText(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dctCodeToText:code-to-text'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     let intArrayRes = [];
     let intC = 0;
@@ -9,6 +9,11 @@ async function dctCodeToText(intArrayIn, strTargetLanguage) {
     let intL = 0;
     intL = await count(intArrayIn);
     let intCurrentDc = 0;
+    let strTargetLanguage = '';
+    strTargetLanguage = await getFormatImportSetting('codeToText', 'language');
+    if (await implEq(0, await len(strTargetLanguage))) {
+        strTargetLanguage = await getEnvCodeLanguage();
+    }
     let strTemp = '';
     while (await implLt(intC, intL)) {
         intCurrentDc = await get(intArrayIn, intC);
@@ -27,8 +32,8 @@ async function dctCodeToText(intArrayIn, strTargetLanguage) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function dctSemanticToText(intArrayIn, strTargetLanguage) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctSemanticToText:semantic-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+async function dctSemanticToText(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dctSemanticToText:semantic-to-text'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     let intArrayRes = [];
     let intC = 0;
@@ -36,6 +41,11 @@ async function dctSemanticToText(intArrayIn, strTargetLanguage) {
     let intL = 0;
     intL = await count(intArrayIn);
     let intCurrentDc = 0;
+    let strTargetLanguage = '';
+    strTargetLanguage = await getFormatImportSetting('semanticToText', 'language');
+    if (await implEq(0, await len(strTargetLanguage))) {
+        strTargetLanguage = await getEnvLanguage();
+    }
     let strTemp = '';
     while (await implLt(intC, intL)) {
         intCurrentDc = await get(intArrayIn, intC);
@@ -471,7 +481,7 @@ async function runTestsFormatSems(boolV) {
     /* No trailing space, will fail in strict mode. */
     await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
     /* Should fail but I don't have a way to test to ensure failure yet: runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 32 50 ) */
-    await runTest(boolV, await arrEq([ 49, 32, 50, 32 ], await dcaToSems([ 1, 2 ])));
+    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 13, 10 ], await dcaToSems([ 1, 2 ])));
     /* Comment preservation */
     await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65, 13, 10 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
@@ -1459,7 +1469,7 @@ async function setFormatImportSetting(strFormat, strKey, strValue) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatImportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
 
     /* Set the value of the specified import setting for the specified format. */
-    await setFormatImportSettings(strFormat, await kvSetValue(await getFormatImportSettings(strFormat), strKey), strKey, strValue);
+    await setFormatImportSettings(strFormat, await kvSetValue(await getFormatImportSettings(strFormat), strKey, strValue));
 
     await internalDebugStackExit();
 }
@@ -1468,7 +1478,7 @@ async function setFormatExportSetting(strFormat, strKey, strValue) {
     await internalDebugCollect('str Format = ' + strFormat + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Value = ' + strValue + '; '); await internalDebugStackEnter('setFormatExportSetting:public-interface'); await assertIsStr(strFormat); await assertIsStr(strKey); await assertIsStr(strValue);
 
     /* Set the value of the specified export setting for the specified format. */
-    await setFormatExportSettings(strFormat, await kvSetValue(await getFormatExportSettings(strFormat), strKey), strKey, strValue);
+    await setFormatExportSettings(strFormat, await kvSetValue(await getFormatExportSettings(strFormat), strKey, strValue));
 
     await internalDebugStackExit();
 }
@@ -1525,7 +1535,7 @@ async function setFormatImportSettings(strFormat, strArraySettings) {
     /* Replace the import settings array for the specified format. */
     await setupIfNeeded();
     await assertIsSupportedInputFormat(strFormat);
-    await setImportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+    await setImportSettings(await getFormatId(strFormat), await kvJoin(strArraySettings));
 
     await internalDebugStackExit();
 }
@@ -1536,7 +1546,7 @@ async function setFormatExportSettings(strFormat, strArraySettings) {
     /* Replace the export settings array for the specified format. */
     await setupIfNeeded();
     await assertIsSupportedOutputFormat(strFormat);
-    await setExportSettings(await getFormatId(strFormat), await kvJoin(strArrayValue));
+    await setExportSettings(await getFormatId(strFormat), await kvJoin(strArraySettings));
 
     await internalDebugStackExit();
 }
@@ -1678,7 +1688,7 @@ async function getPreferredLanguageForFormat(strFormat, strDirection) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
-        if (await implEq('lang_', await substr(intItem, 0, 5))) {
+        if (await implEq('lang_', await substr(strItem, 0, 5))) {
             strRes = strItem;
             boolContinue = false;
         }
@@ -1707,7 +1717,7 @@ async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
             boolContinue = false;
         }
         strItem = await get(strArrayTemp, intC);
-        if (await implEq('pl_', await substr(intItem, 0, 3))) {
+        if (await implEq('pl_', await substr(strItem, 0, 3))) {
             strRes = await substr(strItem, 3, -1);
             boolContinue = false;
         }

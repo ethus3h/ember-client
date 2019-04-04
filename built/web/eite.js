@@ -2011,8 +2011,8 @@ async function intBytearrayLength(bytearray) {
 
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-async function dctCodeToText(intArrayIn, strTargetLanguage) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctCodeToText:code-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+async function dctCodeToText(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dctCodeToText:code-to-text'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     let intArrayRes = [];
     let intC = 0;
@@ -2020,6 +2020,11 @@ async function dctCodeToText(intArrayIn, strTargetLanguage) {
     let intL = 0;
     intL = await count(intArrayIn);
     let intCurrentDc = 0;
+    let strTargetLanguage = '';
+    strTargetLanguage = await getFormatImportSetting('codeToText', 'language');
+    if (await implEq(0, await len(strTargetLanguage))) {
+        strTargetLanguage = await getEnvCodeLanguage();
+    }
     let strTemp = '';
     while (await implLt(intC, intL)) {
         intCurrentDc = await get(intArrayIn, intC);
@@ -2038,8 +2043,8 @@ async function dctCodeToText(intArrayIn, strTargetLanguage) {
     intArrayReturn = intArrayRes; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
 }
 
-async function dctSemanticToText(intArrayIn, strTargetLanguage) {
-    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugCollect('str TargetLanguage = ' + strTargetLanguage + '; '); await internalDebugStackEnter('dctSemanticToText:semantic-to-text'); await assertIsIntArray(intArrayIn); await assertIsStr(strTargetLanguage); let intArrayReturn;
+async function dctSemanticToText(intArrayIn) {
+    await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dctSemanticToText:semantic-to-text'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
     let intArrayRes = [];
     let intC = 0;
@@ -2047,6 +2052,11 @@ async function dctSemanticToText(intArrayIn, strTargetLanguage) {
     let intL = 0;
     intL = await count(intArrayIn);
     let intCurrentDc = 0;
+    let strTargetLanguage = '';
+    strTargetLanguage = await getFormatImportSetting('semanticToText', 'language');
+    if (await implEq(0, await len(strTargetLanguage))) {
+        strTargetLanguage = await getEnvLanguage();
+    }
     let strTemp = '';
     while (await implLt(intC, intL)) {
         intCurrentDc = await get(intArrayIn, intC);
@@ -2283,7 +2293,6 @@ async function dcaToSems(intArrayDcIn) {
     boolAtCommentEnd = false;
     while (await implLt(intInputIndex, intLen)) {
         intCurrentDc = await get(intArrayDcIn, intInputIndex);
-        console.log('found dc '+intCurrentDc);
         if (boolAtCommentEnd) {
             boolAtCommentEnd = false;
         }
@@ -2294,18 +2303,13 @@ async function dcaToSems(intArrayDcIn) {
         else if (await implEq(248, intCurrentDc)) {
             boolInComment = false;
             boolAtCommentEnd = true;
-            console.log('Appending to out was '+intArrayOut);
-            console.log('Appending to out current comment '+intArrayCurrentComment);
             intArrayOut = await append(intArrayOut, await dcaToDcbnbUtf8(intArrayCurrentComment));
-            console.log('Appended to out now is '+intArrayOut);
             intArrayCurrentComment = [  ];
             intArrayOut = await append(intArrayOut, await crlf());
         }
         else {
             if (boolInComment) {
-                console.log('Appending to comment '+intCurrentDc)
                 intArrayCurrentComment = await push(intArrayCurrentComment, intCurrentDc);
-                console.log('Comment now is '+intArrayCurrentComment);
             }
             else {
                 intArrayOut = await append(intArrayOut, await strToByteArray(await implCat(await strFrom(intCurrentDc), ' ')));
@@ -5741,19 +5745,19 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    /*await runTestsMath(boolV);
+    await runTestsMath(boolV);
     await runTestsPack32(boolV);
-    await runTestsTypeConversion(boolV);*/
+    await runTestsTypeConversion(boolV);
     await runTestsWasm(boolV);
     /* Core tests */
-/*    await runTestsDcData(boolV);
-    await runTestsFormatDc(boolV);*/
+    await runTestsDcData(boolV);
+    await runTestsFormatDc(boolV);
     /* Format tests */
-/*    await runTestsFormatAscii(boolV);
+    await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);
-    await runTestsFormatIntegerList(boolV);*/
+    await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
     /* Document exec tests */
