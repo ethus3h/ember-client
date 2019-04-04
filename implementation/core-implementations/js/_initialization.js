@@ -6,6 +6,9 @@ var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
 var envTerminalType;
+var envLanguage;
+var envLocaleConfig;
+var envCodeLanguage;
 var envResolutionW;
 var envResolutionH;
 
@@ -50,25 +53,25 @@ if (envPreferredFormat === undefined) {
     envPreferredFormat = '';
 }
 if (envCharEncoding === undefined) {
-    envCharEncoding = 'asciiSafeSubset'
+    envCharEncoding = 'asciiSafeSubset';
 }
 if (envTerminalType === undefined) {
-    envTerminalType = 'vt100'
+    envTerminalType = 'vt100';
 }
 if (envLanguage === undefined) {
-    envLanguage = 'en-US'
+    envLanguage = 'en-US';
 }
 if (envLocaleConfig === undefined) {
-    envLocaleConfig = 'inherit:usa,'
+    envLocaleConfig = 'inherit:usa,';
 }
 if (envCodeLanguage === undefined) {
-    envCodeLanguage = 'javascript'
+    envCodeLanguage = 'javascript';
 }
 if (envResolutionW === undefined) {
-    envResolutionW = '0'
+    envResolutionW = '0';
 }
 if (envResolutionH === undefined) {
-    envResolutionH = '0'
+    envResolutionH = '0';
 }
 
 async function isSetupFinished() {

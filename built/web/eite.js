@@ -128,6 +128,9 @@ var exportSettings;
 var envPreferredFormat;
 var envCharEncoding;
 var envTerminalType;
+var envLanguage;
+var envLocaleConfig;
+var envCodeLanguage;
 var envResolutionW;
 var envResolutionH;
 
