@@ -46,13 +46,11 @@ r/as/strSplit s/in s/separator
             else
                 set s/remaining ''
         set n/remainingLen len s/remaining
-    if ne '' s/currentElem
-        # No trailing delimiter
-        set as/res push as/res s/currentElem
+    set as/res push as/res s/currentElem
     return as/res
 
 r/s/strJoin ga/in s/separator
-    # Opposite of strSplit for a given separator (never gives a trailing delimiter, though, and remember that delimiters are in-band signalling and a trailing delimiter indicates an empty last item, so strSplit strJoin strSplit ',,' will give [ '' ] not [ '' '' ])
+    # Opposite of strSplit for a given separator
     new n/count
     set n/count count ga/in
     new n/i
