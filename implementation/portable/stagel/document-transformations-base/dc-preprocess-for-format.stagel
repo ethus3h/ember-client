@@ -12,6 +12,6 @@ r/an/dcPreprocessForFormat an/in s/format s/direction
         setFormatImportSetting 'semanticToText' 'language' s/temp
     if not in 'skip_prefilter_code' getSettingsForFormat s/format s/direction
         set s/temp pushFormatImportSetting 'codeToText' 'language' s/preferredCodeLang
-        set an/res overrideDctCodeToText an/res s/preferredCodeLang
+        set an/res dctCodeToText an/res
         setFormatImportSetting 'codeToText' 'language' s/temp
     return an/res
