@@ -1303,7 +1303,7 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     else {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
-        let memory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
+        let eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports[memory];
     }
 }
 
@@ -5682,9 +5682,9 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsMath(boolV);
+/*    await runTestsMath(boolV);
     await runTestsPack32(boolV);
-    await runTestsTypeConversion(boolV);
+    await runTestsTypeConversion(boolV);*/
     await runTestsWasm(boolV);
     /* Core tests */
     await runTestsDcData(boolV);
