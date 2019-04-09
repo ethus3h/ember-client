@@ -16,7 +16,7 @@
             let main=document.getElementsByTagName('main')[0];
             main.remove();
             let elem=document.importNode(document.getElementById('startPageTemplate').content, true);
-            document..getElementById('documentPanel').appendChild(elem.firstChild);
+            document.getElementById('documentPanel').appendChild(elem.firstChild);
             document.getElementById('create').onclick=createClicked;
         }
         document.getElementById('start').onclick=startClicked;
