@@ -49,6 +49,29 @@
     <section id="tabPanel">
     </section>
 </section>
+<template id="documentViewModeMenu">
+    <checkbox id="viewTogglePaginated">Paginated?</checkbox>
+    <checkbox id="viewToggleLinenums">Line numbers?</checkbox>
+    <submenu id="viewmodesBasic">
+        <button id="viewWysiwyg">Visual</button>
+        <button id="viewWysiwym">Structured</button>
+        <button id="viewTags">Tags</button>
+        <button id="viewSource">Source</button>
+        <button id="viewDcs">Dc list</button>
+    </submenu>
+    <submenu id="viewmodesData">
+        <button id="viewTables">Tables</button>
+        <button id="viewTree">Tree</button>
+        <button id="viewXML">XML</button>
+        <button id="viewJson">JSON</button>
+    </submenu>
+    <submenu id="viewmodesAudio">
+        <button id="viewTracks">Tracks</button>
+        <button id="viewScore">Score</button><!-- Score would be the same as the Visual mode, wouldn't it? Hmm. -->
+        <button id="viewPianoRoll">Piano roll</button>
+        <button id="viewWaveform">Waveform</button>
+    </submenu>
+</template>
 <template id="documentViewTemplate"><main>
     <section id="documentViewToolbar">
         <button id="docbtnSave">Save</button>
