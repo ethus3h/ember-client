@@ -30,7 +30,7 @@
 <nav>
     <button id="start">Start</button>
     <button id="tabbar-button">⯐</button>
-    <input type="text" id="tabbar">
+    <input type="text" id="tabbar" />
     <button id="edit">🖉</button>
     <button id="expand">❬</button>
     <button id="weather">🌤</button>
@@ -40,6 +40,7 @@
 </nav>
 <section id="leftPanel">
     <section id="fileBrowser">
+        File browser pane
     </section>
 </section>
 <section id="documentPanel">
@@ -50,13 +51,35 @@
 </section>
 <template id="documentViewTemplate"><main>
     <section id="documentViewToolbar">
+        <button id="docbtnSave">Save</button>
+        <button id="docbtnSaveAs">Save As...</button>
+        <button id="docbtnCopy">Save</button>
+        <button id="docbtnPaste">Save</button>
+        <button id="docbtnViewEditToggle">View/Edit</button>
+        <button id="docbtnViewMode">View Mode</button>
+        <button id="docbtnEditToolsAndSettings">Edit Tools &amp; Settings</button>
+        <button id="docbtnInsert">Insert</button>
+        <button id="docbtnPanels">Panels</button>
+        <button id="docbtnSearch">Search</button>
     </section>
     <section id="documentViewLeftPanel">
         <section id="documentNavPanel">
+            <input type="text" id="documentNavSearchField" />
+            <ul>
+                <li>Heading</li>
+                <li>Heading
+                <ul>
+                    <li>Subheading</li>
+                    <li>Subheading</li>
+                </ul></li>
+                <li>Heading</li>
+            </ul>
         </section>
         <section id="insertObjects">
+            Insert objects palette
         </section>
         <section id="dcPicker">
+            Insert dc palette
         </section>
     </section>
     <section id="documentContents">
