@@ -96,7 +96,7 @@
             text-overflow: ellipsis;
             display: flex;
             align-items: center;
-            white-space: pre;
+            /*white-space: pre;*/
         }
         #tabbarTabs > .tabbutton > button {
             height: 50%;
