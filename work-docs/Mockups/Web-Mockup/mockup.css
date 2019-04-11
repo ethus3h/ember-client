@@ -103,6 +103,12 @@
         #tabbarTabs > .tabbutton > button {
             height: 50%;
         }
+        #tabbarTabs > .tabbutton > button:first-child {
+            margin-right: 0.3rem;
+        }
+        #tabbarTabs > .tabbutton > button:last-child {
+            margin-left: 0.3rem;
+        }
         #playbackbuttons {
             flex-direction: column;
             flex-grow: 0;
