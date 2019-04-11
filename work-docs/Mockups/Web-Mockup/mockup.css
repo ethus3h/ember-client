@@ -84,14 +84,14 @@
             width: 3rem;
             flex-grow: 1;
         }
-        #tabbarTabs {
+        #tabbarTabs, #tabbarBreadcrumbs {
             width: 100%;
             display: flex;
         }
-        #tabbarTabs > .tabbutton:first-of-type {
+        #tabbarTabs > .tabbutton:first-of-type, #tabbarBreadcrumbs > .breadcrumb:first-of-type {
             margin-left: auto;
         }
-        #tabbarTabs > .tabbutton {
+        #tabbarTabs > .tabbutton, #tabbarBreadcrumbs > .breadcrumb {
             overflow: hidden;
             text-overflow: ellipsis;
             display: flex;
@@ -100,13 +100,13 @@
             min-width: 0rem;
             /*white-space: pre;*/
         }
-        #tabbarTabs > .tabbutton > button {
+        #tabbarTabs > .tabbutton > button, #tabbarBreadcrumbs > .breadcrumb > button {
             height: 50%;
         }
         #tabbarTabs > .tabbutton > button:first-child {
             margin-right: 0.3rem;
         }
-        #tabbarTabs > .tabbutton > button:last-child {
+        #tabbarTabs > .tabbutton > button:last-child, #tabbarBreadcrumbs > .breadcrumb > button:last-child {
             margin-left: 0.3rem;
         }
         #playbackbuttons {
