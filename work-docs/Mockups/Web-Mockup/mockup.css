@@ -87,10 +87,9 @@
         #tabbarTabs {
             width: 100%;
             display: flex;
-            align-items: flex-end;
         }
-        #tabbarTabs button {
-            align-self: right;
+        #tabbarTabs button:first-of-type {
+            margin-left: auto;
         }
         #playbackbuttons {
             flex-direction: column;
