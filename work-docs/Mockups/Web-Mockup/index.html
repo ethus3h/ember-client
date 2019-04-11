@@ -33,6 +33,10 @@
             attachFn('create',createClicked);
             document.getElementById('create').onclick=createClicked;
         }
+        let tabbarEditClicked = () => {
+            document.getElementById('tabbarTabs').style.display='block';
+            document.getElementById('edit').innerHTML='x';
+        }
         attachFn('start',startClicked);
         startClicked();
     };
@@ -43,6 +47,7 @@
     <button id="start">Start</button>
     <button id="tabbar-button">⯐</button>
     <input type="text" id="tabbar" />
+    <img 
     <button id="edit">🖉</button>
     <button id="expand">❬</button>
     <button id="weather">🌤</button>
