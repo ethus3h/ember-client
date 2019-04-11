@@ -10,7 +10,7 @@
         nav, #mainrow {
             width: 100vw;
         }
-        nav {
+        nav, #playbackbuttons {
             height: 10vh;
             min-height: 1rem;
             max-height: 3rem;
@@ -61,7 +61,7 @@
         #calendar {
             font-size: 50%;
         }
-        nav button:not(#calendar) {
+        nav button:not(#calendar), nav #playbackbuttons {
             width: 10vh;
             min-width: 1rem;
             max-width: 3rem;
@@ -88,7 +88,7 @@
             flex-direction: column;
             flex-grow: 0;
         }
-        #playbackbuttons button {
+        #playbackbuttons > button, #playprevnext {
             height: 50%;
         }
         #playprevnext button {
