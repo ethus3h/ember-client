@@ -93,7 +93,7 @@
         #tabbarTabs > .tabbutton:first-of-type {
             margin-left: auto;
         }
-        #tabbarBreadcrumbs > .breadcrumb:last-of-type {
+        #tabbarBreadcrumbs > .breadcrumb:last-child {
             margin-right: auto;
         }
         #tabbarTabs > .tabbutton, #tabbarBreadcrumbs > .breadcrumb {
