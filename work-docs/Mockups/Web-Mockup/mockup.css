@@ -88,14 +88,14 @@
             width: 100%;
             display: flex;
         }
-        #tabbarTabs > button:first-of-type {
+        #tabbarTabs > .tabbutton:first-of-type {
             margin-left: auto;
         }
-        #tabbarTabs > button {
+        #tabbarTabs > .tabbutton {
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        #tabbarTabs > button > button {
+        #tabbarTabs > .tabbutton > button {
             height: 50%;
         }
         #playbackbuttons {
