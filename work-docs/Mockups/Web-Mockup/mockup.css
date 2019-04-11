@@ -87,7 +87,6 @@
         #tabbarTabs {
             width: 100%;
             display: flex;
-            flex-direction: row-reverse;
         }
         #tabbarTabs > .tabbutton:first-of-type {
             margin-left: auto;
