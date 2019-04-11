@@ -103,6 +103,15 @@
         }
         #playbackbuttons {
             flex-direction: column;
+            flex-grow: 0;
+        }
+        #playbackbuttons button {
+            height: 50%;
+        }
+        #playprevnext button {
+            width: 5vh;
+            min-width: 0.5rem;
+            max-width: 1.5rem;
         }
         .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
             float: right;
