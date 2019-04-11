@@ -13,17 +13,17 @@
             container.appendChild(elem);
             return elem;
         }
-        let createClicked = () => {
-            let elem=document.importNode(document.getElementById('editFrameTemplate').content, true);
-            let main=document.getElementsByTagName('main')[0];
-            main.innerHTML='';
-            main.appendChild(elem.firstChild);
-        }
-        let startClicked = () => {
+        let removeDocumentElement = () => {
             let main=document.getElementsByTagName('main')[0];
             main.remove();
-            let elem=document.importNode(document.getElementById('startPageTemplate').content, true);
-            document.getElementById('documentPanel').appendChild(elem.firstChild);
+        }
+        let createClicked = () => {
+            removeDocumentElement();
+            addElement('startPage', 'documentPanel');
+        }
+        let startClicked = () => {
+            removeDocumentElement();
+            addElement('startPage', 'documentPanel');
             document.getElementById('create').onclick=createClicked;
         }
         document.getElementById('start').onclick=startClicked;
@@ -231,7 +231,7 @@
         </section>
     </section>
 </main></template>
-<template id="editFrameTemplate"><iframe class="eiteEditToolFrame" src="/specification/engineering-and-tech/information-technology/env/web/edit.html"></iframe></template>
+<template id="editFrameTemplate"><main><iframe class="eiteEditToolFrame" src="/specification/engineering-and-tech/information-technology/env/web/edit.html"></iframe></main></template>
 <div id="background"></div>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
     <defs>
