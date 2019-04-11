@@ -114,6 +114,9 @@
         #tabbarTabs > .tabbutton > button:last-child, #tabbarBreadcrumbs > .breadcrumb > button:last-child {
             margin-left: 0.3rem;
         }
+        #tabbarEditInput {
+            width: 100%;
+        }
         #playbackbuttons {
             flex-direction: column;
             flex-grow: 0;
