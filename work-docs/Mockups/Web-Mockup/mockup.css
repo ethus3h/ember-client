@@ -88,8 +88,11 @@
             width: 100%;
             display: flex;
         }
-        #tabbarTabs > .tabbutton:first-of-type, #tabbarBreadcrumbs > .breadcrumb:first-of-type {
+        #tabbarTabs > .tabbutton:first-of-type {
             margin-left: auto;
+        }
+        #tabbarBreadcrumbs > .breadcrumb:last-of-type {
+            margin-right: auto;
         }
         #tabbarTabs > .tabbutton, #tabbarBreadcrumbs > .breadcrumb {
             overflow: hidden;
