@@ -87,14 +87,17 @@
         #playbackbuttons {
             flex-direction: column;
             flex-grow: 0;
+            overflow: hidden;
         }
         #playbackbuttons > button, #playprevnext {
             height: 50%;
         }
+        #playprevnext {
+            flex-direction: row;
+            display: flex;
+        }
         #playprevnext button {
-            width: 5vh;
-            min-width: 0.5rem;
-            max-width: 1.5rem;
+            width: 50%;
         }
         #edit, #expand, #weather, #calendar, #play, #overview {
             align-self: end;
