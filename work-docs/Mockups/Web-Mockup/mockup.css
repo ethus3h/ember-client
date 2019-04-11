@@ -31,7 +31,6 @@
             height: 90vh;
             max-height: calc(100vh - 1rem);
             min-height: calc(100vh - 3rem);
-            z-index: 2;
         }
         #startPage {
             flex-direction: column;
@@ -175,29 +174,15 @@
             font-size: 3rem;
             font-weight: bold;
             text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
-            justify-content: center;
+            justify-content: space-between;
         }
         #greeting .right-align {
             float: right;
         }
-        nav::before, #actions::before {
-            /*background:-moz-element(#background) no-repeat fixed;
-            filter:url(#f1);*/
-            content: ' ';
-            width: calc(100% + 6rem);
-            height: calc(100% + 6rem);
-            position: absolute;
-            top: -3rem;
-            left: -3rem;
-            clip-path: inset(3rem 3rem 3rem 3rem);
-        }
-        main > section {
+        #startPage > section {
             width: 100%;
             display: flex;
             justify-content: space-between;
-        }
-        main > section:not(#actions) {
-            z-index: 1;
         }
         #actions > button::after {
             content: '❭';
