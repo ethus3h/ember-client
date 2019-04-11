@@ -94,7 +94,6 @@
         #tabbarTabs button {
             overflow: hidden;
             text-overflow: ellipsis;
-            border: 0.2rem dotted black !important;
         }
         #playbackbuttons {
             flex-direction: column;
