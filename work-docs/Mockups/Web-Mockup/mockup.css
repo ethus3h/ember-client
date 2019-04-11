@@ -101,6 +101,9 @@
             flex-grow: 1;
             overflow-y: scroll;
         }
+        #playbackbuttons {
+            flex-direction: column;
+        }
         .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
             float: right;
         }
@@ -131,25 +134,6 @@
         }
         #schedule-calendar table {
             width: 100%;
-        }
-        body, #background {
-            /*width: 375px;
-            height: 665px;
-            max-width: 375px;
-            max-height: 665px;
-            overflow: hidden;*/
-        }
-        #background {
-            /*background-image: url('/specification/engineering-and-tech/information-technology/env/web/DSCN0001.JPG');*/
-            /*background-size: cover;*/
-        }
-        #background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100vw;
-            height: 100vh;
         }
         #actions button:last-of-type {
             border-width: 0;
