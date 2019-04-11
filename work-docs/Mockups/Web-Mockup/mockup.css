@@ -91,6 +91,10 @@
         #tabbarTabs button:first-of-type {
             margin-left: auto;
         }
+        #tabbarTabs button {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         #playbackbuttons {
             flex-direction: column;
             flex-grow: 0;
