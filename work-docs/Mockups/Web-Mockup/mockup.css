@@ -149,13 +149,16 @@
             }
             #greeting {
                 padding: 1rem;
-                font-size: 3rem;
+                font-size: 2rem;
                 font-weight: bold;
                 text-shadow: 0 0 0.5rem white, 0 0 1rem white, 0 0 1rem white, 0 0 1rem white, 0 0 2rem white, 0 0 2rem white;
                 justify-content: space-between;
             }
             #greeting .right-align {
                 float: right;
+            }
+            #greeting p:not(.right-align) {
+                width: 100%;
             }
             #startPage > section {
                 width: 100%;
@@ -171,7 +174,7 @@
                 width: 0;
                 flex-grow: 1
             }
-            #startPage > section:not(:last-of-type) {
+            #startPage > section:not(:last-of-type):not(:first-of-type) {
                 padding: 0.25rem 20vw;
             }
             #startPage > section:first-of-type {
@@ -214,6 +217,9 @@
                 overflow-y: scroll;
             }
         @media only screen and (max-device-width: 640px) {
+            #leftPanel, #rightPanel {
+                diplay: noe
+            }
             #greeting > .right-align, #tabbar, #edit, #weather, #play, #overview, #search, #tools {
                 display: none;
             }
