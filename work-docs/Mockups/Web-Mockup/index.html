@@ -56,6 +56,23 @@
     <button id="viewSubmenuBasic">Basic...</button>
     <button id="viewSubmenuData">Data...</button>
     <button id="viewSubmenuAudio">Audio...</button>
+    <button id="viewSubmenuDerived">Derived...</button>
+</template>
+<template id="documentMouseToolsMenu">
+    <button id="mouseToolClick">Tool for on click...</button>
+    <button id="mouseToolCtl">Tool for control click...</button>
+    <button id="mouseToolShift">Tool for shift click...</button>
+    <button id="mouseToolShiftCtl">Tool for shift+control click...</button>
+    <button id="mouseToolCursor">General Tool</button>
+    <button id="mouseToolPan">Pan Tool</button>
+    <button id="mouseToolArea">Area Tool</button><!-- drag around an area to select it -->
+    <button id="mouseToolHierarchy">Hierarchy Tool</button><!-- Show hierarchy for hovered region of document; allow interacting with it -->
+    <button id="mouseToolCopyColor">Copy Color Tool</button>
+    <button id="mouseToolCopyStyle">Copy Style Tool</button>
+    <button id="mouseEditToolPaste">Paste Edit Tool</button><!-- tool options: paint style, paint foreground/background color, etc -->
+    <button id="mouseEditToolErase">Erase Edit Tool</button>
+    <button id="mouseEditToolScale">Scale/stretch Edit Tool</button>
+    <button id="mouseEditToolRotate">Rotate/shear Edit Tool</button>
 </template>
 <template id="viewmodesBasic">
     <button id="viewWysiwyg">Visual</button>
@@ -76,6 +93,8 @@
     <button id="viewPianoRoll">Piano roll</button>
     <button id="viewWaveform">Waveform</button>
 </template>
+<template id="viewmodesDerived">
+</template>
 <template id="documentViewTemplate"><main>
     <section id="documentViewToolbar">
         <button id="docbtnSave">Save</button>
@@ -85,6 +104,8 @@
         <button id="docbtnPaste">Save</button>
         <button id="docbtnViewEditToggle">View/Edit</button>
         <button id="docbtnViewMode">View Mode</button>
+        <button id="docbtnMouseTools">Mouse Tools</button>
+        <button id="docbtnMouseToolsSettings">Mouse Tools Settings</button>
         <button id="docbtnEditToolsAndSettings">Edit Tools &amp; Settings</button>
         <button id="docbtnInsert">Insert</button>
         <button id="docbtnPanels">Panels</button>
