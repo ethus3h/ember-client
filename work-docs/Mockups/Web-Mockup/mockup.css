@@ -217,10 +217,7 @@
                 overflow-y: scroll;
             }
         @media only screen and (max-device-width: 640px) {
-            #leftPanel, #rightPanel {
-                diplay: noe
-            }
-            #greeting > .right-align, #tabbar, #edit, #weather, #play, #overview, #search, #tools {
+            #greeting > .right-align, #tabbar, #edit, #weather, #play, #overview, #search, #tools, #leftPanel, #rightPanel {
                 display: none;
             }
             #tabbar-button, #searchbutton, #projectsbutton, #schedulebutton, #updatesbutton {
