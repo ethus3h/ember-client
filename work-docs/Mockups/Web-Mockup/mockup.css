@@ -26,16 +26,10 @@
             height: 90vh;
             max-height: calc(100vh - 1rem);
             min-height: calc(100vh - 3rem);
-            flex-direction: row;
             z-index: 2;
         }
-        main {
-            bottom: 0;
-            height: 90vh;
-            max-height: calc(100vh - 1rem);
-            min-height: calc(100vh - 3rem);
+        #startPage {
             flex-direction: column;
-            z-index: 2;
         }
         button {
             font-size: 100%;
@@ -229,6 +223,12 @@
         }
         #tabbar-button, #searchbutton, #projectsbutton, #schedulebutton, #updatesbutton {
             display: none;
+        }
+        #leftPanel, #rightPanel {
+            width: 20vw;
+        }
+        #leftPanel, #rightPanel, #documentPanel, nav {
+            border: 0.5rem groove;
         }
         .eiteEditToolFrame {
             width: 100%;
