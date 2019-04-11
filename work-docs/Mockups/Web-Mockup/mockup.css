@@ -42,7 +42,7 @@
             max-height: 100%;
             overflow: scroll;
         }
-        button {
+        button, .tabbutton {
             font-size: 100%;
             border-width: 0.1rem !important;
             border-style: ridge !important;
@@ -52,10 +52,10 @@
             transition: 0.1s all;
             position: relative;
         }
-        button:hover {
+        button:hover, .tabbutton:hover {
             border-style: groove !important;
         }
-        button:active {
+        button:active, .tabbutton:active {
             border-style: dashed !important;
         }
         #calendar {
@@ -96,6 +96,7 @@
             text-overflow: ellipsis;
             display: flex;
             align-items: center;
+            white-space: pre;
         }
         #tabbarTabs > .tabbutton > button {
             height: 50%;
