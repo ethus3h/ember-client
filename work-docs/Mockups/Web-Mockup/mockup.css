@@ -4,15 +4,30 @@
             box-sizing: border-box;
         }
         nav, main {
-            position: fixed;
             display: flex;
             align-items: center;
+        }
+        nav, #mainrow {
             width: 100vw;
         }
         nav {
             height: 10vh;
             min-height: 1rem;
             max-height: 3rem;
+        }
+        body {
+            flex-direction: column;
+            display: flex;
+        }
+        #mainrow {
+            flex-direction: row;
+            display: flex;
+            bottom: 0;
+            height: 90vh;
+            max-height: calc(100vh - 1rem);
+            min-height: calc(100vh - 3rem);
+            flex-direction: row;
+            z-index: 2;
         }
         main {
             bottom: 0;
