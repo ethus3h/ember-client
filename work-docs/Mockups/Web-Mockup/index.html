@@ -56,11 +56,11 @@
         }
         let tabbarEditClicked = () => {
             document.getElementById('tabbarTabs').style.display='none';
-            document.getElementById('tabbarEdit').style.display='block';
-            document.getElementById('tabbarBreadcrumbs').style.display='none';
+            document.getElementById('tabbarEdit').style.display='none';
+            document.getElementById('tabbarBreadcrumbs').style.display='block';
             document.getElementById('edit').innerHTML='x';
             attachFn('edit',tabbarEditUnlicked);
-            attachFn('tabbarEdit',tabbarEditTextClicked);
+            attachFn('tabbarBreadcrumbs',tabbarEditBreadClicked);
         }
         document.getElementById('tabbarEdit').style.display='none';
         document.getElementById('tabbarBreadcrumbs').style.display='none';
