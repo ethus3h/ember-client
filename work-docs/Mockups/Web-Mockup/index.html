@@ -34,15 +34,16 @@
             document.getElementById('create').onclick=createClicked;
         }
         let tabbarEditUnlicked = () => {
-            document.getElementById('tabbarTabs').style.display='none';
-            document.getElementById('tabbarEdit').style.display='block';
-            document.getElementById('edit').innerHTML='x';
+            document.getElementById('tabbarTabs').style.display='block';
+            document.getElementById('tabbarEdit').style.display='none';
+            document.getElementById('edit').innerHTML='🖉';
         }
         let tabbarEditClicked = () => {
             document.getElementById('tabbarTabs').style.display='none';
             document.getElementById('tabbarEdit').style.display='block';
             document.getElementById('edit').innerHTML='x';
         }
+        document.getElementById('tabbarEdit').style.display='none';
         attachFn('start',startClicked);
         startClicked();
     };
