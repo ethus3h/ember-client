@@ -84,8 +84,9 @@
             width: 3rem;
             flex-grow: 1;
         }
-        #tabbarTabs, #tabbarBreadcrumbs {
+        #tabbarTabs, #tabbarBreadcrumbs, #tabbarEdit {
             width: 100%;
+            height: 100%;
             display: flex;
         }
         #tabbarTabs > .tabbutton:first-of-type {
