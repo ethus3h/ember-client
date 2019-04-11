@@ -63,9 +63,6 @@
         nav button, nav input {
             height: 100%;
         }
-        nav button:first-of-type::before {
-            content: unset;
-        }
         #actions button {
             height: 15vh;
             min-height: 1.5rem;
@@ -91,13 +88,13 @@
             width: 0;
             flex-grow: 1
         }
-        main > section:not(:last-of-type) {
+        #startPage > section:not(:last-of-type) {
             padding: 0.25rem 20vw;
         }
-        main > section:first-of-type {
+        #startPage > section:first-of-type {
             padding-top: 0.5rem;
         }
-        main > section:last-of-type {
+        #startPage > section:last-of-type {
             padding-bottom: 0rem;
         }
         #tools {
