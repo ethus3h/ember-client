@@ -10,7 +10,7 @@
         nav, #mainrow {
             width: 100vw;
         }
-        nav, #playbackbuttons, #tabbarTabs button {
+        nav, #playbackbuttons, #tabbarTabs .tabbutton {
             height: 10vh;
             min-height: 1rem;
             max-height: 3rem;
@@ -94,6 +94,7 @@
         #tabbarTabs > .tabbutton {
             overflow: hidden;
             text-overflow: ellipsis;
+            display: flex;
         }
         #tabbarTabs > .tabbutton > button {
             height: 50%;
