@@ -38,13 +38,19 @@
         }
         button {
             font-size: 100%;
-            border-width: 0.1rem;
-            border-style: ridge;
-            border-color: black;
+            border-width: 0.1rem !important;
+            border-style: ridge !important;
+            border-color: black !important;
             /* flex-shrink: 0; */
             background-color: white;
             transition: 0.1s all;
             position: relative;
+        }
+        button:hover {
+            border-style: groove !important;
+        }
+        button:active {
+            border-style: dashed !important;
         }
         #calendar {
             font-size: 50%;
