@@ -7,12 +7,11 @@
     <script type="text/javascript">
     window.onload = () => {
         let addElement = (itemName, containerName) => {
-            let elem=document.importNode(document.getElementById(itemName+'Template').content, true);
-            elem.firstChild.id=itemName;
-            if(containerName === 'main') {
-                let container=
-            }
+            let elem=document.importNode(document.getElementById(itemName+'Template').content, true).firstChild;
+            elem.id=itemName;
             let container=document.getElementById(containerName);
+            container.appendChild(elem);
+            return elem;
         }
         let createClicked = () => {
             let elem=document.importNode(document.getElementById('editFrameTemplate').content, true);
