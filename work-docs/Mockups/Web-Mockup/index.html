@@ -30,6 +30,7 @@
         let startClicked = () => {
             removeDocumentElement();
             addElement('startPage', 'documentPanel');
+            attachFn('create',createClicked);
             document.getElementById('create').onclick=createClicked;
         }
         attachFn('start',startClicked);
