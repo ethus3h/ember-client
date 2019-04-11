@@ -6,6 +6,14 @@
     <title>Mockup</title>
     <script type="text/javascript">
     window.onload = () => {
+        let addElement = (itemName, containerName) => {
+            let elem=document.importNode(document.getElementById(itemName+'Template').content, true);
+            elem.firstChild.id=itemName;
+            if(containerName === 'main') {
+                let container=
+            }
+            let container=document.getElementById(containerName);
+        }
         let createClicked = () => {
             let elem=document.importNode(document.getElementById('editFrameTemplate').content, true);
             let main=document.getElementsByTagName('main')[0];
@@ -50,7 +58,7 @@
         Tabs list
     </section>
 </section>
-<template id="documentViewModeMenu">
+<template id="documentViewModeMenuTemplate">
     <checkbox id="viewTogglePaginated">Paginated?</checkbox>
     <checkbox id="viewToggleLinenums">Line numbers?</checkbox>
     <button id="viewSubmenuBasic">Basic...</button>
@@ -58,7 +66,7 @@
     <button id="viewSubmenuAudio">Audio...</button>
     <button id="viewSubmenuDerived">Derived...</button>
 </template>
-<template id="documentMouseToolsMenu">
+<template id="documentMouseToolsMenuTemplate">
     <button id="mouseToolClick">Tool for on click...</button>
     <button id="mouseToolCtl">Tool for control click...</button>
     <button id="mouseToolShift">Tool for shift click...</button>
@@ -74,26 +82,26 @@
     <button id="mouseEditToolScale">Scale/stretch Edit Tool</button>
     <button id="mouseEditToolRotate">Rotate/shear Edit Tool</button>
 </template>
-<template id="viewmodesBasic">
+<template id="viewmodesBasicTemplate">
     <button id="viewWysiwyg">Visual</button>
     <button id="viewWysiwym">Structured</button>
     <button id="viewTags">Tags</button>
     <button id="viewSource">Source</button>
     <button id="viewDcs">Dc list</button>
 </template>
-<template id="viewmodesData">
+<template id="viewmodesDataTemplate">
     <button id="viewTables">Tables</button>
     <button id="viewTree">Tree</button>
     <button id="viewXML">XML</button>
     <button id="viewJson">JSON</button>
 </template>
-<template id="viewmodesAudio">
+<template id="viewmodesAudioTemplate">
     <button id="viewTracks">Tracks</button>
     <button id="viewScore">Score</button><!-- Score would be the same as the Visual mode, wouldn't it? Hmm. -->
     <button id="viewPianoRoll">Piano roll</button>
     <button id="viewWaveform">Waveform</button>
 </template>
-<template id="viewmodesDerived">
+<template id="viewmodesDerivedTemplate">
 </template>
 <template id="documentViewTemplate"><main>
     <section id="documentViewToolbar">
