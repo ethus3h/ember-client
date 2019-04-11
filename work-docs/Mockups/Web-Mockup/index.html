@@ -37,14 +37,17 @@
             document.getElementById('tabbarTabs').style.display='block';
             document.getElementById('tabbarEdit').style.display='none';
             document.getElementById('edit').innerHTML='🖉';
+            attachFn('edit',tabbarEditClicked);
         }
         let tabbarEditClicked = () => {
             document.getElementById('tabbarTabs').style.display='none';
             document.getElementById('tabbarEdit').style.display='block';
             document.getElementById('edit').innerHTML='x';
+            attachFn('edit',tabbarEditUnlicked);
         }
         document.getElementById('tabbarEdit').style.display='none';
         attachFn('start',startClicked);
+        attachFn('edit',tabbarEditClicked);
         startClicked();
     };
     </script>
