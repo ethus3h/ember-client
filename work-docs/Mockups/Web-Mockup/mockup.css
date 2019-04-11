@@ -159,36 +159,10 @@
         #schedule-calendar table {
             width: 100%;
         }
-        #actions button:last-of-type {
-            border-width: 0;
-        }
-        nav button {
-            border-width: 0;
-        }
         button {
-            background-color: rgba(255,255,255,0.7);
-            border-width: 0 0 0.1rem 0;
-            border-color: white;
-            border-style: solid;
+            background-color: rgba(255,255,255,1);
             transition: 0.1s all;
             position: relative;
-        }
-        nav button::before {
-            content: ' ';
-            display: block;
-            height: 100%;
-            float: left;
-            position: absolute;
-            width: 0.1rem;
-            background-color: white;
-            top: 0;
-            left: 0;
-        }
-        button:hover {
-            background-color: rgba(255,255,255,0.8);
-        }
-        button:active {
-            background-color: rgba(200,200,200,0.7);
         }
         #edit, #expand, #weather, #calendar, #play, #overview {
             align-self: end;
