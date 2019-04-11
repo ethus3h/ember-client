@@ -61,12 +61,12 @@
         #calendar {
             font-size: 50%;
         }
-        nav button:not(#calendar), nav #playbackbuttons {
+        nav > button:not(#calendar), nav #playbackbuttons {
             width: 10vh;
             min-width: 1rem;
             max-width: 3rem;
         }
-        nav button, nav input {
+        nav > button, nav input {
             height: 100%;
         }
         #actions button {
@@ -83,6 +83,9 @@
         #tabbar {
             width: 3rem;
             flex-grow: 1;
+        }
+        #tabbarTabs {
+            width: 100%;
         }
         #playbackbuttons {
             flex-direction: column;
