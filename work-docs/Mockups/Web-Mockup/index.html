@@ -33,8 +33,14 @@
             attachFn('create',createClicked);
             document.getElementById('create').onclick=createClicked;
         }
+        let tabbarEditUnlicked = () => {
+            document.getElementById('tabbarTabs').style.display='none';
+            document.getElementById('tabbarEdit').style.display='block';
+            document.getElementById('edit').innerHTML='x';
+        }
         let tabbarEditClicked = () => {
-            document.getElementById('tabbarTabs').style.display='block';
+            document.getElementById('tabbarTabs').style.display='none';
+            document.getElementById('tabbarEdit').style.display='block';
             document.getElementById('edit').innerHTML='x';
         }
         attachFn('start',startClicked);
