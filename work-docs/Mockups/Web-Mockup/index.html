@@ -45,7 +45,7 @@
             document.getElementById('tabbarEdit').style.display='flex';
             document.getElementById('tabbarBreadcrumbs').style.display='none';
             document.getElementById('edit').innerHTML='🖉';
-            attachFn('tabbarEdit',tabbarEditTextClicked);
+            attachFn('tabbarEditDone',tabbarEditTextClicked);
         }
         let tabbarEditUnlicked = () => {
             document.getElementById('tabbarTabs').style.display='flex';
@@ -75,7 +75,10 @@
     <button id="start">Start</button>
     <button id="tabbar-button">⯐</button>
     <section id="tabbar">
-        <input type="text" id="tabbarEdit" />
+        <section id="tabbarEdit">
+        <input type="text" id="tabbarEditInput" />
+            <button id="playprev">⏮</button>
+        </section>
         <section id="tabbarTabs">
             <div class="tabbutton">Apache Tomcat/7.0.52 - Error report<!-- It doesn't allow button inside button --><button class="tabclose">🗙</button></div>
             <div class="tabbutton">EITE — Ember <button class="tabclose">🗙</button></div>
