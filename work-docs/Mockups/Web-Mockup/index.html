@@ -20,8 +20,8 @@
                 main.remove();
             }
         }
-        let attachCmd = (elem, func) => {
-            
+        let attachFn (elem, func) => {
+            document.getElementById(elem).onclick=func;
         }
         let createClicked = () => {
             removeDocumentElement();
@@ -32,7 +32,7 @@
             addElement('startPage', 'documentPanel');
             document.getElementById('create').onclick=createClicked;
         }
-        document.getElementById('start').onclick=startClicked;
+        attachFn('start',startClicked);
         startClicked();
     };
     </script>
