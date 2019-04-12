@@ -131,6 +131,8 @@
         #playprevnext {
             flex-direction: row;
             display: flex;
+        }
+        #playprevnext > button {
             width: 50%;
         }
         #edit, #expand, #weather, #calendar, #play, #overview {
