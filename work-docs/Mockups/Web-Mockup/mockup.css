@@ -146,6 +146,9 @@
             min-width: 20vw;
             max-width: 20vw;
         }
+        #fileBrowser, #tabPanel {
+            height: 100%;
+        }
         #leftPanel, #rightPanel, #documentPanel, nav {
             border: 0.1rem groove;
         }
