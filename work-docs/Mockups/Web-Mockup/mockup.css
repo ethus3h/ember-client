@@ -120,13 +120,16 @@
             flex-direction: column;
             flex-grow: 0;
             overflow: hidden;
+            box-sizing: initial;
         }
         #playbackbuttons > button, #playprevnext {
             height: 50%;
             line-height: 100%;
+            box-sizing: initial;
         }
         #play {
             width: 100%;
+            box-sizing: initial;
         }
         #playprevnext {
             flex-direction: row;
@@ -134,6 +137,7 @@
         }
         #playprevnext > button {
             width: 50%;
+            box-sizing: initial;
         }
         #edit, #expand, #weather, #calendar, #play, #overview {
             align-self: end;
