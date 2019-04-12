@@ -123,6 +123,7 @@
         }
         #playbackbuttons > button, #playprevnext {
             height: 50%;
+            line-height: 100%;
         }
         #playprevnext {
             flex-direction: row;
