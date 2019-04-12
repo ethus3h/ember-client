@@ -116,6 +116,9 @@
         #tabbarEditInput {
             width: 100%;
         }
+        .breadcrumb.breadcrumbDropdown {
+            line-height: 100%;
+        }
         #playbackbuttons {
             flex-direction: column;
             flex-grow: 0;
