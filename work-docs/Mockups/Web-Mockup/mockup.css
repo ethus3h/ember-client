@@ -90,8 +90,8 @@
             height: 100%;
             display: flex;
         }
-        #tabbarTabs > .tabbutton:first-of-type {
-            margin-left: auto;
+        #tabbarTabs > .tabbutton:last-of-type {
+            margin-right: auto;
         }
         #tabbarBreadcrumbs > .breadcrumb:last-child {
             margin-right: auto;
