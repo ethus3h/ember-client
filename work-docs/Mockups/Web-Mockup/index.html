@@ -183,30 +183,32 @@
         <button id="docbtnPanels">Panels</button>
         <button id="docbtnSearch">Search</button>
     </section>
-    <section id="documentViewLeftPanel">
-        <section id="documentNavPanel">
-            <input type="text" id="documentNavSearchField" />
-            <ul>
-                <li>Heading</li>
-                <li>Heading
+    <section id="documentViewColumnPanes">
+        <section id="documentViewLeftPanel">
+            <section id="documentNavPanel">
+                <input type="text" id="documentNavSearchField" />
                 <ul>
-                    <li>Subheading</li>
-                    <li>Subheading</li>
-                </ul></li>
-                <li>Heading</li>
-            </ul>
+                    <li>Heading</li>
+                    <li>Heading
+                    <ul>
+                        <li>Subheading</li>
+                        <li>Subheading</li>
+                    </ul></li>
+                    <li>Heading</li>
+                </ul>
+            </section>
+            <section id="insertObjects">
+                Insert objects palette
+            </section>
+            <section id="dcPicker">
+                Insert dc palette
+            </section>
         </section>
-        <section id="insertObjects">
-            Insert objects palette
+        <section id="documentContents">
         </section>
-        <section id="dcPicker">
-            Insert dc palette
-        </section>
-    </section>
-    <section id="documentContents">
-    </section>
-    <section id="documentViewRightPanel">
-        <section id="documentVisualScroll">
+        <section id="documentViewRightPanel">
+            <section id="documentVisualScroll">
+            </section>
         </section>
     </section>
 </main></template>
