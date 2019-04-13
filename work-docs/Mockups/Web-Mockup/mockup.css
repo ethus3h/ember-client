@@ -144,7 +144,7 @@
         #tabbar-button, #searchbutton, #projectsbutton, #schedulebutton, #updatesbutton {
             display: none;
         }
-        #leftPanel, #rightPanel {
+        #leftPanel, #rightPanel, #documentViewLeftPanel, #documentViewRightPanel {
             width: 20vw;
             min-width: 20vw;
             max-width: 20vw;
