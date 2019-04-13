@@ -160,6 +160,9 @@
             height: 100%;
             border: none;
         }
+        #documentView {
+            flex-direction: column;
+        }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
                 float: right;
