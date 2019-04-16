@@ -3,14 +3,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-        nav, main {
+        body > nav, main {
             display: flex;
             align-items: center;
         }
-        nav, #mainrow {
+        body > nav, #mainrow {
             width: 100vw;
         }
-        nav, #playbackbuttons, #tabbarTabs .tabbutton {
+        body > nav, #playbackbuttons, #tabbarTabs .tabbutton {
             height: 10vh;
             min-height: 1rem;
             max-height: 3rem;
@@ -68,13 +68,13 @@
             padding-left: 0.6rem;
             padding-right: 0.6rem;
         }
-        nav > button:not(#calendar), nav #playbackbuttons {
+        body > nav > button:not(#calendar), nav #playbackbuttons {
             width: 10vh;
             min-width: 1rem;
             max-width: 3rem;
             line-height: 100%;
         }
-        nav > button, nav input {
+        body > nav > button, nav input {
             height: 100%;
         }
         #actions button {
@@ -181,6 +181,13 @@
             min-width: 50%;
             max-width: 50%;
             height: 100%;
+        }
+        #documentEditToolbar {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #documentEditToolbar button {
+            height: 50%;
         }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
