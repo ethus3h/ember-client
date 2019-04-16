@@ -62,6 +62,7 @@
             addElement('documentViewModeMenu', 'documentTopToolbarsContainer');
             attachFn('docbtnViewMode',closeViewMenu);
             attachFn('viewMenuClose',closeViewMenu);
+            attachFn('viewSubmenuBasic',openViewmodesBasic);
         }
         let closeMouseToolsMenu = () => {
             removeElement('documentMouseToolsMenu');
@@ -71,6 +72,15 @@
             addElement('documentMouseToolsMenu', 'documentTopToolbarsContainer');
             attachFn('docbtnMouseTools',closeMouseToolsMenu);
             attachFn('mouseToolsMenuClose',closeMouseToolsMenu);
+        }
+        let closeViewmodesBasic = () => {
+            removeElement('viewmodesBasic');
+            attachFn('viewSubmenuBasic',openViewmodesBasic);
+        }
+        let openViewmodesBasic = () => {
+            addElement('viewmodesBasic', 'documentTopToolbarsContainer');
+            attachFn('viewSubmenuBasic',closeViewmodesBasic);
+            attachFn('viewmodesBasicClose',closeViewmodesBasic);
         }
         let createClicked = () => {
             removeDocumentElement();
