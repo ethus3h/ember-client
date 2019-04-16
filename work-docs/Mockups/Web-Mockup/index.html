@@ -30,13 +30,6 @@
             attachFn('docbtnViewEditToggle',setModeView);
             attachFn('activeTabClose',startClicked);
         }
-        let createClicked = () => {
-            removeDocumentElement();
-            addElement('documentView', 'documentPanel');
-            addElement('documentEditToolbar', 'documentTopToolbarsContainer');
-            attachFn('docbtnViewEditToggle',setModeView);
-            attachFn('activeTabClose',startClicked);
-        }
         let startClicked = () => {
             removeDocumentElement();
             addElement('startPage', 'documentPanel');
