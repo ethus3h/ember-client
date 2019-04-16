@@ -40,6 +40,8 @@
         let setModeView = () => {
             removeElement('documentEditToolbar');
             addElement('documentViewToolbar', 'documentTopToolbarsContainer');
+            removeElement('documentBottomEditToolbar');
+            addElement('documentBottomViewToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeEdit);
         }
         let setModeEdit = () => {
