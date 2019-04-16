@@ -185,9 +185,13 @@
         #documentEditToolbar {
             display: flex;
             flex-wrap: wrap;
+            height: 3rem;
         }
         #documentEditToolbar button {
             height: 50%;
+            max-height: 50%;
+            overflow: hidden;
+            line-height: 100%;
         }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
