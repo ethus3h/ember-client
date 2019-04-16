@@ -135,7 +135,7 @@
             height: 50%;
             line-height: 100%;
         }
-        #play {
+        #play, #documentNavSearchField {
             width: 100%;
         }
         #playprevnext {
@@ -159,7 +159,7 @@
         #fileBrowser, #tabPanel {
             height: 100%;
         }
-        #leftPanel, #rightPanel, #documentPanel, nav {
+        #leftPanel, #rightPanel, #documentPanel, nav, #documentViewLeftPanel, #documentViewRightPanel {
             border: 0.1rem groove;
         }
         .eiteEditToolFrame {
