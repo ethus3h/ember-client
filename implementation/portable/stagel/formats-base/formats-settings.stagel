@@ -69,7 +69,7 @@ r/s/getPreferredCodeLanguageForFormat s/format s/direction
         set n/c inc n/c
     return s/res
 
-# setImportSettings/setExportSettings are platform implementation in dc-data
+# setImportSettings/setExportSettings are platform implementation in environment
 
 r/s/getImportSettings n/formatId
     new s/res
