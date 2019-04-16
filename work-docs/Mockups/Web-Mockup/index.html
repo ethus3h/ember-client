@@ -19,11 +19,17 @@
             if (typeof elem !== 'undefined') {
                 elem.remove();
             }
+            else {
+                throw 'Could not remove element '+id;
+            }
         }
         let removeDocumentElement = () => {
             let main=document.getElementsByTagName('main')[0];
             if (typeof main !== 'undefined') {
                 main.remove();
+            }
+            else {
+                throw 'Could not remove element '+id;
             }
         }
         let attachFn = (elem, func) => {
