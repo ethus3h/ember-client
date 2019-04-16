@@ -14,6 +14,12 @@
             container.appendChild(elem);
             return elem;
         }
+        let removeElement = (id) => {
+            let elem=document.getElementsById(id)[0];
+            if (typeof elem !== 'undefined') {
+                elem.remove();
+            }
+        }
         let removeDocumentElement = () => {
             let main=document.getElementsByTagName('main')[0];
             if (typeof main !== 'undefined') {
@@ -22,6 +28,11 @@
         }
         let attachFn = (elem, func) => {
             document.getElementById(elem).onclick=func;
+        }
+        let setModeView = () => {
+            removeElement('documentEditToolbar');
+            addElement('documentViewToolbar', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewEditToggle',setModeEdit);
         }
         let createClicked = () => {
             removeDocumentElement();
