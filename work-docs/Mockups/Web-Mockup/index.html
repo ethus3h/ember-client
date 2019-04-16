@@ -34,6 +34,11 @@
             addElement('documentViewToolbar', 'documentTopToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeEdit);
         }
+        let setModeEdit = () => {
+            removeElement('documentViewToolbar');
+            addElement('documentEditToolbar', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewEditToggle',setModeView);
+        }
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
