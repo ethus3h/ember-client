@@ -21,6 +21,7 @@
             }
             else {
                 throw 'Could not remove element '+id;
+                console.trace();
             }
         }
         let removeDocumentElement = () => {
@@ -30,6 +31,7 @@
             }
             else {
                 throw 'Could not remove main element';
+                console.trace();
             }
         }
         let attachFn = (elem, func) => {
