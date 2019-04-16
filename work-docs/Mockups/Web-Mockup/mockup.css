@@ -159,7 +159,7 @@
         #fileBrowser, #tabPanel {
             height: 100%;
         }
-        #leftPanel, #rightPanel, #documentPanel, nav, #documentViewLeftPanel, #documentViewRightPanel {
+        #leftPanel, #rightPanel, #documentPanel, nav, #documentViewLeftPanel, #documentViewRightPanel, #documentNavPanel, #insertObjects, #dcPicker {
             border: 0.1rem groove;
         }
         .eiteEditToolFrame {
