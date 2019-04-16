@@ -199,8 +199,17 @@
             margin-bottom: 0.2rem;
             width: 100%;
         }
-        .bullet-list {
-            list-style: 
+        .disclosure-list-end {
+            list-style-type: square;
+            list-style-position: inside;
+        }
+        .disclosure-list-closed {
+            list-style-type: disclosure-closed;
+            list-style-position: inside;
+        }
+        .disclosure-list-open {
+            list-style-type: disclosure-open;
+            list-style-position: inside;
         }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
