@@ -194,6 +194,11 @@
             overflow: hidden;
             line-height: 100%;
         }
+        #documentBottomToolbarsContainer {
+            height: 1.5rem;
+            margin-bottom: 0.2rem;
+            width: 100%;
+        }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
                 float: right;
