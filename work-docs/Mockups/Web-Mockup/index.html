@@ -51,6 +51,14 @@
             addElement('documentBottomEditToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeView);
         }
+        let closeViewMenu = () => {
+            addElement('documentViewModeMenuTemplate', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewMode',closeViewMenu);
+        }
+        let openViewMenu = () => {
+            addElement('documentViewModeMenuTemplate', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewMode',closeViewMenu);
+        }
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
@@ -95,9 +103,6 @@
             document.getElementById('edit').innerHTML='x';
             attachFn('edit',tabbarEditUnlicked);
             attachFn('breadcrumbEditAsPath',tabbarEditBreadClicked);
-        }
-        let openViewMenu = () => {
-            documentViewModeMenuTemplate
         }
         document.getElementById('tabbarEdit').style.display='none';
         document.getElementById('tabbarBreadcrumbs').style.display='none';
