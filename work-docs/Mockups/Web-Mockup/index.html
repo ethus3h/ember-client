@@ -43,7 +43,7 @@
             removeElement('documentBottomEditToolbar');
             addElement('documentBottomViewToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeEdit);
-            attachFn('docbtnViewMode',openViewMenu);
+            attachFn('docbtnMouseTools',openMouseToolsMenu);
         }
         let setModeEdit = () => {
             removeElement('documentViewToolbar');
@@ -52,6 +52,7 @@
             addElement('documentBottomEditToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeView);
             attachFn('docbtnViewMode',openViewMenu);
+            attachFn('docbtnMouseTools',openMouseToolsMenu);
         }
         let closeViewMenu = () => {
             removeElement('documentViewModeMenu');
@@ -67,9 +68,9 @@
             attachFn('docbtnViewMode',openViewMenu);
         }
         let openMouseToolsMenu = () => {
-            addElement('documentViewModeMenu', 'documentTopToolbarsContainer');
-            attachFn('docbtnViewMode',closeViewMenu);
-            attachFn('viewMenuClose',closeViewMenu);
+            addElement('documentMouseToolsMenu', 'documentTopToolbarsContainer');
+            attachFn('docbtnMouseTools',closeMouseToolsMenu);
+            attachFn('mouseToolsMenuClose',closeMouseToolsMenu);
         }
         let createClicked = () => {
             removeDocumentElement();
@@ -78,6 +79,7 @@
             addElement('documentBottomEditToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeView);
             attachFn('docbtnViewMode',openViewMenu);
+            attachFn('docbtnMouseTools',openMouseToolsMenu);
             attachFn('activeTabClose',startClicked);
         }
         let startClicked = (removeDocElem=true) => {
