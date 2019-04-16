@@ -26,6 +26,15 @@
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
+            addElement('documentEditToolbar', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewEditToggle',setModeView);
+            attachFn('activeTabClose',startClicked);
+        }
+        let createClicked = () => {
+            removeDocumentElement();
+            addElement('documentView', 'documentPanel');
+            addElement('documentEditToolbar', 'documentTopToolbarsContainer');
+            attachFn('docbtnViewEditToggle',setModeView);
             attachFn('activeTabClose',startClicked);
         }
         let startClicked = () => {
@@ -170,13 +179,27 @@
 <template id="viewmodesDerivedTemplate">
 </template>
 <template id="documentViewToolbarTemplate">
-    <nav id="documentViewToolbarContainer">
+    <nav id="documentViewToolbar">
+        <button id="docbtnSaveAs">Save As...</button>
+        <button id="docbtnExport">Export</button>
+        <button id="docbtnCopy">Copy</button>
+        <button id="docbtnPaste">Paste</button>
+        <button id="docbtnViewEditToggle">☐ Edit</button>
+        <button id="docbtnViewMode">View Mode</button>
+        <button id="docbtnMouseTools">Mouse Tools</button>
+        <button id="docbtnMouseToolsSettings">Mouse Tools Settings</button>
+        <button id="docbtnPanels">Panels</button>
+        <button id="docbtnSearch">Search</button>
+    </nav>
+</template>
+<template id="documentEditToolbarTemplate">
+    <nav id="documentEditToolbar">
         <button id="docbtnSave">Save</button>
         <button id="docbtnSaveAs">Save As...</button>
         <button id="docbtnExport">Export</button>
         <button id="docbtnCopy">Copy</button>
         <button id="docbtnPaste">Paste</button>
-        <button id="docbtnViewEditToggle">View/Edit</button>
+        <button id="docbtnViewEditToggle">🗹 Edit</button>
         <button id="docbtnViewMode">View Mode</button>
         <button id="docbtnMouseTools">Mouse Tools</button>
         <button id="docbtnMouseToolsSettings">Mouse Tools Settings</button>
@@ -186,7 +209,6 @@
         <button id="docbtnSearch">Search</button>
     </nav>
 </template>
-<template id="documentEditToolbarTemplate"></template>
 <template id="documentViewTemplate"><main>
     <section id="documentTopToolbarsContainer">
     </section>
