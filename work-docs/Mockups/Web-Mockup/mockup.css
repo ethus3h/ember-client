@@ -215,6 +215,11 @@
             float: right;
             /*font-size: 0.5rem;*/
         }
+        .dropdownMenu {
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
                 float: right;
