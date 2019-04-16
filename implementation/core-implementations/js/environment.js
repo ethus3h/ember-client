@@ -52,3 +52,23 @@ async function internalRequestRenderDrawHTMLToDOM(htmlString) {
     htmlOutputRootElement.innerHTML = htmlString;
     htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
 }
+
+async function getImportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().importSettings);
+
+    return getWindowOrSelf().importSettings;
+}
+
+async function getExportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().exportSettings);
+
+    return getWindowOrSelf().exportSettings;
+}
+
+async function setImportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings); getWindowOrSelf().importSettings[formatId]=strNewSettings;
+}
+
+async function setExportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+}
