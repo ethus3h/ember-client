@@ -199,6 +199,9 @@
             margin-bottom: 0.2rem;
             width: 100%;
         }
+        .bullet-list {
+            list-style: 
+        }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
                 float: right;
