@@ -69,11 +69,18 @@ async function setImportSettings(formatId, strNewSettings) {
     await assertIsStr(strNewSettings);
 
     await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
-    let is=getWindowOrSelf().import
-    getWindowOrSelf().importSettings[formatId]=strNewSettings;
+
+    let is=getWindowOrSelf().importSettings;
+
+    is[formatId]=strNewSettings;
     let i=0;
-    let c=getWindowOrSelf().importSettings.length;
-    while()
+    let c=is.length;
+    while(i<c) {
+        if (typeof is[i] !== 'string') {
+            is[i]='';
+        }
+        i=i+1;
+    }
 }
 
 async function setExportSettings(formatId, strNewSettings) {
