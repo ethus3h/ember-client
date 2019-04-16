@@ -3,10 +3,6 @@ r/an/dcaToUtf8 an/content
     new an/res
     new an/toOutput
     set an/toOutput an/content
-    new n/l
-    set n/l count an/toOutput
-    new n/c
-    set n/c 0
     new an/temp
     new n/dcAtIndex
     new an/unmappables
@@ -22,6 +18,10 @@ r/an/dcaToUtf8 an/content
     new b/dcBasenbFragmentEnabled
     set b/dcBasenbFragmentEnabled contains as/variantSettings 'dcBasenbFragment'
     set an/toOutput dcPreprocessForFormat an/toOutput 'utf8' 'out'
+    new n/l
+    set n/l count an/toOutput
+    new n/c
+    set n/c 0
     while le n/c n/l
         # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
         if lt n/c n/l
