@@ -70,17 +70,7 @@ async function setImportSettings(formatId, strNewSettings) {
 
     await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
 
-    let arr=getWindowOrSelf().importSettings;
-
-    arr[formatId]=strNewSettings;
-    let i=0;
-    let c=arr.length;
-    while(i<c) {
-        if (typeof arr[i] !== 'string') {
-            arr[i]='';
-        }
-        i=i+1;
-    }
+    getWindowOrSelf().importSettings[formatId]=strNewSettings;
 }
 
 async function setExportSettings(formatId, strNewSettings) {
@@ -88,15 +78,5 @@ async function setExportSettings(formatId, strNewSettings) {
 
     await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
 
-    let arr=getWindowOrSelf().exportSettings;
-
-    arr[formatId]=strNewSettings;
-    let i=0;
-    let c=arr.length;
-    while(i<c) {
-        if (typeof arr[i] !== 'string') {
-            arr[i]='';
-        }
-        i=i+1;
-    }
+    getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }

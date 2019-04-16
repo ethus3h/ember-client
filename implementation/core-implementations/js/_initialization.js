@@ -134,13 +134,13 @@ async function internalSetup() {
     }
 
     // Fill out format settings arrays in case they aren't yet
-    let settingsCount=Object.keys(await listInputFormats()).length;
+    let settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (importSettings[settingsCounter] === undefined) {
             importSettings[settingsCounter] = '';
         }
     }
-    settingsCount=Object.keys(await listOutputFormats()).length;
+    settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
             exportSettings[settingsCounter] = '';
