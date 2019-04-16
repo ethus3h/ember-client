@@ -211,6 +211,10 @@
             list-style-type: disclosure-open;
             list-style-position: inside;
         }
+        #documentNavPanel em {
+            float: right;
+            font-size: 0.5rem;
+        }
         /* Startpage styles */
             .to-do-priority, .notification-time, .notification-priority, .folder-chevron {
                 float: right;
