@@ -82,6 +82,33 @@
             attachFn('viewSubmenuBasic',closeViewmodesBasic);
             attachFn('viewmodesBasicClose',closeViewmodesBasic);
         }
+        let closeViewmodesData = () => {
+            removeElement('viewmodesData');
+            attachFn('viewSubmenuData',openViewmodesData);
+        }
+        let openViewmodesData = () => {
+            addElement('viewmodesData', 'documentTopToolbarsContainer');
+            attachFn('viewSubmenuData',closeViewmodesData);
+            attachFn('viewmodesDataClose',closeViewmodesData);
+        }
+        let closeViewmodesAudio = () => {
+            removeElement('viewmodesAudio');
+            attachFn('viewSubmenuAudio',openViewmodesAudio);
+        }
+        let openViewmodesAudio = () => {
+            addElement('viewmodesAudio', 'documentTopToolbarsContainer');
+            attachFn('viewSubmenuAudio',closeViewmodesAudio);
+            attachFn('viewmodesAudioClose',closeViewmodesAudio);
+        }
+        let closeViewmodesDerived = () => {
+            removeElement('viewmodesDerived');
+            attachFn('viewSubmenuDerived',openViewmodesDerived);
+        }
+        let openViewmodesDerived = () => {
+            addElement('viewmodesDerived', 'documentTopToolbarsContainer');
+            attachFn('viewSubmenuDerived',closeViewmodesDerived);
+            attachFn('viewmodesDerivedClose',closeViewmodesDerived);
+        }
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
