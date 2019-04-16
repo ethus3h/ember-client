@@ -256,13 +256,13 @@ async function internalSetup() {
     }
 
     // Fill out format settings arrays in case they aren't yet
-    let settingsCount=Object.keys(await listInputFormats()).length;
+    let settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (importSettings[settingsCounter] === undefined) {
             importSettings[settingsCounter] = '';
         }
     }
-    settingsCount=Object.keys(await listOutputFormats()).length;
+    settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
             exportSettings[settingsCounter] = '';
@@ -1468,26 +1468,6 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
     await assertIsStrArray(asReturn); return asReturn;
 }
 
-async function getImportSettingsArr() {
-    await assertIsStrArray(getWindowOrSelf().importSettings);
-
-    return getWindowOrSelf().importSettings;
-}
-
-async function getExportSettingsArr() {
-    await assertIsStrArray(getWindowOrSelf().exportSettings);
-
-    return getWindowOrSelf().exportSettings;
-}
-
-async function setImportSettings(formatId, strNewSettings) {
-    await assertIsStr(strNewSettings); getWindowOrSelf().importSettings[formatId]=strNewSettings;
-}
-
-async function setExportSettings(formatId, strNewSettings) {
-    await assertIsStr(strNewSettings); getWindowOrSelf().exportSettings[formatId]=strNewSettings;
-}
-
 // Based on https://web.archive.org/web/20190305073920/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/wtf-8.js
 // This code for wtf8 is included under the following license (from https://web.archive.org/web/20190305074047/https://github.com/mathiasbynens/wtf-8/blob/58c6b976c6678144d180b2307bee5615457e2cc7/LICENSE-MIT.txt):
 /*
@@ -1994,6 +1974,34 @@ async function internalRequestRenderDrawHTMLToDOM(htmlString) {
     let htmlOutputRootElement = await document.getElementById('eiteDocumentRoot');
     htmlOutputRootElement.innerHTML = htmlString;
     htmlOutputRootElement.scrollTop = htmlOutputRootElement.scrollHeight;
+}
+
+async function getImportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().importSettings);
+
+    return getWindowOrSelf().importSettings;
+}
+
+async function getExportSettingsArr() {
+    await assertIsStrArray(getWindowOrSelf().exportSettings);
+
+    return getWindowOrSelf().exportSettings;
+}
+
+async function setImportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings);
+
+    await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
+
+    getWindowOrSelf().importSettings[formatId]=strNewSettings;
+}
+
+async function setExportSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings);
+
+    await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
+
+    getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
 
 /* type-tools, provides:

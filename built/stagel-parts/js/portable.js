@@ -667,10 +667,6 @@ async function dcaToUtf8(intArrayContent) {
     let intArrayRes = [];
     let intArrayToOutput = [];
     intArrayToOutput = intArrayContent;
-    let intL = 0;
-    intL = await count(intArrayToOutput);
-    let intC = 0;
-    intC = 0;
     let intArrayTemp = [];
     let intDcAtIndex = 0;
     let intArrayUnmappables = [];
@@ -686,6 +682,10 @@ async function dcaToUtf8(intArrayContent) {
     let boolDcBasenbFragmentEnabled = false;
     boolDcBasenbFragmentEnabled = await contains(strArrayVariantSettings, 'dcBasenbFragment');
     intArrayToOutput = await dcPreprocessForFormat(intArrayToOutput, 'utf8', 'out');
+    let intL = 0;
+    intL = await count(intArrayToOutput);
+    let intC = 0;
+    intC = 0;
     while (await le(intC, intL)) {
         /* Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8. */
         if (await implLt(intC, intL)) {
@@ -1726,6 +1726,7 @@ async function getPreferredCodeLanguageForFormat(strFormat, strDirection) {
 
     strReturn = strRes; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
 }
+/* setImportSettings/setExportSettings are platform implementation in environment */
 
 async function getImportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('getImportSettings:formats-settings'); await assertIsInt(intFormatId); let strReturn;
@@ -3321,7 +3322,7 @@ async function runTestsTypeConversion(boolV) {
     await runTest(boolV, await arrEq([ '', 'a', '', '' ], await strSplit('abaabab', 'ab')));
     await runTest(boolV, await arrEq([ '', '', '' ], await strSplit('abab', 'ab')));
     await runTest(boolV, await arrEq([ '', '' ], await strSplit('ab', 'ab')));
-    await runTest(boolV, await arrEq([ '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
+    await runTest(boolV, await arrEq([ '', '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
 
     await internalDebugStackExit();
 }
