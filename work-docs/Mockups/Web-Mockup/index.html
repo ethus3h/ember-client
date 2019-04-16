@@ -26,11 +26,13 @@
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
+            attachFn('activeTabClose',startClicked);
         }
         let startClicked = () => {
             removeDocumentElement();
             addElement('startPage', 'documentPanel');
             attachFn('create',createClicked);
+            attachFn('activeTabClose',undefined);
             document.getElementById('create').onclick=createClicked;
         }
         let tabbarEditTextClicked = () => {
@@ -82,7 +84,7 @@
             <div class="tabbutton">EITE — Ember <button class="tabclose">🗙</button></div>
             <div class="tabbutton"><button class="tabdropdown">⏷</button> Search results for "video... <button class="tabclose">🗙</button></div>
             <div class="tabbutton"><button class="tabdropdown">⏷</button> http://localhost:8000/... <button class="tabclose">🗙</button></div>
-            <div class="tabbutton">Mockup <button class="tabclose">🗙</button></div>
+            <div class="tabbutton">Mockup <button class="tabclose" id="activeTabClose">🗙</button></div>
             <div class="tabbutton" id="tabbarDropdown">⏷</div>
         </section>
         <section id="tabbarBreadcrumbs">
