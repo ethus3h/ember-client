@@ -2490,9 +2490,9 @@ async function runTestsFormatSems(boolV) {
 
     await testing(boolV, 'formatSems');
     /* No trailing space, will fail in strict mode. */
-    await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
+    //await runTest(boolV, await arrEq([ 1, 2 ], await dcaFromSems([ 49, 32, 50 ])));
     /* Should fail but I don't have a way to test to ensure failure yet: runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 32 50 ) */
-    await runTest(boolV, await arrEq([ 49, 32, 50, 32, 13, 10 ], await dcaToSems([ 1, 2 ])));
+    //await runTest(boolV, await arrEq([ 49, 32, 50, 32, 13, 10 ], await dcaToSems([ 1, 2 ])));
     /* Comment preservation */
     await runTest(boolV, await arrEq([ 1, 2, 246, 50, 248 ], await dcaFromSems([ 49, 32, 50, 35, 65 ])));
     await runTest(boolV, await arrEq([ 49, 32, 50, 32, 35, 65, 13, 10 ], await dcaToSems([ 1, 2, 246, 50, 248 ])));
@@ -5332,7 +5332,7 @@ async function runTestsTypeConversion(boolV) {
     await runTest(boolV, await arrEq([ '', 'a', '', '' ], await strSplit('abaabab', 'ab')));
     await runTest(boolV, await arrEq([ '', '', '' ], await strSplit('abab', 'ab')));
     await runTest(boolV, await arrEq([ '', '' ], await strSplit('ab', 'ab')));*/
-    await runTest(boolV, await arrEq([ '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
+    await runTest(boolV, await arrEq([ '', '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
 
     await internalDebugStackExit();
 }
@@ -5748,7 +5748,7 @@ async function runTestsOnly(boolV) {
     /*runTestsBits b/v */
     //await runTestsMath(boolV);
     //await runTestsPack32(boolV);
-    await runTestsTypeConversion(boolV);
+    //await runTestsTypeConversion(boolV);
     //await runTestsWasm(boolV);
     /* Core tests */
     //await runTestsDcData(boolV);
@@ -5758,7 +5758,7 @@ async function runTestsOnly(boolV) {
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
     await runTestsFormatHtmlFragment(boolV);*/
-    await runTestsFormatIntegerList(boolV);
+    //await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
     /* Document exec tests */
