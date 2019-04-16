@@ -45,12 +45,15 @@
         let setModeEdit = () => {
             removeElement('documentViewToolbar');
             addElement('documentEditToolbar', 'documentTopToolbarsContainer');
+            removeElement('documentBottomViewToolbar');
+            addElement('documentBottomEditToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeView);
         }
         let createClicked = () => {
             removeDocumentElement();
             addElement('documentView', 'documentPanel');
             addElement('documentEditToolbar', 'documentTopToolbarsContainer');
+            addElement('documentBottomEditToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeView);
             attachFn('activeTabClose',startClicked);
         }
@@ -240,6 +243,13 @@
         </button>
         <button id="docInputMode">
             INS
+        </button>
+    </nav>
+</template>
+<template id="documentBottomViewToolbarTemplate">
+    <nav id="documentBottomViewToolbar">
+        <button id="docWordsChars">
+            1548W 16233C
         </button>
     </nav>
 </template>
