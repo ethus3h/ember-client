@@ -1484,7 +1484,7 @@ async function getExportSettingsArr() {
 async function setImportSettings(formatId, strNewSettings) {
     await assertIsStr(strNewSettings);
 
-    await implDebug('State change for import settings for '+formatId+' to '+strnewSettings+'.', 1);
+    await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
 
     getWindowOrSelf().importSettings[formatId]=strNewSettings;
 }
@@ -1492,7 +1492,7 @@ async function setImportSettings(formatId, strNewSettings) {
 async function setExportSettings(formatId, strNewSettings) {
     await assertIsStr(strNewSettings);
 
-    await implDebug('State change for export settings for '+formatId+' to '+strnewSettings+'.', 1);
+    await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
 
     getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
