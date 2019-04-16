@@ -8,7 +8,7 @@
     <script type="text/javascript">
     window.onload = () => {
         let addElement = (itemName, containerName) => {
-            let elem=document.importNode(document.getElementById(itemName+'Template').content, true).firstChild;
+            let elem=document.importNode(document.getElementById(itemName+'Template').content, true).firstElementChild;
             elem.id=itemName;
             let container=document.getElementById(containerName);
             container.appendChild(elem);
