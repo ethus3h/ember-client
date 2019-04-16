@@ -5322,7 +5322,7 @@ async function runTestsTypeConversion(boolV) {
     await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugStackEnter('runTestsTypeConversion:type-conversion-tests'); await assertIsBool(boolV);
 
     await testing(boolV, 'typeConversion');
-    await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
+    /*await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('a,b,c', ',')));
     await runTest(boolV, await arrEq([ 'a', 'b', 'c' ], await strSplit('aabbabc', 'ab')));
     await runTest(boolV, await arrEq([ 'a', 'b', 'c', '' ], await strSplit('aabbabcab', 'ab')));
     await runTest(boolV, await arrEq([ '', 'c' ], await strSplit('abc', 'ab')));
@@ -5331,7 +5331,7 @@ async function runTestsTypeConversion(boolV) {
     await runTest(boolV, await arrEq([ '', 'a', '' ], await strSplit('abaab', 'ab')));
     await runTest(boolV, await arrEq([ '', 'a', '', '' ], await strSplit('abaabab', 'ab')));
     await runTest(boolV, await arrEq([ '', '', '' ], await strSplit('abab', 'ab')));
-    await runTest(boolV, await arrEq([ '', '' ], await strSplit('ab', 'ab')));
+    await runTest(boolV, await arrEq([ '', '' ], await strSplit('ab', 'ab')));*/
     await runTest(boolV, await arrEq([ '', '' ], await strSplit(await strJoin(await strSplit('abab', 'ab'), 'ab'), 'ab')));
 
     await internalDebugStackExit();
@@ -5746,18 +5746,18 @@ async function runTestsOnly(boolV) {
     /* This runs each component's test suite */
     /* General tests */
     /*runTestsBits b/v */
-    await runTestsMath(boolV);
-    await runTestsPack32(boolV);
+    //await runTestsMath(boolV);
+    //await runTestsPack32(boolV);
     await runTestsTypeConversion(boolV);
-    await runTestsWasm(boolV);
+    //await runTestsWasm(boolV);
     /* Core tests */
-    await runTestsDcData(boolV);
-    await runTestsFormatDc(boolV);
+    //await runTestsDcData(boolV);
+    //await runTestsFormatDc(boolV);
     /* Format tests */
-    await runTestsFormatAscii(boolV);
+    /*await runTestsFormatAscii(boolV);
     await runTestsFormatAsciiSafeSubset(boolV);
     await runTestsFormatHtml(boolV);
-    await runTestsFormatHtmlFragment(boolV);
+    await runTestsFormatHtmlFragment(boolV);*/
     await runTestsFormatIntegerList(boolV);
     await runTestsFormatSems(boolV);
     await runTestsFormatUtf8(boolV);
