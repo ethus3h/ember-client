@@ -52,11 +52,11 @@
             attachFn('docbtnViewEditToggle',setModeView);
         }
         let closeViewMenu = () => {
-            addElement('documentViewModeMenuTemplate', 'documentTopToolbarsContainer');
-            attachFn('docbtnViewMode',closeViewMenu);
+            removeElement('documentViewModeMenu');
+            attachFn('docbtnViewMode',openViewMenu);
         }
         let openViewMenu = () => {
-            addElement('documentViewModeMenuTemplate', 'documentTopToolbarsContainer');
+            addElement('documentViewModeMenu', 'documentTopToolbarsContainer');
             attachFn('docbtnViewMode',closeViewMenu);
         }
         let createClicked = () => {
