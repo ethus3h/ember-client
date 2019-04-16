@@ -43,6 +43,7 @@
             removeElement('documentBottomEditToolbar');
             addElement('documentBottomViewToolbar', 'documentBottomToolbarsContainer');
             attachFn('docbtnViewEditToggle',setModeEdit);
+            attachFn('docbtnViewMode',openViewMenu);
             attachFn('docbtnMouseTools',openMouseToolsMenu);
         }
         let setModeEdit = () => {
