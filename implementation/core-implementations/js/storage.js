@@ -36,7 +36,7 @@ async function storageSetup(kvStorageCfgParam) {
     strArrayStorageCfg=kvStorageCfg;
 }
 
-async function storageSave(session, data) {
+async function storageSave(data) {
     await assertIsIntArray(data); let intRes;
     if (data.constructor.name !== 'Uint8Array') {
         data = new Uint8Array(data);
@@ -51,7 +51,7 @@ async function storageSave(session, data) {
     await assertIsInt(intRes); return intRes;
 }
 
-async function storageRetrieve(session, id) {
+async function storageRetrieve(id) {
     await assertIsInt(id); let intArrayRes;
     /* ipfsNode.files.cat(id, (err, data) => {
         if (err) {
@@ -62,13 +62,13 @@ async function storageRetrieve(session, id) {
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
-async function storageGetLastNodeID(session) {
+async function storageGetLastNodeID() {
     // Get the latest node ID
     let intRes;
     await assertIsInt(intRes); return intRes;
 }
 
-async function internalStorageGetTable(session, tableName) {
+async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
     let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlApiUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlApiSecretKey')+'&table='+tableName;
     let response = await new Promise(resolve => {
