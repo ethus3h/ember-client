@@ -62,7 +62,7 @@ async function storageRetrieve(session, id) {
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
-async function storageGetLastNode(session) {
+async function storageGetLastNodeID(session) {
     // Get the latest node ID
     let intRes;
     await assertIsInt(intRes); return intRes;
@@ -70,6 +70,7 @@ async function storageGetLastNode(session) {
 
 async function internalStorageGetTable(session, tableName) {
     // For testing; will be removed eventually
+    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlApiUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlApiSecretKey')+'&table='+tableName;
     let response = await new Promise(resolve => {
     var oReq = new XMLHttpRequest();
     oReq.open('GET', url, true);

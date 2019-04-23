@@ -74,6 +74,11 @@ if (isset($_GET['data'])) {
 } else {
     $data = $_POST['data'];
 }
+if (isset($_GET['sessionkey'])) {
+    $sessionkey = $_GET['sessionkey'];
+} else {
+    $sessionkey = $_POST['sessionkey'];
+}
 include('active.fracturedb.php');
 $database=new FractureDB('futuqiur_eite_'.$table, $user, $secretkey);
 
