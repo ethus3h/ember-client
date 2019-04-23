@@ -11,6 +11,9 @@ window.onload = async function() {
     async function addRow() {
         await storageSave('', await strToByteArray('Test node data'));
     }
+    async function listRows() {
+        await 
+    }
 };
 
 // @license-end

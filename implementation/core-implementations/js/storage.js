@@ -64,12 +64,16 @@ async function storageRetrieve(session, id) {
 
 async function internalStorageGetTable(session, tableName) {
     // For testing; will be removed eventually
-    await assertIsInt(id); let intArrayRes;
-    /* ipfsNode.files.cat(id, (err, data) => {
-        if (err) {
-            await implDie(err.toString());
-        }
-        return new Uint8Array(data);
-    }); */
-    await assertIsIntArray(intArrayRes); return intArrayRes;
+    let response = await new Promise(resolve => {
+    var oReq = new XMLHttpRequest();
+    oReq.open('GET', url, true);
+    oReq.responseType = 'json';
+    oReq.onload = function(oEvent) {
+        resolve(oReq.response);
+    };
+    oReq.onerror = function() {
+        resolve(undefined);
+    }
+    oReq.send(null);
+    });
 }
