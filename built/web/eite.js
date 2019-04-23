@@ -6615,25 +6615,16 @@ async function kvSetValue(strArrayData, strKey, strVal) {
         let boolContinue = false;
         boolContinue = true;
         while (boolContinue) {
-            console.log(strArrayRes);
-    console.log('What line is the bloody error on'+intC);
             if (boolFound) {
-    console.log('What line is the bloody error ond');
                 strArrayRes = await setElem(strArrayRes, intC, strVal);
                 boolContinue = false;
-    console.log('What line is the bloody error one');
             }
-            else {    console.log('What line is the bloody error onf');
-
-                if (await implNot(await le(intC, intL))) {
-    console.log('What line is the bloody error ong');
+            else {
+                if (await implNot(await implLt(intC, intL))) {
                     boolContinue = false;
                 }
-    console.log('What line is the bloody error onh');
                 if (await implEq(0, await implMod(intC, 2))) {
-    console.log('What line is the bloody error oni');
-                    if (await implEq(strKey, await get(strArrayRes, intC))) {
-    console.log('What line is the bloody error onj');
+                    if (await implEq(strKey, await get(strArrayData, intC))) {
                         boolFound = true;
                     }
                 }
@@ -6641,7 +6632,6 @@ async function kvSetValue(strArrayData, strKey, strVal) {
             intC = await implAdd(intC, 1);
         }
     }
-    console.log('What line is the bloody error oochuaocrlhucrehun');
     if (await implNot(boolFound)) {
         strArrayRes = await push(strArrayRes, strKey);
         strArrayRes = await push(strArrayRes, strVal);

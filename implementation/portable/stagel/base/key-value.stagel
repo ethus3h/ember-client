@@ -74,7 +74,7 @@ r/as/kvSetValue as/data s/key s/val
                 if not lt n/c n/l
                     set b/continue false
                 if eq 0 mod n/c 2
-                    if eq s/key get as/res n/c
+                    if eq s/key get as/data n/c
                         set b/found true
             set n/c add n/c 1
     if not b/found
