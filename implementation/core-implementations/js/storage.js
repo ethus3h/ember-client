@@ -83,4 +83,5 @@ async function internalStorageGetTable(session, tableName) {
     }
     oReq.send(null);
     });
+    return response;
 }

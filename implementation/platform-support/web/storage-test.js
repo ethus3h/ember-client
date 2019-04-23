@@ -9,10 +9,10 @@ window.onload = async function() {
         document.getElementById(elem).onclick=func;
     }
     async function addRow() {
-        await storageSave('', await strToByteArray('Test node data'));
+        alert(await storageSave('', await strToByteArray('Test node data')));
     }
     async function listRows() {
-        await 
+        alert(await internalStorageGetTable('', 'node'));
     }
 };
 
