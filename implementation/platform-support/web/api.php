@@ -14,7 +14,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");         
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -46,11 +46,14 @@ if (isset($_GET['data'])) {
     $data = $_POST['data'];
 }
 include('active.fracturedb.php');
-$database=new FractureDB('futuqiur_eite');
+$database=new FractureDB('futuqiur_eite_'.$table, $user, $secretkey);
 
-if($action==='getTable') {
+if ($action==='getTable') {
     $resultsArray=$database->getTable($table);
     #print_r($resultsArray);
-    echo json_encode ($resultsArray);
+} elseif ($action==='getRowByValue') {
+    $resultsArray=$database->getRow($table, $field, $value);
+    
 }
+echo json_encode ($resultsArray);
 ?>
