@@ -20,7 +20,7 @@ async function storageSetup(kvStorageCfgParam) {
     temp=await kvGetValue(kvStorageCfg, 'mysqlApiUser')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
-        , 'mysqlApiUser', 'UNCONFIGURED');
+        , 'mysqlUser', 'UNCONFIGURED');
     }
     temp=await kvGetValue(kvStorageCfg, 'mysqlApiSecretKey')
     if (''===temp) {
@@ -70,7 +70,25 @@ async function storageGetLastNodeID() {
 
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
-    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlApiUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlApiSecretKey')+'&table='+tableName;
+    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
+    let response = await new Promise(resolve => {
+    var oReq = new XMLHttpRequest();
+    oReq.open('GET', url, true);
+    oReq.responseType = 'json';
+    oReq.onload = function(oEvent) {
+        resolve(oReq.response);
+    };
+    oReq.onerror = function() {
+        resolve(undefined);
+    }
+    oReq.send(null);
+    });
+    return response;
+}
+
+async function internalStorageMysqlApiRequest(tableName) {
+    // For testing; will be removed eventually
+    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
     let response = await new Promise(resolve => {
     var oReq = new XMLHttpRequest();
     oReq.open('GET', url, true);
