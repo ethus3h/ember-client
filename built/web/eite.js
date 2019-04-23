@@ -6601,7 +6601,7 @@ async function kvGetDefinedValue(strArrayData, strKey) {
 
 async function kvSetValue(strArrayData, strKey, strVal) {
     await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Val = ' + strVal + '; '); await internalDebugStackEnter('kvSetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); await assertIsStr(strVal); let strArrayReturn;
-
+STAGEL_DEBUG=2;
     await assertIsKvArray(strArrayData);
     let strArrayRes = [];
     strArrayRes = strArrayData;
