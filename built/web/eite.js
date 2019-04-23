@@ -6626,6 +6626,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
                 if (await implEq(0, await implMod(intC, 2))) {
                     console.log('huhuhuhuhhuhu');
                     console.log(strArrayData);
+                    console.log(intC);
                     if (await implEq(strKey, await get(strArrayData, intC))) {
                         boolFound = true;
                     }
