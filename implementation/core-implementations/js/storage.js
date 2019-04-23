@@ -32,8 +32,7 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
-    let qs='action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
-    return internalStorageMysqlApiRequest(qs);
+    return internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey'));
     // Done, so now set the global value to the prepared configuration key-value pairs
     strArrayStorageCfg=kvStorageCfg;
 }
