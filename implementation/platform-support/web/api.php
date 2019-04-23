@@ -85,6 +85,8 @@ $database=new FractureDB('futuqiur_eite_'.$table, $user, $secretkey);
 if ($action==='getTable') {
     $resultsArray=$database->getTable($table);
     #print_r($resultsArray);
+} elseif ($action==='getSession') {
+    $resultsArray=$database->addRow('idxSession', ['id', 'sessionKey', 'created', 'expires', 'events'], ['NULL', 'test', new DateTime()->getTimestamp(), new DateTime()->getTimestamp() + 1000, 'NULL']);
 } elseif ($action==='getRowByValue') {
     $resultsArray=$database->getRow($table, $field, $value);
 } elseif ($action==='insertNode') {
