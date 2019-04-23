@@ -6621,7 +6621,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
                 boolContinue = false;
             }
             else {
-                if (await implNot(await implLt(intC, intL))) {
+                if (await implNot(await implLe(intC, intL))) {
                     boolContinue = false;
                 }
                 if (await implEq(0, await implMod(intC, 2))) {
