@@ -116,15 +116,15 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
-    getWindowOrSelf().strArrayStorageCfg=kvStorageCfg;
+    await setStorageSettings(kvStorageCfg);
     alert(kvStorageCfg);
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
-        , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')));
+        , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey')));
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
-    getWindowOrSelf().strArrayStorageCfg=kvStorageCfg;
+    await setStorageSettings(kvStorageCfg);
 }
 
 async function storageSave(data) {
@@ -160,9 +160,7 @@ async function storageGetLastNodeID() {
 }
 
 async function internalStorageMysqlApiRequest(queryString) {
-    alert(getWindowOrSelf().strArrayStorageCfg);
-    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?'+queryString;
-    alert(url);
+    let url=await kvGetValue(await getStorageSettings(), 'mysqlApi')+'?'+queryString;
     let response = await new Promise(resolve => {
     var oReq = new XMLHttpRequest();
     oReq.open('GET', url, true);
@@ -175,13 +173,12 @@ async function internalStorageMysqlApiRequest(queryString) {
     }
     oReq.send(null);
     });
-    alert(response);
     return response;
 }
 
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
-    let qs='action=getTable&session='+await kvGetValue(strArrayStorageCfg, 'mysqlSession')+'&table='+tableName;
+    let qs='action=getTable&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&table='+tableName;
     return await internalStorageMysqlApiRequest(qs);
 }
 
