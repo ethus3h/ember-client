@@ -11,8 +11,12 @@ async function storageSetup(kvStorageCfgParam) {
         });
     }); */
     // Provider: MySQL
-    let mysqlApi=await kvGetValue(kvStorageCfg, )
-    mysqlApi='http://futuramerlin.com/'
+    let temp;
+    temp=await kvGetValue(kvStorageCfg, 'mysqlApi')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php')
+        mysqlApi='http://futuramerlin.com/'
+    }
     strArrayStorageCfg=
 }
 
