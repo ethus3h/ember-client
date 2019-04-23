@@ -88,6 +88,7 @@ async function internalRunDocument(execId) {
 // Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that.
 
 async function storageSetup(kvStorageCfgParam) {
+    alert('ochcocrhurehcu');
     kvStorageCfg=kvStorageCfgParam;
     if (typeof kvStorageCfg === 'undefined') {
         kvStorageCfg=[];
