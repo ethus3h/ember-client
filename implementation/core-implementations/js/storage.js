@@ -36,7 +36,7 @@ async function storageSetup(kvStorageCfgParam) {
         , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')));
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
-    strArrayStorageCfg=kvStorageCfg;
+    getWindowOrSelf().strArrayStorageCfg=kvStorageCfg;
 }
 
 async function storageSave(data) {
