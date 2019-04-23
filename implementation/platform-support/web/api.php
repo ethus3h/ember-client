@@ -84,7 +84,7 @@ if ($action==='getTable') {
     $fields=array();
     $values=array();
     $i=0;
-    $rowData=explode_escaped($data);
+    $rowData=explode_escaped($data, ',');
     foreach($rowData as $value) {
         if ($i++ % 2 == 0) {
             $fields[] = $value;
@@ -93,7 +93,7 @@ if ($action==='getTable') {
             $values[] = $value;
         }
     }
-    $resultsArray=$database->addRow($table, $fields, $values);
+    $resultsArray=$database->addRowFromArrays($table, $fields, $values);
 }
 echo json_encode ($resultsArray);
 ?>
