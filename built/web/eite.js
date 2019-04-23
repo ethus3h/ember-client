@@ -117,7 +117,6 @@ async function storageSetup(kvStorageCfgParam) {
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
     await setStorageSettings(kvStorageCfg);
-    alert(kvStorageCfg);
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
@@ -2073,7 +2072,11 @@ async function setExportSettings(formatId, strNewSettings) {
 
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
-    strArrayStorageCfg=strArrayNewSettings;
+    getWindowOrSelf().strArrayStorageCfg=strArrayNewSettings;
+}
+
+async function getStorageSettings(strArrayNewSettings) {
+    return getWindowOrSelf().strArrayStorageCfg;
 }
 
 /* type-tools, provides:
