@@ -6615,6 +6615,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
         let boolContinue = false;
         boolContinue = true;
         while (boolContinue) {
+            console.log(strArrayRes);
     console.log('What line is the bloody error on'+intC);
             if (boolFound) {
     console.log('What line is the bloody error ond');
