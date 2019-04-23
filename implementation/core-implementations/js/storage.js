@@ -91,5 +91,5 @@ async function internalStorageMysqlApiRequest(queryString) {
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
     let qs='action=getTable&session='+await kvGetValue(strArrayStorageCfg, 'mysqlSession')+'&table='+tableName;
-    return internalStorageMysqlApiRequest(qs);
+    return await internalStorageMysqlApiRequest(qs);
 }
