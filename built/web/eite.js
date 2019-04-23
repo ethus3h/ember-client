@@ -160,6 +160,7 @@ async function storageGetLastNodeID() {
 }
 
 async function internalStorageMysqlApiRequest(queryString) {
+    alert(strArrayStorageCfg);
     let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?'+queryString;
     alert(url);
     let response = await new Promise(resolve => {
