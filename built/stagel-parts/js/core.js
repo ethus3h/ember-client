@@ -84,7 +84,12 @@ async function internalRunDocument(execId) {
     // FIXME Unimplemented
 }
 
-async function storageSetup() {
+// Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedSecretKey]; idxSession[nodeId, sessionKey, created, expires, events]
+// Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that.
+
+async function storageSetup(kvStorageCfgParam) {
+    kvStorageCfg=kvStorageCfgParam;
+    let temp;
     // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
     /* ipfsNode = new IPFS();
     await new Promise(resolve => {
@@ -92,6 +97,29 @@ async function storageSetup() {
             resolve()
         });
     }); */
+    // Now, set default values for storage providers configuration
+    // Provider: MySQL
+    temp=await kvGetValue(kvStorageCfg, 'mysqlApi')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php');
+    }
+    temp=await kvGetValue(kvStorageCfg, 'mysqlUser')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlUser', 'UNCONFIGURED');
+    }
+    temp=await kvGetValue(kvStorageCfg, 'mysqlSecretKey')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlSecretKey', 'UNCONFIGURED');
+    }
+    temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')));
+    }
+    // Done, so now set the global value to the prepared configuration key-value pairs
+    strArrayStorageCfg=kvStorageCfg;
 }
 
 async function storageSave(data) {
@@ -118,6 +146,35 @@ async function storageRetrieve(id) {
         return new Uint8Array(data);
     }); */
     await assertIsIntArray(intArrayRes); return intArrayRes;
+}
+
+async function storageGetLastNodeID() {
+    // Get the latest node ID
+    let intRes;
+    await assertIsInt(intRes); return intRes;
+}
+
+async function internalStorageMysqlApiRequest(queryString) {
+    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?'+queryString;
+    let response = await new Promise(resolve => {
+    var oReq = new XMLHttpRequest();
+    oReq.open('GET', url, true);
+    oReq.responseType = 'json';
+    oReq.onload = function(oEvent) {
+        resolve(oReq.response);
+    };
+    oReq.onerror = function() {
+        resolve(undefined);
+    }
+    oReq.send(null);
+    });
+    return response;
+}
+
+async function internalStorageGetTable(tableName) {
+    // For testing; will be removed eventually
+    let qs='action=getTable&session='+await kvGetValue(strArrayStorageCfg, 'mysqlSession')+'&table='+tableName;
+    return internalStorageMysqlApiRequest(qs);
 }
 
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
@@ -156,6 +213,7 @@ let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
 let strArrayImportWarnings = []; // as
 let strArrayExportWarnings = []; // as
+let strArrayStorageCfg = []; // as
 let ipfsNode;
 
 // Global environment
@@ -164,6 +222,9 @@ let haveDom = false;
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
     STAGEL_DEBUG = 1;
+}
+if (EITE_STORAGE_CFG === undefined) {
+    EITE_STORAGE_CFG = [];
 }
 if (importSettings === undefined) {
     importSettings = [];
@@ -271,7 +332,7 @@ async function internalSetup() {
 
     // Set up storage
 
-    await storageSetup();
+    await storageSetup(EITE_STORAGE_CFG);
 
     // Other startup stuff.
 
@@ -2002,6 +2063,11 @@ async function setExportSettings(formatId, strNewSettings) {
     await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
 
     getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+}
+
+async function setStorageSettings(strArrayNewSettings) {
+    await assertIsStrArray(strArrayNewSettings);
+    strArrayStorageCfg=strArrayNewSettings;
 }
 
 /* type-tools, provides:
