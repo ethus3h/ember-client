@@ -3,6 +3,9 @@
 
 async function storageSetup(kvStorageCfgParam) {
     kvStorageCfg=kvStorageCfgParam;
+    if (typeof kvStorageCfg === 'undefined') {
+        kvStorageCfg=[];
+    }
     let temp;
     // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
     /* ipfsNode = new IPFS();
