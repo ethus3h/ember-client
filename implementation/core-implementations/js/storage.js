@@ -1,8 +1,9 @@
-// Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedPrivatekey]; idxSession[nodeId, sessionKey, created, expires, events]
+// Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedSecretKey]; idxSession[nodeId, sessionKey, created, expires, events]
 // Node table is append only. Index tables are read-write.
 
 async function storageSetup(kvStorageCfgParam) {
     kvStorageCfg=kvStorageCfgParam;
+    let temp;
     // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
     /* ipfsNode = new IPFS();
     await new Promise(resolve => {
@@ -10,14 +11,19 @@ async function storageSetup(kvStorageCfgParam) {
             resolve()
         });
     }); */
+    // Now, set default values for storage providers configuration
     // Provider: MySQL
-    let temp;
     temp=await kvGetValue(kvStorageCfg, 'mysqlApi')
     if (''===temp) {
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php')
-        mysqlApi='http://futuramerlin.com/'
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php');
     }
-    strArrayStorageCfg=
+    temp=await kvGetValue(kvStorageCfg, 'mysqlApiSecretKey')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlSecretKey', 'UNCONFIGURED');
+    }
+    // Done, so now set the global value to the prepared configuration key-value pairs
+    strArrayStorageCfg=kvStorageCfg;
 }
 
 async function storageSave(session, data) {
