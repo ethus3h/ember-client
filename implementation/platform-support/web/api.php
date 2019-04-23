@@ -42,11 +42,11 @@ function explode_escaped($delimiter, $string)
     return $fixed;
 }
 function getParam($name) {
-    if (isset($_GET['table'])) {
-        return $_GET['table'];
+    if (isset($_GET[$name])) {
+        return $_GET[$name];
     } else {
-        if (isset($_POST['table'])) {
-            return $_POST['table'];
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
         }
         else
         {
@@ -55,6 +55,13 @@ function getParam($name) {
     }
 }
 $table = getParam('table');
+$user = getParam('user');
+$secretkey = getParam('secretkey');
+$action = getParam('action');
+$field = getParam('field');
+$value = getParam('value');
+$data = getParam('data');
+$sessionkey = getParam('sessionkey');
 if (isset($_GET['user'])) {
     $user = $_GET['user'];
 } else {
