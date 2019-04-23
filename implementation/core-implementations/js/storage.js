@@ -32,6 +32,8 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
+    let qs='action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
+    return internalStorageMysqlApiRequest(qs);
     // Done, so now set the global value to the prepared configuration key-value pairs
     strArrayStorageCfg=kvStorageCfg;
 }
@@ -87,19 +89,6 @@ async function internalStorageMysqlApiRequest(queryString) {
 
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
-    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
-    let response = await new Promise(resolve => {
-    var oReq = new XMLHttpRequest();
-    oReq.open('GET', url, true);
-    oReq.responseType = 'json';
-    oReq.onload = function(oEvent) {
-        resolve(oReq.response);
-    };
-    oReq.onerror = function() {
-        resolve(undefined);
-    }
-    oReq.send(null);
-    });
-    return response;
+    let qs='action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
+    return internalStorageMysqlApiRequest(qs);
 }
-
