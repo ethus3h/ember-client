@@ -60,7 +60,7 @@ function dHandler($db, $query, $e, $qf = 'normal', $failed = False)
 //FractureDB is the class that implements the FractureDB data management system.
 class FractureDB
 {
-    function __construct($name)
+    function __construct($name, $username="", $password="", $host="localhost")
     {
         $this->name = $name;
         
@@ -68,9 +68,9 @@ class FractureDB
         global $db_data;
         #print_r($db_data);
         //echo '<br><br><font color="red">EXECUTING QUERY: ' . $query . '</font><br><br>';
-        $username = "";
-        $password = "";
-        $host     = "localhost";
+        $username = $username;
+        $password = $password;
+        $host     = $host;
         try {
 	        $this->db = new Database('mysql:host=' . $host . ';dbname=' . $this->name . ';charset=utf8', $username, $password);
 	    }

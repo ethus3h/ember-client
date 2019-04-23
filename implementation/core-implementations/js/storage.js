@@ -17,6 +17,11 @@ async function storageSetup(kvStorageCfgParam) {
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php');
     }
+    temp=await kvGetValue(kvStorageCfg, 'mysqlApiUser')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlSecretKey', 'UNCONFIGURED');
+    }
     temp=await kvGetValue(kvStorageCfg, 'mysqlApiSecretKey')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg

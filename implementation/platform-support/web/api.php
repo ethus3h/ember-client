@@ -25,9 +25,32 @@ if (isset($_GET['table'])) {
 } else {
     $table = $_POST['table'];
 }
+if (isset($_GET['user'])) {
+    $user = $_GET['user'];
+} else {
+    $user = $_POST['user'];
+}
+if (isset($_GET['secretkey'])) {
+    $secretkey = $_GET['secretkey'];
+} else {
+    $secretkey = $_POST['secretkey'];
+}
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+} else {
+    $action = $_POST['action'];
+}
+if (isset($_GET['data'])) {
+    $data = $_GET['data'];
+} else {
+    $data = $_POST['data'];
+}
 include('active.fracturedb.php');
-$database=new FractureDB('futuqiur_ezraestey');
-$resultsArray=$database->getTable($table);
-#print_r($resultsArray);
-echo json_encode ($resultsArray);
+$database=new FractureDB('futuqiur_eite');
+
+if($action==='getTable') {
+    $resultsArray=$database->getTable($table);
+    #print_r($resultsArray);
+    echo json_encode ($resultsArray);
+}
 ?>
