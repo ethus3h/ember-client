@@ -62,7 +62,7 @@ $field = getParam('field');
 $value = getParam('value');
 $data = getParam('data');
 $sessionkey = getParam('sessionkey');
-
+$resultsArray=array();
 include('active.fracturedb.php');
 $database=new FractureDB('futuqiur_eite_'.$table, $mysqlUser, $mysqlPassword);
 $datetime=new DateTime();
@@ -72,9 +72,9 @@ if ($action==='getTable') {
     #print_r($resultsArray);
 } elseif ($action==='getSession') {
     $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', 'test', $timestamp, $timestamp + 1000, '']);
-    $resultsArray='test';
+    $resultsArray[]='test';
 } elseif ($action==='getRowByValue') {
-    $resultsArray=$database->getRow($table, $field, $value);
+    $resultsArray[]=$database->getRow($table, $field, $value);
 } elseif ($action==='insertNode') {
     // based on https://stackoverflow.com/questions/1939581/selecting-every-nth-item-from-an-array
     $fields=array();
@@ -89,7 +89,7 @@ if ($action==='getTable') {
             $values[] = $value;
         }
     }
-    $resultsArray=$database->addRow($table, $fields, $values);
+    $resultsArray[]=$database->addRow($table, $fields, $values);
 }
 echo json_encode ($resultsArray);
 ?>
