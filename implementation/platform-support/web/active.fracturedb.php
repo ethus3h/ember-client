@@ -436,11 +436,11 @@ class FractureDB
     }
     function addRowFromArrays($table, $fields, $values, $print="false")
     {
-    if($print=="true"){
-    print_r($fields);
-    print_r($values);
-    }
-		$dbh      = $this->db;
+        if($print=="true"){
+            print_r($fields);
+            print_r($values);
+        }
+        $dbh      = $this->db;
         $i=0;
         $n=count($values);
         $placeholders="";
