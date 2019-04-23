@@ -20,7 +20,7 @@ async function storageSetup(kvStorageCfgParam) {
     temp=await kvGetValue(kvStorageCfg, 'mysqlApiUser')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
-        , 'mysqlSecretKey', 'UNCONFIGURED');
+        , 'mysqlApiUser', 'UNCONFIGURED');
     }
     temp=await kvGetValue(kvStorageCfg, 'mysqlApiSecretKey')
     if (''===temp) {
