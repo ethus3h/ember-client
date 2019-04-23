@@ -17,22 +17,21 @@ async function storageSetup(kvStorageCfgParam) {
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php');
     }
-    temp=await kvGetValue(kvStorageCfg, 'mysqlApiUser')
+    temp=await kvGetValue(kvStorageCfg, 'mysqlUser')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlUser', 'UNCONFIGURED');
     }
-    temp=await kvGetValue(kvStorageCfg, 'mysqlApiSecretKey')
+    temp=await kvGetValue(kvStorageCfg, 'mysqlSecretKey')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
-    temp=await kvGetValue(kvStorageCfg, 'mysqlApiSession')
+    temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
-        , 'mysqlSecretKey', 'UNCONFIGURED');
+        , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')));
     }
-    return internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey'));
     // Done, so now set the global value to the prepared configuration key-value pairs
     strArrayStorageCfg=kvStorageCfg;
 }
@@ -88,6 +87,6 @@ async function internalStorageMysqlApiRequest(queryString) {
 
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
-    let qs='action=getTable&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')+'&table='+tableName;
+    let qs='action=getTable&session='+await kvGetValue(strArrayStorageCfg, 'mysqlSession')+'&table='+tableName;
     return internalStorageMysqlApiRequest(qs);
 }
