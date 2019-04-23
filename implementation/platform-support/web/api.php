@@ -41,17 +41,20 @@ function explode_escaped($delimiter, $string)
     }
     return $fixed;
 }
-if (isset($_GET['table'])) {
-    $table = $_GET['table'];
-} else {
-    if (isset($_POST['table'])) {
-        $table = $_POST['table'];
-    }
-    else
-    {
-        $table = $
+function getParam($name) {
+    if (isset($_GET['table'])) {
+        return $_GET['table'];
+    } else {
+        if (isset($_POST['table'])) {
+            return $_POST['table'];
+        }
+        else
+        {
+            return '';
+        }
     }
 }
+$table = getParam('table');
 if (isset($_GET['user'])) {
     $user = $_GET['user'];
 } else {
