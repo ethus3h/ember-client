@@ -44,7 +44,13 @@ function explode_escaped($delimiter, $string)
 if (isset($_GET['table'])) {
     $table = $_GET['table'];
 } else {
-    $table = $_POST['table'];
+    if (isset($_POST['table'])) {
+        $table = $_POST['table'];
+    }
+    else
+    {
+        $table = $
+    }
 }
 if (isset($_GET['user'])) {
     $user = $_GET['user'];
