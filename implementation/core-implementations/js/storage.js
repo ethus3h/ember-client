@@ -1,5 +1,5 @@
 // Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedSecretKey]; idxSession[nodeId, sessionKey, created, expires, events]
-// Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that.
+// Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that. idxPerson and idxSession are both in the idxPerson database for mysql backend.
 
 async function storageSetup(kvStorageCfgParam) {
     kvStorageCfg=kvStorageCfgParam;
