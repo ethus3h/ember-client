@@ -6609,7 +6609,6 @@ async function kvSetValue(strArrayData, strKey, strVal) {
     intL = await count(strArrayRes);
     let boolFound = false;
     boolFound = false;
-    console.log('What line is the bloody error on');
     if (await ne(0, intL)) {
         let intC = 0;
         intC = 0;
@@ -6633,6 +6632,7 @@ async function kvSetValue(strArrayData, strKey, strVal) {
             intC = await implAdd(intC, 1);
         }
     }
+    console.log('What line is the bloody error on');
     if (await implNot(boolFound)) {
         strArrayRes = await push(strArrayRes, strKey);
         strArrayRes = await push(strArrayRes, strVal);
