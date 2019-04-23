@@ -2,6 +2,12 @@
 
 window.onload = async function() {
     //eiteCall('startEite');
+    EITE_STORAGE_CFG=['mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php', 'mysqlApiUser', 'test', 'mysqlApiSecretKey', 'test'];
+    await storageSetup(EITE_STORAGE_CFG);
+    let attachFn = (elem, func) => {
+        document.getElementById(elem).onclick=func;
+    }
+
     let doc = await eiteCall('loadStoredDocument', ['sems', 'eite.sems']);
     let execId = await eiteCall('runDocumentPrepare', [doc]);
     await eiteCall('setExecOption', [execId, 'stopExecAtTick', '30']);

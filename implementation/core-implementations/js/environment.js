@@ -80,3 +80,8 @@ async function setExportSettings(formatId, strNewSettings) {
 
     getWindowOrSelf().exportSettings[formatId]=strNewSettings;
 }
+
+async function setStorageSettings(strArrayNewSettings) {
+    await assertIsStrArray(strArrayNewSettings);
+    strArrayStorageCfg=strArrayNewSettings;
+}

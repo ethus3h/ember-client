@@ -27,6 +27,11 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
+    temp=await kvGetValue(kvStorageCfg, 'mysqlApiSession')
+    if (''===temp) {
+        kvStorageCfg=await kvSetValue(kvStorageCfg
+        , 'mysqlSecretKey', 'UNCONFIGURED');
+    }
     // Done, so now set the global value to the prepared configuration key-value pairs
     strArrayStorageCfg=kvStorageCfg;
 }
