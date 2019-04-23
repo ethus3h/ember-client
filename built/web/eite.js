@@ -6603,13 +6603,13 @@ async function kvSetValue(strArrayData, strKey, strVal) {
     await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugCollect('str Val = ' + strVal + '; '); await internalDebugStackEnter('kvSetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); await assertIsStr(strVal); let strArrayReturn;
 
     await assertIsKvArray(strArrayData);
-    console.log('What line is the bloody error on');
     let strArrayRes = [];
     strArrayRes = strArrayData;
     let intL = 0;
     intL = await count(strArrayRes);
     let boolFound = false;
     boolFound = false;
+    console.log('What line is the bloody error on');
     if (await ne(0, intL)) {
         let intC = 0;
         intC = 0;
