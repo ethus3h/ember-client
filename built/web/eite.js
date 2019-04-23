@@ -149,6 +149,7 @@ async function storageRetrieve(id) {
         }
         return new Uint8Array(data);
     }); */
+    intArrayRes=await internalStorageMysqlApiRequest('table=node&action=getNode&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&data='+await strFrom(id));
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
