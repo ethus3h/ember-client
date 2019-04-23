@@ -7,11 +7,8 @@ window.onload = async function() {
     let attachFn = (elem, func) => {
         document.getElementById(elem).onclick=func;
     }
-
-    let doc = await eiteCall('loadStoredDocument', ['sems', 'eite.sems']);
-    let execId = await eiteCall('runDocumentPrepare', [doc]);
-    await eiteCall('setExecOption', [execId, 'stopExecAtTick', '30']);
-    await eiteCall('runDocumentGo', [execId]);
+    
+    document.getElementById('eiteDocumentRoot');
 };
 
 // @license-end
