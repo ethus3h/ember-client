@@ -61,3 +61,15 @@ async function storageRetrieve(session, id) {
     }); */
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
+
+async function internalStorageGetTable(session, tableName) {
+    // For testing; will be removed eventually
+    await assertIsInt(id); let intArrayRes;
+    /* ipfsNode.files.cat(id, (err, data) => {
+        if (err) {
+            await implDie(err.toString());
+        }
+        return new Uint8Array(data);
+    }); */
+    await assertIsIntArray(intArrayRes); return intArrayRes;
+}
