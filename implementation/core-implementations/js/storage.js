@@ -30,6 +30,7 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
+    getWindowOrSelf().strArrayStorageCfg=kvStorageCfg;
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
