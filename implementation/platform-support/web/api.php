@@ -86,7 +86,8 @@ if ($action==='getTable') {
     $resultsArray=$database->getTable($table);
     #print_r($resultsArray);
 } elseif ($action==='getSession') {
-    $resultsArray=$database->addRow('idxSession', ['id', 'sessionKey', 'created', 'expires', 'events'], ['NULL', 'test', new DateTime()->getTimestamp(), new DateTime()->getTimestamp() + 1000, 'NULL']);
+    $database->addRow('idxSession', ['id', 'sessionKey', 'created', 'expires', 'events'], ['NULL', 'test', new DateTime()->getTimestamp(), new DateTime()->getTimestamp() + 1000, 'NULL']);
+    $resultsArray='test';
 } elseif ($action==='getRowByValue') {
     $resultsArray=$database->getRow($table, $field, $value);
 } elseif ($action==='insertNode') {
