@@ -34,6 +34,7 @@ let strArrayImportDeferredSettingsStack = []; // as
 let strArrayExportDeferredSettingsStack = []; // as
 let strArrayImportWarnings = []; // as
 let strArrayExportWarnings = []; // as
+let strArrayStorageCfg = []; // as
 let ipfsNode;
 
 // Global environment
