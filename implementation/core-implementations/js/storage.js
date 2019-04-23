@@ -62,6 +62,12 @@ async function storageRetrieve(session, id) {
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
+async function storageGetLastNode(session) {
+    // Get the latest node ID
+    let intRes;
+    await assertIsInt(intRes); return intRes;
+}
+
 async function internalStorageGetTable(session, tableName) {
     // For testing; will be removed eventually
     let response = await new Promise(resolve => {
