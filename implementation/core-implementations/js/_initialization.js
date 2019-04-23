@@ -44,6 +44,9 @@ let haveDom = false;
 if (STAGEL_DEBUG === undefined) {
     STAGEL_DEBUG = 1;
 }
+if (EITE_STORAGE_CFG === undefined) {
+    EITE_STORAGE_CFG = [];
+}
 if (importSettings === undefined) {
     importSettings = [];
 }
@@ -150,7 +153,7 @@ async function internalSetup() {
 
     // Set up storage
 
-    await storageSetup();
+    await storageSetup(EITE_STORAGE_CFG);
 
     // Other startup stuff.
 

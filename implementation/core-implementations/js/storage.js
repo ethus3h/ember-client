@@ -1,7 +1,8 @@
 // Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedPrivatekey]; idxSession[nodeId, sessionKey, created, expires, events]
 // Node table is append only. Index tables are read-write.
 
-async function storageSetup(kvStorageCfg) {
+async function storageSetup(kvStorageCfgParam) {
+    kvStorageCfg=kvStorageCfgParam;
     // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
     /* ipfsNode = new IPFS();
     await new Promise(resolve => {
@@ -12,6 +13,7 @@ async function storageSetup(kvStorageCfg) {
     // Provider: MySQL
     let mysqlApi=await kvGetValue(kvStorageCfg, )
     mysqlApi='http://futuramerlin.com/'
+    strArrayStorageCfg=
 }
 
 async function storageSave(session, data) {
