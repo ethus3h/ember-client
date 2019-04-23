@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+$mysqlUser="futuqiur_eite";
+$mysqlPassword="UNCONFIGURED";
 // from https://stackoverflow.com/questions/14467673/enable-cors-in-htaccess
 // Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
@@ -80,7 +82,7 @@ if (isset($_GET['sessionkey'])) {
     $sessionkey = $_POST['sessionkey'];
 }
 include('active.fracturedb.php');
-$database=new FractureDB('futuqiur_eite_'.$table, $user, $secretkey);
+$database=new FractureDB('futuqiur_eite_'.$table, $mysqlUser, $mysqlPassword);
 
 if ($action==='getTable') {
     $resultsArray=$database->getTable($table);
