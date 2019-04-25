@@ -70,9 +70,6 @@ function getParam($name) {
         }
     }
 }
-function validateSession() {
-    
-}
 $table = getParam('table');
 $user = getParam('user');
 $secretkey = getParam('secretkey');
@@ -86,6 +83,15 @@ include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_'.$table, $mysqlUser, $mysqlPassword, $mysqlServer);
 $datetime=new DateTime();
 $timestamp=$datetime->getTimestamp();
+function validateSession() {
+    $sessionData=$database->getRow('idxSession', sessionKey, $sessionkey);
+    if ($sessionData != null) {
+        $sessionExpires=$sessionData[expires];
+        if ($sessionExpires > 1556056077) {
+            // 1556056077 is recent, to make sure the session isn't 0 or something
+            if ($sessionExpires > $timestamp)
+        }
+}
 if ($action==='getSession') {
     $userData=$database->getRow($table, publicId, $user);
     if($userData["hashedSecretKey"]===password_hash($secretkey)) {
@@ -99,13 +105,6 @@ if ($action==='getSession') {
         #print_r($resultsArray);
     } elseif ($action==='hashSecret') {
         $resultsArray=password_hash($secretkey);
-    } elseif ($action==='getSession') {
-        $userData=$database->getRow($table, publicId, $user);
-        if($userData["hashedSecretKey"]===password_hash($secretkey)) {
-            $newSession=uuidgen();
-            $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 48*60*60, '']);
-            $resultsArray=$newSession;
-        }
     } elseif ($action==='getRowByValue') {
         $resultsArray=$database->getRow($table, $field, $value);
     } elseif ($action==='insertNode') {
