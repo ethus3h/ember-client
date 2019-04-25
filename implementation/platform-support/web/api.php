@@ -111,7 +111,8 @@ else {
         $sessionIsValid=false;
         $sessionData=$database->getRow('idxSession', "sessionKey", $sessionkey);
         if ($sessionData != null) {
-            $sessionExpires=$sessionData[expires];
+        print_r($sessionData);
+            $sessionExpires=$sessionData["expires"];
             if ($sessionExpires > $timestamp) {
                 $sessionIsValid=true;
             }
