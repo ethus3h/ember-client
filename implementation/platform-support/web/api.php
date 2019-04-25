@@ -70,6 +70,9 @@ function getParam($name) {
         }
     }
 }
+function validateSession() {
+    
+}
 $table = getParam('table');
 $user = getParam('user');
 $secretkey = getParam('secretkey');
@@ -83,37 +86,49 @@ include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_'.$table, $mysqlUser, $mysqlPassword, $mysqlServer);
 $datetime=new DateTime();
 $timestamp=$datetime->getTimestamp();
-if ($action==='getTable') {
-    $resultsArray=$database->getTable($table);
-    #print_r($resultsArray);
-} elseif ($action==='hashSecret') {
-    $resultsArray=password_hash($secretkey);
-} elseif ($action==='getSession') {
+if ($action==='getSession') {
     $userData=$database->getRow($table, publicId, $user);
     if($userData["hashedSecretKey"]===password_hash($secretkey)) {
         $newSession=uuidgen();
         $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
         $resultsArray=$newSession;
     }
-} elseif ($action==='getRowByValue') {
-    $resultsArray=$database->getRow($table, $field, $value);
-} elseif ($action==='insertNode') {
-    // based on https://stackoverflow.com/questions/1939581/selecting-every-nth-item-from-an-array
-    $fields=array();
-    $values=array();
-    $i=0;
-    //echo($data);
-    $rowData=explode_escaped(",", $data);
-    //print_r($rowData);
-    foreach($rowData as $value) {
-        if ($i++ % 2 == 0) {
-            $fields[] = $value;
+} elseif (validateSession()) {
+    if ($action==='getTable') {
+        $resultsArray=$database->getTable($table);
+        #print_r($resultsArray);
+    } elseif ($action==='hashSecret') {
+        $resultsArray=password_hash($secretkey);
+    } elseif ($action==='getSession') {
+        $userData=$database->getRow($table, publicId, $user);
+        if($userData["hashedSecretKey"]===password_hash($secretkey)) {
+            $newSession=uuidgen();
+            $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 48*60*60, '']);
+            $resultsArray=$newSession;
         }
-        else {
-            $values[] = $value;
+    } elseif ($action==='getRowByValue') {
+        $resultsArray=$database->getRow($table, $field, $value);
+    } elseif ($action==='insertNode') {
+        // based on https://stackoverflow.com/questions/1939581/selecting-every-nth-item-from-an-array
+        $fields=array();
+        $values=array();
+        $i=0;
+        //echo($data);
+        $rowData=explode_escaped(",", $data);
+        //print_r($rowData);
+        foreach($rowData as $value) {
+            if ($i++ % 2 == 0) {
+                $fields[] = $value;
+            }
+            else {
+                $values[] = $value;
+            }
         }
+        $resultsArray=$database->addRowFromArrays($table, $fields, $values);
     }
-    $resultsArray=$database->addRowFromArrays($table, $fields, $values);
+} else {
+    http_response_code(403);
+    $resultsArray="ERROR: Session key invalid or expired. 4bb92b44-4e05-452b-bc1c-00156290a2bb"; // UUID for identifying error unambiguously
 }
 echo json_encode ($resultsArray);
 ?>
