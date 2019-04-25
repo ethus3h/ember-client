@@ -80,7 +80,7 @@ $data = getParam('data');
 $sessionkey = getParam('sessionkey');
 $resultsArray=array();
 include('active.fracturedb.php');
-$database=new FractureDB($mysqlTablePrefix.'eite_'.$table, $mysqlUser, $mysqlPassword, $mysqlServer);
+$database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $datetime=new DateTime();
 $timestamp=$datetime->getTimestamp();
 function eiteHashSecret($secretkey) {
@@ -109,7 +109,7 @@ else {
         }
     } else {
         $sessionIsValid=false;
-        $sessionData=$database->getRow('idxSession', sessionKey, $sessionkey);
+        $sessionData=$database->getRow('idxSession', "sessionKey", $sessionkey);
         if ($sessionData != null) {
             $sessionExpires=$sessionData[expires];
             if ($sessionExpires > $timestamp) {
