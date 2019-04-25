@@ -87,10 +87,11 @@ function validateSession() {
     $sessionData=$database->getRow('idxSession', sessionKey, $sessionkey);
     if ($sessionData != null) {
         $sessionExpires=$sessionData[expires];
-        if ($sessionExpires > 1556056077) {
-            // 1556056077 is recent, to make sure the session isn't 0 or something
-            if ($sessionExpires > $timestamp)
+        if ($sessionExpires > $timestamp) {
+            return true;
         }
+    }
+    return false;
 }
 if ($action==='getSession') {
     $userData=$database->getRow($table, publicId, $user);
