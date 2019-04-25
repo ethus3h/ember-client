@@ -100,12 +100,12 @@ if ($action==='getSession') {
         $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
         $resultsArray=$newSession;
     }
+} elseif ($action==='hashSecret') {
+    $resultsArray=password_hash($secretkey);
 } elseif (validateSession()) {
     if ($action==='getTable') {
         $resultsArray=$database->getTable($table);
         #print_r($resultsArray);
-    } elseif ($action==='hashSecret') {
-        $resultsArray=password_hash($secretkey);
     } elseif ($action==='getRowByValue') {
         $resultsArray=$database->getRow($table, $field, $value);
     } elseif ($action==='insertNode') {
