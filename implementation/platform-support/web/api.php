@@ -94,12 +94,14 @@ function validateSession() {
     return false;
 }
 if ($action==='getSession') {
-    $userData=$database->getRow($table, publicId, $user);
+    $userData=$database->getRow($table, "publicId", $user);
     if($userData["hashedSecretKey"]===password_hash($secretkey)) {
         $newSession=uuidgen();
         $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
         $resultsArray=$newSession;
     }
+            $resultsArray="ERROR: Unknown action. 29a80dff-cbf7-4183-a645-4b6af5a50bdf";
+
 } elseif ($action==='hashSecret') {
     $resultsArray=password_hash($secretkey);
 } elseif (validateSession()) {
@@ -125,6 +127,9 @@ if ($action==='getSession') {
             }
         }
         $resultsArray=$database->addRowFromArrays($table, $fields, $values);
+    }
+    else {
+        $resultsArray="ERROR: Unknown action. 29a80dff-cbf7-4183-a645-4b6af5a50bdf";
     }
 } else {
     http_response_code(403);
