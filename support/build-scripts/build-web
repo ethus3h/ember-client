@@ -21,12 +21,3 @@ cp -a /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp -a ./LICENSE* ./built/web/
 rm ./built/web/papaparse.js
 cp -a /usr/share/javascript/PapaParse/papaparse.js ./built/web/
-echo '
-export default class eite {
-' > './built/web/eite-for-react.js'
-cat ./built/web/eite.js >> './built/web/eite-for-react.js'
-echo '
-}
-' >> './built/web/eite-for-react.js'
-sed -i -e 's/^async function /async /g' './built/web/eite-for-react.js'
-sed -i -e 's/^function //g' './built/web/eite-for-react.js'
