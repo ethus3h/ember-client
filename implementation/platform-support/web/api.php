@@ -1,8 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-$mysqlUser="futuqiur_eite";
-$mysqlPassword="UNCONFIGURED";
+include('config.php');
 //from https://stackoverflow.com/questions/13640109/how-to-prevent-browser-cache-for-php-site
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -25,6 +24,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
+}
+// from https://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid
+function guidv4($data)
+{
+    assert(strlen($data) == 16);
+
+    $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+    $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+}
+function uuidgen() {
+    return guidv4(random_bytes(16));
 }
 function explode_escaped($delimiter, $string)
 {
@@ -68,7 +80,7 @@ $data = getParam('data');
 $sessionkey = getParam('sessionkey');
 $resultsArray=array();
 include('active.fracturedb.php');
-$database=new FractureDB('futuqiur_eite_'.$table, $mysqlUser, $mysqlPassword);
+$database=new FractureDB($mysqlTablePrefix.'eite_'.$table, $mysqlUser, $mysqlPassword, $mysqlServer);
 $datetime=new DateTime();
 $timestamp=$datetime->getTimestamp();
 if ($action==='getTable') {
