@@ -99,7 +99,7 @@ function eiteHashSecret($secretkey) {
 if ($action==='getSession') {
     $userData=$database->getRow($table, "publicId", $user);
     if ($userData != null) {
-        if($userData["hashedSecretKey"]===eiteHashSecret($secretkey)) {
+        if(password_verify($secretkey, $userData["hashedSecretKey"])) {
             $newSession=uuidgen();
             $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
             $resultsArray=$newSession;
