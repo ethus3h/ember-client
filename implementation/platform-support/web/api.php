@@ -102,7 +102,7 @@ if ($action==='getSession') {
         //print_r($userData);
         //echo $secretkey;
         if(password_verify('UNCONFIRM', eiteHashSecret('UNCONFIRM'))) {
-        echo "BLAHABLAHBLAH";
+        echo "BLAHABLAHBLAH".eiteHashSecret('UNCONFIGURED').'BLAHBLAHBLAH';
         }
         if(password_verify($secretkey, $userData["hashedSecretKey"])) {
             $newSession=uuidgen();
