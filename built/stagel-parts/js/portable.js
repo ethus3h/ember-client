@@ -4531,11 +4531,11 @@ async function kvSetValue(strArrayData, strKey, strVal) {
                 boolContinue = false;
             }
             else {
-                if (await implNot(await implLt(intC, intL))) {
+                if (await implNot(await implLt(intC, await dec(intL)))) {
                     boolContinue = false;
                 }
                 if (await implEq(0, await implMod(intC, 2))) {
-                    if (await implEq(strKey, await get(strArrayRes, intC))) {
+                    if (await implEq(strKey, await get(strArrayData, intC))) {
                         boolFound = true;
                     }
                 }

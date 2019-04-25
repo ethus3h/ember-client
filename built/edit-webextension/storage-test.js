@@ -2,7 +2,7 @@
 
 window.onload = async function() {
     //eiteCall('startEite');
-    EITE_STORAGE_CFG=['mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php', 'mysqlApiUser', 'test', 'mysqlApiSecretKey', 'test'];
+    EITE_STORAGE_CFG=['mysqlApi', 'http://futuramerlin.com/specification/engineering-and-tech/information-technology/software/env/web/api.php', 'mysqlApiUser', 'test', 'mysqlApiSecretKey', 'test'];
     await storageSetup(EITE_STORAGE_CFG);
     alert('Ready to use');
     let attachFn = (elem, func) => {
@@ -14,6 +14,12 @@ window.onload = async function() {
     async function listRows() {
         alert(await internalStorageGetTable('node'));
     }
+    async function getNode() {
+        alert(await storageRetrieve(1));
+    }
+    attachFn('addRow', addRow);
+    attachFn('listRows', listRows);
+    attachFn('getNode', getNode);
 };
 
 // @license-end

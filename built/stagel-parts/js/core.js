@@ -85,10 +85,13 @@ async function internalRunDocument(execId) {
 }
 
 // Schema: node[id, version, data]; idxPerson[nodeId, publicId, hashedSecretKey]; idxSession[nodeId, sessionKey, created, expires, events]
-// Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that.
+// Node table is append only. Index tables are read-write. API currently doesn't have person-level permission granularity, or support sessions, and will need breaking changes to fix that. idxPerson and idxSession are both in the idxPerson database for mysql backend.
 
 async function storageSetup(kvStorageCfgParam) {
     kvStorageCfg=kvStorageCfgParam;
+    if (typeof kvStorageCfg === 'undefined') {
+        kvStorageCfg=[];
+    }
     let temp;
     // Later, use OrbitDB. Currently they don't support granting write access after a database has been created, which makes it unusable for this.
     /* ipfsNode = new IPFS();
@@ -101,7 +104,7 @@ async function storageSetup(kvStorageCfgParam) {
     // Provider: MySQL
     temp=await kvGetValue(kvStorageCfg, 'mysqlApi')
     if (''===temp) {
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-technology/information-technology/software/env/web/api.php');
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-tech/information-technology/software/env/web/api.php');
     }
     temp=await kvGetValue(kvStorageCfg, 'mysqlUser')
     if (''===temp) {
@@ -113,13 +116,13 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
     }
+    await setStorageSettings(kvStorageCfg);
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
-        kvStorageCfg=await kvSetValue(kvStorageCfg
-        , 'mysqlSession', await internalStorageMysqlApiRequest('action=getSession&user='+await kvGetValue(strArrayStorageCfg, 'mysqlUser')+'&secretkey='+await kvGetValue(strArrayStorageCfg, 'mysqlSecretKey')));
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey')));
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
-    strArrayStorageCfg=kvStorageCfg;
+    await setStorageSettings(kvStorageCfg);
 }
 
 async function storageSave(data) {
@@ -134,6 +137,7 @@ async function storageSave(data) {
         // "'hash', known as CID, is a string uniquely addressing the data and can be used to get it again. 'files' is an array because 'add' supports multiple additions, but we only added one entry" —https://js.ipfs.io/
         return files[0].hash;
     }); */
+    intRes=await intFromIntStr(await internalStorageMysqlApiRequest('table=node&action=insertNode&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&data=version,0,data,Example%20node'));
     await assertIsInt(intRes); return intRes;
 }
 
@@ -145,6 +149,7 @@ async function storageRetrieve(id) {
         }
         return new Uint8Array(data);
     }); */
+    intArrayRes=await internalStorageMysqlApiRequest('table=node&action=getRowByValue&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&field=id&value='+await strFrom(id));
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
@@ -155,7 +160,7 @@ async function storageGetLastNodeID() {
 }
 
 async function internalStorageMysqlApiRequest(queryString) {
-    let url=await kvGetValue(strArrayStorageCfg, 'mysqlApi')+'?'+queryString;
+    let url=await kvGetValue(await getStorageSettings(), 'mysqlApi')+'?'+queryString;
     let response = await new Promise(resolve => {
     var oReq = new XMLHttpRequest();
     oReq.open('GET', url, true);
@@ -173,13 +178,14 @@ async function internalStorageMysqlApiRequest(queryString) {
 
 async function internalStorageGetTable(tableName) {
     // For testing; will be removed eventually
-    let qs='action=getTable&session='+await kvGetValue(strArrayStorageCfg, 'mysqlSession')+'&table='+tableName;
-    return internalStorageMysqlApiRequest(qs);
+    let qs='action=getTable&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&table='+tableName;
+    return await internalStorageMysqlApiRequest(qs);
 }
 
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
 var STAGEL_DEBUG;
+var EITE_STORAGE_CFG;
 var importSettings;
 var exportSettings;
 var envPreferredFormat;
@@ -2067,7 +2073,11 @@ async function setExportSettings(formatId, strNewSettings) {
 
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
-    strArrayStorageCfg=strArrayNewSettings;
+    getWindowOrSelf().strArrayStorageCfg=strArrayNewSettings;
+}
+
+async function getStorageSettings(strArrayNewSettings) {
+    return getWindowOrSelf().strArrayStorageCfg;
 }
 
 /* type-tools, provides:
