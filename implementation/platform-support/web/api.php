@@ -93,10 +93,13 @@ function validateSession() {
     }
     return false;
 }
+function eiteHashSecret($secretkey) {
+    return password_hash($secretkey, PASSWORD_DEFAULT);
+}
 if ($action==='getSession') {
     $userData=$database->getRow($table, "publicId", $user);
     if ($userData != null) {
-        if($userData["hashedSecretKey"]===password_hash($secretkey, PASSWORD_DEFAULT)) {
+        if($userData["hashedSecretKey"]===eiteHashSecret($secretkey)) {
             $newSession=uuidgen();
             $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
             $resultsArray=$newSession;
@@ -105,7 +108,7 @@ if ($action==='getSession') {
         $resultsArray="ERROR: Unknown user. c5e74673-32dd-408a-be6e-165361256fba";
     }
 } elseif ($action==='hashSecret') {
-    $resultsArray=password_hash($secretkey, PASSWORD_DEFAULT);
+    $resultsArray=eiteHashSecret($secretkey);
 } elseif (validateSession()) {
     if ($action==='getTable') {
         $resultsArray=$database->getTable($table);
