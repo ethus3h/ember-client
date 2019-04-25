@@ -86,9 +86,16 @@ $timestamp=$datetime->getTimestamp();
 if ($action==='getTable') {
     $resultsArray=$database->getTable($table);
     #print_r($resultsArray);
+} elseif ($action==='hashSecret') {
+    $userData=$database->getRow($table, publicId, );
+    $newSession=uuidgen();
+    $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
+    $resultsArray=$newSession;
 } elseif ($action==='getSession') {
-    $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', 'test', $timestamp, $timestamp + 1000, '']);
-    $resultsArray='test';
+    $userData=$database->getRow($table, publicId, $user);
+    $newSession=uuidgen();
+    $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 1000, '']);
+    $resultsArray=$newSession;
 } elseif ($action==='getRowByValue') {
     $resultsArray=$database->getRow($table, $field, $value);
 } elseif ($action==='insertNode') {
