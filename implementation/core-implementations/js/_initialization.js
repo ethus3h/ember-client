@@ -1,6 +1,6 @@
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
-var STAGEL_DEBUG; internalPrepareGlobal('STAGEL_DEBUG');
+var STAGEL_DEBUG;
 var EITE_STORAGE_CFG;
 var importSettings;
 var exportSettings;
@@ -89,10 +89,10 @@ async function getSharedState(name) {
     }
 }
 
-function setSharedState(name) {
+function setSharedState(name, value) {
     switch (name) {
         case 'STAGEL_DEBUG':
-            return getWindowOrSelf().STAGEL_DEBUG;
+            getWindowOrSelf().STAGEL_DEBUG = value;
             break;
         default:
             await implDie('setSharedState called with invalid name: '+name);
