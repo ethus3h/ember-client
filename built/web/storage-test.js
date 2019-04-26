@@ -17,9 +17,15 @@ window.onload = async function() {
     async function getNode() {
         alert(await storageRetrieve(1));
     }
+    async function getSecretKey() {
+        alert(await strFromByteArray(await getFileFromPath(await kvGetValue(await getStorageSettings(), 'mysqlApi')+'?action=hashSecret&secretkey='+'test')));
+    }
+    attachFn('getSecretKey', getSecretKey);
     attachFn('addRow', addRow);
     attachFn('listRows', listRows);
     attachFn('getNode', getNode);
+    EITE_STORAGE_CFG = ['mysqlApi', 'https://linnovations.site/web/api.php', 'mysqlApiUser','a', 'mysqlApiSecretKey', document.getElementById("password").value]; 
+        await storageSetup(EITE_STORAGE_CFG); 
 };
 
 // @license-end
