@@ -17,9 +17,13 @@ window.onload = async function() {
     async function getNode() {
         alert(await storageRetrieve(1));
     }
+    async function getPass() {
+        alert(await strFromByteArray(await getFileFromPath(await kvGetValue(await getStorageSettings(), 'mysqlApi')+'?action=hashSecret&secretkey='+document.getElementById(password).value)));
+    }
     attachFn('addRow', addRow);
     attachFn('listRows', listRows);
     attachFn('getNode', getNode);
+    attachFn('getPass', getPass);
 };
 
 // @license-end
