@@ -107,11 +107,13 @@ async function storageSetup(kvStorageCfgParam) {
         kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlApi', 'http://futuramerlin.com/specification/engineering-and-tech/information-technology/software/env/web/api.php');
     }
     temp=await kvGetValue(kvStorageCfg, 'mysqlUser')
+    alert(temp);
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlUser', 'UNCONFIGURED');
     }
     temp=await kvGetValue(kvStorageCfg, 'mysqlSecretKey')
+    alert(temp);
     if (''===temp) {
         kvStorageCfg=await kvSetValue(kvStorageCfg
         , 'mysqlSecretKey', 'UNCONFIGURED');
@@ -119,7 +121,13 @@ async function storageSetup(kvStorageCfgParam) {
     await setStorageSettings(kvStorageCfg);
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey')));
+        //alert(await kvGetValue(await getStorageSettings(), 'mysqlUser'));
+        //alert(await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
+        let session=await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
+        if (session === null) {
+            alert('Could not log in!')
+        }
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
     await setStorageSettings(kvStorageCfg);
