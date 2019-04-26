@@ -2,7 +2,7 @@
 
 window.onload = async function() {
     //eiteCall('startEite');
-    EITE_STORAGE_CFG=['mysqlApi', 'http://futuramerlin.com/specification/engineering-and-tech/information-technology/software/env/web/api.php', 'mysqlApiUser', 'test', 'mysqlApiSecretKey', 'test'];
+    EITE_STORAGE_CFG=['mysqlApi', 'http://futuramerlin.com/specification/engineering-and-tech/information-technology/software/env/web/api.php', 'mysqlUser', 'test', 'mysqlSecretKey', 'test'];
     await storageSetup(EITE_STORAGE_CFG);
     alert('Ready to use');
     let attachFn = (elem, func) => {
@@ -24,8 +24,6 @@ window.onload = async function() {
     attachFn('addRow', addRow);
     attachFn('listRows', listRows);
     attachFn('getNode', getNode);
-    EITE_STORAGE_CFG = ['mysqlApi', 'https://linnovations.site/web/api.php', 'mysqlUser','a', 'mysqlSecretKey', 'b']; 
-    await storageSetup(EITE_STORAGE_CFG);
 };
 
 // @license-end
