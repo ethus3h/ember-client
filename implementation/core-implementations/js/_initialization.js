@@ -90,7 +90,13 @@ async function getSharedState(name) {
 }
 
 function setSharedState(name) {
-    
+    switch (name) {
+        case 'STAGEL_DEBUG':
+            return getWindowOrSelf().STAGEL_DEBUG;
+            break;
+        default:
+            await implDie('setSharedState called with invalid name: '+name);
+    }
 }
 
 async function isSetupFinished() {
@@ -224,7 +230,10 @@ async function internalSetup() {
 }
 
 function getWindowOrSelf() {
-    if (typeof window !== 'undefined') {
+    if (typeof this !== 'undefined') {
+        return this;
+    }
+    else if (typeof window !== 'undefined') {
         return window;
     }
     else {
