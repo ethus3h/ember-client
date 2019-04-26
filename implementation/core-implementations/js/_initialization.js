@@ -80,23 +80,25 @@ if (envResolutionH === undefined) {
 }
 
 async function getSharedState(name) {
-    switch (name) {
+    return getWindowOrSelf()[name];
+    /*switch (name) {
         case 'STAGEL_DEBUG':
             return getWindowOrSelf().STAGEL_DEBUG;
             break;
         default:
             await implDie('getSharedState called with invalid name: '+name);
-    }
+    }*/
 }
 
 function setSharedState(name, value) {
-    switch (name) {
+    getWindowOrSelf()[name] = value;
+    /*switch (name) {
         case 'STAGEL_DEBUG':
             getWindowOrSelf().STAGEL_DEBUG = value;
             break;
         default:
             await implDie('setSharedState called with invalid name: '+name);
-    }
+    }*/
 }
 
 async function isSetupFinished() {
