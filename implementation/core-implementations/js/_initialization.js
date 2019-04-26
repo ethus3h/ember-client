@@ -79,8 +79,18 @@ if (envResolutionH === undefined) {
     envResolutionH = '0';
 }
 
-function internalPrepareGlobal(name) {
-    setGlobal('globals', getGlobal('globals').push(name));
+async function getSharedState(name) {
+    switch (name) {
+        case 'STAGEL_DEBUG':
+            return getWindowOrSelf().STAGEL_DEBUG;
+            break;
+        default:
+            await implDie('getSharedState called with invalid name: '+name);
+    }
+}
+
+function setSharedState(name) {
+    
 }
 
 async function isSetupFinished() {
