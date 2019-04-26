@@ -35,7 +35,7 @@ async function storageSetup(kvStorageCfgParam) {
     if (''===temp) {
         let session=await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
         if (session === null) {
-            alert('Could not log in!')
+            alert('Could not log in!');
         }
         kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
     }
