@@ -33,7 +33,11 @@ async function storageSetup(kvStorageCfgParam) {
     await setStorageSettings(kvStorageCfg);
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey')));
+        let session=await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
+        if (session === null) {
+            alert('Could not log in!')
+        }
+        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
     await setStorageSettings(kvStorageCfg);

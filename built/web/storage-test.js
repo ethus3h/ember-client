@@ -24,8 +24,8 @@ window.onload = async function() {
     attachFn('addRow', addRow);
     attachFn('listRows', listRows);
     attachFn('getNode', getNode);
-    EITE_STORAGE_CFG = ['mysqlApi', 'https://linnovations.site/web/api.php', 'mysqlApiUser','a', 'mysqlApiSecretKey', 'b']; 
-        await storageSetup(EITE_STORAGE_CFG); 
+    EITE_STORAGE_CFG = ['mysqlApi', 'https://linnovations.site/web/api.php', 'mysqlUser','a', 'mysqlSecretKey', 'b']; 
+    await storageSetup(EITE_STORAGE_CFG);
 };
 
 // @license-end
