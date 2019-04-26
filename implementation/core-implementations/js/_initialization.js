@@ -1,6 +1,6 @@
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format)
 
-var STAGEL_DEBUG;
+var STAGEL_DEBUG; internalPrepareGlobal('STAGEL_DEBUG');
 var EITE_STORAGE_CFG;
 var importSettings;
 var exportSettings;
@@ -77,6 +77,10 @@ if (envResolutionW === undefined) {
 }
 if (envResolutionH === undefined) {
     envResolutionH = '0';
+}
+
+function internalPrepareGlobal(name) {
+    setGlobal('globals', getGlobal('globals').push(name));
 }
 
 async function isSetupFinished() {
