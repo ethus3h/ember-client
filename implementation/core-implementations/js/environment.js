@@ -93,5 +93,5 @@ async function setStorageSettings(strArrayNewSettings) {
 }
 
 async function getStorageSettings(strArrayNewSettings) {
-    return setSharedState('strArrayStorageCfg');
+    return getSharedState('strArrayStorageCfg');
 }
