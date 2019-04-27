@@ -220,7 +220,7 @@ function getSharedState(name) {
 }
 
 function setSharedState(name, value) {
-    await implDebug('State change for export deferred settings stack to '+newStack+'.', 1);
+    implDebug('State change for ' + name + ' to '.', 1); // this runs async and may show up out of order
     getWindowOrSelf()[name] = value;
 }
 
