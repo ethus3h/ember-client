@@ -87,6 +87,28 @@ async function setExportSettings(formatId, strNewSettings) {
     setSharedState('exportSettings', temp);
 }
 
+async function setImportDeferredSettingsStack(newStack) {
+    await assertIsStrArray(newStack);
+
+    await implDebug('State change for import deferred settings stack to '+newStack+'.', 1);
+
+    let temp;
+    temp=getSharedState('importDeferredSettings');
+    temp[formatId]=strNewSettings;
+    setSharedState('importDeferredSettings', temp);
+}
+
+async function setExportDeferredSettings(formatId, strNewSettings) {
+    await assertIsStr(strNewSettings);
+
+    await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
+
+    let temp;
+    temp=getSharedState('exportSettings');
+    temp[formatId]=strNewSettings;
+    setSharedState('exportSettings', temp);
+}
+
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
     setSharedState('strArrayStorageCfg', strArrayNewSettings);
