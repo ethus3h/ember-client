@@ -15,8 +15,8 @@ var envResolutionH;
 
 // Global variables
 
-let datasets = []; // as
-let datasetsLoaded = false;
+setSharedState(datasets, []); // as
+setSharedState(datasetsLoaded, false);
 setSharedState(dcData, []); // an
 setSharedState(strArrayDocumentExecData, []); // as: holds the current document state for any documents being executed.
 setSharedState(strArrayDocumentExecSymbolIndex, []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
