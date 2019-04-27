@@ -1,4 +1,4 @@
-eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification.
+eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally.
 function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
