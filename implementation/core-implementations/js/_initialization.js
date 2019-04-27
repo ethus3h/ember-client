@@ -50,6 +50,7 @@ async function eiteLibrarySetup() {
     setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
     setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
     setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
+    setSharedState('librarySetupFinished', false);
     setSharedState('setupFinished', false);
     setSharedState('intPassedTests', 0);
     setSharedState('intFailedTests', 0);
@@ -211,6 +212,7 @@ async function eiteLibrarySetup() {
             });
         };
     }
+    setSharedState('librarySetupFinished', true);
 }
 
 function getSharedState(name) {
@@ -226,6 +228,9 @@ async function isSetupFinished() {
 }
 
 async function setupIfNeeded() {
+    if (getSharedState('librarySetupFinished') !== 'true') {
+        await eiteLibrarySetup();
+    }
     if (getSharedState('setupFinished')) {
         return;
     }
