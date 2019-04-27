@@ -37,7 +37,9 @@ async function storageSetup(kvStorageCfgParam) {
         if (session === null || session === undefined) {
             await implError('Could not log in!');
         }
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
+        else {
+            kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
+        }
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
     await setStorageSettings(kvStorageCfg);
