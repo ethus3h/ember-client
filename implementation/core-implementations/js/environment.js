@@ -1,36 +1,36 @@
 async function getEnvPreferredFormat() {
     // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
-    return envPreferredFormat;
+    return getSharedState('envPreferredFormat');
 }
 
 async function getEnvResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available. If it's -1, it's unlimited (probably this would only occur if explicitly configured as such).
-    return envResolutionW;
+    return getSharedState('envResolutionW');
 }
 
 async function getEnvResolutionH() {
     // See getEnvResolutionW description.
-    return envResolutionH;
+    return getSharedState('envResolutionH');
 }
 
 async function getEnvCharEncoding() {
-    return envCharEncoding;
+    return getSharedState('envCharEncoding');
 }
 
 async function getEnvTerminalType() {
-    return envTerminalType;
+    return getSharedState('envTerminalType');
 }
 
 async function getEnvLanguage() {
-    return envLanguage;
+    return getSharedState('envLanguage');
 }
 
 async function getEnvCodeLanguage() {
-    return envCodeLanguage;
+    return getSharedState('envCodeLanguage');
 }
 
 async function getEnvLocaleConfig() {
-    return envLocaleConfig;
+    return getSharedState('envLocaleConfig');
 }
 
 async function renderDrawContents(renderBuffer) {
@@ -54,15 +54,15 @@ async function internalRequestRenderDrawHTMLToDOM(htmlString) {
 }
 
 async function getImportSettingsArr() {
-    await assertIsStrArray(getWindowOrSelf().importSettings);
+    await assertIsStrArray(getSharedState('importSettings'));
 
-    return getWindowOrSelf().importSettings;
+    return getSharedState('importSettings');
 }
 
 async function getExportSettingsArr() {
-    await assertIsStrArray(getWindowOrSelf().exportSettings);
+    await assertIsStrArray(getSharedState('exportSettings'));
 
-    return getWindowOrSelf().exportSettings;
+    return getSharedState('exportSettings');
 }
 
 async function setImportSettings(formatId, strNewSettings) {
@@ -70,7 +70,10 @@ async function setImportSettings(formatId, strNewSettings) {
 
     await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
 
-    getWindowOrSelf().importSettings[formatId]=strNewSettings;
+    let temp;
+    temp=getSharedState('importSettings');
+    temp[formatId]=strNewSettings;
+    setSharedState('importSettings', temp);
 }
 
 async function setExportSettings(formatId, strNewSettings) {
@@ -78,14 +81,17 @@ async function setExportSettings(formatId, strNewSettings) {
 
     await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
 
-    getWindowOrSelf().exportSettings[formatId]=strNewSettings;
+    let temp;
+    temp=getSharedState('exportSettings');
+    temp[formatId]=strNewSettings;
+    setSharedState('exportSettings', temp);
 }
 
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
-    getWindowOrSelf().strArrayStorageCfg=strArrayNewSettings;
+    setSharedState('strArrayStorageCfg', strArrayNewSettings);
 }
 
 async function getStorageSettings(strArrayNewSettings) {
-    return getWindowOrSelf().strArrayStorageCfg;
+    return setSharedState('strArrayStorageCfg');
 }
