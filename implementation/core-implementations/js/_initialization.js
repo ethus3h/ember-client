@@ -61,6 +61,154 @@ setSharedState('strArrayExportWarnings', []); // as
 setSharedState('strArrayStorageCfg', []); // as
 setSharedState('ipfsNode', undefined);
 setSharedState('haveDom', false);
+
+// Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
+
+// To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
+
+// Promise-wrapped worker strategy is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
+
+if (typeof window !== 'undefined') {
+    // Not running as a Web worker
+    window.eiteCall = async function(funcName, args) {
+        if (args === undefined) {
+            args=[];
+        }
+        return await window[funcName]( ...args );
+    };
+    window.eiteHostCall = window.eiteCall;
+    if (window.Worker) {
+        window.eiteWorker = new Worker('eite.js');
+        window.eiteWorkerResolveCallbacks = {};
+        window.eiteWorkerCallID = 0;
+        window.eiteCall = async function(funcName, args) {
+            if (args === undefined) {
+                args=[];
+            }
+            window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
+            let thisCallId=window.eiteWorkerCallID;
+            let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
+            return new Promise(function(resolve) {
+                window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
+                window.eiteWorker.postMessage(thisCall);
+            });
+        };
+        window.eiteHostRequestInternalOnMessage = async function(message) {
+            // The host accepted a message; this function processes it
+            const uuid = message.data.uuid;
+            const msgid = message.data.msgid;
+            const args = message.data.args;
+            implDebug('Host understood message '+msgid+' from worker: '+args, 1);
+            internalDebugLogJSObject(message);
+            let res = await window[args[0]]( ...args[1] );
+            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
+            window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
+        }
+        window.eiteWorker.onmessage = function(message) {
+            // Handle messages sent to this code when it is not running as a Web worker
+            const uuid = message.data.uuid;
+            const msgid = message.data.msgid;
+            const msgdata = message.data.args;
+            implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
+            internalDebugLogJSObject(message);
+            if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
+                if (msgdata === undefined) {
+                    implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
+                }
+                let resolveCallback;
+                resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
+                if (resolveCallback !== undefined) {
+                    resolveCallback(msgdata);
+                    delete window.eiteWorkerResolveCallbacks[msgid];
+                }
+                else {
+                    implDie('Web worker returned invalid message ID '+msgid+'.');
+                    throw 'Web worker returned invalid message ID '+msgid+'.';
+                }
+            }
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
+                window.eiteHostRequestInternalOnMessage(message);
+            }
+            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
+                implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
+                throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
+            }
+        };
+    }
+}
+else {
+    self.eiteCall = async function(funcName, args) {
+        if (args === undefined) {
+            args=[];
+        }
+        return await self[funcName]( ...args );
+    }
+    self.eiteHostCall = self.eiteCall;
+}
+
+if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
+    // Running as a Web worker, so set up accordingly
+    self.internalOnMessage = async function(message) {
+        // The worker accepted a message; this function processes it
+        const uuid = message.data.uuid;
+        const msgid = message.data.msgid;
+        const args = message.data.args;
+        implDebug('Worker understood message '+msgid+' from host: '+args, 1);
+        internalDebugLogJSObject(message);
+        let res;
+        try {
+            res = await self[args[0]]( ...args[1] );
+        }
+        catch(error) {
+            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
+            throw error;
+        }
+        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
+        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
+    }
+
+    self.onmessage = function(message) {
+        // Handle messages sent to this code when it is running as a Web worker
+        const uuid = message.data.uuid;
+        const msgid = message.data.msgid;
+        const args = message.data.args;
+        implDebug('Worker got message '+msgid+' from host: '+args, 1);
+        internalDebugLogJSObject(message);
+        if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
+            self.internalOnMessage(message);
+        }
+        else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
+            if (args === undefined) {
+                implDebug('Host sent undefined contents in message '+msgid+'.', 1);
+            }
+            let resolveCallback;
+            resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
+            if (resolveCallback !== undefined) {
+                resolveCallback(args);
+                delete self.eiteWorkerHostResolveCallbacks[msgid];
+            }
+            else {
+                implDie('Host returned invalid message ID.');
+                throw 'Host returned invalid message ID.';
+            }
+        }
+    }
+
+    self.eiteWorkerHostResolveCallbacks = {};
+    self.eiteWorkerHostCallID = 0;
+    self.eiteHostCall = async function(funcName, args) {
+        if (args === undefined) {
+            args=[];
+        }
+        self.eiteWorkerHostCallID = self.eiteWorkerHostCallID + 1;
+        let thisCallId=self.eiteWorkerHostCallID;
+        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest', msgid: thisCallId, args: [funcName, args]};
+        return new Promise(function(resolve) {
+            self.eiteWorkerHostResolveCallbacks[thisCallId]=resolve;
+            self.postMessage(thisCall);
+        });
+    };
+}
 }
 
 function getSharedState(name) {
@@ -597,151 +745,3 @@ let Base16b = {
         }
     }
 };
-
-// Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
-
-// To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
-
-// Promise-wrapped worker strategy is inspired by Gilad Dayagi's implementation described at https://codeburst.io/promises-for-the-web-worker-9311b7831733
-
-if (typeof window !== 'undefined') {
-    // Not running as a Web worker
-    window.eiteCall = async function(funcName, args) {
-        if (args === undefined) {
-            args=[];
-        }
-        return await window[funcName]( ...args );
-    };
-    window.eiteHostCall = window.eiteCall;
-    if (window.Worker) {
-        window.eiteWorker = new Worker('eite.js');
-        window.eiteWorkerResolveCallbacks = {};
-        window.eiteWorkerCallID = 0;
-        window.eiteCall = async function(funcName, args) {
-            if (args === undefined) {
-                args=[];
-            }
-            window.eiteWorkerCallID = window.eiteWorkerCallID + 1;
-            let thisCallId=window.eiteWorkerCallID;
-            let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest', msgid: thisCallId, args: [funcName, args]};
-            return new Promise(function(resolve) {
-                window.eiteWorkerResolveCallbacks[thisCallId]=resolve;
-                window.eiteWorker.postMessage(thisCall);
-            });
-        };
-        window.eiteHostRequestInternalOnMessage = async function(message) {
-            // The host accepted a message; this function processes it
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const args = message.data.args;
-            implDebug('Host understood message '+msgid+' from worker: '+args, 1);
-            internalDebugLogJSObject(message);
-            let res = await window[args[0]]( ...args[1] );
-            await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
-            window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
-        }
-        window.eiteWorker.onmessage = function(message) {
-            // Handle messages sent to this code when it is not running as a Web worker
-            const uuid = message.data.uuid;
-            const msgid = message.data.msgid;
-            const msgdata = message.data.args;
-            implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-            internalDebugLogJSObject(message);
-            if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
-                if (msgdata === undefined) {
-                    implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
-                }
-                let resolveCallback;
-                resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
-                if (resolveCallback !== undefined) {
-                    resolveCallback(msgdata);
-                    delete window.eiteWorkerResolveCallbacks[msgid];
-                }
-                else {
-                    implDie('Web worker returned invalid message ID '+msgid+'.');
-                    throw 'Web worker returned invalid message ID '+msgid+'.';
-                }
-            }
-            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest') {
-                window.eiteHostRequestInternalOnMessage(message);
-            }
-            else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
-                throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
-            }
-        };
-    }
-}
-else {
-    self.eiteCall = async function(funcName, args) {
-        if (args === undefined) {
-            args=[];
-        }
-        return await self[funcName]( ...args );
-    }
-    self.eiteHostCall = self.eiteCall;
-}
-
-if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
-    // Running as a Web worker, so set up accordingly
-    self.internalOnMessage = async function(message) {
-        // The worker accepted a message; this function processes it
-        const uuid = message.data.uuid;
-        const msgid = message.data.msgid;
-        const args = message.data.args;
-        implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-        internalDebugLogJSObject(message);
-        let res;
-        try {
-            res = await self[args[0]]( ...args[1] );
-        }
-        catch(error) {
-            self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerError', msgid: msgid, args: error.message + ' (call: ' + args[0] + ', ' + args[1].toString() + ')'});
-            throw error;
-        }
-        await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
-        self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
-    }
-
-    self.onmessage = function(message) {
-        // Handle messages sent to this code when it is running as a Web worker
-        const uuid = message.data.uuid;
-        const msgid = message.data.msgid;
-        const args = message.data.args;
-        implDebug('Worker got message '+msgid+' from host: '+args, 1);
-        internalDebugLogJSObject(message);
-        if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
-            self.internalOnMessage(message);
-        }
-        else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
-            if (args === undefined) {
-                implDebug('Host sent undefined contents in message '+msgid+'.', 1);
-            }
-            let resolveCallback;
-            resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
-            if (resolveCallback !== undefined) {
-                resolveCallback(args);
-                delete self.eiteWorkerHostResolveCallbacks[msgid];
-            }
-            else {
-                implDie('Host returned invalid message ID.');
-                throw 'Host returned invalid message ID.';
-            }
-        }
-    }
-
-    self.eiteWorkerHostResolveCallbacks = {};
-    self.eiteWorkerHostCallID = 0;
-    self.eiteHostCall = async function(funcName, args) {
-        if (args === undefined) {
-            args=[];
-        }
-        self.eiteWorkerHostCallID = self.eiteWorkerHostCallID + 1;
-        let thisCallId=self.eiteWorkerHostCallID;
-        let thisCall={uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostRequest', msgid: thisCallId, args: [funcName, args]};
-        return new Promise(function(resolve) {
-            self.eiteWorkerHostResolveCallbacks[thisCallId]=resolve;
-            self.postMessage(thisCall);
-        });
-    };
-}
