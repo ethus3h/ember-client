@@ -1,3 +1,4 @@
+function eiteSetup() {
 // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
 if (getSharedState('STAGEL_DEBUG') === undefined) {
     setSharedState('STAGEL_DEBUG', 1);
@@ -60,8 +61,9 @@ setSharedState('strArrayExportWarnings', []); // as
 setSharedState('strArrayStorageCfg', []); // as
 setSharedState('ipfsNode', undefined);
 setSharedState('haveDom', false);
+}
 
-async function getSharedState(name) {
+function getSharedState(name) {
     return getWindowOrSelf()[name];
 }
 
