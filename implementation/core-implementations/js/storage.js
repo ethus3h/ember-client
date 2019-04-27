@@ -34,7 +34,7 @@ async function storageSetup(kvStorageCfgParam) {
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         let session=await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
-        if (session === null) {
+        if (session === null || session === undefined) {
             await implError('Could not log in!');
         }
         kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
@@ -84,10 +84,15 @@ async function internalStorageMysqlApiRequest(queryString) {
     oReq.open('GET', url, true);
     oReq.responseType = 'json';
     oReq.onload = function(oEvent) {
-        resolve(oReq.response);
+        if (oReq.status !== 200) {
+            resolve(null);
+        }
+        else {
+            resolve(oReq.response);
+        }
     };
     oReq.onerror = function() {
-        resolve(undefined);
+        resolve(null);
     }
     oReq.send(null);
     });
