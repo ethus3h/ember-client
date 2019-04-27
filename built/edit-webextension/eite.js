@@ -186,8 +186,8 @@ async function internalStorageGetTable(tableName) {
     return await internalStorageMysqlApiRequest(qs);
 }
 
-await eiteLibrarySetup();
-async function eiteLibrarySetup() {
+eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally.
+function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
     if (getSharedState('STAGEL_DEBUG') === undefined) {
@@ -408,6 +408,7 @@ function getSharedState(name) {
 }
 
 function setSharedState(name, value) {
+    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 1);
     getWindowOrSelf()[name] = value;
 }
 
@@ -1196,10 +1197,10 @@ async function strReplace(str, find, replace) {
     FIXMEUnimplemented
 */
 
-let stagelDebugCallstack = [];
-let stagelDebugCallNames = [];
-let stagelDebugCallCounts = [];
-let stagelDebugCollection = "";
+setSharedState('stagelDebugCallstack', []);
+setSharedState('stagelDebugCallNames', []);
+setSharedState('stagelDebugCallCounts', []);
+setSharedState('stagelDebugCollection', "");
 //alert("Setting up logging");
 
 async function implDie(strMessage) {
@@ -1239,7 +1240,7 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
     await console.log(strMessage);
-    if(await Object.keys(stagelDebugCallstack).length > 0) {
+    if(await Object.keys(getSharedState('stagelDebugCallstack')).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
@@ -1290,14 +1291,14 @@ async function internalDebugQuiet(strMessage, intLevel) {
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    stagelDebugCollection = stagelDebugCollection + strMessageFragment;
+    setSharedState('stagelDebugCollection') = getSharedState('stagelDebugCollection') + strMessageFragment;
 }
 
 async function internalDebugFlush() {
     /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
-    temp = stagelDebugCollection;
-    stagelDebugCollection = "";
+    temp = getSharedState('stagelDebugCollection');
+    setSharedState('stagelDebugCollection', "");
     return temp;
 }
 
@@ -1306,16 +1307,28 @@ async function internalDebugStackEnter(strBlockName) {
         await implDie("Block entry specified but no block name given");
     }
 
-    if (stagelDebugCallNames.indexOf(strBlockName) < 0) {
-        stagelDebugCallNames.push(strBlockName);
-        stagelDebugCallCounts[stagelDebugCallNames.indexOf(strBlockName)] = 0;
+    let tempCounts;
+
+    if (getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
+        let tempNames;
+        tempNames=getSharedState('stagelDebugCallNames');
+        tempNames.push(strBlockName);
+        setSharedState('stagelDebugCallNames', tempNames);
+        tempCounts=getSharedState('stagelDebugCallCounts');
+        tempCounts[getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
+        setSharedState('stagelDebugCallCounts', tempCounts);
     }
 
     let ind;
-    ind = stagelDebugCallNames.indexOf(strBlockName);
-    stagelDebugCallCounts[ind] = stagelDebugCallCounts[ind] + 1;
+    ind = getSharedState('stagelDebugCallNames').indexOf(strBlockName);
+    tempCounts=getSharedState('stagelDebugCallCounts');
+    tempCounts[ind] = tempCounts[ind] + 1;
+    setSharedState('stagelDebugCallCounts', tempCounts);
 
-    await stagelDebugCallstack.push(strBlockName + " (" + await internalDebugFlush() + ")");
+    let temp;
+    temp=getSharedState('stagelDebugCallstack');
+    temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
+    setSharedState('stagelDebugCallstack', temp);
 
     if (2 <= STAGEL_DEBUG) {
         let callstackLevel=stagelDebugCallstack.length;
@@ -1331,31 +1344,34 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + await stagelDebugCallstack.slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
     }
 }
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await stagelDebugCallstack.slice(-1)[0] === undefined) {
+    if (await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
-    await internalDebugQuiet("Exited block: " + await stagelDebugCallstack.pop(), 3);
+    let temp;
+    temp=getSharedState('stagelDebugCallstack');
+    await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
+    setSharedState('stagelDebugCallstack', temp);
 }
 
 async function internalDebugPrintHotspots() {
     let n = 0;
-    n = stagelDebugCallNames.length;
+    n = getSharedState('stagelDebugCallNames').length;
     let i = 0;
     if (n === 0) {
         console.log('No routine calls have been logged.');
     }
     while (i < n){
-        console.log(stagelDebugCallNames[i] + ' was called ' + stagelDebugCallCounts[i] + ' times.');
+        console.log(getSharedState('stagelDebugCallNames')[i] + ' was called ' + getSharedState('stagelDebugCallCounts')[i] + ' times.');
         i = i + 1;
     }
     let sum = 0;
-    sum = stagelDebugCallCounts.reduce(function (accumulator, currentValue) {
+    sum = getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
     console.log('Total function calls: ' + sum);
@@ -1363,7 +1379,7 @@ async function internalDebugPrintHotspots() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(stagelDebugCallstack).length - 1;
+    i = await Object.keys(getSharedState('stagelDebugCallstack')).length - 1;
     let result="";
     let arrow=" < "
     while (i>=0) {
@@ -1371,7 +1387,7 @@ async function internalDebugPrintStack() {
         if (i==0) {
             arrow=""
         }
-        result = result + stagelDebugCallstack.slice(i)[0] + arrow;
+        result = result + getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
         i = i - 1;
     }
     return result;
@@ -2092,13 +2108,29 @@ async function setExportSettings(formatId, strNewSettings) {
     setSharedState('exportSettings', temp);
 }
 
+async function setImportDeferredSettingsStack(newStack) {
+    await assertIsStrArray(newStack);
+
+    await implDebug('State change for import deferred settings stack to '+newStack+'.', 1);
+
+    setSharedState('strArrayImportDeferredSettingsStack', newStack);
+}
+
+async function setExportDeferredSettings(newStack) {
+    await assertIsStr(newStack);
+
+    await implDebug('State change for export deferred settings stack to '+newStack+'.', 1);
+
+    setSharedState('strArrayImportDeferredSettingsStack', newStack);
+}
+
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
     setSharedState('strArrayStorageCfg', strArrayNewSettings);
 }
 
 async function getStorageSettings(strArrayNewSettings) {
-    return setSharedState('strArrayStorageCfg');
+    return getSharedState('strArrayStorageCfg');
 }
 
 /* type-tools, provides:
@@ -3877,7 +3909,7 @@ async function pushImportSettings(intFormatId, strNewSettingString) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushImportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
 
     /* Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack). */
-    strArrayImportDeferredSettingsStack = await push(strArrayImportDeferredSettingsStack, await getImportSettings(intFormatId));
+    await setSharedState('strArrayImportDeferredSettingsStack', await push(await getSharedState('strArrayImportDeferredSettingsStack'), await getImportSettings(intFormatId)));
     await setImportSettings(intFormatId, strNewSettingString);
 
     await internalDebugStackExit();
@@ -3887,7 +3919,7 @@ async function pushExportSettings(intFormatId, strNewSettingString) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushExportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
 
     /* Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack). */
-    strArrayExportDeferredSettingsStack = await push(strArrayExportDeferredSettingsStack, await getExportSettings(intFormatId));
+    await setSharedState('strArrayExportDeferredSettingsStack', await push(await getSharedState('strArrayExportDeferredSettingsStack'), await getExportSettings(intFormatId)));
     await setExportSettings(intFormatId, strNewSettingString);
 
     await internalDebugStackExit();
@@ -3896,8 +3928,8 @@ async function pushExportSettings(intFormatId, strNewSettingString) {
 async function popImportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popImportSettings:formats-settings'); await assertIsInt(intFormatId);
 
-    await setImportSettings(intFormatId, await get(strArrayImportDeferredSettingsStack, -1));
-    strArrayImportDeferredSettingsStack = await asSubset(strArrayImportDeferredSettingsStack, 0, -2);
+    await setImportSettings(intFormatId, await get(await getSharedState('strArrayImportDeferredSettingsStack'), -1));
+    await setSharedState('strArrayImportDeferredSettingsStack', await asSubset(await getSharedState('strArrayImportDeferredSettingsStack'), 0, -2));
 
     await internalDebugStackExit();
 }
@@ -3905,8 +3937,8 @@ async function popImportSettings(intFormatId) {
 async function popExportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popExportSettings:formats-settings'); await assertIsInt(intFormatId);
 
-    await setExportSettings(intFormatId, await get(strArrayExportDeferredSettingsStack, -1));
-    strArrayExportDeferredSettingsStack = await asSubset(strArrayExportDeferredSettingsStack, 0, -2);
+    await setExportSettings(intFormatId, await get(await getSharedState('strArrayExportDeferredSettingsStack'), -1));
+    await setSharedState('strArrayExportDeferredSettingsStack', await asSubset(await getSharedState('strArrayExportDeferredSettingsStack'), 0, -2));
 
     await internalDebugStackExit();
 }

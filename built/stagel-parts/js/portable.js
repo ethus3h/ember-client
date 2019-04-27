@@ -1761,7 +1761,7 @@ async function pushImportSettings(intFormatId, strNewSettingString) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushImportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
 
     /* Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack). */
-    strArrayImportDeferredSettingsStack = await push(strArrayImportDeferredSettingsStack, await getImportSettings(intFormatId));
+    await setSharedState('strArrayImportDeferredSettingsStack', await push(await getSharedState('strArrayImportDeferredSettingsStack'), await getImportSettings(intFormatId)));
     await setImportSettings(intFormatId, strNewSettingString);
 
     await internalDebugStackExit();
@@ -1771,7 +1771,7 @@ async function pushExportSettings(intFormatId, strNewSettingString) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugCollect('str NewSettingString = ' + strNewSettingString + '; '); await internalDebugStackEnter('pushExportSettings:formats-settings'); await assertIsInt(intFormatId); await assertIsStr(strNewSettingString);
 
     /* Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack). */
-    strArrayExportDeferredSettingsStack = await push(strArrayExportDeferredSettingsStack, await getExportSettings(intFormatId));
+    await setSharedState('strArrayExportDeferredSettingsStack', await push(await getSharedState('strArrayExportDeferredSettingsStack'), await getExportSettings(intFormatId)));
     await setExportSettings(intFormatId, strNewSettingString);
 
     await internalDebugStackExit();
@@ -1780,8 +1780,8 @@ async function pushExportSettings(intFormatId, strNewSettingString) {
 async function popImportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popImportSettings:formats-settings'); await assertIsInt(intFormatId);
 
-    await setImportSettings(intFormatId, await get(strArrayImportDeferredSettingsStack, -1));
-    strArrayImportDeferredSettingsStack = await asSubset(strArrayImportDeferredSettingsStack, 0, -2);
+    await setImportSettings(intFormatId, await get(await getSharedState('strArrayImportDeferredSettingsStack'), -1));
+    await setSharedState('strArrayImportDeferredSettingsStack', await asSubset(await getSharedState('strArrayImportDeferredSettingsStack'), 0, -2));
 
     await internalDebugStackExit();
 }
@@ -1789,8 +1789,8 @@ async function popImportSettings(intFormatId) {
 async function popExportSettings(intFormatId) {
     await internalDebugCollect('int FormatId = ' + intFormatId + '; '); await internalDebugStackEnter('popExportSettings:formats-settings'); await assertIsInt(intFormatId);
 
-    await setExportSettings(intFormatId, await get(strArrayExportDeferredSettingsStack, -1));
-    strArrayExportDeferredSettingsStack = await asSubset(strArrayExportDeferredSettingsStack, 0, -2);
+    await setExportSettings(intFormatId, await get(await getSharedState('strArrayExportDeferredSettingsStack'), -1));
+    await setSharedState('strArrayExportDeferredSettingsStack', await asSubset(await getSharedState('strArrayExportDeferredSettingsStack'), 0, -2));
 
     await internalDebugStackExit();
 }
