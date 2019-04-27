@@ -63,24 +63,10 @@ setSharedState('haveDom', false);
 
 async function getSharedState(name) {
     return getWindowOrSelf()[name];
-    /*switch (name) {
-        case 'STAGEL_DEBUG':
-            return getWindowOrSelf().STAGEL_DEBUG;
-            break;
-        default:
-            await implDie('getSharedState called with invalid name: '+name);
-    }*/
 }
 
 function setSharedState(name, value) {
     getWindowOrSelf()[name] = value;
-    /*switch (name) {
-        case 'STAGEL_DEBUG':
-            getWindowOrSelf().STAGEL_DEBUG = value;
-            break;
-        default:
-            await implDie('setSharedState called with invalid name: '+name);
-    }*/
 }
 
 async function isSetupFinished() {
@@ -108,7 +94,7 @@ async function internalSetup() {
     }
     let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
-        setSharedState(envCharEncoding, 'utf8');
+        setSharedState('envCharEncoding', 'utf8');
     }
     else {
         await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
@@ -289,7 +275,7 @@ async function internalEiteReqWasmLoad(path) {
         }
     };
     let wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath(path)]);
-    getWindowOrSelf().eiteWasmModule = await WebAssembly.instantiate(wasmData, importObject);
+    setSharedState('eiteWasmModule', await WebAssembly.instantiate(wasmData, importObject));
 }
 
 async function internalEiteReqTypeofWindow() {
