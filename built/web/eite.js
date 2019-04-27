@@ -408,7 +408,7 @@ function getSharedState(name) {
 }
 
 function setSharedState(name, value) {
-    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 1);
+    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 3);
     getWindowOrSelf()[name] = value;
 }
 
@@ -1291,7 +1291,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    setSharedState('stagelDebugCollection') = getSharedState('stagelDebugCollection') + strMessageFragment;
+    setSharedState('stagelDebugCollection', getSharedState('stagelDebugCollection') + strMessageFragment);
 }
 
 async function internalDebugFlush() {

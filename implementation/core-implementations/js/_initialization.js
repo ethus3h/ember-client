@@ -220,7 +220,7 @@ function getSharedState(name) {
 }
 
 function setSharedState(name, value) {
-    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 1);
+    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 3);
     getWindowOrSelf()[name] = value;
 }
 

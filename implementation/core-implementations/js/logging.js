@@ -101,7 +101,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    setSharedState('stagelDebugCollection') = getSharedState('stagelDebugCollection') + strMessageFragment;
+    setSharedState('stagelDebugCollection', getSharedState('stagelDebugCollection') + strMessageFragment);
 }
 
 async function internalDebugFlush() {
