@@ -17,66 +17,66 @@ var envResolutionH;
 
 let datasets = []; // as
 let datasetsLoaded = false;
-let dcData = []; // an
-let strArrayDocumentExecData = []; // as: holds the current document state for any documents being executed.
-let strArrayDocumentExecSymbolIndex = []; // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
-let strArrayDocumentExecPtrs = []; // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
-let strArrayDocumentExecFrames = []; // as: holds strings of space-terminated integers representing Dcs to be rendered.
-let strArrayDocumentExecEvents = []; // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
-let strArrayDocumentExecLogs = []; // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
-let strArrayDocumentExecSettings = []; // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
-let setupFinished = false;
-let intPassedTests = 0;
-let intFailedTests = 0;
-let intTotalTests = 0;
-let intArrayTestFrameBuffer = []; // an
-let eiteWasmModule;
-let strArrayImportDeferredSettingsStack = []; // as
-let strArrayExportDeferredSettingsStack = []; // as
-let strArrayImportWarnings = []; // as
-let strArrayExportWarnings = []; // as
-let strArrayStorageCfg = []; // as
-let ipfsNode;
+setSharedState(dcData, []); // an
+setSharedState(strArrayDocumentExecData, []); // as: holds the current document state for any documents being executed.
+setSharedState(strArrayDocumentExecSymbolIndex, []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
+setSharedState(strArrayDocumentExecPtrs, []); // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
+setSharedState(strArrayDocumentExecFrames, []); // as: holds strings of space-terminated integers representing Dcs to be rendered.
+setSharedState(strArrayDocumentExecEvents, []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
+setSharedState(strArrayDocumentExecLogs, []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
+setSharedState(strArrayDocumentExecSettings, []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
+setSharedState(setupFinished, false);
+setSharedState(intPassedTests, 0);
+setSharedState(intFailedTests, 0);
+setSharedState(intTotalTests, 0);
+setSharedState(intArrayTestFrameBuffer, []); // an
+setSharedState(eiteWasmModule, undefined);
+setSharedState(strArrayImportDeferredSettingsStack, []); // as
+setSharedState(strArrayExportDeferredSettingsStack, []); // as
+setSharedState(strArrayImportWarnings, []); // as
+setSharedState(strArrayExportWarnings, []); // as
+setSharedState(strArrayStorageCfg, []); // as
+setSharedState(ipfsNode, undefined);
 
 // Global environment
 let haveDom = false;
 
 // Set defaults for preferences if not set already
 if (STAGEL_DEBUG === undefined) {
-    STAGEL_DEBUG = 1;
+    setSharedState(STAGEL_DEBUG, 1);
 }
 if (EITE_STORAGE_CFG === undefined) {
-    EITE_STORAGE_CFG = [];
+    setSharedState(EITE_STORAGE_CFG, []);
 }
 if (importSettings === undefined) {
-    importSettings = [];
+    setSharedState(importSettings, []);
 }
 if (exportSettings === undefined) {
-    exportSettings = [];
+    setSharedState(exportSettings, []);
 }
 if (envPreferredFormat === undefined) {
-    envPreferredFormat = '';
+    setSharedState(envPreferredFormat, '');
 }
 if (envCharEncoding === undefined) {
-    envCharEncoding = 'asciiSafeSubset';
+    setSharedState(envCharEncoding, 'asciiSafeSubset');
 }
 if (envTerminalType === undefined) {
-    envTerminalType = 'vt100';
+    setSharedState(envTerminalType, 'vt100');
 }
 if (envLanguage === undefined) {
-    envLanguage = 'en-US';
+    setSharedState(envLanguage, 'en-US');
 }
 if (envLocaleConfig === undefined) {
-    envLocaleConfig = 'inherit:usa,';
+    setSharedState(envLocaleConfig, 'inherit:usa,');
 }
 if (envCodeLanguage === undefined) {
-    envCodeLanguage = 'javascript';
+    setSharedState(envCodeLanguage, 'javascript');
 }
 if (envResolutionW === undefined) {
-    envResolutionW = '0';
+    setSharedState(envResolutionW, '0');
 }
 if (envResolutionH === undefined) {
-    envResolutionH = '0';
+    setSharedState(envResolutionH, '0');
 }
 
 async function getSharedState(name) {
@@ -102,11 +102,11 @@ function setSharedState(name, value) {
 }
 
 async function isSetupFinished() {
-    return setupFinished;
+    return getSharedState(setupFinished);
 }
 
 async function setupIfNeeded() {
-    if (setupFinished) {
+    if (getSharedState(setupFinished)) {
         return;
     }
     await internalSetup();
