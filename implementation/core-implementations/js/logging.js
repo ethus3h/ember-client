@@ -59,6 +59,9 @@ async function implLog(strMessage) {
                 }
             }
         }
+        else {
+            console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
+        }
     }
 }
 async function implDebug(strMessage, intLevel) {
