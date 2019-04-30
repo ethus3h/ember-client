@@ -1406,7 +1406,7 @@ async function internalDebugPrintStack() {
     return result;
 }
 
-function internalDebugLogJSObject(obj) {
+async function internalDebugLogJSObject(obj) {
     if (1 <= await getSharedState('STAGEL_DEBUG')) {
         console.log(obj);
     }
