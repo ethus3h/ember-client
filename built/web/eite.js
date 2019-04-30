@@ -446,8 +446,8 @@ async function getSharedState(name) {
 }
 
 async function setSharedState(name, value) {
-    if(name==='internalDelegateStateRequests') {
-        console.log('legalize');
+    if (name==='internalDelegateStateRequests') {
+        console.log('legalize'+value);
     }
     if (await getSharedState('internalDelegateStateRequests') === true) {
         return await eiteHostCall('getSharedState', [name, value]);
