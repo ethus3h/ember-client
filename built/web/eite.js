@@ -443,10 +443,6 @@ async function eiteLibrarySetup() {
 }
 
 async function getSharedState(name) {
-    // from https://web.archive.org/web/20190111230631/https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
-    function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
     console.log('Get shared state request received for: ' +name+' , delegate?'+ getWindowOrSelf()['internalDelegateStateRequests']);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         console.log('Get shared state delegated for '+name);
