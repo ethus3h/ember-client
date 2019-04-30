@@ -305,7 +305,7 @@ async function eiteLibrarySetup() {
                 const uuid = message.data.uuid;
                 const msgid = message.data.msgid;
                 const args = message.data.args;
-                implDebug('Host understood message '+msgid+' from worker: '+args, 1);
+                await implDebug('Host understood message '+msgid+' from worker: '+args, 1);
                 await internalDebugLogJSObject(message);
                 let res = await window[args[0]]( ...args[1] );
                 await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
@@ -316,14 +316,14 @@ async function eiteLibrarySetup() {
                 const uuid = message.data.uuid;
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
-                implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
+                await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
             if(msgid > 50) {
                 await implDie('died too mayn messages');
             }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
-                        implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
+                        await implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
                     }
                     let resolveCallback;
                     resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
@@ -332,7 +332,7 @@ async function eiteLibrarySetup() {
                         delete window.eiteWorkerResolveCallbacks[msgid];
                     }
                     else {
-                        implDie('Web worker returned invalid message ID '+msgid+'.');
+                        await implDie('Web worker returned invalid message ID '+msgid+'.');
                         throw 'Web worker returned invalid message ID '+msgid+'.';
                     }
                 }
@@ -354,18 +354,18 @@ async function eiteLibrarySetup() {
             return await self[funcName]( ...args );
         }
         self.eiteHostCall = self.eiteCall;
+        await implDebug('Done non-worker setup', 0);
     }
-    implDebug('Done worker setup A', 0);
 
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
-        implDebug('Started worker setup B', 0);
+        await implDebug('Started worker setup', 0);
         // Running as a Web worker, so set up accordingly
         self.internalOnMessage = async function(message) {
             // The worker accepted a message; this function processes it
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
             const args = message.data.args;
-            implDebug('Worker understood message '+msgid+' from host: '+args, 1);
+            await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
             await internalDebugLogJSObject(message);
             let res;
             try {
@@ -385,7 +385,7 @@ async function eiteLibrarySetup() {
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
             const args = message.data.args;
-            implDebug('Worker got message '+msgid+' from host: '+args, 1);
+            await implDebug('Worker got message '+msgid+' from host: '+args, 1);
             if(msgid > 50) {
                 await implDie('died too mayn messages');
             }
@@ -395,7 +395,7 @@ async function eiteLibrarySetup() {
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
                 if (args === undefined) {
-                    implDebug('Host sent undefined contents in message '+msgid+'.', 1);
+                    await implDebug('Host sent undefined contents in message '+msgid+'.', 1);
                 }
                 let resolveCallback;
                 resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
@@ -404,12 +404,12 @@ async function eiteLibrarySetup() {
                     delete self.eiteWorkerHostResolveCallbacks[msgid];
                 }
                 else {
-                    implDie('Host returned invalid message ID.');
+                    await implDie('Host returned invalid message ID.');
                     throw 'Host returned invalid message ID.';
                 }
             }
         }
-        implDebug('Defined onmessage for worker', 0);
+        await implDebug('Defined onmessage for worker', 0);
 
         self.eiteWorkerHostResolveCallbacks = {};
         self.eiteWorkerHostCallID = 0;
@@ -425,13 +425,13 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        implDebug('Defined eiteHostCall', 0);
+        await implDebug('Defined eiteHostCall', 0);
         console.log('Setting internalDelegateStateRequests');
         await self.setSharedState('internalDelegateStateRequests', true);
         console.log('Set internalDelegateStateRequests');
-        implDebug('Set internalDelegateStateRequests', 0);
+        await implDebug('Set internalDelegateStateRequests', 0);
     }
-    implDebug('Done worker setup B (when it is running as worker)', 0);
+    await implDebug('Done worker and nonwokrer setup ', 0);
     //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
@@ -439,7 +439,7 @@ async function eiteLibrarySetup() {
             await setSharedState('STAGEL_DEBUG', 1);
         }
     }
-    implDebug('Done basic setup', 0);
+    await implDebug('Done basic setup', 0);
 }
 
 async function getSharedState(name) {
