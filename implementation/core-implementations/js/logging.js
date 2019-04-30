@@ -48,7 +48,7 @@ async function implLog(strMessage) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
-        if (2 <= STAGEL_DEBUG) {
+        if (2 <= await getSharedState('STAGEL_DEBUG')) {
             await console.log("(Previous message sent from non-StageL code.)");
         }
     }
@@ -64,7 +64,7 @@ async function implDebug(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
-    if (intLevel <= STAGEL_DEBUG) {
+    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
         await implLog(strMessage);
     }
 }
@@ -73,7 +73,7 @@ async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
     // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
-    STAGEL_DEBUG=intLevel;
+    await setSharedState('STAGEL_DEBUG', intLevel);
 }
 
 async function FIXMEUnimplemented(strLocation) {
@@ -88,7 +88,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message, but don't print a trace for it
 
-    if (intLevel <= STAGEL_DEBUG) {
+    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
         // await implLog(strMessage);
         console.log(strMessage);
     }
@@ -134,7 +134,7 @@ async function internalDebugStackEnter(strBlockName) {
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
     await setSharedState('stagelDebugCallstack', temp);
 
-    if (2 <= STAGEL_DEBUG) {
+    if (2 <= await getSharedState('STAGEL_DEBUG')) {
         let callstackLevel=stagelDebugCallstack.length;
         let callstackLevelStr='';
         let i=0;
@@ -198,7 +198,7 @@ async function internalDebugPrintStack() {
 }
 
 function internalDebugLogJSObject(obj) {
-    if (1 <= STAGEL_DEBUG) {
+    if (1 <= await getSharedState('STAGEL_DEBUG')) {
         console.log(obj);
     }
 }
