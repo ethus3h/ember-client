@@ -437,6 +437,10 @@ async function eiteLibrarySetup() {
 }
 
 async function getSharedState(name) {
+    function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+await sleep(200);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         console.log('Get shared state delegated for '+name);
         return await eiteHostCall('getSharedState', [name]);
@@ -1285,7 +1289,9 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
+    console.log('Message log '+strMessage);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
+    console.log('Message log delegated '+strMessage);
         await eiteHostCall('implLog', [strMessage]);
     }
     else {
@@ -1307,6 +1313,7 @@ async function implLog(strMessage) {
 }
 
 async function implDebug(strMessage, intLevel) {
+    console.log('Message debug '+strMessage);
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
     }
