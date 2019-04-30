@@ -1305,12 +1305,15 @@ async function implLog(strMessage) {
         await assertIsStr(strMessage);
         // Log the provided message
         await console.log(strMessage);
-        if(await Object.keys(await getSharedState('stagelDebugCallstack')).length > 0) {
-            await console.log("Previous message sent at: " + await internalDebugPrintStack());
-        }
-        else {
-            if (2 <= await getSharedState('STAGEL_DEBUG')) {
-                await console.log("(Previous message sent from non-StageL code.)");
+        let temp=await getSharedState('stagelDebugCallstack');
+        if(temp !== undefined) {
+            if(await Object.keys(temp).length > 0) {
+                await console.log("Previous message sent at: " + await internalDebugPrintStack());
+            }
+            else {
+                if (2 <= await getSharedState('STAGEL_DEBUG')) {
+                    await console.log("(Previous message sent from non-StageL code.)");
+                }
             }
         }
     }
