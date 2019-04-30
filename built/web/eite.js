@@ -355,6 +355,7 @@ async function eiteLibrarySetup() {
     implDebug('Done worker setup A', 0);
 
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
+        implDebug('Started worker setup B', 0);
         // Running as a Web worker, so set up accordingly
         self.internalOnMessage = async function(message) {
             // The worker accepted a message; this function processes it
@@ -374,6 +375,7 @@ async function eiteLibrarySetup() {
             await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
         }
+        implDebug('Defined internalOnMessage for worker', 0);
 
         self.onmessage = async function(message) {
             // Handle messages sent to this code when it is running as a Web worker
@@ -401,6 +403,7 @@ async function eiteLibrarySetup() {
                 }
             }
         }
+        implDebug('Defined onmessage for worker', 0);
 
         self.eiteWorkerHostResolveCallbacks = {};
         self.eiteWorkerHostCallID = 0;
@@ -416,9 +419,11 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
+        implDebug('Defined eiteHostCall', 0);
         await self.setSharedState('internalDelegateStateRequests', true);
+        implDebug('Set internalDelegateStateRequests', 0);
     }
-    implDebug('Done worker setup B', 0);
+    implDebug('Done worker setup B (when it is running as worker)', 0);
     //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
