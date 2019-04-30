@@ -66,7 +66,13 @@ async function eiteLibrarySetup() {
     await setSharedState('haveDom', false);
     await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
-    // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
+    await setSharedState('stagelDebugCallstack', []);
+    await setSharedState('stagelDebugCallNames', []);
+    await setSharedState('stagelDebugCallCounts', []);
+    await setSharedState('stagelDebugCollection', "");
+    //alert("Setting up logging");
+
+    // Next code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
     // To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
 

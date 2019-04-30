@@ -7,12 +7,6 @@
     FIXMEUnimplemented
 */
 
-await setSharedState('stagelDebugCallstack', []);
-await setSharedState('stagelDebugCallNames', []);
-await setSharedState('stagelDebugCallCounts', []);
-await setSharedState('stagelDebugCollection', "");
-//alert("Setting up logging");
-
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
