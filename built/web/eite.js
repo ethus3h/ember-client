@@ -317,6 +317,9 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
+            if(msgid > 300) {
+                await implDie('died too mayn messages');
+            }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
