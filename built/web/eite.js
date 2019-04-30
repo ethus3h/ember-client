@@ -440,7 +440,7 @@ async function getSharedState(name) {
     function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-await sleep(200);
+await sleep(800);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         console.log('Get shared state delegated for '+name);
         return await eiteHostCall('getSharedState', [name]);

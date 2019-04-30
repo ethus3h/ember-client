@@ -221,7 +221,6 @@ async function eiteLibrarySetup() {
         };
         await self.setSharedState('internalDelegateStateRequests', true);
     }
-    //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
         if (await getSharedState('STAGEL_DEBUG') === 0) {
