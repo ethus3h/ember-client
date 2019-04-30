@@ -412,7 +412,7 @@ async function eiteLibrarySetup() {
     await setSharedState('librarySetupFinished', true);
 }
 
-async function await getSharedState(name) {
+async function getSharedState(name) {
     if (await getSharedState('internalDelegateStateRequests') === true) {
         return await eiteHostCall('getSharedState', [name]);
     }
@@ -421,7 +421,7 @@ async function await getSharedState(name) {
     }
 }
 
-async function await setSharedState(name, value) {
+async function setSharedState(name, value) {
     if (await getSharedState('internalDelegateStateRequests') === true) {
         return await eiteHostCall('getSharedState', [name, value]);
     }
