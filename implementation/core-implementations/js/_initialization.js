@@ -64,6 +64,7 @@ function eiteLibrarySetup() {
     setSharedState('strArrayStorageCfg', []); // as
     setSharedState('ipfsNode', undefined);
     setSharedState('haveDom', false);
+    setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
     // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
@@ -211,11 +212,15 @@ function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
+        self.setSharedState('internalDelegateStateRequests', true);
     }
     setSharedState('librarySetupFinished', true);
 }
 
 function getSharedState(name) {
+    if (getSharedState('internalDelegateStateRequests') === true) {
+        return eiteHostCall('getSharedState')
+    }
     return getWindowOrSelf()[name];
 }
 
