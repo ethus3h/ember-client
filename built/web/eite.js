@@ -197,7 +197,6 @@ eiteLibrarySetup(); // This function call should be the only code other than exp
 async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
-    implDebug('Starting setup', 0);
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
         await setSharedState('STAGEL_DEBUG', 0);
         await setSharedState('STAGEL_DEBUG_UNSET', true);
@@ -235,7 +234,6 @@ async function eiteLibrarySetup() {
     if (await getSharedState('envResolutionH') === undefined) {
         await setSharedState('envResolutionH', '0');
     }
-    implDebug('Starting setup 2', 0);
 
     // Shared state variables
     await setSharedState('datasets', []); // as
