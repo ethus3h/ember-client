@@ -120,10 +120,12 @@ async function storageSetup(kvStorageCfgParam) {
     temp=await kvGetValue(kvStorageCfg, 'mysqlSession')
     if (''===temp) {
         let session=await internalStorageMysqlApiRequest('table=idxPerson&action=getSession&user='+await kvGetValue(await getStorageSettings(), 'mysqlUser')+'&secretkey='+await kvGetValue(await getStorageSettings(), 'mysqlSecretKey'));
-        if (session === null) {
+        if (session === null || session === undefined) {
             await implError('Could not log in!');
         }
-        kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
+        else {
+            kvStorageCfg=await kvSetValue(kvStorageCfg, 'mysqlSession', session);
+        }
     }
     // Done, so now set the global value to the prepared configuration key-value pairs
     await setStorageSettings(kvStorageCfg);
@@ -153,7 +155,7 @@ async function storageRetrieve(id) {
         }
         return new Uint8Array(data);
     }); */
-    intArrayRes=await internalStorageMysqlApiRequest('table=node&action=getRowByValue&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&field=id&value='+await strFrom(id));
+    intArrayRes=await strToByteArray((await internalStorageMysqlApiRequest('table=node&action=getRowByValue&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&field=id&value='+await strFrom(id)))['data']);
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
@@ -170,10 +172,15 @@ async function internalStorageMysqlApiRequest(queryString) {
     oReq.open('GET', url, true);
     oReq.responseType = 'json';
     oReq.onload = function(oEvent) {
-        resolve(oReq.response);
+        if (oReq.status !== 200) {
+            resolve(null);
+        }
+        else {
+            resolve(oReq.response);
+        }
     };
     oReq.onerror = function() {
-        resolve(undefined);
+        resolve(null);
     }
     oReq.send(null);
     });
@@ -186,72 +193,73 @@ async function internalStorageGetTable(tableName) {
     return await internalStorageMysqlApiRequest(qs);
 }
 
-eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally.
+eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally. This does not call setupIfNeeded, meaning things like nice error messages that that provides aren't available.
 function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
-    if (getSharedState('STAGEL_DEBUG') === undefined) {
-        setSharedState('STAGEL_DEBUG', 1);
+    if (await getSharedState('STAGEL_DEBUG') === undefined) {
+        await setSharedState('STAGEL_DEBUG', 1);
     }
-    if (getSharedState('EITE_STORAGE_CFG') === undefined) {
-        setSharedState('EITE_STORAGE_CFG', []);
+    if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
+        await setSharedState('EITE_STORAGE_CFG', []);
     }
-    if (getSharedState('importSettings') === undefined) {
-        setSharedState('importSettings', []);
+    if (await getSharedState('importSettings') === undefined) {
+        await setSharedState('importSettings', []);
     }
-    if (getSharedState('exportSettings') === undefined) {
-        setSharedState('exportSettings', []);
+    if (await getSharedState('exportSettings') === undefined) {
+        await setSharedState('exportSettings', []);
     }
-    if (getSharedState('envPreferredFormat') === undefined) {
-        setSharedState('envPreferredFormat', '');
+    if (await getSharedState('envPreferredFormat') === undefined) {
+        await setSharedState('envPreferredFormat', '');
     }
-    if (getSharedState('envCharEncoding') === undefined) {
-        setSharedState('envCharEncoding', 'asciiSafeSubset');
+    if (await getSharedState('envCharEncoding') === undefined) {
+        await setSharedState('envCharEncoding', 'asciiSafeSubset');
     }
-    if (getSharedState('envTerminalType') === undefined) {
-        setSharedState('envTerminalType', 'vt100');
+    if (await getSharedState('envTerminalType') === undefined) {
+        await setSharedState('envTerminalType', 'vt100');
     }
-    if (getSharedState('envLanguage') === undefined) {
-        setSharedState('envLanguage', 'en-US');
+    if (await getSharedState('envLanguage') === undefined) {
+        await setSharedState('envLanguage', 'en-US');
     }
-    if (getSharedState('envLocaleConfig') === undefined) {
-        setSharedState('envLocaleConfig', 'inherit:usa,');
+    if (await getSharedState('envLocaleConfig') === undefined) {
+        await setSharedState('envLocaleConfig', 'inherit:usa,');
     }
-    if (getSharedState('envCodeLanguage') === undefined) {
-        setSharedState('envCodeLanguage', 'javascript');
+    if (await getSharedState('envCodeLanguage') === undefined) {
+        await setSharedState('envCodeLanguage', 'javascript');
     }
-    if (getSharedState('envResolutionW') === undefined) {
-        setSharedState('envResolutionW', '0');
+    if (await getSharedState('envResolutionW') === undefined) {
+        await setSharedState('envResolutionW', '0');
     }
-    if (getSharedState('envResolutionH') === undefined) {
-        setSharedState('envResolutionH', '0');
+    if (await getSharedState('envResolutionH') === undefined) {
+        await setSharedState('envResolutionH', '0');
     }
 
     // Shared state variables
-    setSharedState('datasets', []); // as
-    setSharedState('datasetsLoaded', false);
-    setSharedState('dcData', []); // an
-    setSharedState('strArrayDocumentExecData', []); // as: holds the current document state for any documents being executed.
-    setSharedState('strArrayDocumentExecSymbolIndex', []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
-    setSharedState('strArrayDocumentExecPtrs', []); // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
-    setSharedState('strArrayDocumentExecFrames', []); // as: holds strings of space-terminated integers representing Dcs to be rendered.
-    setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
-    setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
-    setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
-    setSharedState('librarySetupFinished', false);
-    setSharedState('setupFinished', false);
-    setSharedState('intPassedTests', 0);
-    setSharedState('intFailedTests', 0);
-    setSharedState('intTotalTests', 0);
-    setSharedState('intArrayTestFrameBuffer', []); // an
-    setSharedState('eiteWasmModule', undefined);
-    setSharedState('strArrayImportDeferredSettingsStack', []); // as
-    setSharedState('strArrayExportDeferredSettingsStack', []); // as
-    setSharedState('strArrayImportWarnings', []); // as
-    setSharedState('strArrayExportWarnings', []); // as
-    setSharedState('strArrayStorageCfg', []); // as
-    setSharedState('ipfsNode', undefined);
-    setSharedState('haveDom', false);
+    await setSharedState('datasets', []); // as
+    await setSharedState('datasetsLoaded', false);
+    await setSharedState('dcData', []); // an
+    await setSharedState('strArrayDocumentExecData', []); // as: holds the current document state for any documents being executed.
+    await setSharedState('strArrayDocumentExecSymbolIndex', []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
+    await setSharedState('strArrayDocumentExecPtrs', []); // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
+    await setSharedState('strArrayDocumentExecFrames', []); // as: holds strings of space-terminated integers representing Dcs to be rendered.
+    await setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
+    await setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
+    await setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
+    await setSharedState('librarySetupFinished', false);
+    await setSharedState('setupFinished', false);
+    await setSharedState('intPassedTests', 0);
+    await setSharedState('intFailedTests', 0);
+    await setSharedState('intTotalTests', 0);
+    await setSharedState('intArrayTestFrameBuffer', []); // an
+    await setSharedState('eiteWasmModule', undefined);
+    await setSharedState('strArrayImportDeferredSettingsStack', []); // as
+    await setSharedState('strArrayExportDeferredSettingsStack', []); // as
+    await setSharedState('strArrayImportWarnings', []); // as
+    await setSharedState('strArrayExportWarnings', []); // as
+    await setSharedState('strArrayStorageCfg', []); // as
+    await setSharedState('ipfsNode', undefined);
+    await setSharedState('haveDom', false);
+    await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
     // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
@@ -399,28 +407,39 @@ function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
+        self.await setSharedState('internalDelegateStateRequests', true);
     }
-    setSharedState('librarySetupFinished', true);
+    await setSharedState('librarySetupFinished', true);
 }
 
-function getSharedState(name) {
-    return getWindowOrSelf()[name];
+async function await getSharedState(name) {
+    if (await getSharedState('internalDelegateStateRequests') === true) {
+        return await eiteHostCall('getSharedState', [name]);
+    }
+    else {
+        return getWindowOrSelf()[name];
+    }
 }
 
-function setSharedState(name, value) {
-    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 1);
-    getWindowOrSelf()[name] = value;
+async function await setSharedState(name, value) {
+    if (await getSharedState('internalDelegateStateRequests') === true) {
+        return await eiteHostCall('getSharedState', [name, value]);
+    }
+    else {
+        await implDebug('State change for ' + name + ' to ' + value + '.', 3);
+        getWindowOrSelf()[name] = value;
+    }
 }
 
 async function isSetupFinished() {
-    return getSharedState('setupFinished');
+    return await getSharedState('setupFinished');
 }
 
 async function setupIfNeeded() {
-    if (getSharedState('librarySetupFinished') !== 'true') {
+    if (await getSharedState('librarySetupFinished') !== 'true') {
         await eiteLibrarySetup();
     }
-    if (getSharedState('setupFinished')) {
+    if (await getSharedState('setupFinished')) {
         return;
     }
     await internalSetup();
@@ -436,41 +455,41 @@ async function internalSetup() {
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
-        setSharedState('haveDom', true);
+        await setSharedState('haveDom', true);
     }
     let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
-        setSharedState('envCharEncoding', 'utf8');
+        await setSharedState('envCharEncoding', 'utf8');
     }
     else {
         await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
-    if (getSharedState('haveDom')) {
+    if (await getSharedState('haveDom')) {
         // Web browsers, etc.
-        setSharedState('envPreferredFormat', 'htmlFragment');
-        setSharedState('envResolutionW', await eiteHostCall('internalEiteReqOutputWidth'));
-        setSharedState('envResolutionH', await eiteHostCall('internalEiteReqOutputHeight'));
+        await setSharedState('envPreferredFormat', 'htmlFragment');
+        await setSharedState('envResolutionW', await eiteHostCall('internalEiteReqOutputWidth'));
+        await setSharedState('envResolutionH', await eiteHostCall('internalEiteReqOutputHeight'));
     }
     else {
         // Command-line, e.g. Node.js
-        setSharedState('envPreferredFormat', 'characterCells');
-        setSharedState('envResolutionW', process.stdout.columns);
-        setSharedState('envResolutionH', process.stdout.rows);
-        if (getSharedState('envResolutionW') === 0 || getSharedState('envResolutionH') === 0 || getSharedState('envResolutionW') === undefined || getSharedState('envResolutionH') === undefined) {
-            setSharedState('envPreferredFormat', 'immutableCharacterCells');
+        await setSharedState('envPreferredFormat', 'characterCells');
+        await setSharedState('envResolutionW', process.stdout.columns);
+        await setSharedState('envResolutionH', process.stdout.rows);
+        if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
+            await setSharedState('envPreferredFormat', 'immutableCharacterCells');
             // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
-            setSharedState('envResolutionW', 80);
-            setSharedState('envResolutionH', 1);
+            await setSharedState('envResolutionW', 80);
+            await setSharedState('envResolutionH', 1);
         }
     }
-    if (getSharedState('envResolutionW') === 0 || getSharedState('envResolutionH') === 0 || getSharedState('envResolutionW') === undefined || getSharedState('envResolutionH') === undefined) {
-        await implWarn('The resolution detected was zero in at least one dimension. Width = '+getSharedState('envResolutionW')+'; height = '+getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
+    if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
+        await implWarn('The resolution detected was zero in at least one dimension. Width = '+await getSharedState('envResolutionW')+'; height = '+await getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
 
     // Set up data sets.
 
-    setSharedState('datasets', await listDcDatasets());
-    if (!getSharedState('datasetsLoaded')) {
+    await setSharedState('datasets', await listDcDatasets());
+    if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
     }
 
@@ -478,29 +497,29 @@ async function internalSetup() {
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
-        if (getSharedState('importSettings')[settingsCounter] === undefined) {
-            tempSettings = getSharedState('importSettings');
+        if (await getSharedState('importSettings')[settingsCounter] === undefined) {
+            tempSettings = await getSharedState('importSettings');
             tempSettings[settingsCounter] = '';
-            setSharedState('importSettings', tempSettings);
+            await setSharedState('importSettings', tempSettings);
             tempSettings = [];
         }
     }
     settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
-            tempSettings = getSharedState('exportSettings');
+            tempSettings = await getSharedState('exportSettings');
             tempSettings[settingsCounter] = '';
-            setSharedState('exportSettings', tempSettings);
+            await setSharedState('exportSettings', tempSettings);
         }
     }
 
     // Set up storage
 
-    await storageSetup(getSharedState('EITE_STORAGE_CFG'));
+    await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
 
     // Other startup stuff.
 
-    if (getSharedState('haveDom')) {
+    if (await getSharedState('haveDom')) {
         // Override error reporting method to show alert
 
         registerSpeedup('implError', async function (strMessage) {
@@ -537,18 +556,18 @@ async function internalSetup() {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
             }
             else {
-                if (2 <= getSharedState('STAGEL_DEBUG') && 3 > getSharedState('STAGEL_DEBUG')) {
+                if (2 <= await getSharedState('STAGEL_DEBUG') && 3 > await getSharedState('STAGEL_DEBUG')) {
                     await console.log("(Previous message sent from non-StageL code.)");
                     await console.trace();
                 }
             }
-            if (3 <= getSharedState('STAGEL_DEBUG')) {
+            if (3 <= await getSharedState('STAGEL_DEBUG')) {
                 await console.trace();
             }
         });
     }
 
-    setSharedState('setupFinished', true);
+    await setSharedState('setupFinished', true);
 }
 
 function getWindowOrSelf() {
@@ -621,7 +640,7 @@ async function internalEiteReqWasmLoad(path) {
         }
     };
     let wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath(path)]);
-    setSharedState('eiteWasmModule', await WebAssembly.instantiate(wasmData, importObject));
+    await setSharedState('eiteWasmModule', await WebAssembly.instantiate(wasmData, importObject));
 }
 
 async function internalEiteReqTypeofWindow() {
@@ -660,11 +679,11 @@ async function internalLoadDatasets() {
     let temp;
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
-        temp=getSharedState('dcData');
+        temp=await getSharedState('dcData');
         temp[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         temp[dataset] = await eiteHostCall('internalEiteReqLoadDataset', [dataset]);
-        setSharedState('dcData', temp);
+        await setSharedState('dcData', temp);
         count = count + 1;
     }
     datasetsLoaded = true;
@@ -1197,10 +1216,10 @@ async function strReplace(str, find, replace) {
     FIXMEUnimplemented
 */
 
-setSharedState('stagelDebugCallstack', []);
-setSharedState('stagelDebugCallNames', []);
-setSharedState('stagelDebugCallCounts', []);
-setSharedState('stagelDebugCollection', "");
+await setSharedState('stagelDebugCallstack', []);
+await setSharedState('stagelDebugCallNames', []);
+await setSharedState('stagelDebugCallCounts', []);
+await setSharedState('stagelDebugCollection', "");
 //alert("Setting up logging");
 
 async function implDie(strMessage) {
@@ -1240,7 +1259,7 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
     await console.log(strMessage);
-    if(await Object.keys(getSharedState('stagelDebugCallstack')).length > 0) {
+    if(await Object.keys(await getSharedState('stagelDebugCallstack')).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
@@ -1291,14 +1310,14 @@ async function internalDebugQuiet(strMessage, intLevel) {
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    setSharedState('stagelDebugCollection') = getSharedState('stagelDebugCollection') + strMessageFragment;
+    await setSharedState('stagelDebugCollection', await getSharedState('stagelDebugCollection') + strMessageFragment);
 }
 
 async function internalDebugFlush() {
     /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
-    temp = getSharedState('stagelDebugCollection');
-    setSharedState('stagelDebugCollection', "");
+    temp = await getSharedState('stagelDebugCollection');
+    await setSharedState('stagelDebugCollection', "");
     return temp;
 }
 
@@ -1309,26 +1328,26 @@ async function internalDebugStackEnter(strBlockName) {
 
     let tempCounts;
 
-    if (getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
+    if (await getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
         let tempNames;
-        tempNames=getSharedState('stagelDebugCallNames');
+        tempNames=await getSharedState('stagelDebugCallNames');
         tempNames.push(strBlockName);
-        setSharedState('stagelDebugCallNames', tempNames);
-        tempCounts=getSharedState('stagelDebugCallCounts');
-        tempCounts[getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
-        setSharedState('stagelDebugCallCounts', tempCounts);
+        await setSharedState('stagelDebugCallNames', tempNames);
+        tempCounts=await getSharedState('stagelDebugCallCounts');
+        tempCounts[await getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
+        await setSharedState('stagelDebugCallCounts', tempCounts);
     }
 
     let ind;
-    ind = getSharedState('stagelDebugCallNames').indexOf(strBlockName);
-    tempCounts=getSharedState('stagelDebugCallCounts');
+    ind = await getSharedState('stagelDebugCallNames').indexOf(strBlockName);
+    tempCounts=await getSharedState('stagelDebugCallCounts');
     tempCounts[ind] = tempCounts[ind] + 1;
-    setSharedState('stagelDebugCallCounts', tempCounts);
+    await setSharedState('stagelDebugCallCounts', tempCounts);
 
     let temp;
-    temp=getSharedState('stagelDebugCallstack');
+    temp=await getSharedState('stagelDebugCallstack');
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
-    setSharedState('stagelDebugCallstack', temp);
+    await setSharedState('stagelDebugCallstack', temp);
 
     if (2 <= STAGEL_DEBUG) {
         let callstackLevel=stagelDebugCallstack.length;
@@ -1344,34 +1363,34 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + await getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
     }
 }
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
+    if (await await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
     let temp;
-    temp=getSharedState('stagelDebugCallstack');
+    temp=await getSharedState('stagelDebugCallstack');
     await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
-    setSharedState('stagelDebugCallstack', temp);
+    await setSharedState('stagelDebugCallstack', temp);
 }
 
 async function internalDebugPrintHotspots() {
     let n = 0;
-    n = getSharedState('stagelDebugCallNames').length;
+    n = await getSharedState('stagelDebugCallNames').length;
     let i = 0;
     if (n === 0) {
         console.log('No routine calls have been logged.');
     }
     while (i < n){
-        console.log(getSharedState('stagelDebugCallNames')[i] + ' was called ' + getSharedState('stagelDebugCallCounts')[i] + ' times.');
+        console.log(await getSharedState('stagelDebugCallNames')[i] + ' was called ' + await getSharedState('stagelDebugCallCounts')[i] + ' times.');
         i = i + 1;
     }
     let sum = 0;
-    sum = getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
+    sum = await getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
     console.log('Total function calls: ' + sum);
@@ -1379,7 +1398,7 @@ async function internalDebugPrintHotspots() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(getSharedState('stagelDebugCallstack')).length - 1;
+    i = await Object.keys(await getSharedState('stagelDebugCallstack')).length - 1;
     let result="";
     let arrow=" < "
     while (i>=0) {
@@ -1387,7 +1406,7 @@ async function internalDebugPrintStack() {
         if (i==0) {
             arrow=""
         }
-        result = result + getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
+        result = result + await getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
         i = i - 1;
     }
     return result;
@@ -1402,7 +1421,7 @@ function internalDebugLogJSObject(obj) {
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
-    let func=getWindowOrSelf().eiteWasmModule.instance.exports[strRoutine];
+    let func=await getSharedState('eiteWasmModule').instance.exports[strRoutine];
     let eiteWasmMemory;
     if (giVal === null) {
         return func();
@@ -1413,8 +1432,8 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     else {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
-        if (typeof getWindowOrSelf().eiteWasmModule.instance.exports['memory'] !== 'undefined') {
-            eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports['memory'];
+        if (typeof await getSharedState('eiteWasmModule').instance.exports['memory'] !== 'undefined') {
+            eiteWasmMemory=await getSharedState('eiteWasmModule').instance.exports['memory'];
         }
     }
 }
@@ -1489,14 +1508,14 @@ async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
     // - 2: one for the header; one for the last newline, which is (reasonably, looking at the newlines as separators rather than terminators) included as an extra line of data in the parse results
-    intReturn = getSharedState('dcData')[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
+    intReturn = await getSharedState('dcData')[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
-    if (getSharedState('dcData')[dataset] === undefined) {
+    if (await getSharedState('dcData')[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
 
@@ -1504,11 +1523,11 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     rowNum = rowNum + 1;
 
     // and another 1 to account for last row
-    if (rowNum + 1 >= getSharedState('dcData')[dataset].length) {
+    if (rowNum + 1 >= await getSharedState('dcData')[dataset].length) {
         strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
     else {
-        strReturn = getSharedState('dcData')[dataset][rowNum][fieldNum];
+        strReturn = await getSharedState('dcData')[dataset][rowNum][fieldNum];
     }
     await assertIsStr(strReturn); return strReturn;
 }
@@ -1516,12 +1535,12 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = getSharedState('dcData')[dataset].length - 2;
+    let intLength = await getSharedState('dcData')[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(getSharedState('dcData')[dataset][row][filterField] === filterValue) {
-            strReturn = getSharedState('dcData')[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
+        if(await getSharedState('dcData')[dataset][row][filterField] === filterValue) {
+            strReturn = await getSharedState('dcData')[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
     //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
@@ -1538,12 +1557,12 @@ async function dcDataFilterByValue(dataset, filterField, genericFilterValue, des
 
     asReturn = [];
 
-    let intLength = getSharedState('dcData')[dataset].length - 2;
+    let intLength = await getSharedState('dcData')[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(getSharedState('dcData')[dataset][row][filterField] === filterValue) {
-            asReturn = asReturn.concat(getSharedState('dcData')[dataset][row][desiredField]);
+        if(await getSharedState('dcData')[dataset][row][filterField] === filterValue) {
+            asReturn = asReturn.concat(await getSharedState('dcData')[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
@@ -1556,11 +1575,11 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
 
     asReturn = [];
 
-    let intLength = getSharedState('dcData')[dataset].length - 2;
+    let intLength = await getSharedState('dcData')[dataset].length - 2;
     // start at 1 to skip header row
     for (let row = 1; row <= intLength; row++) {
-        if(parseInt(getSharedState('dcData')[dataset][row][filterField], 10) > filterValue) {
-            asReturn = asReturn.concat(getSharedState('dcData')[dataset][row][desiredField]);
+        if(parseInt(await getSharedState('dcData')[dataset][row][filterField], 10) > filterValue) {
+            asReturn = asReturn.concat(await getSharedState('dcData')[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
@@ -2021,37 +2040,37 @@ async function leastSignificantByte(int32input) {
 
 async function getEnvPreferredFormat() {
     // Note that this routine will produce different outputs on different StageL target platforms, and that's not a problem since that's what it's for.
-    return getSharedState('envPreferredFormat');
+    return await getSharedState('envPreferredFormat');
 }
 
 async function getEnvResolutionW() {
     // Result for this is either in pixels or characters. For immutableCharacterCells, it's just the number of columns available, defaulting to 80 if we can't tell, and says 1 line available. If it's -1, it's unlimited (probably this would only occur if explicitly configured as such).
-    return getSharedState('envResolutionW');
+    return await getSharedState('envResolutionW');
 }
 
 async function getEnvResolutionH() {
     // See getEnvResolutionW description.
-    return getSharedState('envResolutionH');
+    return await getSharedState('envResolutionH');
 }
 
 async function getEnvCharEncoding() {
-    return getSharedState('envCharEncoding');
+    return await getSharedState('envCharEncoding');
 }
 
 async function getEnvTerminalType() {
-    return getSharedState('envTerminalType');
+    return await getSharedState('envTerminalType');
 }
 
 async function getEnvLanguage() {
-    return getSharedState('envLanguage');
+    return await getSharedState('envLanguage');
 }
 
 async function getEnvCodeLanguage() {
-    return getSharedState('envCodeLanguage');
+    return await getSharedState('envCodeLanguage');
 }
 
 async function getEnvLocaleConfig() {
-    return getSharedState('envLocaleConfig');
+    return await getSharedState('envLocaleConfig');
 }
 
 async function renderDrawContents(renderBuffer) {
@@ -2075,15 +2094,15 @@ async function internalRequestRenderDrawHTMLToDOM(htmlString) {
 }
 
 async function getImportSettingsArr() {
-    await assertIsStrArray(getSharedState('importSettings'));
+    await assertIsStrArray(await getSharedState('importSettings'));
 
-    return getSharedState('importSettings');
+    return await getSharedState('importSettings');
 }
 
 async function getExportSettingsArr() {
-    await assertIsStrArray(getSharedState('exportSettings'));
+    await assertIsStrArray(await getSharedState('exportSettings'));
 
-    return getSharedState('exportSettings');
+    return await getSharedState('exportSettings');
 }
 
 async function setImportSettings(formatId, strNewSettings) {
@@ -2092,9 +2111,9 @@ async function setImportSettings(formatId, strNewSettings) {
     await implDebug('State change for import settings for '+formatId+' to '+strNewSettings+'.', 1);
 
     let temp;
-    temp=getSharedState('importSettings');
+    temp=await getSharedState('importSettings');
     temp[formatId]=strNewSettings;
-    setSharedState('importSettings', temp);
+    await setSharedState('importSettings', temp);
 }
 
 async function setExportSettings(formatId, strNewSettings) {
@@ -2103,9 +2122,9 @@ async function setExportSettings(formatId, strNewSettings) {
     await implDebug('State change for export settings for '+formatId+' to '+strNewSettings+'.', 1);
 
     let temp;
-    temp=getSharedState('exportSettings');
+    temp=await getSharedState('exportSettings');
     temp[formatId]=strNewSettings;
-    setSharedState('exportSettings', temp);
+    await setSharedState('exportSettings', temp);
 }
 
 async function setImportDeferredSettingsStack(newStack) {
@@ -2113,7 +2132,7 @@ async function setImportDeferredSettingsStack(newStack) {
 
     await implDebug('State change for import deferred settings stack to '+newStack+'.', 1);
 
-    setSharedState('strArrayImportDeferredSettingsStack', newStack);
+    await setSharedState('strArrayImportDeferredSettingsStack', newStack);
 }
 
 async function setExportDeferredSettings(newStack) {
@@ -2121,16 +2140,16 @@ async function setExportDeferredSettings(newStack) {
 
     await implDebug('State change for export deferred settings stack to '+newStack+'.', 1);
 
-    setSharedState('strArrayImportDeferredSettingsStack', newStack);
+    await setSharedState('strArrayImportDeferredSettingsStack', newStack);
 }
 
 async function setStorageSettings(strArrayNewSettings) {
     await assertIsStrArray(strArrayNewSettings);
-    setSharedState('strArrayStorageCfg', strArrayNewSettings);
+    await setSharedState('strArrayStorageCfg', strArrayNewSettings);
 }
 
 async function getStorageSettings(strArrayNewSettings) {
-    return getSharedState('strArrayStorageCfg');
+    return await getSharedState('strArrayStorageCfg');
 }
 
 /* type-tools, provides:
