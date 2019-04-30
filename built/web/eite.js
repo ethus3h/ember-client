@@ -420,9 +420,9 @@ async function eiteLibrarySetup() {
             });
         };
         implDebug('Defined eiteHostCall', 0);
-        console.log('Marijuana');
+        console.log('Setting internalDelegateStateRequests');
         await self.setSharedState('internalDelegateStateRequests', true);
-        console.log('Puff');
+        console.log('Set internalDelegateStateRequests');
         implDebug('Set internalDelegateStateRequests', 0);
     }
     implDebug('Done worker setup B (when it is running as worker)', 0);
@@ -436,11 +436,14 @@ async function eiteLibrarySetup() {
     implDebug('Done basic setup', 0);
 }
 
-async function getSharedState(name, iterCount) {
+async function getSharedState(name) {
+    console.log('Get shared state started for '+name);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        return await eiteHostCall('getSharedState', [name, iterCount + 1]);
+        console.log('Get shared state delegated for '+name);
+        return await eiteHostCall('getSharedState', [name]);
     }
     else {
+        console.log('Get shared state returning for '+name);
         return getWindowOrSelf()[name];
     }
 }
