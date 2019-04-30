@@ -261,7 +261,13 @@ async function eiteLibrarySetup() {
     await setSharedState('haveDom', false);
     await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
-    // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
+    await setSharedState('stagelDebugCallstack', []);
+    await setSharedState('stagelDebugCallNames', []);
+    await setSharedState('stagelDebugCallCounts', []);
+    await setSharedState('stagelDebugCollection', "");
+    //alert("Setting up logging");
+
+    // Next code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
     // To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
 
@@ -298,7 +304,7 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const args = message.data.args;
                 implDebug('Host understood message '+msgid+' from worker: '+args, 1);
-                internalDebugLogJSObject(message);
+                await internalDebugLogJSObject(message);
                 let res = await window[args[0]]( ...args[1] );
                 await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
@@ -309,7 +315,7 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-                internalDebugLogJSObject(message);
+                await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
                         implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
@@ -353,7 +359,7 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-            internalDebugLogJSObject(message);
+            await internalDebugLogJSObject(message);
             let res;
             try {
                 res = await self[args[0]]( ...args[1] );
@@ -372,7 +378,7 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             implDebug('Worker got message '+msgid+' from host: '+args, 1);
-            internalDebugLogJSObject(message);
+            await internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
                 self.internalOnMessage(message);
             }
@@ -409,6 +415,7 @@ async function eiteLibrarySetup() {
         };
         await self.setSharedState('internalDelegateStateRequests', true);
     }
+    //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
 }
 
