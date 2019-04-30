@@ -217,16 +217,23 @@ function eiteLibrarySetup() {
     setSharedState('librarySetupFinished', true);
 }
 
-function getSharedState(name) {
-    if (getSharedState('internalDelegateStateRequests') === true) {
-        return eiteHostCall('getSharedState')
+async function getSharedState(name) {
+    if (await getSharedState('internalDelegateStateRequests') === true) {
+        return await eiteHostCall('getSharedState', [name]);
     }
-    return getWindowOrSelf()[name];
+    else {
+        return getWindowOrSelf()[name];
+    }
 }
 
-function setSharedState(name, value) {
-    implDebug('State change for ' + name + ' to ' + value + ' (this message may be out of order).', 3);
-    getWindowOrSelf()[name] = value;
+async function setSharedState(name, value) {
+    if (await getSharedState('internalDelegateStateRequests') === true) {
+        return await eiteHostCall('getSharedState', [name, value]);
+    }
+    else {
+        await implDebug('State change for ' + name + ' to ' + value + '.', 3);
+        getWindowOrSelf()[name] = value;
+    }
 }
 
 async function isSetupFinished() {
