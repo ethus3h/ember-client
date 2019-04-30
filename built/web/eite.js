@@ -420,7 +420,9 @@ async function eiteLibrarySetup() {
             });
         };
         implDebug('Defined eiteHostCall', 0);
+        console.log('Marijuana');
         await self.setSharedState('internalDelegateStateRequests', true);
+        console.log('Puff');
         implDebug('Set internalDelegateStateRequests', 0);
     }
     implDebug('Done worker setup B (when it is running as worker)', 0);
