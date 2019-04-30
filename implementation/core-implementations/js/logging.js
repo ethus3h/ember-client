@@ -38,9 +38,7 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
-    console.log('Message log '+strMessage);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-    console.log('Message log delegated '+strMessage);
         await eiteHostCall('implLog', [strMessage]);
     }
     else {
