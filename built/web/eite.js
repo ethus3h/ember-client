@@ -464,7 +464,7 @@ async function setSharedState(name, value) {
     console.log(getWindowOrSelf()['internalDelegateStateRequests']);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         console.log('Cache hits 4 Jesus'+name+','+value);
-        return await eiteHostCall('getSharedState', [name, value]);
+        return await eiteHostCall('setSharedState', [name, value]);
     }
     else {
         await implDebug('State change for ' + name + ' to ' + value + '.', 3);
