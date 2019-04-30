@@ -114,7 +114,7 @@ async function eiteLibrarySetup() {
                 await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
             }
-            window.eiteWorker.onmessage = function(message) {
+            window.eiteWorker.onmessage = async function(message) {
                 // Handle messages sent to this code when it is not running as a Web worker
                 const uuid = message.data.uuid;
                 const msgid = message.data.msgid;
@@ -177,7 +177,7 @@ async function eiteLibrarySetup() {
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
         }
 
-        self.onmessage = function(message) {
+        self.onmessage = async function(message) {
             // Handle messages sent to this code when it is running as a Web worker
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
