@@ -449,6 +449,7 @@ async function setSharedState(name, value) {
     if (name==='internalDelegateStateRequests') {
         console.log('legalize'+value);
     }
+    console.log(await getSharedState('internalDelegateStateRequests'));
     if (await getSharedState('internalDelegateStateRequests') === true) {
         console.log('Cache hits 4 Jesus'+name+','+value);
         return await eiteHostCall('getSharedState', [name, value]);
