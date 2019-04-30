@@ -407,7 +407,7 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        self.await setSharedState('internalDelegateStateRequests', true);
+        await self.setSharedState('internalDelegateStateRequests', true);
     }
     await setSharedState('librarySetupFinished', true);
 }
