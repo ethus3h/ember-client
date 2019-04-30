@@ -459,15 +459,16 @@ await sleep(800);
 
 async function setSharedState(name, value) {
     if (name==='internalDelegateStateRequests') {
-        console.log('legalize'+value);
+        console.log('delegate state requests set to '+value);
     }
-    console.log(getWindowOrSelf()['internalDelegateStateRequests']);
+    console.log('Set shared state request received for: ' +name+' , ' +value+' , delegate?'+ getWindowOrSelf()['internalDelegateStateRequests']);
+    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        console.log('Cache hits 4 Jesus'+name+','+value);
+        console.log('Set shared state delegated for : '+name+','+value);
         return await eiteHostCall('setSharedState', [name, value]);
     }
     else {
-        await implDebug('State change for ' + name + ' to ' + value + '.', 3);
+        await implDebug('State change for ' + name + ' to ' + value + '.', 0);
         getWindowOrSelf()[name] = value;
     }
 }
