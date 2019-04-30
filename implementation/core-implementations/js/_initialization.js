@@ -2,69 +2,69 @@ eiteLibrarySetup(); // This function call should be the only code other than exp
 function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
-    if (getSharedState('STAGEL_DEBUG') === undefined) {
-        setSharedState('STAGEL_DEBUG', 1);
+    if (await getSharedState('STAGEL_DEBUG') === undefined) {
+        await setSharedState('STAGEL_DEBUG', 1);
     }
-    if (getSharedState('EITE_STORAGE_CFG') === undefined) {
-        setSharedState('EITE_STORAGE_CFG', []);
+    if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
+        await setSharedState('EITE_STORAGE_CFG', []);
     }
-    if (getSharedState('importSettings') === undefined) {
-        setSharedState('importSettings', []);
+    if (await getSharedState('importSettings') === undefined) {
+        await setSharedState('importSettings', []);
     }
-    if (getSharedState('exportSettings') === undefined) {
-        setSharedState('exportSettings', []);
+    if (await getSharedState('exportSettings') === undefined) {
+        await setSharedState('exportSettings', []);
     }
-    if (getSharedState('envPreferredFormat') === undefined) {
-        setSharedState('envPreferredFormat', '');
+    if (await getSharedState('envPreferredFormat') === undefined) {
+        await setSharedState('envPreferredFormat', '');
     }
-    if (getSharedState('envCharEncoding') === undefined) {
-        setSharedState('envCharEncoding', 'asciiSafeSubset');
+    if (await getSharedState('envCharEncoding') === undefined) {
+        await setSharedState('envCharEncoding', 'asciiSafeSubset');
     }
-    if (getSharedState('envTerminalType') === undefined) {
-        setSharedState('envTerminalType', 'vt100');
+    if (await getSharedState('envTerminalType') === undefined) {
+        await setSharedState('envTerminalType', 'vt100');
     }
-    if (getSharedState('envLanguage') === undefined) {
-        setSharedState('envLanguage', 'en-US');
+    if (await getSharedState('envLanguage') === undefined) {
+        await setSharedState('envLanguage', 'en-US');
     }
-    if (getSharedState('envLocaleConfig') === undefined) {
-        setSharedState('envLocaleConfig', 'inherit:usa,');
+    if (await getSharedState('envLocaleConfig') === undefined) {
+        await setSharedState('envLocaleConfig', 'inherit:usa,');
     }
-    if (getSharedState('envCodeLanguage') === undefined) {
-        setSharedState('envCodeLanguage', 'javascript');
+    if (await getSharedState('envCodeLanguage') === undefined) {
+        await setSharedState('envCodeLanguage', 'javascript');
     }
-    if (getSharedState('envResolutionW') === undefined) {
-        setSharedState('envResolutionW', '0');
+    if (await getSharedState('envResolutionW') === undefined) {
+        await setSharedState('envResolutionW', '0');
     }
-    if (getSharedState('envResolutionH') === undefined) {
-        setSharedState('envResolutionH', '0');
+    if (await getSharedState('envResolutionH') === undefined) {
+        await setSharedState('envResolutionH', '0');
     }
 
     // Shared state variables
-    setSharedState('datasets', []); // as
-    setSharedState('datasetsLoaded', false);
-    setSharedState('dcData', []); // an
-    setSharedState('strArrayDocumentExecData', []); // as: holds the current document state for any documents being executed.
-    setSharedState('strArrayDocumentExecSymbolIndex', []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
-    setSharedState('strArrayDocumentExecPtrs', []); // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
-    setSharedState('strArrayDocumentExecFrames', []); // as: holds strings of space-terminated integers representing Dcs to be rendered.
-    setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
-    setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
-    setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
-    setSharedState('librarySetupFinished', false);
-    setSharedState('setupFinished', false);
-    setSharedState('intPassedTests', 0);
-    setSharedState('intFailedTests', 0);
-    setSharedState('intTotalTests', 0);
-    setSharedState('intArrayTestFrameBuffer', []); // an
-    setSharedState('eiteWasmModule', undefined);
-    setSharedState('strArrayImportDeferredSettingsStack', []); // as
-    setSharedState('strArrayExportDeferredSettingsStack', []); // as
-    setSharedState('strArrayImportWarnings', []); // as
-    setSharedState('strArrayExportWarnings', []); // as
-    setSharedState('strArrayStorageCfg', []); // as
-    setSharedState('ipfsNode', undefined);
-    setSharedState('haveDom', false);
-    setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
+    await setSharedState('datasets', []); // as
+    await setSharedState('datasetsLoaded', false);
+    await setSharedState('dcData', []); // an
+    await setSharedState('strArrayDocumentExecData', []); // as: holds the current document state for any documents being executed.
+    await setSharedState('strArrayDocumentExecSymbolIndex', []); // as: holds a key-value-pair list of symbols for each doc. Example string that could go in this: "25 1 0 1 :129,5 1 3 278 :343," indicates that the document it goes with contains two symbols: the first is named 25 1 0 1 (which is Dcs) and is located at strArrayDocumentExecData[129], and the second is named 5 1 3 278 and is located at strArrayDocumentExecData[343]. Symbols get stuck onto the end of the currently executing document's data and their positions recorded in this index.
+    await setSharedState('strArrayDocumentExecPtrs', []); // as: holds the current execution state of each document as a comma-separated list of ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). When the document finishes executing (the pointer runs off the end of the document), the pointer position is set to -1. (not implemented)
+    await setSharedState('strArrayDocumentExecFrames', []); // as: holds strings of space-terminated integers representing Dcs to be rendered.
+    await setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
+    await setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
+    await setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
+    await setSharedState('librarySetupFinished', false);
+    await setSharedState('setupFinished', false);
+    await setSharedState('intPassedTests', 0);
+    await setSharedState('intFailedTests', 0);
+    await setSharedState('intTotalTests', 0);
+    await setSharedState('intArrayTestFrameBuffer', []); // an
+    await setSharedState('eiteWasmModule', undefined);
+    await setSharedState('strArrayImportDeferredSettingsStack', []); // as
+    await setSharedState('strArrayExportDeferredSettingsStack', []); // as
+    await setSharedState('strArrayImportWarnings', []); // as
+    await setSharedState('strArrayExportWarnings', []); // as
+    await setSharedState('strArrayStorageCfg', []); // as
+    await setSharedState('ipfsNode', undefined);
+    await setSharedState('haveDom', false);
+    await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
     // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
@@ -212,12 +212,12 @@ function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        self.setSharedState('internalDelegateStateRequests', true);
+        self.await setSharedState('internalDelegateStateRequests', true);
     }
-    setSharedState('librarySetupFinished', true);
+    await setSharedState('librarySetupFinished', true);
 }
 
-async function getSharedState(name) {
+async function await getSharedState(name) {
     if (await getSharedState('internalDelegateStateRequests') === true) {
         return await eiteHostCall('getSharedState', [name]);
     }
@@ -226,7 +226,7 @@ async function getSharedState(name) {
     }
 }
 
-async function setSharedState(name, value) {
+async function await setSharedState(name, value) {
     if (await getSharedState('internalDelegateStateRequests') === true) {
         return await eiteHostCall('getSharedState', [name, value]);
     }
@@ -237,14 +237,14 @@ async function setSharedState(name, value) {
 }
 
 async function isSetupFinished() {
-    return getSharedState('setupFinished');
+    return await getSharedState('setupFinished');
 }
 
 async function setupIfNeeded() {
-    if (getSharedState('librarySetupFinished') !== 'true') {
+    if (await getSharedState('librarySetupFinished') !== 'true') {
         await eiteLibrarySetup();
     }
-    if (getSharedState('setupFinished')) {
+    if (await getSharedState('setupFinished')) {
         return;
     }
     await internalSetup();
@@ -260,41 +260,41 @@ async function internalSetup() {
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
     if (await eiteHostCall('internalEiteReqTypeofWindow') !== 'undefined') {
-        setSharedState('haveDom', true);
+        await setSharedState('haveDom', true);
     }
     let charset = await eiteHostCall('internalEiteReqCharset');
     if (charset === 'utf-8') {
-        setSharedState('envCharEncoding', 'utf8');
+        await setSharedState('envCharEncoding', 'utf8');
     }
     else {
         await implWarn("Unimplemented character set: " + charset + ". Falling back to asciiSafeSubset.");
     }
-    if (getSharedState('haveDom')) {
+    if (await getSharedState('haveDom')) {
         // Web browsers, etc.
-        setSharedState('envPreferredFormat', 'htmlFragment');
-        setSharedState('envResolutionW', await eiteHostCall('internalEiteReqOutputWidth'));
-        setSharedState('envResolutionH', await eiteHostCall('internalEiteReqOutputHeight'));
+        await setSharedState('envPreferredFormat', 'htmlFragment');
+        await setSharedState('envResolutionW', await eiteHostCall('internalEiteReqOutputWidth'));
+        await setSharedState('envResolutionH', await eiteHostCall('internalEiteReqOutputHeight'));
     }
     else {
         // Command-line, e.g. Node.js
-        setSharedState('envPreferredFormat', 'characterCells');
-        setSharedState('envResolutionW', process.stdout.columns);
-        setSharedState('envResolutionH', process.stdout.rows);
-        if (getSharedState('envResolutionW') === 0 || getSharedState('envResolutionH') === 0 || getSharedState('envResolutionW') === undefined || getSharedState('envResolutionH') === undefined) {
-            setSharedState('envPreferredFormat', 'immutableCharacterCells');
+        await setSharedState('envPreferredFormat', 'characterCells');
+        await setSharedState('envResolutionW', process.stdout.columns);
+        await setSharedState('envResolutionH', process.stdout.rows);
+        if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
+            await setSharedState('envPreferredFormat', 'immutableCharacterCells');
             // Maybe it's headless, or going to a text file or something? Not tested, but let's just assume we've got 80 columns to work with, and set the height to 1 so apps don't try to draw text-mode GUIs and stuff maybe.
-            setSharedState('envResolutionW', 80);
-            setSharedState('envResolutionH', 1);
+            await setSharedState('envResolutionW', 80);
+            await setSharedState('envResolutionH', 1);
         }
     }
-    if (getSharedState('envResolutionW') === 0 || getSharedState('envResolutionH') === 0 || getSharedState('envResolutionW') === undefined || getSharedState('envResolutionH') === undefined) {
-        await implWarn('The resolution detected was zero in at least one dimension. Width = '+getSharedState('envResolutionW')+'; height = '+getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
+    if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
+        await implWarn('The resolution detected was zero in at least one dimension. Width = '+await getSharedState('envResolutionW')+'; height = '+await getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
 
     // Set up data sets.
 
-    setSharedState('datasets', await listDcDatasets());
-    if (!getSharedState('datasetsLoaded')) {
+    await setSharedState('datasets', await listDcDatasets());
+    if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
     }
 
@@ -302,29 +302,29 @@ async function internalSetup() {
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
-        if (getSharedState('importSettings')[settingsCounter] === undefined) {
-            tempSettings = getSharedState('importSettings');
+        if (await getSharedState('importSettings')[settingsCounter] === undefined) {
+            tempSettings = await getSharedState('importSettings');
             tempSettings[settingsCounter] = '';
-            setSharedState('importSettings', tempSettings);
+            await setSharedState('importSettings', tempSettings);
             tempSettings = [];
         }
     }
     settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
-            tempSettings = getSharedState('exportSettings');
+            tempSettings = await getSharedState('exportSettings');
             tempSettings[settingsCounter] = '';
-            setSharedState('exportSettings', tempSettings);
+            await setSharedState('exportSettings', tempSettings);
         }
     }
 
     // Set up storage
 
-    await storageSetup(getSharedState('EITE_STORAGE_CFG'));
+    await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
 
     // Other startup stuff.
 
-    if (getSharedState('haveDom')) {
+    if (await getSharedState('haveDom')) {
         // Override error reporting method to show alert
 
         registerSpeedup('implError', async function (strMessage) {
@@ -361,18 +361,18 @@ async function internalSetup() {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
             }
             else {
-                if (2 <= getSharedState('STAGEL_DEBUG') && 3 > getSharedState('STAGEL_DEBUG')) {
+                if (2 <= await getSharedState('STAGEL_DEBUG') && 3 > await getSharedState('STAGEL_DEBUG')) {
                     await console.log("(Previous message sent from non-StageL code.)");
                     await console.trace();
                 }
             }
-            if (3 <= getSharedState('STAGEL_DEBUG')) {
+            if (3 <= await getSharedState('STAGEL_DEBUG')) {
                 await console.trace();
             }
         });
     }
 
-    setSharedState('setupFinished', true);
+    await setSharedState('setupFinished', true);
 }
 
 function getWindowOrSelf() {
@@ -445,7 +445,7 @@ async function internalEiteReqWasmLoad(path) {
         }
     };
     let wasmData=await eiteHostCall('internalEiteReqWat2Wabt', [await getFileFromPath(path)]);
-    setSharedState('eiteWasmModule', await WebAssembly.instantiate(wasmData, importObject));
+    await setSharedState('eiteWasmModule', await WebAssembly.instantiate(wasmData, importObject));
 }
 
 async function internalEiteReqTypeofWindow() {
@@ -484,11 +484,11 @@ async function internalLoadDatasets() {
     let temp;
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
-        temp=getSharedState('dcData');
+        temp=await getSharedState('dcData');
         temp[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         temp[dataset] = await eiteHostCall('internalEiteReqLoadDataset', [dataset]);
-        setSharedState('dcData', temp);
+        await setSharedState('dcData', temp);
         count = count + 1;
     }
     datasetsLoaded = true;

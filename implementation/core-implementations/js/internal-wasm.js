@@ -1,7 +1,7 @@
 // Eventually the WASM stuff should all be available in pure StageL (+ getFileFromPath to load it), and this file's contents used only as speedups.
 
 async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
-    let func=getWindowOrSelf().eiteWasmModule.instance.exports[strRoutine];
+    let func=await getSharedState('eiteWasmModule').instance.exports[strRoutine];
     let eiteWasmMemory;
     if (giVal === null) {
         return func();
@@ -12,8 +12,8 @@ async function internalEiteReqWasmCall(strRoutine, giVal, returnsArray=false) {
     else {
         // Either it returns an array, it has an array argument, or both.
         // If it accepts an array as a parameter, it takes int* arr, int size as its parameters.
-        if (typeof getWindowOrSelf().eiteWasmModule.instance.exports['memory'] !== 'undefined') {
-            eiteWasmMemory=getWindowOrSelf().eiteWasmModule.instance.exports['memory'];
+        if (typeof await getSharedState('eiteWasmModule').instance.exports['memory'] !== 'undefined') {
+            eiteWasmMemory=await getSharedState('eiteWasmModule').instance.exports['memory'];
         }
     }
 }

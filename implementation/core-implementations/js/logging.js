@@ -7,10 +7,10 @@
     FIXMEUnimplemented
 */
 
-setSharedState('stagelDebugCallstack', []);
-setSharedState('stagelDebugCallNames', []);
-setSharedState('stagelDebugCallCounts', []);
-setSharedState('stagelDebugCollection', "");
+await setSharedState('stagelDebugCallstack', []);
+await setSharedState('stagelDebugCallNames', []);
+await setSharedState('stagelDebugCallCounts', []);
+await setSharedState('stagelDebugCollection', "");
 //alert("Setting up logging");
 
 async function implDie(strMessage) {
@@ -50,7 +50,7 @@ async function implLog(strMessage) {
     await assertIsStr(strMessage);
     // Log the provided message
     await console.log(strMessage);
-    if(await Object.keys(getSharedState('stagelDebugCallstack')).length > 0) {
+    if(await Object.keys(await getSharedState('stagelDebugCallstack')).length > 0) {
         await console.log("Previous message sent at: " + await internalDebugPrintStack());
     }
     else {
@@ -101,14 +101,14 @@ async function internalDebugQuiet(strMessage, intLevel) {
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    setSharedState('stagelDebugCollection', getSharedState('stagelDebugCollection') + strMessageFragment);
+    await setSharedState('stagelDebugCollection', await getSharedState('stagelDebugCollection') + strMessageFragment);
 }
 
 async function internalDebugFlush() {
     /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
-    temp = getSharedState('stagelDebugCollection');
-    setSharedState('stagelDebugCollection', "");
+    temp = await getSharedState('stagelDebugCollection');
+    await setSharedState('stagelDebugCollection', "");
     return temp;
 }
 
@@ -119,26 +119,26 @@ async function internalDebugStackEnter(strBlockName) {
 
     let tempCounts;
 
-    if (getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
+    if (await getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
         let tempNames;
-        tempNames=getSharedState('stagelDebugCallNames');
+        tempNames=await getSharedState('stagelDebugCallNames');
         tempNames.push(strBlockName);
-        setSharedState('stagelDebugCallNames', tempNames);
-        tempCounts=getSharedState('stagelDebugCallCounts');
-        tempCounts[getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
-        setSharedState('stagelDebugCallCounts', tempCounts);
+        await setSharedState('stagelDebugCallNames', tempNames);
+        tempCounts=await getSharedState('stagelDebugCallCounts');
+        tempCounts[await getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
+        await setSharedState('stagelDebugCallCounts', tempCounts);
     }
 
     let ind;
-    ind = getSharedState('stagelDebugCallNames').indexOf(strBlockName);
-    tempCounts=getSharedState('stagelDebugCallCounts');
+    ind = await getSharedState('stagelDebugCallNames').indexOf(strBlockName);
+    tempCounts=await getSharedState('stagelDebugCallCounts');
     tempCounts[ind] = tempCounts[ind] + 1;
-    setSharedState('stagelDebugCallCounts', tempCounts);
+    await setSharedState('stagelDebugCallCounts', tempCounts);
 
     let temp;
-    temp=getSharedState('stagelDebugCallstack');
+    temp=await getSharedState('stagelDebugCallstack');
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
-    setSharedState('stagelDebugCallstack', temp);
+    await setSharedState('stagelDebugCallstack', temp);
 
     if (2 <= STAGEL_DEBUG) {
         let callstackLevel=stagelDebugCallstack.length;
@@ -154,34 +154,34 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + await getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
     }
 }
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
+    if (await await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
     let temp;
-    temp=getSharedState('stagelDebugCallstack');
+    temp=await getSharedState('stagelDebugCallstack');
     await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
-    setSharedState('stagelDebugCallstack', temp);
+    await setSharedState('stagelDebugCallstack', temp);
 }
 
 async function internalDebugPrintHotspots() {
     let n = 0;
-    n = getSharedState('stagelDebugCallNames').length;
+    n = await getSharedState('stagelDebugCallNames').length;
     let i = 0;
     if (n === 0) {
         console.log('No routine calls have been logged.');
     }
     while (i < n){
-        console.log(getSharedState('stagelDebugCallNames')[i] + ' was called ' + getSharedState('stagelDebugCallCounts')[i] + ' times.');
+        console.log(await getSharedState('stagelDebugCallNames')[i] + ' was called ' + await getSharedState('stagelDebugCallCounts')[i] + ' times.');
         i = i + 1;
     }
     let sum = 0;
-    sum = getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
+    sum = await getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
     console.log('Total function calls: ' + sum);
@@ -189,7 +189,7 @@ async function internalDebugPrintHotspots() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(getSharedState('stagelDebugCallstack')).length - 1;
+    i = await Object.keys(await getSharedState('stagelDebugCallstack')).length - 1;
     let result="";
     let arrow=" < "
     while (i>=0) {
@@ -197,7 +197,7 @@ async function internalDebugPrintStack() {
         if (i==0) {
             arrow=""
         }
-        result = result + getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
+        result = result + await getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
         i = i - 1;
     }
     return result;
