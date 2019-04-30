@@ -197,6 +197,7 @@ eiteLibrarySetup(); // This function call should be the only code other than exp
 async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
+    implDebug('Starting setup', 0);
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
         await setSharedState('STAGEL_DEBUG', 0);
         await setSharedState('STAGEL_DEBUG_UNSET', true);
@@ -234,6 +235,7 @@ async function eiteLibrarySetup() {
     if (await getSharedState('envResolutionH') === undefined) {
         await setSharedState('envResolutionH', '0');
     }
+    implDebug('Starting setup 2', 0);
 
     // Shared state variables
     await setSharedState('datasets', []); // as
@@ -267,6 +269,7 @@ async function eiteLibrarySetup() {
     await setSharedState('stagelDebugCallCounts', []);
     await setSharedState('stagelDebugCollection', "");
     //alert("Setting up logging");
+    implDebug('Done variables', 0);
 
     // Next code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
@@ -351,6 +354,7 @@ async function eiteLibrarySetup() {
         }
         self.eiteHostCall = self.eiteCall;
     }
+    implDebug('Done worker setup A', 0);
 
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
         // Running as a Web worker, so set up accordingly
@@ -416,6 +420,7 @@ async function eiteLibrarySetup() {
         };
         await self.setSharedState('internalDelegateStateRequests', true);
     }
+    implDebug('Done worker setup B', 0);
     //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
@@ -423,6 +428,7 @@ async function eiteLibrarySetup() {
             await setSharedState('STAGEL_DEBUG', 1);
         }
     }
+    implDebug('Done basic setup', 0);
 }
 
 async function getSharedState(name) {
@@ -462,8 +468,10 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components. Functions provided by them are available with await wasmCall('functionName', argument), where argument is an int or an array of ints.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
+    implDebug('Starting internal setup', 0);
     await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/eite-c-exts.c.wat']);
 
+    implDebug('Done WASM setup', 0);
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
@@ -498,6 +506,7 @@ async function internalSetup() {
     if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
         await implWarn('The resolution detected was zero in at least one dimension. Width = '+await getSharedState('envResolutionW')+'; height = '+await getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
+    implDebug('Done environment setup', 0);
 
     // Set up data sets.
 
@@ -505,6 +514,7 @@ async function internalSetup() {
     if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
     }
+    implDebug('Loaded datasets', 0);
 
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
@@ -525,10 +535,12 @@ async function internalSetup() {
             await setSharedState('exportSettings', tempSettings);
         }
     }
+    implDebug('Done preparing format settings arrays', 0);
 
     // Set up storage
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
+    implDebug('Done storage setup', 0);
 
     // Other startup stuff.
 
@@ -579,6 +591,7 @@ async function internalSetup() {
             }
         });
     }
+    implDebug('Done internal setup', 0);
 
     await setSharedState('setupFinished', true);
 }
