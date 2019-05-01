@@ -1393,7 +1393,7 @@ async function internalDebugStackExit() {
     }
     tempStack=await getSharedState('stagelDebugCallstack');
     await internalDebugQuiet("Exited block: " + await tempStack.pop(), 3);
-    await setSharedState('stagelDebugCallstack', temp);
+    await setSharedState('stagelDebugCallstack', tempStack);
 }
 
 async function internalDebugPrintHotspots() {

@@ -165,13 +165,14 @@ async function internalDebugStackEnter(strBlockName) {
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
+    let tempStack;
+    tempStack=await getSharedState('stagelDebugCallstack');
+    if (tempStack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
-    let temp;
-    temp=await getSharedState('stagelDebugCallstack');
-    await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
-    await setSharedState('stagelDebugCallstack', temp);
+    tempStack=await getSharedState('stagelDebugCallstack');
+    await internalDebugQuiet("Exited block: " + await tempStack.pop(), 3);
+    await setSharedState('stagelDebugCallstack', tempStack);
 }
 
 async function internalDebugPrintHotspots() {
