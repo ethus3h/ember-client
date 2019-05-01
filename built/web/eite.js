@@ -466,7 +466,7 @@ async function setSharedState(name, value) {
         return await eiteHostCall('setSharedState', [name, value]);
     }
     else {
-        await implDebug('State change for ' + name + ' to ' + value + '.', 0);
+        //await implDebug('State change for ' + name + ' to ' + value + '.', 0);
         getWindowOrSelf()[name] = value;
     }
 }
