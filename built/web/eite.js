@@ -198,7 +198,7 @@ async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
-        await setSharedState('STAGEL_DEBUG', 1);
+        await setSharedState('STAGEL_DEBUG', 0);
         await setSharedState('STAGEL_DEBUG_UNSET', true);
     }
     if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
@@ -287,7 +287,8 @@ async function eiteLibrarySetup() {
             window.eiteWorker = new Worker('eite.js');
             window.eiteWorkerResolveCallbacks = {};
             window.eiteWorkerCallID = 0;
-            window.eiteCall = async function(funcName, args) {
+            // no need to declare it async when it explicitly returns a promise
+            window.eiteCall = function(funcName, args) {
                 if (args === undefined) {
                     args=[];
                 }
@@ -402,7 +403,8 @@ async function eiteLibrarySetup() {
 
         self.eiteWorkerHostResolveCallbacks = {};
         self.eiteWorkerHostCallID = 0;
-        self.eiteHostCall = async function(funcName, args) {
+        // no need to declare it async when it explicitly returns a promise
+        self.eiteHostCall = function(funcName, args) {
             if (args === undefined) {
                 args=[];
             }
@@ -414,14 +416,19 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        //getWindowOrSelf()['internalDelegateStateRequests'] = true;
+        //getWindowOrSelf()['internalDelegateStateRequests'] = true; // This would make the host and worker use the same shared state. That breaks things though, so don't. Still, it's interesting to have support in the code for it, just as reference to show that it can be done even without SharedArrayBuffer. (not exactly groundbreaking, I know, but whatever, it's only a couple of extra lines to leave the delegated requests support in)
     }
     await setSharedState('librarySetupFinished', true);
-    if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
+    /*if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
         if (await getSharedState('STAGEL_DEBUG') === 0) {
             await setSharedState('STAGEL_DEBUG', 1);
         }
-    }
+    }*/
+}
+
+function internalSleep(ms) {
+    // from https://web.archive.org/web/20190111230631/https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function getSharedState(name) {
@@ -499,6 +506,7 @@ async function internalSetup() {
     }
 
     // Set up data sets.
+
     await setSharedState('datasets', await listDcDatasets());
     if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
@@ -523,6 +531,7 @@ async function internalSetup() {
             await setSharedState('exportSettings', tempSettings);
         }
     }
+
     // Set up storage
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
@@ -576,7 +585,6 @@ async function internalSetup() {
             }
         });
     }
-console.log('auau');
 
     await setSharedState('setupFinished', true);
 }
@@ -695,8 +703,6 @@ async function internalLoadDatasets() {
         temp[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         temp[dataset] = await eiteHostCall('internalEiteReqLoadDataset', [dataset]);
-        console.log(temp);
-        console.log('BUBUBUBBUBUBUBBUBU');
         await setSharedState('dcData', temp);
         count = count + 1;
     }
