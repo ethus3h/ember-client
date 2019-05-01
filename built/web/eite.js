@@ -1535,9 +1535,11 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
+    console.log(',e');
     if ((await getSharedState('dcData'))[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
+    console.log(',u');
 
     // Add 1 to account for header row
     rowNum = rowNum + 1;
@@ -1549,6 +1551,7 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     else {
         strReturn = (await getSharedState('dcData'))[dataset][rowNum][fieldNum];
     }
+    console.log(',f');
     await assertIsStr(strReturn); return strReturn;
 }
 
