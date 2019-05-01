@@ -1335,7 +1335,8 @@ async function implDebug(strMessage, intLevel) {
     // Log the provided message
 
     if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
-        await implLog(strMessage);
+        console.log('Would have called implLog '+strMessage);
+        //await implLog(strMessage);
     }
 }
 
