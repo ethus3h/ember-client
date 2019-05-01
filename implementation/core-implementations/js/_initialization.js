@@ -219,7 +219,7 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        await self.setSharedState('internalDelegateStateRequests', true);
+        getWindowOrSelf()['internalDelegateStateRequests'] = true;
     }
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {

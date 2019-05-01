@@ -444,6 +444,7 @@ async function getSharedState(name) {
 }
 
 async function setSharedState(name, value) {
+    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         await eiteHostCall('setSharedState', [name, value]);
     }
