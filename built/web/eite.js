@@ -198,7 +198,7 @@ async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
-        await setSharedState('STAGEL_DEBUG', 1);
+        await setSharedState('STAGEL_DEBUG', 0);
         await setSharedState('STAGEL_DEBUG_UNSET', true);
     }
     if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
@@ -316,9 +316,6 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-                if(msgid > 80) {
-                    await implDie('died too many messages from worker');
-                }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
@@ -363,9 +360,6 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-            if(msgid > 80) {
-                await implDie('died too many messages from host');
-            }
             await internalDebugLogJSObject(message);
             let res;
             try {
@@ -420,11 +414,8 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        await implDebug('Web wokrer is about to begin delegating requests', 0);
-        await self.setSharedState('internalDelegateStateRequests', true);
-        await implDebug('Just finished setting up Web Workers', 0);
+        getWindowOrSelf()['internalDelegateStateRequests'] = true;
     }
-    await implDebug('Just finished setting up Library', 0);
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
         if (await getSharedState('STAGEL_DEBUG') === 0) {
@@ -434,7 +425,6 @@ async function eiteLibrarySetup() {
 }
 
 async function getSharedState(name) {
-    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         return await eiteHostCall('getSharedState', [name]);
     }
@@ -444,7 +434,6 @@ async function getSharedState(name) {
 }
 
 async function setSharedState(name, value) {
-    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         await eiteHostCall('setSharedState', [name, value]);
     }
