@@ -505,7 +505,6 @@ async function internalSetup() {
     }
 
     // Fill out format settings arrays in case they aren't yet
-    console.log('ok');
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
@@ -524,6 +523,7 @@ async function internalSetup() {
             await setSharedState('exportSettings', tempSettings);
         }
     }
+    console.log('ok');
 
     // Set up storage
 
