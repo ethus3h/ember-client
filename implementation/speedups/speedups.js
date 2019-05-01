@@ -20,6 +20,7 @@ registerSpeedup('assertIsDc', async function (v) {
 });
 
 registerSpeedup('assertIsDcDataset', async function (str) {
+    console.log('BUBUBUBUBUB');
     if ((await getSharedData('datasets')).includes(str)) {
         return;
     }
