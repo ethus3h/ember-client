@@ -201,7 +201,7 @@ async function eiteLibrarySetup() {
         await setSharedState('librarySetupStarted', true);
         await setSharedState('librarySetupFinished', false);
         if (await getSharedState('STAGEL_DEBUG') === undefined) {
-            await setSharedState('STAGEL_DEBUG', 2);
+            await setSharedState('STAGEL_DEBUG', 0);
             await setSharedState('STAGEL_DEBUG_UNSET', true);
         }
         if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
