@@ -501,10 +501,10 @@ async function internalSetup() {
     // Set up data sets.
     await setSharedState('datasets', await listDcDatasets());
     if (!await getSharedState('datasetsLoaded')) {
+console.log('bbbb');
         await internalLoadDatasets();
     }
 
-console.log('bbbb');
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
