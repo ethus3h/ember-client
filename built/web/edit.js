@@ -6,9 +6,8 @@ window.onload = function() {
         window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
-        console.log('ok');
-        window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
-        let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+        window.dcNames=await eiteCall('dcGetColumn', ['dcData', 1]);
+        let datasetLength=await eiteCall('dcDatasetLength', ['dcData']);
         await handleSearchResultUpdate();
         //console.log(window.dcNames);
         // Attach event listeners to elements
@@ -129,7 +128,7 @@ async function handleSearchResultUpdate() {
         re=new RegExp(searchQuery, 'i');
         document.getElementById('dcsShowAllButton').style.display='block';
     }
-    let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+    let datasetLength=await eiteCall('dcDatasetLength', ['dcData']);
     Array.from(document.getElementsByClassName('dcInsertButton')).forEach(function(e) {
         e.remove();
     });
