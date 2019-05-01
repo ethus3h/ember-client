@@ -524,7 +524,7 @@ async function internalSetup() {
             await setSharedState('exportSettings', tempSettings);
         }
     }
-
+console.log('bububub');
     // Set up storage
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
