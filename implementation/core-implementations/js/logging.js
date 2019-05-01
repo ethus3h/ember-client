@@ -123,20 +123,19 @@ async function internalDebugStackEnter(strBlockName) {
     let tempCounts;
 
     let tempNames = await getSharedState('stagelDebugCallNames');
-    if (tempNames !== undefined) {
-        tempNames = [];
-    }
     if (tempNames.indexOf(strBlockName) < 0) {
         tempNames=await getSharedState('stagelDebugCallNames');
         tempNames.push(strBlockName);
         await setSharedState('stagelDebugCallNames', tempNames);
+        tempNames=await getSharedState('stagelDebugCallNames');
         tempCounts=await getSharedState('stagelDebugCallCounts');
-        tempCounts[await getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
+        tempCounts[tempNames.indexOf(strBlockName)] = 0;
         await setSharedState('stagelDebugCallCounts', tempCounts);
     }
 
     let ind;
-    ind = await getSharedState('stagelDebugCallNames').indexOf(strBlockName);
+    tempNames=await getSharedState('stagelDebugCallNames');
+    ind = tempNames.indexOf(strBlockName);
     tempCounts=await getSharedState('stagelDebugCallCounts');
     tempCounts[ind] = tempCounts[ind] + 1;
     await setSharedState('stagelDebugCallCounts', tempCounts);
