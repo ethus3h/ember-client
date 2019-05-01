@@ -198,7 +198,7 @@ async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
-        await setSharedState('STAGEL_DEBUG', 0);
+        await setSharedState('STAGEL_DEBUG', 1);
         await setSharedState('STAGEL_DEBUG_UNSET', true);
     }
     if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
