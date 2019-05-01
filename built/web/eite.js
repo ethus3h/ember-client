@@ -499,6 +499,7 @@ async function internalSetup() {
     }
 
     // Set up data sets.
+
     await setSharedState('datasets', await listDcDatasets());
     if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
@@ -507,7 +508,6 @@ async function internalSetup() {
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
-    console.log('ok');
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (await getSharedState('importSettings')[settingsCounter] === undefined) {
             tempSettings = await getSharedState('importSettings');
@@ -1532,15 +1532,12 @@ async function dcDatasetLength(dataset) {
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
-    console.log(',8'+dataset+':'+await isDcDataset('formats'));console.log('ewubrubecu');
-    await assertIsDcDataset(dataset); console.log(',9');await assertIsInt(rowNum); console.log(',10');await assertIsInt(fieldNum);console.log(',11'); let strReturn;
+    await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
-    console.log(',e');
     if ((await getSharedState('dcData'))[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
-    console.log(',u');
 
     // Add 1 to account for header row
     rowNum = rowNum + 1;
@@ -1552,7 +1549,6 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     else {
         strReturn = (await getSharedState('dcData'))[dataset][rowNum][fieldNum];
     }
-    console.log(',f');
     await assertIsStr(strReturn); return strReturn;
 }
 
@@ -4667,9 +4663,7 @@ async function dcGetColumn(strDataset, intColumn) {
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
     while (await implLt(intI, intCount)) {
-    console.log(',ubmua');
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
-    console.log(',ubmue');
         intI = await implAdd(intI, 1);
     }
 
@@ -6568,8 +6562,6 @@ async function assertIsDcArray(genericItemIn) {
 }
 
 async function assertIsDcDataset(strIn) {
-console.log('B:CGUEBLCGIBCOGEPICRO');
-    await setSharedState('STAGEL_DEBUG',3);
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsDcDataset:assertions'); await assertIsStr(strIn);
 
     await assertIsTrue(await isDcDataset(strIn));
@@ -7707,7 +7699,6 @@ registerSpeedup('assertIsDc', async function (v) {
 });
 
 registerSpeedup('assertIsDcDataset', async function (str) {
-    console.log('BUBUBUBUBUB');
     if ((await getSharedState('datasets')).includes(str)) {
         return;
     }

@@ -414,7 +414,7 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        await self.setSharedState('internalDelegateStateRequests', true);
+        getWindowOrSelf()['internalDelegateStateRequests'] = true;
     }
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
@@ -435,7 +435,7 @@ async function getSharedState(name) {
 
 async function setSharedState(name, value) {
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        return await eiteHostCall('setSharedState', [name, value]);
+        await eiteHostCall('setSharedState', [name, value]);
     }
     else {
         await implDebug('State change for ' + name + ' to ' + value + '.', 3);
@@ -689,6 +689,7 @@ async function internalLoadDatasets() {
     let count = 0;
     let dataset = '';
     let temp;
+    let datasets=await getSharedState('datasets');
     while (count < Object.keys(datasets).length) {
         dataset = datasets[count];
         temp=await getSharedState('dcData');
@@ -1259,33 +1260,30 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
-    if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        await eiteHostCall('implLog', [strMessage]);
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
     }
-    else {
-        if(typeof strMessage !== "string") {
-            throw "Nonstring error message";
-        }
-        await assertIsStr(strMessage);
-        // Log the provided message
-        await console.log(strMessage);
-        let temp=await getSharedState('stagelDebugCallstack');
-        if(temp !== undefined) {
-            if(await Object.keys(temp).length > 0) {
-                await console.log("Previous message sent at: " + await internalDebugPrintStack());
-            }
-            else {
-                // use getWindowOrSelf instead of getSharedState to avoid recursion
-                if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
-                    await console.log("(Previous message sent from non-StageL code.)");
-                }
-            }
+    await assertIsStr(strMessage);
+    // Log the provided message
+    await console.log(strMessage);
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    let temp=getWindowOrSelf()['stagelDebugCallstack'];
+    if(temp !== undefined) {
+        if(await Object.keys(temp).length > 0) {
+            await console.log("Previous message sent at: " + await internalDebugPrintStack());
         }
         else {
-            console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
+            // use getWindowOrSelf instead of getSharedState to avoid recursion
+            if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
+                await console.log("(Previous message sent from non-StageL code.)");
+            }
         }
     }
+    else {
+        console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
+    }
 }
+
 async function implDebug(strMessage, intLevel) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
@@ -1346,18 +1344,20 @@ async function internalDebugStackEnter(strBlockName) {
 
     let tempCounts;
 
-    if (await getSharedState('stagelDebugCallNames').indexOf(strBlockName) < 0) {
-        let tempNames;
+    let tempNames = await getSharedState('stagelDebugCallNames');
+    if (tempNames.indexOf(strBlockName) < 0) {
         tempNames=await getSharedState('stagelDebugCallNames');
         tempNames.push(strBlockName);
         await setSharedState('stagelDebugCallNames', tempNames);
+        tempNames=await getSharedState('stagelDebugCallNames');
         tempCounts=await getSharedState('stagelDebugCallCounts');
-        tempCounts[await getSharedState('stagelDebugCallNames').indexOf(strBlockName)] = 0;
+        tempCounts[tempNames.indexOf(strBlockName)] = 0;
         await setSharedState('stagelDebugCallCounts', tempCounts);
     }
 
     let ind;
-    ind = await getSharedState('stagelDebugCallNames').indexOf(strBlockName);
+    tempNames=await getSharedState('stagelDebugCallNames');
+    ind = tempNames.indexOf(strBlockName);
     tempCounts=await getSharedState('stagelDebugCallCounts');
     tempCounts[ind] = tempCounts[ind] + 1;
     await setSharedState('stagelDebugCallCounts', tempCounts);
@@ -1387,13 +1387,14 @@ async function internalDebugStackEnter(strBlockName) {
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
+    let tempStack;
+    tempStack=await getSharedState('stagelDebugCallstack');
+    if (tempStack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
-    let temp;
-    temp=await getSharedState('stagelDebugCallstack');
-    await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
-    await setSharedState('stagelDebugCallstack', temp);
+    tempStack=await getSharedState('stagelDebugCallstack');
+    await internalDebugQuiet("Exited block: " + await tempStack.pop(), 3);
+    await setSharedState('stagelDebugCallstack', tempStack);
 }
 
 async function internalDebugPrintHotspots() {
@@ -1416,7 +1417,8 @@ async function internalDebugPrintHotspots() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(await getSharedState('stagelDebugCallstack')).length - 1;
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    i = await Object.keys(getWindowOrSelf()['stagelDebugCallstack']).length - 1;
     let result="";
     let arrow=" < "
     while (i>=0) {
@@ -1424,14 +1426,14 @@ async function internalDebugPrintStack() {
         if (i==0) {
             arrow=""
         }
-        result = result + await getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
+        result = result + getWindowOrSelf()['stagelDebugCallstack'].slice(i)[0] + arrow;
         i = i - 1;
     }
     return result;
 }
 
 async function internalDebugLogJSObject(obj) {
-    if (1 <= await getSharedState('STAGEL_DEBUG')) {
+    if (1 <= await getWindowOrSelf()['STAGEL_DEBUG']) {
         console.log(obj);
     }
 }
@@ -1526,14 +1528,14 @@ async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
     // - 2: one for the header; one for the last newline, which is (reasonably, looking at the newlines as separators rather than terminators) included as an extra line of data in the parse results
-    intReturn = await getSharedState('dcData')[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
+    intReturn = (await getSharedState('dcData'))[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
     await assertIsDcDataset(dataset); await assertIsInt(rowNum); await assertIsInt(fieldNum); let strReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
-    if (await getSharedState('dcData')[dataset] === undefined) {
+    if ((await getSharedState('dcData'))[dataset] === undefined) {
         await implDie('dcDataLookupById called, but dataset '+dataset+' does not appear to be available.');
     }
 
@@ -1541,11 +1543,11 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     rowNum = rowNum + 1;
 
     // and another 1 to account for last row
-    if (rowNum + 1 >= await getSharedState('dcData')[dataset].length) {
+    if (rowNum + 1 >= (await getSharedState('dcData'))[dataset].length) {
         strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
     else {
-        strReturn = await getSharedState('dcData')[dataset][rowNum][fieldNum];
+        strReturn = (await getSharedState('dcData'))[dataset][rowNum][fieldNum];
     }
     await assertIsStr(strReturn); return strReturn;
 }
@@ -1553,12 +1555,12 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = await getSharedState('dcData')[dataset].length - 2;
+    let intLength = (await getSharedState('dcData'))[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(await getSharedState('dcData')[dataset][row][filterField] === filterValue) {
-            strReturn = await getSharedState('dcData')[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
+        if((await getSharedState('dcData'))[dataset][row][filterField] === filterValue) {
+            strReturn = (await getSharedState('dcData'))[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
     //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
