@@ -14,6 +14,7 @@ console.log(await eiteCall('getSharedState', ['dcData']));
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         console.log('ok');
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+        console.log('okb');
         await handleSearchResultUpdate();
         //console.log(window.dcNames);
         // Attach event listeners to elements
@@ -58,7 +59,9 @@ console.log(await eiteCall('getSharedState', ['dcData']));
         inFormat=document.getElementById('inFormat');
         inFormat.innerHTML='';
         let formats=[];
+        console.log('okc');
         formats = await eiteCall('listInputFormats');
+        console.log('okd');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
