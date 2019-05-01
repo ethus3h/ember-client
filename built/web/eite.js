@@ -317,9 +317,9 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-            if(msgid > 50) {
-                await implDie('died too mayn messages');
-            }
+                if(msgid > 50) {
+                    await implDie('died too mayn messages');
+                }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
@@ -340,7 +340,7 @@ async function eiteLibrarySetup() {
                     window.eiteHostRequestInternalOnMessage(message);
                 }
                 else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                    implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
+                    await implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
                     throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
                 }
             };
@@ -378,7 +378,7 @@ async function eiteLibrarySetup() {
             await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
         }
-        implDebug('Defined internalOnMessage for worker', 0);
+        await implDebug('Defined internalOnMessage for worker', 0);
 
         self.onmessage = async function(message) {
             // Handle messages sent to this code when it is running as a Web worker

@@ -141,7 +141,7 @@ async function eiteLibrarySetup() {
                     window.eiteHostRequestInternalOnMessage(message);
                 }
                 else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                    implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
+                    await implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
                     throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
                 }
             };
