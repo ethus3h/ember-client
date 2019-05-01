@@ -38,34 +38,30 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
-    if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        await eiteHostCall('implLog', [strMessage]);
+    if(typeof strMessage !== "string") {
+        throw "Nonstring error message";
     }
-    else {
-        if(typeof strMessage !== "string") {
-            throw "Nonstring error message";
-        }
-        await assertIsStr(strMessage);
-        // Log the provided message
-        await console.log(strMessage);
-        // use getWindowOrSelf instead of getSharedState to avoid recursion
-        let temp=getWindowOrSelf()['stagelDebugCallstack'];
-        if(temp !== undefined) {
-            if(await Object.keys(temp).length > 0) {
-                await console.log("Previous message sent at: " + await internalDebugPrintStack());
-            }
-            else {
-                // use getWindowOrSelf instead of getSharedState to avoid recursion
-                if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
-                    await console.log("(Previous message sent from non-StageL code.)");
-                }
-            }
+    await assertIsStr(strMessage);
+    // Log the provided message
+    await console.log(strMessage);
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    let temp=getWindowOrSelf()['stagelDebugCallstack'];
+    if(temp !== undefined) {
+        if(await Object.keys(temp).length > 0) {
+            await console.log("Previous message sent at: " + await internalDebugPrintStack());
         }
         else {
-            console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
+            // use getWindowOrSelf instead of getSharedState to avoid recursion
+            if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
+                await console.log("(Previous message sent from non-StageL code.)");
+            }
         }
     }
+    else {
+        console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
+    }
 }
+
 async function implDebug(strMessage, intLevel) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
