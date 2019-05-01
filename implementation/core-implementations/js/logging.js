@@ -54,7 +54,7 @@ async function implLog(strMessage) {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
             }
             else {
-                if (2 <= await getSharedState('STAGEL_DEBUG')) {
+                if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
                     await console.log("(Previous message sent from non-StageL code.)");
                 }
             }
@@ -74,7 +74,8 @@ async function implDebug(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
-    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    if (intLevel <= getWindowOrSelf()['STAGEL_DEBUG']) {
         await implLog(strMessage);
     }
 }
