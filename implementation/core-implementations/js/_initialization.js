@@ -92,7 +92,7 @@ async function eiteLibrarySetup() {
             window.eiteWorker = new Worker('eite.js');
             window.eiteWorkerResolveCallbacks = {};
             window.eiteWorkerCallID = 0;
-            window.eiteCall = async function(funcName, args) {
+            window.eiteCall = function(funcName, args) {
                 if (args === undefined) {
                     args=[];
                 }
@@ -207,7 +207,8 @@ async function eiteLibrarySetup() {
 
         self.eiteWorkerHostResolveCallbacks = {};
         self.eiteWorkerHostCallID = 0;
-        self.eiteHostCall = async function(funcName, args) {
+        // no need to declare it async when it explicitly returns a promise
+        self.eiteHostCall = function(funcName, args) {
             if (args === undefined) {
                 args=[];
             }
