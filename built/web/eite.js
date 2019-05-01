@@ -420,8 +420,11 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
+        await implDebug('Web wokrer is about to begin delegating requests');
         await self.setSharedState('internalDelegateStateRequests', true);
+        await implDebug('Just finished setting up Web Workers');
     }
+    await implDebug('Just finished setting up Library');
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
         if (await getSharedState('STAGEL_DEBUG') === 0) {
