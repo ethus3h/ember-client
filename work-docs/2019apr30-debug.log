@@ -1,623 +1,1040 @@
 Just finished setting up Library
-eite.js:1280:15
+eite.js:1281:15
 Web wokrer is about to begin delegating requests
-eite.js:1280:15
-Host got message 1 from worker: implLog,Just finished setting up Web Workers
-eite.js:1280:15
+eite.js:1281:15
+Host got message 1 from worker: setSharedState,STAGEL_DEBUG,3
+eite.js:1281:15
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 1 from worker: implLog,Just finished setting up Web Workers
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 1 from worker: setSharedState,STAGEL_DEBUG,3
+eite.js:1281:15
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Just finished setting up Web Workers
-eite.js:1280:15
+eite.js:1445:9
 Request made of host by worker in message 1 returned the result: undefined
-eite.js:1280:15
-Host got message 2 from worker: implLog,Worker got message 1 from host: setupIfNeeded,
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 2 from worker: implLog,Just finished setting up Web Workers
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 2 from worker: implLog,Worker got message 1 from host: setupIfNeeded,
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 2 from worker: implLog,Just finished setting up Web Workers
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 1 from host: setupIfNeeded,
-eite.js:1280:15
+eite.js:1445:9
+Just finished setting up Web Workers
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 2 returned the result: undefined
-eite.js:1280:15
-Host got message 3 from worker: implLog,Worker got message 1 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 3 from worker: implLog,Worker got message 1 from host: setupIfNeeded,
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 3 from worker: implLog,Worker got message 1 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 3 from worker: implLog,Worker got message 1 from host: setupIfNeeded,
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 1 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 1 from host: setupIfNeeded,
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 3 returned the result: undefined
-eite.js:1280:15
-Host got message 4 from worker: implLog,Worker got message 2 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 4 from worker: implLog,Worker got message 1 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 4 from worker: implLog,Worker got message 2 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 4 from worker: implLog,Worker got message 1 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 2 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 1 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 4 returned the result: undefined
-eite.js:1280:15
-Host got message 5 from worker: implLog,Worker got message 3 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 5 from worker: implLog,Worker got message 2 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 5 from worker: implLog,Worker got message 3 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 5 from worker: implLog,Worker got message 2 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 3 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 2 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 5 returned the result: undefined
-eite.js:1280:15
-Host got message 6 from worker: implLog,Worker got message 4 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 6 from worker: implLog,Worker got message 3 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 6 from worker: implLog,Worker got message 4 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 6 from worker: implLog,Worker got message 3 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 4 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 3 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 6 returned the result: undefined
-eite.js:1280:15
-Host got message 7 from worker: implLog,Worker got message 5 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 7 from worker: implLog,Worker got message 4 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 7 from worker: implLog,Worker got message 5 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 7 from worker: implLog,Worker got message 4 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 5 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 4 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 7 returned the result: undefined
-eite.js:1280:15
-Host got message 8 from worker: implLog,Worker got message 6 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 8 from worker: implLog,Worker got message 5 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 8 from worker: implLog,Worker got message 6 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 8 from worker: implLog,Worker got message 5 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 6 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 5 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 8 returned the result: undefined
-eite.js:1280:15
-Host got message 9 from worker: implLog,Worker got message 7 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 9 from worker: implLog,Worker got message 6 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 9 from worker: implLog,Worker got message 7 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 9 from worker: implLog,Worker got message 6 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 7 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 6 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 9 returned the result: undefined
-eite.js:1280:15
-Host got message 10 from worker: implLog,Worker got message 8 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 10 from worker: implLog,Worker got message 7 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 10 from worker: implLog,Worker got message 8 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 10 from worker: implLog,Worker got message 7 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 8 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 7 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 10 returned the result: undefined
-eite.js:1280:15
-Host got message 11 from worker: implLog,Worker got message 9 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 11 from worker: implLog,Worker got message 8 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 11 from worker: implLog,Worker got message 9 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 11 from worker: implLog,Worker got message 8 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 9 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 8 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 11 returned the result: undefined
-eite.js:1280:15
-Host got message 12 from worker: implLog,Worker got message 10 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 12 from worker: implLog,Worker got message 9 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 12 from worker: implLog,Worker got message 10 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 12 from worker: implLog,Worker got message 9 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 10 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 9 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 12 returned the result: undefined
-eite.js:1280:15
-Host got message 13 from worker: implLog,Worker got message 11 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 13 from worker: implLog,Worker got message 10 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 13 from worker: implLog,Worker got message 11 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 13 from worker: implLog,Worker got message 10 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 11 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 10 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 13 returned the result: undefined
-eite.js:1280:15
-Host got message 14 from worker: implLog,Worker got message 12 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 14 from worker: implLog,Worker got message 11 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 14 from worker: implLog,Worker got message 12 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 14 from worker: implLog,Worker got message 11 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 12 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 11 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 14 returned the result: undefined
-eite.js:1280:15
-Host got message 15 from worker: implLog,Worker got message 13 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 15 from worker: implLog,Worker got message 12 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 15 from worker: implLog,Worker got message 13 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 15 from worker: implLog,Worker got message 12 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 13 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 12 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 15 returned the result: undefined
-eite.js:1280:15
-Host got message 16 from worker: implLog,Worker got message 14 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 16 from worker: implLog,Worker got message 13 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 16 from worker: implLog,Worker got message 14 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 16 from worker: implLog,Worker got message 13 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 14 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 13 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 16 returned the result: undefined
-eite.js:1280:15
-Host got message 17 from worker: implLog,Worker got message 15 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 17 from worker: implLog,Worker got message 14 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 17 from worker: implLog,Worker got message 15 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 17 from worker: implLog,Worker got message 14 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 15 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 14 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 17 returned the result: undefined
-eite.js:1280:15
-Host got message 18 from worker: implLog,Worker got message 16 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 18 from worker: implLog,Worker got message 15 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 18 from worker: implLog,Worker got message 16 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 18 from worker: implLog,Worker got message 15 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 16 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 15 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 18 returned the result: undefined
-eite.js:1280:15
-Host got message 19 from worker: implLog,Worker got message 17 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 19 from worker: implLog,Worker got message 16 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 19 from worker: implLog,Worker got message 17 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 19 from worker: implLog,Worker got message 16 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 17 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 16 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 19 returned the result: undefined
-eite.js:1280:15
-Host got message 20 from worker: implLog,Worker got message 18 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 20 from worker: implLog,Worker got message 17 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 20 from worker: implLog,Worker got message 18 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 20 from worker: implLog,Worker got message 17 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 18 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 17 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 20 returned the result: undefined
-eite.js:1280:15
-Host got message 21 from worker: implLog,Worker got message 19 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 21 from worker: implLog,Worker got message 18 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 21 from worker: implLog,Worker got message 19 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 21 from worker: implLog,Worker got message 18 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 19 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 18 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 21 returned the result: undefined
-eite.js:1280:15
-Host got message 22 from worker: implLog,Worker got message 20 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 22 from worker: implLog,Worker got message 19 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 22 from worker: implLog,Worker got message 20 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 22 from worker: implLog,Worker got message 19 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 20 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 19 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 22 returned the result: undefined
-eite.js:1280:15
-Host got message 23 from worker: implLog,Worker got message 21 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 23 from worker: implLog,Worker got message 20 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 23 from worker: implLog,Worker got message 21 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 23 from worker: implLog,Worker got message 20 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 21 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 20 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 23 returned the result: undefined
-eite.js:1280:15
-Host got message 24 from worker: implLog,Worker got message 22 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 24 from worker: implLog,Worker got message 21 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 24 from worker: implLog,Worker got message 22 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 24 from worker: implLog,Worker got message 21 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 22 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 21 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 24 returned the result: undefined
-eite.js:1280:15
-Host got message 25 from worker: implLog,Worker got message 23 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 25 from worker: implLog,Worker got message 22 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 25 from worker: implLog,Worker got message 23 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 25 from worker: implLog,Worker got message 22 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 23 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 22 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 25 returned the result: undefined
-eite.js:1280:15
-Host got message 26 from worker: implLog,Worker got message 24 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 26 from worker: implLog,Worker got message 23 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 26 from worker: implLog,Worker got message 24 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 26 from worker: implLog,Worker got message 23 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 24 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 23 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 26 returned the result: undefined
-eite.js:1280:15
-Host got message 27 from worker: implLog,Worker got message 25 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 27 from worker: implLog,Worker got message 24 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 27 from worker: implLog,Worker got message 25 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 27 from worker: implLog,Worker got message 24 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 25 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 24 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 27 returned the result: undefined
-eite.js:1280:15
-Host got message 28 from worker: implLog,Worker got message 26 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 28 from worker: implLog,Worker got message 25 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 28 from worker: implLog,Worker got message 26 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 28 from worker: implLog,Worker got message 25 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 26 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 25 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 28 returned the result: undefined
-eite.js:1280:15
-Host got message 29 from worker: implLog,Worker got message 27 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 29 from worker: implLog,Worker got message 26 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 29 from worker: implLog,Worker got message 27 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 29 from worker: implLog,Worker got message 26 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 27 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 26 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 29 returned the result: undefined
-eite.js:1280:15
-Host got message 30 from worker: implLog,Worker got message 28 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 30 from worker: implLog,Worker got message 27 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 30 from worker: implLog,Worker got message 28 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 30 from worker: implLog,Worker got message 27 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 28 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 27 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 30 returned the result: undefined
-eite.js:1280:15
-Host got message 31 from worker: implLog,Worker got message 29 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 31 from worker: implLog,Worker got message 28 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 31 from worker: implLog,Worker got message 29 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 31 from worker: implLog,Worker got message 28 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 29 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 28 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 31 returned the result: undefined
-eite.js:1280:15
-Host got message 32 from worker: implLog,Worker got message 30 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 32 from worker: implLog,Worker got message 29 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 32 from worker: implLog,Worker got message 30 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 32 from worker: implLog,Worker got message 29 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 30 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 29 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 32 returned the result: undefined
-eite.js:1280:15
-Host got message 33 from worker: implLog,Worker got message 31 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 33 from worker: implLog,Worker got message 30 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 33 from worker: implLog,Worker got message 31 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 33 from worker: implLog,Worker got message 30 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 31 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 30 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 33 returned the result: undefined
-eite.js:1280:15
-Host got message 34 from worker: implLog,Worker got message 32 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 34 from worker: implLog,Worker got message 31 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 34 from worker: implLog,Worker got message 32 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 34 from worker: implLog,Worker got message 31 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 32 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 31 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 34 returned the result: undefined
-eite.js:1280:15
-Host got message 35 from worker: implLog,Worker got message 33 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 35 from worker: implLog,Worker got message 32 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 35 from worker: implLog,Worker got message 33 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 35 from worker: implLog,Worker got message 32 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 33 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 32 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 35 returned the result: undefined
-eite.js:1280:15
-Host got message 36 from worker: implLog,Worker got message 34 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 36 from worker: implLog,Worker got message 33 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 36 from worker: implLog,Worker got message 34 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 36 from worker: implLog,Worker got message 33 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 34 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 33 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 36 returned the result: undefined
-eite.js:1280:15
-Host got message 37 from worker: implLog,Worker got message 35 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 37 from worker: implLog,Worker got message 34 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 37 from worker: implLog,Worker got message 35 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 37 from worker: implLog,Worker got message 34 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 35 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 34 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 37 returned the result: undefined
-eite.js:1280:15
-Host got message 38 from worker: implLog,Worker got message 36 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 38 from worker: implLog,Worker got message 35 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 38 from worker: implLog,Worker got message 36 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 38 from worker: implLog,Worker got message 35 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 36 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 35 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 38 returned the result: undefined
-eite.js:1280:15
-Host got message 39 from worker: implLog,Worker got message 37 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 39 from worker: implLog,Worker got message 36 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 39 from worker: implLog,Worker got message 37 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 39 from worker: implLog,Worker got message 36 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 37 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 36 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 39 returned the result: undefined
-eite.js:1280:15
-Host got message 40 from worker: implLog,Worker got message 38 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 40 from worker: implLog,Worker got message 37 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 40 from worker: implLog,Worker got message 38 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 40 from worker: implLog,Worker got message 37 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 38 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 37 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 40 returned the result: undefined
-eite.js:1280:15
-Host got message 41 from worker: implLog,Worker got message 39 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 41 from worker: implLog,Worker got message 38 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 41 from worker: implLog,Worker got message 39 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 41 from worker: implLog,Worker got message 38 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 39 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 38 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 41 returned the result: undefined
-eite.js:1280:15
-Host got message 42 from worker: implLog,Worker got message 40 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 42 from worker: implLog,Worker got message 39 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 42 from worker: implLog,Worker got message 40 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 42 from worker: implLog,Worker got message 39 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 40 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 39 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 42 returned the result: undefined
-eite.js:1280:15
-Host got message 43 from worker: implLog,Worker got message 41 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 43 from worker: implLog,Worker got message 40 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 43 from worker: implLog,Worker got message 41 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 43 from worker: implLog,Worker got message 40 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 41 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 40 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 43 returned the result: undefined
-eite.js:1280:15
-Host got message 44 from worker: implLog,Worker got message 42 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 44 from worker: implLog,Worker got message 41 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 44 from worker: implLog,Worker got message 42 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 44 from worker: implLog,Worker got message 41 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 42 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 41 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 44 returned the result: undefined
-eite.js:1280:15
-Host got message 45 from worker: implLog,Worker got message 43 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 45 from worker: implLog,Worker got message 42 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 45 from worker: implLog,Worker got message 43 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 45 from worker: implLog,Worker got message 42 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 43 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 42 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 45 returned the result: undefined
-eite.js:1280:15
-Host got message 46 from worker: implLog,Worker got message 44 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 46 from worker: implLog,Worker got message 43 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 46 from worker: implLog,Worker got message 44 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 46 from worker: implLog,Worker got message 43 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 44 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 43 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 46 returned the result: undefined
-eite.js:1280:15
-Host got message 47 from worker: implLog,Worker got message 45 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 47 from worker: implLog,Worker got message 44 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 47 from worker: implLog,Worker got message 45 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 47 from worker: implLog,Worker got message 44 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 45 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 44 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 47 returned the result: undefined
-eite.js:1280:15
-Host got message 48 from worker: implLog,Worker got message 46 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 48 from worker: implLog,Worker got message 45 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 48 from worker: implLog,Worker got message 46 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 48 from worker: implLog,Worker got message 45 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 46 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 45 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 48 returned the result: undefined
-eite.js:1280:15
-Host got message 49 from worker: implLog,Worker got message 47 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 49 from worker: implLog,Worker got message 46 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 49 from worker: implLog,Worker got message 47 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 49 from worker: implLog,Worker got message 46 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 47 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 46 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 49 returned the result: undefined
-eite.js:1280:15
-Host got message 50 from worker: implLog,Worker got message 48 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 50 from worker: implLog,Worker got message 47 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Host understood message 50 from worker: implLog,Worker got message 48 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Host understood message 50 from worker: implLog,Worker got message 47 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 message { target: Worker, isTrusted: true, data: {…}, origin: "", lastEventId: "", ports: Restricted, currentTarget: Worker, eventPhase: 2, bubbles: false, cancelable: false, … }
-eite.js:1444:9
-Worker got message 48 from host: undefined
-eite.js:1280:15
+eite.js:1445:9
+Worker got message 47 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 Request made of host by worker in message 50 returned the result: undefined
-eite.js:1280:15
-Host got message 51 from worker: implLog,Worker got message 49 from host: undefined
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+Host got message 51 from worker: implLog,Worker got message 48 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 FIXME: Unimplemented in implWarn
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 died too many messages from worker
-eite.js:1280:15
-Host got message 52 from worker: implLog,Worker got message 50 from host: undefined
-eite.js:1280:15
-FIXME: Unimplemented in implWarn
-eite.js:1280:15
-died too many messages from worker
-eite.js:1280:15
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 unreachable code after return statement[Learn More]
 edit.html:27440:8
 unreachable code after return statement[Learn More]
 edit.html:29405:12
 unreachable code after return statement[Learn More]
 edit.html:30157:28
+Host got message 52 from worker: implLog,Worker got message 49 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+FIXME: Unimplemented in implWarn
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+died too many messages from worker
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+uncaught exception: died too many messages from worker
+Host got message 53 from worker: implLog,Worker got message 50 from host: undefined
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+FIXME: Unimplemented in implWarn
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
+died too many messages from worker
+eite.js:1281:15
+(Previous message sent from non-StageL code.)
+eite.js:1290:27
 uncaught exception: died too many messages from worker 
