@@ -4329,6 +4329,7 @@ async function isFormat(strFormat) {
 }
 
 async function listInputFormats() {
+    STAGEL_DEBUG=2;
     await internalDebugStackEnter('listInputFormats:formats-data'); let strArrayReturn;
 
     let strArrayRes = [];
