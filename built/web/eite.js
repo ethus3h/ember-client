@@ -515,7 +515,6 @@ async function internalSetup() {
             tempSettings = [];
         }
     }
-console.log('auau');
     settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
@@ -525,7 +524,6 @@ console.log('auau');
         }
     }
     // Set up storage
-console.log('eueu');
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
 
@@ -578,6 +576,7 @@ console.log('eueu');
             }
         });
     }
+console.log('auau');
 
     await setSharedState('setupFinished', true);
 }

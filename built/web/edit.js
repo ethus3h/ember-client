@@ -6,6 +6,7 @@ window.onload = function() {
         window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
+console.log('eueu');
         window.dcNames=await eiteCall('dcGetColumn', ['dcData', 1]);
         console.log('ok');
         let datasetLength=await eiteCall('dcDatasetLength', ['dcData']);
