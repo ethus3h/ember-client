@@ -1391,9 +1391,8 @@ async function internalDebugStackExit() {
     if (tempStack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
-    let temp;
-    temp=await getSharedState('stagelDebugCallstack');
-    await internalDebugQuiet("Exited block: " + await temp.pop(), 3);
+    tempStack=await getSharedState('stagelDebugCallstack');
+    await internalDebugQuiet("Exited block: " + await tempStack.pop(), 3);
     await setSharedState('stagelDebugCallstack', temp);
 }
 
