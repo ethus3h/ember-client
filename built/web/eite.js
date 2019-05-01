@@ -316,6 +316,9 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
+                if(msgid > 300) {
+                    await implDie('died too many messages from worker');
+                }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
@@ -360,6 +363,9 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
+            if(msgid > 300) {
+                await implDie('died too many messages from host');
+            }
             await internalDebugLogJSObject(message);
             let res;
             try {
@@ -416,7 +422,6 @@ async function eiteLibrarySetup() {
         };
         await implDebug('Web wokrer is about to begin delegating requests', 0);
         await self.setSharedState('internalDelegateStateRequests', true);
-        setSharedState('STAGEL_DEBUG', 3);
         await implDebug('Just finished setting up Web Workers', 0);
     }
     await implDebug('Just finished setting up Library', 0);
