@@ -495,7 +495,7 @@ async function internalLoadDatasets() {
     let dataset = '';
     let temp;
     while (count < Object.keys(await getSharedState('datasets')).length) {
-        dataset = datasets[count];
+        dataset = await getSharedState('datasets')[count];
         temp=await getSharedState('dcData');
         temp[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
