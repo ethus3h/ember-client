@@ -6568,7 +6568,7 @@ async function assertIsDcArray(genericItemIn) {
 }
 
 async function assertIsDcDataset(strIn) {
-    STAGEL_DEBUG=3;
+    await setSharedState('STAGEL_DEBUG',3);
     await internalDebugCollect('str In = ' + strIn + '; '); await internalDebugStackEnter('assertIsDcDataset:assertions'); await assertIsStr(strIn);
 
     await assertIsTrue(await isDcDataset(strIn));
