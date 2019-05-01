@@ -219,7 +219,7 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        getWindowOrSelf()['internalDelegateStateRequests'] = true;
+        //getWindowOrSelf()['internalDelegateStateRequests'] = true; // This would make the host and worker use the same shared state. That breaks things though, so don't. Still, it's interesting to have support in the code for it, just as reference to show that it can be done even without SharedArrayBuffer. (not exactly groundbreaking, I know, but whatever, it's only a couple of extra lines to leave the support in)
     }
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
