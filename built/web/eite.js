@@ -507,7 +507,6 @@ async function internalSetup() {
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
-console.log('auau');
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (await getSharedState('importSettings')[settingsCounter] === undefined) {
             tempSettings = await getSharedState('importSettings');
@@ -516,7 +515,7 @@ console.log('auau');
             tempSettings = [];
         }
     }
-console.log('eueu');
+console.log('auau');
     settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
@@ -526,6 +525,7 @@ console.log('eueu');
         }
     }
     // Set up storage
+console.log('eueu');
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
 
