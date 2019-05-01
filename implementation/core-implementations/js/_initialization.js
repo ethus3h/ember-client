@@ -511,7 +511,7 @@ async function internalLoadDatasets() {
         await setSharedState('dcData', temp);
         count = count + 1;
     }
-    datasetsLoaded = true;
+    await setSharedState('datasetsLoaded', true);
 }
 
 let Base16b = {
