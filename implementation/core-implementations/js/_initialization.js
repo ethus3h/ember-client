@@ -240,7 +240,7 @@ async function getSharedState(name) {
 
 async function setSharedState(name, value) {
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        return await eiteHostCall('setSharedState', [name, value]);
+        await eiteHostCall('setSharedState', [name, value]);
     }
     else {
         await implDebug('State change for ' + name + ' to ' + value + '.', 3);
