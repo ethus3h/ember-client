@@ -1386,7 +1386,9 @@ async function internalDebugStackEnter(strBlockName) {
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
-    if (await await getSharedState('stagelDebugCallstack').slice(-1)[0] === undefined) {
+    let tempStack;
+    tempStack=await getSharedState('stagelDebugCallstack');
+    if (tempStack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
     let temp;
