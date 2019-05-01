@@ -4662,9 +4662,9 @@ async function dcGetColumn(strDataset, intColumn) {
     let intCount = 0;
     intCount = await dcDatasetLength(strDataset);
     let intI = 0;
-    console.log(',ubmue');
     while (await implLt(intI, intCount)) {
         strArrayRes = await push(strArrayRes, await dcDataLookupById(strDataset, intI, intColumn));
+    console.log(',ubmue');
         intI = await implAdd(intI, 1);
     }
 
