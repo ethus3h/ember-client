@@ -1,8 +1,10 @@
 eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally. This does not call setupIfNeeded, meaning things like nice error messages that that provides aren't available.
 async function eiteLibrarySetup() {
-    if (true !== await getSharedState('librarySetupFinished')) {
-        // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
+    // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
+    if (true !== await getSharedState('librarySetupFinished') && true !== await getSharedState('librarySetupStarted')) {
         // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
+        await setSharedState('librarySetupStarted', true);
+        await setSharedState('librarySetupFinished', false);
         if (await getSharedState('STAGEL_DEBUG') === undefined) {
             await setSharedState('STAGEL_DEBUG', 0);
             await setSharedState('STAGEL_DEBUG_UNSET', true);
@@ -52,7 +54,6 @@ async function eiteLibrarySetup() {
         await setSharedState('strArrayDocumentExecEvents', []); // as: holds comma-delimited strings of space-terminated integers representing the Dcs of event data that have not been processed yet.
         await setSharedState('strArrayDocumentExecLogs', []); // as: holds comma-delimited strings of warning messages, like the import and export warning logs, except with a separate warning message array for each document execution.
         await setSharedState('strArrayDocumentExecSettings', []); // as: holds comma-delimited strings of exec setting key/value pairs. For example, might be a good setting string for running a unit test that aborts if it's still running at 50 ticks and running without I/O: stopExecAtTick:50,runHeadless:true,
-        await setSharedState('librarySetupFinished', false);
         await setSharedState('setupFinished', false);
         await setSharedState('intPassedTests', 0);
         await setSharedState('intFailedTests', 0);
