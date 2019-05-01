@@ -230,7 +230,8 @@ async function eiteLibrarySetup() {
 }
 
 function internalSleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    // from https://web.archive.org/web/20190111230631/https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function getSharedState(name) {
