@@ -505,8 +505,8 @@ async function internalSetup() {
     }
 
     // Fill out format settings arrays in case they aren't yet
-    let settingsCount=Object.keys(await listFormats()).length;
     console.log('ok');
+    let settingsCount=Object.keys(await listFormats()).length;
     let tempSettings;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (await getSharedState('importSettings')[settingsCounter] === undefined) {
