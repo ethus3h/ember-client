@@ -3,10 +3,10 @@
 globalCachedInputState="";
 window.onload = function() {
     (async function(){
+        console.log('ok');
         window.dcNames=[];
         await eiteCall('setupIfNeeded');
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
-        console.log('ok');
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         await handleSearchResultUpdate();
