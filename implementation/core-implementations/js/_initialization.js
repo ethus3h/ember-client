@@ -501,6 +501,7 @@ async function internalLoadDatasets() {
         temp[dataset] = [];
         // I guess the anonymous functions defined as parameters to the Papa.parse call inherit the value of dataset from the environment where they were defined (i.e., here)??
         temp[dataset] = await eiteHostCall('internalEiteReqLoadDataset', [dataset]);
+        console.log(temp);
         await setSharedState('dcData', temp);
         count = count + 1;
     }
