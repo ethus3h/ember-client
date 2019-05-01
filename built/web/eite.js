@@ -499,7 +499,6 @@ async function internalSetup() {
     }
 
     // Set up data sets.
-console.log('Abt to load deta sets');
     await setSharedState('datasets', await listDcDatasets());
     if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
@@ -507,8 +506,8 @@ console.log('Abt to load deta sets');
 
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
-console.log('bububub');
     let tempSettings;
+console.log('auau');
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (await getSharedState('importSettings')[settingsCounter] === undefined) {
             tempSettings = await getSharedState('importSettings');
@@ -517,6 +516,7 @@ console.log('bububub');
             tempSettings = [];
         }
     }
+console.log('eueu');
     settingsCount=Object.keys(await listFormats()).length;
     for (let settingsCounter=0; settingsCounter < settingsCount; settingsCounter++) {
         if (exportSettings[settingsCounter] === undefined) {
