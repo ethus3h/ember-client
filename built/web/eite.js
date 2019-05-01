@@ -1279,7 +1279,8 @@ async function implLog(strMessage) {
         await assertIsStr(strMessage);
         // Log the provided message
         await console.log(strMessage);
-        let temp=await getSharedState('stagelDebugCallstack');
+        // use getWindowOrSelf instead of getSharedState to avoid recursion
+        let temp=getWindowOrSelf()['stagelDebugCallstack'];
         if(temp !== undefined) {
             if(await Object.keys(temp).length > 0) {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());

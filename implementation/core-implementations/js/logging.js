@@ -48,7 +48,8 @@ async function implLog(strMessage) {
         await assertIsStr(strMessage);
         // Log the provided message
         await console.log(strMessage);
-        let temp=await getSharedState('stagelDebugCallstack');
+        // use getWindowOrSelf instead of getSharedState to avoid recursion
+        let temp=getWindowOrSelf()['stagelDebugCallstack'];
         if(temp !== undefined) {
             if(await Object.keys(temp).length > 0) {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
@@ -195,7 +196,8 @@ async function internalDebugPrintHotspots() {
 
 async function internalDebugPrintStack() {
     let i;
-    i = await Object.keys(await getSharedState('stagelDebugCallstack')).length - 1;
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    i = await Object.keys(getWindowOrSelf()['stagelDebugCallstack']).length - 1;
     let result="";
     let arrow=" < "
     while (i>=0) {
@@ -203,7 +205,7 @@ async function internalDebugPrintStack() {
         if (i==0) {
             arrow=""
         }
-        result = result + await getSharedState('stagelDebugCallstack').slice(i)[0] + arrow;
+        result = result + getWindowOrSelf()['stagelDebugCallstack'].slice(i)[0] + arrow;
         i = i - 1;
     }
     return result;
