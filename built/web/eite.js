@@ -363,9 +363,9 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-                if(msgid > 50) {
-                    await implDie('died too many messages from worker');
-                }
+            if(msgid > 50) {
+                await implDie('died too many messages from host');
+            }
             await internalDebugLogJSObject(message);
             let res;
             try {
