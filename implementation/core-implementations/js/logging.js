@@ -208,7 +208,7 @@ async function internalDebugPrintStack() {
 }
 
 async function internalDebugLogJSObject(obj) {
-    if (1 <= await getSharedState('STAGEL_DEBUG')) {
+    if (1 <= await getWindowOrSelf()['STAGEL_DEBUG']) {
         console.log(obj);
     }
 }

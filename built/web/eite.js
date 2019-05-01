@@ -316,7 +316,7 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-                if(msgid > 300) {
+                if(msgid > 80) {
                     await implDie('died too many messages from worker');
                 }
                 await internalDebugLogJSObject(message);
@@ -363,7 +363,7 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-            if(msgid > 300) {
+            if(msgid > 80) {
                 await implDie('died too many messages from host');
             }
             await internalDebugLogJSObject(message);
