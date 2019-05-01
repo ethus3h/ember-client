@@ -501,7 +501,6 @@ async function internalSetup() {
     // Set up data sets.
     await setSharedState('datasets', await listDcDatasets());
     if (!await getSharedState('datasetsLoaded')) {
-console.log('bbbb');
         await internalLoadDatasets();
     }
 
@@ -524,6 +523,7 @@ console.log('bbbb');
             await setSharedState('exportSettings', tempSettings);
         }
     }
+console.log('bbbb');
 
     // Set up storage
 
