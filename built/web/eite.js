@@ -688,7 +688,7 @@ async function internalLoadDatasets() {
     let count = 0;
     let dataset = '';
     let temp;
-    while (count < Object.keys(datasets).length) {
+    while (count < Object.keys(await getSharedState('datasets')).length) {
         dataset = datasets[count];
         temp=await getSharedState('dcData');
         temp[dataset] = [];
