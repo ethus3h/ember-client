@@ -122,12 +122,11 @@ async function internalDebugStackEnter(strBlockName) {
 
     let tempCounts;
 
-    let temp = await getSharedState('stagelDebugCallNames');
-    if (temp !== undefined) {
-        temp = [];
+    let tempNames = await getSharedState('stagelDebugCallNames');
+    if (tempNames !== undefined) {
+        tempNames = [];
     }
-    if (temp.indexOf(strBlockName) < 0) {
-        let tempNames;
+    if (tempNames.indexOf(strBlockName) < 0) {
         tempNames=await getSharedState('stagelDebugCallNames');
         tempNames.push(strBlockName);
         await setSharedState('stagelDebugCallNames', tempNames);
