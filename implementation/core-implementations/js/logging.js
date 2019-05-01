@@ -159,7 +159,7 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + await getSharedState('stagelDebugCallstack').slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (await getSharedState('stagelDebugCallstack')).slice(-1)[0], 2);
     }
 }
 
