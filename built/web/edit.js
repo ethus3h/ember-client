@@ -14,6 +14,7 @@ console.log(await eiteCall('getSharedState', ['dcData']));
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         console.log('ok');
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+        console.log(await eiteCall('listInputFormats', []));
         console.log('okb');
         await handleSearchResultUpdate();
         //console.log(window.dcNames);
