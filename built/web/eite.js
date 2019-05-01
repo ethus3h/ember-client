@@ -1532,7 +1532,7 @@ async function dcDatasetLength(dataset) {
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
-    console.log(',8'+dataset+':'+await isDcDataset('formats'));
+    console.log(',8'+dataset+':'+await isDcDataset('formats'));console.log('ewubrubecu');
     await assertIsDcDataset(dataset); console.log(',9');await assertIsInt(rowNum); console.log(',10');await assertIsInt(fieldNum);console.log(',11'); let strReturn;
 
     // This routine returns the value of the specified cell of the nth row in the dataset (zero-indexed, such that the 0th row is the first content row, and the header row is not available (would be -1 but isn't available from this routine)).
