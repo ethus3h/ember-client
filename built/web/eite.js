@@ -1528,7 +1528,7 @@ async function dcDatasetLength(dataset) {
     assertIsDcDataset(dataset); let intReturn;
 
     // - 2: one for the header; one for the last newline, which is (reasonably, looking at the newlines as separators rather than terminators) included as an extra line of data in the parse results
-    intReturn = await getSharedState('dcData')[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
+    intReturn = (await getSharedState('dcData'))[dataset].length - 2; await assertIsInt(intReturn); return intReturn;
 }
 
 async function dcDataLookupById(dataset, rowNum, fieldNum) {
@@ -1543,11 +1543,11 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
     rowNum = rowNum + 1;
 
     // and another 1 to account for last row
-    if (rowNum + 1 >= await getSharedState('dcData')[dataset].length) {
+    if (rowNum + 1 >= (await getSharedState('dcData'))[dataset].length) {
         strReturn = "89315802-d53d-4d11-ba5d-bf505e8ed454"
     }
     else {
-        strReturn = await getSharedState('dcData')[dataset][rowNum][fieldNum];
+        strReturn = (await getSharedState('dcData'))[dataset][rowNum][fieldNum];
     }
     await assertIsStr(strReturn); return strReturn;
 }
@@ -1555,12 +1555,12 @@ async function dcDataLookupById(dataset, rowNum, fieldNum) {
 async function dcDataLookupByValue(dataset, filterField, genericFilterValue, desiredField) {
     await assertIsDcDataset(dataset); await assertIsInt(filterField); await assertIsGeneric(genericFilterValue); await assertIsInt(desiredField); let strReturn;
 
-    let intLength = await getSharedState('dcData')[dataset].length - 2;
+    let intLength = (await getSharedState('dcData'))[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(await getSharedState('dcData')[dataset][row][filterField] === filterValue) {
-            strReturn = await getSharedState('dcData')[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
+        if((await getSharedState('dcData'))[dataset][row][filterField] === filterValue) {
+            strReturn = (await getSharedState('dcData'))[dataset][row][desiredField]; await assertIsStr(strReturn); return strReturn;
         }
     }
     //await console.log("SEARCHING", dataset, filterField, genericFilterValue, desiredField, dcData);
