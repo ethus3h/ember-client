@@ -421,9 +421,8 @@ async function eiteLibrarySetup() {
             });
         };
         await implDebug('Web wokrer is about to begin delegating requests', 0);
-        await implDebug('Web wokrer is about to begin delegating 2', 0);
-        await implDebug('Web wokrer is about to begin delegating 3', 0);
         await self.setSharedState('internalDelegateStateRequests', true);
+        setSharedState('STAGEL_DEBUG', 3);
         await implDebug('Just finished setting up Web Workers', 0);
     }
     await implDebug('Just finished setting up Library', 0);
