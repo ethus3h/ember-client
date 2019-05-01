@@ -267,7 +267,6 @@ async function eiteLibrarySetup() {
     await setSharedState('stagelDebugCallCounts', []);
     await setSharedState('stagelDebugCollection', "");
     //alert("Setting up logging");
-    implDebug('Done variables', 0);
 
     // Next code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
@@ -317,9 +316,6 @@ async function eiteLibrarySetup() {
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
                 await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-                if(msgid > 50) {
-                    await implDie('died too mayn messages');
-                }
                 await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
@@ -354,11 +350,9 @@ async function eiteLibrarySetup() {
             return await self[funcName]( ...args );
         }
         self.eiteHostCall = self.eiteCall;
-        await implDebug('Done non-worker setup', 0);
     }
 
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
-        await implDebug('Started worker setup', 0);
         // Running as a Web worker, so set up accordingly
         self.internalOnMessage = async function(message) {
             // The worker accepted a message; this function processes it
@@ -378,7 +372,6 @@ async function eiteLibrarySetup() {
             await implDebug('Request made of worker by host in message '+msgid+' returned the result: '+res, 1);
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
         }
-        await implDebug('Defined internalOnMessage for worker', 0);
 
         self.onmessage = async function(message) {
             // Handle messages sent to this code when it is running as a Web worker
@@ -386,9 +379,6 @@ async function eiteLibrarySetup() {
             const msgid = message.data.msgid;
             const args = message.data.args;
             await implDebug('Worker got message '+msgid+' from host: '+args, 1);
-            if(msgid > 50) {
-                await implDie('died too mayn messages');
-            }
             await internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
                 self.internalOnMessage(message);
@@ -409,7 +399,6 @@ async function eiteLibrarySetup() {
                 }
             }
         }
-        await implDebug('Defined onmessage for worker', 0);
 
         self.eiteWorkerHostResolveCallbacks = {};
         self.eiteWorkerHostCallID = 0;
@@ -425,48 +414,31 @@ async function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        await implDebug('Defined eiteHostCall', 0);
-        console.log('Setting internalDelegateStateRequests');
         await self.setSharedState('internalDelegateStateRequests', true);
-        console.log('Set internalDelegateStateRequests');
-        await implDebug('Set internalDelegateStateRequests', 0);
     }
-    await implDebug('Done worker and nonwokrer setup ', 0);
-    //await setupIfNeeded();
     await setSharedState('librarySetupFinished', true);
     if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
         if (await getSharedState('STAGEL_DEBUG') === 0) {
             await setSharedState('STAGEL_DEBUG', 1);
         }
     }
-    await implDebug('Done basic setup', 0);
 }
 
 async function getSharedState(name) {
-    console.log('Get shared state request received for: ' +name+' , delegate?'+ getWindowOrSelf()['internalDelegateStateRequests']);
-    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        console.log('Get shared state delegated for '+name);
         return await eiteHostCall('getSharedState', [name]);
     }
     else {
-        console.log('Get shared state returning for '+name);
         return getWindowOrSelf()[name];
     }
 }
 
 async function setSharedState(name, value) {
-    if (name==='internalDelegateStateRequests') {
-        console.log('delegate state requests set to '+value);
-    }
-    console.log('Set shared state request received for: ' +name+' , ' +value+' , delegate?'+ getWindowOrSelf()['internalDelegateStateRequests']);
-    console.trace();
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-        console.log('Set shared state delegated for : '+name+','+value);
         return await eiteHostCall('setSharedState', [name, value]);
     }
     else {
-        //await implDebug('State change for ' + name + ' to ' + value + '.', 0);
+        await implDebug('State change for ' + name + ' to ' + value + '.', 3);
         getWindowOrSelf()[name] = value;
     }
 }
@@ -489,10 +461,8 @@ async function setupIfNeeded() {
 async function internalSetup() {
     // Load WebAssembly components. Functions provided by them are available with await wasmCall('functionName', argument), where argument is an int or an array of ints.
     // https://developer.mozilla.org/en-US/docs/WebAssembly/Loading_and_running
-    implDebug('Starting internal setup', 0);
     await eiteHostCall('internalEiteReqWasmLoad', ['wasm-common/eite-c-exts.c.wat']);
 
-    implDebug('Done WASM setup', 0);
     // Set up environment variables.
 
     // Detect if we can create DOM nodes (otherwise we'll output to a terminal). This is used to provide getEnvironmentPreferredFormat.
@@ -527,7 +497,6 @@ async function internalSetup() {
     if (await getSharedState('envResolutionW') === 0 || await getSharedState('envResolutionH') === 0 || await getSharedState('envResolutionW') === undefined || await getSharedState('envResolutionH') === undefined) {
         await implWarn('The resolution detected was zero in at least one dimension. Width = '+await getSharedState('envResolutionW')+'; height = '+await getSharedState('envResolutionH')+'. Things may draw incorrectly. TODO: Add a way to configure this for environments that misreport it.');
     }
-    implDebug('Done environment setup', 0);
 
     // Set up data sets.
 
@@ -535,7 +504,6 @@ async function internalSetup() {
     if (!await getSharedState('datasetsLoaded')) {
         await internalLoadDatasets();
     }
-    implDebug('Loaded datasets', 0);
 
     // Fill out format settings arrays in case they aren't yet
     let settingsCount=Object.keys(await listFormats()).length;
@@ -556,12 +524,10 @@ async function internalSetup() {
             await setSharedState('exportSettings', tempSettings);
         }
     }
-    implDebug('Done preparing format settings arrays', 0);
 
     // Set up storage
 
     await storageSetup(await getSharedState('EITE_STORAGE_CFG'));
-    implDebug('Done storage setup', 0);
 
     // Other startup stuff.
 
@@ -612,7 +578,6 @@ async function internalSetup() {
             }
         });
     }
-    implDebug('Done internal setup', 0);
 
     await setSharedState('setupFinished', true);
 }
@@ -1294,9 +1259,7 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
-    console.log('Message log '+strMessage);
     if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
-    console.log('Message log delegated '+strMessage);
         await eiteHostCall('implLog', [strMessage]);
     }
     else {
@@ -1312,7 +1275,8 @@ async function implLog(strMessage) {
                 await console.log("Previous message sent at: " + await internalDebugPrintStack());
             }
             else {
-                if (2 <= await getSharedState('STAGEL_DEBUG')) {
+                // use getWindowOrSelf instead of getSharedState to avoid recursion
+                if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
                     await console.log("(Previous message sent from non-StageL code.)");
                 }
             }
@@ -1322,9 +1286,7 @@ async function implLog(strMessage) {
         }
     }
 }
-
 async function implDebug(strMessage, intLevel) {
-    console.log('Message debug '+strMessage);
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
     }
@@ -1334,9 +1296,9 @@ async function implDebug(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
-    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
-        console.log('Would have called implLog '+strMessage);
-        //await implLog(strMessage);
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    if (intLevel <= getWindowOrSelf()['STAGEL_DEBUG']) {
+        await implLog(strMessage);
     }
 }
 

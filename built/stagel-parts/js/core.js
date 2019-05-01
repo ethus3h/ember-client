@@ -194,11 +194,12 @@ async function internalStorageGetTable(tableName) {
 }
 
 eiteLibrarySetup(); // This function call should be the only code other than exports, for easy moduleification. This has to run somehow regardless of whether EITE is being used as a library or normally. This does not call setupIfNeeded, meaning things like nice error messages that that provides aren't available.
-function eiteLibrarySetup() {
+async function eiteLibrarySetup() {
     // This function is run when the eite is imported as a script tag. It has to be manually run when eite is imported as a module (unless you call setupIfNeeded or an API interface that calls it for you as the first thing after importing it).
     // Preferences (most preferences should be implemented in EITE itself rather than this implementation of its data format): set defaults if not set already
     if (await getSharedState('STAGEL_DEBUG') === undefined) {
-        await setSharedState('STAGEL_DEBUG', 1);
+        await setSharedState('STAGEL_DEBUG', 0);
+        await setSharedState('STAGEL_DEBUG_UNSET', true);
     }
     if (await getSharedState('EITE_STORAGE_CFG') === undefined) {
         await setSharedState('EITE_STORAGE_CFG', []);
@@ -261,7 +262,13 @@ function eiteLibrarySetup() {
     await setSharedState('haveDom', false);
     await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
-    // Remaining code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
+    await setSharedState('stagelDebugCallstack', []);
+    await setSharedState('stagelDebugCallNames', []);
+    await setSharedState('stagelDebugCallCounts', []);
+    await setSharedState('stagelDebugCollection', "");
+    //alert("Setting up logging");
+
+    // Next code is support for the eiteCall routine which allows calling other eite routines using a Web worker if available.
 
     // To call a routine from eite, running it as a worker if available, run: await eiteCall('routineName', [param1, param2, param3...]); (with the brackets around the params). There's also eiteHostCall('routineName', [params...]) for calling functions from the worker that can't be called from a worker.
 
@@ -297,22 +304,22 @@ function eiteLibrarySetup() {
                 const uuid = message.data.uuid;
                 const msgid = message.data.msgid;
                 const args = message.data.args;
-                implDebug('Host understood message '+msgid+' from worker: '+args, 1);
-                internalDebugLogJSObject(message);
+                await implDebug('Host understood message '+msgid+' from worker: '+args, 1);
+                await internalDebugLogJSObject(message);
                 let res = await window[args[0]]( ...args[1] );
                 await implDebug('Request made of host by worker in message '+msgid+' returned the result: '+res, 1);
                 window.eiteWorker.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse', msgid: msgid, args: res});
             }
-            window.eiteWorker.onmessage = function(message) {
+            window.eiteWorker.onmessage = async function(message) {
                 // Handle messages sent to this code when it is not running as a Web worker
                 const uuid = message.data.uuid;
                 const msgid = message.data.msgid;
                 const msgdata = message.data.args;
-                implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
-                internalDebugLogJSObject(message);
+                await implDebug('Host got message '+msgid+' from worker: '+msgdata, 1);
+                await internalDebugLogJSObject(message);
                 if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse') {
                     if (msgdata === undefined) {
-                        implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
+                        await implDebug('Web worker returned undefined result in message '+msgid+'.', 1);
                     }
                     let resolveCallback;
                     resolveCallback = window.eiteWorkerResolveCallbacks[msgid];
@@ -321,7 +328,7 @@ function eiteLibrarySetup() {
                         delete window.eiteWorkerResolveCallbacks[msgid];
                     }
                     else {
-                        implDie('Web worker returned invalid message ID '+msgid+'.');
+                        await implDie('Web worker returned invalid message ID '+msgid+'.');
                         throw 'Web worker returned invalid message ID '+msgid+'.';
                     }
                 }
@@ -329,7 +336,7 @@ function eiteLibrarySetup() {
                     window.eiteHostRequestInternalOnMessage(message);
                 }
                 else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerError') {
-                    implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
+                    await implDie('Web worker with message '+msgid+' encountered an error: '+msgdata+'.');
                     throw 'Web worker with message '+msgid+' encountered an error: '+msgdata+'.';
                 }
             };
@@ -352,8 +359,8 @@ function eiteLibrarySetup() {
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
             const args = message.data.args;
-            implDebug('Worker understood message '+msgid+' from host: '+args, 1);
-            internalDebugLogJSObject(message);
+            await implDebug('Worker understood message '+msgid+' from host: '+args, 1);
+            await internalDebugLogJSObject(message);
             let res;
             try {
                 res = await self[args[0]]( ...args[1] );
@@ -366,19 +373,19 @@ function eiteLibrarySetup() {
             self.postMessage({uuid: 'b8316ea083754b2e9290591f37d94765EiteWebworkerResponse', msgid: msgid, args: res});
         }
 
-        self.onmessage = function(message) {
+        self.onmessage = async function(message) {
             // Handle messages sent to this code when it is running as a Web worker
             const uuid = message.data.uuid;
             const msgid = message.data.msgid;
             const args = message.data.args;
-            implDebug('Worker got message '+msgid+' from host: '+args, 1);
-            internalDebugLogJSObject(message);
+            await implDebug('Worker got message '+msgid+' from host: '+args, 1);
+            await internalDebugLogJSObject(message);
             if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerRequest') {
                 self.internalOnMessage(message);
             }
             else if (uuid === 'b8316ea083754b2e9290591f37d94765EiteWebworkerHostResponse') {
                 if (args === undefined) {
-                    implDebug('Host sent undefined contents in message '+msgid+'.', 1);
+                    await implDebug('Host sent undefined contents in message '+msgid+'.', 1);
                 }
                 let resolveCallback;
                 resolveCallback = self.eiteWorkerHostResolveCallbacks[msgid];
@@ -387,7 +394,7 @@ function eiteLibrarySetup() {
                     delete self.eiteWorkerHostResolveCallbacks[msgid];
                 }
                 else {
-                    implDie('Host returned invalid message ID.');
+                    await implDie('Host returned invalid message ID.');
                     throw 'Host returned invalid message ID.';
                 }
             }
@@ -407,13 +414,18 @@ function eiteLibrarySetup() {
                 self.postMessage(thisCall);
             });
         };
-        self.await setSharedState('internalDelegateStateRequests', true);
+        await self.setSharedState('internalDelegateStateRequests', true);
     }
     await setSharedState('librarySetupFinished', true);
+    if (await getSharedState('STAGEL_DEBUG_UNSET') === 'true') {
+        if (await getSharedState('STAGEL_DEBUG') === 0) {
+            await setSharedState('STAGEL_DEBUG', 1);
+        }
+    }
 }
 
-async function await getSharedState(name) {
-    if (await getSharedState('internalDelegateStateRequests') === true) {
+async function getSharedState(name) {
+    if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
         return await eiteHostCall('getSharedState', [name]);
     }
     else {
@@ -421,9 +433,9 @@ async function await getSharedState(name) {
     }
 }
 
-async function await setSharedState(name, value) {
-    if (await getSharedState('internalDelegateStateRequests') === true) {
-        return await eiteHostCall('getSharedState', [name, value]);
+async function setSharedState(name, value) {
+    if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
+        return await eiteHostCall('setSharedState', [name, value]);
     }
     else {
         await implDebug('State change for ' + name + ' to ' + value + '.', 3);
@@ -1216,12 +1228,6 @@ async function strReplace(str, find, replace) {
     FIXMEUnimplemented
 */
 
-await setSharedState('stagelDebugCallstack', []);
-await setSharedState('stagelDebugCallNames', []);
-await setSharedState('stagelDebugCallCounts', []);
-await setSharedState('stagelDebugCollection', "");
-//alert("Setting up logging");
-
 async function implDie(strMessage) {
     // Don't call await assertIsStr(strMessage); here since it can call implDie and cause a recursive loop
 
@@ -1253,22 +1259,33 @@ async function implWarn(strMessage) {
 }
 
 async function implLog(strMessage) {
-    if(typeof strMessage !== "string") {
-        throw "Nonstring error message";
-    }
-    await assertIsStr(strMessage);
-    // Log the provided message
-    await console.log(strMessage);
-    if(await Object.keys(await getSharedState('stagelDebugCallstack')).length > 0) {
-        await console.log("Previous message sent at: " + await internalDebugPrintStack());
+    if (getWindowOrSelf()['internalDelegateStateRequests'] === true) {
+        await eiteHostCall('implLog', [strMessage]);
     }
     else {
-        if (2 <= STAGEL_DEBUG) {
-            await console.log("(Previous message sent from non-StageL code.)");
+        if(typeof strMessage !== "string") {
+            throw "Nonstring error message";
+        }
+        await assertIsStr(strMessage);
+        // Log the provided message
+        await console.log(strMessage);
+        let temp=await getSharedState('stagelDebugCallstack');
+        if(temp !== undefined) {
+            if(await Object.keys(temp).length > 0) {
+                await console.log("Previous message sent at: " + await internalDebugPrintStack());
+            }
+            else {
+                // use getWindowOrSelf instead of getSharedState to avoid recursion
+                if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
+                    await console.log("(Previous message sent from non-StageL code.)");
+                }
+            }
+        }
+        else {
+            console.log('Warning: implLog called before EITE finished setting up. Log message is: '+strMessage);
         }
     }
 }
-
 async function implDebug(strMessage, intLevel) {
     if(typeof strMessage !== "string") {
         throw "Nonstring error message";
@@ -1279,7 +1296,8 @@ async function implDebug(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message
 
-    if (intLevel <= STAGEL_DEBUG) {
+    // use getWindowOrSelf instead of getSharedState to avoid recursion
+    if (intLevel <= getWindowOrSelf()['STAGEL_DEBUG']) {
         await implLog(strMessage);
     }
 }
@@ -1288,7 +1306,7 @@ async function setDebugLevel(intLevel) {
     await assertIsInt(intLevel);
     // Set the debug level to the level specified. Int from 0 to 2 inclusive. Default 0. 0 = no debug messages printed; 1 = normal debug messages printed; 2 = block entry printed; 3 = verbose printing
 
-    STAGEL_DEBUG=intLevel;
+    await setSharedState('STAGEL_DEBUG', intLevel);
 }
 
 async function FIXMEUnimplemented(strLocation) {
@@ -1303,7 +1321,7 @@ async function internalDebugQuiet(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message, but don't print a trace for it
 
-    if (intLevel <= STAGEL_DEBUG) {
+    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
         // await implLog(strMessage);
         console.log(strMessage);
     }
@@ -1349,7 +1367,7 @@ async function internalDebugStackEnter(strBlockName) {
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
     await setSharedState('stagelDebugCallstack', temp);
 
-    if (2 <= STAGEL_DEBUG) {
+    if (2 <= await getSharedState('STAGEL_DEBUG')) {
         let callstackLevel=stagelDebugCallstack.length;
         let callstackLevelStr='';
         let i=0;
@@ -1412,8 +1430,8 @@ async function internalDebugPrintStack() {
     return result;
 }
 
-function internalDebugLogJSObject(obj) {
-    if (1 <= STAGEL_DEBUG) {
+async function internalDebugLogJSObject(obj) {
+    if (1 <= await getSharedState('STAGEL_DEBUG')) {
         console.log(obj);
     }
 }
