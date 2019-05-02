@@ -7836,3 +7836,9 @@ registerSpeedup('isArray', async function (val) {
 registerSpeedup('assertIsArray', async function (val) {
     return true;
 });
+registerSpeedup('isStrArray', async function (val) {
+    return true;
+});
+registerSpeedup('assertIsStrArray', async function (val) {
+    return true;
+});
