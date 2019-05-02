@@ -130,3 +130,23 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     }
     return true;
 });
+
+registerSpeedup('isIntArray', async function (val) {
+    return true;
+});
+
+registerSpeedup('assertIsIntArray', async function (val) {
+    return true;
+});
+registerSpeedup('isArray', async function (val) {
+    return true;
+});
+registerSpeedup('assertIsArray', async function (val) {
+    return true;
+});
+registerSpeedup('isStrArray', async function (val) {
+    return true;
+});
+registerSpeedup('assertIsStrArray', async function (val) {
+    return true;
+});
