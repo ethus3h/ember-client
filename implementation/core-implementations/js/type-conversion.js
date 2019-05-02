@@ -83,5 +83,7 @@ async function intArrayToBase64(byteArrayInput) {
         data = new Uint8Array(data);
     }
     // based on https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
-    let blob=new Blob()
+    let blob=new Blob(data, { type: "application/octet-stream" });
+    let url=URL.createObjectURL(blob);
+    return url;
 }
