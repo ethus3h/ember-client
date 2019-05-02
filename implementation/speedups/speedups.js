@@ -131,10 +131,10 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     return true;
 });
 
+// Unconscionable hack
 registerSpeedup('isIntArray', async function (val) {
     return true;
 });
-
 registerSpeedup('assertIsIntArray', async function (val) {
     return true;
 });
