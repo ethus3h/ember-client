@@ -1377,7 +1377,7 @@ async function internalDebugStackEnter(strBlockName) {
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
     getWindowOrSelf()['stagelDebugCallstack'] = temp;
 
-    if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
+    if (0 <= getWindowOrSelf()['STAGEL_DEBUG']) {
         let callstackLevel=stagelDebugCallstack.length;
         let callstackLevelStr='';
         let i=0;
@@ -1391,7 +1391,7 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (getWindowOrSelf()['stagelDebugCallstack']).slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (getWindowOrSelf()['stagelDebugCallstack']).slice(-1)[0], 0); await internalSleep(100);
     }
 }
 
