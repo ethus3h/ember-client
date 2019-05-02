@@ -76,3 +76,11 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
     }
     await implDie('Base16b.decode returned false');
 }
+
+async function intArrayToBase64(byteArrayInput) {
+    await assertIsIntArray(data); let strRes;
+    if (data.constructor.name !== 'Uint8Array') {
+        data = new Uint8Array(data);
+    }
+
+}
