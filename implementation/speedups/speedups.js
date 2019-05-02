@@ -145,6 +145,20 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 });
 
+registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+
+    await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
+    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+        await internalDebugStackExit();
+        return strArrayData[strKey];
+    }
+    await internalDebugStackExit();
+    return '';
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+});
+
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
 // Unconscionable hack FIXME
 registerSpeedup('isIntArray', async function (val) {
