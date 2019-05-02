@@ -1391,7 +1391,7 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (getWindowOrSelf()['stagelDebugCallstack']).slice(-1)[0], 0); await internalSleep(100);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (getWindowOrSelf()['stagelDebugCallstack']).slice(-1)[0], 0);// await internalSleep(100);
     }
 }
 
@@ -7822,3 +7822,17 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
 });
 
 // @license-end
+
+registerSpeedup('isIntArray', async function (val) {
+    return true;
+});
+
+registerSpeedup('assertIsIntArray', async function (val) {
+    return true;
+});
+registerSpeedup('isArray', async function (val) {
+    return true;
+});
+registerSpeedup('assertIsArray', async function (val) {
+    return true;
+});
