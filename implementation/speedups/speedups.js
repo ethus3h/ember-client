@@ -134,7 +134,13 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
 registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
         await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
 
-    await assertIsKvArray(strArrayData);
+        await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
+        if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+            await internalDebugStackExit();
+            return true;
+        }
+        await internalDebugStackExit();
+        return false;
     let boolRes = false;
     boolRes = false;
     let intL = 0;
