@@ -131,8 +131,34 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     return true;
 });
 
-registerSpeedup('isIntArray', async function (val) {
-    return true;
+registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
+        await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+
+    await assertIsKvArray(strArrayData);
+    let boolRes = false;
+    boolRes = false;
+    let intL = 0;
+    intL = await count(strArrayData);
+    if (await ne(0, intL)) {
+        let intC = 0;
+        intC = 0;
+        let boolContinue = false;
+        boolContinue = true;
+        while (boolContinue) {
+            if (await implNot(await implLt(intC, intL))) {
+                boolContinue = false;
+            }
+            if (await implEq(0, await implMod(intC, 2))) {
+                if (await implEq(strKey, await get(strArrayData, intC))) {
+                    boolRes = true;
+                    boolContinue = false;
+                }
+            }
+            intC = await implAdd(intC, 1);
+        }
+    }
+
+    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 });
 
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
