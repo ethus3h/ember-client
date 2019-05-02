@@ -1587,12 +1587,12 @@ async function dcDataFilterByValue(dataset, filterField, genericFilterValue, des
 
     asReturn = [];
 
-    let intLength = await getSharedState('dcData')[dataset].length - 2;
+    let intLength = (await getSharedState('dcData'))[dataset].length - 2;
     // start at 1 to skip header row
     let filterValue = await strFrom(genericFilterValue);
     for (let row = 1; row <= intLength; row++) {
-        if(await getSharedState('dcData')[dataset][row][filterField] === filterValue) {
-            asReturn = asReturn.concat(await getSharedState('dcData')[dataset][row][desiredField]);
+        if((await getSharedState('dcData'))[dataset][row][filterField] === filterValue) {
+            asReturn = asReturn.concat((await getSharedState('dcData'))[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
