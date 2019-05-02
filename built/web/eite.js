@@ -7844,6 +7844,7 @@ registerSpeedup('assertIsStrArray', async function (val) {
 
 async function intArrayToBase64(byteArrayInput) {
     await assertIsByteArray(byteArrayInput); let strRes;
+    // based on https://stackoverflow.com/questions/6978156/get-base64-encode-file-data-from-input-form
     let uint8ToString = function uint8ToString(buf) {
         var i, length, out = '';
         for (i = 0, length = buf.length; i < length; i += 1) {
@@ -7857,5 +7858,5 @@ async function intArrayToBase64(byteArrayInput) {
     // based on https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
     let blob=new Blob(byteArrayInput, { type: "application/octet-stream" });
     let url=URL.createObjectURL(blob);
-    return url;
+    return btoa(uint8ToString(yourUint8Array));
 }
