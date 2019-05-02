@@ -1609,7 +1609,7 @@ async function dcDataFilterByValueGreater(dataset, filterField, filterValue, des
     // start at 1 to skip header row
     for (let row = 1; row <= intLength; row++) {
         if(parseInt(await getSharedState('dcData')[dataset][row][filterField], 10) > filterValue) {
-            asReturn = asReturn.concat(await getSharedState('dcData')[dataset][row][desiredField]);
+            asReturn = asReturn.concat((await getSharedState('dcData'))[dataset][row][desiredField]);
         }
     }
     await assertIsStrArray(asReturn); return asReturn;
