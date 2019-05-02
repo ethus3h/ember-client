@@ -131,6 +131,10 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     return true;
 });
 
+registerSpeedup('isIntArray', async function (val) {
+    return true;
+});
+
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
 // Unconscionable hack FIXME
 registerSpeedup('isIntArray', async function (val) {
