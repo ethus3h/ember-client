@@ -143,7 +143,7 @@ async function storageSave(data) {
         // "'hash', known as CID, is a string uniquely addressing the data and can be used to get it again. 'files' is an array because 'add' supports multiple additions, but we only added one entry" —https://js.ipfs.io/
         return files[0].hash;
     }); */
-    intRes=await intFromIntStr(await internalStorageMysqlApiRequest('table=node&action=insertNode&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&data=version,0,data,Example%20node'));
+    intRes=await intFromIntStr(await internalStorageMysqlApiRequest('table=node&action=insertNode&session='+await kvGetValue(await getStorageSettings(), 'mysqlSession')+'&data=version,0,data,'+await intArrayToBase64(data))));
     await assertIsInt(intRes); return intRes;
 }
 
@@ -1061,6 +1061,24 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
         return res;
     }
     await implDie('Base16b.decode returned false');
+}
+
+async function intArrayToBase64(byteArrayInput) {
+    await assertIsByteArray(byteArrayInput); let strRes;
+    // based on https://stackoverflow.com/questions/6978156/get-base64-encode-file-data-from-input-form
+    let uint8ToString = function uint8ToString(buf) {
+        let i;
+        let length;
+        let out = '';
+        for (i = 0, length = buf.length; i < length; i += 1) {
+            out += String.fromCharCode(buf[i]);
+        }
+        return out;
+    }
+    if (byteArrayInput.constructor.name !== 'Uint8Array') {
+        byteArrayInput = new Uint8Array(byteArrayInput);
+    }
+    return btoa(uint8ToString(byteArrayInput));
 }
 
 /* arrays, provides:
