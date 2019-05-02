@@ -132,37 +132,15 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
 });
 
 registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
-        await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
 
-        await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-        if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
-            await internalDebugStackExit();
-            return true;
-        }
+    await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
+    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
         await internalDebugStackExit();
-        return false;
-    let boolRes = false;
-    boolRes = false;
-    let intL = 0;
-    intL = await count(strArrayData);
-    if (await ne(0, intL)) {
-        let intC = 0;
-        intC = 0;
-        let boolContinue = false;
-        boolContinue = true;
-        while (boolContinue) {
-            if (await implNot(await implLt(intC, intL))) {
-                boolContinue = false;
-            }
-            if (await implEq(0, await implMod(intC, 2))) {
-                if (await implEq(strKey, await get(strArrayData, intC))) {
-                    boolRes = true;
-                    boolContinue = false;
-                }
-            }
-            intC = await implAdd(intC, 1);
-        }
+        return true;
     }
+    await internalDebugStackExit();
+    return false;
 
     boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 });
