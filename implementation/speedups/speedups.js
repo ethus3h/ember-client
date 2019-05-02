@@ -141,8 +141,6 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     }
     await internalDebugStackExit();
     return false;
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 });
 
 registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
@@ -155,8 +153,6 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     }
     await internalDebugStackExit();
     return '';
-
-    boolReturn = boolRes; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
 });
 
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
