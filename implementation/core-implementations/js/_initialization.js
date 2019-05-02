@@ -67,7 +67,6 @@ async function eiteLibrarySetup() {
         await setSharedState('strArrayStorageCfg', []); // as
         await setSharedState('ipfsNode', undefined);
         await setSharedState('haveDom', false);
-        await setSharedState('useSharedStateForDebugData', false); // The shared-state API is a lot slower, but I guess is needed for modularization... maybe?
         await setSharedState('internalDelegateStateRequests', false); // if set to true, pass back get/set shared state requests to the Web worker's host, allowing state to be kept in sync between the worker and host.
 
         await setSharedState('stagelDebugCallstack', []);
