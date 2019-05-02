@@ -78,12 +78,19 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
 }
 
 async function intArrayToBase64(byteArrayInput) {
-    await assertIsByteArray(data); let strRes;
-    if (data.constructor.name !== 'Uint8Array') {
-        data = new Uint8Array(data);
+    await assertIsByteArray(byteArrayInput); let strRes;
+    // based on https://stackoverflow.com/questions/6978156/get-base64-encode-file-data-from-input-form
+    let uint8ToString = function uint8ToString(buf) {
+        let i;
+        let length;
+        let out = '';
+        for (i = 0, length = buf.length; i < length; i += 1) {
+            out += String.fromCharCode(buf[i]);
+        }
+        return out;
     }
-    // based on https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
-    let blob=new Blob(data, { type: "application/octet-stream" });
-    let url=URL.createObjectURL(blob);
-    return url;
+    if (byteArrayInput.constructor.name !== 'Uint8Array') {
+        byteArrayInput = new Uint8Array(byteArrayInput);
+    }
+    return btoa(uint8ToString(byteArrayInput));
 }
