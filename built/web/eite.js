@@ -1329,21 +1329,21 @@ async function internalDebugQuiet(strMessage, intLevel) {
     await assertIsStr(strMessage); await assertIsInt(intLevel);
     // Log the provided message, but don't print a trace for it
 
-    if (intLevel <= await getSharedState('STAGEL_DEBUG')) {
+    if (intLevel <= getWindowOrSelf()['STAGEL_DEBUG']) {
         // await implLog(strMessage);
         console.log(strMessage);
     }
 }
 
 async function internalDebugCollect(strMessageFragment) {
-    await setSharedState('stagelDebugCollection', await getSharedState('stagelDebugCollection') + strMessageFragment);
+    getWindowOrSelf()['stagelDebugCollection'] = getWindowOrSelf()['stagelDebugCollection'] + strMessageFragment;
 }
 
 async function internalDebugFlush() {
     /* console.log("Flushing debug message fragment collector, which contains: " + stagelDebugCollection); */
     let temp;
-    temp = await getSharedState('stagelDebugCollection');
-    await setSharedState('stagelDebugCollection', "");
+    temp = getWindowOrSelf()['stagelDebugCollection'];
+    getWindowOrSelf()['stagelDebugCollection'] = "";
     return temp;
 }
 
@@ -1354,30 +1354,30 @@ async function internalDebugStackEnter(strBlockName) {
 
     let tempCounts;
 
-    let tempNames = await getSharedState('stagelDebugCallNames');
+    let tempNames = getWindowOrSelf()['stagelDebugCallNames'];
     if (tempNames.indexOf(strBlockName) < 0) {
-        tempNames=await getSharedState('stagelDebugCallNames');
+        tempNames=getWindowOrSelf()['stagelDebugCallNames'];
         tempNames.push(strBlockName);
-        await setSharedState('stagelDebugCallNames', tempNames);
-        tempNames=await getSharedState('stagelDebugCallNames');
-        tempCounts=await getSharedState('stagelDebugCallCounts');
+        getWindowOrSelf()['stagelDebugCallNames'] = tempNames;
+        tempNames=getWindowOrSelf()['stagelDebugCallNames'];
+        tempCounts=getWindowOrSelf()['stagelDebugCallCounts'];
         tempCounts[tempNames.indexOf(strBlockName)] = 0;
-        await setSharedState('stagelDebugCallCounts', tempCounts);
+        getWindowOrSelf()['stagelDebugCallCounts'] = tempCounts;
     }
 
     let ind;
-    tempNames=await getSharedState('stagelDebugCallNames');
+    tempNames=getWindowOrSelf()['stagelDebugCallNames'];
     ind = tempNames.indexOf(strBlockName);
-    tempCounts=await getSharedState('stagelDebugCallCounts');
+    tempCounts=getWindowOrSelf()['stagelDebugCallCounts'];
     tempCounts[ind] = tempCounts[ind] + 1;
-    await setSharedState('stagelDebugCallCounts', tempCounts);
+    getWindowOrSelf()['stagelDebugCallCounts'] = tempCounts;
 
     let temp;
-    temp=await getSharedState('stagelDebugCallstack');
+    temp=getWindowOrSelf()['stagelDebugCallstack'];
     temp.push(strBlockName + " (" + await internalDebugFlush() + ")");
-    await setSharedState('stagelDebugCallstack', temp);
+    getWindowOrSelf()['stagelDebugCallstack'] = temp;
 
-    if (2 <= await getSharedState('STAGEL_DEBUG')) {
+    if (2 <= getWindowOrSelf()['STAGEL_DEBUG']) {
         let callstackLevel=stagelDebugCallstack.length;
         let callstackLevelStr='';
         let i=0;
@@ -1391,35 +1391,35 @@ async function internalDebugStackEnter(strBlockName) {
             i=i+1;
         }
         //let callstackLevelStr=":".repeat(callstackLevel);
-        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (await getSharedState('stagelDebugCallstack')).slice(-1)[0], 2);
+        await internalDebugQuiet(callstackLevelStr+"Entered block: " + (getWindowOrSelf()['stagelDebugCallstack']).slice(-1)[0], 2);
     }
 }
 
 async function internalDebugStackExit() {
     //alert("Dbgstackext");
     let tempStack;
-    tempStack=await getSharedState('stagelDebugCallstack');
+    tempStack=getWindowOrSelf()['stagelDebugCallstack'];
     if (tempStack.slice(-1)[0] === undefined) {
         await implDie("Exited block, but no block on stack");
     }
-    tempStack=await getSharedState('stagelDebugCallstack');
+    tempStack=getWindowOrSelf()['stagelDebugCallstack'];
     await internalDebugQuiet("Exited block: " + await tempStack.pop(), 3);
-    await setSharedState('stagelDebugCallstack', tempStack);
+    getWindowOrSelf()['stagelDebugCallstack'] = tempStack;
 }
 
 async function internalDebugPrintHotspots() {
     let n = 0;
-    n = await getSharedState('stagelDebugCallNames').length;
+    n = getWindowOrSelf()['stagelDebugCallNames'].length;
     let i = 0;
     if (n === 0) {
         console.log('No routine calls have been logged.');
     }
     while (i < n){
-        console.log(await getSharedState('stagelDebugCallNames')[i] + ' was called ' + await getSharedState('stagelDebugCallCounts')[i] + ' times.');
+        console.log(getWindowOrSelf()['stagelDebugCallNames'][i] + ' was called ' + getWindowOrSelf()['stagelDebugCallCounts'][i] + ' times.');
         i = i + 1;
     }
     let sum = 0;
-    sum = await getSharedState('stagelDebugCallCounts').reduce(function (accumulator, currentValue) {
+    sum = getWindowOrSelf()['stagelDebugCallCounts'].reduce(function (accumulator, currentValue) {
         return accumulator + currentValue;
     }, 0);
     console.log('Total function calls: ' + sum);
