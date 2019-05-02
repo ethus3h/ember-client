@@ -5,25 +5,9 @@ window.onload = function() {
     (async function(){
         window.dcNames=[];
         await eiteCall('setupIfNeeded');
-        console.log('bububbu')
-console.log(await eiteCall('getSharedState', ['dcData']));
-        console.log('bubuci')
         await setupIfNeeded(); /* Set up normally and in Web worker because things that need performance on quick calls e.g. to respond when typing are too slow going through the Web worker */
-console.log('eueu');
-console.log(await eiteCall('getSharedState', ['dcData']));
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
-        console.log(await eiteCall('dcGetColumn', ['DcData', 1]));
-        console.log('ok');
-        console.log(await eiteCall('dcGetColumn', ['formats', 1]));
-        console.log('oka');
-        console.log(await eiteCall('listFormats', []));
-        console.log('okb');
-        console.log(await eiteCall('listInputFormats', []));
-        console.log('okbb');
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
-        console.log('okc');
-        console.log(await eiteCall('listInputFormats', []));
-        console.log('okd');
         await handleSearchResultUpdate();
         //console.log(window.dcNames);
         // Attach event listeners to elements
@@ -68,9 +52,7 @@ console.log(await eiteCall('getSharedState', ['dcData']));
         inFormat=document.getElementById('inFormat');
         inFormat.innerHTML='';
         let formats=[];
-        console.log('okc');
         formats = await eiteCall('listInputFormats');
-        console.log('okd');
         for (let i=0;i<Object.keys(formats).length;i++) {
             let elem=document.createElement('option');
             elem.innerHTML=formats[i];
