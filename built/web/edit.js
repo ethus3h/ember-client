@@ -13,9 +13,12 @@ console.log('eueu');
 console.log(await eiteCall('getSharedState', ['dcData']));
         window.dcNames=await eiteCall('dcGetColumn', ['DcData', 1]);
         console.log('ok');
-        let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
-        console.log(await eiteCall('listInputFormats', []));
+        console.log(await eiteCall('listFormats', []));
         console.log('okb');
+        let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
+        console.log('okc');
+        console.log(await eiteCall('listInputFormats', []));
+        console.log('okd');
         await handleSearchResultUpdate();
         //console.log(window.dcNames);
         // Attach event listeners to elements
