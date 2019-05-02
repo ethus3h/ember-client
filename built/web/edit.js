@@ -18,6 +18,8 @@ console.log(await eiteCall('getSharedState', ['dcData']));
         console.log('oka');
         console.log(await eiteCall('listFormats', []));
         console.log('okb');
+        console.log(await eiteCall('listInputFormats', []));
+        console.log('okbb');
         let datasetLength=await eiteCall('dcDatasetLength', ['DcData']);
         console.log('okc');
         console.log(await eiteCall('listInputFormats', []));
