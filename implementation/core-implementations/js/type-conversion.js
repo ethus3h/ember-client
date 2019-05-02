@@ -78,7 +78,7 @@ async function internalIntBitArrayFromBasenbString(byteArrayInput, intRemainder)
 }
 
 async function intArrayToBase64(byteArrayInput) {
-    await assertIsIntArray(data); let strRes;
+    await assertIsByteArray(data); let strRes;
     if (data.constructor.name !== 'Uint8Array') {
         data = new Uint8Array(data);
     }

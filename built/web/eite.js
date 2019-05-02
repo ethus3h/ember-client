@@ -7841,3 +7841,14 @@ registerSpeedup('assertIsStrArray', async function (val) {
 });
 
 // @license-end
+
+async function intArrayToBase64(byteArrayInput) {
+    await assertIsByteArray(data); let strRes;
+    if (data.constructor.name !== 'Uint8Array') {
+        data = new Uint8Array(data);
+    }
+    // based on https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
+    let blob=new Blob(data, { type: "application/octet-stream" });
+    let url=URL.createObjectURL(blob);
+    return url;
+}
