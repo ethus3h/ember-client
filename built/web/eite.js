@@ -7844,6 +7844,13 @@ registerSpeedup('assertIsStrArray', async function (val) {
 
 async function intArrayToBase64(byteArrayInput) {
     await assertIsByteArray(byteArrayInput); let strRes;
+    let uint8ToString = function uint8ToString(buf) {
+        var i, length, out = '';
+        for (i = 0, length = buf.length; i < length; i += 1) {
+            out += String.fromCharCode(buf[i]);
+        }
+        return out;
+    }
     if (byteArrayInput.constructor.name !== 'Uint8Array') {
         byteArrayInput = new Uint8Array(byteArrayInput);
     }
