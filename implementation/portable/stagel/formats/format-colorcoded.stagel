@@ -1,7 +1,7 @@
 r/an/dcaToColorcoded an/dcIn
     assertIsDcArray an/dcIn
     new an/out
-    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:salmon">Mathematics</span> <span style="color:pink">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:purple">Emoji</span> <span style="color:lavender">Styling</span> <span style="color:brown">Other</span></p>'
+    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:salmon">Mathematics</span> <span style="color:rebeccapurple">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:purple">Emoji</span> <span style="color:maroon">Styling</span> <span style="color:brown">Other</span></p>'
     set an/out append an/out dcaToColorcodedFragment an/dcIn
     set an/out append an/out strToByteArray '</body></html>'
     assertIsByteArray an/out
@@ -47,7 +47,7 @@ r/an/dcToColorcoded n/in
         set s/color 'salmon'
     elif eq 'Symbols' s/script
         # Symbols
-        set s/color 'pink'
+        set s/color 'rebeccapurple'
     elif eq 'EL ' substr s/script 0 3
         # Programming
         set s/color 'red'
@@ -62,7 +62,7 @@ r/an/dcToColorcoded n/in
         set s/color 'purple'
     elif eq 'Colors' s/script
         # Styling
-        set s/color 'lavender'
+        set s/color 'maroon'
     else
         # Other
         set s/color 'brown'
