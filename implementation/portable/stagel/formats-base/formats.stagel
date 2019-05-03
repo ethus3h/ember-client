@@ -70,6 +70,8 @@ r/an/dcToFormat s/outFormat n/dc
             set s/lookup dcDataLookupByValue 'mappings/from/unicode' 1 n/dc 0
         if notExcep s/lookup
             set an/res utf8BytesFromDecimalChar hexToDec s/lookup
+    elif eq s/outFormat 'colorcoded'
+        set s/res dcToColorcoded n/dc
     elif eq s/outFormat 'html'
         set s/res dcDataLookupById 'mappings/to/html' n/dc 1
         if strNonempty s/res
