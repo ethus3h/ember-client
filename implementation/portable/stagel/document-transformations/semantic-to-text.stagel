@@ -8,7 +8,7 @@ r/an/dctSemanticToText an/in
     new s/targetLanguage
     set s/targetLanguage getFormatImportSetting 'semanticToText' 'language'
     if eq 0 len s/targetLanguage
-        set s/targetLanguage getEnvLanguage
+        set s/targetLanguage cat 'lang_' getEnvLanguage
     new s/temp
     while lt n/c n/l
         set n/currentDc get an/in n/c

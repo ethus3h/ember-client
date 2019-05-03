@@ -7784,7 +7784,7 @@ async function dctSemanticToText(intArrayIn) {
     let strTargetLanguage = '';
     strTargetLanguage = await getFormatImportSetting('semanticToText', 'language');
     if (await implEq(0, await len(strTargetLanguage))) {
-        strTargetLanguage = await getEnvLanguage();
+        strTargetLanguage = await cat('lang_', await getEnvLanguage());
     }
     let strTemp = '';
     while (await implLt(intC, intL)) {
