@@ -5631,6 +5631,7 @@ async function dcaToColorcodedFragment(intArrayDcIn) {
     let intDcAtIndex = 0;
     while (await implLt(intInputIndex, intLen)) {
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        console.log('Bububu '+intInputIndex);
         intArrayOut = await append(intArrayOut, await dcToFormat('colorcoded', intDcAtIndex));
         intInputIndex = await implAdd(intInputIndex, 1);
     }
