@@ -7960,7 +7960,7 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
     console.log(strArrayData);
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+    if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return strArrayData[strKey];
     }
