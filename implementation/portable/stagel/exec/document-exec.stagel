@@ -10,7 +10,7 @@ r/n/prepareDocumentExec an/contents
     set as/documentExecFrames push as/documentExecFrames ''
     set as/documentExecEvents push as/documentExecEvents ''
     set as/documentExecLogs push as/documentExecLogs ''
-    set as/documentExecSettings append as/documentExecSettings [ '' '' ]
+    set as/documentExecSettings push as/documentExecSettings ','
     assertIsExecId n/execId
     return n/execId
 
