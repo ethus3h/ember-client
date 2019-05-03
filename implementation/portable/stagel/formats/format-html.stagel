@@ -6,4 +6,3 @@ r/an/dcaToHtml an/dcIn
     set an/out append an/out strToByteArray '</body></html>'
     assertIsByteArray an/out
     return an/out
-

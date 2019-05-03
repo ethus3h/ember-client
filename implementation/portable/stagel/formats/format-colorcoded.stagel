@@ -18,11 +18,16 @@ r/an/dcaToColorcodedFragment an/dcIn
     new n/dcAtIndex
     while lt n/inputIndex n/len
         set n/dcAtIndex get an/dcIn n/inputIndex
-        set an/out push an/out dcToFormat 'colorcoded' n/dcAtIndex
+        set an/out append an/out dcToFormat 'colorcoded' n/dcAtIndex
         set n/inputIndex add n/inputIndex 1
     set an/out append an/out strToByteArray '</div>'
     assertIsByteArray an/out
     return an/out
 
 r/an/dcToColorcoded n/in
-    
+    assertIsDc n/in
+    new an/out
+    set an/out append an/out strToByteArray '<span style="color:'
+    new s/categ
+    set s/categ dcGetType n/in
+    if eq 
