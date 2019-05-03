@@ -83,7 +83,7 @@ window.onload = function() {
                 let oldEditFormat=window.editFormatValue;
                 let editFormat=document.getElementById('editFormat').value;
                 let inputarea=document.getElementById('inputarea');
-                await eiteCall('pushExportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,skip_prefilter_semantic,skip_prefilter_code,']);
+                await eiteCall('pushExportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
                 let tempInputValue=await eiteCall('importAndExport', ['integerList', editFormat, await getInputDoc(oldEditFormat)]);
                 await eiteCall('popExportSettings', [await getFormatId('utf8')]);
                 if (editFormat === 'utf8') {
@@ -366,7 +366,7 @@ async function getInputDoc(overrideEditFormat) {
     }
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
-        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
+        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,']);
         res = await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }

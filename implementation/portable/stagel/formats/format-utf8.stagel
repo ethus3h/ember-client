@@ -327,7 +327,7 @@ r/an/dcaFromDcbnbUtf8 an/content
 r/an/dcaToDcbnbFragmentUtf8 an/content
     # convenience wrapper
     new an/res
-    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb dcBasenbFragment,'
+    pushExportSettings getFormatId 'utf8' } 'variants:dcBasenb dcBasenbFragment,skip_prefilter_semantic:,skip_prefilter_code:,'
     set an/res dcaToUtf8 an/content
     popExportSettings getFormatId 'utf8'
     return an/res
