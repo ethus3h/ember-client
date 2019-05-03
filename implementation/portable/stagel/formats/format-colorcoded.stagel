@@ -28,6 +28,10 @@ r/an/dcToColorcoded n/in
     assertIsDc n/in
     new an/out
     set an/out append an/out strToByteArray '<span style="color:'
-    new s/categ
-    set s/categ dcGetType n/in
-    if eq 
+    new s/type
+    set s/type dcGetType n/in
+    new s/script
+    set s/script dcGetScript n/in
+    new s/color
+    if eq 'Cc' s/type
+        set s/color '
