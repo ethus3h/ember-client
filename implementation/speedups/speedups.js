@@ -135,7 +135,7 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+    if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return true;
     }
@@ -147,7 +147,7 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+    if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return strArrayData[strKey];
     }
