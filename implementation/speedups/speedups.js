@@ -130,7 +130,7 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     }
     return true;
 });
-
+/*
 registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     let boolReturn;
 
@@ -152,7 +152,7 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     }
     return '';
 });
-
+*/
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
 // Unconscionable hack FIXME
 registerSpeedup('isIntArray', async function (val) {

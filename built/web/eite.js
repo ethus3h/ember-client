@@ -5345,6 +5345,7 @@ async function dcaFromUtf8(intArrayContent) {
                 intArrayTemp = intArrayLatestChar;
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
+                console.log(intArrayTemp);
                 if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
                     intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
                 }
