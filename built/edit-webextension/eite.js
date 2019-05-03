@@ -5345,8 +5345,10 @@ async function dcaFromUtf8(intArrayContent) {
                 intArrayTemp = intArrayLatestChar;
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
-                if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
-                    intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
+                if (await le(1, await count(intArrayTempFromUnicode))) {
+                    if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
+                        intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
+                    }
                 }
             }
         }
@@ -5440,7 +5442,7 @@ async function dcaToDcbnbFragmentUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,skip_prefilter_semantic:,skip_prefilter_code:,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popExportSettings(await getFormatId('utf8'));
 
@@ -7067,6 +7069,7 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
+    let strTemp = '';
     if (await implEq(strOutFormat, 'utf8')) {
         let strLookup = '';
         strLookup = await dcDataLookupById('mappings/to/unicode', intDc, 1);
@@ -7078,17 +7081,17 @@ async function dcToFormat(strOutFormat, intDc) {
         }
     }
     else if (await implEq(strOutFormat, 'colorcoded')) {
-        strRes = await dcToColorcoded(intDc);
+        intArrayRes = await dcToColorcoded(intDc);
     }
     else if (await implEq(strOutFormat, 'html')) {
-        strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
-        if (await strNonempty(strRes)) {
-            intArrayRes = await strToByteArray(strRes);
+        strTemp = await dcDataLookupById('mappings/to/html', intDc, 1);
+        if (await strNonempty(strTemp)) {
+            intArrayRes = await strToByteArray(strTemp);
         }
         else {
-            strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
-            if (await isBaseStr(strRes, 16)) {
-                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+            strTemp = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+            if (await isBaseStr(strTemp, 16)) {
+                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strTemp)));
             }
         }
     }
@@ -7726,12 +7729,12 @@ async function dcPreprocessForFormat(intArrayIn, strFormat, strDirection) {
     let strPreferredCodeLang = '';
     strPreferredCodeLang = await getPreferredCodeLanguageForFormat(strFormat, strDirection);
     let strTemp = '';
-    if (await implNot(await implIn('skip_prefilter_semantic', await getSettingsForFormat(strFormat, strDirection)))) {
+    if (await implIn('prefilter_semantic', await getSettingsForFormat(strFormat, strDirection))) {
         strTemp = await pushFormatImportSetting('semanticToText', 'language', strPreferredLang);
         intArrayRes = await dctSemanticToText(intArrayRes);
         await setFormatImportSetting('semanticToText', 'language', strTemp);
     }
-    if (await implNot(await implIn('skip_prefilter_code', await getSettingsForFormat(strFormat, strDirection)))) {
+    if (await implIn('prefilter_code', await getSettingsForFormat(strFormat, strDirection))) {
         strTemp = await pushFormatImportSetting('codeToText', 'language', strPreferredCodeLang);
         intArrayRes = await dctCodeToText(intArrayRes);
         await setFormatImportSetting('codeToText', 'language', strTemp);
@@ -7782,9 +7785,9 @@ async function dctSemanticToText(intArrayIn) {
     intL = await count(intArrayIn);
     let intCurrentDc = 0;
     let strTargetLanguage = '';
-    strTargetLanguage = await getFormatImportSetting('semanticToText', 'language');
-    if (await implEq(0, await len(strTargetLanguage))) {
-        strTargetLanguage = await getEnvLanguage();
+    strTargetLanguage = await implCat('lang_', await getFormatImportSetting('semanticToText', 'language'));
+    if (await implEq('lang_', strTargetLanguage)) {
+        strTargetLanguage = await implCat('lang_', await getEnvLanguage());
     }
     let strTemp = '';
     while (await implLt(intC, intL)) {
@@ -7941,16 +7944,15 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     }
     return true;
 });
-
+/*
 registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+    if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return true;
     }
-    await internalDebugStackExit();
     return false;
 });
 
@@ -7958,14 +7960,13 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+    if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return strArrayData[strKey];
     }
-    await internalDebugStackExit();
     return '';
 });
-
+*/
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
 // Unconscionable hack FIXME
 registerSpeedup('isIntArray', async function (val) {

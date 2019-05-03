@@ -223,7 +223,7 @@ async function eiteLibrarySetup() {
             await setSharedState('envTerminalType', 'vt100');
         }
         if (await getSharedState('envLanguage') === undefined) {
-            await setSharedState('envLanguage', 'en');
+            await setSharedState('envLanguage', 'en-US');
         }
         if (await getSharedState('envLocaleConfig') === undefined) {
             await setSharedState('envLocaleConfig', 'inherit:usa,');
@@ -5345,7 +5345,6 @@ async function dcaFromUtf8(intArrayContent) {
                 intArrayTemp = intArrayLatestChar;
                 let intArrayTempFromUnicode = [];
                 intArrayTempFromUnicode = await dcFromFormat('unicode', intArrayTemp);
-                console.log(intArrayTempFromUnicode);
                 if (await le(1, await count(intArrayTempFromUnicode))) {
                     if (await ne(-1, await get(intArrayTempFromUnicode, 0))) {
                         intArrayRes = await append(intArrayRes, intArrayTempFromUnicode);
@@ -5443,7 +5442,7 @@ async function dcaToDcbnbFragmentUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,skip_prefilter_semantic:,skip_prefilter_code:,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popExportSettings(await getFormatId('utf8'));
 
@@ -5631,7 +5630,6 @@ async function dcaToColorcodedFragment(intArrayDcIn) {
     let intDcAtIndex = 0;
     while (await implLt(intInputIndex, intLen)) {
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
-        console.log('Bububu '+intInputIndex);
         intArrayOut = await append(intArrayOut, await dcToFormat('colorcoded', intDcAtIndex));
         intInputIndex = await implAdd(intInputIndex, 1);
     }
@@ -7071,6 +7069,7 @@ async function dcToFormat(strOutFormat, intDc) {
     await assertIsSupportedOutputFormat(strOutFormat);
     await assertIsDc(intDc);
     let intArrayRes = [];
+    let strTemp = '';
     if (await implEq(strOutFormat, 'utf8')) {
         let strLookup = '';
         strLookup = await dcDataLookupById('mappings/to/unicode', intDc, 1);
@@ -7082,17 +7081,17 @@ async function dcToFormat(strOutFormat, intDc) {
         }
     }
     else if (await implEq(strOutFormat, 'colorcoded')) {
-        strRes = await dcToColorcoded(intDc);
+        intArrayRes = await dcToColorcoded(intDc);
     }
     else if (await implEq(strOutFormat, 'html')) {
-        strRes = await dcDataLookupById('mappings/to/html', intDc, 1);
-        if (await strNonempty(strRes)) {
-            intArrayRes = await strToByteArray(strRes);
+        strTemp = await dcDataLookupById('mappings/to/html', intDc, 1);
+        if (await strNonempty(strTemp)) {
+            intArrayRes = await strToByteArray(strTemp);
         }
         else {
-            strRes = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
-            if (await isBaseStr(strRes, 16)) {
-                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strRes)));
+            strTemp = await dcDataLookupByValue('mappings/from/unicode', 1, intDc, 0);
+            if (await isBaseStr(strTemp, 16)) {
+                intArrayRes = await append(intArrayRes, await utf8BytesFromDecimalChar(await hexToDec(strTemp)));
             }
         }
     }
@@ -7950,7 +7949,6 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    console.log(strArrayData);
     if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return true;
@@ -7962,7 +7960,6 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    console.log(strArrayData);
     if (strArrayData.filter((elem,i) => i&1).includes(strKey)) {
         await internalDebugStackExit();
         return strArrayData[strKey];
