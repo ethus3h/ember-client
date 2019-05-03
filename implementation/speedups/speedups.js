@@ -156,10 +156,8 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
 });
 
 registerSpeedup('kvSplit', async function (strArrayData, strKey) {
-    let strArrayReturn;
-
     let strArrayRes = [];
-    strArrayRes = [  ];
+    strArrayRes = [ ];
     let strArrayTemp = [];
     strArrayTemp = await strSplitEsc(strData, ',');
     let intL = 0;

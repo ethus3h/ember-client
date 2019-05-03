@@ -115,14 +115,14 @@ r/as/kvSplit s/data
     new as/res
     set as/res [ ]
     new as/temp
-    set as/temp strSplitEsc s/data ','
+    set as/temp strSplitEscaped s/data ','
     new n/l
     set n/l count as/temp
     if ne 0 n/l
         new n/c
         set n/c 0
         while lt n/c n/l
-            set as/res append as/res strSplitEsc get as/temp n/c } ':'
+            set as/res append as/res strSplitEscaped get as/temp n/c } ':'
             set n/c inc n/c
     return as/res
 
