@@ -5440,7 +5440,7 @@ async function dcaToDcbnbFragmentUtf8(intArrayContent) {
 
     /* convenience wrapper */
     let intArrayRes = [];
-    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,skip_prefilter_semantic:,skip_prefilter_code:,');
+    await pushExportSettings(await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,');
     intArrayRes = await dcaToUtf8(intArrayContent);
     await popExportSettings(await getFormatId('utf8'));
 
@@ -7726,12 +7726,12 @@ async function dcPreprocessForFormat(intArrayIn, strFormat, strDirection) {
     let strPreferredCodeLang = '';
     strPreferredCodeLang = await getPreferredCodeLanguageForFormat(strFormat, strDirection);
     let strTemp = '';
-    if (await implNot(await implIn('skip_prefilter_semantic', await getSettingsForFormat(strFormat, strDirection)))) {
+    if (await implIn('prefilter_semantic', await getSettingsForFormat(strFormat, strDirection))) {
         strTemp = await pushFormatImportSetting('semanticToText', 'language', strPreferredLang);
         intArrayRes = await dctSemanticToText(intArrayRes);
         await setFormatImportSetting('semanticToText', 'language', strTemp);
     }
-    if (await implNot(await implIn('skip_prefilter_code', await getSettingsForFormat(strFormat, strDirection)))) {
+    if (await implIn('prefilter_code', await getSettingsForFormat(strFormat, strDirection))) {
         strTemp = await pushFormatImportSetting('codeToText', 'language', strPreferredCodeLang);
         intArrayRes = await dctCodeToText(intArrayRes);
         await setFormatImportSetting('codeToText', 'language', strTemp);
