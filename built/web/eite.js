@@ -4760,7 +4760,7 @@ async function prepareDocumentExec(intArrayContents) {
     strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
     strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
     strArrayDocumentExecLogs = await push(strArrayDocumentExecLogs, '');
-    strArrayDocumentExecSettings = await push(strArrayDocumentExecSettings, '');
+    strArrayDocumentExecSettings = await append(strArrayDocumentExecSettings, ['', '']);
     await assertIsExecId(intExecId);
 
     intReturn = intExecId;  return intReturn;
