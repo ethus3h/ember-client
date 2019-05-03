@@ -155,7 +155,7 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
     return '';
 });
 
-registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
+registerSpeedup('kvSplit', async function (strArrayData, strKey) {
     await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
 
     await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
