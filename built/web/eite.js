@@ -223,7 +223,7 @@ async function eiteLibrarySetup() {
             await setSharedState('envTerminalType', 'vt100');
         }
         if (await getSharedState('envLanguage') === undefined) {
-            await setSharedState('envLanguage', 'en-US');
+            await setSharedState('envLanguage', 'en');
         }
         if (await getSharedState('envLocaleConfig') === undefined) {
             await setSharedState('envLocaleConfig', 'inherit:usa,');
