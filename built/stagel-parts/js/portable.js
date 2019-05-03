@@ -2092,14 +2092,14 @@ async function kvSplit(strData) {
     let strArrayRes = [];
     strArrayRes = [  ];
     let strArrayTemp = [];
-    strArrayTemp = await strSplitEsc(strData, ',');
+    strArrayTemp = await strSplitEscaped(strData, ',');
     let intL = 0;
     intL = await count(strArrayTemp);
     if (await ne(0, intL)) {
         let intC = 0;
         intC = 0;
         while (await implLt(intC, intL)) {
-            strArrayRes = await append(strArrayRes, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+            strArrayRes = await append(strArrayRes, await strSplitEscaped(await get(strArrayTemp, intC), ':'));
             intC = await inc(intC);
         }
     }
@@ -3387,6 +3387,104 @@ async function runTestsFormatIntegerList(boolV) {
     await internalDebugStackExit();
 }
 
+async function dcaToColorcoded(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToColorcoded:format-colorcoded'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    intArrayOut = await strToByteArray('<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:salmon">Mathematics</span> <span style="color:pink">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:purple">Emoji</span> <span style="color:lavender">Styling</span> <span style="color:yellow">Other</span></p>');
+    intArrayOut = await append(intArrayOut, await dcaToColorcodedFragment(intArrayDcIn));
+    intArrayOut = await append(intArrayOut, await strToByteArray('</body></html>'));
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcaToColorcodedFragment(intArrayDcIn) {
+    await internalDebugCollect('intArray DcIn = ' + intArrayDcIn + '; '); await internalDebugStackEnter('dcaToColorcodedFragment:format-colorcoded'); await assertIsIntArray(intArrayDcIn); let intArrayReturn;
+
+    await assertIsDcArray(intArrayDcIn);
+    let intArrayOut = [];
+    intArrayOut = await append(intArrayOut, await strToByteArray('<div style="white-space:pre-wrap">'));
+    let intLen = 0;
+    intLen = await count(intArrayDcIn);
+    let intInputIndex = 0;
+    intInputIndex = 0;
+    let intDcAtIndex = 0;
+    while (await implLt(intInputIndex, intLen)) {
+        intDcAtIndex = await get(intArrayDcIn, intInputIndex);
+        intArrayOut = await append(intArrayOut, await dcToFormat('colorcoded', intDcAtIndex));
+        intInputIndex = await implAdd(intInputIndex, 1);
+    }
+    intArrayOut = await append(intArrayOut, await strToByteArray('</div>'));
+    await assertIsByteArray(intArrayOut);
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
+async function dcToColorcoded(intIn) {
+    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('dcToColorcoded:format-colorcoded'); await assertIsInt(intIn); let intArrayReturn;
+
+    await assertIsDc(intIn);
+    let intArrayOut = [];
+    intArrayOut = await append(intArrayOut, await strToByteArray('<span style="color:'));
+    let strType = '';
+    strType = await dcGetType(intIn);
+    let strScript = '';
+    strScript = await dcGetScript(intIn);
+    let strColor = '';
+    if (await implEq('L', await strChar(strType, 0))) {
+        /* Letter */
+        strColor = 'black';
+    }
+    else if (await implEq('Controls', strScript)) {
+        /* Control */
+        strColor = 'gray';
+    }
+    else if (await implEq('Semantic', strScript)) {
+        /* Semantic */
+        strColor = 'blue';
+    }
+    else if (await implEq('Mathematics', strScript)) {
+        /* Mathematics */
+        strColor = 'salmon';
+    }
+    else if (await implEq('Symbols', strScript)) {
+        /* Symbols */
+        strColor = 'pink';
+    }
+    else if (await implEq('EL ', await substr(strScript, 0, 3))) {
+        /* Programming */
+        strColor = 'red';
+    }
+    else if (await implEq('Financial', strScript)) {
+        /* Financial */
+        strColor = 'green';
+    }
+    else if (await implEq('Punctuation', strScript)) {
+        /* Punctuation */
+        strColor = 'orange';
+    }
+    else if (await implEq('Emoji', strScript)) {
+        /* Emoji */
+        strColor = 'purple';
+    }
+    else if (await implEq('Colors', strScript)) {
+        /* Styling */
+        strColor = 'lavender';
+    }
+    else {
+        /* Other */
+        strColor = 'yellow';
+    }
+    intArrayOut = await append(intArrayOut, await strToByteArray(strColor));
+    intArrayOut = await append(intArrayOut, await strToByteArray('">'));
+    intArrayOut = await append(intArrayOut, await strToByteArray(await strFrom(intIn)));
+    intArrayOut = await append(intArrayOut, await strToByteArray('</span> '));
+
+    intArrayReturn = intArrayOut; await assertIsIntArray(intArrayReturn); await internalDebugStackExit(); return intArrayReturn;
+}
+
 async function dcaFromElad(intArrayIn) {
     await internalDebugCollect('intArray In = ' + intArrayIn + '; '); await internalDebugStackEnter('dcaFromElad:format-elad'); await assertIsIntArray(intArrayIn); let intArrayReturn;
 
@@ -3497,7 +3595,7 @@ async function dcaToHtmlFragment(intArrayDcIn) {
     let intDcAtIndex = 0;
     while (await implLt(intInputIndex, intLen)) {
         intDcAtIndex = await get(intArrayDcIn, intInputIndex);
-        intArrayOut = await push(intArrayOut, await dcToFormat('html', intDcAtIndex));
+        intArrayOut = await append(intArrayOut, await dcToFormat('html', intDcAtIndex));
         intInputIndex = await implAdd(intInputIndex, 1);
     }
     intArrayOut = await append(intArrayOut, await strToByteArray('</div>'));
@@ -4699,6 +4797,9 @@ async function dcaToFormat(strOutFormat, intArrayDcArrayIn) {
     else if (await implEq(strOutFormat, 'asciiSafeSubset')) {
         intArrayRes = await dcaToAsciiSafeSubset(intArrayDcArrayIn);
     }
+    else if (await implEq(strOutFormat, 'colorcoded')) {
+        intArrayRes = await dcaToColorcoded(intArrayDcArrayIn);
+    }
     else if (await implEq(strOutFormat, 'utf8')) {
         intArrayRes = await dcaToUtf8(intArrayDcArrayIn);
     }
@@ -4760,6 +4861,9 @@ async function dcToFormat(strOutFormat, intDc) {
         if (await notExcep(strLookup)) {
             intArrayRes = await utf8BytesFromDecimalChar(await hexToDec(strLookup));
         }
+    }
+    else if (await implEq(strOutFormat, 'colorcoded')) {
+        strRes = await dcToColorcoded(intDc);
     }
     else if (await implEq(strOutFormat, 'html')) {
         strRes = await dcDataLookupById('mappings/to/html', intDc, 1);

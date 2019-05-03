@@ -133,6 +133,30 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
     return true;
 });
 
+registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
+    let boolReturn;
+
+    await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
+    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+        await internalDebugStackExit();
+        return true;
+    }
+    await internalDebugStackExit();
+    return false;
+});
+
+registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
+    let boolReturn;
+
+    await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
+    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
+        await internalDebugStackExit();
+        return strArrayData[strKey];
+    }
+    await internalDebugStackExit();
+    return '';
+});
+
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
 // Unconscionable hack FIXME
 registerSpeedup('isIntArray', async function (val) {
