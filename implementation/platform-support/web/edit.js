@@ -366,7 +366,7 @@ async function getInputDoc(overrideEditFormat) {
     }
     else {
         res = new TextEncoder().encode(document.getElementById('inputarea').value);
-        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb dcBasenbFragment,variants:dcBasenb,skip_prefilter_semantic,skip_prefilter_code,']);
+        await eiteCall('pushImportSettings', [await getFormatId('utf8'), 'variants:dcBasenb,']);
         res = await eiteCall('printArr', [await eiteCall('importDocument', ['utf8', res])]);
         await eiteCall('popImportSettings', [await getFormatId('utf8')]);
     }
