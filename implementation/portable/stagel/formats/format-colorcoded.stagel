@@ -33,8 +33,9 @@ r/an/dcToColorcoded n/in
     new s/script
     set s/script dcGetScript n/in
     new s/color
-    if or eq 'Cc' s/type } eq 'Cn' s/type
+    if eq 'Controls' s/script
         set s/color 'gray'
     elif or eq 'Sm' s/type } eq 'Nd' s/type
         set s/color 'purple'
-    elif eq 'Po' 
+    elif eq 'Punctuation' s/script
+        set s/color 'orange'
