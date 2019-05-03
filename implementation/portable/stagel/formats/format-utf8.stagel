@@ -266,7 +266,7 @@ r/an/dcaFromUtf8 an/content
                 set an/temp an/latestChar
                 new an/tempFromUnicode
                 set an/tempFromUnicode dcFromFormat 'unicode' an/temp
-                if nlt 1 count an/tempFromUnicode
+                if le 1 count an/tempFromUnicode
                     if ne -1 get an/tempFromUnicode 0
                         set an/res append an/res an/tempFromUnicode
         # Place in an/remaining the substring of input that has not been processed yet.
