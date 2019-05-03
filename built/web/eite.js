@@ -2285,7 +2285,7 @@ async function getExecOption(intExecId, strKey) {
     await setupIfNeeded();
     await assertIsExecId(intExecId);
     let strRes = '';
-    strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
+    //strRes = await kvGetValue(await getExecSettings(intExecId), strKey);
 
     strReturn = strRes;  return strReturn;
 }
