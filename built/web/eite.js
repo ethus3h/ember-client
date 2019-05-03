@@ -7951,7 +7951,6 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
         await internalDebugStackExit();
         return true;
     }
-    await internalDebugStackExit();
     return false;
 });
 
@@ -7964,7 +7963,6 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
         await internalDebugStackExit();
         return strArrayData[strKey];
     }
-    await internalDebugStackExit();
     return '';
 });
 
