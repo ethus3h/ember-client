@@ -1,25 +1,9 @@
-r/an/dcaToColorcoded an/dcIn
+r/an/dcaToHtml an/dcIn
     assertIsDcArray an/dcIn
     new an/out
-    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span><span style="color:black">Control</span><span style="color:black">Semantic</span><span style="color:black">Mathematics</span><span style="color:black">Symbols</span><span style="color:black">Programming</span><span style="color:black">Letter</span><span style="color:black">Financial</span><span style="color:black">Punctuation</span><span style="color:black">Emoji</span><span style="color:black">Styling</span><span style="color:black">Other</span></p>'
-    set an/out append an/out dcaToColorcodedFragment an/dcIn
+    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body>'
+    set an/out append an/out dcaToHtmlFragment an/dcIn
     set an/out append an/out strToByteArray '</body></html>'
     assertIsByteArray an/out
     return an/out
 
-    r/an/dcaToHtmlFragment an/dcIn
-    assertIsDcArray an/dcIn
-    new an/out
-    set an/out append an/out strToByteArray '<div style="white-space:pre-wrap">'
-    new n/len
-    set n/len count an/dcIn
-    new n/inputIndex
-    set n/inputIndex 0
-    new n/dcAtIndex
-    while lt n/inputIndex n/len
-        set n/dcAtIndex get an/dcIn n/inputIndex
-        set an/out push an/out dcToFormat 'html' n/dcAtIndex
-        set n/inputIndex add n/inputIndex 1
-    set an/out append an/out strToByteArray '</div>'
-    assertIsByteArray an/out
-    return an/out
