@@ -4818,7 +4818,7 @@ async function getCurrentExecPtrPos(intExecId) {
 
     let intRes = 0;
     console.log(await getExecPtrs(intExecId));
-    console.log(await get(await getExecPtrs(intExecId), -1);
+    console.log(await get(await getExecPtrs(intExecId), -1));
     intRes = await intFromIntStr(await get(await getExecPtrs(intExecId), -1));
 
     intReturn = intRes;  return intReturn;
