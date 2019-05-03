@@ -4756,7 +4756,7 @@ async function prepareDocumentExec(intArrayContents) {
     strArrayDocumentExecData = await push(strArrayDocumentExecData, await strPrintArr(intArrayContents));
     /* documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack). */
     strArrayDocumentExecSymbolIndex = await push(strArrayDocumentExecSymbolIndex, '');
-    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, '0,');
+    strArrayDocumentExecPtrs = await push(strArrayDocumentExecPtrs, '0');
     strArrayDocumentExecFrames = await push(strArrayDocumentExecFrames, '');
     strArrayDocumentExecEvents = await push(strArrayDocumentExecEvents, '');
     strArrayDocumentExecLogs = await push(strArrayDocumentExecLogs, '');
