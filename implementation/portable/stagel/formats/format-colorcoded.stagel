@@ -1,7 +1,7 @@
 r/an/dcaToColorcoded an/dcIn
     assertIsDcArray an/dcIn
     new an/out
-    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span><span style="color:black">Control</span><span style="color:black">Semantic</span><span style="color:black">Mathematics</span><span style="color:black">Symbols</span><span style="color:black">Programming</span><span style="color:black">Letter</span><span style="color:black">Financial</span><span style="color:black">Punctuation</span><span style="color:black">Emoji</span><span style="color:black">Styling</span><span style="color:black">Other</span></p>'
+    set an/out strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:purple">Mathematics</span> <span style="color:pink">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:salmon">Emoji</span> <span style="color:lavender">Styling</span> <span style="color:yellow">Other</span></p>'
     set an/out append an/out dcaToColorcodedFragment an/dcIn
     set an/out append an/out strToByteArray '</body></html>'
     assertIsByteArray an/out
@@ -33,5 +33,8 @@ r/an/dcToColorcoded n/in
     new s/script
     set s/script dcGetScript n/in
     new s/color
-    if eq 'Cc' s/type
-        set s/color '
+    if or eq 'Cc' s/type } eq 'Cn' s/type
+        set s/color 'gray'
+    elif or eq 'Sm' s/type } eq 'Nd' s/type
+        set s/color 'purple'
+    elif eq 'Po' 
