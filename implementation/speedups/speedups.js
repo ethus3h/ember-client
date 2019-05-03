@@ -132,7 +132,7 @@ registerSpeedup('arrEq', async function (genericArrayA, genericArrayB) {
 });
 
 registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
-    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvHasValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+    let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
     if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
@@ -144,7 +144,7 @@ registerSpeedup('kvHasValue', async function (strArrayData, strKey) {
 });
 
 registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
-    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+    let boolReturn;
 
     await assertIsKvArray(strArrayData); //based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
     if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
@@ -156,15 +156,22 @@ registerSpeedup('kvGetValue', async function (strArrayData, strKey) {
 });
 
 registerSpeedup('kvSplit', async function (strArrayData, strKey) {
-    await internalDebugCollect('strArray Data = ' + strArrayData + '; '); await internalDebugCollect('str Key = ' + strKey + '; '); await internalDebugStackEnter('kvGetValue:key-value'); await assertIsStrArray(strArrayData); await assertIsStr(strKey); let boolReturn;
+    let strArrayReturn;
 
-    await assertIsKvArray(strArrayData);//based on https://stackoverflow.com/questions/52723904/every-other-element-in-an-array
-    if (strArrayData.filter((elem,i) => i&1).contains(strKey)) {
-        await internalDebugStackExit();
-        return strArrayData[strKey];
+    let strArrayRes = [];
+    strArrayRes = [  ];
+    let strArrayTemp = [];
+    strArrayTemp = await strSplitEsc(strData, ',');
+    let intL = 0;
+    intL = await count(strArrayTemp);
+    if (await ne(0, intL)) {
+        let intC = 0;
+        intC = 0;
+        while (await implLt(intC, intL)) {
+            strArrayRes = await append(strArrayRes, await strSplitEsc(await get(strArrayTemp, intC), ':'));
+            intC = await inc(intC);
+        }
     }
-    await internalDebugStackExit();
-    return '';
 });
 
 // FIXME: Replace (or supplement if necessary) this next bit with polyfills for kv functions (which are slow)
