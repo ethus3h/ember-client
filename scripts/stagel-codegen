@@ -124,6 +124,7 @@ while contains "loop-block" "${tokens[@]}"; do
                 tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
                 tokensTemp+=( "$loopIdxPos" "newline" "" )
                 tokensTemp+="${tokens[@]:$i+13}"
+                tokens="${tokensTemp[@]}"
             fi
         fi
     done
