@@ -78,6 +78,7 @@ loopIdxId=""
 loopElemPos=""
 loopElemType=""
 loopElemId=""
+loopNewlinePos=""
 loopIndentPos=""
 
 for (( i=0; i<tokenCount; i++ )); do
@@ -95,6 +96,9 @@ for (( i=0; i<tokenCount; i++ )); do
             loopElemType="${tokens[$i+5]}"
             loopElemId="${tokens[$i+6]}"
             loopIndentPos="${tokens[$i+7]}"
+            loopNewlinePos="${tokens[$i+10]}"
+            [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
+            
         fi
     fi
 done

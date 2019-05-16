@@ -22,10 +22,13 @@ ident-n
 ident-s
             loopElemId="${tokens[$i+6]}"
  101 108 101 109
-            loopIndentPos="${tokens[$i+7]}"
+            loopNewlinePos="${tokens[$i+7]}"
 4:21:0
+            8
 newline
+            9
 
+            loopIndentPos="${tokens[$i+10]}"
 5:6:0
 indent
 
