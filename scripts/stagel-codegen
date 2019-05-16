@@ -81,26 +81,28 @@ loopElemId=""
 loopNewlinePos=""
 loopIndentPos=""
 
-for (( i=0; i<tokenCount; i++ )); do
-    if ! (( (i+1) % 3 )); then
-        if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
-            tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
-            loopSrcPos="${tokens[$i-5]}"
-            loopSrcType="${tokens[$i-4]}"
-            loopSrcId="${tokens[$i-3]}"
-            loopOperPos="${tokens[$i-2]}"
-            loopIdxPos="${tokens[$i+1]}"
-            loopIdxType="${tokens[$i+2]}"
-            loopIdxId="${tokens[$i+3]}"
-            loopElemPos="${tokens[$i+4]}"
-            loopElemType="${tokens[$i+5]}"
-            loopElemId="${tokens[$i+6]}"
-            loopIndentPos="${tokens[$i+7]}"
-            loopNewlinePos="${tokens[$i+10]}"
-            [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
-            
+while contains "loop-block" "${tokens[@]}"; do
+    for (( i=0; i<tokenCount; i++ )); do
+        if ! (( (i+1) % 3 )); then
+            if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
+                tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
+                loopSrcPos="${tokens[$i-5]}"
+                loopSrcType="${tokens[$i-4]}"
+                loopSrcId="${tokens[$i-3]}"
+                loopOperPos="${tokens[$i-2]}"
+                loopIdxPos="${tokens[$i+1]}"
+                loopIdxType="${tokens[$i+2]}"
+                loopIdxId="${tokens[$i+3]}"
+                loopElemPos="${tokens[$i+4]}"
+                loopElemType="${tokens[$i+5]}"
+                loopElemId="${tokens[$i+6]}"
+                loopNewlinePos="${tokens[$i+7]}"
+                loopIndentPos="${tokens[$i+10]}"
+                [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
+                
+            fi
         fi
-    fi
+    done
 done
 
 # Set up the variables we'll need for going through the tokens and generating the code
