@@ -1,15 +1,28 @@
+            loopSrcPos="${tokens[$i-5]}"
 4:2:0
+            loopSrcType="${tokens[$i-4]}"
 ident-as
+            loopSrcId="${tokens[$i-3]}"
  116 101 109 112
+            loopOperPos="${tokens[$i-2]}"
 4:10:0
+            -1
 loop-block
+            0
 
+            loopIdxPos="${tokens[$i+1]}"
 4:12:0
+            loopIdxType="${tokens[$i+2]}"
 ident-n
+            loopIdxId="${tokens[$i+3]}"
  105
+            loopElemPos="${tokens[$i+4]}"
 4:16:0
+            loopElemType="${tokens[$i+5]}"
 ident-s
+            loopElemId="${tokens[$i+6]}"
  101 108 101 109
+            loopIndentPos="${tokens[$i+7]}"
 4:21:0
 newline
 
