@@ -66,6 +66,15 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 
+# Rewrite loop shorthand
+
+for (( i=0; i<tokenCount; i++ )); do
+    if ! (( (i+1) % 3 )); then
+        if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
+            "$"
+    fi
+done
+
 # Set up the variables we'll need for going through the tokens and generating the code
 
 codegenIndent=0
