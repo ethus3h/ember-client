@@ -114,7 +114,7 @@ codegenFormatType() {
     # First arg: type; second arg: "true" for uppercase first letter; third arg "true" for don't die and return an empty string instead
     local result=""
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         [[ "$1" == "literal-b" ]] && result='bool'
         [[ "$1" == "literal-n" ]] && result='int'
         [[ "$1" == "literal-s" ]] && result='str'
@@ -185,7 +185,7 @@ codegenStringLiteralDelim() {
     js)
         codegenOutput \'
         ;;
-    c)
+    c|cpp)
         codegenOutput \"
         ;;
     *)
@@ -198,7 +198,7 @@ codegenLiteral() {
     codegenDebug "Literal" "${@}" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         case "$1" in
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
@@ -225,7 +225,7 @@ codegenReference() {
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenFormatType "$1"
         codegenOutput "${2^}"
         ;;
@@ -247,7 +247,7 @@ codegenPrintIndentationSpaces() {
 codegenStartDocument() {
     codegenDebug "Start document" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -258,7 +258,7 @@ codegenStartDocument() {
 codegenEndDocument() {
     codegenDebug "End document" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -270,7 +270,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOnNewLine || codegenOutput ' '
         codegenOutput '{'$'\n'
         ;;
@@ -286,7 +286,7 @@ codegenDedent() {
     codegenPrintIndentationSpaces
     #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput '}'$'\n'
         ;;
     *)
@@ -300,7 +300,7 @@ codegenComment() {
     codegenDebug "Comment" "${@}" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput "/*""$1 */"$'\n'
         ;;
     *)
@@ -334,7 +334,7 @@ codegenGetCurrentRoutineType() {
 codegenInitializeType() {
     codegenDebug "Initialize type" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput " = "
         case "$1" in
         "bool")
@@ -372,7 +372,7 @@ codegenInitializeType() {
 codegenStartArray() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput '[ '
         ;;
     *)
@@ -384,7 +384,7 @@ codegenStartArray() {
 codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput ', '
         ;;
     *)
@@ -396,7 +396,7 @@ codegenArrayEntryDelimiter() {
 codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
-    js|c)
+    js|c|cpp)
         codegenOutput ' ]'
         ;;
     *)
@@ -414,7 +414,7 @@ codegenCommandInvocationStart() {
         fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        js|c)
+        js|c|cpp)
             if [[ "c" == "$targetLang" ]]; then
                 codegenType "${codegenArgList[-2]}"
                 codegenOutput ' '
