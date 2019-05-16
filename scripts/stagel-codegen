@@ -68,10 +68,21 @@ fi
 
 # Rewrite loop shorthand
 tokensTemp=()
+loopSrcPos=""
+loopSrcType=""
+loopSrcId=""
+loopOperPos=""
+loopIdxPos=""
+loopIdxId=""
+loopElemPos=""
+loopElemType=""
+loopElemId=""
+loopIndentPos=""
+
 for (( i=0; i<tokenCount; i++ )); do
     if ! (( (i+1) % 3 )); then
         if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
-            tokensTemp="${tokens[@]:0:$i-2}" # does not include tokens[$i-2]
+            tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
         fi
     fi
 done
