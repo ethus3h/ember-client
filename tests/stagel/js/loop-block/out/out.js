@@ -1,10 +1,10 @@
-let strN = '';
-if (await implEq('a', strN)) {
-    strN = 'FizzBuzz';
-}
-else if (await implEq('b', strN)) {
-    strN = 'c';
-}
-else {
-    strN = 'b';
+let strArrayTemp = [];
+strArrayTemp = [ 'd', 'b', 'l', 'c', 'b', 'a' ];
+let intC = 0;
+let intI = 0;
+let strElem = '';
+while (await implLt(intI, await count(strArrayTemp))) {
+    strElem = await get(strArrayTemp, intI);
+    intI = await inc(intI);
+    intC = await inc(intC);
 }
