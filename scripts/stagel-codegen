@@ -76,13 +76,16 @@ loopSrcType=""
 loopSrcId=""
 loopOperPos=""
 loopIdxPos=""
+loopIdxPosIndented=""
 loopIdxType=""
 loopIdxId=""
 loopElemPos=""
+loopElemPosIndented=""
 loopElemType=""
 loopElemId=""
 loopNewlinePos=""
 loopIndentPos=""
+loopIndentLevel=""
 while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
     if [[ "$tokensLoopFound" == "true" ]]; then
         tokens=("${tokensTemp[@]}")
@@ -111,6 +114,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
                         loopElemId="${tokens[$i+6]}"
                         loopNewlinePos="${tokens[$i+7]}"
                         loopIndentPos="${tokens[$i+10]}"
+                        loopIndentLevel=        codegenIndent="${tokens[$i - 2]##*:}"
                         [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
                         tokensTemp+=( "$loopOperPos" "command" "new" )
                         tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
