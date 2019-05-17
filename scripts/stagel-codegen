@@ -68,6 +68,7 @@ fi
 
 # Rewrite loop shorthand
 tokensTemp=()
+tokensLoopFound=""
 loopSrcPos=""
 loopSrcType=""
 loopSrcId=""
@@ -84,47 +85,50 @@ loopIndentPos=""
 while contains "loop-block" "${tokens[@]}"; do
     for (( i=0; i<tokenCount; i++ )); do
         if ! (( (i+1) % 3 )); then
-            if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
-                tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
-                loopSrcPos="${tokens[$i-5]}"
-                loopSrcType="${tokens[$i-4]}"
-                loopSrcId="${tokens[$i-3]}"
-                loopOperPos="${tokens[$i-2]}"
-                loopIdxPos="${tokens[$i+1]}"
-                loopIdxType="${tokens[$i+2]}"
-                loopIdxId="${tokens[$i+3]}"
-                loopElemPos="${tokens[$i+4]}"
-                loopElemType="${tokens[$i+5]}"
-                loopElemId="${tokens[$i+6]}"
-                loopNewlinePos="${tokens[$i+7]}"
-                loopIndentPos="${tokens[$i+10]}"
-                [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
-                tokensTemp+=( "$loopOperPos" "command" "new" )
-                tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
-                tokensTemp+=( "$loopOperPos" "newline" "" )
-                tokensTemp+=( "$loopOperPos" "command" "new" )
-                tokensTemp+=( "$loopElemPos" "$loopElemType" "$loopElemId" )
-                tokensTemp+=( "$loopOperPos" "newline" "" )
-                tokensTemp+=( "$loopOperPos" "command" "while" )
-                tokensTemp+=( "$loopOperPos" "command" "lt" )
-                tokensTemp+=( "$loopOperPos" "ident-n" "$loopIdxId" )
-                tokensTemp+=( "$loopOperPos" "command" "count" )
-                tokensTemp+=( "$loopSrcPos" "$loopSrcType" "$loopSrcId" )
-                tokensTemp+=( "$loopNewlinePos" "newline" "" )
-                tokensTemp+=( "$loopIndentPos" "indent" "" )
-                tokensTemp+=( "$loopElemPos" "command" "set" )
-                tokensTemp+=( "$loopElemPos" "$loopElemType" "$loopElemId" )
-                tokensTemp+=( "$loopElemPos" "command" "get" )
-                tokensTemp+=( "$loopElemPos" "$loopSrcType" "$loopSrcId" )
-                tokensTemp+=( "$loopElemPos" "ident-n" "$loopIdxId" )
-                tokensTemp+=( "$loopElemPos" "newline" "" )
-                tokensTemp+=( "$loopIdxPos" "command" "set" )
-                tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
-                tokensTemp+=( "$loopIdxPos" "command" "inc" )
-                tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
-                tokensTemp+=( "$loopIdxPos" "newline" "" )
-                tokensTemp+="${tokens[@]:$i+13}"
-                tokens="${tokensTemp[@]}"
+            if [[ "$tokensLoopFound" != "true" ]]; then
+                if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
+                    tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
+                    loopSrcPos="${tokens[$i-5]}"
+                    loopSrcType="${tokens[$i-4]}"
+                    loopSrcId="${tokens[$i-3]}"
+                    loopOperPos="${tokens[$i-2]}"
+                    loopIdxPos="${tokens[$i+1]}"
+                    loopIdxType="${tokens[$i+2]}"
+                    loopIdxId="${tokens[$i+3]}"
+                    loopElemPos="${tokens[$i+4]}"
+                    loopElemType="${tokens[$i+5]}"
+                    loopElemId="${tokens[$i+6]}"
+                    loopNewlinePos="${tokens[$i+7]}"
+                    loopIndentPos="${tokens[$i+10]}"
+                    [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
+                    tokensTemp+=( "$loopOperPos" "command" "new" )
+                    tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
+                    tokensTemp+=( "$loopOperPos" "newline" "" )
+                    tokensTemp+=( "$loopOperPos" "command" "new" )
+                    tokensTemp+=( "$loopElemPos" "$loopElemType" "$loopElemId" )
+                    tokensTemp+=( "$loopOperPos" "newline" "" )
+                    tokensTemp+=( "$loopOperPos" "command" "while" )
+                    tokensTemp+=( "$loopOperPos" "command" "lt" )
+                    tokensTemp+=( "$loopOperPos" "ident-n" "$loopIdxId" )
+                    tokensTemp+=( "$loopOperPos" "command" "count" )
+                    tokensTemp+=( "$loopSrcPos" "$loopSrcType" "$loopSrcId" )
+                    tokensTemp+=( "$loopNewlinePos" "newline" "" )
+                    tokensTemp+=( "$loopIndentPos" "indent" "" )
+                    tokensTemp+=( "$loopElemPos" "command" "set" )
+                    tokensTemp+=( "$loopElemPos" "$loopElemType" "$loopElemId" )
+                    tokensTemp+=( "$loopElemPos" "command" "get" )
+                    tokensTemp+=( "$loopElemPos" "$loopSrcType" "$loopSrcId" )
+                    tokensTemp+=( "$loopElemPos" "ident-n" "$loopIdxId" )
+                    tokensTemp+=( "$loopElemPos" "newline" "" )
+                    tokensTemp+=( "$loopIdxPos" "command" "set" )
+                    tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
+                    tokensTemp+=( "$loopIdxPos" "command" "inc" )
+                    tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
+                    tokensTemp+=( "$loopIdxPos" "newline" "" )
+                    tokensTemp+="${tokens[@]:$i+13}"
+                    tokensLoopFound="true"
+                    tokens="${tokensTemp[@]}"
+                fi
             fi
         fi
     done
