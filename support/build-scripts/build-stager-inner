@@ -24,7 +24,7 @@ fi
 
 [[ -z "$2" ]] && die "No target language given."
 
-if [[ -f "./scripts/stagel-convert" ]]; then
+if [[ -f "./scripts/stagel-bootstrap-convert" ]]; then
     ./scripts/stagel-convert "$debugBuild" "$typecheckBuild" "$1" "$2" >> ./built/stagel-build-temp/implementation/portable/stagel/portable."$2"
 else
     stagel-convert "$debugBuild" "$typecheckBuild" "$1" "$2" >> ./built/stagel-build-temp/implementation/portable/stagel/portable."$2"
