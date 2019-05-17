@@ -34,7 +34,7 @@ runTest stagel/js/set-number-add-no-routine
 runTest stagel/js/set-number-add
 runTest stagel/js/set-to-str-routine-with-new
 runTest stagel/js/set-to-str-routine-invocation
-runTest -v stagel/js/routine-fizzbuzz
+runTest stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
 runTest stagel/js/generic-parameter
 runTest stagel/js/array-s
@@ -45,7 +45,7 @@ runTest stagel/js/else
 runTest stagel/js/elif
 runTest stagel/js/arglist-inline-end
 runTest stagel/js/loop-block-longhand
-runTest stagel/js/loop-block
+runTest -v stagel/js/loop-block
 runTest stagel/js/wasm-tests
 
 reportTests

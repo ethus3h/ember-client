@@ -137,6 +137,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
             done
         else
             tokens="${tokensTemp[@]}"
+            tokensTemp=()
             tokensLoopFound="false"
         fi
     fi
