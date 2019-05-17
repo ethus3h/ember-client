@@ -66,6 +66,7 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 set -x
+true
 # Rewrite loop shorthand
 tokensTemp=()
 tokensLoopFound=""
