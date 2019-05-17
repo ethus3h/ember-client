@@ -115,6 +115,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
                         loopNewlinePos="${tokens[$i+7]}"
                         loopIndentPos="${tokens[$i+10]}"
                         loopIndentLevel="${loopIndentPos##*:}"
+                        loopIndentLevel=$((loopIndentLevel+1))
                         loopElemPosIndented="${loopElemPos%:*}:$loopIndentLevel"
                         loopIdxPosIndented="${loopIdxPos%:*}:$loopIndentLevel"
                         [[ "$loopIdxType" == "ident-n" ]] || die "Loop index identifier must be an int."
