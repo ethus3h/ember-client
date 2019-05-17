@@ -44,7 +44,7 @@ runTest stagel/js/str-escape-literal
 runTest stagel/js/else
 runTest stagel/js/elif
 runTest stagel/js/arglist-inline-end
-runTest stagel/js/loop-block-longhand
+runTest -v stagel/js/loop-block-longhand
 runTest -v stagel/js/loop-block
 runTest stagel/js/wasm-tests
 
