@@ -65,7 +65,7 @@ if [[ "$targetLang" == "parsed" ]]; then
     true
     exit
 fi
-
+set -x
 # Rewrite loop shorthand
 tokensTemp=()
 tokensLoopFound=""
@@ -140,6 +140,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
         fi
     fi
 done
+set +x
 
 # Set up the variables we'll need for going through the tokens and generating the code
 
