@@ -85,7 +85,7 @@ loopNewlinePos=""
 loopIndentPos=""
 while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
     if [[ "$tokensLoopFound" == "true" ]]; then
-        tokens="${tokensTemp[@]}"
+        tokens=("${tokensTemp[@]}")
         tokensTemp=()
         tokensLoopFound="false"
     fi
@@ -97,7 +97,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
             for (( i=0; i<tokenCount; i++ )); do
                 if ! (( (i+1) % 3 )); then
                     if [[ "${tokens[$i-1]}" == "loop-block" ]]; then
-                        tokensTemp="${tokens[@]:0:$i-5}" # does not include tokens[$i-5]
+                        tokensTemp=("${tokens[@]:0:$i-5}") # does not include tokens[$i-5]
                         loopSrcPos="${tokens[$i-5]}"
                         loopSrcType="${tokens[$i-4]}"
                         loopSrcId="${tokens[$i-3]}"
@@ -135,7 +135,7 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
                         tokensTemp+=( "$loopIdxPos" "command" "inc" )
                         tokensTemp+=( "$loopIdxPos" "ident-n" "$loopIdxId" )
                         tokensTemp+=( "$loopIdxPos" "newline" "" )
-                        tokensTemp+="${tokens[@]:$i+13}"
+                        tokensTemp+=("${tokens[@]:$i+13}")
                         tokensLoopFound="true"
                     fi
                 fi
