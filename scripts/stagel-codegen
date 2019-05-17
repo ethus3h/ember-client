@@ -66,7 +66,7 @@ if [[ "$targetLang" == "parsed" ]]; then
     exit
 fi
 set -x
-true
+
 # Rewrite loop shorthand
 tokensTemp=()
 tokensLoopFound=""
@@ -84,6 +84,11 @@ loopElemId=""
 loopNewlinePos=""
 loopIndentPos=""
 while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
+    if [[ "$tokensLoopFound" == "true" ]]; then
+        tokens="${tokensTemp[@]}"
+        tokensTemp=()
+        tokensLoopFound="false"
+    fi
     if ! contains "loop-block" "${tokens[@]}"; then
         tokensDoneLoopRewrites="true"
     fi
@@ -135,10 +140,6 @@ while [[ "$tokensDoneLoopRewrites" != "true" ]]; do
                     fi
                 fi
             done
-        else
-            tokens="${tokensTemp[@]}"
-            tokensTemp=()
-            tokensLoopFound="false"
         fi
     fi
 done
