@@ -1,152 +1,50 @@
-1:1:0
-start-document
-
-1:1:0
-filename
-in
-1:2:0
-command
-new
-1:6:0
-ident-as
- 116 101 109 112
-1:12:0
-newline
-
-2:2:0
-command
-set
-2:6:0
-ident-as
- 116 101 109 112
-2:14:0
-literal-as-start
-
-2:16:0
-literal-s
- 100
-2:20:0
-literal-s
- 98
-2:24:0
-literal-s
- 108
-2:28:0
-literal-s
- 99
-2:32:0
-literal-s
- 98
-2:36:0
-literal-s
- 97
-2:40:0
-literal-as-end
-
-2:40:0
-newline
-
-3:2:0
-command
-new
-3:6:0
-ident-n
- 99
-3:8:0
-newline
-
-4:10:0
-command
-new
-4:12:0
-ident-n
- 105
-4:10:0
-newline
-
-4:10:0
-command
-new
-4:16:0
-ident-s
- 101
-108 101
-109
-4:10:0
-newline
-
-4:10:0
-command
-while
-4:10:0
-command
-lt
-4:10:0
-ident-n
- 105
-4:10:0
-command
-count
-4:2:0
-ident-as
- 116 101 109 112
-4:21:0
-newline
-
-5:6:0
-indent
-
-4:16:0
-command
-set
-4:16:0
-ident-s
- 101 108 101 109
-4:16:0
-command
-get
-4:16:0
-ident-as
- 116 101 109 112
-4:16:0
-ident-n
- 105
-4:16:0
-newline
-
-4:12:0
-command
-set
-4:12:0
-ident-n
- 105
-4:12:0
-command
-inc
-4:12:0
-ident-n
- 105
-4:12:0
-newline
-
-5:6:1
-command
-set
-5:10:1
-ident-n
- 99
-5:14:1
-command
-inc
-5:18:1
-ident-n
- 99
-5:20:1
-newline
-
-6:1:0
-dedent
-
-6:1:0
-end-document
-
+Token #1 (1:1:0): start-document (1):  (2)
+Token #2 (1:1:0): filename (4): in (5)
+Token #3 (1:2:0): command (7): new (8)
+Token #4 (1:6:0): ident-as (10):  116 101 109 112 (11)
+Token #5 (1:12:0): newline (13):  (14)
+Token #6 (2:2:0): command (16): set (17)
+Token #7 (2:6:0): ident-as (19):  116 101 109 112 (20)
+Token #8 (2:14:0): literal-as-start (22):  (23)
+Token #9 (2:16:0): literal-s (25):  100 (26)
+Token #10 (2:20:0): literal-s (28):  98 (29)
+Token #11 (2:24:0): literal-s (31):  108 (32)
+Token #12 (2:28:0): literal-s (34):  99 (35)
+Token #13 (2:32:0): literal-s (37):  98 (38)
+Token #14 (2:36:0): literal-s (40):  97 (41)
+Token #15 (2:40:0): literal-as-end (43):  (44)
+Token #16 (2:40:0): newline (46):  (47)
+Token #17 (3:2:0): command (49): new (50)
+Token #18 (3:6:0): ident-n (52):  99 (53)
+Token #19 (3:8:0): newline (55):  (56)
+Token #20 (4:2:0): command (58): new (59)
+Token #21 (4:6:0): ident-n (61):  105 (62)
+Token #22 (4:8:0): newline (64):  (65)
+Token #23 (5:2:0): command (67): new (68)
+Token #24 (5:6:0): ident-s (70):  101 108 101 109 (71)
+Token #25 (5:11:0): newline (73):  (74)
+Token #26 (6:2:0): command (76): while (77)
+Token #27 (6:8:0): command (79): lt (80)
+Token #28 (6:11:0): ident-n (82):  105 (83)
+Token #29 (6:15:0): command (85): count (86)
+Token #30 (6:21:0): ident-as (88):  116 101 109 112 (89)
+Token #31 (6:27:0): newline (91):  (92)
+Token #32 (7:6:0): indent (94):  (95)
+Token #33 (7:6:1): command (97): set (98)
+Token #34 (7:10:1): ident-s (100):  101 108 101 109 (101)
+Token #35 (7:17:1): command (103): get (104)
+Token #36 (7:21:1): ident-as (106):  116 101 109 112 (107)
+Token #37 (7:29:1): ident-n (109):  105 (110)
+Token #38 (7:31:1): newline (112):  (113)
+Token #39 (8:6:1): command (115): set (116)
+Token #40 (8:10:1): ident-n (118):  105 (119)
+Token #41 (8:14:1): command (121): inc (122)
+Token #42 (8:18:1): ident-n (124):  105 (125)
+Token #43 (8:20:1): newline (127):  (128)
+Token #44 (9:6:1): command (130): set (131)
+Token #45 (9:10:1): ident-n (133):  99 (134)
+Token #46 (9:14:1): command (136): inc (137)
+Token #47 (9:18:1): ident-n (139):  99 (140)
+Token #48 (9:20:1): newline (142):  (143)
+Token #49 (10:1:0): dedent (145):  (146)
+Token #50 (10:1:0): end-document (148):  (149)
