@@ -1,4 +1,3 @@
-r/s/fizzBuzz
+r/s/f
     until
-        eq n/counter 100
-        return s/temp
+        condition
