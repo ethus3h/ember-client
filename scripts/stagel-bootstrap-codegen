@@ -719,7 +719,11 @@ codegenCommandInvocationEnd() {
     if ! contains "test" "${stateStack[@]}"; then
         [[ "${stateStack[-2]}" != "arglist" ]] && [[ "${blockStack[-1]}" != "else" ]] && codegenOutput ';'$'\n'
     fi
-    blockStackRemoveLast
+    if [[ "$codegenTestIndentDeferred" == "indent-deferred" ]] && [[ "${blockStack[-2]}" == "test" ]]; then
+        true
+    else
+        blockStackRemoveLast
+    fi
     codegenRoutineType=""
     codegenRoutineName=""
     codegenArgList=()
