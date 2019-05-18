@@ -591,7 +591,8 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         codegenOutput "while (!("
         # Pretend it's in an arglist to make it close the parenthesis for the outside of the while
-        stateStack+=("arglist")
+        # This doesn't work. I guess it'll be necessary to forgo split-line untils.
+        #stateStack+=("arglist")
         ;;
     and|not|eq|gt|lt|add|sub|mul|div|mod|cat|die|error|warn|log|debug|in)
         codegenPrintIndentationSpaces
