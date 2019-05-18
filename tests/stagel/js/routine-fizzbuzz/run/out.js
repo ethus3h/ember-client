@@ -1,8 +1,6 @@
-async function fizzBuzz() {
-    await internalDebugStackEnter('fizzBuzz:in'); let strReturn;
+async function f() {
+    await internalDebugStackEnter('f:in'); let strReturn;
 
     while (!()
 
-        await implEq(intCounter, 100)) {
-
-        
+        await condition())}
