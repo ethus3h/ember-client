@@ -3,4 +3,8 @@ async function f() {
 
     if (
         await condition())}
-    while (!())
+    while (!()) {
+    {
+        await condition();
+    }
+}
