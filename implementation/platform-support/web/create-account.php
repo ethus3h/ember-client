@@ -63,7 +63,7 @@ if ($userData != null) {
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
     <title>User Access Management</title>
     </head>
-    <body><a href="/">→ Home</a><br><br>
+    <body><a href="/">← Home</a><br><br>
     <p>ERROR: The requested user account ID already exists!</p>
     </body>
     </html>';
@@ -78,7 +78,7 @@ elseif ($userData["publicId"] != '') {
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
     <title>User Access Management</title>
     </head>
-    <body><a href="/">→ Home</a><br><br>
+    <body><a href="/">← Home</a><br><br>
     <p>ERROR: The requested user account ID may already exist!</p>
     </body>
     </html>';
@@ -93,7 +93,7 @@ else {
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
     <title>User Access Management</title>
     </head>
-    <body><a href="/">→ Home</a><br><br>
+    <body><a href="/">← Home</a><br><br>
     <p>Added account (new account public ID is: '.$publicId.')! After it has been approved, you can start using the account.</p>
     </body>
     </html>';
