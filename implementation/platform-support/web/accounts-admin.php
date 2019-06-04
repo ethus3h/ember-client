@@ -39,10 +39,9 @@ function getParam($name) {
     }
 }
 include('active.fracturedb.php');
-function eiteHashSecret($secretkey) {
-    return password_hash($secretkey, PASSWORD_DEFAULT);
-}
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
+$accessKey=getParam('accessKey');
+if($accessKey === $mysqlPassword) {
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,3 +68,18 @@ while ($counter <= (count($resultsArray) - 1)) {
     $counter++;
 }
 echo '</tbody></table></body></html>';
+}
+else {
+    http_response_code(403);
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+    <title>User Access Management</title>
+    </head>
+    <body><a href="/">→ Home</a><br><br>
+    <p>ERROR: Incorrect access key!</p>
+    </body>
+    </html>';
+}

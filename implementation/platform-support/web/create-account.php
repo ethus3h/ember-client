@@ -40,6 +40,9 @@ function getParam($name) {
     }
 }
 include('active.fracturedb.php');
+function eiteHashSecret($secretkey) {
+    return password_hash($secretkey, PASSWORD_DEFAULT);
+}
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $publicId = getParam('publicId');
 $secretkey = getParam('secretkey');
@@ -65,7 +68,7 @@ if ($userData["publicId"] != '') {
     </html>';
 }
 else {
-    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'name', 'location', 'employeesCount', 'paymentMethod', 'email', 'other'], ['NULL', $publicId, eiteHashSecret($secretkey), $name, $location, $employeesCount, $paymentMethod, $email, $other]);
+    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'name', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $name, $location, $employeesCount, $paymentMethod, $email, $other, '0']);
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
