@@ -53,7 +53,7 @@ if($accessKey === '') {
     <title>User Access Management</title>
     </head>
     <body><a href="/">← Home</a><br><br>';
-    echo '<form method="post" action="accounts-admin.php"><label for="accessKey">Login ID: </label> <input type="password" name="accessKey" id="accessKey" required><input type="submit" value="Log in to admin panel"></form>';
+    echo '<form method="post" action="accounts-admin.php"><label for="accessKey">Login ID: </label> <input type="password" name="accessKey" id="accessKey" required><br><input type="submit" value="Log in to admin panel"></form>';
     echo '</body></html>';
 }
 else {
@@ -68,7 +68,7 @@ else {
             <title>User Access Management</title>
             </head>
             <body><a href="/">← Home</a><br><br>
-            <table><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Email</th><th>Other</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
+            <table><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');
             $counter = 0;
@@ -78,7 +78,7 @@ else {
                 if($userRow['permissions'] === '0') {
                     $permissionWord='No';
                 }
-                echo '<tr><td>'.$userRow['id'].'</td><td>'.$userRow['publicId'].'</td><td>'.$userRow['name'].'</td><td>'.$userRow['location'].'</td><td>'.$userRow['employeesCount'].'</td><td>'.$userRow['paymentMethod'].'</td><td>'.$userRow['email'].'</td><td>'.$userRow['other'].'</td><td>'.$permissionWord.'</td><td><form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="'.$userRow['permissions'].'"><input type="hidden" name="accountId" value="'.$userRow['id'].'"><input type="hidden" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Toggle"></form></td></tr>';
+                echo '<tr><td>'.$userRow['id'].'</td><td>'.$userRow['publicId'].'</td><td>'.$userRow['personName'].'</td><td>'.$userRow['name'].'</td><td>'.$userRow['referrer'].'</td><td>'.$userRow['email'].'</td><td>'.$userRow['location'].'</td><td>'.$userRow['employeesCount'].'</td><td>'.$userRow['paymentMethod'].'</td><td>'.$userRow['other'].'</td><td>'.$permissionWord.'</td><td><form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="'.$userRow['permissions'].'"><input type="hidden" name="accountId" value="'.$userRow['id'].'"><input type="hidden" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Toggle"></form></td></tr>';
                 $counter++;
             }
             echo '</tbody></table></body></html>';
