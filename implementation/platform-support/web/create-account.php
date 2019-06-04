@@ -41,19 +41,16 @@ function getParam($name) {
 }
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
-$userData=$database->getRow($table, "publicId", $user);
+$publicId = getParam('publicId');
+$secretkey = getParam('secretkey');
+$name = getParam('name');
+$location = getParam('location');
+$employeesCount = getParam('employeesCount');
+$paymentMethod = getParam('paymentMethod');
+$email = getParam('email');
+$other = getParam('other');
+$userData=$database->getRow('idxPerson', "publicId", $publicId);
 if ($userData["publicId"] != '') {
-    //print_r($userData);
-    //echo $secretkey;
-    if(password_verify($secretkey, $userData["hashedSecretKey"])) {
-        $newSession=uuidgen();
-        $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 48*60*60, '']);
-        $resultsArray=$newSession;
-    } else {
-        http_response_code(403);
-        $resultsArray="ERROR: Could not verify secret key. 2d9e733b-58d1-43bd-b306-bbd46570381e";
-    }
-} else {
     http_response_code(403);
     echo '<!DOCTYPE html>
     <html lang="en">
@@ -67,14 +64,17 @@ if ($userData["publicId"] != '') {
     </body>
     </html>';
 }
-echo '<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-<title>User Access Management</title>
-</head>
-<body><a href="/">→ Home</a><br><br>
-<p>Added account! After it has been approved, you can start using the account.</p>
-</body>
-</html>';
+else {
+    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'name', 'location', 'employeesCount', 'paymentMethod', 'email', 'other'], ['NULL', $publicId, eiteHashSecret($secretkey), $name, $location, $employeesCount, $paymentMethod, $email, $other]);
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+    <title>User Access Management</title>
+    </head>
+    <body><a href="/">→ Home</a><br><br>
+    <p>Added account (new account public ID is: '.$publicId.')! After it has been approved, you can start using the account.</p>
+    </body>
+    </html>';
+}
