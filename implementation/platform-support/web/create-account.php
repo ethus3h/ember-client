@@ -42,21 +42,31 @@ function getParam($name) {
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $userData=$database->getRow($table, "publicId", $user);
-        if ($userData != null) {
-            //print_r($userData);
-            //echo $secretkey;
-            if(password_verify($secretkey, $userData["hashedSecretKey"])) {
-                $newSession=uuidgen();
-                $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 48*60*60, '']);
-                $resultsArray=$newSession;
-            } else {
-                http_response_code(403);
-                $resultsArray="ERROR: Could not verify secret key. 2d9e733b-58d1-43bd-b306-bbd46570381e";
-            }
-        } else {
-            http_response_code(403);
-            $resultsArray="ERROR: Unknown user. c5e74673-32dd-408a-be6e-165361256fba";
-        }
+if ($userData["publicId"] != '') {
+    //print_r($userData);
+    //echo $secretkey;
+    if(password_verify($secretkey, $userData["hashedSecretKey"])) {
+        $newSession=uuidgen();
+        $database->addRowFromArrays('idxSession', ['nodeId', 'sessionKey', 'created', 'expires', 'events'], ['NULL', $newSession, $timestamp, $timestamp + 48*60*60, '']);
+        $resultsArray=$newSession;
+    } else {
+        http_response_code(403);
+        $resultsArray="ERROR: Could not verify secret key. 2d9e733b-58d1-43bd-b306-bbd46570381e";
+    }
+} else {
+    http_response_code(403);
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+    <title>User Access Management</title>
+    </head>
+    <body><a href="/">→ Home</a><br><br>
+    <p>ERROR: The requested user account ID already exists!</p>
+    </body>
+    </html>';
+}
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
