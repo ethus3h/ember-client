@@ -46,7 +46,9 @@ function eiteHashSecret($secretkey) {
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $publicId = getParam('publicId');
 $secretkey = getParam('secretkey');
+$personName = getParam('personName');
 $name = getParam('name');
+$referrer = getParam('referrer');
 $location = getParam('location');
 $employeesCount = getParam('employeesCount');
 $paymentMethod = getParam('paymentMethod');
@@ -68,7 +70,7 @@ if (array_key_exists('publicId', $userData)) {
     </body>
     </html>';
 } else {
-    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'name', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $name, $location, $employeesCount, $paymentMethod, $email, $other, '0']);
+    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '0']);
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
