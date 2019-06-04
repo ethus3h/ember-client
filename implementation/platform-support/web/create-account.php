@@ -53,7 +53,7 @@ $paymentMethod = getParam('paymentMethod');
 $email = getParam('email');
 $other = getParam('other');
 $userData=$database->getRow('idxPerson', "publicId", $publicId);
-if ($userData != null) {
+if (array_key_exists('publicId', $userData)) {
     http_response_code(403);
     echo '<!DOCTYPE html>
     <html lang="en">
