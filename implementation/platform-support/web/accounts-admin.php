@@ -25,38 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
 }
-// from https://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid
-function guidv4($data)
-{
-    assert(strlen($data) == 16);
-
-    $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
-    $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
-
-    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-}
-function uuidgen() {
-    return guidv4(random_bytes(16));
-}
-function explode_escaped($delimiter, $string)
-{
-    $exploded = explode($delimiter, $string);
-    $fixed = array();
-    for ($k = 0, $l = count($exploded); $k < $l; ++$k) {
-        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') {
-            if ($k + 1 >= $l) {
-                $fixed[] = trim($exploded[$k]);
-                break;
-            }
-            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter;
-            $exploded[$k].= $exploded[$k + 1];
-            array_splice($exploded, $k + 1, 1);
-            --$l;
-            --$k;
-        } else $fixed[] = trim($exploded[$k]);
-    }
-    return $fixed;
-}
 function getParam($name) {
     if (isset($_GET[$name])) {
         return $_GET[$name];
@@ -70,14 +38,27 @@ function getParam($name) {
         }
     }
 }
-$table = getParam('table');
-$user = getParam('user');
-$secretkey = getParam('secretkey');
-$action = getParam('action');
-$field = getParam('field');
-$value = getParam('value');
-$data = getParam('data');
-$sessionkey = getParam('session');
-$resultsArray=array();
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
+echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+<title>StudyMaster</title>
+</head>
+<body><a href="StudyMaster.php?a=home">→StudyMaster Home</a><br><br>';
+$resultsArray=$database->getTable($table);
+$counter = 0;
+        while ($counter <= (count(explode(',', $columns)) - 1)) {
+            $columnarray = explode(',', $columns);
+            global $baggage_claim;
+            $temp_temp_table = $baggage_claim->claim_luggage('temp_temp_table');
+            $tableid = $baggage_claim->claim_luggage('tableid');
+            $table = $baggage_claim->claim_luggage('table');
+            //print_r($temp_temp_table);
+            echo '   var ' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . ' = document.getElementById(\'' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . '\').innerHTML;
+
+       ';
+            $counter++;
+        }
