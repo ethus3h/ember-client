@@ -65,8 +65,11 @@ if($accessKey === $mysqlPassword) {
         echo '</tbody></table></body></html>';
     }
     else {
-        if($oldPermissions === '0') {
-            setField($table, $field, $value, $id = '')
+        if ($oldPermissions === '0') {
+            $database->setField('idxPerson', 'permissions', '1', $accountId);
+        }
+        else {
+            $database->setField('idxPerson', 'permissions', '0', $accountId);
         }
     }
 }
