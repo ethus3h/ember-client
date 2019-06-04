@@ -45,20 +45,24 @@ echo '<!DOCTYPE html>
 <head>
 <meta charset="utf-8" />
 <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-<title>StudyMaster</title>
+<title>User Access Management</title>
 </head>
-<body><a href="StudyMaster.php?a=home">→StudyMaster Home</a><br><br>';
-$resultsArray=$database->getTable($table);
+<body><a href="/">→ Home</a><br><br>
+<table><thead><tr></tr></thead>
+<tbody>';
+$resultsArray=$database->getTable('idxPerson');
 $counter = 0;
-        while ($counter <= (count(explode(',', $columns)) - 1)) {
-            $columnarray = explode(',', $columns);
-            global $baggage_claim;
-            $temp_temp_table = $baggage_claim->claim_luggage('temp_temp_table');
-            $tableid = $baggage_claim->claim_luggage('tableid');
-            $table = $baggage_claim->claim_luggage('table');
-            //print_r($temp_temp_table);
-            echo '   var ' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . ' = document.getElementById(\'' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . '\').innerHTML;
+while ($counter <= (count($resultsArray) - 1)) {
+    $userRow=$resultsArray[$counter];
+    $columnarray = explode(',', $columns);
+    global $baggage_claim;
+    $temp_temp_table = $baggage_claim->claim_luggage('temp_temp_table');
+    $tableid = $baggage_claim->claim_luggage('tableid');
+    $table = $baggage_claim->claim_luggage('table');
+    //print_r($temp_temp_table);
+    echo '   var ' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . ' = document.getElementById(\'' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . '\').innerHTML;
 
-       ';
-            $counter++;
-        }
+';
+    $counter++;
+}
+echo '</tbody></table></body><html>';
