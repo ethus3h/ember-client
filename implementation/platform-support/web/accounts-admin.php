@@ -65,4 +65,4 @@ while ($counter <= (count($resultsArray) - 1)) {
 ';
     $counter++;
 }
-echo '</tbody></table></body><html>';
+echo '</tbody></table></body></html>';
