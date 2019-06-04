@@ -8,7 +8,19 @@
     <body>
         <h1>Request an account</h1>
         <a href="/">→ Home</a><br><br>
-        <form><form method="post"><input type="text" value="' . $fieldVal . '" id="' . $this->getId() . '" onKeyPress="sync_' . $this->getId() . '();"></form>
+        <form method="post" action="create-account.php">
+            <label for="login">Login ID: </label> <input type="text" placeholder="my-login-id" name="login" id="login" required>
+            <label for="secret">Password: </label> <input type="password" name="secret" id="secret" required>
+            <label for="name">Company Name: </label> <input type="text" placeholder="Company Name..." name="name" id="name" required>
+            <label for="location">Company Location: </label> <input type="text" placeholder="Company Location..." name="location" id="location" required>
+            <label for="employeesCount">Number of Employees: </label> <input type="number" placeholder="Number of employees..." name="employeesCount" id="employeesCount" required>
+            <label for="paymentMethod">Payment Method Preferred: </label> <select name="paymentMethod" id="paymentMethod" required>
+                <option value="cash">Cash</option>
+                <option value="check">Check</option>
+            </select>
+            <label for="email">E-Mail Address: </label> <input type="text" placeholder="example@example.org" name="email" id="email" required>
+            <label for="other">Other Information: </label> <textarea name="other" id="other"></textarea>
+            <input type="submit" value="Send Account Request">
         </form>
     </body>
 </html>
