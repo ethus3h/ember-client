@@ -53,10 +53,8 @@ if($accessKey === '') {
     <title>User Access Management</title>
     </head>
     <body><a href="/">← Home</a><br><br>';
-    echo '<form method="post" action="accounts-admin.php"><label for="publicId">Login ID: </label> <input type="text" placeholder="my-login-id" name="publicId" id="publicId" required><input type="text" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Toggle"></form></td></tr>';
-        $counter++;
-    }
-    echo '</tbody></table></body></html>';
+    echo '<form method="post" action="accounts-admin.php"><label for="accessKey">Login ID: </label> <input type="password" name="accessKey" id="accessKey" required><input type="submit" value="Log in to admin panel"></form>';
+    echo '</body></html>';
 }
 else {
     if($accessKey === $mysqlPassword) {
