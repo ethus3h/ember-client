@@ -50,21 +50,13 @@ echo '<!DOCTYPE html>
 <title>User Access Management</title>
 </head>
 <body><a href="/">→ Home</a><br><br>
-<table><thead><tr></tr></thead>
+<table><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Email</th><th>Other</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
 <tbody>';
 $resultsArray=$database->getTable('idxPerson');
 $counter = 0;
 while ($counter <= (count($resultsArray) - 1)) {
     $userRow=$resultsArray[$counter];
-    $columnarray = explode(',', $columns);
-    global $baggage_claim;
-    $temp_temp_table = $baggage_claim->claim_luggage('temp_temp_table');
-    $tableid = $baggage_claim->claim_luggage('tableid');
-    $table = $baggage_claim->claim_luggage('table');
-    //print_r($temp_temp_table);
-    echo '   var ' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . ' = document.getElementById(\'' . $table . '_' . $columnarray[$counter] . '_' . $temp_temp_table["$tableid"] . '\').innerHTML;
-
-';
+    echo '<tr><td>'.$userRow['id'].'</td><td>'.$userRow['publicId'].'</td><td>'.$userRow['name'].'</td><td>'.$userRow['location'].'</td><td>'.$userRow['employeesCount'].'</td><td>'.$userRow['paymentMethod'].'</td><td>'.$userRow['email'].'</td><td>'.$userRow['other'].'</td><td>'.$userRow['permissions'].'</td><td><form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="'.$userRow['permissions'].'"><input type="hidden" name="accountId" value="'.$userRow['id'].'"><input type="submit" value="Toggle"></form></td></tr>';
     $counter++;
 }
 echo '</tbody></table></body></html>';
