@@ -207,7 +207,7 @@ codegenFormatType() {
     # First arg: type; second arg: "true" for uppercase first letter; third arg "true" for don't die and return an empty string instead
     local result=""
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         [[ "$1" == "literal-b" ]] && result='bool'
         [[ "$1" == "literal-n" ]] && result='int'
         [[ "$1" == "literal-s" ]] && result='str'
@@ -291,7 +291,7 @@ codegenLiteral() {
     codegenDebug "Literal" "${@}" >&2
     # First arg: type; second arg: value
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         case "$1" in
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
@@ -318,7 +318,7 @@ codegenReference() {
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenFormatType "$1"
         codegenOutput "${2^}"
         ;;
@@ -340,7 +340,7 @@ codegenPrintIndentationSpaces() {
 codegenStartDocument() {
     codegenDebug "Start document" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -351,7 +351,7 @@ codegenStartDocument() {
 codegenEndDocument() {
     codegenDebug "End document" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -363,7 +363,7 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOnNewLine || codegenOutput ' '
         codegenOutput '{'$'\n'
         ;;
@@ -379,7 +379,7 @@ codegenDedent() {
     codegenPrintIndentationSpaces
     #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput '}'$'\n'
         ;;
     *)
@@ -393,7 +393,7 @@ codegenComment() {
     codegenDebug "Comment" "${@}" >&2
     codegenPrintIndentationSpaces
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput "/*""$1 */"$'\n'
         ;;
     *)
@@ -427,7 +427,7 @@ codegenGetCurrentRoutineType() {
 codegenInitializeType() {
     codegenDebug "Initialize type" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput " = "
         case "$1" in
         "bool")
@@ -465,7 +465,7 @@ codegenInitializeType() {
 codegenStartArray() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput '[ '
         ;;
     *)
@@ -477,7 +477,7 @@ codegenStartArray() {
 codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput ', '
         ;;
     *)
@@ -489,7 +489,7 @@ codegenArrayEntryDelimiter() {
 codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
-    js|c|cpp|bash)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput ' ]'
         ;;
     *)
@@ -507,7 +507,7 @@ codegenCommandInvocationStart() {
         fi
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        js|c|cpp|bash)
+        bash|c|cpp|cs|java|js|p6|php|pl|sh)
             if [[ "c" == "$targetLang" ]]; then
                 codegenType "${codegenArgList[-2]}"
                 codegenOutput ' '
@@ -610,7 +610,7 @@ codegenCommandInvocationStart() {
     set)
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        js)
+        bash|c|cpp|cs|java|js|p6|php|pl|sh)
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 codegenOutput ' = '
@@ -635,6 +635,9 @@ codegenCommandInvocationStart() {
         js)
             codegenOutput "await $codegenRoutineName("
             ;;
+        bash|c|cpp|cs|java|p6|php|pl|sh)
+            codegenOutput "$codegenRoutineName("
+            ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
             ;;
@@ -649,7 +652,7 @@ codegenCommandInvocationStart() {
 codegenCommandInvocationArgSeparator() {
     codegenDebug "Command invocation argument separator" "${@}" >&2
     case "$targetLang" in
-    js)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput ", "
         ;;
     *)
@@ -661,7 +664,7 @@ codegenCommandInvocationArgSeparator() {
 codegenCommandInvocationArglist() {
     codegenDebug "Command invocation argument list" "${@}" >&2
     case "$targetLang" in
-    js)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
     #set -x
         argumentCount="${#codegenArgList[@]}"
         codegenLastKnownArglistCount="$argumentCount"
@@ -697,7 +700,7 @@ codegenCommandInvocationEnd() {
     add|eq|mod)
         # These commands are implemented with impl* calls
         case "$targetLang" in
-        js)
+        bash|c|cpp|cs|java|js|p6|php|pl|sh)
             codegenOutput ")"
             ;;
         *)
@@ -708,7 +711,7 @@ codegenCommandInvocationEnd() {
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
-        js)
+        bash|c|cpp|cs|java|js|p6|php|pl|sh)
             { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else|debugger)$ ]]; } || codegenOutput ")"
             ;;
         *)
@@ -818,7 +821,7 @@ codegenRoutineDefinitionPreEnd() {
 codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
-    js)
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
         # codegenOutput "}"$'\n'
         ;;
     *)
