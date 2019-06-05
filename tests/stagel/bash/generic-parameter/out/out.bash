@@ -4,5 +4,5 @@ ne() {
     boolTemp="false"
     boolTemp="$(implNot "$(implEq "$genericA" "$genericB")")"
 
-    boolReturn = boolTemp; assertIsBool(boolReturn); internalDebugStackExit(); return boolReturn;
+    boolReturn="$boolTemp"; assertIsBool "$boolReturn"; internalDebugStackExit; print "$boolReturn"
 }
