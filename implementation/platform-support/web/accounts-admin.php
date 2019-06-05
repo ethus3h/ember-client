@@ -48,6 +48,7 @@ if($accessKey === '') {
     <html lang="en">
     <head>
     <meta charset="utf-8" />
+    <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
     <link href="accounts.css" rel="stylesheet" type="text/css">
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
     <title>User Access Management</title>
@@ -63,6 +64,7 @@ else {
             <html lang="en">
             <head>
             <meta charset="utf-8" />
+            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
             <link href="accounts.css" rel="stylesheet" type="text/css">
             <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
             <title>User Access Management</title>
@@ -94,6 +96,7 @@ else {
             <html lang="en">
             <head>
             <meta charset="utf-8" />
+            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
             <link href="accounts.css" rel="stylesheet" type="text/css">
             <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
             <title>User Access Management</title>
@@ -109,6 +112,7 @@ else {
         <html lang="en">
         <head>
         <meta charset="utf-8" />
+        <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
         <link href="accounts.css" rel="stylesheet" type="text/css">
         <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
         <title>User Access Management</title>
