@@ -70,7 +70,7 @@ if (array_key_exists('publicId', $userData)) {
     </body>
     </html>';
 } else {
-    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '0']);
+    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '1']);
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -79,8 +79,9 @@ if (array_key_exists('publicId', $userData)) {
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
     <title>User Access Management</title>
     </head>
-    <body><a href="/">← Home</a><br><br>
-    <p>Added account (new account public ID is: '.$publicId.')! After it has been approved, you can start using the account.</p>
+    <body><br><br>
+    <p>Added account (new account public ID is: '.$publicId.')!</p><br>
+    <p><a href="/">→ Log in at home page</a></p>
     </body>
     </html>';
 }

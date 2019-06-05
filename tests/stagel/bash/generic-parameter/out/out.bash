@@ -1,8 +1,8 @@
-async function ne(genericA, genericB) {
-    await internalDebugCollect('generic A = ' + genericA + '; '); await internalDebugCollect('generic B = ' + genericB + '; '); await internalDebugStackEnter('ne:in'); await assertIsGeneric(genericA); await assertIsGeneric(genericB); let boolReturn;
+ne() {
+    IFS=$'\037' read -r -a genericA <<< "$1"; IFS=$'\037' read -r -a genericB <<< "$1"; internalDebugCollect "generic A = ${genericA[@]}; "; internalDebugCollect "generic A = ${genericB[@]}; "; internalDebugStackEnter('ne:in'); assertIsGeneric(genericA); assertIsGeneric(genericB)
 
-    let boolTemp = false;
-    boolTemp = await implNot(await implEq(genericA, genericB));
+    boolTemp="false"
+    boolTemp = implNot(await implEq(genericA, genericB));
 
-    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    boolReturn = boolTemp; assertIsBool(boolReturn); internalDebugStackExit(); return boolReturn;
 }
