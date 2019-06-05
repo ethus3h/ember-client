@@ -8,6 +8,11 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 (
 cd tests || die
 
+runTestForEachLanguage() {
+    runTest "stagel/bash/$1"
+    runTest "stagel/js/$1"
+}
+
 runTest stagel/no-codegen/routine-minimal
 runTest stagel/no-codegen/routine-newline-in-body
 runTest stagel/no-codegen/if-with-indented
@@ -17,7 +22,7 @@ runTest stagel/no-codegen/loop-block-longhand
 runTest stagel/no-codegen/loop-block
 runTest stagel/no-codegen/routine-fizzbuzz
 runTest stagel/js/arglist-two-nested
-runTest stagel/js/arglist-three-nested
+runTestForEachLanguage arglist-three-nested
 runTest stagel/js/routine-minimal
 runTest stagel/js/two-routines
 runTest stagel/js/bare-block
@@ -43,7 +48,7 @@ runTest stagel/js/bool-literal
 runTest stagel/js/str-escape-literal
 runTest stagel/js/else
 runTest stagel/js/elif
-runTest stagel/js/arglist-inline-end
+runTestForEachLanguage arglist-inline-end
 runTest stagel/js/loop-block-longhand
 runTest stagel/js/loop-block
 runTest stagel/js/wasm-tests

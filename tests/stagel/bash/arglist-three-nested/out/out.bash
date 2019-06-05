@@ -1,1 +1,1 @@
-intCounter = await implAdd(intCounter, await implSub(intCounter, 2));
+intCounter="$(implAdd "$intCounter" "$(implSub "$intCounter" 2)")"

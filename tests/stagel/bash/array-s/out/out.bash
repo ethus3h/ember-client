@@ -1,11 +1,11 @@
-async function strFromByte(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('strFromByte:in'); await assertIsInt(intIn); let strReturn;
+strFromByte() {
+    local -n intIn="$1"; shift; internalDebugCollect "int In = ${intIn[@]}; "; internalDebugStackEnter 'strFromByte:in'; assertIsInt "${intIn[@]}"
 
-    let strArrayChars = [];
-    strArrayChars = [ '', '', '', '', '', '', '' ];
-    /* 0 through 6 */
-    let strArrayTemp = [];
-    strArrayTemp = [ 'd', 'b', 'l', 
-    'c', 'b', 'a' ];
-    await append(strArrayChars, strArrayTemp);
+    strArrayChars=()
+    strArrayChars=( '' '' '' '' '' '' '' )
+    # 0 through 6
+    strArrayTemp=();
+    strArrayTemp=( 'd' 'b' 'l' 
+    'c' 'b' 'a' )
+    append strArrayChars strArrayTemp
 }

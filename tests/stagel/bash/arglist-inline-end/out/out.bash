@@ -1,3 +1,3 @@
-if [[ "true" == "$(or(await implEq('Zp', strType), await implEq('Zl', strType))) {
-    /* return true */
-}
+if [[ "true" == "$(or "$(implEq 'Zp' "$strType")" "$(implEq 'Zl' "$strType")")" ]]; then
+    # return true
+fi
