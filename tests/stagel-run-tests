@@ -39,9 +39,10 @@ runTest stagel/js/set-number-add-no-routine
 runTest stagel/js/set-number-add
 runTest stagel/js/set-to-str-routine-with-new
 runTest stagel/js/set-to-str-routine-invocation
-runTest -v stagel/js/routine-fizzbuzz
+#runTest -v stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
-runTest stagel/js/generic-parameter
+runTestForEachLanguage generic-parameter
+runTestForEachLanguage generic-ga-gi-parameter
 runTestForEachLanguage array-s
 runTest stagel/js/array-zero-only
 runTest stagel/js/bool-literal
