@@ -71,7 +71,7 @@ if (array_key_exists('publicId', $userData)) {
     </body>
     </html>';
 } else {
-    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '1']);
+    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions', 'accountCreationDate', 'server_tz'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '1', gmdate("Y-m-d H:i:s"), date_default_timezone_get()]);
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
