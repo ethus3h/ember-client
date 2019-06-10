@@ -66,10 +66,11 @@ else {
             <meta charset="utf-8" />
             <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
             <link href="accounts.css" rel="stylesheet" type="text/css">
+            <script src="sorttable.js"></script>
             <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
             <title>User Access Management</title>
             </head>
-            <body><a href="/">← Home</a><br><br>
+            <body class="noBodyBackground" class="sortable"><a href="/">← Home</a><br><br>
             <table><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');
