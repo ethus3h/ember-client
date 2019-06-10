@@ -70,8 +70,8 @@ else {
             <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
             <title>User Access Management</title>
             </head>
-            <body class="noBodyBackground" class="sortable"><a href="/">← Home</a><br><br>
-            <table><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
+            <body class="noBodyBackground"><a href="/">← Home</a><br><br>
+            <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');
             $counter = 0;
