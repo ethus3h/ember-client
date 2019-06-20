@@ -51,7 +51,7 @@ if($oldKey === '') {
     <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
     <link href="accounts.css" rel="stylesheet" type="text/css">
     <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-    <title>User Access Management</title>
+    <title>Change Password</title>
     </head>
     <body><a href="/">← Home</a><br><br>';
     echo '<form method="post" action="update-secretkey.php"><label for="publicId">User name: </label> <input type="text" placeholder="my-login-id" name="publicId" id="publicId" required><br><label for="oldKey">Old password: </label> <input type="password" name="oldKey" id="oldKey" required><br><label for="newKey">New password: </label> <input type="password" name="newKey" id="newKey" required><br><input type="submit" value="Change password"></form>';
@@ -60,77 +60,39 @@ if($oldKey === '') {
 else {
     $userData=$database->getRow($table, "publicId", $publicId);
     if ($userData != null) {
-        //print_r($userData);
-        //echo $secretkey;
-        if ($userData["permissions"] != '0') {
-            if (password_verify($oldKey, $userData["hashedSecretKey"])) {
-    
-            } else {
-                http_response_code(403);
-                $resultsArray="ERROR: Could not verify secret key. 2d9e733b-58d1-43bd-b306-bbd46570381e";
-            }
+        if (password_verify($oldKey, $userData["hashedSecretKey"])) {
+            $database->setField('idxPerson', 'hashedSecretKey', eiteHashSecret($newKey), $userRow['id']);
+            echo '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="utf-8" />
+            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
+            <link href="accounts.css" rel="stylesheet" type="text/css">
+            <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+            <title>Change Password</title>
+            </head>
+            <body><br><br>
+            <p>Updated password!</p><br>
+            <p><a href="/">→ Log in with the new password at home page</a></p>
+            </body>
+            </html>';
         } else {
             http_response_code(403);
-            $resultsArray="ERROR: User account has not been activated. 108fb88a-53a7-445c-b4c0-a8929da44e23";
+            echo '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="utf-8" />
+            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
+            <link href="accounts.css" rel="stylesheet" type="text/css">
+            <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+            <title>Change Password</title>
+            </head>
+            <body><a href="/">← Home</a><br><br>
+            <p>ERROR: Incorrect password!</p>
+            </body>
+            </html>';
         }
     } else {
-        http_response_code(403);
-        $resultsArray="ERROR: Unknown user. c5e74673-32dd-408a-be6e-165361256fba";
-    }
-    if($accessKey === $mysqlPassword) {
-        if($oldPermissions === '') {
-            echo '<!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="utf-8" />
-            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
-            <link href="accounts.css" rel="stylesheet" type="text/css">
-            <script src="sorttable.js"></script>
-            <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-            <title>User Access Management</title>
-            </head>
-            <body class="noBodyBackground"><a href="/">← Home</a><br><br>
-            <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
-            <tbody>';
-            $resultsArray=$database->getTable('idxPerson');
-            $counter = 0;
-            while ($counter <= (count($resultsArray) - 1)) {
-                $userRow=$resultsArray[$counter];
-                $permissionWord='Yes';
-                if($userRow['permissions'] === '0') {
-                    $permissionWord='No';
-                }
-                $employeeCountDisplay=$userRow['employeesCount'];
-                if($employeeCountDisplay === '0') {
-                    $employeeCountDisplay='';
-                }
-                echo '<tr><td>'.$userRow['id'].'</td><td>'.$userRow['publicId'].'</td><td>'.$userRow['personName'].'</td><td>'.$userRow['name'].'</td><td>'.$userRow['referrer'].'</td><td>'.$userRow['email'].'</td><td>'.$userRow['location'].'</td><td>'.$employeeCountDisplay.'</td><td>'.$userRow['paymentMethod'].'</td><td>'.$userRow['other'].'</td><td>'.$userRow['accountCreationDate'].'</td><td>'.$permissionWord.'</td><td><form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="'.$userRow['permissions'].'"><input type="hidden" name="accountId" value="'.$userRow['id'].'"><input type="hidden" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Toggle"></form></td></tr>';
-                $counter++;
-            }
-            echo '</tbody></table></body></html>';
-        }
-        else {
-            if ($oldPermissions === '0') {
-                $database->setField('idxPerson', 'permissions', '1', $accountId);
-            }
-            else {
-                $database->setField('idxPerson', 'permissions', '0', $accountId);
-            }
-            echo '<!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="utf-8" />
-            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
-            <link href="accounts.css" rel="stylesheet" type="text/css">
-            <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-            <title>User Access Management</title>
-            </head>
-            <body><a href="/">← Home</a><br><br>';
-            echo '<form method="post" action="accounts-admin.php"><input type="hidden" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Done! Back to management page"></form></td></tr>';
-            echo '</body></html>';
-        }
-    }
-    else {
         http_response_code(403);
         echo '<!DOCTYPE html>
         <html lang="en">
@@ -139,10 +101,10 @@ else {
         <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
         <link href="accounts.css" rel="stylesheet" type="text/css">
         <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-        <title>User Access Management</title>
+        <title>Change Password</title>
         </head>
         <body><a href="/">← Home</a><br><br>
-        <p>ERROR: Incorrect access key!</p>
+        <p>ERROR: Unknown user.</p>
         </body>
         </html>';
     }
