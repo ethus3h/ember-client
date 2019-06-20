@@ -40,10 +40,10 @@ function getParam($name) {
 }
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
-$accessKey=getParam('accessKey');
-$oldPermissions=getParam('oldPermissions');
-$accountId=getParam('accountId');
-if($accessKey === '') {
+$publicId=getParam('publicId');
+$oldKey=getParam('oldKey');
+$newKey=getParam('oldPermissions');
+if($oldKey === '') {
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -54,10 +54,29 @@ if($accessKey === '') {
     <title>User Access Management</title>
     </head>
     <body><a href="/">← Home</a><br><br>';
-    echo '<form method="post" action="accounts-admin.php"><label for="accessKey">Login ID: </label> <input type="password" name="accessKey" id="accessKey" required><br><input type="submit" value="Log in to admin panel"></form>';
+    echo '<form method="post" action="update-secretkey.php"><label for="publicId">User name: </label> <input type="text" placeholder="my-login-id" name="publicId" id="publicId" required><br><label for="oldKey">Old password: </label> <input type="password" name="oldKey" id="oldKey" required><br><label for="newKey">New password: </label> <input type="password" name="newKey" id="newKey" required><br><input type="submit" value="Change password"></form>';
     echo '</body></html>';
 }
 else {
+    $userData=$database->getRow($table, "publicId", $publicId);
+    if ($userData != null) {
+        //print_r($userData);
+        //echo $secretkey;
+        if ($userData["permissions"] != '0') {
+            if (password_verify($oldKey, $userData["hashedSecretKey"])) {
+    
+            } else {
+                http_response_code(403);
+                $resultsArray="ERROR: Could not verify secret key. 2d9e733b-58d1-43bd-b306-bbd46570381e";
+            }
+        } else {
+            http_response_code(403);
+            $resultsArray="ERROR: User account has not been activated. 108fb88a-53a7-445c-b4c0-a8929da44e23";
+        }
+    } else {
+        http_response_code(403);
+        $resultsArray="ERROR: Unknown user. c5e74673-32dd-408a-be6e-165361256fba";
+    }
     if($accessKey === $mysqlPassword) {
         if($oldPermissions === '') {
             echo '<!DOCTYPE html>
