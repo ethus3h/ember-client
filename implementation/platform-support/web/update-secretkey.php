@@ -39,6 +39,9 @@ function getParam($name) {
     }
 }
 include('active.fracturedb.php');
+function eiteHashSecret($secretkey) {
+    return password_hash($secretkey, PASSWORD_DEFAULT);
+}
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $publicId=getParam('publicId');
 $oldKey=getParam('oldKey');
