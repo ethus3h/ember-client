@@ -42,7 +42,8 @@ include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $publicId=getParam('publicId');
 $oldKey=getParam('oldKey');
-$newKey=getParam('oldPermissions');
+$newKey=getParam('newKey');
+$newKeyConfirm=getParam('newKeyConfirm');
 if($oldKey === '') {
     echo '<!DOCTYPE html>
     <html lang="en">
@@ -54,28 +55,46 @@ if($oldKey === '') {
     <title>Change Password</title>
     </head>
     <body><a href="/">← Home</a><br><br>';
-    echo '<form method="post" action="update-secretkey.php"><label for="publicId">User name: </label> <input type="text" placeholder="my-login-id" name="publicId" id="publicId" required><br><label for="oldKey">Old password: </label> <input type="password" name="oldKey" id="oldKey" required><br><label for="newKey">New password: </label> <input type="password" name="newKey" id="newKey" required><br><input type="submit" value="Change password"></form>';
+    echo '<form method="post" action="update-secretkey.php"><label for="publicId">User name: </label> <input type="text" placeholder="my-login-id" name="publicId" id="publicId" required><br><label for="oldKey">Old password: </label> <input type="password" name="oldKey" id="oldKey" required><br><label for="newKey">New password: </label> <input type="password" name="newKey" id="newKey" required><br><label for="newKeyConfirm">Retype new password to confirm: </label> <input type="password" name="newKeyConfirm" id="newKeyConfirm" required><br><input type="submit" value="Change password"></form>';
     echo '</body></html>';
 }
 else {
     $userData=$database->getRow($table, "publicId", $publicId);
     if ($userData != null) {
         if (password_verify($oldKey, $userData["hashedSecretKey"])) {
-            $database->setField('idxPerson', 'hashedSecretKey', eiteHashSecret($newKey), $userRow['id']);
-            echo '<!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="utf-8" />
-            <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
-            <link href="accounts.css" rel="stylesheet" type="text/css">
-            <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
-            <title>Change Password</title>
-            </head>
-            <body><br><br>
-            <p>Updated password!</p><br>
-            <p><a href="/">→ Log in with the new password at home page</a></p>
-            </body>
-            </html>';
+            if($newKey === $newKeyConfirm) {
+                $database->setField('idxPerson', 'hashedSecretKey', eiteHashSecret($newKey), $userRow['id']);
+                echo '<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                <meta charset="utf-8" />
+                <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
+                <link href="accounts.css" rel="stylesheet" type="text/css">
+                <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+                <title>Change Password</title>
+                </head>
+                <body><br><br>
+                <p>Updated password!</p><br>
+                <p><a href="/">→ Log in with the new password at home page</a></p>
+                </body>
+                </html>';
+            }
+            else {
+                http_response_code(400);
+                echo '<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                <meta charset="utf-8" />
+                <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
+                <link href="accounts.css" rel="stylesheet" type="text/css">
+                <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
+                <title>Change Password</title>
+                </head>
+                <body>
+                <p>ERROR: The two new passwords do not match! <a href="javascript:history.back()">Back</a></p>
+                </body>
+                </html>';
+            }
         } else {
             http_response_code(403);
             echo '<!DOCTYPE html>
