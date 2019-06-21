@@ -59,7 +59,7 @@ if($oldKey === '') {
     echo '</body></html>';
 }
 else {
-    $userData=$database->getRow($table, "publicId", $publicId);
+    $userData=$database->getRow("idxPerson", "publicId", $publicId);
     if ($userData != null) {
         if (password_verify($oldKey, $userData["hashedSecretKey"])) {
             if($newKey === $newKeyConfirm) {
