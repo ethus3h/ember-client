@@ -82,8 +82,8 @@ if (array_key_exists('publicId', $userData)) {
     <title>User Access Management</title>
     </head>
     <body><br><br>
-    <p>Added account (new account public ID is: '.$publicId.')!</p><br>
-    <p><a href="/">→ Log in at home page</a></p>
+    <p>Added account (new account public ID is: '.$publicId.')! Once your request has been approved, you can log in from the home page.</p><br>
+    <p><a href="/">Back to home page</a></p>
     </body>
     </html>';
 }
