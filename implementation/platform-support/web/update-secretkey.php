@@ -66,7 +66,7 @@ else {
     if ($userData != null) {
         if (password_verify($oldKey, $userData["hashedSecretKey"])) {
             if($newKey === $newKeyConfirm) {
-                $database->setField('idxPerson', 'hashedSecretKey', eiteHashSecret($newKey), $userRow['id']);
+                $database->setField('idxPerson', 'hashedSecretKey', eiteHashSecret($newKey), $userData['id']);
                 echo '<!DOCTYPE html>
                 <html lang="en">
                 <head>
