@@ -391,9 +391,9 @@ codegenDedent() {
         codegenOutput '}'$'\n'
         ;;
     bash|sh)
-        if [[ "${blockStack[-3]}" =~ ^test-body-if|test-body-elif$ ]]; then
+        if [[ "${blockStack[-4]}" =~ ^test-body-if|test-body-elif$ ]]; then
             codegenOutput 'fi'$'\n'
-        elif [[ "${blockStack[-3]}" =~ ^test-body-while|test-body-until$ ]]; then
+        elif [[ "${blockStack[-4]}" =~ ^test-body-while|test-body-until$ ]]; then
             codegenOutput 'done'$'\n'
         else
             codegenOutput $'\n'
