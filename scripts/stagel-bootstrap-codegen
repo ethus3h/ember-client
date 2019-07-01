@@ -165,6 +165,7 @@ codegenIndent=0
 codegenLastKnownArglistCount=0
 codegenRoutineType=""
 codegenRoutineName=""
+codegenInvocationLevel="0"
 codegenArgList=()
 codegenNewLine="true"
 codegenNewlineLookingForSpaces="true" # True while finding indentation spaces at the beginning of a line.
@@ -672,7 +673,12 @@ codegenCommandInvocationStart() {
             codegenOutput "await impl${codegenRoutineName^}("
             ;;
         bash)
-            codegenOutput "impl${codegenRoutineName^} "
+            if codegenOnNewLine; then
+                codegenOutput "impl${codegenRoutineName^}"
+            else
+                codegenOutput '"$('"impl${codegenRoutineName^}"
+                codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
+            fi
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -722,8 +728,16 @@ codegenCommandInvocationStart() {
         js)
             codegenOutput "await $codegenRoutineName("
             ;;
-        bash|c|cpp|cs|java|p6|php|pl|sh)
+        c|cpp|cs|java|p6|php|pl)
             codegenOutput "$codegenRoutineName("
+            ;;
+        bash|sh)
+            if codegenOnNewLine; then
+                codegenOutput "$codegenRoutineName"
+            else
+                codegenOutput '"$('"$codegenRoutineName"
+                codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
+            fi
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -807,6 +821,9 @@ codegenCommandInvocationEnd() {
         bash|sh)
             if [[ "${blockStack[-1]}" =~ ^(if|elif|while|until)$ ]]; then
                 codegenOutput ' ]]; then'
+            elif [[ "0" != "$codegenInvocationLevel" ]]; then
+                codegenOutput ')"'
+                codegenInvocationLevel=$(( codegenInvocationLevel - 1 ))
             fi
             ;;
         *)
