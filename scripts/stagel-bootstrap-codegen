@@ -620,7 +620,17 @@ codegenCommandInvocationStart() {
         ;;
     if|while)
         codegenPrintIndentationSpaces
-        codegenOutput "$codegenRoutineName ("
+        case "$targetLang" in
+        c|cpp|cs|java|js|p6|php|pl)
+            codegenOutput "$codegenRoutineName ("
+            ;;
+        bash|sh)
+            codegenOutput "$codegenRoutineName"' [[ "true" == '
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+        esac
         ;;
     else|debugger)
         # debugger isn't a StageL command, but I want to be able to use it in firefox js
@@ -656,25 +666,40 @@ codegenCommandInvocationStart() {
         ;;
     set)
         codegenPrintIndentationSpaces
-        case "$targetLang" in
-        bash|c|cpp|cs|java|js|p6|php|pl|sh)
-            if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
-                codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+        if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
+            codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+            case "$targetLang" in
+            c|cpp|cs|java|js|p6|php|pl)
                 codegenOutput ' = '
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 codegenOutput ";"$'\n'
-            else
-                # It's getting set to a command's return value
-                codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                ;;
+            bash|sh)
+                codegenOutput '='
+                codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                codegenOutput $'\n'
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+                ;;
+            esac
+        else
+            # It's getting set to a command's return value
+            codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            case "$targetLang" in
+            c|cpp|cs|java|js|p6|php|pl)
                 codegenOutput ' = '
-                unset 'codegenArgList[-1]'
-                unset 'codegenArgList[-1]'
-            fi
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
+                ;;
+            bash|sh)
+                codegenOutput '='
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+                ;;
+            esac
+            unset 'codegenArgList[-1]'
+            unset 'codegenArgList[-1]'
+        fi
         ;;
     *)
         codegenPrintIndentationSpaces
