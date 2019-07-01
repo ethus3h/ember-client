@@ -1,1 +1,1 @@
-intCounter="$(implAddintCounter,  "$(implSubintCounter, 2)")";
+intCounter="$(implAdd intCounter "$(implSub intCounter 2)")";

@@ -320,7 +320,7 @@ codegenReference() {
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenFormatType "$1"
         codegenOutput "${2^}"
         ;;
