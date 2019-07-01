@@ -324,6 +324,11 @@ codegenReference() {
         codegenFormatType "$1"
         codegenOutput "${2^}"
         ;;
+    bash|sh)
+        codegenOutput '"$'
+        codegenFormatType "$1"
+        codegenOutput "${2^}"'"'
+        ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
