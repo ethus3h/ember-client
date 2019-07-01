@@ -741,7 +741,14 @@ codegenFormatArgument() {
         codegenOutput "${codegenArgumentName^}"
         ;;
     bash)
-        
+        if [[ "$(codegenFormatType "${codegenArgumentType}")" =~ ^(boolArray|intArray|strArray|genericArray|genericItem)$ ]]; then
+            codegenOutput '"$(join_by $'\''\037'\'' "${'
+            codegenFormatType "${codegenArgumentType}"
+            codegenOutput "${codegenArgumentName^}"'[@]}")"'
+        else
+            codegenFormatType '"$'"${codegenArgumentType}"
+            codegenOutput "${codegenArgumentName^}"'"'
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
