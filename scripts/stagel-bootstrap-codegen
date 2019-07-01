@@ -676,10 +676,10 @@ codegenCommandInvocationStart() {
             if codegenOnNewLine; then
                 codegenOutput "impl${codegenRoutineName^}"
             else
-                if [[ "0" != "$codegenInvocationLevel" ]]; then
-                    codegenOutput ' '
-                fi
-                codegenOutput '"$('"impl${codegenRoutineName^}"
+                #if [[ "0" != "$codegenInvocationLevel" ]]; then
+                #    codegenOutput ' '
+                #fi
+                codegenOutput '"$('"impl${codegenRoutineName^} "
                 codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
             fi
             ;;
@@ -738,10 +738,10 @@ codegenCommandInvocationStart() {
             if codegenOnNewLine; then
                 codegenOutput "$codegenRoutineName"
             else
-                if [[ "0" != "$codegenInvocationLevel" ]]; then
-                    codegenOutput ' '
-                fi
-                codegenOutput '"$('"$codegenRoutineName"
+                #if [[ "0" != "$codegenInvocationLevel" ]]; then
+                #    codegenOutput ' '
+                #fi
+                codegenOutput '"$('"$codegenRoutineName "
                 codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
             fi
             ;;
@@ -760,8 +760,11 @@ codegenCommandInvocationStart() {
 codegenCommandInvocationArgSeparator() {
     codegenDebug "Command invocation argument separator" "${@}" >&2
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenOutput ", "
+        ;;
+    bash|sh)
+        codegenOutput ' '
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
