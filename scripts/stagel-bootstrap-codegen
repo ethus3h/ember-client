@@ -772,22 +772,27 @@ codegenCommandInvocationEnd() {
         # This shouldn't happen, because it's all handled in codegenCommandInvocationStart
         die "Internal error (this is a bug): codegenCommandInvocationEnd called for return"
         ;;
-    add|eq|mod)
+    #add|eq|mod)
         # These commands are implemented with impl* calls
-        case "$targetLang" in
-        bash|c|cpp|cs|java|js|p6|php|pl|sh)
-            codegenOutput ")"
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
-        ;;
+    #    case "$targetLang" in
+    #    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    #        codegenOutput ")"
+    #        ;;
+    #    *)
+    #        die "${FUNCNAME[0]} is not implemented in $targetLang."
+    #        ;;
+    #    esac
+    #    ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
-        bash|c|cpp|cs|java|js|p6|php|pl|sh)
+        c|cpp|cs|java|js|p6|php|pl)
             { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else|debugger)$ ]]; } || codegenOutput ")"
+            ;;
+        bash|sh)
+            if [[ "${blockStack[-1]}" =~ ^(if|elif|while|until)$ ]]; then
+                codegenOutput ' ]]; then'
+            fi
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
