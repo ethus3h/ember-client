@@ -413,6 +413,9 @@ codegenComment() {
     bash|c|cpp|cs|java|js|p6|php|pl|sh)
         codegenOutput "/*""$1 */"$'\n'
         ;;
+    bash|sh)
+        codegenOutput "#""$1"$'\n'
+        ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
