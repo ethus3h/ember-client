@@ -774,14 +774,26 @@ codegenRoutineDefinitionStart() {
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
                     codegenFormatType "${codegenArgList[$k - 1]}"
-                    if [[ "$k" == $((argumentCount - 1)) ]]; then
-                        if generateDebugCode; then
-                            codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                    if [[ "$(codegenFormatType "${codegenArgList[$k - 1]}")" =~ ^(boolArray|intArray|strArray|genericArray|genericItem)$ ]]; then
+                        if [[ "$k" == $((argumentCount - 1)) ]]; then
+                            if generateDebugCode; then
+                                codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                            else
+                                codegenOutput "${codegenArgList[$k]^}"'="$1"'
+                            fi
                         else
-                            codegenOutput "${codegenArgList[$k]^}"'="$1"'
+                            codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
                         fi
                     else
-                        codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                        if [[ "$k" == $((argumentCount - 1)) ]]; then
+                            if generateDebugCode; then
+                                codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                            else
+                                codegenOutput "${codegenArgList[$k]^}"'="$1"'
+                            fi
+                        else
+                            codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                        fi
                     fi
                 fi
             done
