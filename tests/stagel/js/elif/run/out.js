@@ -5,6 +5,3 @@ if (await implEq('a', strN)) {
 else if (await implEq('b', strN)) {
     strN = 'c';
 }
-else {
-    strN = 'b';
-}

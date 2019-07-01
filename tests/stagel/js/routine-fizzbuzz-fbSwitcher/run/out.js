@@ -18,6 +18,4 @@ async function fbSwitcher(intNum) {
         await implEq(0, await implMod(intNum, 3))) {
         /* Comment 4 */
 
-        strReturn = 'Fizz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
-    }
-}
+        
