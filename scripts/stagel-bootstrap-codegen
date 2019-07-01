@@ -735,23 +735,62 @@ codegenCommandInvocationEnd() {
 codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
-    js)
-        codegenOutput "async function $codegenRoutineName("
-        argumentCount="${#codegenArgList[@]}"
-        for (( k=0; k<argumentCount; k++ )); do
-            if (( k % 2 )); then
-                codegenFormatType "${codegenArgList[$k - 1]}"
-                if [[ "$k" == $((argumentCount - 1)) ]]; then
-                    codegenOutput "${codegenArgList[$k]^}"
-                else
-                    codegenOutput "${codegenArgList[$k]^}, "
+    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+
+        case "$targetLang" in
+        js)
+            codegenOutput "async function $codegenRoutineName("
+            argumentCount="${#codegenArgList[@]}"
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    codegenFormatType "${codegenArgList[$k - 1]}"
+                    if [[ "$k" == $((argumentCount - 1)) ]]; then
+                        codegenOutput "${codegenArgList[$k]^}"
+                    else
+                        codegenOutput "${codegenArgList[$k]^}, "
+                    fi
                 fi
-            fi
-        done
-        codegenOutput ") {"$'\n'
+            done
+            codegenOutput ") {"$'\n'
+            ;;
+        bash)
+            codegenOutput "$codegenRoutineName() {"
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+        esac
+
         codegenIndent=$(( codegenIndent + 1 ))
         codegenPrintIndentationSpaces
         codegenIndent=$(( codegenIndent - 1 ))
+
+        case "$targetLang" in
+        js)
+            true
+            ;;
+        bash)
+            argumentCount="${#codegenArgList[@]}"
+            for (( k=0; k<argumentCount; k++ )); do
+                if (( k % 2 )); then
+                    codegenFormatType "${codegenArgList[$k - 1]}"
+                    if [[ "$k" == $((argumentCount - 1)) ]]; then
+                        if generateDebugCode; then
+                            codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                        else
+                            codegenOutput "${codegenArgList[$k]^}"'="$1"'
+                        fi
+                    else
+                        codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                    fi
+                fi
+            done
+            ;;
+        *)
+            die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+        esac
+
         if generateDebugCode; then
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
@@ -790,7 +829,6 @@ codegenRoutineDefinitionStart() {
         codegenOutput $'\n\n'
         ;;
     bash)
-        codegenOutput "$codegenRoutineName() {"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
