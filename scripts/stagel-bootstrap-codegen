@@ -367,9 +367,12 @@ codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenOnNewLine || codegenOutput ' '
         codegenOutput '{'$'\n'
+        ;;
+    bash|sh)
+        codegenOutput $'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -384,8 +387,11 @@ codegenDedent() {
     codegenPrintIndentationSpaces
     #codegenIndent=$(( codegenIndent + 1 ))
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenOutput '}'$'\n'
+        ;;
+    bash|sh)
+        codegenOutput $'\n'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."

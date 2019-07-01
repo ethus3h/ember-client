@@ -6,5 +6,5 @@ strFromByte() {intIn="$1"; shift; internalDebugCollect "int In = ${intIn[@]}; ";
     let strArrayTemp = [];
     strArrayTemp=[ "d", "b", "l", 
     "c", "b", "a" ];
-    append(strArrayChars, strArrayTemp);
-}
+    append(strArrayChars, strArrayTemp;
+
