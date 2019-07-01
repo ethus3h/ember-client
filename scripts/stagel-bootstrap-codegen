@@ -752,6 +752,7 @@ codegenFormatArgument() {
         ;;
     bash)
         if [[ "$(codegenFormatType "${codegenArgumentType}")" =~ ^(boolArray|intArray|strArray|genericArray|genericItem)$ ]]; then
+            # shellcheck disable=SC2016
             codegenOutput '"$(join_by $'\''\037'\'' "${'
             codegenFormatType "${codegenArgumentType}"
             codegenOutput "${codegenArgumentName^}"'[@]}")"'
@@ -812,22 +813,28 @@ codegenRoutineDefinitionStart() {
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         if [[ "$k" == $((argumentCount - 1)) ]]; then
                             if generateDebugCode; then
+                                # shellcheck disable=SC2016
                                 codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift; '
                             else
+                                # shellcheck disable=SC2016
                                 codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift'
                             fi
                         else
+                            # shellcheck disable=SC2016
                             codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift; '
                         fi
                     else
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         if [[ "$k" == $((argumentCount - 1)) ]]; then
                             if generateDebugCode; then
+                                # shellcheck disable=SC2016
                                 codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
                             else
+                                # shellcheck disable=SC2016
                                 codegenOutput "${codegenArgList[$k]^}"'="$1"'
                             fi
                         else
+                            # shellcheck disable=SC2016
                             codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
                         fi
                     fi
@@ -853,6 +860,7 @@ codegenRoutineDefinitionStart() {
                     bash)
                         codegenOutput 'internalDebugCollect "'
                         codegenFormatType "${codegenArgList[$k - 1]}"
+                        # shellcheck disable=SC2016
                         codegenOutput " ${codegenArgList[$k]^}"' = ${'
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         codegenOutput "${codegenArgList[$k]^}"'[@]}; "; '
