@@ -1,1 +1,1 @@
-intCounter=implAdd 
+intCounter=implAdd intCounter, implSub intCounter, 2;
