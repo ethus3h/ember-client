@@ -760,7 +760,6 @@ codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
     bash|c|cpp|cs|java|js|p6|php|pl|sh)
-
         case "$targetLang" in
         js)
             codegenOutput "async function $codegenRoutineName("
@@ -878,15 +877,13 @@ codegenRoutineDefinitionStart() {
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput "("
                         codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
-                        codegenFormatType "${codegenArgList[$k - 1]}"
-                        codegenOutput "${codegenArgList[$k]^});"
+                        codegenOutput ");"
                         ;;
                     bash)
                         codegenOutput "assertIs"
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput " "
-                        codegenFormatType "${codegenArgList[$k - 1]}"
-                        codegenOutput "${codegenArgList[$k]^});"
+                        codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -899,13 +896,21 @@ codegenRoutineDefinitionStart() {
             codegenOutput " "
         fi
         if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
-            codegenOutput "let "
-            codegenFormatType "$codegenRoutineType"
-            codegenOutput "Return;"
+            case "$targetLang" in
+            js)
+                codegenOutput "let "
+                codegenFormatType "$codegenRoutineType"
+                codegenOutput "Return;"
+                ;;
+            bash)
+                true
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+            esac
         fi
         codegenOutput $'\n\n'
-        ;;
-    bash)
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
