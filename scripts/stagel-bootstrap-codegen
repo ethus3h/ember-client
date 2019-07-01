@@ -184,7 +184,7 @@ codegenOnNewLine() {
 }
 
 codegenOutput() {
-    echo "(codegenOutput: ${@})" >&2
+    echo "(codegenOutput: $*)" >&2
     print "${@}"
     if [[ "$*" == *$'\n' ]]; then
         codegenNewLine="true"
@@ -743,6 +743,7 @@ codegenCommandInvocationEnd() {
 }
 
 codegenFormatArgument() {
+    codegenDebug "Format argument" "${@}" >&2
     codegenArgumentType="$1"
     codegenArgumentName="$2"
     case "$targetLang" in
