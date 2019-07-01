@@ -272,6 +272,7 @@ codegenType() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenStringLiteralDelim() {
     codegenDebug "LiteralDelim" "${@}" >&2
     case "$targetLang" in
@@ -337,6 +338,7 @@ codegenPrintIndentationSpaces() {
     true
 }
 
+# shellcheck disable=SC2120
 codegenStartDocument() {
     codegenDebug "Start document" "${@}" >&2
     case "$targetLang" in
@@ -348,6 +350,7 @@ codegenStartDocument() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenEndDocument() {
     codegenDebug "End document" "${@}" >&2
     case "$targetLang" in
@@ -359,6 +362,7 @@ codegenEndDocument() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenIndent() {
     codegenDebug "Indent" "${@}" >&2
     codegenOnNewLine && codegenPrintIndentationSpaces
@@ -373,6 +377,7 @@ codegenIndent() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenDedent() {
     codegenDebug "Dedent" "${@}" >&2
     #codegenIndent=$(( codegenIndent - 1 ))
@@ -474,6 +479,7 @@ codegenStartArray() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
@@ -498,6 +504,7 @@ codegenEndArray() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenCommandInvocationStart() {
     codegenDebug "Command invocation start" "${@}" >&2
     case "$codegenRoutineName" in
@@ -652,6 +659,7 @@ codegenCommandInvocationStart() {
     codegenArgList=()
 }
 
+# shellcheck disable=SC2120
 codegenCommandInvocationArgSeparator() {
     codegenDebug "Command invocation argument separator" "${@}" >&2
     case "$targetLang" in
@@ -664,6 +672,7 @@ codegenCommandInvocationArgSeparator() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenCommandInvocationArglist() {
     codegenDebug "Command invocation argument list" "${@}" >&2
     case "$targetLang" in
@@ -693,6 +702,7 @@ codegenCommandInvocationArglist() {
     codegenArgList=()
 }
 
+# shellcheck disable=SC2120
 codegenCommandInvocationEnd() {
     codegenDebug "Command invocation end" "${@}" >&2
     case "$codegenRoutineName" in
@@ -756,6 +766,7 @@ codegenFormatArgument() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
@@ -842,7 +853,7 @@ codegenRoutineDefinitionStart() {
                     bash)
                         codegenOutput 'internalDebugCollect "'
                         codegenFormatType "${codegenArgList[$k - 1]}"
-                        codegenOutput " ${codegenArgList[$k]^} = ${"
+                        codegenOutput " ${codegenArgList[$k]^}"' = ${'
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         codegenOutput "${codegenArgList[$k]^}"'[@]}; "; '
                         ;;
@@ -921,6 +932,7 @@ codegenRoutineDefinitionStart() {
     codegenArgList=()
 }
 
+# shellcheck disable=SC2120
 codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
@@ -944,6 +956,7 @@ codegenRoutineDefinitionPreEnd() {
     esac
 }
 
+# shellcheck disable=SC2120
 codegenRoutineDefinitionEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
