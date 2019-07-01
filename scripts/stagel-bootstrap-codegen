@@ -391,9 +391,9 @@ codegenDedent() {
         codegenOutput '}'$'\n'
         ;;
     bash|sh)
-        if [[ "${blockStack[-2]}" =~ ^test-body-if|test-body-elif$ ]]; then
+        if [[ "${blockStack[-3]}" =~ ^test-body-if|test-body-elif$ ]]; then
             codegenOutput 'fi'$'\n'
-        elif [[ "${blockStack[-2]}" =~ ^test-body-while|test-body-until$ ]]; then
+        elif [[ "${blockStack[-3]}" =~ ^test-body-while|test-body-until$ ]]; then
             codegenOutput 'done'$'\n'
         else
             codegenOutput $'\n'
@@ -1209,7 +1209,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     codegenDedent
                     unset 'stateStack[-1]'
                     blockStackRemoveLast
-                    if [[ "${blockStack[-1]}" == test-body-* ]]; then
+                    if [[ "${blockStack[-2]}" == test-body-* ]]; then
                         blockStackRemoveLast
                     fi
                     ;;
@@ -1227,7 +1227,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     case "${tokens[$i]}" in
                     if|elif|until|while)
                         stateStack+=("test")
-                        blockStack+=("test-body-${tokens[$i]}" "test" "${tokens[$i]}")
+                        blockStack+=("test-body-${tokens[$i]}" "" "test" "${tokens[$i]}")
                         codegenCommandInvocationStart
                         ;;
                     new|set)
