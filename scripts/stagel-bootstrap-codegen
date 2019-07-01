@@ -551,30 +551,67 @@ codegenCommandInvocationStart() {
         codegenOutput $'\n'
         codegenPrintIndentationSpaces
         case "$targetLang" in
-        js)
+        js|bash)
             local returnType
             returnType="$(codegenGetCurrentRoutineType)" || true
             [[ -z "$returnType" ]] && die "Tried to return, but was not inside a routine!"
-            codegenFormatType "$returnType"
-            codegenOutput "Return = "
+            case "$targetLang" in
+            js)
+                codegenFormatType "$returnType"
+                codegenOutput "Return = "
+                ;;
+            bash)
+                codegenFormatType "$returnType"
+                codegenOutput "Return="
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+            esac
             if [[ "${codegenArgList[-2]}" == ident-* ]]; then
                 codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             else
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             fi
             if generateRuntimeTypeCheckCode; then
-                codegenOutput "; await assertIs"
-                codegenFormatType "$returnType" true
-                codegenOutput "("
-                codegenFormatType "$returnType"
-                codegenOutput "Return); "
+                case "$targetLang" in
+                js)
+                    codegenOutput "; await assertIs"
+                    codegenFormatType "$returnType" true
+                    codegenOutput "("
+                    codegenFormatType "$returnType"
+                    codegenOutput "Return); "
+                    ;;
+                bash)
+                    codegenOutput "; assertIs"
+                    codegenFormatType "$returnType" true
+                    codegenOutput " "
+                    codegenFormatArgument "$returnType" "Return"
+                    codegenOutput "; "
+                    ;;
+                *)
+                    die "${FUNCNAME[0]} is not implemented in $targetLang."
+                ;;
+                esac
             else
                 codegenOutput "; "
             fi
             codegenRoutineDefinitionPreEnd
-            codegenOutput "return "
-            codegenFormatType "$returnType"
-            codegenOutput "Return;"$'\n'
+            case "$targetLang" in
+            js)
+                codegenOutput "return "
+                codegenFormatType "$returnType"
+                codegenOutput "Return;"$'\n'
+                ;;
+            bash)
+                codegenOutput 'print '
+                codegenFormatArgument "$returnType" "Return"
+                codegenOutput $'\n'
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+            esac
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -758,7 +795,8 @@ codegenFormatArgument() {
             codegenFormatType "${codegenArgumentType}"
             codegenOutput "${codegenArgumentName^}"'[@]}")"'
         else
-            codegenFormatType '"$'"${codegenArgumentType}"
+            codegenOutput '"$'
+            codegenFormatType "${codegenArgumentType}"
             codegenOutput "${codegenArgumentName^}"'"'
         fi
         ;;
