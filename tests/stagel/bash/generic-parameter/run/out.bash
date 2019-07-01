@@ -1,6 +1,6 @@
 ne() {genericA="$1"; shift; genericB="$1"; shift; internalDebugCollect "generic A = ${genericA[@]}; "; internalDebugCollect "generic B = ${genericB[@]}; "; internalDebugStackEnter 'ne:in'; assertIsGeneric "$genericA" assertIsGeneric "$genericB" 
 
     let boolTemp = false;
-    boolTemp="$(implNot"$(implEqgenericA, genericB)")";
+    boolTemp="$(implNot "$(implEqgenericA, genericB)")";
 
     boolReturn=boolTemp; assertIsBool "$boolReturn"; 
