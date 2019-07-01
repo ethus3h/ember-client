@@ -732,6 +732,23 @@ codegenCommandInvocationEnd() {
     codegenArgList=()
 }
 
+codegenFormatArgument() {
+    codegenArgumentType="$1"
+    codegenArgumentName="$2"
+    case "$targetLang" in
+    c|cpp|cs|java|js|p6|php|pl|sh)
+        codegenFormatType "${codegenArgumentType}"
+        codegenOutput "${codegenArgumentName^}"
+        ;;
+    bash)
+        
+        ;;
+    *)
+        die "${FUNCNAME[0]} is not implemented in $targetLang."
+        ;;
+    esac
+}
+
 codegenRoutineDefinitionStart() {
     codegenDebug "Routine definition start" "${@}" >&2
     case "$targetLang" in
@@ -773,18 +790,20 @@ codegenRoutineDefinitionStart() {
             argumentCount="${#codegenArgList[@]}"
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
-                    codegenFormatType "${codegenArgList[$k - 1]}"
                     if [[ "$(codegenFormatType "${codegenArgList[$k - 1]}")" =~ ^(boolArray|intArray|strArray|genericArray|genericItem)$ ]]; then
+                        codegenOutput 'IFS=$'\''\037'\'' read -r -a '\'
+                        codegenFormatType "${codegenArgList[$k - 1]}"
                         if [[ "$k" == $((argumentCount - 1)) ]]; then
                             if generateDebugCode; then
-                                codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                                codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift; '
                             else
-                                codegenOutput "${codegenArgList[$k]^}"'="$1"'
+                                codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift'
                             fi
                         else
-                            codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
+                            codegenOutput "${codegenArgList[$k]^}"' <<< "$1"; shift; '
                         fi
                     else
+                        codegenFormatType "${codegenArgList[$k - 1]}"
                         if [[ "$k" == $((argumentCount - 1)) ]]; then
                             if generateDebugCode; then
                                 codegenOutput "${codegenArgList[$k]^}"'="$1"; shift; '
@@ -806,14 +825,38 @@ codegenRoutineDefinitionStart() {
         if generateDebugCode; then
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
-                    codegenOutput "await internalDebugCollect('"
-                    codegenFormatType "${codegenArgList[$k - 1]}"
-                    codegenOutput " ${codegenArgList[$k]^} = ' + "
-                    codegenFormatType "${codegenArgList[$k - 1]}"
-                    codegenOutput "${codegenArgList[$k]^} + '; '); "
+                    case "$targetLang" in
+                    js)
+                        codegenOutput "await internalDebugCollect('"
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput " ${codegenArgList[$k]^} = ' + "
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput "${codegenArgList[$k]^} + '; '); "
+                        ;;
+                    bash)
+                        codegenOutput 'internalDebugCollect "'
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput " ${codegenArgList[$k]^} = ${"
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput "${codegenArgList[$k]^}"'[@]}; "; '
+                        ;;
+                    *)
+                        die "${FUNCNAME[0]} is not implemented in $targetLang."
+                    ;;
+                    esac
                 fi
             done
-            codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
+            case "$targetLang" in
+            js)
+                codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
+                ;;
+            bash)
+                codegenOutput "internalDebugStackEnter '$codegenRoutineName:$filename';"
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+            ;;
+            esac
         fi
         if [[ "$argumentCount" != 0 ]] || [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             codegenOutput " "
@@ -822,11 +865,26 @@ codegenRoutineDefinitionStart() {
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
                     [[ "$k" != 1 ]] && codegenOutput ' '
-                    codegenOutput "await assertIs"
-                    codegenFormatType "${codegenArgList[$k - 1]}" "true"
-                    codegenOutput "("
-                    codegenFormatType "${codegenArgList[$k - 1]}"
-                    codegenOutput "${codegenArgList[$k]^});"
+                    case "$targetLang" in
+                    js)
+                        codegenOutput "await assertIs"
+                        codegenFormatType "${codegenArgList[$k - 1]}" "true"
+                        codegenOutput "("
+                        codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput "${codegenArgList[$k]^});"
+                        ;;
+                    bash)
+                        codegenOutput "assertIs"
+                        codegenFormatType "${codegenArgList[$k - 1]}" "true"
+                        codegenOutput " "
+                        codegenFormatType "${codegenArgList[$k - 1]}"
+                        codegenOutput "${codegenArgList[$k]^});"
+                        ;;
+                    *)
+                        die "${FUNCNAME[0]} is not implemented in $targetLang."
+                    ;;
+                    esac
                 fi
             done
         fi
