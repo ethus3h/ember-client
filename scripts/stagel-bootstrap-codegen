@@ -391,7 +391,13 @@ codegenDedent() {
         codegenOutput '}'$'\n'
         ;;
     bash|sh)
-        codegenOutput $'\n'
+        if [[ "${blockStack[-1]}" =~ ^if|elif$ ]]; then
+            codegenOutput 'fi'$'\n'
+        elif [[ "${blockStack[-1]}" =~ ^while|until$ ]]; then
+            codegenOutput 'done'$'\n'
+        else
+            codegenOutput $'\n'
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -1054,7 +1060,7 @@ codegenRoutineDefinitionEnd() {
 
 codegenIsTestCommand() {
     case "$1" in
-    for|if|elif|until|while)
+    if|elif|until|while)
         true
         ;;
     *)
