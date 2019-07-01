@@ -602,6 +602,9 @@ codegenCommandInvocationStart() {
         js)
             codegenOutput "await impl${codegenRoutineName^}("
             ;;
+        bash)
+            codegenOutput "impl${codegenRoutineName^} "
+            ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
             ;;
@@ -785,6 +788,9 @@ codegenRoutineDefinitionStart() {
             codegenOutput "Return;"
         fi
         codegenOutput $'\n\n'
+        ;;
+    bash)
+        codegenOutput "$codegenRoutineName() {"
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
