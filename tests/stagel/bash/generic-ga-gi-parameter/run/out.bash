@@ -3,4 +3,4 @@ ne() {IFS=$'\037' read -r -a 'genericArrayA <<< "$1"; shift; IFS=$'\037' read -r
     let boolTemp = false;
     boolTemp = implNot implEq genericArrayA, genericItemB));
 
-    
+    boolReturn=boolTemp; assertIsBool "$boolReturn"; 
