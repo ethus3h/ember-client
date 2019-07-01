@@ -277,10 +277,10 @@ codegenType() {
 codegenStringLiteralDelim() {
     codegenDebug "LiteralDelim" "${@}" >&2
     case "$targetLang" in
-    js)
+    js|bash|sh)
         codegenOutput \'
         ;;
-    c|cpp|bash)
+    c|cpp)
         codegenOutput \"
         ;;
     *)
