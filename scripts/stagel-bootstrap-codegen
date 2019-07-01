@@ -676,7 +676,7 @@ codegenCommandInvocationStart() {
             if codegenOnNewLine; then
                 codegenOutput "impl${codegenRoutineName^}"
             else
-                codegenOutput ' "$('"impl${codegenRoutineName^}"
+                codegenOutput '"$('"impl${codegenRoutineName^}"
                 codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
             fi
             ;;
