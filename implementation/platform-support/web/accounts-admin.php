@@ -72,13 +72,19 @@ else {
             <meta content="width=device-width, height=device-height, user-scalable=yes" name="viewport">
             <link href="accounts.css" rel="stylesheet" type="text/css">
             <script src="sorttable.js"></script>
+            <script type="text/javascript">
+                function sortByCompanyName() {
+                    let companyNameHeader=document.getElementById(\'companyNameHeader\');
+                    sorttable.innerSortFunction.apply(companyNameHeader, []);
+                }
+            </script>
             <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
             <title>User Access Management</title>
             </head>
-            <body class="noBodyBackground"><a href="/">← Home</a><br><br>
+            <body class="noBodyBackground" onLoad="javascript:sortByCompanyName();"><a href="/">← Home</a><br><br>
             <a href="#AddZIPCode">→ Add ZIP Code...</a><br><br>
             <p>Click column headers to sort the table.</p>
-            <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
+            <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th id="companyNameHeader">Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');
             $counter = 0;
