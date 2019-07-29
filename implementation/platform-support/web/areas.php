@@ -25,24 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
 }
-function getParam($name) {
-    if (isset($_GET[$name])) {
-        return $_GET[$name];
-    } else {
-        if (isset($_POST[$name])) {
-            return $_POST[$name];
-        }
-        else
-        {
-            return '';
-        }
-    }
-}
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
-$accessKey=getParam('accessKey');
-$oldPermissions=getParam('oldPermissions');
-$accountId=getParam('accountId');
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
