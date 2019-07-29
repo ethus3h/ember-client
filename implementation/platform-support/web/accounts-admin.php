@@ -88,7 +88,11 @@ else {
                 echo '<tr><td>'.$userRow['id'].'</td><td>'.$userRow['publicId'].'</td><td>'.$userRow['personName'].'</td><td>'.$userRow['name'].'</td><td>'.$userRow['referrer'].'</td><td>'.$userRow['email'].'</td><td>'.$userRow['location'].'</td><td>'.$employeeCountDisplay.'</td><td>'.$userRow['paymentMethod'].'</td><td>'.$userRow['other'].'</td><td>'.$userRow['accountCreationDate'].'</td><td>'.$permissionWord.'</td><td><form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="'.$userRow['permissions'].'"><input type="hidden" name="accountId" value="'.$userRow['id'].'"><input type="hidden" name="accessKey" value="'.$accessKey.'"><input type="submit" value="Toggle"></form></td></tr>';
                 $counter++;
             }
-            echo '</tbody></table></body></html>';
+            echo '</tbody></table>
+            <h2>Add ZIP Code</h2>
+            <form>
+                <input type="hidden" name=""
+            </body></html>';
         }
         else {
             if ($oldPermissions === '0') {
