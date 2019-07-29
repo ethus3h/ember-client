@@ -91,7 +91,12 @@ else {
             echo '</tbody></table>
             <h2>Add ZIP Code</h2>
             <form>
-                <input type="hidden" name=""
+                <form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="zipCodeUpdate"><input type="hidden" name="accessKey" value="'.$accessKey.'">
+                    <label for="zipcode">ZIP Code: </label> <input type="text" placeholder="00000" name="zipcode" id="zipcode" required><br>
+                    <label for="town">Town: </label> <input type="text" placeholder="" name="town" id="town" required><br>
+                    <label for="areaOfCountry">Area of country (state/province/subdivision): </label> <input type="text" placeholder="" name="areaOfCountry" id="areaOfCountry" required><br>
+                    <label for="country">Country: </label> <input type="text" placeholder="" name="country" id="country" required><br>
+                <input type="submit" value="Add"></form>
             </body></html>';
         }
         else {
@@ -99,7 +104,12 @@ else {
                 $database->setField('idxPerson', 'permissions', '1', $accountId);
             }
             else {
-                $database->setField('idxPerson', 'permissions', '0', $accountId);
+                if ($oldPermissions === 'zipCodeUpdate') {
+                    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions', 'accountCreationDate', 'server_tz'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '1', gmdate("Y-m-d H:i:s"), date_default_timezone_get()]);
+                }
+                else {
+                    $database->setField('idxPerson', 'permissions', '0', $accountId);
+                }
             }
             echo '<!DOCTYPE html>
             <html lang="en">

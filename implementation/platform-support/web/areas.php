@@ -38,13 +38,17 @@ echo '<!DOCTYPE html>
 <title>Available ZIP Codes</title>
 </head>
 <body class="noBodyBackground"><a href="/">← Home</a><br><br>
-<table class="sortable"><thead><tr><th>ZIP Code</th><th>Town</th><th>Area of country (state/province/subdivision)</th><th>Country</th></tr></thead>
+<table class="sortable"><thead><tr><th>ZIP Code</th><th>Town</th>';
+echo '<th>Area of country (state/province/subdivision)</th><th>Country</th>';
+echo '</tr></thead>
 <tbody>';
 $resultsArray=$database->getTable('ZIPCodes');
 $counter = 0;
 while ($counter <= (count($resultsArray) - 1)) {
     $dataRow=$resultsArray[$counter];
-    echo '<tr><td>'.$dataRow['zipcode'].'</td><td>'.$dataRow['town'].'</td><td>'.$dataRow['areaOfCountry'].'</td><td>'.$dataRow['country'].'</td></tr>';
+    echo '<tr><td>'.$dataRow['zipcode'].'</td><td>'.$dataRow['town'].'</td>';
+    echo '<td>'.$dataRow['areaOfCountry'].'</td><td>'.$dataRow['country'].'</td>';
+    echo '</tr>';
     $counter++;
 }
 echo '</tbody></table></body></html>';
