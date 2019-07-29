@@ -25,8 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
 }
+function getParam($name) {
+    if (isset($_GET[$name])) {
+        return $_GET[$name];
+    } else {
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
+        }
+        else
+        {
+            return '';
+        }
+    }
+}
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node2', $mysqlUser, $mysqlPassword, $mysqlServer);
+$closeByJavascript=getParam('closeByJavascript');
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +51,13 @@ echo '<!DOCTYPE html>
 <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
 <title>Available ZIP Codes</title>
 </head>
-<body class="noBodyBackground"><h1>Available ZIP Codes</h1><a href="/">← Home</a><br><br>
+<body class="noBodyBackground"><h1>Available ZIP Codes</h1><a href="';
+if ($closeByJavascript === 'true') {
+    echo 'javascript:window.close()';
+} else {
+    echo '/';
+}
+echo '">← Home</a><br><br>
 <!-- <p>Click column headers to sort the table.</p> -->
 <table class="sortable"><thead><tr><th>ZIP Code</th><th>City</th>';
 echo '<th><!-- Area of country (state/province/subdivision) -->State</th><!-- <th>Country</th> -->';
