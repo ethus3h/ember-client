@@ -41,8 +41,13 @@ function getParam($name) {
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $accessKey=getParam('accessKey');
+$accessKey=getParam('action');
 $oldPermissions=getParam('oldPermissions');
 $accountId=getParam('accountId');
+$zipcode=getParam('zipcode');
+$town=getParam('town');
+$areaOfCountry=getParam('areaOfCountry');
+$country=getParam('country');
 if($accessKey === '') {
     echo '<!DOCTYPE html>
     <html lang="en">
@@ -71,6 +76,7 @@ else {
             <title>User Access Management</title>
             </head>
             <body class="noBodyBackground"><a href="/">← Home</a><br><br>
+            <a href="#AddZIPCode">→ Add ZIP Code...</a><br><br>
             <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');
@@ -89,9 +95,9 @@ else {
                 $counter++;
             }
             echo '</tbody></table>
-            <h2>Add ZIP Code</h2>
+            <h2 id="AddZIPCode">Add ZIP Code</h2>
             <form>
-                <form method="post" action="accounts-admin.php"><input type="hidden" name="oldPermissions" value="zipCodeUpdate"><input type="hidden" name="accessKey" value="'.$accessKey.'">
+                <form method="post" action="accounts-admin.php"><input type="hidden" name="action" value="zipCodeUpdate"><input type="hidden" name="accessKey" value="'.$accessKey.'">
                     <label for="zipcode">ZIP Code: </label> <input type="text" placeholder="00000" name="zipcode" id="zipcode" required><br>
                     <label for="town">Town: </label> <input type="text" placeholder="" name="town" id="town" required><br>
                     <label for="areaOfCountry">Area of country (state/province/subdivision): </label> <input type="text" placeholder="" name="areaOfCountry" id="areaOfCountry" required><br>
@@ -100,12 +106,12 @@ else {
             </body></html>';
         }
         else {
-            if ($oldPermissions === '0') {
-                $database->setField('idxPerson', 'permissions', '1', $accountId);
+            if ($action === 'zipCodeUpdate') {
+                $database->addRowFromArrays('ZIPCodes', ['id', 'zipcode', 'town', 'areaOfCountry', 'country'], ['NULL', $zipcode, $town, $areaOfCountry, $country]);
             }
             else {
-                if ($oldPermissions === 'zipCodeUpdate') {
-                    $database->addRowFromArrays('idxPerson', ['nodeId', 'publicId', 'hashedSecretKey', 'personName', 'name', 'referrer', 'location', 'employeesCount', 'paymentMethod', 'email', 'other', 'permissions', 'accountCreationDate', 'server_tz'], ['NULL', $publicId, eiteHashSecret($secretkey), $personName, $name, $referrer, $location, $employeesCount, $paymentMethod, $email, $other, '1', gmdate("Y-m-d H:i:s"), date_default_timezone_get()]);
+                if ($oldPermissions === '0') {
+                    $database->setField('idxPerson', 'permissions', '1', $accountId);
                 }
                 else {
                     $database->setField('idxPerson', 'permissions', '0', $accountId);
