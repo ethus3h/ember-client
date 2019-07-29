@@ -424,9 +424,11 @@ class FractureDB
     function setField($table, $field, $value, $id = '')
     {
         $dbh      = $this->db;
-        $query = $dbh->prepare('INSERT INTO ' . $table . ' (id, ' . $field . ') VALUES (' . $id . ',\'' . $value . '\') ON DUPLICATE KEY UPDATE ' . $field . ' = \'' . '?' . '\';');
+        $query = $dbh->prepare('INSERT INTO ' . $table . ' (id, ' . $field . ') VALUES (' . '?' . ',' . '?' . ') ON DUPLICATE KEY UPDATE ' . $field . ' = ' . '?' . ';');
         echo 'Setting '.$table.':'.$field.' to '.$value.' and ID '.$id;
-        $query->bindParam(1, $value);
+        $query->bindParam(1, $id);
+        $query->bindParam(2, $value);
+        $query->bindParam(3, $value);
         //echo $query;
         $query->execute();
     }
