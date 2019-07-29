@@ -425,7 +425,6 @@ class FractureDB
     {
         $dbh      = $this->db;
         $query = $dbh->prepare('INSERT INTO ' . $table . ' (id, ' . $field . ') VALUES (' . '?' . ',' . '?' . ') ON DUPLICATE KEY UPDATE ' . $field . ' = ' . '?' . ';');
-        echo 'Setting '.$table.':'.$field.' to '.$value.' and ID '.$id;
         $query->bindParam(1, $id);
         $query->bindParam(2, $value);
         $query->bindParam(3, $value);
