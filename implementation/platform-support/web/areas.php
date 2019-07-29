@@ -53,7 +53,7 @@ echo '<!DOCTYPE html>
 </head>
 <body class="noBodyBackground"><h1>Available ZIP Codes</h1><a href="';
 if ($closeByJavascript === 'true') {
-    echo '#" onClick="javascript:window.close(); return false';
+    echo '#" onClick="javascript:window.close(); window.location.href = \'/\'; return false';
 } else {
     echo '/';
 }
