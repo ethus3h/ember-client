@@ -64,7 +64,7 @@ if($accessKey === '') {
 }
 else {
     if($accessKey === $mysqlPassword) {
-        if($oldPermissions === '' || $action === '') {
+        if($oldPermissions === '' && $action === '') {
             echo '<!DOCTYPE html>
             <html lang="en">
             <head>
