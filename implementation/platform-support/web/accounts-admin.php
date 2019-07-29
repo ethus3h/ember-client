@@ -41,7 +41,7 @@ function getParam($name) {
 include('active.fracturedb.php');
 $database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
 $accessKey=getParam('accessKey');
-$accessKey=getParam('action');
+$action=getParam('action');
 $oldPermissions=getParam('oldPermissions');
 $accountId=getParam('accountId');
 $zipcode=getParam('zipcode');
@@ -64,7 +64,7 @@ if($accessKey === '') {
 }
 else {
     if($accessKey === $mysqlPassword) {
-        if($oldPermissions === '') {
+        if($oldPermissions === '' || $action === '') {
             echo '<!DOCTYPE html>
             <html lang="en">
             <head>
@@ -103,13 +103,12 @@ else {
             }
             echo '</tbody></table>
             <h2 id="AddZIPCode">Add ZIP Code</h2>
-            <form>
-                <form method="post" action="accounts-admin.php"><input type="hidden" name="action" value="zipCodeUpdate"><input type="hidden" name="accessKey" value="'.$accessKey.'">
-                    <label for="zipcode">ZIP Code: </label> <input type="text" placeholder="00000" name="zipcode" id="zipcode" required><br>
-                    <label for="town">Town: </label> <input type="text" placeholder="" name="town" id="town" required><br>
-                    <label for="areaOfCountry">Area of country (state/province/subdivision): </label> <input type="text" placeholder="" name="areaOfCountry" id="areaOfCountry" required><br>
-                    <label for="country">Country: </label> <input type="text" placeholder="" name="country" id="country" required><br>
-                <input type="submit" value="Add"></form>
+            <form method="post" action="accounts-admin.php"><input type="hidden" name="action" value="zipCodeUpdate"><input type="hidden" name="accessKey" value="'.$accessKey.'">
+                <label for="zipcode">ZIP Code: </label> <input type="text" placeholder="00000" name="zipcode" id="zipcode" required><br>
+                <label for="town">Town: </label> <input type="text" placeholder="" name="town" id="town" required><br>
+                <label for="areaOfCountry">Area of country (state/province/subdivision): </label> <input type="text" placeholder="" name="areaOfCountry" id="areaOfCountry" required><br>
+                <label for="country">Country: </label> <input type="text" placeholder="" name="country" id="country" required><br>
+            <input type="submit" value="Add"></form>
             </body></html>';
         }
         else {
