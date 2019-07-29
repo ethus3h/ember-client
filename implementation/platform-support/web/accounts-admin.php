@@ -77,6 +77,7 @@ else {
             </head>
             <body class="noBodyBackground"><a href="/">← Home</a><br><br>
             <a href="#AddZIPCode">→ Add ZIP Code...</a><br><br>
+            <p>Click column headers to sort the table.</p>
             <table class="sortable"><thead><tr><th>ID</th><th>Public ID</th><th>Name</th><th>Company Name</th><th>Referred by</th><th>Email</th><th>Location</th><th>Employees Count</th><th>Payment Method</th><th>Other</th><th>Date added</th><th>Account approved?</th><th>(Dis)Approve</th></tr></thead>
             <tbody>';
             $resultsArray=$database->getTable('idxPerson');

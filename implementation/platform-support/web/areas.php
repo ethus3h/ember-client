@@ -38,6 +38,7 @@ echo '<!DOCTYPE html>
 <title>Available ZIP Codes</title>
 </head>
 <body class="noBodyBackground"><a href="/">← Home</a><br><br>
+<p>Click column headers to sort the table.</p>
 <table class="sortable"><thead><tr><th>ZIP Code</th><th>Town</th>';
 echo '<th>Area of country (state/province/subdivision)</th><th>Country</th>';
 echo '</tr></thead>
