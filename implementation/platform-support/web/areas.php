@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 }
 include('active.fracturedb.php');
-$database=new FractureDB($mysqlTablePrefix.'eite_node', $mysqlUser, $mysqlPassword, $mysqlServer);
+$database=new FractureDB($mysqlTablePrefix.'eite_node2', $mysqlUser, $mysqlPassword, $mysqlServer);
 echo '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +37,10 @@ echo '<!DOCTYPE html>
 <style type="text/css" media="all">table,tr,td{border:1px dotted maroon;}"</style>
 <title>Available ZIP Codes</title>
 </head>
-<body class="noBodyBackground"><a href="/">← Home</a><br><br>
-<p>Click column headers to sort the table.</p>
-<table class="sortable"><thead><tr><th>ZIP Code</th><th>Town</th>';
-echo '<th>Area of country (state/province/subdivision)</th><th>Country</th>';
+<body class="noBodyBackground"><h1>Available ZIP Codes</h1><a href="/">← Home</a><br><br>
+<!-- <p>Click column headers to sort the table.</p> -->
+<table class="sortable"><thead><tr><th>ZIP Code</th><th>City</th>';
+echo '<th><!-- Area of country (state/province/subdivision) -->State</th><!-- <th>Country</th> -->';
 echo '</tr></thead>
 <tbody>';
 $resultsArray=$database->getTable('ZIPCodes');
@@ -48,7 +48,8 @@ $counter = 0;
 while ($counter <= (count($resultsArray) - 1)) {
     $dataRow=$resultsArray[$counter];
     echo '<tr><td>'.$dataRow['zipcode'].'</td><td>'.$dataRow['town'].'</td>';
-    echo '<td>'.$dataRow['areaOfCountry'].'</td><td>'.$dataRow['country'].'</td>';
+    echo '<td>'.$dataRow['areaOfCountry'].'</td>';
+    #echo '<td>'.$dataRow['country'].'</td>';
     echo '</tr>';
     $counter++;
 }
