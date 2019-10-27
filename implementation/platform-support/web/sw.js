@@ -1,11 +1,12 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
+
 // This is the "Offline page" service worker
 
 const CACHE = "pwabuilder-page";
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "dsportal-offline.html";
+const offlineFallbackPage = "ToDo-replace-this-name.html";
 
 // Install stage sets up the offline page in the cache and opens a new cache
 self.addEventListener("install", function (event) {
@@ -14,6 +15,10 @@ self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
       console.log("[PWA Builder] Cached offline page during install");
+
+      if (offlineFallbackPage === "ToDo-replace-this-name.html") {
+        return cache.add(new Response("TODO: Update the value of the offlineFallbackPage constant in the serviceworker."));
+      }
 
       return cache.add(offlineFallbackPage);
     })
