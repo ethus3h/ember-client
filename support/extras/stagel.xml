@@ -58,14 +58,9 @@
 				<DetectChar attribute="Normal Text" char="[" context="List" beginRegion="List"/>
 				<DetectChar attribute="Normal Text" char="(" context="Tuple" beginRegion="Tuple"/>
 
-				<IncludeRules context="CommentVariants" />
-
 				<DetectChar attribute="Comment" char="#" context="Hash comment"/>
 
 				<IncludeRules context="StringVariants" />
-
-				<RegExpr attribute="Decorator" String="@[_a-zA-Z[:^ascii:]][\._a-zA-Z0-9[:^ascii:]]*" firstNonSpace="true"/>
-				<AnyChar attribute="Operator" String="+*/%\|=;\!&lt;&gt;!^&amp;~-@" context="#stay"/>
 			</context>
 
 			<context name="#CheckForString" attribute="Normal Text" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop">
