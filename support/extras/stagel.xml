@@ -79,7 +79,7 @@
 			<context name="BoolArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
 				<DetectChar attribute="Normal Text" char=">" context="#pop" endRegion="Dictionary"/>
-				
+				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
 			</context>
 
 			<context name="StrArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
