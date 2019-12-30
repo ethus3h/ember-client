@@ -39,7 +39,8 @@
 				<keyword attribute="Exceptions" String="exceptions" context="#stay"/>
 				<keyword attribute="Overloaders" String="overloaders" context="#stay"/>
 				<RegExpr attribute="Normal Text" String="[a-zA-Z_][a-zA-Z_0-9]{2,}" context="#stay"/>
-				<RegExpr attribute="Special Variable" String="[a-zA-Z][a-zA-Z]/[a-zA-Z_0-9]+" context="#stay"/>
+				<RegExpr attribute="Special Variable" String="[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
+				<RegExpr attribute="Definition Keyword" String="[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
 
 				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 
