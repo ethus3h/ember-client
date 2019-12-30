@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- xmllint --dtdvalid support/extras/language.xsd support/extras/stagel.xml -->
 <!DOCTYPE language SYSTEM "language.dtd"
 [
 	<!ENTITY digitPart "[0-9](?:_?[0-9])*">
