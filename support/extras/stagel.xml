@@ -6,7 +6,7 @@
 	<!ENTITY beforePointFloat "(?&lt;![\w[:^ascii:]])">
 ]>
 <!-- StageL syntax highlighting file based on https://raw.githubusercontent.com/KDE/syntax-highlighting/master/data/syntax/python.xml -->
-<language name="StageL" version="1" style="python" indenter="python" kateversion="5.0" section="Sources" extensions="*.stagel" mimetype="application/x-stagel" casesensitive="1" author="Michael Bueker" license="">
+<language name="StageL" version="1" style="python" indenter="python" kateversion="5.0" section="Sources" extensions="*.stagel" mimetype="application/x-stagel" casesensitive="1" author="Michael Bueker (original Python highlighter); Elli Chandler (StageL changes)" license="">
 	<highlighting>
 		<list name="import">
 			<item>import</item>
