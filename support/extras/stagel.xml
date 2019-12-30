@@ -29,6 +29,7 @@
 			<item>elif</item>
 			<item>else</item>
 			<item>{</item>
+			<item>}</item>
 			<item>while</item>
 			<item>until</item>
 			<item>return</item>
@@ -48,9 +49,9 @@
 
 				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 
-				<DetectChar attribute="Normal Text" char="{" context="Dictionary" beginRegion="Dictionary"/>
-				<DetectChar attribute="Normal Text" char="[" context="List" beginRegion="List"/>
-				<DetectChar attribute="Normal Text" char="(" context="Tuple" beginRegion="Tuple"/>
+				<DetectChar attribute="Normal Text" char="<" context="BoolArray" beginRegion="BoolArray"/>
+				<DetectChar attribute="Normal Text" char="[" context="StrArray" beginRegion="StrArray"/>
+				<DetectChar attribute="Normal Text" char="(" context="IntArray" beginRegion="IntArray"/>
 
 				<DetectChar attribute="Comment" char="#" context="Hash comment"/>
 
