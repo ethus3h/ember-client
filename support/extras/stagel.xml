@@ -29,24 +29,12 @@
 			<item>or</item>
 		</list>
 		<list name="flow">
-			<item>assert</item>
-			<item>break</item>
-			<item>continue</item>
+			<item>if</item>
 			<item>elif</item>
 			<item>else</item>
-			<item>except</item>
-			<item>finally</item>
-			<item>for</item>
-			<item>if</item>
-			<item>pass</item>
-			<item>raise</item>
+			<item>foreach</item>
 			<item>return</item>
-			<item>try</item>
 			<item>while</item>
-			<item>with</item>
-			<item>yield</item>
-			<item>async</item>
-			<item>await</item>
 		</list>
 		<list name="builtinfuncs">
 			<item>__import__</item>
