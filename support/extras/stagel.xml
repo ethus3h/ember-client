@@ -27,6 +27,7 @@
 			<item>else</item>
 			<item>{</item>
 			<item>while</item>
+			<item>until</item>
 			<item>return</item>
 		</list>
 		<contexts>
