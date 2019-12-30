@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- xmllint --dtdvalid support/extras/language.xsd support/extras/stagel.xml -->
 <!DOCTYPE language SYSTEM "language.dtd"
 [
 	<!ENTITY digitPart "[0-9](?:_?[0-9])*">
@@ -7,6 +6,7 @@
 	<!ENTITY beforePointFloat "(?&lt;![\w[:^ascii:]])">
 ]>
 <!-- StageL syntax highlighting file based on https://raw.githubusercontent.com/KDE/syntax-highlighting/master/data/syntax/python.xml -->
+<!-- xmllint --dtdvalid support/extras/language.xsd support/extras/stagel.xml -->
 <language name="StageL" version="1" style="python" indenter="python" kateversion="5.0" section="Sources" extensions="*.stagel" mimetype="application/x-stagel" casesensitive="1" author="Michael Bueker (original Python highlighter); Elli Chandler (StageL changes)" license="MIT (original Python highlighter); AGPL-3 (StageL changes)">
 	<highlighting>
 		<list name="import">
