@@ -36,6 +36,7 @@
 			<context name="Normal" attribute="Normal Text" lineEndContext="#stay">
 				<keyword attribute="Import" String="import" context="#stay"/>
 				<keyword attribute="Definition Keyword" String="defs" context="#stay"/>
+				<keyword attribute="Operator Keyword" String="operators" context="#stay"/>
 				<keyword attribute="Flow Control Keyword" String="flow" context="#stay"/>
 				<keyword attribute="Extensions" String="bindings" context="#stay"/>
 				<keyword attribute="Exceptions" String="exceptions" context="#stay"/>
