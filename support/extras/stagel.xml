@@ -17,6 +17,13 @@
 			<item>new</item>
 			<item>set</item>
 		</list>
+		<list name="booleans">
+			<!-- because of the nature of StageL, these "operators" are just commonly used built-in functions -->
+			<item>add</item>
+			<item>sub</item>
+			<item>inc</item>
+			<item>cat</item>
+		</list>
 		<list name="operators">
 			<!-- because of the nature of StageL, these "operators" are just commonly used built-in functions -->
 			<item>add</item>
@@ -71,36 +78,25 @@
 
 			<context name="StringVariants" attribute="Normal Text" lineEndContext="#stay">
 				<DetectSpaces/>
-
-				<RegExpr attribute="String" String="u?'''"                insensitive="true" context="Triple A-string" beginRegion="Triple A-region"/>
 				<RegExpr attribute="String" String="u?'"                  insensitive="true" context="Single A-string"/>
-				<RegExpr attribute="String" String="u?&quot;"             insensitive="true" context="Single Q-string"/>
-
-				<RegExpr attribute="Raw String" String="(u?r|ru)'''"                insensitive="true" context="Raw Triple A-string" beginRegion="Triple A-region"/>
-				<RegExpr attribute="Raw String" String="(u?r|ru)'"                  insensitive="true" context="Raw A-string"/>
-				<RegExpr attribute="Raw String" String="(u?r|ru)&quot;"             insensitive="true" context="Raw Q-string"/>
-
 			</context>
 
-			<context name="Dictionary" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
+			<context name="BoolArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
-				<DetectChar attribute="Normal Text" char="}" context="#pop" endRegion="Dictionary"/>
-				<IncludeRules context="StringVariants" />
-				<IncludeRules context="Normal" />
+				<DetectChar attribute="Normal Text" char=">" context="#pop" endRegion="Dictionary"/>
+				
 			</context>
 
-			<context name="List" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
+			<context name="StrArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
-				<DetectChar attribute="Normal Text" char="]" context="#pop" endRegion="List"/>
+				<DetectChar attribute="Normal Text" char="]" context="#pop" endRegion="StrArray"/>
 				<IncludeRules context="StringVariants" />
-				<IncludeRules context="Normal" />
 			</context>
 
-			<context name="Tuple" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
+			<context name="IntArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
-				<DetectChar attribute="Normal Text" char=")" context="#pop" endRegion="Tuple"/>
-				<IncludeRules context="StringVariants" />
-				<IncludeRules context="Normal" />
+				<DetectChar attribute="Normal Text" char=")" context="#pop" endRegion="IntArray"/>
+				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 			</context>
 
 			<!-- Comments -->
