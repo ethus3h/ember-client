@@ -122,9 +122,6 @@
 
 		<!-- escape characters -->
 		<context name="stringescape" attribute="String Char" lineEndContext="#stay">
-			<!-- As this highlighting style is for both, Python 2 and 3,
-			we do not know if a normal string is “unicode” or not. So we
-			-->
 			<RegExpr attribute="String Char" String="\\[\\]" context="#stay"/>
 		</context>
 
@@ -138,6 +135,7 @@
 			<itemData name="Special Variable" defStyleNum="dsVariable" spellChecking="false"/>
 			<itemData name="Extensions" defStyleNum="dsExtension" spellChecking="false"/>
 			<itemData name="Import" defStyleNum="dsImport" spellChecking="false"/>
+			<itemData name="Boolean literal" defStyleNum="dsKeyword" spellChecking="false"/>
 			<itemData name="Int" defStyleNum="dsDecVal" spellChecking="false"/>
 			<itemData name="Comment" defStyleNum="dsComment"/>
 			<itemData name="String" defStyleNum="dsString"/>
