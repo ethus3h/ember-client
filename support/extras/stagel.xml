@@ -137,9 +137,11 @@
 			<itemData name="Special Variable" defStyleNum="dsVariable" spellChecking="false"/>
 			<itemData name="Extensions" defStyleNum="dsExtension" spellChecking="false"/>
 			<itemData name="Import" defStyleNum="dsImport" spellChecking="false"/>
+			<itemData name="Boolean literal" defStyleNum="dsKeyword" spellChecking="false"/>
 			<itemData name="Int" defStyleNum="dsDecVal" spellChecking="false"/>
 			<itemData name="Comment" defStyleNum="dsComment"/>
 			<itemData name="String" defStyleNum="dsString"/>
+			<itemData name="String Char" defStyleNum="dsChar" spellChecking="false"/>
 			<itemData name="Error" defStyleNum="dsError"/>
 		</itemDatas>
 	</highlighting>
