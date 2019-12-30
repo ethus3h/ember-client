@@ -17,6 +17,12 @@
 			<item>new</item>
 			<item>set</item>
 		</list>
+		<list name="operators">
+			<item>add</item>
+			<item>sub</item>
+			<item>inc</item>
+			<item>cat</item>
+		</list>
 		<list name="flow">
 			<item>if</item>
 			<item>elif</item>
