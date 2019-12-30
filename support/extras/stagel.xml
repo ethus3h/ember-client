@@ -18,6 +18,7 @@
 			<item>set</item>
 		</list>
 		<list name="operators">
+			<!-- because of the nature of StageL, these "operators" are just commonly used built-in functions -->
 			<item>add</item>
 			<item>sub</item>
 			<item>inc</item>
@@ -80,20 +81,6 @@
 
 			</context>
 
-			<context name="CommentVariants" attribute="Normal Text" lineEndContext="#stay">
-				<DetectSpaces/>
-
-				<RegExpr attribute="Comment" String="u?'''"                insensitive="true" firstNonSpace="true" context="Triple A-comment" beginRegion="Triple A-region"/>
-				<RegExpr attribute="Comment" String="u?&quot;&quot;&quot;" insensitive="true" firstNonSpace="true" context="Triple Q-comment" beginRegion="Triple Q-region"/>
-				<RegExpr attribute="Comment" String="u?'"                  insensitive="true" firstNonSpace="true" context="Single A-comment"/>
-				<RegExpr attribute="Comment" String="u?&quot;"             insensitive="true" firstNonSpace="true" context="Single Q-comment"/>
-
-				<RegExpr attribute="Comment" String="(u?r|ru)'''"                insensitive="true" firstNonSpace="true" context="Triple A-comment" beginRegion="Triple A-region"/>
-				<RegExpr attribute="Comment" String="(u?r|ru)&quot;&quot;&quot;" insensitive="true" firstNonSpace="true" context="Triple Q-comment" beginRegion="Triple Q-region"/>
-				<RegExpr attribute="Comment" String="(u?r|ru)'"                  insensitive="true" firstNonSpace="true" context="Single A-comment"/>
-				<RegExpr attribute="Comment" String="(u?r|ru)&quot;"             insensitive="true" firstNonSpace="true" context="Single Q-comment"/>
-			</context>
-
 			<context name="Dictionary" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
 				<DetectChar attribute="Normal Text" char="}" context="#pop" endRegion="Dictionary"/>
@@ -122,78 +109,7 @@
 				<IncludeRules context="##Modelines" />
 			</context>
 
-			<context name="Triple A-comment" attribute="Comment" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<IncludeRules context="stringescape"/>
-				<StringDetect attribute="Comment" String="'''" context="#pop" endRegion="Triple A-region"/>
-				<IncludeRules context="##Alerts" />
-			</context>
-
-			<context name="Triple Q-comment" attribute="Comment" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<IncludeRules context="stringescape"/>
-				<StringDetect attribute="Comment" String="&quot;&quot;&quot;" context="#pop" endRegion="Triple Q-region"/>
-				<IncludeRules context="##Alerts" />
-			</context>
-
-			<context name="Single A-comment" attribute="Comment" lineEndContext="#stay">
-				<IncludeRules context="stringescape"/>
-				<DetectChar attribute="Comment" char="'" context="#pop"/>
-				<IncludeRules context="##Alerts" />
-			</context>
-
-			<context name="Single Q-comment" attribute="Comment" lineEndContext="#stay">
-				<IncludeRules context="stringescape"/>
-				<DetectChar attribute="Comment" char="&quot;" context="#pop"/>
-				<IncludeRules context="##Alerts" />
-			</context>
-
 			<!-- Strings -->
-
-			<!-- format characters -->
-			<context name="stringformat" attribute="String Substitution" lineEndContext="#stay">
-				<!-- Python 2 style. Syntax:
-				     1. start character '%'
-				     2. [optional] Mapping key, e.g. '(foo)'
-				     3. [optional] Conversion flags, one of '#0- +'
-				     4. [optional] Minimum width, integer or '*'
-				     5. [optional] Precision, '.' followed by integer or '*'
-				     6. [optional] Length modifier, one of 'hlL'
-				     7. conversion type, one of 'crsdiouxXeEfFgG%'
-				     [Special cases: %prog and %default - see http://docs.python.org/library/optparse.html]
-				-->
-				<RegExpr attribute="String Substitution" String="%((\([a-zA-Z0-9_]+\))?[#0\- +]?([1-9][0-9]*|\*)?(\.([1-9][0-9]*|\*))?[hlL]?[crsdiouxXeEfFgG%]|prog|default)" context="#stay"/>
-				<!-- http://docs.python.org/2/library/string.html#format-string-syntax:
-				     replacement_field ::=  "{" [field_name] ["!" conversion] [":" format_spec] "}"
-				     field_name        ::=  arg_name ("." attribute_name | "[" element_index "]")*
-				     arg_name          ::=  [identifier | integer]
-				     attribute_name    ::=  identifier
-				     element_index     ::=  integer | index_string
-				     index_string      ::=  <any source character except "]"> +
-				     conversion        ::=  "r" | "s"
-				     format_spec       ::=  [[fill]align][sign][#][0][width][,][.precision][type]
-				     fill              ::=  <any character>
-				     align             ::=  "<" | ">" | "=" | "^"
-				     sign              ::=  "+" | "-" | " "
-				     width             ::=  integer
-				     precision         ::=  integer
-				     type              ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
-				-->
-				<RegExpr attribute="String Substitution" String="\{(([a-zA-Z0-9_]+|[0-9]+)(\.[a-zA-Z0-9_]+|\[[^ \]]+\])*)?(![rs])?(:([^}]?[&lt;&gt;=^])?[ +-]?#?0?[0-9]*(\.[0-9]+)?[bcdeEfFgGnosxX%]?)?\}" context="#stay"/>
-				<Detect2Chars attribute="String Substitution" char="{" char1="{" context="#stay" />
-				<Detect2Chars attribute="String Substitution" char="}" char1="}" context="#stay" />
-			</context>
-
-			<!-- escape characters -->
-			<context name="stringescape" attribute="String Char" lineEndContext="#stay">
-				<!-- As this highlighting style is for both, Python 2 and 3,
-				we do not know if a normal string is “unicode” or not. So we
-				-->
-				<RegExpr attribute="String Char" String="\\[\\'&quot;abfnrtv]" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\[0-7]{1,3}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\x[0-9A-Fa-f]{2}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\u[0-9A-Fa-f]{4}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\U[0-9A-Fa-f]{8}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\N\{[a-zA-Z0-9\- ]+\}" context="#stay"/>
-			</context>
 
 			<!--
 			It follows a Binary tree of string kinds (not even touching byte literals).
@@ -267,9 +183,6 @@
 			<itemData name="Comment" defStyleNum="dsComment"/>
 			<itemData name="String" defStyleNum="dsString"/>
 			<itemData name="Raw String" defStyleNum="dsVerbatimString"/>
-			<itemData name="String Char" defStyleNum="dsChar" spellChecking="false"/>
-			<itemData name="String Substitution" defStyleNum="dsSpecialChar" spellChecking="false"/>
-			<itemData name="Decorator" defStyleNum="dsAttribute" spellChecking="false"/>
 			<itemData name="Error" defStyleNum="dsError"/>
 		</itemDatas>
 	</highlighting>
