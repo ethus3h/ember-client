@@ -1,3 +1,5 @@
+From https://raw.githubusercontent.com/KDE/syntax-highlighting/master/COPYING:
+
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining
