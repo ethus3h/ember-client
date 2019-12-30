@@ -66,12 +66,10 @@
 				<DetectSpaces/>
 
 				<RegExpr attribute="String" String="u?'''"                insensitive="true" context="Triple A-string" beginRegion="Triple A-region"/>
-				<RegExpr attribute="String" String="u?&quot;&quot;&quot;" insensitive="true" context="Triple Q-string" beginRegion="Triple Q-region"/>
 				<RegExpr attribute="String" String="u?'"                  insensitive="true" context="Single A-string"/>
 				<RegExpr attribute="String" String="u?&quot;"             insensitive="true" context="Single Q-string"/>
 
 				<RegExpr attribute="Raw String" String="(u?r|ru)'''"                insensitive="true" context="Raw Triple A-string" beginRegion="Triple A-region"/>
-				<RegExpr attribute="Raw String" String="(u?r|ru)&quot;&quot;&quot;" insensitive="true" context="Raw Triple Q-string" beginRegion="Triple Q-region"/>
 				<RegExpr attribute="Raw String" String="(u?r|ru)'"                  insensitive="true" context="Raw A-string"/>
 				<RegExpr attribute="Raw String" String="(u?r|ru)&quot;"             insensitive="true" context="Raw Q-string"/>
 
@@ -250,17 +248,6 @@
 			</context>
 
 			<!-- Triple-quoted Q-strings -->
-			<context name="Triple Q-string" attribute="String" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<IncludeRules context="stringescape"/>
-				<IncludeRules context="stringformat"/>
-				<StringDetect attribute="String" String="&quot;&quot;&quot;" context="#pop#CheckForString" endRegion="Triple Q-region"/>
-			</context>
-
-			<context name="Raw Triple Q-string" attribute="Raw String" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<HlCStringChar attribute="Raw String" context="#stay"/>
-				<IncludeRules context="stringformat"/>
-				<StringDetect attribute="Raw String" String="&quot;&quot;&quot;" context="#pop#CheckForString" endRegion="Triple Q-region"/>
-			</context>
 
 			<context name="Triple Q-F-String" attribute="F-String" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<IncludeRules context="stringescape"/>
