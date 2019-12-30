@@ -48,7 +48,7 @@
 				<RegExpr attribute="Definition Keyword" String="r/[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
 				<RegExpr attribute="Special Variable" String="[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
 
-				<keyword attribute="Boolean literal" String="boolean" context="#stay"/>
+				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
 				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 
 				<DetectChar attribute="Normal Text" char="<" context="BoolArray" beginRegion="BoolArray"/>
