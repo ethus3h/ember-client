@@ -49,7 +49,7 @@
 				<RegExpr attribute="Definition Keyword" String="r/[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
 				<RegExpr attribute="Special Variable" String="[a-zA-Z][a-zA-Z]?/[a-zA-Z_0-9]+" context="#stay"/>
 
-				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
+				<keyword attribute="Definition Keyword" String="booleans" context="#stay"/>
 				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 
 				<DetectChar attribute="Normal Text" char="&lt;" context="BoolArray" beginRegion="BoolArray"/>
@@ -79,7 +79,7 @@
 
 			<context name="BoolArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
-				<DetectChar attribute="Normal Text" char="&gt;" context="#pop" endRegion="Dictionary"/>
+				<DetectChar attribute="Normal Text" char="&gt;" context="#pop" endRegion="BoolArray"/>
 				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
 			</context>
 
@@ -136,7 +136,6 @@
 			<itemData name="Special Variable" defStyleNum="dsVariable" spellChecking="false"/>
 			<itemData name="Extensions" defStyleNum="dsExtension" spellChecking="false"/>
 			<itemData name="Import" defStyleNum="dsImport" spellChecking="false"/>
-			<itemData name="Boolean literal" defStyleNum="dsKeyword" spellChecking="false"/>
 			<itemData name="Int" defStyleNum="dsDecVal" spellChecking="false"/>
 			<itemData name="Comment" defStyleNum="dsComment"/>
 			<itemData name="String" defStyleNum="dsString"/>
