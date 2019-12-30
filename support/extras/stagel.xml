@@ -51,7 +51,7 @@
 				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
 				<RegExpr attribute="Int" String="&beforeDigit;(?:[1-9](?:_?\d)*|0(?:_?0)*)\b" context="#stay"/>
 
-				<DetectChar attribute="Normal Text" char="<" context="BoolArray" beginRegion="BoolArray"/>
+				<DetectChar attribute="Normal Text" char="&lt;" context="BoolArray" beginRegion="BoolArray"/>
 				<DetectChar attribute="Normal Text" char="[" context="StrArray" beginRegion="StrArray"/>
 				<DetectChar attribute="Normal Text" char="(" context="IntArray" beginRegion="IntArray"/>
 
@@ -78,7 +78,7 @@
 
 			<context name="BoolArray" attribute="Normal Text" lineEndContext="#stay" noIndentationBasedFolding="true">
 				<DetectSpaces/>
-				<DetectChar attribute="Normal Text" char=">" context="#pop" endRegion="Dictionary"/>
+				<DetectChar attribute="Normal Text" char="&gt;" context="#pop" endRegion="Dictionary"/>
 				<keyword attribute="Boolean literal" String="booleans" context="#stay"/>
 			</context>
 
