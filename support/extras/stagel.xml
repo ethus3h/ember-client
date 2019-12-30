@@ -119,12 +119,13 @@
 				<IncludeRules context="stringescape"/>
 				<DetectChar attribute="String" char="'" context="#pop#CheckForString"/>
 			</context>
-		</contexts>
 
-		<!-- escape characters -->
-		<context name="stringescape" attribute="String Char" lineEndContext="#stay">
-			<RegExpr attribute="String Char" String="\\[\\]" context="#stay"/>
-		</context>
+			<!-- escape characters -->
+			<context name="stringescape" attribute="String Char" lineEndContext="#stay">
+				<RegExpr attribute="String Char" String="\\[\\]" context="#stay"/>
+			</context>
+
+		</contexts>
 
 		<itemDatas>
 			<itemData name="Normal Text" defStyleNum="dsNormal" spellChecking="false"/>
