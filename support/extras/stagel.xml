@@ -25,9 +25,9 @@
 			<item>if</item>
 			<item>elif</item>
 			<item>else</item>
-			<item>foreach</item>
-			<item>return</item>
+			<item>{</item>
 			<item>while</item>
+			<item>return</item>
 		</list>
 		<contexts>
 			<context name="Normal" attribute="Normal Text" lineEndContext="#stay">
