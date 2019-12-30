@@ -121,60 +121,21 @@
 			Adding byte literals wouldn’t make the current 2⁴ into 2⁵ contexts, as there are no byte f-literals
 			-->
 
-
-			<!-- Triple-quoted A-strings -->
-			<context name="Triple A-string" attribute="String" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<IncludeRules context="stringescape"/>
-				<IncludeRules context="stringformat"/>
-				<StringDetect attribute="String" String="'''" context="#pop#CheckForString" endRegion="Triple A-region"/>
-			</context>
-
-			<context name="Raw Triple A-string" attribute="Raw String" lineEndContext="#stay" noIndentationBasedFolding="true">
-				<HlCStringChar attribute="Raw String" context="#stay"/>
-				<IncludeRules context="stringformat"/>
-				<StringDetect attribute="Raw String" String="'''" context="#pop#CheckForString" endRegion="Triple A-region"/>
-			</context>
-
 			<!-- Single-quoted A-strings -->
 			<context name="Single A-string" attribute="String" lineEndContext="#stay">
 				<IncludeRules context="stringescape"/>
-				<IncludeRules context="stringformat"/>
 				<DetectChar attribute="String" char="'" context="#pop#CheckForString"/>
 			</context>
-
-			<context name="Raw A-string" attribute="Raw String" lineEndContext="#stay">
-				<HlCStringChar attribute="Raw String" context="#stay"/>
-				<IncludeRules context="stringformat"/>
-				<DetectChar attribute="Raw String" char="'" context="#pop#CheckForString"/>
-			</context>
-
-			<!-- Single-quoted Q-strings -->
-			<context name="Single Q-string" attribute="String" lineEndContext="#stay">
-				<IncludeRules context="stringescape"/>
-				<IncludeRules context="stringformat"/>
-				<DetectChar attribute="String" char="&quot;" context="#pop#CheckForString"/>
-			</context>
-
-			<context name="Raw Q-string" attribute="Raw String" lineEndContext="#stay">
-				<HlCStringChar attribute="Raw String" context="#stay"/>
-				<IncludeRules context="stringformat"/>
-				<DetectChar attribute="Raw String" char="&quot;" context="#pop#CheckForString"/>
-			</context>
 		</contexts>
-		
-			<!-- escape characters -->
-			<context name="stringescape" attribute="String Char" lineEndContext="#stay">
-				<!-- As this highlighting style is for both, Python 2 and 3,
-				we do not know if a normal string is “unicode” or not. So we
-				-->
-				<RegExpr attribute="String Char" String="\\[\\'&quot;abfnrtv]" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\[0-7]{1,3}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\x[0-9A-Fa-f]{2}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\u[0-9A-Fa-f]{4}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\U[0-9A-Fa-f]{8}" context="#stay"/>
-				<RegExpr attribute="String Char" String="\\N\{[a-zA-Z0-9\- ]+\}" context="#stay"/>
-			</context>
-			
+
+		<!-- escape characters -->
+		<context name="stringescape" attribute="String Char" lineEndContext="#stay">
+			<!-- As this highlighting style is for both, Python 2 and 3,
+			we do not know if a normal string is “unicode” or not. So we
+			-->
+			<RegExpr attribute="String Char" String="\\[\\]" context="#stay"/>
+		</context>
+
 		<itemDatas>
 			<itemData name="Normal Text" defStyleNum="dsNormal" spellChecking="false"/>
 			<itemData name="Definition Keyword" defStyleNum="dsKeyword" spellChecking="false"/>
@@ -184,18 +145,10 @@
 			<itemData name="Builtin Function" defStyleNum="dsBuiltIn" spellChecking="false"/>
 			<itemData name="Special Variable" defStyleNum="dsVariable" spellChecking="false"/>
 			<itemData name="Extensions" defStyleNum="dsExtension" spellChecking="false"/>
-			<itemData name="Exceptions" defStyleNum="dsPreprocessor" spellChecking="false"/>
-			<itemData name="Overloaders" defStyleNum="dsFunction" spellChecking="false"/>
 			<itemData name="Import" defStyleNum="dsImport" spellChecking="false"/>
-			<itemData name="Float" defStyleNum="dsFloat" spellChecking="false"/>
 			<itemData name="Int" defStyleNum="dsDecVal" spellChecking="false"/>
-			<itemData name="Hex" defStyleNum="dsBaseN" spellChecking="false"/>
-			<itemData name="Octal" defStyleNum="dsBaseN" spellChecking="false"/>
-			<itemData name="Binary" defStyleNum="dsBaseN" spellChecking="false"/>
-			<itemData name="Complex" defStyleNum="dsOthers" spellChecking="false"/>
 			<itemData name="Comment" defStyleNum="dsComment"/>
 			<itemData name="String" defStyleNum="dsString"/>
-			<itemData name="Raw String" defStyleNum="dsVerbatimString"/>
 			<itemData name="Error" defStyleNum="dsError"/>
 		</itemDatas>
 	</highlighting>
