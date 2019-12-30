@@ -5,6 +5,7 @@
 	<!ENTITY beforeDigit "(?&lt;![\.\w[:^ascii:]])">
 	<!ENTITY beforePointFloat "(?&lt;![\w[:^ascii:]])">
 ]>
+<!-- Based on https://raw.githubusercontent.com/KDE/syntax-highlighting/master/data/syntax/python.xml -->
 <!-- Python syntax highlightning v0.9 by Per Wigren -->
 <!-- Python syntax highlighting v1.9 by Michael Bueker (improved keyword differentiation) -->
 <!-- Python syntax highlighting v1.97 by Paul Giannaros -->
