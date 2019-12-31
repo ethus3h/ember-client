@@ -24,10 +24,10 @@
 		</list>
 		<list name="operators">
 			<!-- because of the nature of StageL, these "operators" are just commonly used built-in functions -->
-			<item>add</item>
+			<!-- <item>add</item>
 			<item>sub</item>
 			<item>inc</item>
-			<item>cat</item>
+			<item>cat</item> -->
 		</list>
 		<list name="flow">
 			<item>if</item>
