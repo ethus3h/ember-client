@@ -45,7 +45,8 @@ async function storageSetup(kvStorageCfgParam) {
     await setStorageSettings(kvStorageCfg);
 }
 
-async function storagePut(data) {
+async function storagePut(path, data) {
+    // s/path, as/data
     await assertIsIntArray(data); let intRes;
     if (data.constructor.name !== 'Uint8Array') {
         data = new Uint8Array(data);
@@ -61,7 +62,8 @@ async function storagePut(data) {
     await assertIsInt(intRes); return intRes;
 }
 
-async function storageGet(id) {
+async function storageGet(path) {
+    // s/path
     await assertIsInt(id); let intArrayRes;
     /* ipfsNode.files.cat(id, (err, data) => {
         if (err) {
