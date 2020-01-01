@@ -1,6 +1,6 @@
 // This file contains the public interface for EITE NDW.
 async function runTests() {
-     let boolReturn;
+    let boolReturn;
 
     /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
     await setupIfNeeded();
