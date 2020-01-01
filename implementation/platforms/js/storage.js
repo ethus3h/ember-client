@@ -75,12 +75,6 @@ async function storageGet(path) {
     await assertIsIntArray(intArrayRes); return intArrayRes;
 }
 
-async function storageGetLastNodeID() {
-    // Get the latest node ID
-    let intRes;
-    await assertIsInt(intRes); return intRes;
-}
-
 async function internalStorageMysqlApiRequest(queryString) {
     let url=await kvGetValue(await getStorageSettings(), 'mysqlApi')+'?'+queryString;
     let response = await new Promise(resolve => {
