@@ -9,6 +9,14 @@ async function ndw() {
 }
 
 async function ndw_invoke(routine) {
-    if (routine === 'main')
+    if (routine === 'main') {
+        return eite_main();
+    }
+    if (routine === 'main') {
+        return eite_main();
+    }
+    if (routine === 'main') {
+        return eite_main();
+    }
     return getWindowOrSelf()[routine]();
 }
