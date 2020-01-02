@@ -1,1 +1,1 @@
-// This file contains the public interface for EITE NDW.
+// This file contains the main loop of EITE NDW JavaScript implementation
