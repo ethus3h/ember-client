@@ -2,5 +2,7 @@
 
 async function ndw(entrypoint='startEite') {
     ndw_invoke(entrypoint);
+    while (ndw_invoke('tick')) {
 
+    }
 }
