@@ -6,10 +6,6 @@ async function ndw() {
     return ndw_invoke('exitCode');
 }
 
-async function ndw_invoke(routine, parameter='') {
-    return getWindowOrSelf()[routine]();
-}
-
-async function ndw_invoke_with_parameter(routine) {
+async function ndw_invoke(routine) {
     return getWindowOrSelf()[routine]();
 }
