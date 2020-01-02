@@ -1,1 +1,2 @@
-// This file contains the main loop of EITE NDW JavaScript implementation
+// This file contains the implementation of the main loop of the JavaScript implementation of the EITE NDW
+
