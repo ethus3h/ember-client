@@ -1,6 +1,6 @@
 # This file contains the public interface for EITE StageR.
 
-# If you just want to run EITE, use the following function.
+# If you just want to run EITE, use the following routine.
 
 r/v/startEite
     # Start EITE, using the default startup document. Does not return while EITE is still running.
