@@ -3,7 +3,7 @@
 async function ndw() {
     // Start StageR main loop
     ndw_invoke('main');
-    // Start
+    // Run r/b/tick, which returns false once there is no more code to run
     while (ndw_invoke('tick'));
     return ndw_invoke('getExitCode');
 }
