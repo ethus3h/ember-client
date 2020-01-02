@@ -2,10 +2,10 @@
 
 async function ndw() {
     // Start StageR main loop
-    ndw_invoke('main');
+    await ndw_invoke('main');
     // Run r/b/tick, which returns false once there is no more code to run
-    while (ndw_invoke('tick'));
-    return ndw_invoke('getExitCode');
+    while (await ndw_invoke('tick'));
+    return await ndw_invoke('getExitCode');
 }
 
 async function ndw_invoke(routine) {
