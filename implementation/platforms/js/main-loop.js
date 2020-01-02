@@ -7,5 +7,5 @@ async function ndw(entrypoint='startEite') {
 }
 
 async function ndw_invoke(routine) {
-    return
+    return getWindowOrSelf()[routine]();
 }
