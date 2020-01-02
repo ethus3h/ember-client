@@ -12,11 +12,10 @@ async function ndw_invoke(routine) {
     if (routine === 'main') {
         return eite_main();
     }
-    if (routine === 'main') {
-        return eite_main();
+    if (routine === 'tick') {
+        return eite_tick();
     }
-    if (routine === 'main') {
-        return eite_main();
+    if (routine === 'getExitCode') {
+        return eite_getExitCode();
     }
-    return getWindowOrSelf()[routine]();
 }
