@@ -2,7 +2,6 @@
 
 async function ndw(entrypoint='startEite') {
     ndw_invoke(entrypoint);
-    while (ndw_invoke('tick')) {
-
-    }
+    while (ndw_invoke('tick'));
+    return ndw_invoke('exitCode');
 }
