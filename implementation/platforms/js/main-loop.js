@@ -20,8 +20,9 @@ async function ndw_invoke(routine) {
     // sr_ prefix is the deterministic StageR routines
     semiPersistentMemory = ...
     eventData = sr_serializeEvents(...)
+    let instanceData;
     if (routine === 'main') {
-        return sr_main(an/memory, an/storage, an/io);
+        out = sr_main(an/memory, an/storage, an/io);
     }
     if (routine === 'tick') {
         return sr_tick(an/memory, an/storage, an/io);
