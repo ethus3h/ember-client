@@ -21,7 +21,7 @@ async function ndw_invoke(routine) {
     semiPersistentMemory = ...
     eventData = sr_serializeEvents(...)
     if (routine === 'main') {
-        return sr_main();
+        return sr_main(an/memory, an/storage, an/io);
     }
     if (routine === 'tick') {
         return sr_tick();
