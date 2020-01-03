@@ -18,6 +18,8 @@ async function ndw() {
 
 async function ndw_invoke(routine) {
     // sr_ prefix is the deterministic StageR routines
+    semiPersistentMemory = ...
+    eventData = sr_serializeEvents(...)
     if (routine === 'main') {
         return sr_main();
     }
