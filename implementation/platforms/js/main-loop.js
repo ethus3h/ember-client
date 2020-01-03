@@ -7,7 +7,11 @@ async function ndw() {
     let status;
     while (status > 0) {
         status = await ndw_invoke('tick');
-        if (status = 1)
+        if (status === 1) {
+            // continue without waiting for next event
+        } else if (status === 2) {
+            // wait for next expected event
+        }
     }
     return await ndw_invoke('getExitCode');
 }
