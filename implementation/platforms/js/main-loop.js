@@ -4,7 +4,8 @@ async function ndw() {
     // Start StageR main loop
     await ndw_invoke('main');
     // Run r/b/tick, which returns false once there is no more code to run
-    while (await ndw_invoke('tick'));
+    while (status > 0);
+    let status = await ndw_invoke('tick');
     return await ndw_invoke('getExitCode');
 }
 
