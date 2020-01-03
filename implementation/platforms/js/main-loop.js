@@ -18,14 +18,15 @@ async function ndw() {
 
 async function ndw_invoke(routine) {
     // sr_ prefix is the deterministic StageR routines
-    semiPersistentMemory = ...
-    eventData = sr_serializeEvents(...)
-    let instanceData;
+    let tickResults;
+    if (routine === 'main' || routine === 'tick') {
     if (routine === 'main') {
-        out = sr_main(an/memory, an/storage, an/io);
+        tickResults = sr_main(an/memory, an/storage, an/io);
     }
     if (routine === 'tick') {
-        return sr_tick(an/memory, an/storage, an/io);
+        tickResults = sr_tick(an/memory, an/storage, an/io);
+    }
+    return 1;
     }
     if (routine === 'getExitCode') {
         return sr_getExitCode(an/memory, an/storage, an/io);
