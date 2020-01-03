@@ -24,9 +24,9 @@ async function ndw_invoke(routine) {
         return sr_main(an/memory, an/storage, an/io);
     }
     if (routine === 'tick') {
-        return sr_tick();
+        return sr_tick(an/memory, an/storage, an/io);
     }
     if (routine === 'getExitCode') {
-        return sr_getExitCode();
+        return sr_getExitCode(an/memory, an/storage, an/io);
     }
 }
