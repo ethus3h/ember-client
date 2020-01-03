@@ -20,13 +20,13 @@ async function ndw_invoke(routine) {
     // sr_ prefix is the deterministic StageR routines
     let tickResults;
     if (routine === 'main' || routine === 'tick') {
-    if (routine === 'main') {
-        tickResults = sr_main(an/memory, an/storage, an/io);
-    }
-    if (routine === 'tick') {
-        tickResults = sr_tick(an/memory, an/storage, an/io);
-    }
-    return 1;
+        if (routine === 'main') {
+            tickResults = sr_main(an/memory, an/storage, an/io);
+        }
+        if (routine === 'tick') {
+            tickResults = sr_tick(an/memory, an/storage, an/io);
+        }
+        return 1;
     }
     if (routine === 'getExitCode') {
         return sr_getExitCode(an/memory, an/storage, an/io);
