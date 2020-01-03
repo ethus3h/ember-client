@@ -3,7 +3,7 @@
 async function ndw() {
     // Start StageR main loop
     await ndw_invoke('main');
-    // Run r/b/tick, which returns false once there is no more code to run
+    // Run r/b/tick, which returns 0 once there is no more code to run
     let status;
     while (status > 0) {
         status = await ndw_invoke('tick');
@@ -17,13 +17,14 @@ async function ndw() {
 }
 
 async function ndw_invoke(routine) {
+    // sr_ prefix is the deterministic StageR routines
     if (routine === 'main') {
-        return eite_main();
+        return sr_main();
     }
     if (routine === 'tick') {
-        return eite_tick();
+        return sr_tick();
     }
     if (routine === 'getExitCode') {
-        return eite_getExitCode();
+        return sr_getExitCode();
     }
 }
