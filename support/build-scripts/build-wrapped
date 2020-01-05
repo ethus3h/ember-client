@@ -38,21 +38,21 @@ targets=(js sh)
 
 targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
-    [[ -d "./implementation/core-implementations/${targets[$i]}" ]] || continue
+    [[ -d "./implementation/stagel-cores/${targets[$i]}" ]] || continue
 
-    #StageL
+    # StageL
 
-    mkdir -p "./built/stagel-build-temp/implementation/core-implementations/${targets[$i]}"
+    mkdir -p "./built/stagel-build-temp/implementation/stagel-cores/${targets[$i]}"
 
-    rm -f ./implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
+    rm -f ./implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
 
-    find ./implementation/core-implementations/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+    find ./implementation/stagel-cores/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
 
-    echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
 
-    #StageR
+    # StageR
 
     mkdir -p "./built/stagel-build-temp/implementation/portable/stagel"
 
@@ -64,11 +64,13 @@ for (( i=0; i<targetCount; i++ )); do
 
     echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
 
+    # NDW
+
     # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
     mkdir -p ./built/stagel-parts/"${targets[$i]}"
 
-    mv ./built/stagel-build-temp/implementation/core-implementations/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
+    mv ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
     mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
 
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
