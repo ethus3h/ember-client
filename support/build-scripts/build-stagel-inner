@@ -7,5 +7,9 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+type="stagel-cores"
+filename=""
+if [[ "$3" == "ndw" ]]; then
+    $
 cat "$1" >> "./built/stagel-build-temp/implementation/stagel-cores/$2/core.$2"
 echo >> "./built/stagel-build-temp/implementation/stagel-cores/$2/core.$2"
