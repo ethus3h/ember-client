@@ -66,6 +66,16 @@ for (( i=0; i<targetCount; i++ )); do
 
     # NDW
 
+    mkdir -p "./built/stagel-build-temp/implementation/portable/stagel"
+
+    rm -f ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+
+    find ./implementation/portable/stagel/ -name '*.stagel' -exec "$srcmd" "$debugBuild" "$typecheckBuild" {} "${targets[$i]}" \;
+
+    echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+
     # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
     mkdir -p ./built/implementation-parts/"${targets[$i]}"
