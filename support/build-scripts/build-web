@@ -15,7 +15,7 @@ cp -ra ./built/eite/* ./built/web/
 rm -rf ./built/web/data
 cp -ra ./data ./built/web/
 cp -ra ./built/dist-built/ucd ./built/web/data/
-cp -a ./built/stagel-parts/js/eite.js ./built/web/
+cp -a ./built/implementation-parts/js/eite.js ./built/web/
 cp -ra ./built/wasm-common ./built/web/
 cp -a /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp -a ./LICENSE* ./built/web/
