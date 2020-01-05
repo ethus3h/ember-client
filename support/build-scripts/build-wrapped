@@ -29,8 +29,8 @@ slcmd="./support/build-scripts/build-stagel-inner"
 srcmd="./support/build-scripts/build-stager-inner"
 #[[ -f "./stagel-build-internal-stager-inner" ]] && srcmd=./"$srcmd"
 
-rm -rf ./built/stagel-parts
-mkdir ./built/stagel-parts
+rm -rf ./built/implementation-parts
+mkdir ./built/implementation-parts
 
 targets=(js sh)
 
@@ -68,20 +68,20 @@ for (( i=0; i<targetCount; i++ )); do
 
     # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
-    mkdir -p ./built/stagel-parts/"${targets[$i]}"
+    mkdir -p ./built/implementation-parts/"${targets[$i]}"
 
-    mv ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
-    mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/
+    mv ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
+    mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
 
-    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-    cat ./implementation/speedups/speedups."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-    echo $'\n''// @license-end' >> ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}"
+    echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
+    cat ./implementation/speedups/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
+    echo $'\n''// @license-end' >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
 
-    cp ./built/stagel-parts/"${targets[$i]}"/core."${targets[$i]}" ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    echo >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    cat ./built/stagel-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    echo >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
-    cat ./built/stagel-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/stagel-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cp ./built/implementation-parts/"${targets[$i]}"/core."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    echo >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./built/implementation-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    echo >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
 
     rm -r "./built/stagel-build-temp"
 done
