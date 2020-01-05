@@ -72,7 +72,7 @@ for (( i=0; i<targetCount; i++ )); do
 
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}"
 
-    find ./implementation/ndw/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+    find ./implementation/ndw/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" "ndw" \;
 
     echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}"
 
@@ -82,6 +82,7 @@ for (( i=0; i<targetCount; i++ )); do
 
     mv ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
     mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
+    mv ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
 
     echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
     cat ./implementation/speedups/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
@@ -92,6 +93,7 @@ for (( i=0; i<targetCount; i++ )); do
     cat ./built/implementation-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
     echo >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
     cat ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+    cat ./built/implementation-parts/"${targets[$i]}"/ndw."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
 
     rm -r "./built/stagel-build-temp"
 done
