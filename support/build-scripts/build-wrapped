@@ -40,7 +40,7 @@ targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
     [[ -d "./implementation/stagel-cores/${targets[$i]}" ]] || continue
 
-    # StageL
+    # StageL language core
 
     mkdir -p "./built/stagel-build-temp/implementation/stagel-cores/${targets[$i]}"
 
