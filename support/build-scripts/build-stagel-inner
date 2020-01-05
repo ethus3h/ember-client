@@ -13,5 +13,5 @@ if [[ "$3" == "ndw" ]]; then
     directory="ndw"
     filename="ndw"
 fi
-cat "$1" >> "./built/stagel-build-temp/implementation/stagel-cores/$2/core.$2"
-echo >> "./built/stagel-build-temp/implementation/stagel-cores/$2/core.$2"
+cat "$1" >> "./built/stagel-build-temp/implementation/$directory/$2/$filename.$2"
+echo >> "./built/stagel-build-temp/implementation/$directory/$2/$filename.$2"
