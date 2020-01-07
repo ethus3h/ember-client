@@ -81,7 +81,8 @@ if [[ "--cache" == "$cache" ]]; then
 fi
 
 if [[ "true" == "$needCache" ]]; then
-    "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang" > "$cachePath"
+    "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang" > "$cachePath.tmp"
+    [[ -s "$cachePath.tmp" ]] || die ""
     cat "$cachePath"
     exit
 fi
