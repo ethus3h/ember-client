@@ -17,6 +17,8 @@ if [[ "$1" == "--cache" ]]; then
 elif [[ "$1" == "--no-cache" ]]; then
     cache="--no-cache"
     shift
+    cacheDir="$1"
+    shift
 fi
 debugBuild="--debug"
 if [[ "$1" == "--debug" ]]; then

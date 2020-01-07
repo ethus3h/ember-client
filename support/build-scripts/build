@@ -71,17 +71,17 @@ touch ./build-temp/wasm-dist-build-ready
 
 if [[ "$1" == "-v" ]]; then
     shift
-    "$sicmd" "$debugBuild" "$typecheckBuild" "$@"
+    "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
     [[ "$distBuild" == "--dist-build" ]] && ./support/build-scripts/build-wasm-common
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
-    "$sicmd" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+    "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
     [[ "$distBuild" == "--dist-build" ]] && ./support/build-scripts/build-wasm-common
 else
-    "$sicmd" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+    "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build &> /dev/null
     [[ "$distBuild" == "--dist-build" ]] && ./support/build-scripts/build-wasm-common &> /dev/null
 fi
