@@ -41,7 +41,10 @@ targetLang="$2"
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
 parseCmd="stagel-bootstrap-parse"
-[[ -f "./stagel-bootstrap-parse" ]] && parseCmd=./"$parseCmd"
+if [[ "--cache" == "$cache" ]]; then
+parsePath="$(which stagel-bootstrap-parse)"
+if [[ -f "./stagel-bootstrap-parse" ]]; then
+    parseCmd=./"$parseCmd"
 
 codegenCmd="stagel-bootstrap-codegen"
 [[ -f "./stagel-bootstrap-codegen" ]] && codegenCmd=./"$codegenCmd"
@@ -49,7 +52,7 @@ codegenCmd="stagel-bootstrap-codegen"
 if [[ "--cache" == "$cache" ]]; then
     inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
     configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
-    slconvertHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
+    slconvertHash="$(sha512sum < "$parseCmd" | awk '{print $1;}')"
     mkdir -p "$cacheDir/1/$inputHash/$configHash"
 fi
 
