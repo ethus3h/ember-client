@@ -7,7 +7,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Takes a StageL file as first argument, and prints out equivalent code in the language of the second argument (bash/js).
 
-cache="--cache"
+cache="--no-cache"
+cacheDir="."
 if [[ "$1" == "--cache" ]]; then
     cache="--cache"
     shift

@@ -10,7 +10,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
 
-cache="--cache"
+cache="--no-cache"
 cacheDir="."
 if [[ "$1" == "--cache" ]]; then
     cache="--cache"
