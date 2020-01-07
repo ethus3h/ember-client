@@ -62,9 +62,13 @@ codegenCmd="stagel-bootstrap-codegen"
 if [[ "--cache" == "$cache" ]]; then
     inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
     configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
-    slparseHash="$(sha512sum < "$parsePath" | awk '{print $1;}')"
-    slcodegenHash="$(sha512sum < "$codegenPath" | awk '{print $1;}')"
-    mkdir -p "$cacheDir/1/$inputHash/$configHash/$parseHash"
+    parseHash="$(sha512sum < "$parsePath" | awk '{print $1;}')"
+    codegenHash="$(sha512sum < "$codegenPath" | awk '{print $1;}')"
+    cacheSubdir="$cacheDir/1/$inputHash/$configHash/$parseHash"
+    mkdir -p "$cacheSubdir"
+    cachePath="$cacheSubdir/$codegenHash"
+    if [[ -e "$cacheSubdir/$codegenHash" ]]; then
+        cat ""
 fi
 
 "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang"
