@@ -42,7 +42,7 @@ cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
 if [[ "--cache" == "$cache" ]]; then
     inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
-    configHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
+    configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
     mkdir -p "$cacheDir/1/$inputHash/$configHash"
 fi
 
