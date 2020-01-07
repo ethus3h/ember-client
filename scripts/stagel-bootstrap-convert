@@ -81,8 +81,12 @@ if [[ "--cache" == "$cache" ]]; then
 fi
 
 if [[ "true" == "$needCache" ]]; then
-    "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang" > "$cachePath.tmp"
-    [[ -s "$cachePath.tmp" ]] || die ""
+    "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang" > "$cachePath.tmp" || die "convert failed"
+    mv "$cachePath.tmp" "$cachePath" || die "move failed"
+    if ! [[ -s "$cachePath" ]]; then
+        rm -f "$cachePath"
+        die "Cache entry was empty."
+    fi
     cat "$cachePath"
     exit
 fi
