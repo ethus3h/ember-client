@@ -5,6 +5,16 @@ source ember_bash_setup &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A 
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+cache="--cache"
+if [[ "$1" == "--cache" ]]; then
+    cache="--cache"
+    shift
+    cacheDir="$1"
+    shift
+elif [[ "$1" == "--no-cache" ]]; then
+    cache="--no-cache"
+    shift
+fi
 debugBuild="--debug"
 if [[ "$1" == "--debug" ]]; then
     debugBuild="--debug"
