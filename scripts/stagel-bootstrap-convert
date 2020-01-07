@@ -71,6 +71,7 @@ if [[ "--cache" == "$cache" ]]; then
     cachePath="$cacheSubdir/$codegenHash"
     if [[ -e "$cachePath" ]]; then
         cat "$cachePath"
+        exit
     else
         needCache="true"
     fi
@@ -78,4 +79,7 @@ fi
 
 if [[ "true" == "$needCache" ]]; then
     "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang" > "$cachePath"
+    cat "$cachePath"
+    exit
 fi
+"$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang"
