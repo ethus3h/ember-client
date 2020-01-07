@@ -40,16 +40,17 @@ targetLang="$2"
 # Try to cd to the directory the stagel-convert script is stored in. Based on https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
-if [[ "--cache" == "$cache" ]]; then
-    inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
-    configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
-    mkdir -p "$cacheDir/1/$inputHash/$configHash"
-fi
-
 parseCmd="stagel-bootstrap-parse"
 [[ -f "./stagel-bootstrap-parse" ]] && parseCmd=./"$parseCmd"
 
 codegenCmd="stagel-bootstrap-codegen"
 [[ -f "./stagel-bootstrap-codegen" ]] && codegenCmd=./"$codegenCmd"
+
+if [[ "--cache" == "$cache" ]]; then
+    inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
+    configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
+    slconvertHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
+    mkdir -p "$cacheDir/1/$inputHash/$configHash"
+fi
 
 "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang"
