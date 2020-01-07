@@ -40,11 +40,21 @@ targetLang="$2"
 # Try to cd to the directory the stagel-convert script is stored in. Based on https://stackoverflow.com/questions/59895/get-the-source-directory-of-a-bash-script-from-within-the-script-itself
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
-parseCmd="stagel-bootstrap-parse"
 if [[ "--cache" == "$cache" ]]; then
-parsePath="$(which stagel-bootstrap-parse)"
-if [[ -f "./stagel-bootstrap-parse" ]]; then
-    parseCmd=./"$parseCmd"
+    if ! [[ -f "./stagel-bootstrap-parse" ]]; then
+        parsePath="$(which stagel-bootstrap-parse)"
+    else
+        parsePath="./stagel-bootstrap-parse"
+    fi
+    if ! [[ -f "./stagel-bootstrap-codegen" ]]; then
+        codegenPath="$(which stagel-bootstrap-codegen)"
+    else
+        codegenPath="./stagel-bootstrap-codegen"
+    fi
+fi
+
+parseCmd="stagel-bootstrap-parse"
+[[ -f "./stagel-bootstrap-parse" ]] && parseCmd=./"$parseCmd"
 
 codegenCmd="stagel-bootstrap-codegen"
 [[ -f "./stagel-bootstrap-codegen" ]] && codegenCmd=./"$codegenCmd"
@@ -52,8 +62,9 @@ codegenCmd="stagel-bootstrap-codegen"
 if [[ "--cache" == "$cache" ]]; then
     inputHash="$(sha512sum < "$inputFile" | awk '{print $1;}')"
     configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
-    slconvertHash="$(sha512sum < "$parseCmd" | awk '{print $1;}')"
-    mkdir -p "$cacheDir/1/$inputHash/$configHash"
+    slparseHash="$(sha512sum < "$parsePath" | awk '{print $1;}')"
+    slcodegenHash="$(sha512sum < "$codegenPath" | awk '{print $1;}')"
+    mkdir -p "$cacheDir/1/$inputHash/$configHash/$parseHash"
 fi
 
 "$parseCmd" -q "$inputFile" | "$codegenCmd" "$debugBuild" "$typecheckBuild" "$targetLang"
