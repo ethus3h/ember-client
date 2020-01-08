@@ -69,9 +69,9 @@ if [[ "--cache" == "$cache" ]]; then
     configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
     parseHash="$(sha512sum < "$parsePath" | awk '{print $1;}')"
     codegenHash="$(sha512sum < "$codegenPath" | awk '{print $1;}')"
-    cacheSubdir="$cacheDir/.stagel-cache/1/$inputHash/$configHash/$parseHash"
+    cacheSubdir="$cacheDir/.stagel-cache/1/$codegenHash/$parseHash/$configHash"
     mkdir -p "$cacheSubdir"
-    cachePath="$cacheSubdir/$codegenHash"
+    cachePath="$cacheSubdir/$inputHash"
     if [[ -e "$cachePath" ]]; then
         cat "$cachePath"
         exit
