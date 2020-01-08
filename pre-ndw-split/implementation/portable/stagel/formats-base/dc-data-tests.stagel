@@ -1,3 +1,0 @@
-r/v/runTestsDcData b/v
-    testing b/v 'dcData'
-    runTest b/v eq 'B' dcGetBidiClass 120
