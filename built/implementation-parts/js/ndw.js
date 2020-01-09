@@ -1,22 +1,5 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
-// This file contains the public interface for EITE NDW.
-async function runTests() {
-    let boolReturn;
-
-    /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
-    await setupIfNeeded();
-    await clearTestStats();
-    await runTestsOnly(true);
-    await reportTests();
-    if (await implEq(intFailedTests, 0)) {
-
-        boolReturn = true;  return boolReturn;
-    }
-
-    boolReturn = false;  return boolReturn;
-}
-
 async function storageSetup(kvStorageCfgParam) {
     kvStorageCfg=kvStorageCfgParam;
     if (typeof kvStorageCfg === 'undefined') {
@@ -152,6 +135,23 @@ async function ndw_invoke(routine) {
     if (routine === 'getExitCode') {
         return sr_getExitCode(an/memory, an/storage, an/io);
     }
+}
+
+// This file contains the public interface for EITE NDW.
+async function runTests() {
+    let boolReturn;
+
+    /* Returns true if all tests pass; false otherwise. Displays a report of the tests. */
+    await setupIfNeeded();
+    await clearTestStats();
+    await runTestsOnly(true);
+    await reportTests();
+    if (await implEq(intFailedTests, 0)) {
+
+        boolReturn = true;  return boolReturn;
+    }
+
+    boolReturn = false;  return boolReturn;
 }
 
  
