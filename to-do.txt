@@ -31,3 +31,4 @@ OTHER
 - WASM compatibility in StageL
 - Import in editor is broken.
 - WebExt: button for swap between text and rendered; button to open in editor; editor open in tab option
+- Deterministic build: "find" use I think is making output nondeterministic I think
