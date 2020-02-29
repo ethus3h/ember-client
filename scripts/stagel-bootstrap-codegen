@@ -855,17 +855,12 @@ codegenCommandInvocationEnd() {
     esac
     if ! contains "test" "${stateStack[@]}"; then
         if [[ "${stateStack[-2]}" != "arglist" ]] && [[ "${blockStack[-1]}" != "else" ]]; then
+            # End-of-statement character, if any
             case "$targetLang" in
             c|cpp|cs|java|js|p6|php|pl)
-                { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else|debugger)$ ]]; } || codegenOutput ")"
+                codegenOutput ';'
                 ;;
             bash|sh)
-                if [[ "${blockStack[-1]}" =~ ^(if|elif|while|until)$ ]]; then
-                    codegenOutput ' ]]; then'
-                elif [[ "0" != "$codegenInvocationLevel" ]]; then
-                    codegenOutput ')"'
-                    codegenInvocationLevel=$(( codegenInvocationLevel - 1 ))
-                fi
                 ;;
             *)
                 die "${FUNCNAME[0]} is not implemented in $targetLang."
