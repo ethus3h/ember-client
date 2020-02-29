@@ -416,7 +416,7 @@ codegenDedent() {
         elif [[ "${blockStack[-4]}" =~ ^test-body-while|test-body-until$ ]]; then
             codegenOutput 'done'$'\n'
         else
-            codegenOutput $'\n'
+            codegenOutput '}'$'\n'
         fi
         ;;
     *)
@@ -1067,7 +1067,9 @@ codegenRoutineDefinitionStart() {
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput " "
                         codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
-                        codegenOutput ';'
+                        if [[ "$k" -lt "$argumentCount" ]]; then
+                            codegenOutput ';'
+                        fi
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
