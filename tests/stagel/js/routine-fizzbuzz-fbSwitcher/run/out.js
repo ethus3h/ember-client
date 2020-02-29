@@ -18,4 +18,6 @@ async function fbSwitcher(intNum) {
         StageL_Eq(0, StageL_Mod(intNum, 3))) {
         /* Comment 4 */
 
-        
+        strReturn = 'Fizz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
+    }
+}
