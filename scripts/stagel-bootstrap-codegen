@@ -337,7 +337,7 @@ codegenReference() {
         codegenOutput "${2^}"
         ;;
     bash|sh)
-        if [[ "$1" =~ ident-a.* ]] || [[ "$1" =~ ident-ga ]]; then
+        if [[ "$1" =~ ident-a.* ]] || [[ "$1" =~ ident-ga ]] || [[ "$1" =~ ident-gi ]]; then
             if [[ "false" == "$isAssignmentTarget" ]]; then
                 codegenOutput '"$(join_by $'\''\037'\'' "${'
                 codegenFormatType "$1"
