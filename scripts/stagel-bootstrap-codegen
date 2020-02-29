@@ -573,13 +573,13 @@ codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     c|cpp|cs|java|js|p6|php|pl)
-        if [[ "false" == "$endOfLine" ]]; then
-            codegenOutput ', '
-        else
-            codegenOutput ','
+        codegenOutput ','
+        [[ "false" == "$endOfLine" ]] && codegenOutput ' '
+        true
         ;;
     bash|sh)
-        codegenOutput ' '
+        [[ "false" == "$endOfLine" ]] && codegenOutput ' '
+        true
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
