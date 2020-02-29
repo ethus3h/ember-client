@@ -12,12 +12,6 @@ runTestForEachLanguage() {
     runTest -v "stagel/bash/$1"
     #runTest "stagel/js/$1"
 }
-runTest() {
-    if [[ "$1" =~ stagel\/js\/ ]]; then
-        true
-    else
-
-}
 runTest stagel/no-codegen/routine-minimal
 runTest stagel/no-codegen/routine-newline-in-body
 runTest stagel/no-codegen/if-with-indented
