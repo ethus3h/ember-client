@@ -1067,7 +1067,7 @@ codegenRoutineDefinitionStart() {
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput " "
                         codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
-                        codegenOutput '; '
+                        codegenOutput ';'
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
