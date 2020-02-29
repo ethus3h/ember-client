@@ -12,7 +12,7 @@
 		<list name="import">
 			<item>import</item>
 			<item>from</item>
-			<item>as</item>
+			<item>as </item><!-- trailing space to avoid matching as/ type -->
 		</list>
 		<list name="defs">
 			<item>new</item>
