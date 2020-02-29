@@ -1,3 +1,3 @@
 {
-    StageL_implEq(0, 0);
+    StageL_Eq(0, 0);
 }

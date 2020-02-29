@@ -1,13 +1,13 @@
 async function fbSwitcher(intNum) {
     StageL_internalDebugCollect('int Num = ' + intNum + '; '); StageL_internalDebugStackEnter('fbSwitcher:in'); StageL_assertIsInt(intNum); let strReturn;
 
-    if (StageL_implEq(0, StageL_implMod(intNum, 15))) {
+    if (StageL_Eq(0, StageL_Mod(intNum, 15))) {
         /* just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL. */
 
         strReturn = 'FizzBuzz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
     }
     /* Comment */
-    if (StageL_implEq(0, StageL_implMod(intNum, 5))) {
+    if (StageL_Eq(0, StageL_Mod(intNum, 5))) {
         /* Comment 2 */
 
         strReturn = 'Buzz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
@@ -15,7 +15,7 @@ async function fbSwitcher(intNum) {
     }
     if (/* Could also write it like this, with the condition on another line */
 
-        StageL_implEq(0, StageL_implMod(intNum, 3))) {
+        StageL_Eq(0, StageL_Mod(intNum, 3))) {
         /* Comment 4 */
 
         strReturn = 'Fizz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
@@ -29,8 +29,8 @@ async function fizzBuzz() {
     /* return-assert -n # the output should be non-empty. */
     let intCounter = 1;
     while (!(
-        StageL_implEq(intCounter, 100))) {
-        intCounter = StageL_implAdd(intCounter, 1);
+        StageL_Eq(intCounter, 100))) {
+        intCounter = StageL_Add(intCounter, 1);
         let strTemp = '';
         strTemp = StageL_fbSwitcher(intCounter);
 

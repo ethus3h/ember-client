@@ -1,1 +1,1 @@
-"$intCounter"="$(implAdd "$intCounter" "$(implSub "$intCounter" 2)")";
+"$intCounter"="$(Add "$intCounter" "$(Sub "$intCounter" 2)")";

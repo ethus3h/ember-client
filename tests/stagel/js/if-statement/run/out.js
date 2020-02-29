@@ -1,4 +1,4 @@
-if (StageL_implEq(0, StageL_implMod(intNum, 15))) {
+if (StageL_Eq(0, StageL_Mod(intNum, 15))) {
     let strN = '';
     strN = 'FizzBuzz';
 }

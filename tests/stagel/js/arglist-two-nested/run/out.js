@@ -1,1 +1,1 @@
-intCounter = StageL_implAdd(intCounter, 2);
+intCounter = StageL_Add(intCounter, 2);

@@ -1,5 +1,5 @@
 let strN = '';
-if (StageL_implEq('a', strN)) {
+if (StageL_Eq('a', strN)) {
     strN = 'FizzBuzz';
 }
 else {
