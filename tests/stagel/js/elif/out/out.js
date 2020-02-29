@@ -1,8 +1,8 @@
 let strN = '';
-if (StageL_Eq('a', strN)) {
+if (StageL_eq('a', strN)) {
     strN = 'FizzBuzz';
 }
-else if (StageL_Eq('b', strN)) {
+else if (StageL_eq('b', strN)) {
     strN = 'c';
 }
 else {

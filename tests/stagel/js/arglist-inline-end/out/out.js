@@ -1,3 +1,3 @@
-if (StageL_or(StageL_Eq('Zp', strType), StageL_Eq('Zl', strType))) {
+if (StageL_or(StageL_eq('Zp', strType), StageL_eq('Zl', strType))) {
     /* return true */
 }
