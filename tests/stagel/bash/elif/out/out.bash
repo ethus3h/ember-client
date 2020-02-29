@@ -1,8 +1,8 @@
 let strN = '';
-if (await implEq('a', strN)) {
+if (await Eq('a', strN)) {
     strN = 'FizzBuzz';
 }
-else if (await implEq('b', strN)) {
+else if (await Eq('b', strN)) {
     strN = 'c';
 }
 else {

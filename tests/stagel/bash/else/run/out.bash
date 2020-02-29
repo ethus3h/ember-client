@@ -1,5 +1,5 @@
 let strN = '';
-if (await implEq('a', strN)) {
+if (await Eq('a', strN)) {
     strN = 'FizzBuzz';
 }
 else {

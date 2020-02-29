@@ -1,13 +1,13 @@
 async function fbSwitcher(intNum) {
     await internalDebugCollect('int Num = ' + intNum + '; '); await internalDebugStackEnter('fbSwitcher:in'); await assertIsInt(intNum); let strReturn;
 
-    if (await implEq(0, await implMod(intNum, 15))) {
+    if (await Eq(0, await Mod(intNum, 15))) {
         /* just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL. */
 
         strReturn = 'FizzBuzz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
     }
     /* Comment */
-    if (await implEq(0, await implMod(intNum, 5))) {
+    if (await Eq(0, await Mod(intNum, 5))) {
         /* Comment 2 */
 
         strReturn = 'Buzz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
@@ -15,7 +15,7 @@ async function fbSwitcher(intNum) {
     }
     if (/* Could also write it like this, with the condition on another line */
 
-        await implEq(0, await implMod(intNum, 3))) {
+        await Eq(0, await Mod(intNum, 3))) {
         /* Comment 4 */
 
         strReturn = 'Fizz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
@@ -29,8 +29,8 @@ async function fizzBuzz() {
     /* return-assert -n # the output should be non-empty. */
     let intCounter = 1;
     while (!(
-        await implEq(intCounter, 100))) {
-        intCounter = await implAdd(intCounter, 1);
+        await Eq(intCounter, 100))) {
+        intCounter = await Add(intCounter, 1);
         let strTemp = '';
         strTemp = await fbSwitcher(intCounter);
 

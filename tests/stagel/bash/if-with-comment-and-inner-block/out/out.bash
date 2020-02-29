@@ -1,9 +1,9 @@
 {
     if (/* comment */
 
-        await implEq(0, await implMod(intNum, 3))) {
+        await Eq(0, await Mod(intNum, 3))) {
         {
-            await implEq(0, 0);
+            await Eq(0, 0);
         }
     }
 }
