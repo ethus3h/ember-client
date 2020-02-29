@@ -316,11 +316,11 @@ codegenLiteral() {
 }
 
 codegenReference() {
-    codegenDebug "Reference" "${@}" >&2
-    isAssignmentTarget="false"
     if [[ "--is-assignment-target" == "$1" ]]; then
         isAssignmentTarget="true"
     fi
+    codegenDebug "Reference" "${@}" >&2
+    isAssignmentTarget="false"
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
