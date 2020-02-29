@@ -1067,7 +1067,7 @@ codegenRoutineDefinitionStart() {
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput " "
                         codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
-                        codegenOutput '; aoeu'
+                        codegenOutput '; '
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -1077,7 +1077,19 @@ codegenRoutineDefinitionStart() {
             done
         fi
         if [[ "$argumentCount" != 0 ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
-            codegenOutput " "
+            case "$targetLang" in
+            js)
+                codegenOutput "let "
+                codegenFormatType "$codegenRoutineType"
+                codegenOutput "Return;"
+                ;;
+            bash)
+                true
+                ;;
+            *)
+                codegenOutput " "
+            ;;
+            esac
         fi
         if [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             case "$targetLang" in
