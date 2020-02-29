@@ -302,12 +302,8 @@ codegenLiteral() {
             codegenStringLiteralDelim
             ;;
         "literal-n"|"literal-b")
-            if [[ "literal-b" == "$1" ]]; then
-            codegenOutput "$2"
-            ;;
-        "literal-b")
             bash|sh)
-                codegenOutput '"'"$2"'"'
+                codegenOutput "'$2'"
                 ;;
             *)
                 codegenOutput "$2"
