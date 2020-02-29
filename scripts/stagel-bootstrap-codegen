@@ -1093,11 +1093,6 @@ codegenRoutineDefinitionPreEnd() {
             codegenOutput " "
         fi
         ;;
-    bash)
-        codegenOutput 'print '
-        codegenFormatArgument "$returnType" "Return"
-        codegenOutput $'\n'
-        ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
