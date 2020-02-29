@@ -338,11 +338,12 @@ codegenReference() {
         ;;
     bash|sh)
         [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"$'
-        codegenFormatType "$1"
+        if [[ "$1" =~ ident-a.* ]] ||
                     codegenOutput '"$(join_by $'\''\037'\'' "${'
             codegenFormatType "${codegenArgumentType}"
             codegenOutput "${codegenArgumentName^}"'[@]}")"'
 
+        codegenFormatType "$1"
         codegenOutput "${2^}"
         [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"'
         true
