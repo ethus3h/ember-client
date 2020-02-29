@@ -302,6 +302,7 @@ codegenLiteral() {
             codegenStringLiteralDelim
             ;;
         "literal-n"|"literal-b")
+            if [[ "literal-b" == "$1" ]]; then
             codegenOutput "$2"
             ;;
         literal-a*)
@@ -551,7 +552,7 @@ codegenCommandInvocationStart() {
                 true
             fi
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
-                codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+                codegenReference --is-assignment-target "${codegenArgList[-4]}" "${codegenArgList[-3]}"
                 case "$targetLang" in
                 bash|sh)
                     codegenOutput '='
@@ -563,9 +564,16 @@ codegenCommandInvocationStart() {
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             else
                 #set -x
-                codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+                codegenReference --is-assignment-target "${codegenArgList[-2]}" "${codegenArgList[-1]}"
                 if [[ "$tokenLookahead" =~ ^(ident-|literal-) ]]; then
-                    codegenOutput ' = '
+                    case "$targetLang" in
+                    bash|sh)
+                        codegenOutput '='
+                        ;;
+                    *)
+                        codegenOutput ' = '
+                        ;;
+                    esac
                     tokenLookahead=""
                 else
                     local type
