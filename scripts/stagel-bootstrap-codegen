@@ -554,7 +554,7 @@ codegenArrayEntryDelimiter() {
 codegenEndArray() {
     codegenDebug "End array" "${@}" >&2
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenOutput ' ]'
         ;;
     bash|sh)
