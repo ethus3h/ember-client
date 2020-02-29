@@ -9,7 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 cd tests || die
 
 runTestForEachLanguage() {
-    runTest "stagel/bash/$1"
+    runTest -v "stagel/bash/$1"
     #runTest "stagel/js/$1"
 }
 runTest stagel/no-codegen/routine-minimal

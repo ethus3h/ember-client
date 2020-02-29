@@ -3,7 +3,7 @@ async function or(boolA, boolB) {
 
     let boolTemp = false;
     boolTemp = StageL_not(boolA);
-    boolTemp = StageL_not(StageL_And(boolTemp, StageL_not(boolB)));
+    boolTemp = StageL_not(StageL_and(boolTemp, StageL_not(boolB)));
 
     boolReturn = boolTemp; StageL_assertIsBool(boolReturn); StageL_internalDebugStackExit(); return boolReturn;
 }
