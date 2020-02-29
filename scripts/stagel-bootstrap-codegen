@@ -806,7 +806,7 @@ codegenCommandInvocationStart() {
             ;;
         bash|sh)
             if codegenOnNewLine; then
-                codegenOutput "StageL_$codegenRoutineName"
+                codegenOutput "StageL_$codegenRoutineName "
             else
                 #if [[ "0" != "$codegenInvocationLevel" ]]; then
                 #    codegenOutput ' '
