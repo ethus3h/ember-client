@@ -468,7 +468,14 @@ codegenInitializeType() {
     codegenDebug "Initialize type" "${@}" >&2
     case "$targetLang" in
     bash|c|cpp|cs|java|js|p6|php|pl|sh)
-        codegenOutput " = "
+        case "$targetLang" in
+        bash|sh)
+            codegenOutput '='
+            ;;
+        *)
+            codegenOutput ' = '
+            ;;
+        esac
         case "$1" in
         "bool")
             codegenLiteral 'literal-b' 'false'
