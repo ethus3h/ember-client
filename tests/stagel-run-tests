@@ -41,7 +41,6 @@ runTest stagel/js/set-to-str-routine-invocation
 #runTest -v stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
 runTestForEachLanguage generic-parameter
-exit
 runTestForEachLanguage generic-ga-gi-parameter
 runTestForEachLanguage array-s
 runTest stagel/js/array-zero-only
