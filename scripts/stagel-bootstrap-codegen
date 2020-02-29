@@ -565,15 +565,18 @@ codegenStartArray() {
 
 # shellcheck disable=SC2120
 codegenArrayEntryDelimiter() {
-    isAssignmentTarget="false"
-    if [[ "--is-assignment-target" == "$1" ]]; then
-        isAssignmentTarget="true"
+    endOfLine="false"
+    if [[ "--end-of-line" == "$1" ]]; then
+        endOfLine="true"
         shift
     fi
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     c|cpp|cs|java|js|p6|php|pl)
-        codegenOutput ', '
+        if [[ "false" == "$endOfLine" ]]; then
+            codegenOutput ', '
+        else
+            codegenOutput ','
         ;;
     bash|sh)
         codegenOutput ' '
