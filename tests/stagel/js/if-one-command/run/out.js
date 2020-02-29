@@ -1,4 +1,4 @@
-if (StageL_Eq(0, 15)) {
+if (StageL_eq(0, 15)) {
     let strN = '';
     strN = 'FizzBuzz';
 }
