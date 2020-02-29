@@ -7,5 +7,5 @@ strFromByte() {
     strArrayTemp=()
     strArrayTemp=( 'd' 'b' 'l'
     'c' 'b' 'a' )
-    append"$(join_by $'\037' "${strArrayChars[@]}")" "$(join_by $'\037' "${strArrayTemp[@]}")"
+    StageL_append"$(join_by $'\037' "${strArrayChars[@]}")" "$(join_by $'\037' "${strArrayTemp[@]}")"
 }
