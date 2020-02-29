@@ -3,4 +3,5 @@ ne() {genericA="$1"; shift; genericB="$1"; shift; internalDebugCollect "generic 
     let "$boolTemp" = false
     boolTemp="$(StageL_Not "$(StageL_Eq "$genericA" "$genericB")")"
 
-    boolReturn="$boolTemp"; assertIsBool "$boolReturn"; 
+    boolReturn="$boolTemp"; assertIsBool "$boolReturn"; StageL_internalDebugStackExit print "$boolReturn"
+
