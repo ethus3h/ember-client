@@ -1,2 +1,2 @@
-intCounter = StageL_Add(intCounter, 1);
+intCounter = StageL_add(intCounter, 1);
 let strTemp = '';
