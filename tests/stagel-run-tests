@@ -10,7 +10,7 @@ cd tests || die
 
 runTestForEachLanguage() {
     runTest -v "stagel/bash/$1"
-    #runTest "stagel/js/$1"
+    runTest "stagel/js/$1"
 }
 
 runTest stagel/no-codegen/routine-minimal
