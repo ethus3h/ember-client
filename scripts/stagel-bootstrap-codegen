@@ -523,8 +523,11 @@ codegenInitializeType() {
 codegenStartArray() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
-    bash|c|cpp|cs|java|js|p6|php|pl|sh)
+    c|cpp|cs|java|js|p6|php|pl)
         codegenOutput '[ '
+        ;;
+    bash|sh)
+        codegenOutput '( '
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
