@@ -471,10 +471,10 @@ codegenInitializeType() {
         codegenOutput " = "
         case "$1" in
         "bool")
-            codegenOutput 'false'
+            codegenLiteral 'literal-b' 'false'
             ;;
         "int")
-            codegenOutput '0'
+            codegenLiteral 'literal-n' '0'
             ;;
         "str")
             codegenStringLiteralDelim
