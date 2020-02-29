@@ -1,1 +1,1 @@
-intCounter="$(StageL_Add "$intCounter" "$(StageL_Sub "$intCounter" '2')")"
+intCounter="$(add "$intCounter" "$(sub "$intCounter" '2')")"
