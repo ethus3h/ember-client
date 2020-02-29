@@ -1078,11 +1078,6 @@ codegenRoutineDefinitionStart() {
         fi
         if [[ "$argumentCount" != 0 ]] && [[ "${blockStack[-2]}" != "ident-r-v" ]]; then
             case "$targetLang" in
-            js)
-                codegenOutput "let "
-                codegenFormatType "$codegenRoutineType"
-                codegenOutput "Return;"
-                ;;
             bash)
                 true
                 ;;
