@@ -334,6 +334,7 @@ codegenReference() {
         codegenFormatType "$1"
         codegenOutput "${2^}"
         [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"'
+        true
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
