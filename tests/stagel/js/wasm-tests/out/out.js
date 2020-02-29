@@ -1,8 +1,8 @@
 async function runTestsWasm(boolV, boolA) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugStackEnter('runTestsWasm:in'); await assertIsBool(boolV); await assertIsBool(boolA);
+    StageL_internalDebugCollect('bool V = ' + boolV + '; '); StageL_internalDebugCollect('bool A = ' + boolA + '; '); StageL_internalDebugStackEnter('runTestsWasm:in'); StageL_assertIsBool(boolV); StageL_assertIsBool(boolA);
 
-    await runTest(boolV, await implEq(42, await wasmCall('fortytwo', [ true, false ])));
-    await runTest(boolV, await implEq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+    StageL_runTest(boolV, StageL_implEq(42, StageL_wasmCall('fortytwo', [ true, false ])));
+    StageL_runTest(boolV, StageL_implEq(4, StageL_wasmCallArrIn('add', [ 2, 2 ])));
 
-    await internalDebugStackExit();
+    StageL_internalDebugStackExit();
 }

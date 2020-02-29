@@ -1,7 +1,7 @@
 async function f() {
-    await internalDebugStackEnter('f:in'); let strReturn;
+    StageL_internalDebugStackEnter('f:in'); let strReturn;
 
-    while (!(await condition()) {
-        await command();
+    while (!(StageL_condition()) {
+        StageL_command();
     }
 }

@@ -1,9 +1,9 @@
 async function or(boolA, boolB) {
-    await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugCollect('bool B = ' + boolB + '; '); await internalDebugStackEnter('or:in'); await assertIsBool(boolA); await assertIsBool(boolB); let boolReturn;
+    StageL_internalDebugCollect('bool A = ' + boolA + '; '); StageL_internalDebugCollect('bool B = ' + boolB + '; '); StageL_internalDebugStackEnter('or:in'); StageL_assertIsBool(boolA); StageL_assertIsBool(boolB); let boolReturn;
 
     let boolTemp = false;
-    boolTemp = await implNot(boolA);
-    boolTemp = await implNot(await implAnd(boolTemp, await implNot(boolB)));
+    boolTemp = StageL_implNot(boolA);
+    boolTemp = StageL_implNot(StageL_implAnd(boolTemp, StageL_implNot(boolB)));
 
-    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    boolReturn = boolTemp; StageL_assertIsBool(boolReturn); StageL_internalDebugStackExit(); return boolReturn;
 }

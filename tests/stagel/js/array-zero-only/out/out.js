@@ -1,4 +1,4 @@
 let intArrayRes = [];
-while (await implLt(8, await len(intArrayRes))) {
-    intArrayRes = await push([ 0 ], intArrayRes);
+while (StageL_implLt(8, StageL_len(intArrayRes))) {
+    intArrayRes = StageL_push([ 0 ], intArrayRes);
 }

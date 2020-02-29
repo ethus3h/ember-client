@@ -1,9 +1,9 @@
 async function f() {
-    await internalDebugStackEnter('f:in');
+    StageL_internalDebugStackEnter('f:in');
 
     let intCounter = 1;
-    intCounter = await implAdd(intCounter, 1);
+    intCounter = StageL_implAdd(intCounter, 1);
     let strTemp = '';
 
-    await internalDebugStackExit();
+    StageL_internalDebugStackExit();
 }

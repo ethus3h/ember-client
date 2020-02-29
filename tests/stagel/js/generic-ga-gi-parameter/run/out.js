@@ -1,8 +1,8 @@
 async function ne(genericArrayA, genericItemB) {
-    await internalDebugCollect('genericArray A = ' + genericArrayA + '; '); await internalDebugCollect('genericItem B = ' + genericItemB + '; '); await internalDebugStackEnter('ne:in'); await assertIsGenericArray(genericArrayA); await assertIsGenericItem(genericItemB); let boolReturn;
+    StageL_internalDebugCollect('genericArray A = ' + genericArrayA + '; '); StageL_internalDebugCollect('genericItem B = ' + genericItemB + '; '); StageL_internalDebugStackEnter('ne:in'); StageL_assertIsGenericArray(genericArrayA); StageL_assertIsGenericItem(genericItemB); let boolReturn;
 
     let boolTemp = false;
-    boolTemp = await implNot(await implEq(genericArrayA, genericItemB));
+    boolTemp = StageL_implNot(StageL_implEq(genericArrayA, genericItemB));
 
-    boolReturn = boolTemp; await assertIsBool(boolReturn); await internalDebugStackExit(); return boolReturn;
+    boolReturn = boolTemp; StageL_assertIsBool(boolReturn); StageL_internalDebugStackExit(); return boolReturn;
 }

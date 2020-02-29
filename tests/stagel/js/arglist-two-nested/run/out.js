@@ -1,1 +1,1 @@
-intCounter = await implAdd(intCounter, 2);
+intCounter = StageL_implAdd(intCounter, 2);

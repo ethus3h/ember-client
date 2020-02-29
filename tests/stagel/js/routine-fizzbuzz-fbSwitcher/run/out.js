@@ -1,23 +1,23 @@
 async function fbSwitcher(intNum) {
-    await internalDebugCollect('int Num = ' + intNum + '; '); await internalDebugStackEnter('fbSwitcher:in'); await assertIsInt(intNum); let strReturn;
+    StageL_internalDebugCollect('int Num = ' + intNum + '; '); StageL_internalDebugStackEnter('fbSwitcher:in'); StageL_assertIsInt(intNum); let strReturn;
 
-    if (await implEq(0, await implMod(intNum, 15))) {
+    if (StageL_implEq(0, StageL_implMod(intNum, 15))) {
         /* just a literal sequence of bytes. Everything should be binary safe. 0x could be used to return data, too. 0x = data, not numbers, in StageL. */
 
-        strReturn = 'FizzBuzz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+        strReturn = 'FizzBuzz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
     }
     /* Comment */
-    if (await implEq(0, await implMod(intNum, 5))) {
+    if (StageL_implEq(0, StageL_implMod(intNum, 5))) {
         /* Comment 2 */
 
-        strReturn = 'Buzz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+        strReturn = 'Buzz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
         /* Comment 3 */
     }
     if (/* Could also write it like this, with the condition on another line */
 
-        await implEq(0, await implMod(intNum, 3))) {
+        StageL_implEq(0, StageL_implMod(intNum, 3))) {
         /* Comment 4 */
 
-        strReturn = 'Fizz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+        strReturn = 'Fizz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
     }
 }

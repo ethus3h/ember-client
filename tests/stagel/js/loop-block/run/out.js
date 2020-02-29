@@ -3,8 +3,8 @@ strArrayTemp = [ 'd', 'b', 'l', 'c', 'b', 'a' ];
 let intC = 0;
 let intI = 0;
 let strElem = '';
-while (await implLt(intI, await count(strArrayTemp))) {
-    strElem = await get(strArrayTemp, intI);
-    intI = await inc(intI);
-    intC = await inc(intC);
+while (StageL_implLt(intI, StageL_count(strArrayTemp))) {
+    strElem = StageL_get(strArrayTemp, intI);
+    intI = StageL_inc(intI);
+    intC = StageL_inc(intC);
 }

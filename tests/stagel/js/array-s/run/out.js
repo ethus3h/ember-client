@@ -1,5 +1,5 @@
 async function strFromByte(intIn) {
-    await internalDebugCollect('int In = ' + intIn + '; '); await internalDebugStackEnter('strFromByte:in'); await assertIsInt(intIn); let strReturn;
+    StageL_internalDebugCollect('int In = ' + intIn + '; '); StageL_internalDebugStackEnter('strFromByte:in'); StageL_assertIsInt(intIn); let strReturn;
 
     let strArrayChars = [];
     strArrayChars = [ '', '', '', '', '', '', '' ];
@@ -7,5 +7,5 @@ async function strFromByte(intIn) {
     let strArrayTemp = [];
     strArrayTemp = [ 'd', 'b', 'l', 
     'c', 'b', 'a' ];
-    await append(strArrayChars, strArrayTemp);
+    StageL_append(strArrayChars, strArrayTemp);
 }

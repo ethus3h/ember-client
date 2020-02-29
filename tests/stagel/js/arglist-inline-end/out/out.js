@@ -1,3 +1,3 @@
-if (await or(await implEq('Zp', strType), await implEq('Zl', strType))) {
+if (StageL_or(StageL_implEq('Zp', strType), StageL_implEq('Zl', strType))) {
     /* return true */
 }

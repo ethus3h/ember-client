@@ -1,2 +1,2 @@
-strTemp = await fbSwitcher(intCounter);
+strTemp = StageL_fbSwitcher(intCounter);
 let strTick = '';

@@ -1,7 +1,7 @@
 {
     if (/* comment */
 
-        await implEq(0, await implMod(intNum, 3))) {
-        await implEq(0, 0);
+        StageL_implEq(0, StageL_implMod(intNum, 3))) {
+        StageL_implEq(0, 0);
     }
 }

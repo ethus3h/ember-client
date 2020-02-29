@@ -1,13 +1,13 @@
 async function fbSwitcher(intNum) {
-    await internalDebugCollect('int Num = ' + intNum + '; '); await internalDebugStackEnter('fbSwitcher:in'); await assertIsInt(intNum); let strReturn;
+    StageL_internalDebugCollect('int Num = ' + intNum + '; '); StageL_internalDebugStackEnter('fbSwitcher:in'); StageL_assertIsInt(intNum); let strReturn;
 
 
-    strReturn = 'Fizz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    strReturn = 'Fizz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
 }
 
 async function fbSwitchar(intNum) {
-    await internalDebugCollect('int Num = ' + intNum + '; '); await internalDebugStackEnter('fbSwitchar:in'); await assertIsInt(intNum); let strReturn;
+    StageL_internalDebugCollect('int Num = ' + intNum + '; '); StageL_internalDebugStackEnter('fbSwitchar:in'); StageL_assertIsInt(intNum); let strReturn;
 
 
-    strReturn = 'Fazz'; await assertIsStr(strReturn); await internalDebugStackExit(); return strReturn;
+    strReturn = 'Fazz'; StageL_assertIsStr(strReturn); StageL_internalDebugStackExit(); return strReturn;
 }

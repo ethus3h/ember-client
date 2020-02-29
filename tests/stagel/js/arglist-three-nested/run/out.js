@@ -1,1 +1,1 @@
-intCounter = await implAdd(intCounter, await implSub(intCounter, 2));
+intCounter = StageL_implAdd(intCounter, StageL_implSub(intCounter, 2));

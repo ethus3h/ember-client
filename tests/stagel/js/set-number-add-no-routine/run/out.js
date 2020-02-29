@@ -1,2 +1,2 @@
-intCounter = await implAdd(intCounter, 1);
+intCounter = StageL_implAdd(intCounter, 1);
 let strTemp = '';
