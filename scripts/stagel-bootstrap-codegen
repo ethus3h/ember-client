@@ -317,6 +317,10 @@ codegenLiteral() {
 
 codegenReference() {
     codegenDebug "Reference" "${@}" >&2
+    isAssignmentTarget="false"
+    if [[ "--is-assignment-target" == "$1" ]]; then
+        isAssignmentTarget="true"
+    fi
     # Reference to a variable
     # First arg: type; second arg: name
     case "$targetLang" in
@@ -325,6 +329,7 @@ codegenReference() {
         codegenOutput "${2^}"
         ;;
     bash|sh)
+        [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"'
         codegenOutput '"$'
         codegenFormatType "$1"
         codegenOutput "${2^}"'"'
