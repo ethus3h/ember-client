@@ -1079,7 +1079,7 @@ codegenRoutineDefinitionStart() {
 codegenRoutineDefinitionPreEnd() {
     codegenDebug "Routine definition end" "${@}" >&2
     case "$targetLang" in
-    js)
+    js|bash)
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
             codegenIndent=$(( codegenIndent + 1 ))
@@ -1093,19 +1093,11 @@ codegenRoutineDefinitionPreEnd() {
             codegenOutput " "
         fi
         ;;
-            js)
-                codegenOutput "return "
-                codegenFormatType "$returnType"
-                codegenOutput "Return;"$'\n'
-                ;;
-            bash)
-                codegenOutput 'print '
-                codegenFormatArgument "$returnType" "Return"
-                codegenOutput $'\n'
-                ;;
-            *)
-                die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
+    bash)
+        codegenOutput 'print '
+        codegenFormatArgument "$returnType" "Return"
+        codegenOutput $'\n'
+        ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
