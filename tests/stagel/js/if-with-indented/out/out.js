@@ -1,5 +1,5 @@
 if (
-    StageL_eq(0, StageL_Mod(intNum, 15))) {
+    StageL_eq(0, StageL_mod(intNum, 15))) {
     let strN = '';
     strN = 'FizzBuzz';
 }
