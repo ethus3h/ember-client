@@ -973,7 +973,7 @@ codegenRoutineDefinitionStart() {
             for (( k=0; k<argumentCount; k++ )); do
                 if (( k % 2 )); then
                     if [[ "$(codegenFormatType "${codegenArgList[$k - 1]}")" =~ ^(boolArray|intArray|strArray|genericArray|genericItem)$ ]]; then
-                        codegenOutput 'IFS=$'\''\037'\'' read -r -a '\'
+                        codegenOutput 'IFS=$'\''\037'\'' read -r -a '
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         if [[ "$k" == $((argumentCount - 1)) ]]; then
                             if generateDebugCode; then

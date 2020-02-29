@@ -42,6 +42,7 @@ runTest stagel/js/set-to-str-routine-invocation
 runTest stagel/js/logical-or
 runTestForEachLanguage generic-parameter
 runTestForEachLanguage generic-ga-gi-parameter
+exit
 runTestForEachLanguage array-s
 runTest stagel/js/array-zero-only
 runTest stagel/js/bool-literal

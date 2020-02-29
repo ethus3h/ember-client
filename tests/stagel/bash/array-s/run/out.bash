@@ -1,10 +1,11 @@
-strFromByte() {intIn="$1"; shift; internalDebugCollect "int In = ${intIn[@]}; "; internalDebugStackEnter 'strFromByte:in'; assertIsInt "$intIn" 
+strFromByte() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = ${intIn[@]}; "; StageL_internalDebugStackEnter 'strFromByte:in'; StageL_assertIsInt "$intIn"
 
-    let "$strArrayChars" = []
+    strArrayChars=[]
     strArrayChars=[ '', '', '', '', '', '', '' ]
     # 0 through 6
-    let "$strArrayTemp" = []
+    strArrayTemp=[]
     strArrayTemp=[ 'd', 'b', 'l', 
     'c', 'b', 'a' ]
     append"$strArrayChars" "$strArrayTemp"
-
+}
