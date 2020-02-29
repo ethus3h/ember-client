@@ -684,12 +684,12 @@ codegenCommandInvocationStart() {
             ;;
         bash)
             if codegenOnNewLine; then
-                codegenOutput "${codegenRoutineName^}"
+                codegenOutput "StageL_${codegenRoutineName^}"
             else
                 #if [[ "0" != "$codegenInvocationLevel" ]]; then
                 #    codegenOutput ' '
                 #fi
-                codegenOutput '"$('"${codegenRoutineName^} "
+                codegenOutput '"$('"StageL_${codegenRoutineName^} "
                 codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
             fi
             ;;
