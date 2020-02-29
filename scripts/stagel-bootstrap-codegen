@@ -854,7 +854,9 @@ codegenCommandInvocationEnd() {
         ;;
     esac
     if ! contains "test" "${stateStack[@]}"; then
-        [[ "${stateStack[-2]}" != "arglist" ]] && [[ "${blockStack[-1]}" != "else" ]] && codegenOutput $'\n'
+        if [[ "${stateStack[-2]}" != "arglist" ]] && [[ "${blockStack[-1]}" != "else" ]]; then
+        [[ "$targetLang" ]]
+        codegenOutput $'\n'
     fi
     blockStackRemoveLast
     codegenRoutineType=""
