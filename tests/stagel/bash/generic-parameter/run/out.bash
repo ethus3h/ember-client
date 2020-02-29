@@ -4,5 +4,5 @@ ne() {
     boolTemp='false'
     boolTemp="$(StageL_Not "$(StageL_Eq "$genericA" "$genericB")")"
 
-    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit print "$boolReturn"
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
 

@@ -1027,7 +1027,7 @@ codegenRoutineDefinitionStart() {
                         # shellcheck disable=SC2016
                         codegenOutput " ${codegenArgList[$k]^}"' = ${'
                         codegenFormatType "${codegenArgList[$k - 1]}"
-                        codegenOutput "${codegenArgList[$k]^}"'[@]}; ";'
+                        codegenOutput "${codegenArgList[$k]^}"'[@]}; "; '
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -1040,7 +1040,7 @@ codegenRoutineDefinitionStart() {
                 codegenOutput "StageL_internalDebugStackEnter('$codegenRoutineName:$filename');"
                 ;;
             bash)
-                codegenOutput "StageL_internalDebugStackEnter '$codegenRoutineName:$filename';"
+                codegenOutput "StageL_internalDebugStackEnter '$codegenRoutineName:$filename'; "
                 ;;
             *)
                 die "${FUNCNAME[0]} is not implemented in $targetLang."
