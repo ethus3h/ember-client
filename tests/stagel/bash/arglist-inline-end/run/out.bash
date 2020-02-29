@@ -1,3 +1,3 @@
-if [[ "true" == "$(or "$(Eq 'Zp' "$strType")" "$(Eq 'Zl' "$strType")")" ]]; then
+if [[ "true" == "$(or "$(StageL_Eq 'Zp' "$strType")" "$(StageL_Eq 'Zl' "$strType")")" ]]; then
     # return true
 fi
