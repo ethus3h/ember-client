@@ -22,7 +22,6 @@ runTest stagel/no-codegen/loop-block
 runTest stagel/no-codegen/routine-fizzbuzz
 runTestForEachLanguage arglist-two-nested
 runTestForEachLanguage arglist-three-nested
-exit
 runTest stagel/js/routine-minimal
 runTest stagel/js/two-routines
 runTest stagel/js/bare-block
@@ -42,6 +41,7 @@ runTest stagel/js/set-to-str-routine-invocation
 #runTest -v stagel/js/routine-fizzbuzz
 runTest stagel/js/logical-or
 runTestForEachLanguage generic-parameter
+exit
 runTestForEachLanguage generic-ga-gi-parameter
 runTestForEachLanguage array-s
 runTest stagel/js/array-zero-only
