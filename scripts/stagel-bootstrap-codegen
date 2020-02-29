@@ -302,6 +302,7 @@ codegenLiteral() {
             codegenStringLiteralDelim
             ;;
         "literal-n"|"literal-b")
+            case "$targetLang" in
             bash|sh)
                 codegenOutput "'$2'"
                 ;;
