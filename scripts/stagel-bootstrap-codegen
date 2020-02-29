@@ -924,7 +924,7 @@ codegenRoutineDefinitionStart() {
             codegenOutput ") {"$'\n'
             ;;
         bash)
-            codegenOutput "$codegenRoutineName() {"
+            codegenOutput "$codegenRoutineName() {"$'\n'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
