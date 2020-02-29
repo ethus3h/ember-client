@@ -1126,8 +1126,16 @@ codegenRoutineDefinitionPreEnd() {
         if generateDebugCode; then
             codegenOutput "StageL_internalDebugStackExit"
             if [[ "js" == "$targetLang" ]]; then
-                codegenOutput "();"
+                codegenOutput "()"
             fi
+            case "$targetLang" in
+            bash|sh)
+                true
+                ;;
+            *)
+                codegenOutput " "
+            ;;
+            esac;
         fi
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
