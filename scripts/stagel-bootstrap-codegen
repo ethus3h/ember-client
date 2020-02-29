@@ -499,24 +499,44 @@ codegenInitializeType() {
             codegenStringLiteralDelim
             ;;
         "boolArray")
-        case "$targetLang" in
-        bash|sh)
-            codegenOutput '='
-            ;;
-        *)
-            codegenOutput ' = '
-            ;;
-        esac
-            codegenOutput "[]"
+            case "$targetLang" in
+            bash|sh)
+                codegenOutput "()"
+                ;;
+            *)
+                codegenOutput "[]"
+                ;;
+            esac
             ;;
         "intArray")
-            codegenOutput "[]"
+            case "$targetLang" in
+            bash|sh)
+                codegenOutput "()"
+                ;;
+            *)
+                codegenOutput "[]"
+                ;;
+            esac
             ;;
         "strArray")
-            codegenOutput "[]"
+            case "$targetLang" in
+            bash|sh)
+                codegenOutput "()"
+                ;;
+            *)
+                codegenOutput "[]"
+                ;;
+            esac
             ;;
         "genericArray")
-            codegenOutput "[]"
+            case "$targetLang" in
+            bash|sh)
+                codegenOutput "()"
+                ;;
+            *)
+                codegenOutput "[]"
+                ;;
+            esac
             ;;
         *)
             die "Initialize requested for unexpected type of $1."
