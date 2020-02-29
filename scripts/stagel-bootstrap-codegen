@@ -1086,7 +1086,12 @@ codegenRoutineDefinitionPreEnd() {
             codegenPrintIndentationSpaces
             codegenIndent=$(( codegenIndent - 1 ))
         fi
-        generateDebugCode && codegenOutput "StageL_internalDebugStackExit();"
+        if generateDebugCode; then
+            codegenOutput "StageL_internalDebugStackExit"
+            if [[ "js" == "$targetLang" ]]; then
+                codegenOutput "();"
+            fi
+        fi
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
         else
