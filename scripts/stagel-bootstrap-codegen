@@ -306,14 +306,11 @@ codegenLiteral() {
             codegenOutput "$2"
             ;;
         "literal-b")
-            js|bash|sh)
-                codegenOutput \'
-                ;;
-            c|cpp)
-                codegenOutput \"
+            bash|sh)
+                codegenOutput '"'"$2"'"'
                 ;;
             *)
-                die "${FUNCNAME[0]} is not implemented in $targetLang."
+                codegenOutput "$2"
                 ;;
             esac
             ;;
