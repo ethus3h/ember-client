@@ -701,7 +701,7 @@ codegenCommandInvocationStart() {
     set)
         codegenPrintIndentationSpaces
         if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
-            codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
+            codegenReference --is-assignment-target "${codegenArgList[-4]}" "${codegenArgList[-3]}"
             case "$targetLang" in
             c|cpp|cs|java|js|p6|php|pl)
                 codegenOutput ' = '
