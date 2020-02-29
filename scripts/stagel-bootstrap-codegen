@@ -761,30 +761,6 @@ codegenCommandInvocationStart() {
         # This doesn't work. I guess it'll just be necessary to forgo split-line untils for now, although I'm not sure split-line commands are really desirable regardless. FIXME
         #stateStack+=("arglist")
         ;;
-    and|not|eq|gt|lt|add|sub|mul|div|mod|cat|die|error|warn|log|debug|in)
-        codegenPrintIndentationSpaces
-        # These commands are implemented with impl* calls
-        # The only purpose of using "impl" now is to prevent collisions with things that are likely to be reserved words in target languages; so, e.g. "implFIXMEUnimplemented" is unnecessary since it can just be "FIXMEUnimplemented" and be unlikely to collide.
-        case "$targetLang" in
-        js)
-            codegenOutput "StageL_${codegenRoutineName^}("
-            ;;
-        bash)
-            if codegenOnNewLine; then
-                codegenOutput "StageL_${codegenRoutineName^}"
-            else
-                #if [[ "0" != "$codegenInvocationLevel" ]]; then
-                #    codegenOutput ' '
-                #fi
-                codegenOutput '"$('"StageL_${codegenRoutineName^} "
-                codegenInvocationLevel=$(( codegenInvocationLevel + 1 ))
-            fi
-            ;;
-        *)
-            die "${FUNCNAME[0]} is not implemented in $targetLang."
-            ;;
-        esac
-        ;;
     set)
         codegenPrintIndentationSpaces
         if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
