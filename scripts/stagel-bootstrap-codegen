@@ -719,7 +719,7 @@ codegenCommandInvocationStart() {
             esac
         else
             # It's getting set to a command's return value
-            codegenReference "${codegenArgList[-2]}" "${codegenArgList[-1]}"
+            codegenReference --is-assignment-target "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             case "$targetLang" in
             c|cpp|cs|java|js|p6|php|pl)
                 codegenOutput ' = '
