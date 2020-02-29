@@ -43,7 +43,6 @@ runTest stagel/js/logical-or
 runTestForEachLanguage generic-parameter
 runTestForEachLanguage generic-ga-gi-parameter
 runTestForEachLanguage array-s
-exit
 runTest stagel/js/array-zero-only
 runTest stagel/js/bool-literal
 runTest stagel/js/str-escape-literal
