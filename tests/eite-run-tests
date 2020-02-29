@@ -13,9 +13,9 @@ eite-single-test() {
     if [[ -d "$testPath" ]]; then
         cp "$testPath/in.eite" "$runInput"
         if [[ -e "$testPath/invalid" ]]; then
-            say "true" > "$runShouldFail"
+            say "true" > "$runShouldFail"
         else
-            say "false" > "$runShouldFail"
+            say "false" > "$runShouldFail"
         fi
     else
         die "TODO: not implemented"
