@@ -329,8 +329,7 @@ codegenReference() {
         codegenOutput "${2^}"
         ;;
     bash|sh)
-        [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"'
-        codegenOutput '$'
+        [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"$'
         codegenFormatType "$1"
         codegenOutput "${2^}"
         [[ "false" == "$isAssignmentTarget" ]] && codegenOutput '"'
