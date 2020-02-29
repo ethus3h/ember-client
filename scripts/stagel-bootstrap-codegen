@@ -633,7 +633,7 @@ codegenCommandInvocationStart() {
                     codegenOutput "Return); "
                     ;;
                 bash)
-                    codegenOutput "; assertIs"
+                    codegenOutput "; StageL_assertIs"
                     codegenFormatType "$returnType" true
                     codegenOutput " "
                     codegenFormatArgument "$returnType" "Return"
@@ -644,7 +644,7 @@ codegenCommandInvocationStart() {
                 ;;
                 esac
             else
-                codegenOutput "; "
+                codegenOutput ";"
             fi
             codegenRoutineDefinitionPreEnd
             case "$targetLang" in
