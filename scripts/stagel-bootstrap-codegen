@@ -597,7 +597,7 @@ codegenCommandInvocationStart() {
             if generateRuntimeTypeCheckCode; then
                 case "$targetLang" in
                 js)
-                    codegenOutput "; await assertIs"
+                    codegenOutput "; StageL_assertIs"
                     codegenFormatType "$returnType" true
                     codegenOutput "("
                     codegenFormatType "$returnType"
@@ -675,7 +675,7 @@ codegenCommandInvocationStart() {
         # The only purpose of using "impl" now is to prevent collisions with things that are likely to be reserved words in target languages; so, e.g. "implFIXMEUnimplemented" is unnecessary since it can just be "FIXMEUnimplemented" and be unlikely to collide.
         case "$targetLang" in
         js)
-            codegenOutput "await impl${codegenRoutineName^}("
+            codegenOutput "StageL_impl${codegenRoutineName^}("
             ;;
         bash)
             if codegenOnNewLine; then
@@ -734,7 +734,7 @@ codegenCommandInvocationStart() {
         codegenPrintIndentationSpaces
         case "$targetLang" in
         js)
-            codegenOutput "await $codegenRoutineName("
+            codegenOutput "StageL_$codegenRoutineName("
             ;;
         c|cpp|cs|java|p6|php|pl)
             codegenOutput "$codegenRoutineName("
@@ -966,7 +966,7 @@ codegenRoutineDefinitionStart() {
                 if (( k % 2 )); then
                     case "$targetLang" in
                     js)
-                        codegenOutput "await internalDebugCollect('"
+                        codegenOutput "StageL_internalDebugCollect('"
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         codegenOutput " ${codegenArgList[$k]^} = ' + "
                         codegenFormatType "${codegenArgList[$k - 1]}"
@@ -988,7 +988,7 @@ codegenRoutineDefinitionStart() {
             done
             case "$targetLang" in
             js)
-                codegenOutput "await internalDebugStackEnter('$codegenRoutineName:$filename');"
+                codegenOutput "StageL_internalDebugStackEnter('$codegenRoutineName:$filename');"
                 ;;
             bash)
                 codegenOutput "internalDebugStackEnter '$codegenRoutineName:$filename';"
@@ -1007,7 +1007,7 @@ codegenRoutineDefinitionStart() {
                     [[ "$k" != 1 ]] && codegenOutput ' '
                     case "$targetLang" in
                     js)
-                        codegenOutput "await assertIs"
+                        codegenOutput "StageL_assertIs"
                         codegenFormatType "${codegenArgList[$k - 1]}" "true"
                         codegenOutput "("
                         codegenFormatArgument "${codegenArgList[$k - 1]}" "${codegenArgList[$k]}"
@@ -1066,7 +1066,7 @@ codegenRoutineDefinitionPreEnd() {
             codegenPrintIndentationSpaces
             codegenIndent=$(( codegenIndent - 1 ))
         fi
-        generateDebugCode && codegenOutput "await internalDebugStackExit();"
+        generateDebugCode && codegenOutput "StageL_internalDebugStackExit();"
         if [[ "${blockStack[-2]}" == "ident-r-v" ]]; then
             codegenOutput $'\n'
         else
