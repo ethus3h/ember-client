@@ -499,6 +499,14 @@ codegenInitializeType() {
             codegenStringLiteralDelim
             ;;
         "boolArray")
+        case "$targetLang" in
+        bash|sh)
+            codegenOutput '='
+            ;;
+        *)
+            codegenOutput ' = '
+            ;;
+        esac
             codegenOutput "[]"
             ;;
         "intArray")
