@@ -552,8 +552,14 @@ codegenCommandInvocationStart() {
             fi
             if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
                 codegenReference "${codegenArgList[-4]}" "${codegenArgList[-3]}"
-                [[ "js" == "$targetLang" ]] && codegenOutput ' = '
-                [[ "js" == "$targetLang" ]] && codegenOutput '='
+                case "$targetLang" in
+                bash|sh)
+                    codegenOutput '='
+                    ;;
+                *)
+                    codegenOutput ' = '
+                    ;;
+                esac
                 codegenLiteral "${codegenArgList[-2]}" "${codegenArgList[-1]}"
             else
                 #set -x
