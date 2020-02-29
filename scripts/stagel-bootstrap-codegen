@@ -305,6 +305,18 @@ codegenLiteral() {
             if [[ "literal-b" == "$1" ]]; then
             codegenOutput "$2"
             ;;
+        "literal-b")
+            js|bash|sh)
+                codegenOutput \'
+                ;;
+            c|cpp)
+                codegenOutput \"
+                ;;
+            *)
+                die "${FUNCNAME[0]} is not implemented in $targetLang."
+                ;;
+            esac
+            ;;
         literal-a*)
             codegenOutput "$2"
             ;;
