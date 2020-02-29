@@ -21,6 +21,7 @@ runTest stagel/no-codegen/loop-block-longhand
 runTest stagel/no-codegen/loop-block
 runTest stagel/no-codegen/routine-fizzbuzz
 runTestForEachLanguage arglist-two-nested
+exit
 runTestForEachLanguage arglist-three-nested
 runTest stagel/js/routine-minimal
 runTest stagel/js/two-routines
