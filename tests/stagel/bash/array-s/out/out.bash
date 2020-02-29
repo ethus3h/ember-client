@@ -1,5 +1,5 @@
 strFromByte() {
-    intIn="$1"; shift; StageL_internalDebugCollect "int In = ${intIn[@]}; "; StageL_internalDebugStackEnter 'strFromByte:in'; StageL_assertIsInt "${intIn[@]}"
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = ${intIn[@]}; "; StageL_internalDebugStackEnter 'strFromByte:in'; StageL_assertIsInt "$intIn"
 
     strArrayChars=()
     strArrayChars=( '' '' '' '' '' '' '' )

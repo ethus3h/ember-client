@@ -565,6 +565,11 @@ codegenStartArray() {
 
 # shellcheck disable=SC2120
 codegenArrayEntryDelimiter() {
+    isAssignmentTarget="false"
+    if [[ "--is-assignment-target" == "$1" ]]; then
+        isAssignmentTarget="true"
+        shift
+    fi
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     c|cpp|cs|java|js|p6|php|pl)
@@ -1278,7 +1283,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-b|ident-b)$ ]] && codegenArrayAppend "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayAppend "$(codegenArrayEntryDelimiter)"
+                    codegenArrayAppend "$(codegenArrayEntryDelimiter --end-of-line)"
                     codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
@@ -1303,7 +1308,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-n|ident-n)$ ]] && codegenArrayAppend "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayAppend "$(codegenArrayEntryDelimiter)"
+                    codegenArrayAppend "$(codegenArrayEntryDelimiter --end-of-line)"
                     codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
@@ -1328,7 +1333,7 @@ for (( i=0; i<tokenCount; i++ )); do
                     [[ "${tokens[$i + 2]}" =~ ^(literal-s|ident-s)$ ]] && codegenArrayAppend "$(codegenArrayEntryDelimiter)"
                     ;;
                 newline)
-                    codegenArrayAppend "$(codegenArrayEntryDelimiter)"
+                    codegenArrayAppend "$(codegenArrayEntryDelimiter --end-of-line)"
                     codegenArrayAppend $'\n'"$(codegenPrintIndentationSpaces --force)"
                     codegenArrayAppend "$(codegenPrintIndentationSpaces)"
                     ;;
