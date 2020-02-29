@@ -1125,15 +1125,12 @@ codegenRoutineDefinitionPreEnd() {
         fi
         if generateDebugCode; then
             codegenOutput "StageL_internalDebugStackExit"
-            if [[ "js" == "$targetLang" ]]; then
-                codegenOutput "()"
-            fi
             case "$targetLang" in
             bash|sh)
-                true
+                codegenOutput ";"
                 ;;
             *)
-                codegenOutput " "
+                codegenOutput "();"
             ;;
             esac;
         fi
