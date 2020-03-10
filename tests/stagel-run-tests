@@ -24,7 +24,7 @@ runTest stagel/no-codegen/routine-fizzbuzz
 
 runTestForEachLanguage arglist-two-nested
 runTestForEachLanguage arglist-three-nested
-runTestForEachLanguage stagel/js/routine-minimal
+runTestForEachLanguage routine-minimal
 exit
 runTest stagel/js/two-routines
 runTest stagel/js/bare-block
