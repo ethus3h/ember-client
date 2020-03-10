@@ -593,12 +593,8 @@ codegenArrayEntryDelimiter() {
         true
         ;;
     bash|sh)
-        if [[ "arglist" == "${stateStack[-1]}" ]]; then
-            codegenOutput ' '
-        else
-            [[ "false" == "$endOfLine" ]] && codegenOutput ' '
-            true
-        fi
+        [[ "false" == "$endOfLine" ]] && codegenOutput ' '
+        true
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -613,6 +609,11 @@ codegenEndArray() {
         codegenOutput ' ]'
         ;;
     bash|sh)
+        if [[ "arglist" == "${stateStack[-1]}" ]]; then
+            codegenOutput '"$(join_by $'"'\037' "
+        else
+            codegenOutput '( '
+        fi
         codegenOutput ' )'
         ;;
     *)
