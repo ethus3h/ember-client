@@ -1,7 +1,7 @@
-{
-    if (/* comment */
 
-        await Eq(0, await Mod(intNum, 3))) {
-        await Eq(0, 0);
-    }
+    if [[ "true" == # comment
+
+        StageL_eq '0' "$(StageL_mod "$intNum" '3')" ]]; then
+        StageL_eq '0' '0'
+    fi
 }
