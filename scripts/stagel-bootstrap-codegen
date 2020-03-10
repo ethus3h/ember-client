@@ -568,7 +568,9 @@ codegenStartArray() {
     bash|sh)
         if [[ "arglist" == "${stateStack[-1]}" ]]; then
             codegenOutput '"$(join_by $'"'\037' "
-        codegenOutput '( '
+        else
+            codegenOutput '( '
+        fi
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
@@ -586,6 +588,11 @@ codegenArrayEntryDelimiter() {
     codegenDebug "Start array" "${@}" >&2
     case "$targetLang" in
     c|cpp|cs|java|js|p6|php|pl)
+        if [[ "arglist" == "${stateStack[-1]}" ]]; then
+            codegenOutput '"$(join_by $'"'\037' "
+        else
+            codegenOutput '( '
+        fi
         codegenOutput ','
         [[ "false" == "$endOfLine" ]] && codegenOutput ' '
         true
