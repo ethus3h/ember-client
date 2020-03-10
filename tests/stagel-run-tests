@@ -12,8 +12,7 @@ runTestForEachLanguage() {
     runTest -v "stagel/bash/$1"
     #runTest "stagel/js/$1"
 }
-runTestForEachLanguage stagel/no-codegen/routine-minimal
-exit
+runTest stagel/no-codegen/routine-minimal
 runTest stagel/no-codegen/routine-newline-in-body
 runTest stagel/no-codegen/if-with-indented
 runTest stagel/no-codegen/if-with-comment
