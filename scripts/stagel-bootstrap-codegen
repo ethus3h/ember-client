@@ -609,7 +609,7 @@ codegenEndArray() {
         codegenOutput ' ]'
         ;;
     bash|sh)
-        # For start array, the literal-a(n) is not on the state stack yet, so that gets -1 while this gets -2 for the index.
+        # For start array, the literal-a(n, etc) is not on the state stack yet, so that gets -1 while this gets -2 for the index.
         if [[ "arglist" == "${stateStack[-2]}" ]]; then
             codegenOutput ')"'
         else
