@@ -754,7 +754,7 @@ codegenCommandInvocationStart() {
             ;;
         bash)
             codegenPrintIndentationSpaces
-            codegenOutput "$codegenRoutineName"
+            codegenOutput 'else'
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
