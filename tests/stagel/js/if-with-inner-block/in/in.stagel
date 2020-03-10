@@ -1,4 +1,5 @@
-if eq 0 mod n/num 3
-    new b/out
-    set b/out eq 0 0
-    return b/out
+r/b test n/num
+    if eq 0 mod n/num 3
+        new b/out
+        set b/out eq 0 0
+        return b/out
