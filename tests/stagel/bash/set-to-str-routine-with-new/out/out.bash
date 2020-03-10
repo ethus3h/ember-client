@@ -1,2 +1,2 @@
-strTemp = await fbSwitcher(intCounter);
-let strTick = '';
+strTemp="$(StageL_fbSwitcher "$intCounter")"
+strTick=''
