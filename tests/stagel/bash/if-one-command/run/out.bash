@@ -1,4 +1,4 @@
-if (await Eq(0, 15)) {
-    let strN = '';
-    strN = 'FizzBuzz';
-}
+if [[ "true" == "$(StageL_eq '0' '15')" ]]; then
+    strN=''
+    strN='FizzBuzz'
+fi

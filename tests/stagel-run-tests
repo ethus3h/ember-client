@@ -27,8 +27,8 @@ runTestForEachLanguage arglist-three-nested
 runTestForEachLanguage routine-minimal
 runTestForEachLanguage two-routines
 runTestForEachLanguage if-statement
-exit
 runTestForEachLanguage if-one-command
+exit
 runTestForEachLanguage if-with-indented
 runTestForEachLanguage if-with-comment
 runTestForEachLanguage if-with-comment-and-inner-block
