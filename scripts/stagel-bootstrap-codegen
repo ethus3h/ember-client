@@ -566,6 +566,8 @@ codegenStartArray() {
         codegenOutput '[ '
         ;;
     bash|sh)
+        if [[ "arglist" == "${stateStack[-1]}" ]]; then
+            codegenOutput '"$(join_by $'"'\037' "
         codegenOutput '( '
         ;;
     *)
