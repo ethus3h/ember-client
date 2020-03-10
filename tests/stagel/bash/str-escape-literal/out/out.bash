@@ -1,3 +1,3 @@
-let strT = '';
-strT = '\\';
-strT = '\\\\';
+strT=''
+strT='\\'
+strT='\\\\'
