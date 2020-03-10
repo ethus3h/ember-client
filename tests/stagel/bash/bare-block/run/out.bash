@@ -1,3 +1,3 @@
-{
-    await Eq(0, 0);
+
+    StageL_eq '0' '0'
 }
