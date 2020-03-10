@@ -29,8 +29,8 @@ runTestForEachLanguage two-routines
 runTestForEachLanguage if-statement
 runTestForEachLanguage if-one-command
 runTestForEachLanguage if-with-inner-block
-exit
 runTestForEachLanguage routine-fbSwitcher-return-type
+exit
 runTestForEachLanguage routine-fizzbuzz-fbSwitcher
 runTestForEachLanguage routine-with-if
 runTestForEachLanguage declare-n
