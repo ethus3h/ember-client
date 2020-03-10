@@ -609,7 +609,8 @@ codegenEndArray() {
         codegenOutput ' ]'
         ;;
     bash|sh)
-        if [[ "arglist" == "${stateStack[-1]}" ]]; then
+        # For start array, the literal-an is not on the state stack yet, so that gets -1 while this gets -2 for the index.
+        if [[ "arglist" == "${stateStack[-2]}" ]]; then
             codegenOutput ')"'
         else
             codegenOutput ' )'
@@ -910,17 +911,6 @@ codegenCommandInvocationEnd() {
         # This shouldn't happen, because it's all handled in codegenCommandInvocationStart
         die "Internal error (this is a bug): codegenCommandInvocationEnd called for return"
         ;;
-    #add|eq|mod)
-        # These commands are implemented with impl* calls
-    #    case "$targetLang" in
-    #    bash|c|cpp|cs|java|js|p6|php|pl|sh)
-    #        codegenOutput ")"
-    #        ;;
-    #    *)
-    #        die "${FUNCNAME[0]} is not implemented in $targetLang."
-    #        ;;
-    #    esac
-    #    ;;
     *)
         #codegenPrintIndentationSpaces
         case "$targetLang" in
