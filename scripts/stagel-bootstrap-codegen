@@ -1078,9 +1078,9 @@ codegenRoutineDefinitionStart() {
                         codegenOutput 'StageL_internalDebugCollect "'
                         codegenFormatType "${codegenArgList[$k - 1]}"
                         # shellcheck disable=SC2016
-                        codegenOutput " ${codegenArgList[$k]^}"' = $(join_by '\'' '\'' "${'
+                        codegenOutput " ${codegenArgList[$k]^}"' = ${'
                         codegenFormatType "${codegenArgList[$k - 1]}"
-                        codegenOutput "${codegenArgList[$k]^}"'[@]}"); "; '
+                        codegenOutput "${codegenArgList[$k]^}"'[@]}; "; '
                         ;;
                     *)
                         die "${FUNCNAME[0]} is not implemented in $targetLang."
