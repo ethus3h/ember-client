@@ -25,8 +25,8 @@ runTest stagel/no-codegen/routine-fizzbuzz
 runTestForEachLanguage arglist-two-nested
 runTestForEachLanguage arglist-three-nested
 runTestForEachLanguage routine-minimal
-exit
 runTestForEachLanguage two-routines
+exit
 runTestForEachLanguage bare-block
 runTestForEachLanguage if-statement
 runTestForEachLanguage if-one-command
