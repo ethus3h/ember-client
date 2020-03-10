@@ -1,1 +1,1 @@
-intCounter="$(StageL_add 
+intCounter="$(StageL_add "$intCounter" '2')"
