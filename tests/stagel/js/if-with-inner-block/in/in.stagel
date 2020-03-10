@@ -1,3 +1,4 @@
-    if # comment
-        eq 0 mod n/num 3
-            eq 0 0
+if eq 0 mod n/num 3
+    new b/out
+    set b/out eq 0 0
+    return b/out
