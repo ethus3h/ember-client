@@ -32,8 +32,8 @@ runTestForEachLanguage if-with-inner-block
 runTestForEachLanguage routine-fbSwitcher-return-type
 runTestForEachLanguage routine-fizzbuzz-fbSwitcher
 runTestForEachLanguage routine-with-if
-exit
 runTestForEachLanguage declare-n
+exit
 runTestForEachLanguage set-number-add-no-routine
 runTestForEachLanguage set-number-add
 runTestForEachLanguage set-to-str-routine-with-new
