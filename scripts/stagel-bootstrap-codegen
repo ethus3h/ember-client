@@ -610,11 +610,10 @@ codegenEndArray() {
         ;;
     bash|sh)
         if [[ "arglist" == "${stateStack[-1]}" ]]; then
-            codegenOutput '"$(join_by $'"'\037' "
+            codegenOutput ')"'
         else
-            codegenOutput '( '
+            codegenOutput ' )'
         fi
-        codegenOutput ' )'
         ;;
     *)
         die "${FUNCNAME[0]} is not implemented in $targetLang."
