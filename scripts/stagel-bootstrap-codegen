@@ -1374,12 +1374,16 @@ for (( i=0; i<tokenCount; i++ )); do
                     if|elif|else|while)
                         case "${tokens[$i]}" in
                         else)
-                            ;;
-                        *)
-                        ;;
                         stateStack+=("test")
                         blockStack+=("test-body-${tokens[$i]}" "" "test" "${tokens[$i]}")
                         codegenCommandInvocationStart
+                            ;;
+                        *)
+                            stateStack+=("test")
+                            blockStack+=("test-body-${tokens[$i]}" "" "test" "${tokens[$i]}")
+                            codegenCommandInvocationStart
+                            ;;
+                        esac
                         ;;
                     new|set)
                         stateStack+=("arglist")
