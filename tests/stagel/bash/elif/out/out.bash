@@ -1,10 +1,8 @@
-let strN = '';
-if (await Eq('a', strN)) {
-    strN = 'FizzBuzz';
-}
-else if (await Eq('b', strN)) {
-    strN = 'c';
-}
-else {
-    strN = 'b';
-}
+strN=''
+if [[ "true" == "$(StageL_eq 'a' "$strN")" ]]; then
+    strN='FizzBuzz'
+elif [[ "true" == "$(StageL_eq 'b' "$strN")" ]]; then
+    strN='c'
+else
+    strN='b'
+fi
