@@ -1371,7 +1371,12 @@ for (( i=0; i<tokenCount; i++ )); do
                 command)
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
-                    if|elif|while)
+                    if|elif|else|while)
+                        case "${tokens[$i]}" in
+                        else)
+                            ;;
+                        *)
+                        ;;
                         stateStack+=("test")
                         blockStack+=("test-body-${tokens[$i]}" "" "test" "${tokens[$i]}")
                         codegenCommandInvocationStart
