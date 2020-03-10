@@ -5,7 +5,7 @@ async function strFromByte(intIn) {
     strArrayChars = [ '', '', '', '', '', '', '' ];
     /* 0 through 6 */
     let strArrayTemp = [];
-    strArrayTemp = [ 'd', 'b', 'l', 
+    strArrayTemp = [ 'd', 'b', 'l',
     'c', 'b', 'a' ];
     StageL_append(strArrayChars, strArrayTemp);
 }
