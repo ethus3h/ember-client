@@ -49,8 +49,8 @@ runTestForEachLanguage else
 runTestForEachLanguage elif
 runTestForEachLanguage arglist-inline-end
 runTestForEachLanguage loop-block-longhand
-exit
 runTestForEachLanguage loop-block
+exit
 runTestForEachLanguage wasm-tests
 
 reportTests
