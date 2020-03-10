@@ -929,8 +929,11 @@ codegenCommandInvocationEnd() {
             ;;
         bash|sh)
             if [[ "${blockStack[-1]}" =~ ^(if|elif|while)$ ]]; then
-            if [[ "${blockStack[-1]}" =~ ^(if|elif|while)$ ]]; then
-                codegenOutput ' ]]; then'
+                if [[ "while" == "${blockStack[-1]}" ]]; then
+                    codegenOutput ' ]]; do'
+                else
+                    codegenOutput ' ]]; then'
+                fi
             elif [[ "0" != "$codegenInvocationLevel" ]]; then
                 codegenOutput ')"'
                 codegenInvocationLevel=$(( codegenInvocationLevel - 1 ))
