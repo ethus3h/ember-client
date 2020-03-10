@@ -1,5 +1,5 @@
 fbSwitcher() {
-    intNum="$1"; shift; StageL_internalDebugCollect "int Num = ${intNum[@]}; "; StageL_internalDebugStackEnter 'fbSwitcher:in'; StageL_assertIsInt "$intNum"
+    intNum="$1"; shift; StageL_internalDebugCollect "int Num = $intNum; "; StageL_internalDebugStackEnter 'fbSwitcher:in'; StageL_assertIsInt "$intNum"
 
     # Test comment; semicolon
 
