@@ -748,11 +748,7 @@ codegenCommandInvocationStart() {
     else|debugger)
         # debugger isn't a StageL command, but I want to be able to use it in firefox js
         case "$targetLang" in
-        js)
-            codegenPrintIndentationSpaces
-            codegenOutput "$codegenRoutineName"
-            ;;
-        bash)
+        js|bash)
             codegenPrintIndentationSpaces
             codegenOutput "$codegenRoutineName"
             ;;
