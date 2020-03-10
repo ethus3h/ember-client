@@ -1,5 +1,5 @@
 or() {
-    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $(join_by ' ' "${boolA[@]}"); "; StageL_internalDebugCollect "bool B = $(join_by ' ' "${boolB[@]}"); "; StageL_internalDebugStackEnter 'or:in'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'or:in'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
 
     boolTemp='false'
     boolTemp="$(StageL_not "$boolA")"
