@@ -47,8 +47,8 @@ runTestForEachLanguage bool-literal
 runTestForEachLanguage str-escape-literal
 runTestForEachLanguage else
 runTestForEachLanguage elif
-exit
 runTestForEachLanguage arglist-inline-end
+exit
 runTestForEachLanguage loop-block-longhand
 runTestForEachLanguage loop-block
 runTestForEachLanguage wasm-tests
