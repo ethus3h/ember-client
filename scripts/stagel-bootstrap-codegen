@@ -424,7 +424,7 @@ codegenDedent() {
     bash|sh)
         if [[ "${blockStack[-4]}" =~ ^test-body-if|test-body-elif$ ]]; then
             codegenOutput 'fi'$'\n'
-        elif [[ "${blockStack[-4]}" =~ ^test-body-while|test-body-until$ ]]; then
+        elif [[ "${blockStack[-4]}" =~ ^test-body-while$ ]]; then
             codegenOutput 'done'$'\n'
         else
             codegenOutput '}'$'\n'
@@ -909,7 +909,7 @@ codegenCommandInvocationEnd() {
             { [[ "${blockStack[-2]}" == "command" ]] && [[ "${blockStack[-1]}" =~ ^(new|return|set|else|debugger)$ ]]; } || codegenOutput ")"
             ;;
         bash|sh)
-            if [[ "${blockStack[-1]}" =~ ^(if|elif|while|until)$ ]]; then
+            if [[ "${blockStack[-1]}" =~ ^(if|elif|while)$ ]]; then
                 codegenOutput ' ]]; then'
             elif [[ "0" != "$codegenInvocationLevel" ]]; then
                 codegenOutput ')"'
@@ -1203,7 +1203,7 @@ codegenRoutineDefinitionEnd() {
 
 codegenIsTestCommand() {
     case "$1" in
-    if|elif|until|while)
+    if|elif|while)
         true
         ;;
     *)
@@ -1365,7 +1365,7 @@ for (( i=0; i<tokenCount; i++ )); do
                 command)
                     codegenRoutineName="${tokens[$i]}"
                     case "${tokens[$i]}" in
-                    if|elif|until|while)
+                    if|elif|while)
                         stateStack+=("test")
                         blockStack+=("test-body-${tokens[$i]}" "" "test" "${tokens[$i]}")
                         codegenCommandInvocationStart
