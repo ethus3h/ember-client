@@ -425,8 +425,9 @@ codegenDedent() {
         ;;
     bash|sh)
         if [[ "${blockStack[-4]}" =~ ^test-body-if|test-body-elif$ ]]; then
-            if [[ "" ]]
-            codegenOutput 'fi'$'\n'
+            if [[ ! "$nextToken" =~ ^else|elif$ ]]; then
+                codegenOutput 'fi'$'\n'
+            fi
         elif [[ "${blockStack[-4]}" =~ ^test-body-while$ ]]; then
             codegenOutput 'done'$'\n'
         else
