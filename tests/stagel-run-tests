@@ -34,8 +34,8 @@ runTestForEachLanguage routine-fizzbuzz-fbSwitcher
 runTestForEachLanguage routine-with-if
 runTestForEachLanguage declare-n
 runTestForEachLanguage set-number-add-no-routine
-exit
 runTestForEachLanguage set-number-add
+exit
 runTestForEachLanguage set-to-str-routine-with-new
 runTestForEachLanguage set-to-str-routine-invocation
 #runTest -v stagel/js/routine-fizzbuzz

@@ -1,2 +1,2 @@
-intCounter = await Add(intCounter, 1);
-let strTemp = '';
+intCounter="$(StageL_add "$intCounter" '1')"
+strTemp=''
