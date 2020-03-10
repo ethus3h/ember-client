@@ -749,28 +749,23 @@ codegenCommandInvocationStart() {
         # debugger isn't a StageL command, but I want to be able to use it in firefox js
         case "$targetLang" in
         js)
-            codegenOutput "return "
-            codegenFormatType "$returnType"
-            codegenOutput "Return;"$'\n'
+        codegenPrintIndentationSpaces
+        codegenOutput "$codegenRoutineName"
             ;;
         bash)
-            codegenOutput 'print '
-            codegenFormatArgument "$returnType" "Return"
-            codegenOutput $'\n'
+        codegenPrintIndentationSpaces
+        codegenOutput "$codegenRoutineName"
             ;;
         *)
             die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
         esac
-        codegenPrintIndentationSpaces
-        codegenOutput "$codegenRoutineName"
         ;;
     elif)
         case "$targetLang" in
         js)
-            codegenOutput "return "
-            codegenFormatType "$returnType"
-            codegenOutput "Return;"$'\n'
+        codegenPrintIndentationSpaces
+        codegenOutput "else if ("
             ;;
         bash)
             codegenOutput 'print '
@@ -781,8 +776,6 @@ codegenCommandInvocationStart() {
             die "${FUNCNAME[0]} is not implemented in $targetLang."
         ;;
         esac
-        codegenPrintIndentationSpaces
-        codegenOutput "else if ("
         ;;
     until)
         codegenPrintIndentationSpaces
