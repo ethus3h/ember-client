@@ -28,9 +28,8 @@ runTestForEachLanguage routine-minimal
 runTestForEachLanguage two-routines
 runTestForEachLanguage if-statement
 runTestForEachLanguage if-one-command
-runTestForEachLanguage if-with-indented
-exit
 runTestForEachLanguage if-with-comment
+exit
 runTestForEachLanguage if-with-comment-and-inner-block
 runTestForEachLanguage routine-fbSwitcher-return-type
 runTestForEachLanguage routine-fizzbuzz-fbSwitcher
