@@ -175,6 +175,8 @@ stateStack=("root" "code")
 blockStack=("root" "")
 testParameterFound="false" # This is set to "false" usually. When a token that uses a "test" syntax (e.g. if, or any other thing that first takes a value and also starts a code block) is encountered, it stays false until something representing a value is found, at which point it is set to "true". It's returned to "false" once the test's associated code block is located.
 codegenStatus="Nothing done yet"
+nextToken=""
+# tokenLookahead is something different
 tokenLookahead=""
 filename=""
 
@@ -423,6 +425,7 @@ codegenDedent() {
         ;;
     bash|sh)
         if [[ "${blockStack[-4]}" =~ ^test-body-if|test-body-elif$ ]]; then
+            if [[ "" ]]
             codegenOutput 'fi'$'\n'
         elif [[ "${blockStack[-4]}" =~ ^test-body-while$ ]]; then
             codegenOutput 'done'$'\n'
