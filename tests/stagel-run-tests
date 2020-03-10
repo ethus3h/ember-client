@@ -46,6 +46,7 @@ runTestForEachLanguage array-zero-only
 runTestForEachLanguage bool-literal
 runTestForEachLanguage str-escape-literal
 runTestForEachLanguage else
+exit
 runTestForEachLanguage elif
 runTestForEachLanguage arglist-inline-end
 runTestForEachLanguage loop-block-longhand

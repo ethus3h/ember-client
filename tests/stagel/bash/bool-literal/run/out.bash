@@ -1,4 +1,4 @@
-let boolT = false;
-boolT = true;
-let boolF = false;
-boolF = false;
+boolT='false'
+boolT='true'
+boolF='false'
+boolF='false'
