@@ -300,7 +300,10 @@ codegenLiteral() {
         "literal-s")
             tempSubstitution="$(asciiDecListToText "$2")"
             codegenStringLiteralDelim
-            codegenOutput "${tempSubstitution//\\/\\\\}"
+            case "$targetLang" in
+            bash|c|cpp|cs|java|js|p6|php|pl|sh)
+                codegenOutput "${tempSubstitution//\\/\\\\}"
+                ;;
             codegenStringLiteralDelim
             ;;
         "literal-n"|"literal-b")
