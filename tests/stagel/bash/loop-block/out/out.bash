@@ -1,10 +1,10 @@
-let strArrayTemp = [];
-strArrayTemp = [ 'd', 'b', 'l', 'c', 'b', 'a' ];
-let intC = 0;
-let intI = 0;
-let strElem = '';
-while (await Lt(intI, await count(strArrayTemp))) {
-    strElem = await get(strArrayTemp, intI);
-    intI = await inc(intI);
-    intC = await inc(intC);
-}
+strArrayTemp=()
+strArrayTemp=( 'd' 'b' 'l' 'c' 'b' 'a' )
+intC='0'
+intI='0'
+strElem=''
+while [[ "true" == "$(StageL_lt "$intI" "$(StageL_count "$(join_by $'\037' "${strArrayTemp[@]}")")")" ]]; do
+    strElem="$(StageL_get "$(join_by $'\037' "${strArrayTemp[@]}")" "$intI")"
+    intI="$(StageL_inc "$intI")"
+    intC="$(StageL_inc "$intC")"
+done
