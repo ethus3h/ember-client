@@ -37,9 +37,9 @@ runTestForEachLanguage set-number-add-no-routine
 runTestForEachLanguage set-number-add
 runTestForEachLanguage set-to-str-routine-with-new
 runTestForEachLanguage set-to-str-routine-invocation
-exit
 #runTest -v stagel/js/routine-fizzbuzz
 runTestForEachLanguage logical-or
+exit
 runTestForEachLanguage generic-parameter
 runTestForEachLanguage generic-ga-gi-parameter
 runTestForEachLanguage array-s
