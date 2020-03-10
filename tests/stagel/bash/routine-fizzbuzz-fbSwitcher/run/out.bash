@@ -13,9 +13,8 @@ fbSwitcher() {
         strReturn='Buzz'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
         # Comment 3
     fi
-    if [[ "true" == # Could also write it like this, with the condition on another line
-
-        StageL_eq '0' "$(StageL_mod "$intNum" '3')" ]]; then
+    # Comment
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intNum" '3')")" ]]; then
         # Comment 4
 
         strReturn='Fizz'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
