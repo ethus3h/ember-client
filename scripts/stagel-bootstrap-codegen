@@ -772,13 +772,6 @@ codegenCommandInvocationStart() {
         ;;
         esac
         ;;
-    until)
-        codegenPrintIndentationSpaces
-        codegenOutput "while (!("
-        # Pretend it's in an arglist to make it close the parenthesis for the outside of the while
-        # This doesn't work. I guess it'll just be necessary to forgo split-line untils for now, although I'm not sure split-line commands are really desirable regardless. FIXME
-        #stateStack+=("arglist")
-        ;;
     set)
         codegenPrintIndentationSpaces
         if [[ "${#codegenArgList[@]}" -ge 4 ]]; then
