@@ -5,6 +5,6 @@ r/s/fbSwitcher n/num
     if eq 0 mod n/num 5
         return 'Buzz' # Comment 2
         # Comment 3
-    if # Could also write it like this, with the condition on another line
-        eq 0 mod n/num 3
+    # Comment
+    if eq 0 mod n/num 3
         return 'Fizz' # Comment 4
