@@ -589,12 +589,11 @@ codegenArrayEntryDelimiter() {
     case "$targetLang" in
     c|cpp|cs|java|js|p6|php|pl)
         if [[ "arglist" == "${stateStack[-1]}" ]]; then
-            codegenOutput '"$(join_by $'"'\037' "
+            codegenOutput ' '
         else
-            codegenOutput '( '
+            codegenOutput ','
+            [[ "false" == "$endOfLine" ]] && codegenOutput ' '
         fi
-        codegenOutput ','
-        [[ "false" == "$endOfLine" ]] && codegenOutput ' '
         true
         ;;
     bash|sh)
