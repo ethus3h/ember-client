@@ -1,8 +1,8 @@
-async function runTestsWasm(boolV, boolA) {
-    await internalDebugCollect('bool V = ' + boolV + '; '); await internalDebugCollect('bool A = ' + boolA + '; '); await internalDebugStackEnter('runTestsWasm:in'); await assertIsBool(boolV); await assertIsBool(boolA);
+runTestsWasm() {
+    boolV="$1"; shift; boolA="$1"; shift; StageL_internalDebugCollect "bool V = ${boolV[@]}; "; StageL_internalDebugCollect "bool A = ${boolA[@]}; "; StageL_internalDebugStackEnter 'runTestsWasm:in'; StageL_assertIsBool "$boolV"; StageL_assertIsBool "$boolA"
 
-    await runTest(boolV, await Eq(42, await wasmCall('fortytwo', [ true, false ])));
-    await runTest(boolV, await Eq(4, await wasmCallArrIn('add', [ 2, 2 ])));
+    StageL_runTest "$boolV" "$(StageL_eq '42' "$(StageL_wasmCall 'fortytwo' "$(join_by $'\037' 'true' 'false')")")"
+    StageL_runTest "$boolV" "$(StageL_eq '4' "$(StageL_wasmCallArrIn 'add' "$(join_by $'\037' '2' '2')")")"
 
-    await internalDebugStackExit();
+    StageL_internalDebugStackExit;
 }
