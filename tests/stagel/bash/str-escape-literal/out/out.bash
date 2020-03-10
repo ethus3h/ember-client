@@ -1,3 +1,3 @@
 strT=''
+strT='\'
 strT='\\'
-strT='\\\\'
