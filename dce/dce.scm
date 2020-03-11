@@ -29,7 +29,7 @@
                (base32
                 "0ww34r0xgbi997j1iwrph8b1dcrnlgqb11p1qyxv0qm7rw05ali6"))))
     (build-system gnu-build-system)
-    (arguments '(#:configure-flags '("--enable-silent-rules")))
+    (arguments '(#:phases (modify-phases %standard-phases (delete 'configure))))
     (inputs `(("gawk" ,gawk)))
     (synopsis "Hello, GNU world: An example GNU package")
     (description "Guess what GNU Hello prints!")
