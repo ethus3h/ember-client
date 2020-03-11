@@ -18,7 +18,7 @@
   #:use-module (guix licenses)
   #:use-module (gnu packages gawk))
 
-(define-public hello
+(define-public ember-shared-error-notify
   (package
     (name "hello")
     (version "2.10")
