@@ -1,4 +1,4 @@
-(define-module (gnu packages hello)
+(define-module (ember ember)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system gnu)
