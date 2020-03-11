@@ -27,7 +27,7 @@
               (uri (string-append "http://web.archive.org/web/20200311033244if_/https://gitlab.com/ethus3h/ember-shared/-/archive/v" version "/ember-shared-v" version ".tar.gz"))
               (sha256
                (base32
-                "0ssi1wpaf7plaswqqjwigppsg5fyh99vdlb9kzl7c9lng89ndq1i"))))
+                "0ww34r0xgbi997j1iwrph8b1dcrnlgqb11p1qyxv0qm7rw05ali6"))))
     (build-system gnu-build-system)
     (arguments '(#:configure-flags '("--enable-silent-rules")))
     (inputs `(("gawk" ,gawk)))
