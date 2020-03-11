@@ -24,8 +24,7 @@
     (version "1.1.4.473")
     (source (origin
               (method url-fetch)
-              (uri (string-append "http://web.archive.org/web/20200311033244if_/https://gitlab.com/ethus3h/ember-shared/-/archive/v"1.1.4.473"/ember-shared-v" version
-                                  ".tar.gz"))
+              (uri (string-append "http://web.archive.org/web/20200311033244if_/https://gitlab.com/ethus3h/ember-shared/-/archive/v" version "/ember-shared-v" version ".tar.gz"))
               (sha256
                (base32
                 "0ssi1wpaf7plaswqqjwigppsg5fyh99vdlb9kzl7c9lng89ndq1i"))))
