@@ -32,6 +32,6 @@
     (arguments '(#:phases (modify-phases %standard-phases (delete 'configure))))
     (inputs `(("xxd" ,xxd)))
     (synopsis "ember-shared error-notify script")
-    (description "Guess what GNU Hello prints!")
+    (description "Shell script to notify of errors")
     (home-page "https://www.gnu.org/software/hello/")
     (license agpl3+)))
