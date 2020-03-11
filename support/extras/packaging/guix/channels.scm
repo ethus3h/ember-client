@@ -1,4 +1,4 @@
 (cons (channel
-        (name 'my-personal-packages)
+        (name 'ember')
         (url "https://example.org/personal-packages.git"))
       %default-channels)
