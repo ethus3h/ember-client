@@ -11,7 +11,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (ember ember)
+(define-module (dce dce)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system gnu)
