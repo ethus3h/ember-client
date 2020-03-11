@@ -33,5 +33,5 @@
     (inputs `(("xxd" ,xxd)))
     (synopsis "ember-shared error-notify script")
     (description "Shell script to notify of errors")
-    (home-page "https://www.gnu.org/software/hello/")
+    (home-page "http://futuramerlin.com/ancillary/ember-shared/")
     (license agpl3+)))
