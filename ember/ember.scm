@@ -20,7 +20,7 @@
 
 (define-public ember-shared-error-notify
   (package
-    (name "hello")
+    (name "ember-shared-error-notify")
     (version "2.10")
     (source (origin
               (method url-fetch)
