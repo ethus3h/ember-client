@@ -29,7 +29,7 @@
                (base32
                 "0ww34r0xgbi997j1iwrph8b1dcrnlgqb11p1qyxv0qm7rw05ali6"))))
     (build-system gnu-build-system)
-    (arguments '(#:phases (modify-phases %standard-phases (delete 'configure))))
+    ;(arguments '(#:phases (modify-phases %standard-phases (delete 'configure))))
     (inputs `(("xxd" ,xxd)))
     (synopsis "ember-shared error-notify script")
     (description "Shell script to notify of errors")
