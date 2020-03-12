@@ -35,3 +35,4 @@
     (description "Shell script to notify of errors")
     (home-page "http://futuramerlin.com/ancillary/ember-shared/")
     (license agpl3+)))
+ember-shared-error-notify
