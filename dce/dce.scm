@@ -13,7 +13,7 @@
 
 (define-module (gnu packages dce)
   #:use-module (guix packages)
-  #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
   #:use-module (guix licenses)
   #:use-module (gnu packages vim))
@@ -21,18 +21,19 @@
 (define-public ember-shared-error-notify
   (package
     (name "ember-shared-error-notify")
-    (version "1.1.4.473")
+    (version "0-e2f239e508edce43bd4dd678b5663e5526e69b50")
     (source (origin
-              (method url-fetch)
-              (uri (string-append "http://web.archive.org/web/20200311033244if_/https://gitlab.com/ethus3h/ember-shared/-/archive/v" version "/ember-shared-v" version ".tar.gz"))
+              (method git-fetch)
+              (uri (git-reference
+                (url "https://github.com/ethus3h/ember-shared.git")
+                (commit "e2f239e508edce43bd4dd678b5663e5526e69b50")))
               (sha256
                (base32
-                "0ww34r0xgbi997j1iwrph8b1dcrnlgqb11p1qyxv0qm7rw05ali6"))))
+                "1zzkdvwxvczcijrins5ia4i7rnzkamzzc3g5nn4h4crwsrgzp2xq"))))
     (build-system gnu-build-system)
-    ;(arguments '(#:phases (modify-phases %standard-phases (delete 'configure))))
+    (arguments '(#:configure-flags '("--module" "error-notify") #:phases (modify-phases %standard-phases (delete 'check))))
     (inputs `(("xxd" ,xxd)))
     (synopsis "ember-shared error-notify script")
     (description "Shell script to notify of errors")
     (home-page "http://futuramerlin.com/ancillary/ember-shared/")
     (license agpl3+)))
-ember-shared-error-notify
