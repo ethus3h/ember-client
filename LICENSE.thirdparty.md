@@ -5,4 +5,4 @@ All licenses should be free/libre/open-source licenses.
 The list of licenses (AGPL-3+ is for the project itself, while the others are for its dependencies) is:
 AGPL-3+ X11-style Unicode
 
-Individual parts also use MIT
+Individual parts also use X11-style licenses.
