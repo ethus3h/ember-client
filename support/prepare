@@ -61,5 +61,3 @@ fi
 
 # Any extra installation prep logic (compilation, etc.) goes here.
 
-tests/stagel-run-tests || die "StageL tests failed!"
-support/build-scripts/build --dist-build --somewhat-verbose || die "Build failed!"
