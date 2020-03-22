@@ -1,4 +1,4 @@
-X11-style license, from https://raw.githubusercontent.com/KDE/syntax-highlighting/master/COPYING:
+X11-style license, from https://web.archive.org/web/20200322030550/https://raw.githubusercontent.com/KDE/syntax-highlighting/master/COPYING:
 
 
 Permission is hereby granted, free of charge, to any person obtaining
