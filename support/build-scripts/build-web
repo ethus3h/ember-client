@@ -18,4 +18,4 @@ cp -a ./built/implementation-parts/js/eite.js ./built/web/
 cp -a /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp -a ./LICENSE* ./built/web/
 rm ./built/web/papaparse.js
-cp -a /usr/share/javascript/PapaParse/papaparse.js ./built/web/
+cp -a /usr/share/javascript/PapaParse/papaparse.js ./built/web/ || true
