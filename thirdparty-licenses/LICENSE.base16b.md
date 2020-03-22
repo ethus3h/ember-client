@@ -1,10 +1,5 @@
-Code for the Base16b object is included under the following license:
-    /**
-    * Base16b family encode / decode
-    * http://base16b.org/lib/version/0.1/js/base16b.js
-    * or http://base16b.org/lib/js/base16b.js
-    **/
-    /*
+Code for the Base16b object is included under the following X11-style license:
+
     Copyright (c) 2009 Base16b.org
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
