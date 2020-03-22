@@ -1,4 +1,4 @@
-This license applies to wabt/libwabt, Binaryen, and the WebAssembly testsuite.
+This license applies to the Unicode Character Database.
 
 
 EXHIBIT 1
