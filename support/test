@@ -1,2 +1,2 @@
 # tests/stagel-run-tests are run prior to building, during prepare
-tests/eite-run-tests
+tests/eite-run-tests || die "EITE tests failed!"
