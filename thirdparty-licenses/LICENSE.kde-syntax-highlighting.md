@@ -1,4 +1,4 @@
-From https://raw.githubusercontent.com/KDE/syntax-highlighting/master/COPYING:
+X11-style license, from https://raw.githubusercontent.com/KDE/syntax-highlighting/master/COPYING:
 
 MIT License
 
