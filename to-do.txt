@@ -1,6 +1,7 @@
 Pre-built soccer.css file: should be generated from source file (soccer.otf, or better yet sfdir)
 Papaparse?
 Have a separate package that downloads and install dependent source code? Or something. So that the source code of dependencies (unicode character databse, etc. ) are all available in /usr/share/whatever?
+Finish renaming (probably to DCE) icluding repository
 
 HIGH PRIORITY EITE
 - Show a button. Do something when button is clicked.
