@@ -20,23 +20,9 @@ if [[ -d /usr/portage/distfiles ]]; then
 
     # wabt and its build-time dependencies
     eiteEbuildDistfileCopy "ucd.all.flat-${myUnicodeVersion}.zip"
-    eiteEbuildDistfileCopy "emscripten-${myEmscriptenCommit}.tar.gz"
-    eiteEbuildDistfileCopy "binaryen-${myBinaryenVersion}.tar.gz"
-    eiteEbuildDistfileCopy "binaryen-${myBinaryenVersion}.zip"
-    eiteEbuildDistfileCopy "wabt-${myWabtVersion}.tar.gz"
-    eiteEbuildDistfileCopy "googletest-${myGoogletestVersion}.tar.gz"
-    eiteEbuildDistfileCopy "python-lex-yacc-${myPlyVersion}.tar.gz"
-    eiteEbuildDistfileCopy "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz"
 else
     (
         cd ./build-temp/distfiles/
         wget "https://www.unicode.org/Public/"${myUnicodeVersion}"/ucdxml/ucd.all.flat.zip" -O "ucd.all.flat-${myUnicodeVersion}.zip"
-        wget "https://github.com/emscripten-core/emscripten/archive/${myEmscriptenCommit}.tar.gz" -O "emscripten-${myEmscriptenCommit}.tar.gz"
-        wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.tar.gz" -O "binaryen-${myBinaryenVersion}.tar.gz"
-        wget "https://github.com/WebAssembly/binaryen/archive/version_${myBinaryenVersion}.zip" -O "binaryen-${myBinaryenVersion}.zip"
-        wget "https://github.com/WebAssembly/wabt/archive/${myWabtVersion}.tar.gz" -O "wabt-${myWabtVersion}.tar.gz"
-        wget "https://github.com/google/googletest/archive/release-${myGoogletestVersion}.tar.gz" -O "googletest-${myGoogletestVersion}.tar.gz"
-        wget "https://github.com/dabeaz/ply/archive/${myPlyVersion}.tar.gz" -O "python-lex-yacc-${myPlyVersion}.tar.gz"
-        wget "https://github.com/WebAssembly/testsuite/archive/${myTestsuiteCommit}.tar.gz" -O "WebAssembly-testsuite-${myTestsuiteCommit}.tar.gz"
     )
 fi
