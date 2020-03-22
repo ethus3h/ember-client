@@ -1,4 +1,4 @@
-Code for the Base16b object is included under the following X11-style license:
+Code for the Base16b object is included under the following X11-style license (from https://web.archive.org/web/20090902074623/http://www.base16b.org/doc/specification/version/0.1/base16b.pdf):
 
     Copyright (c) 2009 Base16b.org
     Permission is hereby granted, free of charge, to any person
