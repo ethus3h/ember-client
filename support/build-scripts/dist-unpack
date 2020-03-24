@@ -28,4 +28,4 @@ unzip "./ucd.all.flat-${myUnicodeVersion}.zip" -d "./ucd.all.flat-${myUnicodeVer
 rm "./ucd.all.flat-${myUnicodeVersion}.zip"
 )
 
-touch ./build-temp/dist-already-unpacked
+# don't touch ./build-temp/dist-already-unpacked since this should generally be re-run I guess?
