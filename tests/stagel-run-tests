@@ -9,6 +9,8 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 cd tests || die
 
 runTestForEachLanguage() {
+    if [[ "-v" == "$1" ]]; then
+
     runTest "stagel/bash/$1"
     runTest "stagel/js/$1"
 }
