@@ -10,6 +10,7 @@ cd tests || die
 
 runTestForEachLanguage() {
     if [[ "-v" == "$1" ]]; then
+        shift
         runTest -v "stagel/bash/$1"
         runTest -v "stagel/js/$1"
     else
