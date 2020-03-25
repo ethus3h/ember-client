@@ -10,9 +10,12 @@ cd tests || die
 
 runTestForEachLanguage() {
     if [[ "-v" == "$1" ]]; then
-
-    runTest "stagel/bash/$1"
-    runTest "stagel/js/$1"
+        runTest -v "stagel/bash/$1"
+        runTest -v "stagel/js/$1"
+    else
+        runTest "stagel/bash/$1"
+        runTest "stagel/js/$1"
+    fi
 }
 
 runTest stagel/no-codegen/routine-minimal
