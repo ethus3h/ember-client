@@ -22,7 +22,7 @@ runTest stagel/no-codegen/loop-block-longhand
 runTest stagel/no-codegen/loop-block
 runTest stagel/no-codegen/routine-fizzbuzz
 
-runTestForEachLanguage arglist-two-nested
+runTestForEachLanguage -v arglist-two-nested
 runTestForEachLanguage arglist-three-nested
 runTestForEachLanguage routine-minimal
 runTestForEachLanguage two-routines
