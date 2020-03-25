@@ -52,5 +52,5 @@ runTestForEachLanguage loop-block-longhand
 runTestForEachLanguage loop-block
 runTestForEachLanguage wasm-tests
 
-reportTests || die
-) || die
+reportTests
+)
