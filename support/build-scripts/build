@@ -79,19 +79,15 @@ if [[ "$1" == "-v" ]]; then
     shift
     if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
-    fi
+
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
     # StageL goes to /dev/null, while other things are verbose
-    if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
-        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
-    fi
+    "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
 else
-    if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
-        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
-    fi
+    "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build &> /dev/null
 fi
 
