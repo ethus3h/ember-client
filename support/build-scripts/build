@@ -61,6 +61,9 @@ fi
 
 echo "Building, please wait..."
 
+if [[ -n "$buildType" ]]; then
+    distBuild="--no-dist-build"
+fi
 if [[ "dist" == "$buildType" ]]; then
     distBuild="--dist-build"
 fi
