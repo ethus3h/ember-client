@@ -59,6 +59,10 @@ if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
 fi
 
+if [[ "dist" == "$buildType" ]]; then
+    distBuild="--dist-build"
+fi
+
 echo "Building, please wait..."
 
 [[ "$distBuild" == "--dist-build" ]] && rm -rf ./built
