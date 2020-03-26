@@ -55,6 +55,10 @@ elif [[ "$1" == "--no-dist-build" ]]; then
     shift
 fi
 
+if [[ -f ./support/.build-type ]]; then
+    buildType="$(<./support/.build-type)"
+fi
+
 echo "Building, please wait..."
 
 [[ "$distBuild" == "--dist-build" ]] && rm -rf ./built
