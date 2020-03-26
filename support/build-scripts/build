@@ -89,7 +89,9 @@ else
     [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build &> /dev/null
 fi
 
-cp -ra ./implementation/portable/eite ./built/
+if [[ -n "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
+    cp -ra ./implementation/portable/eite ./built/
+fi
 
 ./support/build-scripts/build-web
 ./support/build-scripts/build-edit-webextension
