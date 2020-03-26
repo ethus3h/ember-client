@@ -61,7 +61,7 @@ fi
 
 echo "Building, please wait..."
 
-# Handling for both dist as the build type, or as the
+# Handling for both dist as the build type, or as a --dist-build command-line argument
 if [[ -n "$buildType" ]]; then
     distBuild="--no-dist-build"
 fi
