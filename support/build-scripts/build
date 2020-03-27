@@ -57,7 +57,7 @@ fi
 
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
-    echo "Building module: $buildType"
+    echo "Building output: $buildType"
 fi
 
 echo "Building, please wait..."
