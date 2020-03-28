@@ -1,7 +1,7 @@
 mkdir -p "$emberDatadir/eite"
 mkdir -p "$emberDatadir/doc/eite"
 mkdir -p "$emberBindir"
-find scripts -type d -maxdepth 0 -empty -delete
+rmdir scripts || true
 if [[ -d scripts ]]; then
     chmod +x scripts/*
     cp scripts/* "$emberBindir/"
