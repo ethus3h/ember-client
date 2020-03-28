@@ -80,7 +80,9 @@ verbose=""
 if [[ "-v" == "$1" ]]; then
     shift
     verbose="yes"
-elif [[ "--somewhat-verbose" == "$1" ]];
+elif [[ "--somewhat-verbose" == "$1" ]]; then
+    verbose="somewhat"
+fi
 
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
