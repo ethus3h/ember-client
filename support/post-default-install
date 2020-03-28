@@ -1,4 +1,4 @@
 #rm built/web/papaparse.js
 #cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js built/web/
 
-#cp -r built/* "$emberDatadir/eite/"
+cp -r built/* "$emberDatadir/eite/"
