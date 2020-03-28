@@ -108,6 +108,7 @@ checkForData() {
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+    checkForData
     if [[ "yes" == "$verbose" ]]; then
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
     else
