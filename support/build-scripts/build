@@ -107,13 +107,14 @@ checkForData() {
     if [[ -n "$buildType" ]]; then
         if [[ "implementation-parts" == "$buildType" ]]; then
             [[ -d "$dceDataDir"/bootstrap ]] || die "Could not find bootstrap module while building $buildType."
-        fi
-        [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
-        [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
-        [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
-        [[ -d "$dceDataDir"/dce ]] || die "Could not find dce module while building $buildType."
-        if [[ "edit-webextension" == "$buildType" ]]; then
-            [[ -d "$dceDataDir"/web ]] || die "Could not find web module while building $buildType."
+        else
+            [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
+            [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
+            [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
+            [[ -d "$dceDataDir"/dce ]] || die "Could not find dce module while building $buildType."
+            if [[ "edit-webextension" == "$buildType" ]]; then
+                [[ -d "$dceDataDir"/web ]] || die "Could not find web module while building $buildType."
+            fi
         fi
     fi
 }
