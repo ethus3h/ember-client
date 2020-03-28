@@ -87,19 +87,6 @@ else
     rm scripts/stagel-bootstrap-*
 fi
 
-# FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
-if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
-    if [[ "yes" == "$verbose" ]]; then
-        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
-    else
-        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
-    fi
-fi
-
-if [[ -z "$buildType" ]] || [[ "dce" == "$buildType" ]]; then
-    cp -ra ./implementation/portable/dce ./built/
-fi
-
 checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
     dceDataDir="$sharedDataDir/dce/"
@@ -118,6 +105,19 @@ checkForData() {
         fi
     fi
 }
+
+# FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
+if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+    if [[ "yes" == "$verbose" ]]; then
+        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+    else
+        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+    fi
+fi
+
+if [[ -z "$buildType" ]] || [[ "dce" == "$buildType" ]]; then
+    cp -ra ./implementation/portable/dce ./built/
+fi
 
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
     checkForData
