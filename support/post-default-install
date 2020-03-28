@@ -1,8 +1,11 @@
 mkdir -p "$emberDatadir/eite"
 mkdir -p "$emberDatadir/doc/eite"
 mkdir -p "$emberBindir"
-chmod +x scripts/*
-cp scripts/* "$emberBindir/"
+find scripts -type d -maxdepth 0 -empty -delete
+if [[ -d scripts ]]; then
+    chmod +x scripts/*
+    cp scripts/* "$emberBindir/"
+fi
 mkdir -p "$emberSysconfdir"
 
 cp -r data "$emberDatadir/eite/"
