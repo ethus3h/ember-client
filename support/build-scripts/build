@@ -105,6 +105,9 @@ checkForData() {
     dceDataDir="$sharedDataDir/dce/"
     # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType" ]]; then
+        if [[ "implementation-parts" == "$buildType" ]]; then
+            [[ -d "$dceDataDir"/bootstrap ]] || die "Could not find bootstrap module while building $buildType."
+        fi
         [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
         [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
         [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
