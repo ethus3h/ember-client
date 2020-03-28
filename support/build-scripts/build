@@ -55,6 +55,7 @@ elif [[ "$1" == "--no-dist-build" ]]; then
     shift
 fi
 
+buildType=""
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
     echo "Building output: $buildType"
