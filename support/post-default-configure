@@ -1,6 +1,3 @@
-if [[ "$1" == "--" ]]; then
-shift
-fi
 if [[ "--build-type" == "$1" ]]; then
     shift
     echo "$1" > ./support/.build-type
