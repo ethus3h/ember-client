@@ -24,9 +24,9 @@ eite-single-test() {
     assert fileEquals "$testPath/out" "$runOutput"
 }
 
-sharedDataDir="$(getEmberSharedDataDir)"
 testDir="./tests"
 if ! [[ -e ./support/.configured ]]; then
-    testDir="$sharedD"
+    sharedDataDir="$(getEmberSharedDataDir)"
+    testDir="$sharedDataDir/"
 
 find "$(readlink -f "$(abspath "$(dirname "$(ember-getconf ConfigLocation)")"/../share/eite/tests)")" -name '.eite-test' -exec runTest eite-single-test {} \;
