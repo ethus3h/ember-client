@@ -6,6 +6,6 @@ mkdir -p "$emberEmberdir/dce/"
 if [[ -d ./built ]]; then
     rmdir --ignore-fail-on-non-empty ./built
 fi
-if [[ -d ./scripts ]]; then
+if [[ -d ./built ]]; then
     cp -r built/* "$emberEmberdir/dce/"
 fi
