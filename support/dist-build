@@ -5,6 +5,8 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
+[[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run support/dist-fetch to get them from your /usr/portage or the Web."
+
 source ./support/build-scripts/dist-versions || die
 ./support/build-scripts/dist-unpack || die "Could not run dist-unpack."
 
