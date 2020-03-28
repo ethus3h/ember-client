@@ -1,2 +1,8 @@
+buildType=""
+if [[ -f ./support/.build-type ]]; then
+    buildType="$(<./support/.build-type)"
+    echo "Building output: $buildType"
+fi
+
 # data/tests/stagel-run-tests are run prior to building, during prepare
 data/tests/eite-run-tests || die "EITE tests failed!"
