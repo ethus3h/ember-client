@@ -46,15 +46,6 @@ if [[ "$1" == "--fast" ]]; then
     shift
 fi
 
-distBuild="--no-dist-build"
-if [[ "$1" == "--dist-build" ]]; then
-    distBuild="--dist-build"
-    shift
-elif [[ "$1" == "--no-dist-build" ]]; then
-    distBuild="--no-dist-build"
-    shift
-fi
-
 buildType=""
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
