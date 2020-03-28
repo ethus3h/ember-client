@@ -98,7 +98,7 @@ if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
     cp -ra ./implementation/portable/eite ./built/
 fi
 
-if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
+if [[ -z "$buildType" ]] || [[ "dce" == "$buildType" ]]; then
     cp -ra ./implementation/portable/dce ./built/
 fi
 
