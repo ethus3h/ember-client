@@ -98,6 +98,10 @@ if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
     cp -ra ./implementation/portable/eite ./built/
 fi
 
+if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
+    cp -ra ./implementation/portable/eite ./built/
+fi
+
 checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
     dceDataDir="$sharedDataDir/"
