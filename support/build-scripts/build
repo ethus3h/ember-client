@@ -81,6 +81,7 @@ if [[ "-v" == "$1" ]]; then
     shift
     verbose="yes"
 elif [[ "--somewhat-verbose" == "$1" ]]; then
+    shift
     # StageL goes to /dev/null, while other things are verbose
     verbose="somewhat"
 fi
