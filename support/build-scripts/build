@@ -94,12 +94,10 @@ else
 fi
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
-if [[ "yes" == "$verbose" ]]; then
-    if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+    if [[ "yes" == "$verbose" ]]; then
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
-    fi
-else
-    if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+    else
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     fi
 fi
