@@ -84,6 +84,7 @@ elif [[ "--somewhat-verbose" == "$1" ]]; then
     verbose="somewhat"
 fi
 
+if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ "$1" == "-v" ]]; then
