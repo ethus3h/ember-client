@@ -54,15 +54,7 @@ fi
 
 echo "Building, please wait..."
 
-# Handling for both dist as the build type, or as a --dist-build command-line argument (but ignore the --dist-build argument if a build type were supplied)
-if [[ -n "$buildType" ]]; then
-    distBuild="--no-dist-build"
-fi
-if [[ "dist" == "$buildType" ]]; then
-    distBuild="--dist-build"
-fi
-
-[[ "$distBuild" == "--dist-build" ]] && rm -rf ./built
+rm -rf ./built
 mkdir -p ./built
 mkdir -p ./build-temp
 
