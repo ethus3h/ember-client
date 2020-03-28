@@ -106,7 +106,9 @@ checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
     dceDataDir="$sharedDataDir/dce/"
     # Check that each module is available
-    [[ -e ]]
+    if [[ -n "$buildType"]]; then
+        [[ -e ]]
+    fi
 }
 
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
