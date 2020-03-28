@@ -107,7 +107,7 @@ checkForData() {
     dceDataDir="$sharedDataDir/dce/"
     # Check that each module is available
     if [[ -n "$buildType"]]; then
-        [[ -e ]]
+        [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
     fi
 }
 
