@@ -1,11 +1,5 @@
 mkdir -p "$emberDatadir/eite"
 mkdir -p "$emberDatadir/doc/eite"
-mkdir -p "$emberBindir"
-rmdir --ignore-fail-on-non-empty scripts
-if [[ -d scripts ]]; then
-    chmod +x scripts/*
-    cp scripts/* "$emberBindir/"
-fi
 mkdir -p "$emberSysconfdir"
 
 cp -r data "$emberDatadir/eite/"
