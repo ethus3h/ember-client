@@ -76,7 +76,10 @@ mkdir -p ./build-temp
 
 [[ -d ./build-temp/distfiles ]] || die "Make sure the required dependency files are in ./build-temp/distfiles, or run support/dist-fetch to get them from your /usr/portage or the Web."
 
-if [[  ]]
+if [[ "-v" == "$1" ]]; then
+    verbose="yes"
+fi
+
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ "$1" == "-v" ]]; then
