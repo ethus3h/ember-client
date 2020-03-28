@@ -104,7 +104,8 @@ fi
 
 checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
-    dceDataDir="$sharedDataDir/"
+    dceDataDir="$sharedDataDir/dce/"
+    [[ -e ]]
 }
 
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
