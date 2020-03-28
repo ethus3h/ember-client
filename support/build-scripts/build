@@ -126,7 +126,6 @@ if [[ -z "$buildType" ]] || [[ "edit-webextension" == "$buildType" ]]; then
     ./support/build-scripts/build-edit-webextension
 fi
 
-rm -r data/dce
-mv built data/dce
+touch support/.no-build-data
 
 echo "Done."
