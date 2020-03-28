@@ -103,7 +103,7 @@ fi
 checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
     dceDataDir="$sharedDataDir/dce/"
-    # Check that each module is available
+    # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType"]]; then
         [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
         [[ -d "$dceDataDir"/data ]] || die "Could not find dist module while building $buildType."
