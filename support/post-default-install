@@ -1,11 +1,3 @@
-mkdir -p "$emberDatadir/eite"
-mkdir -p "$emberDatadir/doc/eite"
-mkdir -p "$emberSysconfdir"
-
-cp -r data "$emberDatadir/eite/"
-cp -r tests "$emberDatadir/eite/"
-cp -r docs/* "$emberDatadir/doc/eite/"
-
 rm built/web/papaparse.js
 cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js built/web/
 
