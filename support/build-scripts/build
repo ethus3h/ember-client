@@ -96,6 +96,10 @@ if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
     cp -ra ./implementation/portable/eite ./built/
 fi
 
+checkForData() {
+    sharedDataDir="$(getEmberSharedDataDir)"
+}
+
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
     ./support/build-scripts/build-web
 fi
