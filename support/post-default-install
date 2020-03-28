@@ -6,4 +6,5 @@ if [[ -d ./scripts ]]; then
     rmdir --ignore-fail-on-non-empty ./scripts
 fi
 if [[ -d ./scripts ]]; then
-cp -r built/* "$emberEmberdir/dce/"
+    cp -r built/* "$emberEmberdir/dce/"
+fi
