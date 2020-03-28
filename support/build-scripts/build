@@ -68,6 +68,20 @@ elif [[ "--somewhat-verbose" == "$1" ]]; then
     verbose="somewhat"
 fi
 
+if [[ -z "$buildType" ]] || [[ "dist" == "$buildType" ]]; then
+    if [[ -z "$verbose" ]]; then
+        ./support/dist-build &> /dev/null
+    else
+        ./support/dist-build
+    fi
+fi
+
+touch support/.no-build-data
+
+if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
+    cp -ra ./data ./built/
+fi
+
 if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Test the bootstrap scripts
     PATH="$PATH:$(pwd)/data/tests/" stagel-run-bootstrap-tests || die "StageL tests failed!"
@@ -82,20 +96,6 @@ if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     else
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     fi
-fi
-
-if [[ -z "$buildType" ]] || [[ "dist" == "$buildType" ]]; then
-    if [[ -z "$verbose" ]]; then
-        ./support/dist-build &> /dev/null
-    else
-        ./support/dist-build
-    fi
-fi
-
-touch support/.no-build-data
-
-if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
-    cp -ra ./data ./built/
 fi
 
 if [[ -z "$buildType" ]] || [[ "dce" == "$buildType" ]]; then
