@@ -25,6 +25,6 @@ eite-single-test() {
 }
 
 sharedDataDir="$(getEmberSharedDataDir)"
-[[ -d "$" ]]
+[[ -e  ]]
 
 find "$(readlink -f "$(abspath "$(dirname "$(ember-getconf ConfigLocation)")"/../share/eite/tests)")" -name '.eite-test' -exec runTest eite-single-test {} \;
