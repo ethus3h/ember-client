@@ -76,8 +76,6 @@ if [[ -z "$buildType" ]] || [[ "dist" == "$buildType" ]]; then
     fi
 fi
 
-touch support/.no-build-data
-
 if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
     cp -ra ./data ./built/
 fi
@@ -121,5 +119,7 @@ fi
 if [[ -z "$buildType" ]] || [[ "edit-webextension" == "$buildType" ]]; then
     ./support/build-scripts/build-edit-webextension
 fi
+
+touch support/.no-build-data
 
 echo "Done."
