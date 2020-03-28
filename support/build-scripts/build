@@ -94,12 +94,12 @@ fi
 
 touch support/.no-build-data
 
-if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
+if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
     cp -ra ./implementation/portable/eite ./built/
 fi
 
 if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
-    cp -ra ./implementation/portable/eite ./built/
+    cp -ra ./implementation/portable/dce ./built/
 fi
 
 checkForData() {
