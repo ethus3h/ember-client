@@ -87,6 +87,7 @@ fi
 if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Test the bootstrap scripts
     tests/stagel-run-bootstrap-tests || die "StageL tests failed!"
+fi
 
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ "$1" == "-v" ]]; then
