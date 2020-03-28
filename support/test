@@ -1,7 +1,7 @@
 buildType=""
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
-    echo "Building output: $buildType"
+    echo "Testing output: $buildType"
 fi
 
 # data/tests/stagel-run-tests are run prior to building, during prepare
