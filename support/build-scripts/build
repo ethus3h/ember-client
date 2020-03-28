@@ -107,7 +107,6 @@ checkForData() {
     if [[ -n "$buildType" ]]; then
         [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
         [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
-        [[ -d "$dceDataDir"/bootstrap ]] || die "Could not find bootstrap module while building $buildType."
         [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
         [[ -d "$dceDataDir"/dce ]] || die "Could not find dce module while building $buildType."
         if [[ "edit-webextension" == "$buildType" ]]; then
