@@ -117,10 +117,12 @@ checkForData() {
 }
 
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
+    checkForData
     ./support/build-scripts/build-web
 fi
 
 if [[ -z "$buildType" ]] || [[ "edit-webextension" == "$buildType" ]]; then
+    checkForData
     ./support/build-scripts/build-edit-webextension
 fi
 
