@@ -103,13 +103,12 @@ if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     fi
 fi
 
-if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]] || [[ "--dist-build" == "$distBuild" ]]; then
-    if [[ -z "$verbose" ]]; then
+if [[ -z "$verbose" ]]; then
+    if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]] || [[ "--dist-build" == "$distBuild" ]]; then
         ./support/dist-build &> /dev/null
     fi
 else
-    if [[ -z "$verbose" ]]; then
-        [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
+    [[ "$distBuild" == "--dist-build" ]] && ./support/dist-build
 fi
 
 if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
