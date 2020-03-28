@@ -81,6 +81,7 @@ if [[ "-v" == "$1" ]]; then
     shift
     verbose="yes"
 elif [[ "--somewhat-verbose" == "$1" ]]; then
+    # StageL goes to /dev/null, while other things are verbose
     verbose="somewhat"
 fi
 
@@ -99,7 +100,6 @@ if [[ "$1" == "-v" ]]; then
     fi
 elif [[ "$1" == "--somewhat-verbose" ]]; then
     shift
-    # StageL goes to /dev/null, while other things are verbose
     if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     fi
