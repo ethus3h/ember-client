@@ -111,7 +111,7 @@ checkForData() {
         [[ -d "$dceDataDir"/data ]] || die "Could not find dist module while building $buildType."
         [[ -d "$dceDataDir"/bootstrap ]] || die "Could not find dist module while building $buildType."
         [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find dist module while building $buildType."
-        [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
+        [[ -d "$dceDataDir"/dce ]] || die "Could not find dist module while building $buildType."
     fi
 }
 
