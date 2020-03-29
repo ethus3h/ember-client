@@ -94,7 +94,7 @@ checkForData() {
     if [[ -n "$buildType" ]]; then
         if [[ "implementation-parts" == "$buildType" ]]; then
             if ! fmwtk_loc="$(type -P "futuramerlin-web-toolkit-build")" || [[ -z $fmwtk_loc ]]; then
-            #[[ -d "$dceDataDir"/bootstrap ]] || die "Could not find bootstrap module while building $buildType."
+                die "Could not find bootstrap module while building $buildType."
         else
             [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
             [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
