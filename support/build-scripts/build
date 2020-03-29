@@ -82,7 +82,9 @@ fi
 
 if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Test the bootstrap scripts
-    PATH="$PATH:$(pwd)/data/tests/" stagel-run-bootstrap-tests || die "StageL tests failed!"
+    (
+        cd $(pwd)/data/tests || die
+        PATH="$PATH:$(pwd)/data/tests/" stagel-run-bootstrap-tests || die "StageL tests failed!"
 else
     rm scripts/stagel-bootstrap-*
 fi
