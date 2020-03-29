@@ -6,7 +6,7 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
 (
-# Run the tests regardless of whether this script and the tests have been installed and are being called by a subsequent invocation of the build process, or whether they are being run outside of the context of building (just in the source tree), or whether they're being run by a single
+# Run the tests regardless of whether this script and the tests have been installed and are being called by a subsequent invocation of the build process, or whether they are being run outside of the context of building (just in the source tree) (or in a single-pass (not using --build-type) build).
 cd "${BASH_SOURCE%/*}/" || die
 
 runTestForEachLanguage() {
