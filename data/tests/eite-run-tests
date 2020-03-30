@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 currentDirectory="${BASH_SOURCE%/*}/"
 cd "$currentDirectory" || die
-PATH="$currentDirectory:$PATH"
+PATH="$currentDirectory:${PATH:+:${PATH}}"
 export PATH
 
 eite-single-test() {
