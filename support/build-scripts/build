@@ -89,7 +89,7 @@ fi
 
 checkForData() {
     sharedDataDir="$(getEmberSharedDataDir)"
-    dceDataDir="$sharedDataDir/dce/"
+    ddcDataDir="$sharedDataDir/ddc/"
     # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType" ]]; then
         if [[ "implementation-parts" == "$buildType" ]]; then
@@ -97,12 +97,12 @@ checkForData() {
             #    die "Could not find bootstrap module while building $buildType."
             #fi
         else
-            [[ -d "$dceDataDir"/dist ]] || die "Could not find dist module while building $buildType."
-            [[ -d "$dceDataDir"/data ]] || die "Could not find data module while building $buildType."
-            [[ -d "$dceDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
-            [[ -d "$dceDataDir"/dce ]] || die "Could not find dce module while building $buildType."
+            [[ -d "$ddcDataDir"/dist ]] || die "Could not find dist module while building $buildType."
+            [[ -d "$ddcDataDir"/data ]] || die "Could not find data module while building $buildType."
+            [[ -d "$ddcDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
+            [[ -d "$ddcDataDir"/ddc ]] || die "Could not find ddc module while building $buildType."
             if [[ "edit-webextension" == "$buildType" ]]; then
-                [[ -d "$dceDataDir"/web ]] || die "Could not find web module while building $buildType."
+                [[ -d "$ddcDataDir"/web ]] || die "Could not find web module while building $buildType."
             fi
         fi
     fi
@@ -118,8 +118,8 @@ if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     fi
 fi
 
-if [[ -z "$buildType" ]] || [[ "dce" == "$buildType" ]]; then
-    cp -ra ./implementation/portable/dce ./built/
+if [[ -z "$buildType" ]] || [[ "ddc" == "$buildType" ]]; then
+    cp -ra ./implementation/portable/ddc ./built/
 fi
 
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
