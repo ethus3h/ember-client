@@ -5,7 +5,9 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-cd "${BASH_SOURCE%/*}/" || die
+$currentDirectory="${BASH_SOURCE%/*}/"
+cd "$currentDirectory" || die
+export PATH="$PATH:$currentDirectory"
 
 eite-single-test() {
     testPath="$1"
