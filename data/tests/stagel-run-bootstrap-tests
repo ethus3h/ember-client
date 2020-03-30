@@ -9,8 +9,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 # Run the tests regardless of whether this script and the tests have been installed and are being called by a subsequent invocation of the build process, or whether they are being run outside of the context of building (just in the source tree) (or in a single-pass (not using --build-type) build).
 currentDirectory="${BASH_SOURCE%/*}/"
 cd "$currentDirectory" || die
-#PATH="$currentDirectory:${PATH:+:${PATH}}"
-#export PATH
+if [[ -e ../../scripts/stagel-bootstrap-convert ]]; then
+PATH="$currentDirectory:${PATH:+:${PATH}}"
+export PATH
 
 runTestForEachLanguage() {
     if [[ "-v" == "$1" ]]; then
