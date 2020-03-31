@@ -69,7 +69,7 @@ mkdir -p ./build-temp
 if [[ -n "$buildType" ]]; then
     emberDataDir="$(getEmberDataDir)"
     # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getEmberDataDir will return all available modules.
-    cp -r "$(getEmberDataDir)" ./built
+    cp -r "$(getEmberDataDir)/ddc" ./built
 fi
 
 verbose=""
