@@ -69,6 +69,7 @@ mkdir -p ./build-temp
 if [[ -n "$buildType" ]] && [[ "dist" != "$buildType" ]]; then
     emberDataDir="$(getEmberDataDir)"
     # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getEmberDataDir will return all available modules.
+    # The first component built should be "dist".
     cp -r "$(getEmberDataDir)/ddc" ./built || die "Could not copy previously installed modules."
 fi
 
