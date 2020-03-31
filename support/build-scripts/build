@@ -48,6 +48,8 @@ if [[ "$1" == "--fast" ]]; then
     shift
 fi
 
+echo "Building, please wait..."
+
 buildType=""
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
@@ -60,7 +62,7 @@ echo '#!'"$(which bash)" > "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
 
-echo "Building, please wait..."
+
 
 rm -rf ./built
 mkdir -p ./built
