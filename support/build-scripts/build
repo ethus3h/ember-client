@@ -51,13 +51,11 @@ if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
     echo "Building output: $buildType"
     dataPathScript="./scripts/getDDCDataDir-$buildType"
-    echo '#!'"$(which bash)" > "$dataPathScript"
-    echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 else
     dataPathScript="./scripts/getDDCDataDir-unsplit"
 fi
-    echo '#!'"$(which bash)" > "$dataPathScript"
-    echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
+echo '#!'"$(which bash)" > "$dataPathScript"
+echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 
 echo "Building, please wait..."
 
