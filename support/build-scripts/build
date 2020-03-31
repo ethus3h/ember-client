@@ -103,7 +103,7 @@ fi
 
 checkForData() {
     emberDataDir="$(getEmberDataDir)"
-    ddcDataDir="$sharedDataDir/ddc/"
+    ddcDataDir="$emberDataDir/ddc/"
     # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType" ]]; then
         if [[ "implementation-parts" == "$buildType" ]]; then
