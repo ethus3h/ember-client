@@ -56,6 +56,7 @@ else
 fi
 echo '#!'"$(which bash)" > "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
+chmod +x "$dataPathScript"
 
 echo "Building, please wait..."
 
