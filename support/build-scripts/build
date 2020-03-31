@@ -54,7 +54,7 @@ if [[ -f ./support/.build-type ]]; then
     echo '#!'"$(which bash)" > "$dataPathScript"
     echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 else
-    dataPathScript="./scripts/getDDCDataDir-$buildType"
+    dataPathScript="./scripts/getDDCDataDir-unsplit"
     echo '#!'"$(which bash)" > "$dataPathScript"
     echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 fi
