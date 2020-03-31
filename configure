@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-set -x
+#set -x
 
-# Should work without ember-shared, so don't source ember_bash_setup_core or set traps that need. Only require ember_bash_setup_core.
+# Should work without ember-shared, so don't source ember_bash_setup or set traps that need. Only require ember_bash_setup_core.
 
 packageName="$(<package-name)"
 
@@ -41,12 +41,12 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 #NOTE: MAINTENANCE: Manual error printing
 trap 'printf '\''%b'\'' '\''\033[1;31m'\'' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd)." >&2; printf '\''%b'\'' '\''\033[0m'\'' >&2; exit 1' ERR
 
-sharedDataDir="$(getEmberSharedDataDir)"
+sharedDataDir="$(getEmberDataDirShared)"
 if [[ -z "$sharedDataDir" ]]; then
     echo "Could not get ember-shared data directory. Perhaps the installed version is too old?"
     exit 1
 fi
-buildsystemDir="$(getEmberSharedDataDir)/app-buildsystem"
+buildsystemDir="$(getEmberDataDirShared)/app-buildsystem"
 if ! [[ -d "$buildsystemDir" ]]; then
     echo "Could not get ember-shared build directory. Perhaps the installed version is too old?"
     exit 1
