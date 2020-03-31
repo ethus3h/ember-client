@@ -62,14 +62,14 @@ echo '#!'"$(which bash)" > "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
 
+rm -rf ./built
 if [[ -n "$buildType" ]]; then
     emberDataDir="$(getEmberDataDir)"
     # Blech
     cp -r "$(getEmberDataDir)" ./built
+else
+    mkdir -p ./built
 fi
-
-rm -rf ./built
-mkdir -p ./built
 mkdir -p ./build-temp
 
 verbose=""
