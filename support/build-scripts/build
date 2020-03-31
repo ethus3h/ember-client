@@ -94,7 +94,7 @@ else
 fi
 
 checkForData() {
-    sharedDataDir="$(getEmberSharedDataDir)"
+    emberDataDir="$(getEmberSharedDataDir)"
     ddcDataDir="$sharedDataDir/ddc/"
     # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType" ]]; then
