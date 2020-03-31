@@ -63,14 +63,15 @@ echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
 
 rm -rf ./built
+mkdir -p ./built
+mkdir -p ./build-temp
+
 if [[ -n "$buildType" ]]; then
     emberDataDir="$(getEmberDataDir)"
     # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getEmberDataDir will return all available modules.
     cp -r "$(getEmberDataDir)" ./built
 else
-    mkdir -p ./built
 fi
-mkdir -p ./build-temp
 
 verbose=""
 if [[ "-v" == "$1" ]]; then
