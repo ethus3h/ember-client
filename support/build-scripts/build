@@ -64,6 +64,8 @@ chmod +x "$dataPathScript"
 
 if [[ -n "$buildType" ]]; then
     emberDataDir="$(getEmberDataDir)"
+    # Blech
+    cp -r "$(getEmberDataDir)" ./built
 fi
 
 rm -rf ./built
