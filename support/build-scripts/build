@@ -51,7 +51,8 @@ if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
     echo "Building output: $buildType"
     buildPathScript="./scripts/getEmberDataDirDDC$buildType"
-    echo '#!'"$(which bash)" >  print '"'$(support/.emberdir)'"'; }' > "./scripts/getEmberDataDirDDC$buildType"
+    echo '#!'"$(which bash)" > "$buildPathScript"
+    echo 'printf '%s' "'$(support/.emberdir)'"'; }' > "$buildPathScript"
 fi
 
 echo "Building, please wait..."
