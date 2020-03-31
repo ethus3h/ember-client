@@ -58,7 +58,7 @@ if [[ -f ./support/.build-type ]]; then
 else
     dataPathScript="./scripts/getDDCDataDir-unsplit"
 fi
-# Guix will patch the #!/usr/bin/env bash even on
+# Guix patch-shebangs will take care of the #!/usr/bin/env bash
 echo '#!/usr/bin/env bash" > "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
