@@ -50,7 +50,7 @@ buildType=""
 if [[ -f ./support/.build-type ]]; then
     buildType="$(<./support/.build-type)"
     echo "Building output: $buildType"
-    echo 'getEmberSharedDataDir() { print '"'$(support/.emberdir)'"'; }' > ./scripts/
+    echo 'getEmberSharedDataDir() { print '"'$(support/.emberdir)'"'; }' > ./scripts/getEmberDataDirDDC$buildType
 fi
 
 echo "Building, please wait..."
