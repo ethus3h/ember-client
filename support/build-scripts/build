@@ -63,6 +63,8 @@ echo 'printf '\''%s'\'' "'"$(support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
 
 if [[ -n "$buildType" ]]; then
+    emberDataDir="$(getEmberDataDir)"
+fi
 
 rm -rf ./built
 mkdir -p ./built
