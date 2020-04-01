@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the EITE implementation.
 
-# When adding new modules, update this file (including checkForData), update the package definitions, and update the getEmberDataDir in ember_bash_setup_core.
+# When adding new modules, update this file (including checkForData), update the package definitions, and update the getDDCDataDir in ember_bash_setup_core.
 
 sicmd="./support/build-scripts/build-wrapped"
 #[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
@@ -67,10 +67,10 @@ mkdir -p ./built
 mkdir -p ./build-temp
 
 if [[ -n "$buildType" ]] && [[ "dist" != "$buildType" ]]; then
-    emberDataDir="$(getEmberDataDir)"
-    # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getEmberDataDir will return all available modules.
+    emberDataDir="$(getDDCDataDir)"
+    # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getDDCDataDir will return all available modules.
     # The first component built should be "dist".
-    cp -r "$(getEmberDataDir)/ddc/"* ./built || die "Could not copy previously installed modules."
+    cp -r "$(getDDCDataDir)/ddc/"* ./built || die "Could not copy previously installed modules."
 fi
 
 verbose=""
@@ -103,7 +103,7 @@ else
 fi
 
 checkForData() {
-    emberDataDir="$(getEmberDataDir)"
+    emberDataDir="$(getDDCDataDir)"
     ddcDataDir="$emberDataDir/ddc/"
     # Check that each module is available that is needed for the package modules
     if [[ -n "$buildType" ]]; then
