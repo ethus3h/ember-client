@@ -59,7 +59,7 @@ else
     dataPathScript="./scripts/getDDCDataDir-unsplit"
 fi
 # Guix patch-shebangs will take care of the #!/usr/bin/env bash
-echo '#!/usr/bin/env bash" > "$dataPathScript"
+createEmberSharedCoreScript "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' > "$dataPathScript"
 chmod +x "$dataPathScript"
 
