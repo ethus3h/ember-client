@@ -60,7 +60,7 @@ else
 fi
 
 createEmberSharedCoreScript "$dataPathScript"
-echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' > "$dataPathScript"
+echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' >> "$dataPathScript"
 
 rm -rf ./built
 mkdir -p ./built
