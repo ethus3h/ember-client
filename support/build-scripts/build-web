@@ -13,7 +13,7 @@ cp -ra ./implementation/platform-support/web/* ./built/web/
 cp -ra ./built/ddc/* ./built/web/
 rm -rf ./built/web/data
 cp -ra ./data ./built/web/
-cp -ra ./built/dist-built/ucd ./built/web/data/
+cp -ra ./built/dist/ucd ./built/web/data/
 cp -a ./built/implementation-parts/js/eite.js ./built/web/
 cp -a /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp -a ./LICENSE* ./built/web/
