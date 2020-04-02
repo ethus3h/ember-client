@@ -100,6 +100,8 @@ fi
 if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Test the bootstrap scripts
     ./data/tests/stagel-run-bootstrap-tests || die "StageL tests failed!"
+    # Then, build the bootstrap StageL in bash
+    # Use it to build itself, and install that
 else
     rm scripts/stagel-bootstrap-*
 fi
