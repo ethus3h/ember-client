@@ -64,6 +64,6 @@ rm -r ./build-temp/unpacked
 rm -r ./build-temp/build
 touch ./build-temp/dist-build-ready
 
-rm -rf ./built/dist-built
-cp -ra ./build-temp/out ./build-temp/dist-built
-mv ./build-temp/dist-built ./built/
+rm -rf ./built/dist
+cp -ra ./build-temp/out ./build-temp/dist
+mv ./build-temp/dist ./built/
