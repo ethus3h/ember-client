@@ -134,7 +134,7 @@ if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     fi
 fi
 
-if [[ -z "$buildType" ]] || [[ "ddc" == "$buildType" ]]; then
+if [[ -z "$buildType" ]] || [[ "main" == "$buildType" ]]; then
     cp -ra ./implementation/portable/ddc ./built/
 fi
 
