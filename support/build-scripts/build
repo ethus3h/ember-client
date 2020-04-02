@@ -89,8 +89,9 @@ if [[ -z "$buildType" ]] || [[ "dist" == "$buildType" ]]; then
     else
         ./support/dist-build
     fi
-    cp -a ./LICENSE* ./built/
-    cp -ra thirdparty-licenses ./built/
+    mkdir ./built/licenses
+    cp -a ./LICENSE* ./built/licenses/
+    cp -ra thirdparty-licenses ./built/licenses/
 fi
 
 if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
