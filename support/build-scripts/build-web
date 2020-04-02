@@ -10,12 +10,12 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 rm -rf ./built/web
 mkdir ./built/web
 cp -ra ./implementation/platform-support/web/* ./built/web/
-cp -ra ./built/eite/* ./built/web/
+cp -ra ./built/ddc/* ./built/web/
 rm -rf ./built/web/data
 cp -ra ./data ./built/web/
 cp -ra ./built/dist-built/ucd ./built/web/data/
 cp -a ./built/implementation-parts/js/eite.js ./built/web/
 cp -a /usr/share/futuramerlin-web-toolkit/assets/*.css ./built/web/
 cp -a ./LICENSE* ./built/web/
-rm ./built/web/papaparse.js
-cp -a /usr/share/javascript/PapaParse/papaparse.js ./built/web/ || true
+#rm ./built/web/papaparse.js
+#cp -a /usr/share/javascript/PapaParse/papaparse.js ./built/web/ || true

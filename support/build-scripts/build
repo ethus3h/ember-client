@@ -5,7 +5,7 @@ set -x
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Build the EITE implementation.
+# Build the DDC implementation.
 
 # When adding new modules, update this file (including checkForData), update the package definitions, and update the getDDCDataDir in ember_bash_setup_core.
 
