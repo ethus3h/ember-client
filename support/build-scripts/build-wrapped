@@ -5,7 +5,7 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-# Build the libraries and interface that comprise DDC, for a given language. This consists of: StageL language core library, StageR library, native StageL/StageR speedup/validation implementations (validation = meaning it could run a native sha512sum at the same time as the StageR one, to ensure the StageR one works correctly), and NDW (non-determinism wrapper).
+# Build the libraries and interface that underly DDC, for a given language. This consists of: StageL language core library, StageR library, native StageL/StageR speedup/validation implementations (validation = meaning it could run a native sha512sum at the same time as the StageR one, to ensure the StageR one works correctly), and NDW (non-determinism wrapper).
 
 target="$1"
 shift
