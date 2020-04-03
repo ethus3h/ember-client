@@ -15,6 +15,8 @@ bootstrap=""
 if [[ "$1" == "--bootstrap" ]]; then
     bootstrap="--bootstrap"
     shift
+elif [[ "$1" == "--bootstrap-selfhosted" ]]; then
+    bootstrap="--bootstrap-selfhosted"
 fi
 cache="--no-cache"
 cacheDir="."
