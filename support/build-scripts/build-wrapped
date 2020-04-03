@@ -109,11 +109,11 @@ echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&d
 cat ./implementation/speedups/speedups."$target" >> ./built/implementation-parts/"$target"/speedups."$target"
 echo $'\n''// @license-end' >> ./built/implementation-parts/"$target"/speedups."$target"
 
-cp ./built/implementation-parts/"$target"/core."$target" ./built/implementation-parts/"$target"/eite."$target"
-echo >> ./built/implementation-parts/"$target"/eite."$target"
-cat ./built/implementation-parts/"$target"/portable."$target" >> ./built/implementation-parts/"$target"/eite."$target"
-echo >> ./built/implementation-parts/"$target"/eite."$target"
-cat ./built/implementation-parts/"$target"/speedups."$target" >> ./built/implementation-parts/"$target"/eite."$target"
-cat ./built/implementation-parts/"$target"/ndw."$target" >> ./built/implementation-parts/"$target"/eite."$target"
+cp ./built/implementation-parts/"$target"/core."$target" ./built/implementation-parts/"$target"/ddc."$target"
+echo >> ./built/implementation-parts/"$target"/ddc."$target"
+cat ./built/implementation-parts/"$target"/portable."$target" >> ./built/implementation-parts/"$target"/ddc."$target"
+echo >> ./built/implementation-parts/"$target"/ddc."$target"
+cat ./built/implementation-parts/"$target"/speedups."$target" >> ./built/implementation-parts/"$target"/ddc."$target"
+cat ./built/implementation-parts/"$target"/ndw."$target" >> ./built/implementation-parts/"$target"/ddc."$target"
 
 rm -r "./built/stagel-build-temp"
