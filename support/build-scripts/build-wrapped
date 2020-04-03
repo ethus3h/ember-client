@@ -7,11 +7,9 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 # Build the libraries and interface that comprise DDC, for a given language. This consists of: StageL language core library, StageR library, native StageL/StageR speedup/validation implementations (validation = meaning it could run a native sha512sum at the same time as the StageR one, to ensure the StageR one works correctly), and NDW (non-determinism wrapper).
 
-bootstrap="--bootstrap"
-if [[ "$1" == "--cache" ]]; then
-    cache="--cache"
-    shift
-    cacheDir="$1"
+bootstrap=""
+if [[ "$1" == "--bootstrap" ]]; then
+    bootstrap="--bootstrap"
     shift
 fi
 cache="--no-cache"
