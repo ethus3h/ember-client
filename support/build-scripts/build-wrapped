@@ -11,7 +11,7 @@ target="$1"
 shift
 [[ -z "$1" ]] && die "No target language was specified to build."
 
-bootstrap=""
+bootstrap="--no-bootstrap"
 if [[ "$1" == "--bootstrap" ]]; then
     bootstrap="--bootstrap"
     shift
