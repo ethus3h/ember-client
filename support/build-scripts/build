@@ -156,6 +156,8 @@ if [[ -z "$buildType" ]] || [[ "main" == "$buildType" ]]; then
     cp -ra ./implementation/portable/ddc ./built/
 fi
 
+# Application versions
+
 if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
     checkForData
     ./support/build-scripts/build-web
