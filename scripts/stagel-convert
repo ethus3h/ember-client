@@ -70,11 +70,6 @@ if [[ "--cache" == "$cache" ]]; then
     fi
 fi
 
-parseCmd="stagel-bootstrap-parse"
-
-codegenCmd="stagel-bootstrap-codegen"
-[[ -f "./stagel-bootstrap-codegen" ]] && codegenCmd=./"$codegenCmd"
-
 cachePath=""
 needCache="false"
 if [[ "--cache" == "$cache" ]]; then
