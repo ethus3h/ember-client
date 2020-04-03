@@ -104,7 +104,7 @@ if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Then, build the bootstrap StageL in bash
     # Use it to build itself, and install that (this is what will later be used to build each language implementation)
 else
-    rm scripts/stagel-bootstrap-*
+    rm scripts/stagel-*
 fi
 
 checkForData() {
