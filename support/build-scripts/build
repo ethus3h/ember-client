@@ -142,7 +142,7 @@ checkForData() {
 targets=(js bash)
 targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
-    if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
+    if [[ -z "$buildType" ]] || [[ "implementation-${targets[$i]}" == "$buildType" ]]; then
         checkForData
         if [[ "yes" == "$verbose" ]]; then
             "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
