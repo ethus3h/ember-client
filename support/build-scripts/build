@@ -136,9 +136,9 @@ for (( i=0; i<targetCount; i++ )); do
 if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     checkForData
     if [[ "yes" == "$verbose" ]]; then
-        ./support/build-scripts/build-wrapped "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
     else
-        ./support/build-scripts/build-wrapped "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+        "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     fi
 fi
 done
