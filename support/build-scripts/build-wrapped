@@ -45,12 +45,8 @@ srcmd="./support/build-scripts/build-stager-inner"
 rm -rf ./built/implementation-parts
 mkdir ./built/implementation-parts
 
-targets=(js sh)
-
 # FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
 
-targetCount="${#targets[@]}"
-for (( i=0; i<targetCount; i++ )); do
     [[ -d "./implementation/stagel-cores/${targets[$i]}" ]] || continue
 
     # StageL language core for the target language
@@ -109,4 +105,3 @@ for (( i=0; i<targetCount; i++ )); do
     cat ./built/implementation-parts/"${targets[$i]}"/ndw."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
 
     rm -r "./built/stagel-build-temp"
-done
