@@ -47,61 +47,61 @@ mkdir ./built/implementation-parts
 
 # FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
 
-[[ -d "./implementation/stagel-cores/${targets[$i]}" ]] || continue
+[[ -d "./implementation/stagel-cores/$target" ]] || continue
 
 # StageL language core for the target language
 
-mkdir -p "./built/stagel-build-temp/implementation/stagel-cores/${targets[$i]}"
+mkdir -p "./built/stagel-build-temp/implementation/stagel-cores/$target"
 
-rm -f ./implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
+rm -f ./implementation/stagel-cores/"$target"/core."$target"
 
-echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
+echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/stagel-cores/"$target"/core."$target"
 
-find ./implementation/stagel-cores/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" \;
+find ./implementation/stagel-cores/"$target"/ -name '*.'"$target" -exec "$slcmd" {} "$target" \;
 
-echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}"
+echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/stagel-cores/"$target"/core."$target"
 
 # StageR
 
 mkdir -p "./built/stagel-build-temp/implementation/portable/stagel"
 
-rm -f ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+rm -f ./built/stagel-build-temp/implementation/portable/stagel/portable."$target"
 
-echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/portable/stagel/portable."$target"
 
-find ./implementation/portable/stagel/ -name '*.stagel' -exec "$srcmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" {} "${targets[$i]}" \;
+find ./implementation/portable/stagel/ -name '*.stagel' -exec "$srcmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" {} "$target" \;
 
-echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}"
+echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/portable/stagel/portable."$target"
 
 # NDW
 
-mkdir -p "./built/stagel-build-temp/implementation/ndw/${targets[$i]}"
+mkdir -p "./built/stagel-build-temp/implementation/ndw/$target"
 
-rm -f ./implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}"
+rm -f ./implementation/ndw/"$target"/ndw."$target"
 
-echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}"
+echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' > ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target"
 
-find ./implementation/ndw/"${targets[$i]}"/ -name '*.'"${targets[$i]}" -exec "$slcmd" {} "${targets[$i]}" "ndw" \;
+find ./implementation/ndw/"$target"/ -name '*.'"$target" -exec "$slcmd" {} "$target" "ndw" \;
 
-echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}"
+echo $'\n''// @license-end' >> ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target"
 
 # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
-mkdir -p ./built/implementation-parts/"${targets[$i]}"
+mkdir -p ./built/implementation-parts/"$target"
 
-mv ./built/stagel-build-temp/implementation/stagel-cores/"${targets[$i]}"/core."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
-mv ./built/stagel-build-temp/implementation/portable/stagel/portable."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
-mv ./built/stagel-build-temp/implementation/ndw/"${targets[$i]}"/ndw."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/
+mv ./built/stagel-build-temp/implementation/stagel-cores/"$target"/core."$target" ./built/implementation-parts/"$target"/
+mv ./built/stagel-build-temp/implementation/portable/stagel/portable."$target" ./built/implementation-parts/"$target"/
+mv ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target" ./built/implementation-parts/"$target"/
 
-echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-cat ./implementation/speedups/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
-echo $'\n''// @license-end' >> ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}"
+echo '// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0'$'\n' >> ./built/implementation-parts/"$target"/speedups."$target"
+cat ./implementation/speedups/speedups."$target" >> ./built/implementation-parts/"$target"/speedups."$target"
+echo $'\n''// @license-end' >> ./built/implementation-parts/"$target"/speedups."$target"
 
-cp ./built/implementation-parts/"${targets[$i]}"/core."${targets[$i]}" ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
-echo >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
-cat ./built/implementation-parts/"${targets[$i]}"/portable."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
-echo >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
-cat ./built/implementation-parts/"${targets[$i]}"/speedups."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
-cat ./built/implementation-parts/"${targets[$i]}"/ndw."${targets[$i]}" >> ./built/implementation-parts/"${targets[$i]}"/eite."${targets[$i]}"
+cp ./built/implementation-parts/"$target"/core."$target" ./built/implementation-parts/"$target"/eite."$target"
+echo >> ./built/implementation-parts/"$target"/eite."$target"
+cat ./built/implementation-parts/"$target"/portable."$target" >> ./built/implementation-parts/"$target"/eite."$target"
+echo >> ./built/implementation-parts/"$target"/eite."$target"
+cat ./built/implementation-parts/"$target"/speedups."$target" >> ./built/implementation-parts/"$target"/eite."$target"
+cat ./built/implementation-parts/"$target"/ndw."$target" >> ./built/implementation-parts/"$target"/eite."$target"
 
 rm -r "./built/stagel-build-temp"
