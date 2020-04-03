@@ -9,6 +9,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 target="$1"
 shift
+
 bootstrap=""
 if [[ "$1" == "--bootstrap" ]]; then
     bootstrap="--bootstrap"
