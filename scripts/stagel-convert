@@ -43,6 +43,12 @@ if [[ "--parseCmd" == "$1" ]]; then
     shift
 fi
 codegenCmd="stagel-codegen"
+parseCmd="stagel-parse"
+if [[ "--parseCmd" == "$1" ]]; then
+    shift
+    parseCmd="$1"
+    shift
+fi
 
 inputFile="$(readlink -f "$1")"
 targetLang="$2"
