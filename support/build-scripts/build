@@ -139,6 +139,8 @@ checkForData() {
     fi
 }
 
+# Library versions
+
 targets=(js bash)
 targetCount="${#targets[@]}"
 for (( i=0; i<targetCount; i++ )); do
@@ -151,6 +153,8 @@ for (( i=0; i<targetCount; i++ )); do
         fi
     fi
 done
+
+# Documents
 
 if [[ -z "$buildType" ]] || [[ "main" == "$buildType" ]]; then
     cp -ra ./implementation/portable/ddc ./built/
