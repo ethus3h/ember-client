@@ -36,6 +36,13 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     typecheckBuild="--no-runtime-type-checks"
     shift
 fi
+parseCmd="stagel-parse"
+if [[ "--parseCmd" == "$1" ]]; then
+    shift
+    parseCmd="$1"
+    shift
+fi
+codegenCmd="stagel-codegen"
 
 inputFile="$(readlink -f "$1")"
 targetLang="$2"
