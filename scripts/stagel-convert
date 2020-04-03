@@ -58,8 +58,8 @@ targetLang="$2"
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
 if [[ "--cache" == "$cache" ]]; then
+    parsePath="$(which $parseCmd)"
     if ! [[ -f "./stagel-bootstrap-parse" ]]; then
-        parsePath="$(which stagel-bootstrap-parse)"
     else
         parsePath="./stagel-bootstrap-parse"
     fi
