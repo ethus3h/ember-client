@@ -13,7 +13,7 @@ if [[ "$1" == "--cache" ]]; then
     shift
     cacheDir="$1"
     shift
-
+fi
 cache="--no-cache"
 cacheDir="."
 if [[ "$1" == "--cache" ]]; then
