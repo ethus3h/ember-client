@@ -59,16 +59,7 @@ cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" || true
 
 if [[ "--cache" == "$cache" ]]; then
     parsePath="$(which "$parseCmd")"
-    if ! [[ -f "./stagel-bootstrap-parse" ]]; then
-    else
-        parsePath="./stagel-bootstrap-parse"
-    fi
     codegenPath="$(which "$codegenCmd")"
-    if ! [[ -f "./stagel-bootstrap-codegen" ]]; then
-        codegenPath="$(which stagel-bootstrap-codegen)"
-    else
-        codegenPath="./stagel-bootstrap-codegen"
-    fi
 fi
 
 cachePath=""
