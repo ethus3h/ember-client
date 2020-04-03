@@ -43,10 +43,9 @@ if [[ "--parseCmd" == "$1" ]]; then
     shift
 fi
 codegenCmd="stagel-codegen"
-parseCmd="stagel-parse"
-if [[ "--parseCmd" == "$1" ]]; then
+if [[ "--codegenCmd" == "$1" ]]; then
     shift
-    parseCmd="$1"
+    codegenCmd="$1"
     shift
 fi
 
