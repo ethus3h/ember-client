@@ -37,6 +37,7 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     shift
 fi
 parseCmd="stagel-parse"
+[[ -f "./stagel-bootstrap-parse" ]] && parseCmd=./"$parseCmd"
 if [[ "--parseCmd" == "$1" ]]; then
     shift
     parseCmd="$1"
@@ -69,7 +70,6 @@ if [[ "--cache" == "$cache" ]]; then
 fi
 
 parseCmd="stagel-bootstrap-parse"
-[[ -f "./stagel-bootstrap-parse" ]] && parseCmd=./"$parseCmd"
 
 codegenCmd="stagel-bootstrap-codegen"
 [[ -f "./stagel-bootstrap-codegen" ]] && codegenCmd=./"$codegenCmd"
