@@ -129,6 +129,8 @@ checkForData() {
     fi
 }
 
+targets=(js sh)
+targetCount="${#targets[@]}"
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     checkForData
