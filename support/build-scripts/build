@@ -131,6 +131,7 @@ checkForData() {
 
 targets=(js sh)
 targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
 # FIXME: Split up implementation-parts (stagel-bootstrap, stagel, stager-[language])
 if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
     checkForData
@@ -140,6 +141,7 @@ if [[ -z "$buildType" ]] || [[ "implementation-parts" == "$buildType" ]]; then
         "$sicmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
     fi
 fi
+done
 
 if [[ -z "$buildType" ]] || [[ "main" == "$buildType" ]]; then
     cp -ra ./implementation/portable/ddc ./built/
