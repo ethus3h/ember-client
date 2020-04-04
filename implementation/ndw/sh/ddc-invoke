@@ -7,3 +7,4 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 source ddc.bash &> /dev/null || die
 
+StageL_invoke "$1"
