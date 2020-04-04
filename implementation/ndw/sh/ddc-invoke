@@ -1,3 +1,3 @@
 ddc-invoke() {
-    StageL_invoke ""
+    StageL_invoke "$1"
 }
