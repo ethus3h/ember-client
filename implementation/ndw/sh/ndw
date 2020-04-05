@@ -1,3 +1,5 @@
 ndw_internal_store() {
-    StageL_import "$1"
+    local response
+    response="$(StageL_store "$1")"
+    if [[ "" ]]
 }
