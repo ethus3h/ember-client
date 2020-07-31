@@ -1,4 +1,4 @@
-# Ember Information Technology Environment
+# DDC
 
 This is part of the Ember project.
 
