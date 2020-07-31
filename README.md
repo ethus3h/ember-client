@@ -1,4 +1,4 @@
-# DDC
+# Deterministic Document Computing (DDC)
 
 This is part of the Ember project.
 
