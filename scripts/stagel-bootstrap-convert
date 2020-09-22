@@ -37,6 +37,7 @@ elif [[ "$1" == "--no-runtime-type-checks" ]]; then
     shift
 fi
 parseCmd="stagel-parse"
+if [[ ! command -v ]]
 [[ -f "../../scripts/stagel-bootstrap-parse" ]] && parseCmd="./stagel-bootstrap-parse"
 if [[ "--parseCmd" == "$1" ]]; then
     shift
