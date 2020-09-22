@@ -5,7 +5,7 @@ source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; ech
 
 trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
 
-rm -r built-portable
+rm -rf built-portable
 mkdir built-portable
 cd built-portable
 find .. -maxdepth 1 -not -path . -not -name built-portable -exec cp -r {} ./ \;
