@@ -59,7 +59,7 @@ mkdir ./built/implementation-parts
 
 # FIXME: the "find" commands (I think?) don't return nonzero exit status on failure
 
-[[ -d "./implementation/stagel-cores/$target" ]] || exit
+[[ -d "./implementation/stagel-cores/$target" ]] || die "Could not find StageL core to build"
 
 # StageL language core for the target language
 
