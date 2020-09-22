@@ -7,7 +7,7 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 
 rm -r built-portable
 mkdir built-portable
-cd build-portable
+cd built-portable
 find .. -maxdepth 1 -not -path . -not -name build-portable -exec cp -r {} ./ \;
 ./configure --prefix=.
 make
