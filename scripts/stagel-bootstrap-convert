@@ -48,7 +48,7 @@ if [[ "--parseCmd" == "$1" ]]; then
 fi
 codegenCmd="stagel-codegen"
 if ! command -v "$codegenCmd"; then
-    codegenCmd="stagel-bootstrap-parse"
+    codegenCmd="stagel-bootstrap-codegen"
 fi
 #[[ -f "../../scripts/stagel-bootstrap-codegen" ]] && codegenCmd="./stagel-bootstrap-codegen"
 if [[ "--codegenCmd" == "$1" ]]; then
