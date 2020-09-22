@@ -105,7 +105,7 @@ if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     if [[ "yes" == "$verbose" ]]; then
         "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
     else
-        "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+        "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" # &> /dev/null
     fi
     # Use it to build itself, and install that (this is what will later be used to build each language implementation)
     if [[ "yes" == "$verbose" ]]; then
