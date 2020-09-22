@@ -8,6 +8,6 @@ trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(p
 rm -rf built-portable
 mkdir built-portable
 cd built-portable
-find .. -maxdepth 1 -not -path . -not -name built-portable -exec cp -r {} ./ \;
+find .. -maxdepth 1 -not -path . -not -name .git -not -name built -not -name .egup.stat -not -name built-portable -exec cp -r {} ./ \;
 ./configure --prefix=.
 make
