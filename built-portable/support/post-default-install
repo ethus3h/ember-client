@@ -1,0 +1,11 @@
+#rm built/web/papaparse.js
+#cp "$overrideInstalledAppDataDir"/javascript/PapaParse/papaparse.js built/web/
+
+mkdir -p "$emberEmberdir/ddc/"
+
+if [[ -d ./built ]]; then
+    rmdir --ignore-fail-on-non-empty ./built
+fi
+if [[ -d ./built ]]; then
+    cp -r built/* "$emberEmberdir/ddc/"
+fi

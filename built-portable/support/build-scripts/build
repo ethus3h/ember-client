@@ -1,0 +1,177 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+source ember_bash_setup_core &> /dev/null || { printf '%b' '\033[1;31m' >&2; echo "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd): The required dependency ember-shared could not be found (or ember_bash_setup_core could not be sourced for some other reason)." >&2; printf '%b' '\033[0m' >&2; exit 1; }
+set -x
+
+trap 'die "A fatal error was reported on ${BASH_SOURCE[0]} line ${LINENO} in $(pwd) at $(emdate)."' ERR
+
+# Build the DDC implementation.
+
+# When adding new modules, update this file (including checkForData), update the package definitions, and update the getDDCDataDir in ember_bash_setup_core.
+
+sicmd="./support/build-scripts/build-wrapped"
+#[[ -f "./build-wrapped" ]] && sicmd=./"$sicmd"
+
+cache="--no-cache"
+cacheDir="."
+if [[ "$1" == "--cache" ]]; then
+    cache="--cache"
+    shift
+    cacheDir="$1"
+    shift
+elif [[ "$1" == "--no-cache" ]]; then
+    cache="--no-cache"
+    shift
+    cacheDir="$1"
+    shift
+fi
+debugBuild="--debug"
+if [[ "$1" == "--debug" ]]; then
+    debugBuild="--debug"
+    shift
+elif [[ "$1" == "--no-debug" ]]; then
+    debugBuild="--no-debug"
+    shift
+fi
+typecheckBuild="--runtime-type-checks"
+if [[ "$1" == "--runtime-type-checks" ]]; then
+    typecheckBuild="--runtime-type-checks"
+    shift
+elif [[ "$1" == "--no-runtime-type-checks" ]]; then
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
+
+if [[ "$1" == "--fast" ]]; then
+    debugBuild="--no-debug"
+    typecheckBuild="--no-runtime-type-checks"
+    shift
+fi
+
+echo "Building, please wait..."
+
+buildType=""
+if [[ -f ./support/.build-type ]]; then
+    buildType="$(<./support/.build-type)"
+    echo "Building output: $buildType"
+    dataPathScript="./scripts/getDDCDataDir-$buildType"
+else
+    dataPathScript="./scripts/getDDCDataDir-unsplit"
+fi
+
+createEmberSharedCoreScript "$dataPathScript"
+echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' >> "$dataPathScript"
+
+rm -rf ./built
+mkdir -p ./built
+mkdir -p ./build-temp
+
+if [[ -n "$buildType" ]] && [[ "dist" != "$buildType" ]]; then
+    emberDataDir="$(getDDCDataDir)"
+    # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getDDCDataDir will return all available modules.
+    # The first component built should be "dist".
+    cp -r "$(getDDCDataDir)/ddc/"* ./built || die "Could not copy previously installed modules."
+fi
+
+verbose=""
+if [[ "-v" == "$1" ]]; then
+    shift
+    verbose="yes"
+elif [[ "--somewhat-verbose" == "$1" ]]; then
+    shift
+    # StageL goes to /dev/null, while other things are verbose
+    verbose="somewhat"
+fi
+
+if [[ -z "$buildType" ]] || [[ "dist" == "$buildType" ]]; then
+    if [[ -z "$verbose" ]]; then
+        ./support/dist-build &> /dev/null
+    else
+        ./support/dist-build
+    fi
+    mkdir ./built/licenses
+    cp -a ./LICENSE* ./built/licenses/
+    cp -ra thirdparty-licenses ./built/licenses/
+fi
+
+if [[ -z "$buildType" ]] || [[ "data" == "$buildType" ]]; then
+    cp -ra ./data ./built/
+fi
+
+if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
+    # Test the bootstrap scripts
+    ./data/tests/stagel-run-bootstrap-tests || die "StageL tests failed!"
+    # Then, build the bootstrap StageL in bash
+    if [[ "yes" == "$verbose" ]]; then
+        "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+    else
+        "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+    fi
+    # Use it to build itself, and install that (this is what will later be used to build each language implementation)
+    if [[ "yes" == "$verbose" ]]; then
+        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+    else
+        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+    fi
+else
+    rm scripts/stagel-*
+fi
+
+checkForData() {
+    emberDataDir="$(getDDCDataDir)"
+    ddcDataDir="$emberDataDir/ddc/"
+    # Check that each module is available that is needed for the package modules
+    if [[ -n "$buildType" ]]; then
+        if [[ "implementation-parts" == "$buildType" ]]; then
+            #if ! fmwtk_loc="$(type -P "futuramerlin-web-toolkit-build")" || [[ -z $fmwtk_loc ]]; then
+            #    die "Could not find bootstrap module while building $buildType."
+            #fi
+            true
+        else
+            [[ -d "$ddcDataDir"/dist ]] || die "Could not find dist module while building $buildType."
+            [[ -d "$ddcDataDir"/data ]] || die "Could not find data module while building $buildType."
+            [[ -d "$ddcDataDir"/implementation-parts ]] || die "Could not find implementation-parts module while building $buildType."
+            [[ -d "$ddcDataDir"/ddc ]] || die "Could not find ddc module while building $buildType."
+            if [[ "edit-webextension" == "$buildType" ]]; then
+                [[ -d "$ddcDataDir"/web ]] || die "Could not find web module while building $buildType."
+            fi
+        fi
+    fi
+}
+
+# Library versions
+
+targets=(js bash)
+targetCount="${#targets[@]}"
+for (( i=0; i<targetCount; i++ )); do
+    if [[ -z "$buildType" ]] || [[ "implementation-${targets[$i]}" == "$buildType" ]]; then
+        checkForData
+        if [[ "yes" == "$verbose" ]]; then
+            "$sicmd" ${targets[$i]} "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+        else
+            "$sicmd" ${targets[$i]} "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+        fi
+    fi
+done
+
+# Documents
+
+if [[ -z "$buildType" ]] || [[ "main" == "$buildType" ]]; then
+    cp -ra ./implementation/portable/ddc ./built/
+fi
+
+# Application versions
+
+if [[ -z "$buildType" ]] || [[ "web" == "$buildType" ]]; then
+    checkForData
+    ./support/build-scripts/build-web
+fi
+
+if [[ -z "$buildType" ]] || [[ "edit-webextension" == "$buildType" ]]; then
+    checkForData
+    ./support/build-scripts/build-edit-webextension
+fi
+
+touch support/.no-build-data
+
+echo "Done."

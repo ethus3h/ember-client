@@ -1,0 +1,1 @@
+support/build-scripts/build --somewhat-verbose || die "Build failed!"

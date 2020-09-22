@@ -1,0 +1,12 @@
+buildType=""
+if [[ -f ./support/.build-type ]]; then
+    buildType="$(<./support/.build-type)"
+    echo "Testing output: $buildType"
+fi
+
+# data/tests/stagel-run-tests are run prior to building, during prepare
+if [[ -z "$buildType" ]] || [[ "portable" == "$buildType" ]]; then
+    data/tests/eite-run-tests || die "EITE tests failed!"
+fi
+
+true
