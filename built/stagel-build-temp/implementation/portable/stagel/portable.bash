@@ -2688,4 +2688,65 @@ dcFromFormat() {
         if [[ "true" == "$(StageL_excep "$strTemp")" ]]; then
             StageL_warn "$(StageL_cat 'FIXME: save unmapped unicode char ' "$(StageL_strFrom "$intC")")"
 
-            
+            intArrayReturn=(  ); StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+        fi
+        intDc="$(StageL_intFromIntStr "$strTemp")"
+        else
+        StageL_die "$(StageL_cat 'Unimplemented character source format: ' "$strInFormat")"
+    fi
+    intArrayRes="$(StageL_setElement "$(join_by $'\037' "${intArrayRes[@]}")" '0' "$intDc")"
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+importWarning() {
+    intIndex="$1"; shift; strProblem="$1"; shift; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugCollect "str Problem = $strProblem; "; StageL_internalDebugStackEnter 'importWarning:formats'; StageL_assertIsInt "$intIndex"; StageL_assertIsStr "$strProblem"
+
+    strWarning=''
+    strWarning="$(StageL_cat 'A problem was encountered while importing at character ' "$(StageL_cat "$(StageL_strFrom "$intIndex")" "$(StageL_cat ': ' "$strProblem")")")"
+    strArrayImportWarnings="$(StageL_push "$(join_by $'\037' "${strArrayImportWarnings[@]}")" "$strWarning")"
+    StageL_warn "$strWarning"
+
+    StageL_internalDebugStackExit;
+}
+
+exportWarning() {
+    intIndex="$1"; shift; strProblem="$1"; shift; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugCollect "str Problem = $strProblem; "; StageL_internalDebugStackEnter 'exportWarning:formats'; StageL_assertIsInt "$intIndex"; StageL_assertIsStr "$strProblem"
+
+    strWarning=''
+    strWarning="$(StageL_cat 'A problem was encountered while exporting at character ' "$(StageL_cat "$(StageL_strFrom "$intIndex")" "$(StageL_cat ': ' "$strProblem")")")"
+    strArrayExportWarnings="$(StageL_push "$(join_by $'\037' "${strArrayExportWarnings[@]}")" "$strWarning")"
+    StageL_warn "$strWarning"
+
+    StageL_internalDebugStackExit;
+}
+
+getImportWarnings() {
+    StageL_internalDebugStackEnter 'getImportWarnings:formats'; 
+
+    strArrayRes=()
+    strArrayRes="$(join_by $'\037' "${strArrayImportWarnings[@]}")"
+    strArrayImportWarnings=(  )
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getExportWarnings() {
+    StageL_internalDebugStackEnter 'getExportWarnings:formats'; 
+
+    strArrayRes=()
+    strArrayRes="$(join_by $'\037' "${strArrayExportWarnings[@]}")"
+    strArrayExportWarnings=(  )
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+exportWarningUnmappable() {
+    intIndex="$1"; shift; intProblemDc="$1"; shift; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugCollect "int ProblemDc = $intProblemDc; "; StageL_internalDebugStackEnter 'exportWarningUnmappable:formats'; StageL_assertIsInt "$intIndex"; StageL_assertIsInt "$intProblemDc"
+
+    StageL_exportWarning "$intIndex" "$(StageL_cat 'The character ' "$(StageL_cat "$(StageL_strFrom "$intProblemDc")" ' could not be represented in the chosen export format.')")"
+
+    StageL_internalDebugStackExit;
+}
+
