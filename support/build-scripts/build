@@ -59,6 +59,8 @@ else
     dataPathScript="./scripts/getDDCDataDir-unsplit"
 fi
 
+chmod +x ./scripts/*
+
 createEmberSharedCoreScript "$dataPathScript"
 echo 'printf '\''%s'\'' "'"$(<support/.emberdir)"'"' >> "$dataPathScript"
 
