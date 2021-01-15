@@ -4386,4 +4386,187 @@ dcaFromAscii() {
     done
     StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
 
-    
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToAscii() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaToAscii:format-ascii'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayRes=()
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intC='0'
+    intC='0'
+    intArrayTemp=()
+    intDcAtIndex='0'
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intC")"
+        intArrayTemp="$(StageL_dcToFormat 'utf8' "$intDcAtIndex")"
+        if [[ "true" == "$(StageL_arrNonempty "$(join_by $'\037' "${intArrayTemp[@]}")")" ]]; then
+            if [[ "true" == "$(StageL_isAsciiByte "$(StageL_get "$(join_by $'\037' "${intArrayTemp[@]}")" '0')")" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(join_by $'\037' "${intArrayTemp[@]}")")"
+                        else
+                StageL_exportWarningUnmappable "$intC" "$intDcAtIndex"
+            fi
+                else
+            StageL_exportWarningUnmappable "$intC" "$intDcAtIndex"
+        fi
+        intC="$(StageL_add "$intC" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isAsciiByte() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'isAsciiByte:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_intIsBetween "$intN" '0' '127')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsDigit() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsDigit:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_intIsBetween "$intN" '48' '57')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsPrintable() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsPrintable:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_intIsBetween "$intN" '32' '126')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsSpace() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsSpace:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_eq "$intN" '32')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsNewline() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsNewline:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolT1='false'
+    boolT1="$(StageL_eq "$intN" '10')"
+    boolT2='false'
+    boolT2="$(StageL_or "$boolT1" "$(StageL_eq "$intN" '13')")"
+
+    boolReturn="$boolT2"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsLetterUpper() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsLetterUpper:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_intIsBetween "$intN" '65' '90')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsLetterLower() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsLetterLower:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_intIsBetween "$intN" '97' '122')"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsLetter() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsLetter:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_asciiIsLetterLower "$intN")"
+    boolTemp="$(StageL_or "$boolTemp" "$(StageL_asciiIsLetterUpper "$intN")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+asciiIsAlphanum() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'asciiIsAlphanum:format-ascii'; StageL_assertIsInt "$intN"
+
+    boolTemp='false'
+    boolTemp="$(StageL_asciiIsLetter "$intN")"
+    boolTemp="$(StageL_or "$boolTemp" "$(StageL_asciiIsDigit "$intN")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+crlf() {
+    StageL_internalDebugStackEnter 'crlf:format-ascii'; 
+
+    intArrayTemp=()
+    intArrayTemp=( '13' '10' )
+
+    intArrayReturn="$(join_by $'\037' "${intArrayTemp[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+# 0  NUL    16 DLE    32 SP   48 0    64 @    80 P    96  `    112 p
+# 1  SOH    17 DC1    33 !    49 1    65 A    81 Q    97  a    113 q
+# 2  STX    18 DC2    34 "    50 2    66 B    82 R    98  b    114 r
+# 3  ETX    19 DC3    35 #    51 3    67 C    83 S    99  c    115 s
+# 4  EOT    20 DC4    36 $    52 4    68 D    84 T    100 d    116 t
+# 5  ENQ    21 NAK    37 %    53 5    69 E    85 U    101 e    117 u
+# 6  ACK    22 SYN    38 &    54 6    70 F    86 V    102 f    118 v
+# 7  BEL    23 ETB    39 '    55 7    71 G    87 W    103 g    119 w
+# 8  BS     24 CAN    40 (    56 8    72 H    88 X    104 h    120 x
+# 9  HT     25 EM     41 )    57 9    73 I    89 Y    105 i    121 y
+# 10 LF     26 SUB    42 *    58 :    74 J    90 Z    106 j    122 z
+# 11 VT     27 ESC    43 +    59 ;    75 K    91 [    107 k    123 {
+# 12 FF     28 FS     44 ,    60 <    76 L    92 \    108 l    124 |
+# 13 CR     29 GS     45 -    61 =    77 M    93 ]    109 m    125 }
+# 14 SO     30 RS     46 .    62 >    78 N    94 ^    110 n    126 ~
+# 15 SI     31 US     47 /    63 ?    79 O    95 _    111 o    127 DEL
+
+runTestsFormatSems() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatSems:format-sems-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatSems'
+    # No trailing space, will fail in strict mode.
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '1' '2')" "$(StageL_dcaFromSems "$(join_by $'\037' '49' '32' '50')")")"
+    # Should fail but I don't have a way to test to ensure failure yet: runTest b/v arrEq ( 1 2 ) dcaFromSems ( 49 32 32 50 )
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '49' '32' '50' '32' '13' '10')" "$(StageL_dcaToSems "$(join_by $'\037' '1' '2')")")"
+    # Comment preservation
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '1' '2' '246' '50' '248')" "$(StageL_dcaFromSems "$(join_by $'\037' '49' '32' '50' '35' '65')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '49' '32' '50' '32' '35' '65' '13' '10')" "$(StageL_dcaToSems "$(join_by $'\037' '1' '2' '246' '50' '248')")")"
+    # Currently doesn't output the 65 in the desired result (FIXME not implemented)
+    # UTF-8 comments
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '256' '258' '260' '262' '264' '263' '57' '86' '93' '93' '96' '30' '18' '286' '72' '96' '99' '93' '85' '287' '19' '18' '284' '261' '259' '246' '18' '100' '82' '106' '18' '20' '57' '86' '93' '93' '96' '30' '18' '33' '72' '96' '99' '93' '85' '33' '19' '18' '281' '20' '248' '1' '2' '246' '18' '281' '248')" "$(StageL_dcaFromSems "$(join_by $'\037' '50' '53' '54' '32' '50' '53' '56' '32' '50' '54' '48' '32' '50' '54' '50' '32' '50' '54' '52' '32' '50' '54' '51' '32' '53' '55' '32' '56' '54' '32' '57' '51' '32' '57' '51' '32' '57' '54' '32' '51' '48' '32' '49' '56' '32' '50' '56' '54' '32' '55' '50' '32' '57' '54' '32' '57' '57' '32' '57' '51' '32' '56' '53' '32' '50' '56' '55' '32' '49' '57' '32' '49' '56' '32' '50' '56' '52' '32' '50' '54' '49' '32' '50' '53' '57' '32' '35' '32' '115' '97' '121' '32' '34' '72' '101' '108' '108' '111' '44' '32' '47' '87' '111' '114' '108' '100' '47' '33' '32' '226' '154' '189' '34' '10' '49' '32' '50' '32' '35' '32' '226' '154' '189' '10')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runTestsFormatAscii() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatAscii:format-ascii-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatAscii'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '0' '212' '120' '216' '221' '226' '231' '21' '26')" "$(StageL_dcaFromAscii "$(join_by $'\037' '0' '5' '10' '15' '20' '25' '30' '35' '40')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '0' '5' '10' '15' '20' '25' '30' '35' '40')" "$(StageL_dcaToAscii "$(join_by $'\037' '0' '212' '120' '216' '291' '221' '226' '231' '21' '26')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+dcaToHtml() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToHtml:format-html'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_strToByteArray '<!DOCTYPE html><html><head><title></title></head><body>')"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcaToHtmlFragment "$(join_by $'\037' "${intArrayDcIn[@]}")")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</body></html>')")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
