@@ -2090,4 +2090,82 @@ testing() {
 runTest() {
     boolV="$1"; shift; boolTestReturn="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "bool TestReturn = $boolTestReturn; "; StageL_internalDebugStackEnter 'runTest:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsBool "$boolTestReturn"
 
-    intTotalTests="$(StageL_add 
+    intTotalTests="$(StageL_add "$intTotalTests" '1')"
+    if [[ "true" == "$boolTestReturn" ]]; then
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" ' passed.')")")")"
+        fi
+        intPassedTests="$(StageL_add "$intPassedTests" '1')"
+        else
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" ' failed.')")")")"
+        fi
+        intFailedTests="$(StageL_add "$intFailedTests" '1')"
+    fi
+    if [[ "true" == "$boolV" ]]; then
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    boolReturn="$boolTestReturn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+runTestNamed() {
+    boolV="$1"; shift; strTestName="$1"; shift; boolTestReturn="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestName = $strTestName; "; StageL_internalDebugCollect "bool TestReturn = $boolTestReturn; "; StageL_internalDebugStackEnter 'runTestNamed:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestName"; StageL_assertIsBool "$boolTestReturn"
+
+    intTotalTests="$(StageL_add "$intTotalTests" '1')"
+    if [[ "true" == "$boolTestReturn" ]]; then
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat "$strTestName" ' passed.')")")")")"
+        fi
+        intPassedTests="$(StageL_add "$intPassedTests" '1')"
+        else
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat "$strTestName" ' failed.')")")")")"
+        fi
+        intFailedTests="$(StageL_add "$intFailedTests" '1')"
+    fi
+    if [[ "true" == "$boolV" ]]; then
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    boolReturn="$boolTestReturn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+clearTestStats() {
+    StageL_internalDebugStackEnter 'clearTestStats:unit-testing';
+
+    intTotalTests='0'
+    intPassedTests='0'
+    intFailedTests='0'
+
+    StageL_internalDebugStackExit;
+}
+
+reportTests() {
+    StageL_internalDebugStackEnter 'reportTests:unit-testing'; 
+
+    strPassedWord=''
+    strPassedWord='tests'
+    if [[ "true" == "$(StageL_eq "$intPassedTests" '1')" ]]; then
+        strPassedWord='test'
+    fi
+    strFailedWord=''
+    strFailedWord='tests'
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '1')" ]]; then
+        strFailedWord='test'
+    fi
+    strTotalWord=''
+    strTotalWord='tests'
+    if [[ "true" == "$(StageL_eq "$intTotalTests" '1')" ]]; then
+        strTotalWord='test'
+    fi
+    strPassedPercentage=''
+    strPassedPercentage="$(StageL_formatPercentage "$intPassedTests" "$intTotalTests")"
+    strFailedPercentage=''
+    strFailedPercentage="$(StageL_formatPercentage "$intFailedTests" "$intTotalTests")"
+    intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat "$(StageL_strFrom "$intPassedTests")" "$(StageL_cat ' ' "$(StageL_cat "$strPassedWord" "$(StageL_cat ' (' "$(StageL_cat "$strPassedPercentage" "$(StageL_cat '%) passed and ' "$(StageL_cat "$(StageL_strFrom "$intFailedTests")" "$(StageL_cat ' ' "$(StageL_cat "$strFailedWord" "$(StageL_cat ' (' "$(StageL_cat "$strFailedPercentage" "$(StageL_cat '%) failed out of a total of ' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat ' ' "$(StageL_cat "$strTotalWord" '.')")")")")")")")")")")")")")")")")"
+    strTemp=''
+    if [[ "true" == "$(StageL_ne "$intFailedTests" '0')" ]]; then
+        strTotalWord='Some tests'
+        if [[ "true" == "$(StageL_eq "$intTotalTests" '1')" ]]; then
+            strTotalWord=
