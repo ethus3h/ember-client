@@ -15,5 +15,8 @@ Setting up and building
 ./configure -- --build-type data; make; sudo make install
 ./configure -- --build-type bootstrap; make; sudo make install
 ./configure -- --build-type implementation-parts; make; sudo make install
-./configure -- --build-type implementation-parts; make; sudo make install
+./configure -- --build-type main; make; sudo make install
+./configure -- --build-type web; make; sudo make install
+./configure -- --build-type edit-webextension; make; sudo make install
+./configure -- --build-type meta; make; sudo make install
 ```
