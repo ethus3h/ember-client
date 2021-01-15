@@ -2675,4 +2675,17 @@ dcFromFormat() {
     intArrayRes=()
     intDc='0'
     strTemp=''
-    if [[ "true" == "$(StageL_or "$(StageL_eq "$strInFormat" 'ascii')" "$(StageL_eq "$strInFormat" 
+    if [[ "true" == "$(StageL_or "$(StageL_eq "$strInFormat" 'ascii')" "$(StageL_eq "$strInFormat" 'unicode')")" ]]; then
+        intC='0'
+        intC="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" '0')"
+        if [[ "true" == "$(StageL_eq "$strInFormat" 'ascii')" ]]; then
+            if [[ "true" == "$(StageL_not "$(StageL_isAsciiByte "$intC")")" ]]; then
+                StageL_die "$(StageL_cat 'The character number ' "$(StageL_cat "$(StageL_strFrom "$intC")" ' is not a 7-bit ASCII character.')")"
+            fi
+        fi
+        StageL_assertIsNonnegative "$intC"
+        strTemp="$(StageL_dcDataLookupByValue 'mappings/from/unicode' '0' "$(StageL_decToHex "$intC")" '1')"
+        if [[ "true" == "$(StageL_excep "$strTemp")" ]]; then
+            StageL_warn "$(StageL_cat 'FIXME: save unmapped unicode char ' "$(StageL_strFrom "$intC")")"
+
+            
