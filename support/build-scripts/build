@@ -176,5 +176,6 @@ if [[ -z "$buildType" ]] || [[ "edit-webextension" == "$buildType" ]]; then
 fi
 
 touch support/.no-build-data
+chmod +x scripts/*
 
 echo "Done."
