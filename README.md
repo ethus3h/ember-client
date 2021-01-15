@@ -12,4 +12,6 @@ Setting up and building
 - then the distfiles:
 ```
 ./configure -- --build-type dist; make; sudo make install
+./configure -- --build-type dist; make; sudo make install
+
 ```
