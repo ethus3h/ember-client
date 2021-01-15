@@ -1045,3 +1045,89 @@ notExcOrEmpty() {
     boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
 }
 
+# For now, I'm inclined to skip implementing wasm right now, and just have a stub interface here. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later.
+# Copies of the current versions as of this writing (latest git commits) of wac, WebAssembly spec, and dependencies are included in work-docs/wasm for easy access, and are covered under their respective licenses. The following repositories are there:
+# https://github.com/kanaka/wac
+# https://github.com/kanaka/fooboot
+# https://github.com/WebAssembly/wabt
+# https://github.com/WebAssembly/spec
+# https://github.com/WebAssembly/testsuite
+# https://github.com/google/googletest
+# https://github.com/dabeaz/ply
+
+wasmCheckForError() {
+    strCaller="$1"; shift; IFS=$'\037' read -r -a genericItemArg <<< "$1"; shift; StageL_internalDebugCollect "str Caller = $strCaller; "; StageL_internalDebugCollect "genericItem Arg = $genericItemArg; "; StageL_internalDebugStackEnter 'wasmCheckForError:wasm'; StageL_assertIsStr "$strCaller"; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemArg[@]}")"
+
+    strArgStr=''
+    if [[ "true" == "$(StageL_isArray "$(join_by $'\037' "${genericItemArg[@]}")")" ]]; then
+        strArgStr="$(StageL_printArray "$(join_by $'\037' "${genericItemArg[@]}")")"
+        else
+        strArgStr="$(StageL_strFrom "$(join_by $'\037' "${genericItemArg[@]}")")"
+    fi
+    intErr='0'
+    intErr="$(StageL_internalWasmCall 'checkForError')"
+    # await console.log('intErr='+intErr+typeof intErr);
+    # await console.log('strArgStr='+strArgStr+typeof strArgStr);
+    # Next line seems to crash with intErr being a null object. Why????
+    # await console.log(await ne(intErr, 0));
+    # return;
+    StageL_warn 'WASM error checking does not yet work.'
+    #if ne 0 n/err
+    
+        #die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.'
+    }
+
+    StageL_internalDebugStackExit;
+}
+
+wasmCall() {
+    strRoutine="$1"; shift; intVal="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "int Val = $intVal; "; StageL_internalDebugStackEnter 'wasmCall:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsInt "$intVal"
+
+    intRes='0'
+    intRes="$(StageL_internalWasmCall "$strRoutine" "$intVal")"
+    StageL_wasmCheckForError "$strRoutine" "$intVal"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallNoArgs() {
+    strRoutine="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugStackEnter 'wasmCallNoArgs:wasm'; StageL_assertIsStr "$strRoutine"
+
+    # Only returns an int
+    intRes='0'
+    intRes="$(StageL_internalWasmCallNoArgs "$strRoutine")"
+    StageL_wasmCheckForError "$strRoutine"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallArrIn() {
+    strRoutine="$1"; shift; IFS=$'\037' read -r -a intArrayVals <<< "$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "intArray Vals = $intArrayVals; "; StageL_internalDebugStackEnter 'wasmCallArrIn:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intRes='0'
+    intRes="$(StageL_internalWasmCallArrIn "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")")"
+    StageL_wasmCheckForError "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallArrOut() {
+    strRoutine="$1"; shift; intVal="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "int Val = $intVal; "; StageL_internalDebugStackEnter 'wasmCallArrOut:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsInt "$intVal"
+
+    intArrayRes=()
+    intRes="$(StageL_internalWasmCallArrOut "$strRoutine" "$intVal")"
+    StageL_wasmCheckForError "$strRoutine" "$intVal"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+wasmCallArrInOut() {
+    strRoutine="$1"; shift; IFS=$'\037' read -r -a intArrayVals <<< "$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "intArray Vals = $intArrayVals; "; StageL_internalDebugStackEnter 'wasmCallArrInOut:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intArrayRes=()
+    intRes="$(StageL_internalWasmCallArrInOut "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")")"
+    StageL_wasmCheckForError "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
