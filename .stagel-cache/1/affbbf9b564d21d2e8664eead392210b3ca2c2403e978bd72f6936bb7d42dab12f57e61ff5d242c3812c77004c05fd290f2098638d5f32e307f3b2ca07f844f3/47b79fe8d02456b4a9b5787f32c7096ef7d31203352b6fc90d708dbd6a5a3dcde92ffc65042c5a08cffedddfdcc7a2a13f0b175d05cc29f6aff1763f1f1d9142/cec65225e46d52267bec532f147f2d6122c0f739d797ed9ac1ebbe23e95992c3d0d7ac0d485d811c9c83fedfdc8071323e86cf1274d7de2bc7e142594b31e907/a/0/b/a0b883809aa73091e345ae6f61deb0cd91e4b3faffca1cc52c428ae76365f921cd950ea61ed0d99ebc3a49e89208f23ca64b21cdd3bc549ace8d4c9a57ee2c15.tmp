@@ -114,3 +114,35 @@ dcaFromUtf8() {
         intArrayTemp=(  )
         intArrayLatestChar="$(StageL_pack32 "$(StageL_firstCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")")"
         if [[ "true" == "$boolDcBasenbEnabled" ]]; then
+            # Dcbasenb is enabled, so process characters accordingly.
+            if [[ "true" == "$(StageL_not "$boolInDcBasenbSection")" ]]; then
+                # Not in a dcbasenb section, so look out for the UUID in case we run into one
+                # All this code down to "(End of code section)" is only looking for UUIDs, and can mostly be disregarded for purposes of understanding the decoder logic.
+                # 8 characters for uuid. Probably a better way to do this but oh well. Got them with new TextEncoder().encode('[char]'); etc.
+                if [[ "true" == "$(StageL_ne '0' "$intDcBasenbUuidMonitorReprocessNeededCount")" ]]; then
+                    # We're reprocessing potential UUID chars that didn't match a UUID after all, so don't check them for being a UUID. FIXME: Non-UUID char being reprocessed followed by 244 141 129 157 etc. (a potential UUID) would NOT be checked to be a UUID here. It should handle correctly the situation where there's potential but not a UUID, followed by potential and is a UUID, overlapping, like that.
+                    intDcBasenbUuidMonitorReprocessNeededCount="$(StageL_sub "$intDcBasenbUuidMonitorReprocessNeededCount" '1')"
+                                else
+                    # Check for a UUID.
+                    if [[ "true" == "$(StageL_eq "$intDcBasenbUuidMonitorState" '0')" ]]; then
+                        if [[ "true" == "$(StageL_arrEq "$(join_by $'\037' "${intArrayLatestChar[@]}")" "$(join_by $'\037' '244' '141' '129' '157')")" ]]; then
+                            intDcBasenbUuidMonitorState='1'
+                        fi
+                                        elif [[ "true" == "$(StageL_eq "$intDcBasenbUuidMonitorState" '1')" ]]; then
+                        if [[ "true" == "$(StageL_arrEq "$(join_by $'\037' "${intArrayLatestChar[@]}")" "$(join_by $'\037' '244' '139' '182' '128')")" ]]; then
+                            intDcBasenbUuidMonitorState='2'
+                                                else
+                            intDcBasenbUuidMonitorReprocessNeededCount="$intDcBasenbUuidMonitorState"
+                            intDcBasenbUuidMonitorState='0'
+                        fi
+                                        elif [[ "true" == "$(StageL_eq "$intDcBasenbUuidMonitorState" '2')" ]]; then
+                        if [[ "true" == "$(StageL_arrEq "$(join_by $'\037' "${intArrayLatestChar[@]}")" "$(join_by $'\037' '243' '188' '183' '162')")" ]]; then
+                            intDcBasenbUuidMonitorState='3'
+                                                else
+                            intDcBasenbUuidMonitorReprocessNeededCount="$intDcBasenbUuidMonitorState"
+                            intDcBasenbUuidMonitorState='0'
+                        fi
+                                        elif [[ "true" == "$(StageL_eq "$intDcBasenbUuidMonitorState" '3')" ]]; then
+                        if [[ "true" == "$(StageL_arrEq "$(join_by $'\037' "${intArrayLatestChar[@]}")" "$(join_by $'\037' '243' '186' '128' '138')")" ]]; then
+                            intDcBasenbUuidMonitorState='4'
+                                                else
