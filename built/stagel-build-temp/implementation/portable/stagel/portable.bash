@@ -1008,3 +1008,858 @@ notExcep() {
 
     boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
 }
+
+excepArr() {
+    IFS=$'\037' read -r -a genericArrayTest <<< "$1"; shift; StageL_internalDebugCollect "genericArray Test = $genericArrayTest; "; StageL_internalDebugStackEnter 'excepArr:exceptions'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayTest[@]}")"
+
+    boolRes='false'
+    boolRes="$(StageL_excep "$(StageL_strPrintArray "$(join_by $'\037' "${genericArrayTest[@]}")")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+notExcepArr() {
+    IFS=$'\037' read -r -a genericArrayTest <<< "$1"; shift; StageL_internalDebugCollect "genericArray Test = $genericArrayTest; "; StageL_internalDebugStackEnter 'notExcepArr:exceptions'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayTest[@]}")"
+
+    boolRes='false'
+    boolRes="$(StageL_not "$(StageL_excepArr "$(join_by $'\037' "${genericArrayTest[@]}")")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+excOrEmpty() {
+    strTest="$1"; shift; StageL_internalDebugCollect "str Test = $strTest; "; StageL_internalDebugStackEnter 'excOrEmpty:exceptions'; StageL_assertIsStr "$strTest"
+
+    boolRes='false'
+    boolRes="$(StageL_or "$(StageL_excep "$strTest")" "$(StageL_strEmpty "$strTest")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+notExcOrEmpty() {
+    strTest="$1"; shift; StageL_internalDebugCollect "str Test = $strTest; "; StageL_internalDebugStackEnter 'notExcOrEmpty:exceptions'; StageL_assertIsStr "$strTest"
+
+    boolRes='false'
+    boolRes="$(StageL_not "$(StageL_excOrEmpty "$strTest")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+# For now, I'm inclined to skip implementing wasm right now, and just have a stub interface here. It seems well specced and portable, so I think it *can* be at some point. It would be nice if it were already implemented in StageL, but I might have to do that later.
+# Copies of the current versions as of this writing (latest git commits) of wac, WebAssembly spec, and dependencies are included in work-docs/wasm for easy access, and are covered under their respective licenses. The following repositories are there:
+# https://github.com/kanaka/wac
+# https://github.com/kanaka/fooboot
+# https://github.com/WebAssembly/wabt
+# https://github.com/WebAssembly/spec
+# https://github.com/WebAssembly/testsuite
+# https://github.com/google/googletest
+# https://github.com/dabeaz/ply
+
+wasmCheckForError() {
+    strCaller="$1"; shift; IFS=$'\037' read -r -a genericItemArg <<< "$1"; shift; StageL_internalDebugCollect "str Caller = $strCaller; "; StageL_internalDebugCollect "genericItem Arg = $genericItemArg; "; StageL_internalDebugStackEnter 'wasmCheckForError:wasm'; StageL_assertIsStr "$strCaller"; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemArg[@]}")"
+
+    strArgStr=''
+    if [[ "true" == "$(StageL_isArray "$(join_by $'\037' "${genericItemArg[@]}")")" ]]; then
+        strArgStr="$(StageL_printArray "$(join_by $'\037' "${genericItemArg[@]}")")"
+        else
+        strArgStr="$(StageL_strFrom "$(join_by $'\037' "${genericItemArg[@]}")")"
+    fi
+    intErr='0'
+    intErr="$(StageL_internalWasmCall 'checkForError')"
+    # await console.log('intErr='+intErr+typeof intErr);
+    # await console.log('strArgStr='+strArgStr+typeof strArgStr);
+    # Next line seems to crash with intErr being a null object. Why????
+    # await console.log(await ne(intErr, 0));
+    # return;
+    StageL_warn 'WASM error checking does not yet work.'
+    #if ne 0 n/err
+    
+        #die cat 'WebAssembly call to ' cat s/caller cat ' with the argument ' cat s/argStr ' reported an error.'
+    }
+
+    StageL_internalDebugStackExit;
+}
+
+wasmCall() {
+    strRoutine="$1"; shift; intVal="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "int Val = $intVal; "; StageL_internalDebugStackEnter 'wasmCall:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsInt "$intVal"
+
+    intRes='0'
+    intRes="$(StageL_internalWasmCall "$strRoutine" "$intVal")"
+    StageL_wasmCheckForError "$strRoutine" "$intVal"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallNoArgs() {
+    strRoutine="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugStackEnter 'wasmCallNoArgs:wasm'; StageL_assertIsStr "$strRoutine"
+
+    # Only returns an int
+    intRes='0'
+    intRes="$(StageL_internalWasmCallNoArgs "$strRoutine")"
+    StageL_wasmCheckForError "$strRoutine"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallArrIn() {
+    strRoutine="$1"; shift; IFS=$'\037' read -r -a intArrayVals <<< "$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "intArray Vals = $intArrayVals; "; StageL_internalDebugStackEnter 'wasmCallArrIn:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intRes='0'
+    intRes="$(StageL_internalWasmCallArrIn "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")")"
+    StageL_wasmCheckForError "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+wasmCallArrOut() {
+    strRoutine="$1"; shift; intVal="$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "int Val = $intVal; "; StageL_internalDebugStackEnter 'wasmCallArrOut:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsInt "$intVal"
+
+    intArrayRes=()
+    intRes="$(StageL_internalWasmCallArrOut "$strRoutine" "$intVal")"
+    StageL_wasmCheckForError "$strRoutine" "$intVal"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+wasmCallArrInOut() {
+    strRoutine="$1"; shift; IFS=$'\037' read -r -a intArrayVals <<< "$1"; shift; StageL_internalDebugCollect "str Routine = $strRoutine; "; StageL_internalDebugCollect "intArray Vals = $intArrayVals; "; StageL_internalDebugStackEnter 'wasmCallArrInOut:wasm'; StageL_assertIsStr "$strRoutine"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intArrayRes=()
+    intRes="$(StageL_internalWasmCallArrInOut "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")")"
+    StageL_wasmCheckForError "$strRoutine" "$(join_by $'\037' "${intArrayVals[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isNonnegative() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNonnegative:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_lt "$intIn" '0')" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isNegative() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNegative:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_lt "$intIn" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isPositive() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isPositive:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_le "$intIn" '0')" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isNonpositive() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNonpositive:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_le "$intIn" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isEven() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isEven:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intIn" '2')")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isOdd() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isOdd:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intIn" '2')")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+assertIsEven() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsEven:math'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isEven "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsOdd() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsOdd:math'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isOdd "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+intIsBetween() {
+    intN="$1"; shift; intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intIsBetween:math'; StageL_assertIsInt "$intN"; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    # Checks whether N is within the range A and B, including endpoints
+    # Can't do it this way since it can use ints intermediately that are outside of 32 bit
+    #new n/t1
+    #set n/t1 sub n/n n/a
+    #new n/t2
+    #set n/t2 sub n/n n/b
+    #new n/t3
+    #set n/t3 mul n/t1 n/t2
+    #new b/temp
+    #set b/temp le n/t3 0
+    # So instead implement using gt/lt
+    boolTemp="$(StageL_and "$(StageL_ge "$intN" "$intA")" "$(StageL_le "$intN" "$intB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+intToBase36Char() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'intToBase36Char:math'; StageL_assertIsInt "$intN"
+
+    # Returns the nth digit in base 36 or less (using capitalized digits).
+    if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intN" '0' '36')")" ]]; then
+        strTemp=''
+        strTemp="$(StageL_strFrom "$intN")"
+        StageL_die "$(StageL_cat "$(StageL_strFrom "$strTemp" ' is not within the supported range of numbers between 0 and 36 (Z).')")"
+    fi
+    strRes=''
+    if [[ "true" == "$(StageL_le "$intN" '9')" ]]; then
+        strRes="$(StageL_charFromByte "$(StageL_add "$intN" '48')")"
+        else
+        strRes="$(StageL_charFromByte "$(StageL_add "$intN" '55')")"
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+intFromBase36Char() {
+    strN="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugStackEnter 'intFromBase36Char:math'; StageL_assertIsStr "$strN"
+
+    # Returns an int given the nth digit in base 36 or less (using capitalized digits).
+    StageL_assertIsChar "$strN"
+    strUc=''
+    strUc="$(StageL_strToUpper "$strN")"
+    intRes='0'
+    intRes="$(StageL_byteFromChar "$strUc")"
+    if [[ "true" == "$(StageL_ge "$intRes" '65')" ]]; then
+        if [[ "true" == "$(StageL_gt "$intRes" '90')" ]]; then
+            StageL_die "$(StageL_cat "$strUc" ' is not within the supported range of digits between 0 and Z (36).')"
+        fi
+        intRes="$(StageL_sub "$intRes" '55')"
+        else
+        if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intRes" '48' '57')")" ]]; then
+            StageL_die "$(StageL_cat "$strN" ' is not within the supported range of digits between 0 and Z (36).')"
+        fi
+        intRes="$(StageL_sub "$intRes" '48')"
+    fi
+    if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intRes" '0' '36')")" ]]; then
+        StageL_die "$(StageL_cat 'Internal error in intFromBase36Char called with n=' "$(StageL_cat "$strN" '.')")"
+    fi
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+intFromBaseStr() {
+    strN="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intFromBaseStr:math'; StageL_assertIsStr "$strN"; StageL_assertIsInt "$intB"
+
+    # Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    StageL_assertIsBaseStr "$strN" "$intB"
+    strUc=''
+    strUc="$(StageL_strToUpper "$strN")"
+    intRes='0'
+    intRes='0'
+    intLen='0'
+    intLen="$(StageL_len "$strUc")"
+    intInt='0'
+    intInt='0'
+    intPow='0'
+    intPow='1'
+    while [[ "true" == "$(StageL_gt "$intLen" '0')" ]]; do
+        intLen="$(StageL_sub "$intLen" '1')"
+        intInt="$(StageL_intFromBase36Char "$(StageL_strCharAtPos "$strUc" "$intLen")")"
+        StageL_assertIsTrue "$(StageL_lt "$intInt" "$intB")"
+        intRes="$(StageL_add "$intRes" "$(StageL_mul "$intInt" "$intPow")")"
+        intPow="$(StageL_mul "$intPow" "$intB")"
+    done
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+hexToDec() {
+    strN="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugStackEnter 'hexToDec:math'; StageL_assertIsStr "$strN"
+
+    intRes='0'
+    intRes="$(StageL_intFromBaseStr "$strN" '16')"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+decToHex() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'decToHex:math'; StageL_assertIsInt "$intN"
+
+    strRes=''
+    strRes="$(StageL_intToBaseStr "$intN" '16')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+intToBaseStr() {
+    intN="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intToBaseStr:math'; StageL_assertIsInt "$intN"; StageL_assertIsInt "$intB"
+
+    # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    strRes=''
+    if [[ "true" == "$(StageL_eq '0' "$intN")" ]]; then
+        strRes='0'
+        else
+        while [[ "true" == "$(StageL_gt "$intN" '0')" ]]; do
+            strRes="$(StageL_cat "$strRes" "$(StageL_intToBase36Char "$(StageL_mod "$intN" "$intB")")")"
+            intN="$(StageL_div "$intN" "$intB")"
+        done
+        strRes="$(StageL_reverseStr "$strRes")"
+    fi
+    StageL_assertIsBaseStr "$strRes" "$intB"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+isSupportedBase() {
+    intB="$1"; shift; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isSupportedBase:math'; StageL_assertIsInt "$intB"
+
+    # StageL base conversion routines support base 1 to base 36.
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intB" '1' '36')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseDigit() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseDigit:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    StageL_assertIsChar "$strIn"
+    StageL_assertIsSupportedBase "$intB"
+    if [[ "true" == "$(StageL_not "$(StageL_asciiIsAlphanum "$(StageL_byteFromChar "$strIn")")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intDigitVal='0'
+    intDigitVal="$(StageL_intFromBase36Char "$strIn")"
+    boolRes='false'
+    boolRes="$(StageL_lt "$intDigitVal" "$intB")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseStr() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseStr:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    intLen='0'
+    intLen="$(StageL_len "$strIn")"
+    intLen="$(StageL_sub "$intLen" '1')"
+    StageL_assertIsNonnegative "$intLen"
+    strChr=''
+    boolRes='false'
+    boolRes='true'
+    while [[ "true" == "$(StageL_ge "$intLen" '0')" ]]; do
+        strChr="$(StageL_strCharAtPos "$strIn" "$intLen")"
+        boolRes="$(StageL_and "$boolRes" "$(StageL_isBaseDigit "$strChr" "$intB")")"
+        intLen="$(StageL_sub "$intLen" '1')"
+    done
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+formatPercentage() {
+    intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'formatPercentage:math'; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    if [[ "true" == "$(StageL_eq '0' "$intA")" ]]; then
+
+        strReturn='0.000'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+    fi
+    intPercentageN='0'
+    intPercentageN="$(StageL_mul '100' "$(StageL_div "$(StageL_mul "$intA" '100000')" "$intB")")"
+    strPercentageTemp=''
+    strPercentageTemp="$(StageL_strFrom "$intPercentageN")"
+    intCount='0'
+    intCount="$(StageL_sub "$(StageL_len "$strPercentageTemp")" '2')"
+    intCounter='0'
+    intCounter="$intCount"
+    strPercentage=''
+    intDecimLoc='0'
+    intDecimLoc="$(StageL_sub "$intCount" '3')"
+    while [[ "true" == "$(StageL_gt "$intCounter" '0')" ]]; do
+        if [[ "true" == "$(StageL_eq "$intCounter" "$(StageL_sub "$intCount" "$intDecimLoc")")" ]]; then
+            strPercentage="$(StageL_cat "$strPercentage" '.')"
+        fi
+        strPercentage="$(StageL_cat "$strPercentage" "$(StageL_strChar "$strPercentageTemp" "$(StageL_sub "$intCount" "$intCounter")")")"
+        intCounter="$(StageL_sub "$intCounter" '1')"
+    done
+
+    strReturn="$strPercentage"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+inc() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'inc:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+dec() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'dec:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '-1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+runTestsMath() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsMath:math-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'math'
+    StageL_runTest "$boolV" "$(StageL_eq '4' "$(StageL_add '2' '2')")"
+    StageL_runTest "$boolV" "$(StageL_ne '4' "$(StageL_add '2' '3')")"
+    StageL_runTest "$boolV" "$(StageL_eq '26BD' "$(StageL_decToHex '9917')")"
+    StageL_runTest "$boolV" "$(StageL_eq '9917' "$(StageL_hexToDec '26BD')")"
+
+    StageL_internalDebugStackExit;
+}
+
+isByte() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isByte:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '0' '255')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isIntBit() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isIntBit:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '0' '1')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isChar() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isChar:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isStr "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    strVal=''
+    strVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_isCharByte "$(StageL_byteFromChar "$strVal")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isCharByte() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isCharByte:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    # Bear in mind that StageL doesn't attempt to support Unicode.
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '32' '126')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+strChar() {
+    strStr="$1"; shift; intIndex="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugStackEnter 'strChar:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intIndex"
+
+    strTemp=''
+    strTemp="$(StageL_substring "$strStr" "$intIndex" '1')"
+
+    strReturn="$strTemp"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strCharAtPos() {
+    strStr="$1"; shift; intIndex="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugStackEnter 'strCharAtPos:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intIndex"
+
+    # helper alias
+    strTemp=''
+    strTemp="$(StageL_strChar "$strStr" "$intIndex")"
+
+    strReturn="$strTemp"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+charAtPos() {
+    strStr="$1"; shift; intIndex="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugStackEnter 'charAtPos:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intIndex"
+
+    # helper alias
+    strTemp=''
+    strTemp="$(StageL_strChar "$strStr" "$intIndex")"
+
+    strReturn="$strTemp"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+charAt() {
+    strStr="$1"; shift; intIndex="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugStackEnter 'charAt:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intIndex"
+
+    # helper alias
+    strTemp=''
+    strTemp="$(StageL_strChar "$strStr" "$intIndex")"
+
+    strReturn="$strTemp"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+setCharAt() {
+    strStr="$1"; shift; intIndex="$1"; shift; strChar="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Index = $intIndex; "; StageL_internalDebugCollect "str Char = $strChar; "; StageL_internalDebugStackEnter 'setCharAt:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intIndex"; StageL_assertIsStr "$strChar"
+
+    strRes=''
+    intFirstEnd='0'
+    intLastStart='0'
+    intFirstEnd="$(StageL_sub "$(StageL_len "$strStr")" "$(StageL_dec "$intIndex")")"
+    intLastStart="$(StageL_sub "$(StageL_len "$strStr")" "$(StageL_inc "$intIndex")")"
+    strRes="$(StageL_cat "$(StageL_substr "$strStr" '0' "$intFirstEnd")" "$(StageL_cat "$strChar" "$(StageL_substr "$strStr" "$intLastStart" '-1')")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+reverseStr() {
+    strStr="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugStackEnter 'reverseStr:strings'; StageL_assertIsStr "$strStr"
+
+    intL='0'
+    intL="$(StageL_len "$strStr")"
+    intC='0'
+    intC='0'
+    strRes=''
+    while [[ "true" == "$(StageL_le "$intC" "$intL")" ]]; do
+        strRes="$(StageL_cat "$strRes" "$(StageL_strCharAtPos "$strStr" "$(StageL_sub "$intL" "$intC")")")"
+        intC="$(StageL_add '1' "$intC")"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+charToUpper() {
+    strChar="$1"; shift; StageL_internalDebugCollect "str Char = $strChar; "; StageL_internalDebugStackEnter 'charToUpper:strings'; StageL_assertIsStr "$strChar"
+
+    StageL_assertIsChar "$strChar"
+    intTemp='0'
+    intTemp="$(StageL_byteFromChar "$strChar")"
+    if [[ "true" == "$(StageL_intIsBetween "$intTemp" '97' '122')" ]]; then
+        intTemp="$(StageL_sub "$intTemp" '32')"
+    fi
+    strRes=''
+    strRes="$(StageL_charFromByte "$intTemp")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strToUpper() {
+    strStr="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugStackEnter 'strToUpper:strings'; StageL_assertIsStr "$strStr"
+
+    strRes=''
+    intI='0'
+    intI='0'
+    intCount='0'
+    intCount="$(StageL_len "$strStr")"
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strRes="$(StageL_cat "$strRes" "$(StageL_charToUpper "$(StageL_strCharAtPos "$strStr" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+charToLower() {
+    strChar="$1"; shift; StageL_internalDebugCollect "str Char = $strChar; "; StageL_internalDebugStackEnter 'charToLower:strings'; StageL_assertIsStr "$strChar"
+
+    StageL_assertIsChar "$strChar"
+    intTemp='0'
+    intTemp="$(StageL_byteFromChar "$strChar")"
+    if [[ "true" == "$(StageL_intIsBetween "$intTemp" '65' '90')" ]]; then
+        intTemp="$(StageL_add "$intTemp" '32')"
+    fi
+    strRes=''
+    strRes="$(StageL_charFromByte "$intTemp")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strToLower() {
+    strStr="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugStackEnter 'strToLower:strings'; StageL_assertIsStr "$strStr"
+
+    strRes=''
+    intI='0'
+    intI='0'
+    intCount='0'
+    intCount="$(StageL_len "$strStr")"
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strRes="$(StageL_cat "$strRes" "$(StageL_charToLower "$(StageL_strCharAtPos "$strStr" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strEmpty() {
+    strStr="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugStackEnter 'strEmpty:strings'; StageL_assertIsStr "$strStr"
+
+    boolRes='false'
+    boolRes="$(StageL_eq '0' "$(StageL_len "$strStr")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+strNonempty() {
+    strStr="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugStackEnter 'strNonempty:strings'; StageL_assertIsStr "$strStr"
+
+    boolRes='false'
+    boolRes="$(StageL_not "$(StageL_strEmpty "$strStr")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+substr() {
+    strStr="$1"; shift; intStart="$1"; shift; intLen="$1"; shift; StageL_internalDebugCollect "str Str = $strStr; "; StageL_internalDebugCollect "int Start = $intStart; "; StageL_internalDebugCollect "int Len = $intLen; "; StageL_internalDebugStackEnter 'substr:strings'; StageL_assertIsStr "$strStr"; StageL_assertIsInt "$intStart"; StageL_assertIsInt "$intLen"
+
+    # Convenience wrapper
+    strRes=''
+    strRes="$(StageL_substring "$strStr" "$intStart" "$intLen")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strContainsOnlyInt() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'strContainsOnlyInt:strings'; StageL_assertIsStr "$strIn"
+
+    # Positive int, specifically. Only digits allowed.
+    intTemp='0'
+    intTemp="$(StageL_len "$strIn")"
+    intI='0'
+    intI='0'
+    boolRes='false'
+    boolRes='true'
+    while [[ "true" == "$(StageL_lt "$intI" "$intTemp")" ]]; do
+        if [[ "true" == "$(StageL_not "$(StageL_asciiIsDigit "$(StageL_byteFromChar "$(StageL_strCharAtPos "$strIn" "$intI")")")")" ]]; then
+            boolRes='false'
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isValidIdent() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isValidIdent:strings'; StageL_assertIsStr "$strIn"
+
+    # Doesn't check for duplicate idents or whatever. Just makes sure the basic form is correct.
+    intTemp='0'
+    intTemp="$(StageL_len "$strIn")"
+    intI='0'
+    intI='0'
+    boolRes='false'
+    boolRes='true'
+    intCurrentCharByte='0'
+    while [[ "true" == "$(StageL_lt "$intI" "$intTemp")" ]]; do
+        intCurrentCharByte="$(StageL_byteFromChar "$(StageL_strCharAtPos "$strIn" "$intI")")"
+        if [[ "true" == "$(StageL_eq "$intI" '0')" ]]; then
+            # First character can only be lowercase letter
+            if [[ "true" == "$(StageL_not "$(StageL_asciiIsLetterLower "$intCurrentCharByte")")" ]]; then
+                boolRes='false'
+            fi
+                elif [[ "true" == "$(StageL_not "$(StageL_or "$(StageL_asciiIsDigit "$intCurrentCharByte")" "$(StageL_asciiIsLetter "$intCurrentCharByte")")")" ]]; then
+            boolRes='false'
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$boolRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+prepareStrForEcho() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'prepareStrForEcho:strings'; StageL_assertIsStr "$strIn"
+
+    intArrayRes=()
+    intArrayRes="$(StageL_convertFormats 'ascii' "$(StageL_getEnvPreferredFormat )" "$(StageL_append "$(StageL_strToByteArray "$strIn")" "$(StageL_crlf )")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+strPrintArr() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'strPrintArr:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # The reverse of this for an/ input is intArrFromStrPrintedArr.
+    # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
+    strOut=''
+    strOut="$(StageL_strJoin "$(join_by $'\037' "${genericArrayIn[@]}")" ' ')"
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+printArray() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'printArray:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strPrintArray() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'strPrintArray:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+printArr() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'printArr:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strSplit() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strSplit:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    strArrayRes=()
+    intSeparLen='0'
+    intSeparLen="$(StageL_len "$strSeparator")"
+    strRemaining=''
+    strRemaining="$strIn"
+    intRemainingLen='0'
+    intRemainingLen="$(StageL_len "$strRemaining")"
+    strCurrentElem=''
+    strCurrentChar=''
+    while [[ "true" == "$(StageL_lt '0' "$intRemainingLen")" ]]; do
+        if [[ "true" == "$(StageL_eq "$strSeparator" "$(StageL_substr "$strRemaining" '0' "$intSeparLen")")" ]]; then
+            strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strCurrentElem")"
+            strCurrentElem=''
+            strRemaining="$(StageL_substr "$strRemaining" "$intSeparLen" '-1')"
+                else
+            strCurrentChar="$(StageL_strChar "$strRemaining" '0')"
+            strCurrentElem="$(StageL_cat "$strCurrentElem" "$strCurrentChar")"
+            if [[ "true" == "$(StageL_lt '1' "$intRemainingLen")" ]]; then
+                strRemaining="$(StageL_substr "$strRemaining" '1' '-1')"
+                        else
+                strRemaining=''
+            fi
+        fi
+        intRemainingLen="$(StageL_len "$strRemaining")"
+    done
+    strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strCurrentElem")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+strJoin() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strJoin:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"; StageL_assertIsStr "$strSeparator"
+
+    # Opposite of strSplit for a given separator
+    intCount='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${genericArrayIn[@]}")")"
+    intI='0'
+    intI='0'
+    strOut=''
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strOut="$(StageL_cat "$strOut" "$(StageL_strFrom "$(StageL_get "$(join_by $'\037' "${genericArrayIn[@]}")" "$intI")")")"
+        if [[ "true" == "$(StageL_ne "$intI" "$(StageL_add '-1' "$intCount")")" ]]; then
+            strOut="$(StageL_cat "$strOut" "$strSeparator")"
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strSplitEscaped() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strSplitEscaped:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    strArrayRes=()
+    strArrayExploded=()
+    strArrayExploded="$(StageL_strSplit "$strIn" "$strSeparator")"
+    strArrayRes=(  )
+    intK='0'
+    intL='0'
+    intK='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayExploded[@]}")")"
+    boolContinue='false'
+    boolContinue='true'
+    strTemp=''
+    strArrayTempSubset=()
+    while [[ "true" == "$(StageL_and "$boolContinue" "$(StageL_lt "$intK" "$intL")")" ]]; do
+        if [[ "true" == "$(StageL_eq '\\' "$(StageL_charAt "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" "$(StageL_add '-1' "$(StageL_len "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")")")")" ]]; then
+            if [[ "true" == "$(StageL_ge "$(StageL_add '1' "$intK")" "$intL")" ]]; then
+                strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")"
+                boolContinue='false'
+            fi
+            strTemp="$(StageL_setCharAt "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" "$(StageL_dec "$(StageL_len "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" )" )" "$strSeparator")"
+            StageL_setElem "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK" "$strTemp"
+            #array_splice($exploded, $k + 1, 1); // https://www.php.net/manual/en/function.array-splice.php
+            strArrayTempSubset="$(StageL_subset "$(join_by $'\037' "${strArrayExploded[@]}")" "$(StageL_add '1' "$intK")" "$(StageL_add '2' "$intK")")"
+            strArrayExploded="$(StageL_append "$(join_by $'\037' "${strArrayTempSubset[@]}")" "$(StageL_subset "$(join_by $'\037' "${strArrayExploded[@]}")" "$(StageL_add '2' "$intK")" '-1')")"
+            intL="$(StageL_dec "$intL")"
+            intK="$(StageL_dec "$intK")"
+                else
+            strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")"
+        fi
+        intK="$(StageL_add '1' "$intK")"
+    done
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+    # Based on the explode_esc PHP function:
+    #//explode_escaped (not written by me)
+    #function explode_esc($delimiter, $string)
+    #{
+    #    $exploded = explode($delimiter, $string);
+    #    $fixed    = array();
+    #    for ($k = 0, $l = count($exploded); $k < $l; ++$k) {
+    #        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') {
+    #            if ($k + 1 >= $l) {
+    #                $fixed[] = trim($exploded[$k]);
+    #                break;
+    #            }
+    #            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter;
