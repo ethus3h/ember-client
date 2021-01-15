@@ -55,4 +55,62 @@ dcaToUtf8() {
                     intUnmappablesCounter='0'
                     while [[ "true" == "$(StageL_lt "$intUnmappablesCounter" "$intUnmappablesCount")" ]]; do
                         # The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first get the bytearray for the character we're on. Each character should be packed separately, to make it easy to spot where one character ends and the next begins.
-                        intArrayUnmappablesIntermediatePacked="$(StageL_append 
+                        intArrayUnmappablesIntermediatePacked="$(StageL_append "$(join_by $'\037' "${intArrayUnmappablesIntermediatePacked[@]}")" "$(StageL_pack32 "$(StageL_get "$(join_by $'\037' "${intArrayUnmappables[@]}")" "$intUnmappablesCounter")")")"
+                        intUnmappablesCounter="$(StageL_add "$intUnmappablesCounter" '1')"
+                        intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_byteArrayToBase17bUtf8 "$(join_by $'\037' "${intArrayUnmappablesIntermediatePacked[@]}")")")"
+                        intArrayUnmappablesIntermediatePacked=(  )
+                    done
+                    intArrayUnmappables=(  )
+                    intArrayUnmappablesIntermediatePacked=(  )
+                fi
+            fi
+        fi
+        # Stick the current character onto the result array
+        if [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; then
+            intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(join_by $'\037' "${intArrayTemp[@]}")")"
+        fi
+        # and finally increment the loop counter
+        intC="$(StageL_add "$intC" '1')"
+    done
+    if [[ "true" == "$(StageL_and "$boolDcBasenbEnabled" "$boolFoundAnyUnmappables")" ]]; then
+        if [[ "true" == "$(StageL_not "$boolDcBasenbFragmentEnabled")" ]]; then
+            intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_getArmoredUtf8EmbeddedEndUuid )")"
+        fi
+    fi
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaFromUtf8() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromUtf8:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    intArrayRes=()
+    intArrayRemaining=()
+    intArrayRemaining="$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayTemp=()
+    intArrayLatestChar=()
+    intDcBasenbUuidMonitorState='0'
+    intDcBasenbUuidMonitorState='0'
+    intDcBasenbUuidMonitorReprocessNeededCount='0'
+    intDcBasenbUuidMonitorReprocessNeededCount='0'
+    strArrayVariantSettings=()
+    strArrayVariantSettings="$(StageL_utf8VariantSettings 'in')"
+    boolDcBasenbEnabled='false'
+    boolDcBasenbEnabled="$(StageL_contains "$(join_by $'\037' "${strArrayVariantSettings[@]}")" 'dcBasenb')"
+    boolInDcBasenbSection='false'
+    boolInDcBasenbSection='false'
+    if [[ "true" == "$boolDcBasenbEnabled" ]]; then
+        boolInDcBasenbSection="$(StageL_contains "$(join_by $'\037' "${strArrayVariantSettings[@]}")" 'dcBasenbFragment')"
+    fi
+    intSkipThisChar='0'
+    intSkipThisChar='0'
+    intArrayCollectedDcBasenbChars=()
+    intCollectedDcBasenbCharsCount='0'
+    intCollectedDcBasenbCharsCounter='0'
+    intArrayCurrentUnmappableChar=()
+    intTempArrayCount='0'
+    while [[ "true" == "$(StageL_not "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayRemaining[@]}")")")")" ]]; do
+        intArrayTemp=(  )
+        intArrayLatestChar="$(StageL_pack32 "$(StageL_firstCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")")"
+        if [[ "true" == "$boolDcBasenbEnabled" ]]; then
