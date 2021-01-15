@@ -32,6 +32,8 @@ elif [[ "$1" == "--no-cache" ]]; then
     cacheDir="$1"
     shift
 fi
+if [[ "--cache" == "$cache" ]] && [[ "" == "$cacheDir" ]]; then
+    cacheDir=.
 debugBuild="--debug"
 if [[ "$1" == "--debug" ]]; then
     debugBuild="--debug"
