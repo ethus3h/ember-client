@@ -8,7 +8,7 @@ Please report any issues you find with this repository to the Ember project's is
 
 ## Setting up and building
 
-- Build and install dependencies
+- Build and install dependencies: see the packaging for what's needed: https://github.com/ethus3h/ember-shared/blob/master/data/packages/ddc-in.scm
 - Bootstrap and later are actively getting changed in ways that will make them probably not build sometimes or all the time.
 - then the distfiles:
 ```
