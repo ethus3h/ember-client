@@ -15,7 +15,7 @@ Please report any issues you find with this repository to the Ember project's is
 ./configure -- --build-type dist; make; sudo make install
 ./configure -- --build-type data; make; sudo make install
 ./configure -- --build-type bootstrap --cache; make; sudo make install
-./configure -- --build-type implementation-parts; make; sudo make install
+./configure -- --build-type implementation-parts --cache; make; sudo make install
 ./configure -- --build-type main; make; sudo make install
 ./configure -- --build-type web; make; sudo make install
 ./configure -- --build-type edit-webextension; make; sudo make install
