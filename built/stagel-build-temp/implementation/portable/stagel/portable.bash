@@ -1951,3 +1951,95 @@ intArrFromStrPrintedArr() {
     strCurrentInt=''
     strCurrentInt=''
     intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intByteOffset='0'
+    intCurrentByte='0'
+    while [[ "true" == "$(StageL_lt "$intByteOffset" "$intContentLength")" ]]; do
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are ints represented as ASCII text bytes, rather than an array of ints.
+        intCurrentByte="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intByteOffset")"
+        if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentByte")" ]]; then
+            strCurrentInt="$(StageL_cat "$strCurrentInt" "$(StageL_charFromByte "$intCurrentByte")")"
+                elif [[ "true" == "$(StageL_asciiIsSpace "$intCurrentByte")" ]]; then
+            intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentInt")")"
+            strCurrentInt=''
+                else
+            StageL_die 'Unexpected parser state in intArrFromStrPrintedArr.'
+        fi
+        intByteOffset="$(StageL_add "$intByteOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentInt")")" ]]; then
+        # Ended without a trailing space
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentInt")")"
+    fi
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+positiveIntFromIntStr() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'positiveIntFromIntStr:type-conversion'; StageL_assertIsStr "$strIn"
+
+    # Returns a negative value for an empty input string
+    intRes='0'
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_len "$strIn")")" ]]; then
+        intRes='-1'
+        else
+        intRes="$(StageL_intFromIntStr "$strIn")"
+    fi
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+posIntFromIntStr() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'posIntFromIntStr:type-conversion'; StageL_assertIsStr "$strIn"
+
+    # Convenience wrapper
+    intRes='0'
+    intRes="$(StageL_positiveFromIntStr "$strIn")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+charFromHexByte() {
+    strHexByte="$1"; shift; StageL_internalDebugCollect "str HexByte = $strHexByte; "; StageL_internalDebugStackEnter 'charFromHexByte:type-conversion'; StageL_assertIsStr "$strHexByte"
+
+    # Bear in mind that StageL doesn't attempt to support Unicode.
+    StageL_assertIsBaseStr "$strHexByte" '16'
+    strRes=''
+    strRes="$(StageL_charFromByte "$(StageL_intFromBaseStr "$strHexByte" '16')")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strToByteArray() {
+    strInput="$1"; shift; StageL_internalDebugCollect "str Input = $strInput; "; StageL_internalDebugStackEnter 'strToByteArray:type-conversion'; StageL_assertIsStr "$strInput"
+
+    intCount='0'
+    intCount="$(StageL_len "$strInput")"
+    intI='0'
+    intI='0'
+    intArrayOut=()
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_byteFromChar "$(StageL_strChar "$strInput" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+strFromByteArray() {
+    IFS=$'\037' read -r -a intArrayInput <<< "$1"; shift; StageL_internalDebugCollect "intArray Input = $intArrayInput; "; StageL_internalDebugStackEnter 'strFromByteArray:type-conversion'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayInput[@]}")"
+
+    # Remember this will break if there are non-string bytes in it.
+    intCount='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${intArrayInput[@]}")")"
+    intI='0'
+    intI='0'
+    strOut=''
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strOut="$(StageL_cat "$strOut" "$(StageL_charFromByte "$(StageL_get "$(join_by $'\037' "${intArrayInput[@]}")" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
