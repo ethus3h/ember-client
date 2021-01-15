@@ -1,2 +1,0 @@
-set n/counter add n/counter 1
-new s/temp ''

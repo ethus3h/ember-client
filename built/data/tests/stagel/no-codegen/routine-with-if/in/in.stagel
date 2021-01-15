@@ -1,5 +1,0 @@
-r/s/fbSwitcher n/num
-    if eq 0 0
-        return 'a'
-
-#
