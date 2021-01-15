@@ -6,7 +6,7 @@ Learn about this project at the Ember Web site: http://futuramerlin.com/specific
 
 Please report any issues you find with this repository to the Ember project's issue tracker at http://futuramerlin.com/issue-tracker/.
 
-Setting up and building
+## Setting up and building
 
 - Build and install dependencies
 - Bootstrap and later are actively getting changed in ways that will make them probably not build sometimes or all the time.
