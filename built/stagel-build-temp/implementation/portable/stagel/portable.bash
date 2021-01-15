@@ -1929,4 +1929,72 @@ strJoinEsc() {
 }
 
 strJoinEscNoTrailing() {
-    IFS=$'\037' read -r -a strArrayIn <<< "$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "strArray In = $strArrayIn; "; StageL_internalDebugCollect "
+    IFS=$'\037' read -r -a strArrayIn <<< "$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "strArray In = $strArrayIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strJoinEscNoTrailing:type-conversion'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayIn[@]}")"; StageL_assertIsStr "$strSeparator"
+
+    # a,b instead of a,b,
+    strRes=''
+    intSeparLen='0'
+    intSeparLen="$(StageL_len "$strSeparator")"
+    intSeparLen="$(StageL_sub '-1' "$intSeparLen")"
+    strRes="$(StageL_substr "$(StageL_strJoinEscaped "$(join_by $'\037' "${strArrayIn[@]}")" "$strSeparator")" '0' "$intSeparLen")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+intArrFromStrPrintedArr() {
+    strInput="$1"; shift; StageL_internalDebugCollect "str Input = $strInput; "; StageL_internalDebugStackEnter 'intArrFromStrPrintedArr:type-conversion'; StageL_assertIsStr "$strInput"
+
+    # Reverse of strPrintArr with an an/ parameter.
+    intArrayRes=()
+    intArrayContent=()
+    intArrayContent="$(StageL_strToByteArray "$strInput")"
+    strCurrentInt=''
+    strCurrentInt=''
+    intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intByteOffset='0'
+    intCurrentByte='0'
+    while [[ "true" == "$(StageL_lt "$intByteOffset" "$intContentLength")" ]]; do
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are ints represented as ASCII text bytes, rather than an array of ints.
+        intCurrentByte="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intByteOffset")"
+        if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentByte")" ]]; then
+            strCurrentInt="$(StageL_cat "$strCurrentInt" "$(StageL_charFromByte "$intCurrentByte")")"
+                elif [[ "true" == "$(StageL_asciiIsSpace "$intCurrentByte")" ]]; then
+            intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentInt")")"
+            strCurrentInt=''
+                else
+            StageL_die 'Unexpected parser state in intArrFromStrPrintedArr.'
+        fi
+        intByteOffset="$(StageL_add "$intByteOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentInt")")" ]]; then
+        # Ended without a trailing space
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentInt")")"
+    fi
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+positiveIntFromIntStr() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'positiveIntFromIntStr:type-conversion'; StageL_assertIsStr "$strIn"
+
+    # Returns a negative value for an empty input string
+    intRes='0'
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_len "$strIn")")" ]]; then
+        intRes='-1'
+        else
+        intRes="$(StageL_intFromIntStr "$strIn")"
+    fi
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+posIntFromIntStr() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'posIntFromIntStr:type-conversion'; StageL_assertIsStr "$strIn"
+
+    # Convenience wrapper
+    intRes='0'
+    intRes="$(StageL_positiveFromIntStr "$strIn")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
