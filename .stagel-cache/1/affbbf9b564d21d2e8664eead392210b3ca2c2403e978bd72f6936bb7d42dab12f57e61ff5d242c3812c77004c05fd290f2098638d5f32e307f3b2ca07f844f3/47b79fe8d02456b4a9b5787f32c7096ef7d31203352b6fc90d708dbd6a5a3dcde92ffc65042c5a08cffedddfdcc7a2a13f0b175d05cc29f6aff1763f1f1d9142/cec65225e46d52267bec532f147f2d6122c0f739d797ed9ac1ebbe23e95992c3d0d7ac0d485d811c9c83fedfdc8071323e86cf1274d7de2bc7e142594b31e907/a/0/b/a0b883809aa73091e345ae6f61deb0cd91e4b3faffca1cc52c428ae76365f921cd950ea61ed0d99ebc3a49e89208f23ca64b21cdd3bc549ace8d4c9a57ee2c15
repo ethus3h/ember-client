@@ -485,4 +485,72 @@ dcbnbGetFirstChar() {
     intArrayRemaining="$(join_by $'\037' "${intArrayIn[@]}")"
     intTempArrayCount='0'
     while [[ "true" == "$boolContinue" ]]; do
-        intArrayNextUtf8="$(StageL_pack32 "$(StageL_firstCharOfUtf8String 
+        intArrayNextUtf8="$(StageL_pack32 "$(StageL_firstCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")")"
+        if [[ "true" == "$(StageL_not "$(StageL_isBasenbChar "$(join_by $'\037' "${intArrayNextUtf8[@]}")")")" ]]; then
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayRes[@]}")")")" ]]; then
+                intArrayRes="$(join_by $'\037' "${intArrayNextUtf8[@]}")"
+            fi
+            boolContinue='false'
+                else
+            intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(join_by $'\037' "${intArrayNextUtf8[@]}")")"
+            if [[ "true" == "$(StageL_isBasenbDistinctRemainderChar "$(join_by $'\037' "${intArrayNextUtf8[@]}")")" ]]; then
+                boolContinue='false'
+                        else
+                intTempArrayCount="$(StageL_count "$(join_by $'\037' "${intArrayNextUtf8[@]}")")"
+                intArrayRemaining="$(StageL_anSubset "$(join_by $'\037' "${intArrayRemaining[@]}")" "$intTempArrayCount" '-1')"
+            fi
+        fi
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcbnbGetLastChar() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dcbnbGetLastChar:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    # Return the last character of a dcbnb string (doesn't do any conversion; returns dcbnb)
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")")" ]]; then
+
+        intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+    fi
+    boolContinue='false'
+    boolContinue='true'
+    intArrayNextUtf8=()
+    intArrayRemaining=()
+    intArrayRemaining="$(join_by $'\037' "${intArrayIn[@]}")"
+    intTempArrayCount='0'
+    intTempArrayCount='0'
+    boolPastFirstBasenbRemainderChar='false'
+    boolPastFirstBasenbRemainderChar='false'
+    while [[ "true" == "$boolContinue" ]]; do
+        if [[ "true" == "$(StageL_ne '0' "$(StageL_count "$(join_by $'\037' "${intArrayRemaining[@]}")")")" ]]; then
+            intArrayNextUtf8="$(StageL_pack32 "$(StageL_lastCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")")"
+                else
+            intArrayNextUtf8=(  )
+        fi
+        if [[ "true" == "$(StageL_not "$(StageL_isBasenbChar "$(join_by $'\037' "${intArrayNextUtf8[@]}")")")" ]]; then
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayRes[@]}")")")" ]]; then
+                intArrayRes="$(join_by $'\037' "${intArrayNextUtf8[@]}")"
+            fi
+            boolContinue='false'
+                else
+            if [[ "true" == "$(StageL_isBasenbDistinctRemainderChar "$(join_by $'\037' "${intArrayNextUtf8[@]}")")" ]]; then
+                if [[ "true" == "$boolPastFirstBasenbRemainderChar" ]]; then
+                    boolContinue='false'
+                                else
+                    intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayNextUtf8[@]}")" "$(join_by $'\037' "${intArrayRes[@]}")")"
+                    intTempArrayCount="$(StageL_count "$(join_by $'\037' "${intArrayNextUtf8[@]}")")"
+                    intArrayRemaining="$(StageL_anSubset "$(join_by $'\037' "${intArrayRemaining[@]}")" '0' "$(StageL_add '-1' "$(StageL_mul '-1' "$intTempArrayCount")")")"
+                    boolPastFirstBasenbRemainderChar='true'
+                fi
+                        else
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayNextUtf8[@]}")" "$(join_by $'\037' "${intArrayRes[@]}")")"
+                intTempArrayCount="$(StageL_count "$(join_by $'\037' "${intArrayNextUtf8[@]}")")"
+                intArrayRemaining="$(StageL_anSubset "$(join_by $'\037' "${intArrayRemaining[@]}")" '0' "$(StageL_add '-1' "$(StageL_mul '-1' "$intTempArrayCount")")")"
+            fi
+        fi
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

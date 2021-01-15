@@ -1,0 +1,4 @@
+dcaToHtmlFragment() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToHtmlFragment:format-htmlFragment'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${
