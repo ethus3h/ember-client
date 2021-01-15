@@ -109,11 +109,11 @@ if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
         # &> /dev/null
     fi
     # Use it to build itself, and install that (this is what will later be used to build each language implementation)
-    if [[ "yes" == "$verbose" ]]; then
-        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
-    else
-        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
-    fi
+#    if [[ "yes" == "$verbose" ]]; then
+#        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
+#    else
+#        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
+#    fi
 else
     rm scripts/stagel-*
 fi
