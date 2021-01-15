@@ -19,3 +19,242 @@ runTestsTypeConversion() {
     StageL_internalDebugStackExit;
 }
 
+kvHasValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvHasValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"
+
+    StageL_assertIsKvArray "$(join_by $'\037' "${strArrayData[@]}")"
+    boolRes='false'
+    boolRes='false'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayData[@]}")")"
+    if [[ "true" == "$(StageL_ne '0' "$intL")" ]]; then
+        intC='0'
+        intC='0'
+        boolContinue='false'
+        boolContinue='true'
+        while [[ "true" == "$boolContinue" ]]; do
+            if [[ "true" == "$(StageL_not "$(StageL_lt "$intC" "$intL")")" ]]; then
+                boolContinue='false'
+            fi
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intC" '2')")" ]]; then
+                if [[ "true" == "$(StageL_eq "$strKey" "$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$intC")")" ]]; then
+                    boolRes='true'
+                    boolContinue='false'
+                fi
+            fi
+            intC="$(StageL_add "$intC" '1')"
+        done
+    fi
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+kvGetValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvGetValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"
+
+    # data format: [ 'a' 'b' 'c' 'd' ... ]
+    # Returns empty if value not set
+    StageL_assertIsKvArray "$(join_by $'\037' "${strArrayData[@]}")"
+    strRes=''
+    strRes=''
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayData[@]}")")"
+    if [[ "true" == "$(StageL_ne '0' "$intL")" ]]; then
+        intC='0'
+        intC='0'
+        boolContinue='false'
+        boolContinue='true'
+        boolFound='false'
+        boolFound='false'
+        while [[ "true" == "$boolContinue" ]]; do
+            if [[ "true" == "$boolFound" ]]; then
+                strRes="$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$intC")"
+                boolContinue='false'
+                        else
+                if [[ "true" == "$(StageL_not "$(StageL_lt "$intC" "$(StageL_add '-1' "$intL")")")" ]]; then
+                    boolContinue='false'
+                fi
+                if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intC" '2')")" ]]; then
+                    if [[ "true" == "$(StageL_eq "$strKey" "$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$intC")")" ]]; then
+                        boolFound='true'
+                    fi
+                fi
+            fi
+            intC="$(StageL_add "$intC" '1')"
+        done
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+kvGetDefinedValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvGetDefinedValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"
+
+    StageL_assertKvHasValue "$(join_by $'\037' "${strArrayData[@]}")"
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(join_by $'\037' "${strArrayData[@]}")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+kvSetValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; strVal="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Val = $strVal; "; StageL_internalDebugStackEnter 'kvSetValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strVal"
+
+    StageL_assertIsKvArray "$(join_by $'\037' "${strArrayData[@]}")"
+    strArrayRes=()
+    strArrayRes="$(join_by $'\037' "${strArrayData[@]}")"
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayRes[@]}")")"
+    boolFound='false'
+    boolFound='false'
+    if [[ "true" == "$(StageL_ne '0' "$intL")" ]]; then
+        intC='0'
+        intC='0'
+        boolContinue='false'
+        boolContinue='true'
+        while [[ "true" == "$boolContinue" ]]; do
+            if [[ "true" == "$boolFound" ]]; then
+                strArrayRes="$(StageL_setElem "$(join_by $'\037' "${strArrayRes[@]}")" "$intC" "$strVal")"
+                boolContinue='false'
+                        else
+                if [[ "true" == "$(StageL_not "$(StageL_lt "$intC" "$(StageL_dec "$intL")")")" ]]; then
+                    boolContinue='false'
+                fi
+                if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intC" '2')")" ]]; then
+                    if [[ "true" == "$(StageL_eq "$strKey" "$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$intC")")" ]]; then
+                        boolFound='true'
+                    fi
+                fi
+            fi
+            intC="$(StageL_add "$intC" '1')"
+        done
+    fi
+    if [[ "true" == "$(StageL_not "$boolFound")" ]]; then
+        strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strKey")"
+        strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strVal")"
+    fi
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+kvsHasValue() {
+    strData="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Data = $strData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvsHasValue:key-value'; StageL_assertIsStr "$strData"; StageL_assertIsStr "$strKey"
+
+    boolRes='false'
+    boolRes="$(StageL_kvHasValue "$(StageL_kvSplit "$strData")" "$strKey")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+kvsGetValue() {
+    strData="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Data = $strData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvsGetValue:key-value'; StageL_assertIsStr "$strData"; StageL_assertIsStr "$strKey"
+
+    # data format: [ 'a:b,c:d,' ... ]
+    # Returns empty if value not set
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_kvSplit "$strData")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+kvsGetDefinedValue() {
+    strData="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Data = $strData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'kvsGetDefinedValue:key-value'; StageL_assertIsStr "$strData"; StageL_assertIsStr "$strKey"
+
+    StageL_assertKvsHasValue "$strData"
+    strRes=''
+    strRes="$(StageL_kvsGetValue "$strData" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+kvsSetValue() {
+    strData="$1"; shift; strKey="$1"; shift; strVal="$1"; shift; StageL_internalDebugCollect "str Data = $strData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Val = $strVal; "; StageL_internalDebugStackEnter 'kvsSetValue:key-value'; StageL_assertIsStr "$strData"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strVal"
+
+    strRes=''
+    strRes="$(StageL_kvJoin "$(StageL_kvSetValue "$(StageL_kvSplit "$strData")" "$strKey" "$strVal")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+assertKvHasValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'assertKvHasValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"
+
+    StageL_assertIsTrue "$(StageL_kvHasValue "$(join_by $'\037' "${strArrayData[@]}")" "$strKey")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertKvsHasValue() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'assertKvsHasValue:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"; StageL_assertIsStr "$strKey"
+
+    StageL_assertIsTrue "$(StageL_kvsHasValue "$(join_by $'\037' "${strArrayData[@]}")" "$strKey")"
+
+    StageL_internalDebugStackExit;
+}
+
+kvSplit() {
+    strData="$1"; shift; StageL_internalDebugCollect "str Data = $strData; "; StageL_internalDebugStackEnter 'kvSplit:key-value'; StageL_assertIsStr "$strData"
+
+    strArrayRes=()
+    strArrayRes=(  )
+    strArrayTemp=()
+    strArrayTemp="$(StageL_strSplitEscaped "$strData" ',')"
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayTemp[@]}")")"
+    if [[ "true" == "$(StageL_ne '0' "$intL")" ]]; then
+        intC='0'
+        intC='0'
+        while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+            strArrayRes="$(StageL_append "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_strSplitEscaped "$(StageL_get "$(join_by $'\037' "${strArrayTemp[@]}")" "$intC")" ':')")"
+            intC="$(StageL_inc "$intC")"
+        done
+    fi
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+kvJoin() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugStackEnter 'kvJoin:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"
+
+    strRes=''
+    strRes=''
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayData[@]}")")"
+    if [[ "true" == "$(StageL_ne '0' "$intL")" ]]; then
+        intC='0'
+        intC='0'
+        strArrayTempA=()
+        strArrayTempB=()
+        strArrayTempB=(  )
+        while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intC" '2')")" ]]; then
+                strArrayTempA=(  )
+                strArrayTempA="$(StageL_push "$(join_by $'\037' "${strArrayTempA[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$intC")")"
+                strArrayTempA="$(StageL_push "$(join_by $'\037' "${strArrayTempA[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayData[@]}")" "$(StageL_add '1' "$intC")")")"
+                strArrayTempB="$(StageL_push "$(join_by $'\037' "${strArrayTempB[@]}")" "$(StageL_strJoinEscNoTrailing "$(join_by $'\037' "${strArrayTempA[@]}")" ':')")"
+            fi
+            intC="$(StageL_inc "$intC")"
+        done
+        strRes="$(StageL_strJoinEsc "$(join_by $'\037' "${strArrayTempB[@]}")" ',')"
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+isKvArray() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugStackEnter 'isKvArray:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"
+
+    boolRes='false'
+    boolRes="$(StageL_isEven "$(StageL_count "$(join_by $'\037' "${strArrayData[@]}")")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+assertIsKvArray() {
+    IFS=$'\037' read -r -a strArrayData <<< "$1"; shift; StageL_internalDebugCollect "strArray Data = $strArrayData; "; StageL_internalDebugStackEnter 'assertIsKvArray:key-value'; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayData[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isKvArray "$(join_by $'\037' "${strArrayData[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
