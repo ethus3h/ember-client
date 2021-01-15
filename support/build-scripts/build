@@ -117,6 +117,7 @@ if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
 #        "$sicmd" "bash" --bootstrap-selfhosted "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@" &> /dev/null
 #    fi
 else
+    # Avoid the bootstrap version running
     chmod -x scripts/stagel-*
 fi
 
