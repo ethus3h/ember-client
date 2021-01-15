@@ -107,3 +107,23 @@ dcGetScript() {
 
     strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
 }
+
+dcGetComplexTraits() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcGetComplexTraits:dc-data'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strRes=''
+    strRes="$(StageL_dcGetField "$intDc" '7')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+dcGetDescription() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcGetDescription:dc-data'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strRes=''
+    strRes="$(StageL_dcGetField "$intDc" '8')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
