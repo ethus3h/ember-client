@@ -2626,4 +2626,53 @@ getExportExtension() {
     fi
     strRes="$(StageL_getFormatExtension "$strFormat")"
 
-    
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+dcToFormat() {
+    strOutFormat="$1"; shift; intDc="$1"; shift; StageL_internalDebugCollect "str OutFormat = $strOutFormat; "; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcToFormat:formats'; StageL_assertIsStr "$strOutFormat"; StageL_assertIsInt "$intDc"
+
+    # Output byte array for a single dc, or an empty array if no output is available. Only operates on one Dc at a time. Some formats may not need this; calling with them is an error and should cause an assertion failure.
+    StageL_assertIsSupportedOutputFormat "$strOutFormat"
+    StageL_assertIsDc "$intDc"
+    intArrayRes=()
+    strTemp=''
+    if [[ "true" == "$(StageL_eq "$strOutFormat" 'utf8')" ]]; then
+        strLookup=''
+        strLookup="$(StageL_dcDataLookupById 'mappings/to/unicode' "$intDc" '1')"
+        if [[ "true" == "$(StageL_excOrEmpty "$strLookup")" ]]; then
+            strLookup="$(StageL_dcDataLookupByValue 'mappings/from/unicode' '1' "$intDc" '0')"
+        fi
+        if [[ "true" == "$(StageL_notExcep "$strLookup")" ]]; then
+            intArrayRes="$(StageL_utf8BytesFromDecimalChar "$(StageL_hexToDec "$strLookup")")"
+        fi
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'colorcoded')" ]]; then
+        intArrayRes="$(StageL_dcToColorcoded "$intDc")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'html')" ]]; then
+        strTemp="$(StageL_dcDataLookupById 'mappings/to/html' "$intDc" '1')"
+        if [[ "true" == "$(StageL_strNonempty "$strTemp")" ]]; then
+            intArrayRes="$(StageL_strToByteArray "$strTemp")"
+                else
+            strTemp="$(StageL_dcDataLookupByValue 'mappings/from/unicode' '1' "$intDc" '0')"
+            if [[ "true" == "$(StageL_isBaseStr "$strTemp" '16')" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_utf8BytesFromDecimalChar "$(StageL_hexToDec "$strTemp")")")"
+            fi
+        fi
+        else
+        StageL_die "$(StageL_cat 'Unimplemented character output format: ' "$strOutFormat")"
+    fi
+    # Returns an empty array if the Dc isn't printable. I don't think it should be an error to call this for a nonprintable Dc.
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcFromFormat() {
+    strInFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "str InFormat = $strInFormat; "; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcFromFormat:formats'; StageL_assertIsStr "$strInFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    # Retrieve dc (as a one-element array) corresponding to the input data (input data for some formats may be expected as byte arrays, but not for others), or an empty array if no match. Only operates on one Dc at a time. Some formats (e.g. sems) don't need this; calling with them is an error and should cause an assertion failure.
+    StageL_assertIsTrue "$(StageL_isSupportedInternalFormat "$strInFormat")"
+    intArrayRes=()
+    intDc='0'
+    strTemp=''
+    if [[ "true" == "$(StageL_or "$(StageL_eq "$strInFormat" 'ascii')" "$(StageL_eq "$strInFormat" 
