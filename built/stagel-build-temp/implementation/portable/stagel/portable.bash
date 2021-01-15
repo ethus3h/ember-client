@@ -1325,3 +1325,112 @@ decToHex() {
 intToBaseStr() {
     intN="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intToBaseStr:math'; StageL_assertIsInt "$intN"; StageL_assertIsInt "$intB"
 
+    # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    strRes=''
+    if [[ "true" == "$(StageL_eq '0' "$intN")" ]]; then
+        strRes='0'
+        else
+        while [[ "true" == "$(StageL_gt "$intN" '0')" ]]; do
+            strRes="$(StageL_cat "$strRes" "$(StageL_intToBase36Char "$(StageL_mod "$intN" "$intB")")")"
+            intN="$(StageL_div "$intN" "$intB")"
+        done
+        strRes="$(StageL_reverseStr "$strRes")"
+    fi
+    StageL_assertIsBaseStr "$strRes" "$intB"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+isSupportedBase() {
+    intB="$1"; shift; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isSupportedBase:math'; StageL_assertIsInt "$intB"
+
+    # StageL base conversion routines support base 1 to base 36.
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intB" '1' '36')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseDigit() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseDigit:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    StageL_assertIsChar "$strIn"
+    StageL_assertIsSupportedBase "$intB"
+    if [[ "true" == "$(StageL_not "$(StageL_asciiIsAlphanum "$(StageL_byteFromChar "$strIn")")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intDigitVal='0'
+    intDigitVal="$(StageL_intFromBase36Char "$strIn")"
+    boolRes='false'
+    boolRes="$(StageL_lt "$intDigitVal" "$intB")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseStr() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseStr:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    intLen='0'
+    intLen="$(StageL_len "$strIn")"
+    intLen="$(StageL_sub "$intLen" '1')"
+    StageL_assertIsNonnegative "$intLen"
+    strChr=''
+    boolRes='false'
+    boolRes='true'
+    while [[ "true" == "$(StageL_ge "$intLen" '0')" ]]; do
+        strChr="$(StageL_strCharAtPos "$strIn" "$intLen")"
+        boolRes="$(StageL_and "$boolRes" "$(StageL_isBaseDigit "$strChr" "$intB")")"
+        intLen="$(StageL_sub "$intLen" '1')"
+    done
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+formatPercentage() {
+    intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'formatPercentage:math'; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    if [[ "true" == "$(StageL_eq '0' "$intA")" ]]; then
+
+        strReturn='0.000'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+    fi
+    intPercentageN='0'
+    intPercentageN="$(StageL_mul '100' "$(StageL_div "$(StageL_mul "$intA" '100000')" "$intB")")"
+    strPercentageTemp=''
+    strPercentageTemp="$(StageL_strFrom "$intPercentageN")"
+    intCount='0'
+    intCount="$(StageL_sub "$(StageL_len "$strPercentageTemp")" '2')"
+    intCounter='0'
+    intCounter="$intCount"
+    strPercentage=''
+    intDecimLoc='0'
+    intDecimLoc="$(StageL_sub "$intCount" '3')"
+    while [[ "true" == "$(StageL_gt "$intCounter" '0')" ]]; do
+        if [[ "true" == "$(StageL_eq "$intCounter" "$(StageL_sub "$intCount" "$intDecimLoc")")" ]]; then
+            strPercentage="$(StageL_cat "$strPercentage" '.')"
+        fi
+        strPercentage="$(StageL_cat "$strPercentage" "$(StageL_strChar "$strPercentageTemp" "$(StageL_sub "$intCount" "$intCounter")")")"
+        intCounter="$(StageL_sub "$intCounter" '1')"
+    done
+
+    strReturn="$strPercentage"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+inc() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'inc:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+dec() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'dec:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '-1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
