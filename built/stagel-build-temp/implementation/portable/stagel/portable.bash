@@ -4570,3 +4570,898 @@ dcaToHtml() {
     intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
 }
 
+runTestsFormatUtf8() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatUtf8:format-utf8-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatUtf8'
+    # FIXME: Update tests for new remainder character format.
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '35' '18' '36')" "$(StageL_dcaFromUtf8 "$(join_by $'\037' '49' '32' '50')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '49' '32' '50')" "$(StageL_dcaToUtf8 "$(join_by $'\037' '35' '18' '36')")")"
+    # Test for converting to UTF8+dcbnb with only one unmappable char at the end
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_append "$(join_by $'\037' '49' '32' '50')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '244' '131' '173' '156' '239' '159' '185')" "$(StageL_getArmoredUtf8EmbeddedEndUuid )" )" )" )" "$(StageL_dcaToDcbnbUtf8 "$(join_by $'\037' '35' '18' '36' '291')")")"
+    # Test for converting to UTF8+dcbnb with intermixed mappable and nonmappable
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_append "$(join_by $'\037' '49' '32' '50')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '244' '131' '173' '156' '239' '159' '185' '50')" "$(StageL_getArmoredUtf8EmbeddedEndUuid )" )" )" )" "$(StageL_dcaToDcbnbUtf8 "$(join_by $'\037' '35' '18' '36' '291' '36')")")"
+    # Tests for converting from UTF8+dcbnb
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '35' '18' '36' '291' '36')" "$(StageL_dcaFromDcbnbUtf8 "$(StageL_append "$(join_by $'\037' '49' '32' '50')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '244' '131' '173' '156' '244' '143' '191' '173' '50')" "$(StageL_getArmoredUtf8EmbeddedEndUuid )")")")")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '35' '18' '36' '291')" "$(StageL_dcaFromDcbnbUtf8 "$(StageL_append "$(join_by $'\037' '49' '32' '50')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '244' '131' '173' '156' '244' '143' '191' '173')" "$(StageL_getArmoredUtf8EmbeddedEndUuid )")")")")")"
+    # Make sure the dcbnb region gets output at the right place relative to the other chars (there's a bug where it outputs 18 18 11 instead of 18 11 18)
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '18' '11' '18')" "$(StageL_dcaFromDcbnbUtf8 "$(StageL_append "$(join_by $'\037' '32')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '244' '143' '191' '180' '244' '143' '191' '181')" "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedEndUuid )" "$(join_by $'\037' '32')")")")")")")"
+    # Same as the previous test, but with the spaces inside the start and end UUIDs. Works even though the previous one failed.
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '18' '11' '18')" "$(StageL_dcaFromDcbnbUtf8 "$(StageL_append "$(StageL_getArmoredUtf8EmbeddedStartUuid )" "$(StageL_append "$(join_by $'\037' '32' '244' '143' '191' '180' '244' '143' '191' '181' '32')" "$(StageL_getArmoredUtf8EmbeddedEndUuid )")")")")"
+    # Like the test after next but with only the first region
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '89' '7')" "$(StageL_dcaFromDcbnbUtf8 "$(join_by $'\037' '104' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '184' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157')")")"
+    # Second half of the subsequent test
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '11')" "$(StageL_dcaFromDcbnbUtf8 "$(join_by $'\037' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '180' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157')")")"
+    # Two dcbnb regions: The two halves work separately, but fail when together
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '89' '7' '11')" "$(StageL_dcaFromDcbnbUtf8 "$(join_by $'\037' '104' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '184' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '180' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157')")")"
+    # It fails without the leading h as well. The issue is that the ( 7 11 ) mysteriously becomes ( 65533 65533 ) when they are together.
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '7' '11')" "$(StageL_dcaFromDcbnbUtf8 "$(join_by $'\037' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '184' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '180' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157')")")"
+    # With the h in the middle separating the two dcbnb regions
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '7' '89' '11')" "$(StageL_dcaFromDcbnbUtf8 "$(join_by $'\037' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '184' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157' '104' '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' '244' '143' '191' '180' '244' '143' '191' '181' '243' '188' '133' '185' '243' '180' '182' '175' '244' '136' '161' '186' '243' '191' '148' '138' '244' '134' '178' '166' '244' '141' '184' '130' '243' '178' '128' '176' '244' '143' '188' '157')")")"
+    # "h\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff8}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}\u{10d05d}\u{10bd80}\u{fcde2}\u{fa00a}\u{f894e}\u{108e8d}\u{f22e0}\u{10fe90}\u{10fff4}\u{10fff5}\u{fc179}\u{f4daf}\u{10887a}\u{ff50a}\u{106ca6}\u{10de02}\u{f2030}\u{10ff1d}" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,184,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157" "244,141,129,157,244,139,182,128,243,188,183,162,243,186,128,138,243,184,165,142,244,136,186,141,243,178,139,160,244,143,186,144,244,143,191,180,244,143,191,181,243,188,133,185,243,180,182,175,244,136,161,186,243,191,148,138,244,134,178,166,244,141,184,130,243,178,128,176,244,143,188,157"
+    # Test for a bug that results in the output being 16 uppercase letter Bs
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '6')" "$(StageL_dcaFromDcbnbFragmentUtf8 "$(join_by $'\037' '244' '143' '191' '185' '239' '160' '129')")")"
+    # A simple one with new format remainder character
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '82' '86' '5')" "$(StageL_dcaFromDcbnbFragmentUtf8 "$(join_by $'\037' '97' '101' '244' '143' '191' '186' '239' '160' '129')")")"
+    # Tests for dcbnbGetLastChar
+    # 82 86 5
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '244' '143' '191' '186' '239' '160' '129')" "$(StageL_dcbnbGetLastChar "$(join_by $'\037' '97' '101' '244' '143' '191' '186' '239' '160' '129')")")"
+    # invalid
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' )" "$(StageL_dcbnbGetLastChar "$(join_by $'\037' '239' '160' '129')")")"
+    # invalid
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' )" "$(StageL_dcbnbGetLastChar "$(join_by $'\037' '97' '101' '244' '143' '191' '186')")")"
+    # invalid 82
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '82')" "$(StageL_dcbnbGetLastChar "$(join_by $'\037' '244' '143' '191' '186' '97')")")"
+    # Tests for dcbnbGetFirstChar
+    # 5 82 86
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '244' '143' '191' '186' '239' '160' '129')" "$(StageL_dcbnbGetFirstChar "$(join_by $'\037' '244' '143' '191' '186' '239' '160' '129' '97' '101')")")"
+    # invalid
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' )" "$(StageL_dcbnbGetFirstChar "$(join_by $'\037' '239' '160' '129')")")"
+    # invalid 82 86
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' )" "$(StageL_dcbnbGetFirstChar "$(join_by $'\037' '239' '160' '129' '97' '101')")")"
+    # invalid 82 86
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' )" "$(StageL_dcbnbGetFirstChar "$(join_by $'\037' '244' '143' '191' '186' '97' '101')")")"
+    # 86 invalid
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '86')" "$(StageL_dcbnbGetFirstChar "$(join_by $'\037' '101' '244' '143' '191' '186')")")"
+    # Tests for utf8CharArrayFromByteArray and vice versa
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '50' '53' '54' '32' '50' '53' '56' '32' '50' '54' '48' '32' '50' '54' '50' '32' '50' '54' '52' '32' '50' '54' '51' '32' '53' '55' '32' '56' '54' '32' '57' '51' '32' '57' '51' '32' '57' '54' '32' '51' '48' '32' '49' '56' '32' '50' '56' '54' '32' '55' '50' '32' '57' '54' '32' '57' '57' '32' '57' '51' '32' '56' '53' '32' '50' '56' '55' '32' '49' '57' '32' '49' '56' '32' '50' '56' '52' '32' '50' '54' '49' '32' '50' '53' '57' '32' '35' '32' '115' '97' '121' '32' '34' '72' '101' '108' '108' '111' '44' '32' '47' '87' '111' '114' '108' '100' '47' '33' '32' '9917' '34' '10' '49' '32' '50' '32' '35' '32' '9917' '10')" "$(StageL_utf8CharArrayFromByteArray "$(join_by $'\037' '50' '53' '54' '32' '50' '53' '56' '32' '50' '54' '48' '32' '50' '54' '50' '32' '50' '54' '52' '32' '50' '54' '51' '32' '53' '55' '32' '56' '54' '32' '57' '51' '32' '57' '51' '32' '57' '54' '32' '51' '48' '32' '49' '56' '32' '50' '56' '54' '32' '55' '50' '32' '57' '54' '32' '57' '57' '32' '57' '51' '32' '56' '53' '32' '50' '56' '55' '32' '49' '57' '32' '49' '56' '32' '50' '56' '52' '32' '50' '54' '49' '32' '50' '53' '57' '32' '35' '32' '115' '97' '121' '32' '34' '72' '101' '108' '108' '111' '44' '32' '47' '87' '111' '114' '108' '100' '47' '33' '32' '226' '154' '189' '34' '10' '49' '32' '50' '32' '35' '32' '226' '154' '189' '10')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '50' '53' '54' '32' '50' '53' '56' '32' '50' '54' '48' '32' '50' '54' '50' '32' '50' '54' '52' '32' '50' '54' '51' '32' '53' '55' '32' '56' '54' '32' '57' '51' '32' '57' '51' '32' '57' '54' '32' '51' '48' '32' '49' '56' '32' '50' '56' '54' '32' '55' '50' '32' '57' '54' '32' '57' '57' '32' '57' '51' '32' '56' '53' '32' '50' '56' '55' '32' '49' '57' '32' '49' '56' '32' '50' '56' '52' '32' '50' '54' '49' '32' '50' '53' '57' '32' '35' '32' '115' '97' '121' '32' '34' '72' '101' '108' '108' '111' '44' '32' '47' '87' '111' '114' '108' '100' '47' '33' '32' '226' '154' '189' '34' '10' '49' '32' '50' '32' '35' '32' '226' '154' '189' '10')" "$(StageL_byteArrayFromUtf8CharArray "$(join_by $'\037' '50' '53' '54' '32' '50' '53' '56' '32' '50' '54' '48' '32' '50' '54' '50' '32' '50' '54' '52' '32' '50' '54' '51' '32' '53' '55' '32' '56' '54' '32' '57' '51' '32' '57' '51' '32' '57' '54' '32' '51' '48' '32' '49' '56' '32' '50' '56' '54' '32' '55' '50' '32' '57' '54' '32' '57' '57' '32' '57' '51' '32' '56' '53' '32' '50' '56' '55' '32' '49' '57' '32' '49' '56' '32' '50' '56' '52' '32' '50' '54' '49' '32' '50' '53' '57' '32' '35' '32' '115' '97' '121' '32' '34' '72' '101' '108' '108' '111' '44' '32' '47' '87' '111' '114' '108' '100' '47' '33' '32' '9917' '34' '10' '49' '32' '50' '32' '35' '32' '9917' '10')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runTestsFormatHtml() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatHtml:format-html-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatHtml'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><div style="white-space:pre-wrap">5&lt;6</div></body></html>')" "$(StageL_dcaToHtml "$(join_by $'\037' '39' '46' '40')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runTestsFormatAsciiSafeSubset() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatAsciiSafeSubset:format-asciiSafeSubset-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatAsciiSafeSubset'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '121' '120' '21' '26')" "$(StageL_dcaFromAsciiSafeSubset "$(join_by $'\037' '13' '10' '35' '40')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '13' '10' '35' '13' '10' '40')" "$(StageL_dcaToAsciiSafeSubset "$(join_by $'\037' '0' '212' '120' '216' '291' '221' '226' '231' '21' '121' '120' '26')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+dcaFromSems() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dcaFromSems:format-sems'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayRes=()
+    # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
+    intArrayContent=()
+    intArrayContent="$(StageL_utf8CharArrayFromByteArray "$(join_by $'\037' "${intArrayIn[@]}")")"
+    strParserState=''
+    strParserState='dc'
+    strCurrentDc=''
+    strCurrentDc=''
+    intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intCharOffset='0'
+    intCurrentChar='0'
+    boolStrict='false'
+    boolStrict="$(StageL_eq 'true' "$(StageL_getSettingForFormat 'sems' 'in' 'strict')")"
+    while [[ "true" == "$(StageL_lt "$intCharOffset" "$intContentLength")" ]]; do
+        # do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        intCurrentChar="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intCharOffset")"
+        if [[ "true" == "$(StageL_eq "$strParserState" 'dc')" ]]; then
+            if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentChar")" ]]; then
+                strCurrentDc="$(StageL_cat "$strCurrentDc" "$(StageL_charFromByte "$intCurrentChar")")"
+                        elif [[ "true" == "$(StageL_in "$intCurrentChar" "$(join_by $'\037' '10' '13' '32')")" ]]; then
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+                strCurrentDc=''
+                        elif [[ "true" == "$(StageL_eq '35' "$intCurrentChar")" ]]; then
+                # pound sign: start comment
+                if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+                    # Comment was not preceded by a space
+                    StageL_warnOrDie "$boolStrict" 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
+                    intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+                    strCurrentDc=''
+                fi
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '246')"
+                strParserState='comment'
+                        else
+                StageL_die 'Unexpected parser state in SEMS document.'
+            fi
+                elif [[ "true" == "$(StageL_eq "$strParserState" 'comment')" ]]; then
+            if [[ "true" == "$(StageL_asciiIsNewline "$intCurrentChar")" ]]; then
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '248')"
+                strParserState='dc'
+                        else
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromUnicodeChar "$intCurrentChar")")"
+            fi
+                else
+            StageL_die 'Internal error: unexpected parser state while parsing SEMS document'
+        fi
+        intCharOffset="$(StageL_add "$intCharOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_eq "$strParserState" 'comment')" ]]; then
+        # Document ended with a comment and no newline at the end
+        if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+            StageL_die "$(StageL_cat 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found: ' "$(StageL_cat "$strCurrentDc" '.')")"
+        fi
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '248')"
+        elif [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+        StageL_warnOrDie "$boolStrict" 'No trailing space present in sems format while importing. This is not allowed in strict mode.'
+        # Ended without a trailing space
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToSems() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToSems:format-sems'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    # TODO: Support SEMS comment roundtripping
+    intArrayOut=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intCurrentDc='0'
+    boolInComment='false'
+    boolInComment='false'
+    intArrayCurrentComment=()
+    intArrayCurrentComment=(  )
+    boolAtCommentEnd='false'
+    boolAtCommentEnd='false'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        if [[ "true" == "$boolAtCommentEnd" ]]; then
+            boolAtCommentEnd='false'
+        fi
+        if [[ "true" == "$(StageL_eq '246' "$intCurrentDc")" ]]; then
+            boolInComment='true'
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '#')")"
+                elif [[ "true" == "$(StageL_eq '248' "$intCurrentDc")" ]]; then
+            boolInComment='false'
+            boolAtCommentEnd='true'
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcaToDcbnbUtf8 "$(join_by $'\037' "${intArrayCurrentComment[@]}")")")"
+            intArrayCurrentComment=(  )
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                else
+            if [[ "true" == "$boolInComment" ]]; then
+                intArrayCurrentComment="$(StageL_push "$(join_by $'\037' "${intArrayCurrentComment[@]}")" "$intCurrentDc")"
+                        else
+                intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_cat "$(StageL_strFrom "$intCurrentDc")" ' ')")")"
+            fi
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    if [[ "true" == "$(StageL_not "$boolAtCommentEnd")" ]]; then
+        intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+    fi
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToColorcoded() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToColorcoded:format-colorcoded'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:salmon">Mathematics</span> <span style="color:rebeccapurple">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:purple">Emoji</span> <span style="color:maroon">Styling</span> <span style="color:brown">Other</span></p>')"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcaToColorcodedFragment "$(join_by $'\037' "${intArrayDcIn[@]}")")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</body></html>')")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToColorcodedFragment() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToColorcodedFragment:format-colorcoded'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '<div style="white-space:pre-wrap">')")"
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intDcAtIndex='0'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcToFormat 'colorcoded' "$intDcAtIndex")")"
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</div>')")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcToColorcoded() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'dcToColorcoded:format-colorcoded'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsDc "$intIn"
+    intArrayOut=()
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '<span style="color:')")"
+    strType=''
+    strType="$(StageL_dcGetType "$intIn")"
+    strScript=''
+    strScript="$(StageL_dcGetScript "$intIn")"
+    strColor=''
+    if [[ "true" == "$(StageL_eq 'L' "$(StageL_strChar "$strType" '0')")" ]]; then
+        # Letter
+        strColor='black'
+        elif [[ "true" == "$(StageL_eq 'Controls' "$strScript")" ]]; then
+        # Control
+        strColor='gray'
+        elif [[ "true" == "$(StageL_eq 'Semantic' "$strScript")" ]]; then
+        # Semantic
+        strColor='blue'
+        elif [[ "true" == "$(StageL_eq 'Mathematics' "$strScript")" ]]; then
+        # Mathematics
+        strColor='salmon'
+        elif [[ "true" == "$(StageL_eq 'Symbols' "$strScript")" ]]; then
+        # Symbols
+        strColor='rebeccapurple'
+        elif [[ "true" == "$(StageL_eq 'EL ' "$(StageL_substr "$strScript" '0' '3')")" ]]; then
+        # Programming
+        strColor='red'
+        elif [[ "true" == "$(StageL_eq 'Financial' "$strScript")" ]]; then
+        # Financial
+        strColor='green'
+        elif [[ "true" == "$(StageL_eq 'Punctuation' "$strScript")" ]]; then
+        # Punctuation
+        strColor='orange'
+        elif [[ "true" == "$(StageL_eq 'Emoji' "$strScript")" ]]; then
+        # Emoji
+        strColor='purple'
+        elif [[ "true" == "$(StageL_eq 'Colors' "$strScript")" ]]; then
+        # Styling
+        strColor='maroon'
+        else
+        # Other
+        strColor='brown'
+    fi
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$strColor")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '">')")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_strFrom "$intIn")")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</span> ')")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaFromAsciiSafeSubset() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromAsciiSafeSubset:format-asciiSafeSubset'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intCounter='0'
+    intCounter='0'
+    strState=''
+    strState='normal'
+    intArrayPrefilter=()
+    intCurrentChar='0'
+    boolStrict='false'
+    boolStrict='false'
+    if [[ "true" == "$(StageL_eq 'true' "$(StageL_getSettingForFormat 'asciiSafeSubset' 'in' 'strict')")" ]]; then
+        boolStrict='true'
+    fi
+    while [[ "true" == "$(StageL_lt "$intCounter" "$intLen")" ]]; do
+        intCurrentChar="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intCounter")"
+        StageL_assertIsTrue "$(StageL_isAsciiSafeSubsetChar "$intCurrentChar")"
+        if [[ "true" == "$(StageL_and "$boolStrict" "$(StageL_and "$(StageL_eq "$strState" 'normal')" "$(StageL_eq "$intCurrentChar" '10')")")" ]]; then
+            StageL_die 'LF without preceding CR not allowed in asciiSafeSubset strict mode.'
+        fi
+        if [[ "true" == "$(StageL_and "$(StageL_eq "$strState" 'normal')" "$(StageL_eq "$intCurrentChar" '13')")" ]]; then
+            # Wait to see if there's a lf after this cr. If so, treat them as a unit.
+            strState='crlf'
+                elif [[ "true" == "$(StageL_eq "$strState" 'crlf')" ]]; then
+            strState='normal'
+            intArrayPrefilter="$(StageL_append "$(join_by $'\037' "${intArrayPrefilter[@]}")" "$(StageL_crlf )")"
+            if [[ "true" == "$(StageL_ne "$intCurrentChar" '10')" ]]; then
+                if [[ "true" == "$boolStrict" ]]; then
+                    StageL_die 'CR followed by non-LF byte not allowed in asciiSafeSubset strict mode.'
+                fi
+                # Reparse the current character
+                intCounter="$(StageL_sub "$intCounter" '1')"
+            fi
+                else
+            intArrayPrefilter="$(StageL_push "$(join_by $'\037' "${intArrayPrefilter[@]}")" "$intCurrentChar")"
+        fi
+        intCounter="$(StageL_add "$intCounter" '1')"
+    done
+    intArrayPrefilter="$(StageL_dcaFromAscii "$(join_by $'\037' "${intArrayPrefilter[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayPrefilter[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToAsciiSafeSubset() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToAsciiSafeSubset:format-asciiSafeSubset'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayTemp=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intDcAtIndex='0'
+    strState=''
+    strState='normal'
+    intArrayMapTemp=()
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intArrayMapTemp="$(StageL_dcToFormat 'utf8' "$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")")"
+        if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayMapTemp[@]}")")")" ]]; then
+            intArrayTemp="$(StageL_setElement "$(join_by $'\037' "${intArrayTemp[@]}")" "$intInputIndex" '-1')"
+                else
+            intArrayTemp="$(StageL_setElement "$(join_by $'\037' "${intArrayTemp[@]}")" "$intInputIndex" "$(StageL_get "$(join_by $'\037' "${intArrayMapTemp[@]}")" '0')")"
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    intInputIndex='0'
+    intArrayTempChar=()
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        if [[ "true" == "$(StageL_eq "$intDcAtIndex" '121')" ]]; then
+            strState='crlf'
+            intInputIndex="$(StageL_add "$intInputIndex" '1')"
+            intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        fi
+        if [[ "true" == "$(StageL_eq "$strState" 'normal')" ]]; then
+            intArrayTempChar="$(StageL_dcToFormat 'utf8' "$intDcAtIndex")"
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayTempChar[@]}")")")" ]]; then
+                StageL_exportWarningUnmappable "$intInputIndex" "$intDcAtIndex"
+                        else
+                if [[ "true" == "$(StageL_dcIsNewline "$intDcAtIndex")" ]]; then
+                    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                                elif [[ "true" == "$(StageL_isAsciiSafeSubsetChar "$(StageL_get "$(join_by $'\037' "${intArrayTempChar[@]}")" '0')")" ]]; then
+                    intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(join_by $'\037' "${intArrayTempChar[@]}")")"
+                                else
+                    StageL_exportWarningUnmappable "$intInputIndex" "$intDcAtIndex"
+                fi
+            fi
+                elif [[ "true" == "$(StageL_eq "$strState" 'crlf')" ]]; then
+            strState='normal'
+            if [[ "true" == "$(StageL_eq "$intDcAtIndex" '120')" ]]; then
+                # Found ambiguous cr, lf in a row, so only output one crlf
+                intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                        else
+                # Reprocess the current character with 'normal' state
+                intInputIndex="$(StageL_sub "$intInputIndex" '1')"
+            fi
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isAsciiSafeSubsetChar() {
+    intChar="$1"; shift; StageL_internalDebugCollect "int Char = $intChar; "; StageL_internalDebugStackEnter 'isAsciiSafeSubsetChar:format-asciiSafeSubset'; StageL_assertIsInt "$intChar"
+
+    boolRes='false'
+    boolRes="$(StageL_or "$(StageL_asciiIsPrintable "$intChar")" "$(StageL_asciiIsNewline "$intChar")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcaFromIntegerList() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromIntegerList:format-integerList'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayRes=()
+    # Accepts an array of bytes representing an ASCII list of integers representing Dcs. Returns an array of Dcs. This format is the same as sems but without supporting comments.
+    strCurrentDc=''
+    strCurrentDc=''
+    intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intByteOffset='0'
+    intCurrentByte='0'
+    while [[ "true" == "$(StageL_lt "$intByteOffset" "$intContentLength")" ]]; do
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        intCurrentByte="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intByteOffset")"
+        if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentByte")" ]]; then
+            strCurrentDc="$(StageL_cat "$strCurrentDc" "$(StageL_charFromByte "$intCurrentByte")")"
+                elif [[ "true" == "$(StageL_asciiIsSpace "$intCurrentByte")" ]]; then
+            intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+            strCurrentDc=''
+                else
+            StageL_die 'Unexpected parser state in integerList document.'
+        fi
+        intByteOffset="$(StageL_add "$intByteOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+        # Ended without a trailing space
+        if [[ "true" == "$(StageL_eq 'true' "$(StageL_getSettingForFormat 'integerList' 'in' 'strict')")" ]]; then
+            StageL_die 'No trailing space present in integerList format while importing. This is not allowed in strict mode.'
+        fi
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToIntegerList() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToIntegerList:format-integerList'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_cat "$(StageL_strFrom "$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")" )" ' ')")")"
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isSupportedDocumentTransformation() {
+    strTransform="$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugStackEnter 'isSupportedDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"
+
+    boolRes='false'
+    boolRes="$(StageL_in "$strTransform" "$(join_by $'\037' "${strArrayListDocumentTransformations[@]}")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+assertIsSupportedDocumentTransformation() {
+    strTransform="$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugStackEnter 'assertIsSupportedDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"
+
+    StageL_assertIsTrue "$(StageL_isSupportedDocumentTransformation "$strTransform")"
+
+    StageL_internalDebugStackExit;
+}
+
+applyDocumentTransformation() {
+    strTransform="$1"; shift; IFS=$'\037' read -r -a intArrayDcArrayIn <<< "$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugCollect "intArray DcArrayIn = $intArrayDcArrayIn; "; StageL_internalDebugStackEnter 'applyDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+
+    StageL_assertIsSupportedDocumentTransformation "$strTransform"
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq "$strTransform" 'semanticToText')" ]]; then
+        intArrayRes="$(StageL_dctSemanticToText "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strTransform" 'codeToText')" ]]; then
+        intArrayRes="$(StageL_dctCodeToText "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        else
+        StageL_die "$(StageL_cat 'Unimplemented document transformation: ' "$strTransform")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcPreprocessForFormat() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'dcPreprocessForFormat:dc-preprocess-for-format'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    intArrayRes=()
+    intArrayRes="$(join_by $'\037' "${intArrayIn[@]}")"
+    strPreferredLang=''
+    strPreferredLang="$(StageL_getPreferredLanguageForFormat "$strFormat" "$strDirection")"
+    strPreferredCodeLang=''
+    strPreferredCodeLang="$(StageL_getPreferredCodeLanguageForFormat "$strFormat" "$strDirection")"
+    strTemp=''
+    if [[ "true" == "$(StageL_in 'prefilter_semantic' "$(StageL_getSettingsForFormat "$strFormat" "$strDirection")")" ]]; then
+        strTemp="$(StageL_pushFormatImportSetting 'semanticToText' 'language' "$strPreferredLang")"
+        intArrayRes="$(StageL_dctSemanticToText "$(join_by $'\037' "${intArrayRes[@]}")")"
+        StageL_setFormatImportSetting 'semanticToText' 'language' "$strTemp"
+    fi
+    if [[ "true" == "$(StageL_in 'prefilter_code' "$(StageL_getSettingsForFormat "$strFormat" "$strDirection")")" ]]; then
+        strTemp="$(StageL_pushFormatImportSetting 'codeToText' 'language' "$strPreferredCodeLang")"
+        intArrayRes="$(StageL_dctCodeToText "$(join_by $'\037' "${intArrayRes[@]}")")"
+        StageL_setFormatImportSetting 'codeToText' 'language' "$strTemp"
+    fi
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dctSemanticToText() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dctSemanticToText:semantic-to-text'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intCurrentDc='0'
+    strTargetLanguage=''
+    strTargetLanguage="$(StageL_cat 'lang_' "$(StageL_getFormatImportSetting 'semanticToText' 'language')")"
+    if [[ "true" == "$(StageL_eq 'lang_' "$strTargetLanguage")" ]]; then
+        strTargetLanguage="$(StageL_cat 'lang_' "$(StageL_getEnvLanguage )")"
+    fi
+    strTemp=''
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_eq 'Semantic' "$(StageL_dcGetScript "$intCurrentDc")")" ]]; then
+            strTemp="$(StageL_dcGetMappingToFormat "$intCurrentDc" "$strTargetLanguage")"
+            if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strTemp")")" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromElad "$strTemp")")"
+                        else
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$intCurrentDc")"
+            fi
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dctCodeToText() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dctCodeToText:code-to-text'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intCurrentDc='0'
+    strTargetLanguage=''
+    strTargetLanguage="$(StageL_getFormatImportSetting 'codeToText' 'language')"
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_len "$strTargetLanguage")")" ]]; then
+        strTargetLanguage="$(StageL_getEnvCodeLanguage )"
+    fi
+    strTemp=''
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_dcIsELCode "$intCurrentDc")" ]]; then
+            strTemp="$(StageL_dcGetMappingToFormat "$intCurrentDc" "$strTargetLanguage")"
+            if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strTemp")")" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromElad "$strTemp")")"
+                        else
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$intCurrentDc")"
+            fi
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+# This file contains the public interface for EITE StageR.
+# If you just want to run EITE, use the following routine.
+
+startEite() {
+    StageL_internalDebugStackEnter 'startEite:public-interface';
+
+    # Start EITE, using the default startup document. Does not return while EITE is still running.
+    StageL_loadAndRun 'sems' 'eite.sems'
+
+    StageL_internalDebugStackExit;
+}
+# If you want to run a different document, you can call loadAndRun with the format of the document to open and its location.
+
+loadAndRun() {
+    strFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadAndRun:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strPath"
+
+    # Load and run the specified document. Does not return while the document is still running.
+    StageL_runDocument "$(StageL_loadStoredDocument "$strFormat" "$strPath")"
+
+    StageL_internalDebugStackExit;
+}
+# If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
+
+loadAndConvert() {
+    strInputFormat="$1"; shift; strOutputFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str InputFormat = $strInputFormat; "; StageL_internalDebugCollect "str OutputFormat = $strOutputFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadAndConvert:public-interface'; StageL_assertIsStr "$strInputFormat"; StageL_assertIsStr "$strOutputFormat"; StageL_assertIsStr "$strPath"
+
+    # Load the specified document, and return it converted to the specified outputFormat as an array of bytes.
+    intArrayOut=()
+    intArrayOut="$(StageL_exportDocument "$strOutputFormat" "$(StageL_loadStoredDocument "$strInputFormat" "$strPath")" )"
+}
+# To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. Or, if you already have it as a byte array, you can call importDocument or importAndExport on it.
+
+runDocument() {
+    IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'runDocument:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    # Run the provided document. Does not return while the document is still running. Takes care of events and I/O automatically.
+    StageL_runDocumentGo "$(StageL_runDocumentPrepare "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runDocumentPrepare() {
+    IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'runDocumentPrepare:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    # Prepare to run the provided document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document.
+    StageL_setupIfNeeded 
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayContents[@]}")"
+    intExecId='0'
+    intExecId="$(StageL_prepareDocumentExec "$(join_by $'\037' "${intArrayContents[@]}")")"
+    StageL_assertIsExecId "$intExecId"
+
+    intReturn="$intExecId"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+runDocumentGo() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'runDocumentGo:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Run a document, once it's been prepared to run by calling runDocumentPrepare.
+    StageL_internalRunDocument "$intExecId"
+
+    StageL_internalDebugStackExit;
+}
+
+getExecOption() {
+    intExecId="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getExecOption:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strKey"
+
+    # Get the value of an execution option for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getExecSettings "$intExecId")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getExecOptions() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getExecOptions:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Get the execution options set for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    strArrayRes=()
+    strArrayRes="$(StageL_getExecSettings "$intExecId")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+setExecOption() {
+    intExecId="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setExecOption:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Set an execution option for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    StageL_setExecSettings "$intExecId" "$(StageL_kvSetValue "$(StageL_getExecSettings "$intExecId")" "$strKey" "$strValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+exportDocument() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'exportDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
+    StageL_setupIfNeeded 
+    intArrayOut=()
+    intArrayOut="$(StageL_dcaToFormat "$strFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+importDocument() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'importDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
+    StageL_setupIfNeeded 
+    intArrayOut=()
+    intArrayOut="$(StageL_dcaFromFormat "$strFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+importAndExport() {
+    strInputFormat="$1"; shift; strOutputFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str InputFormat = $strInputFormat; "; StageL_internalDebugCollect "str OutputFormat = $strOutputFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'importAndExport:public-interface'; StageL_assertIsStr "$strInputFormat"; StageL_assertIsStr "$strOutputFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strInputFormat"
+    StageL_assertIsSupportedOutputFormat "$strOutputFormat"
+    # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
+    intArrayOut=()
+    intArrayOut="$(StageL_convertFormats "$strInputFormat" "$strOutputFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getFormatImportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getFormatImportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"
+
+    # Return the value of the specified import setting for the specified format.
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getFormatImportSettings "$strFormat")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatExportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getFormatExportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"
+
+    # Return the value of the specified export setting for the specified format.
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getFormatExportSettings "$strFormat")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+setFormatImportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setFormatImportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Set the value of the specified import setting for the specified format.
+    StageL_setFormatImportSettings "$strFormat" "$(StageL_kvSetValue "$(StageL_getFormatImportSettings "$strFormat")" "$strKey" "$strValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+setFormatExportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setFormatExportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Set the value of the specified export setting for the specified format.
+    StageL_setFormatExportSettings "$strFormat" "$(StageL_kvSetValue "$(StageL_getFormatExportSettings "$strFormat")" "$strKey" "$strValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+pushFormatImportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'pushFormatImportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Temporarily set the value of the specified import setting for the specified format. Call setFormatImportSetting with the value this returns when you want to put the setting back.
+    strResult=''
+    strResult="$(StageL_getFormatImportSetting "$strFormat" "$strKey")"
+    StageL_setFormatImportSetting "$strFormat" "$strKey" "$strValue"
+
+    strReturn="$strResult"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+pushFormatExportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'pushFormatExportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Temporarily set the value of the specified export setting for the specified format. Call setFormatExportSetting with the value this returns when you want to put the setting back.
+    strResult=''
+    strResult="$(StageL_getFormatExportSetting "$strFormat" "$strKey")"
+    StageL_setFormatExportSetting "$strFormat" "$strKey" "$strValue"
+
+    strReturn="$strResult"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatImportSettings() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatImportSettings:public-interface'; StageL_assertIsStr "$strFormat"
+
+    # Return the import settings array for the specified format.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    strArrayRes=()
+    strArrayRes="$(StageL_getSettingsForFormat "$strFormat" 'in')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getFormatExportSettings() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatExportSettings:public-interface'; StageL_assertIsStr "$strFormat"
+
+    # Return the export settings array for the specified format.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    strArrayRes=()
+    strArrayRes="$(StageL_getSettingsForFormat "$strFormat" 'out')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+setFormatImportSettings() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a strArraySettings <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "strArray Settings = $strArraySettings; "; StageL_internalDebugStackEnter 'setFormatImportSettings:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStrArray "$(join_by $'\037' "${strArraySettings[@]}")"
+
+    # Replace the import settings array for the specified format.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    StageL_setImportSettings "$(StageL_getFormatId "$strFormat")" "$(StageL_kvJoin "$(join_by $'\037' "${strArraySettings[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+setFormatExportSettings() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a strArraySettings <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "strArray Settings = $strArraySettings; "; StageL_internalDebugStackEnter 'setFormatExportSettings:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStrArray "$(join_by $'\037' "${strArraySettings[@]}")"
+
+    # Replace the export settings array for the specified format.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    StageL_setExportSettings "$(StageL_getFormatId "$strFormat")" "$(StageL_kvJoin "$(join_by $'\037' "${strArraySettings[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+transformDocument() {
+    IFS=$'\037' read -r -a intArrayInputDocument <<< "$1"; shift; strTransformation="$1"; shift; StageL_internalDebugCollect "intArray InputDocument = $intArrayInputDocument; "; StageL_internalDebugCollect "str Transformation = $strTransformation; "; StageL_internalDebugStackEnter 'transformDocument:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayInputDocument[@]}")"; StageL_assertIsStr "$strTransformation"
+
+    # Apply one of the supported document transformations to the provided document, and return the result.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedDocumentTransformation "$strTransformation"
+    intArrayResult=()
+    intArrayResult="$(StageL_applyDocumentTransformation "$strTransformation" "$(join_by $'\037' "${intArrayInputDocument[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayResult[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+# If you want more control over the document loading and execution, you can use these lower-level functions.
+
+loadStoredDocument() {
+    strFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadStoredDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strPath"
+
+    # Load and return the specified document as a Dc array.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    intArrayRes=()
+    intArrayRes="$(StageL_dcaFromFormat "$strFormat" "$(StageL_getFileFromPath "$strPath")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getDesiredEventNotifications() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getDesiredEventNotifications:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
+    strArrayRes=()
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+sendEvent() {
+    intExecId="$1"; shift; IFS=$'\037' read -r -a intArrayEventData <<< "$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "intArray EventData = $intArrayEventData; "; StageL_internalDebugStackEnter 'sendEvent:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayEventData[@]}")"
+
+    # Send the provided event or events data to the specified document.
+}
+
+getDocumentFrame() {
+    intExecId="$1"; shift; strFormat="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getDocumentFrame:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    # Return the most recently available output for the given document in the requested format.
+}
+# To run the tests, you can use runTests or runPrintTests.
+
+runTests() {
+    StageL_internalDebugStackEnter 'runTests:public-interface'; 
+
+    # Returns true if all tests pass; false otherwise. Displays a report of the tests.
+    StageL_setupIfNeeded 
+    StageL_clearTestStats 
+    StageL_runTestsOnly 'true'
+    StageL_reportTests 
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+quietRunTests() {
+    StageL_internalDebugStackEnter 'quietRunTests:public-interface'; 
+
+    # Returns true if all tests pass; false otherwise.
+    StageL_setupIfNeeded 
+    boolRes='false'
+    boolRes="$(StageL_runTestsOnly 'false')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+
+// @license-end
