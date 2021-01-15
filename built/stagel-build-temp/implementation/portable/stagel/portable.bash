@@ -4362,3 +4362,28 @@ dcaToHtmlFragment() {
     intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
 }
 
+runTestsFormatHtmlFragment() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatHtmlFragment:format-htmlFragment-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatHtmlFragment'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_strToByteArray '<div style="white-space:pre-wrap">5&lt;6</div>')" "$(StageL_dcaToHtmlFragment "$(join_by $'\037' '39' '46' '40')")")"
+
+    StageL_internalDebugStackExit;
+}
+
+dcaFromAscii() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromAscii:format-ascii'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayRes=()
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intC='0'
+    intC='0'
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcFromFormat 'ascii' "$(StageL_anFromN "$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intC")")")")"
+        intC="$(StageL_add "$intC" '1')"
+    done
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    
