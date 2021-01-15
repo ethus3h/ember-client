@@ -4,7 +4,10 @@ if [[ "--build-type" == "$1" ]]; then
     shift
 fi
 
-if [[ "--cache"  ]]
+if [[ "--cache" == "$1" ]]; then
+    shift
+    touch ./support/.cache-build
+fi
 
 rm -rf ./built
 mkdir ./built
