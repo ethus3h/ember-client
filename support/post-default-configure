@@ -4,7 +4,7 @@ if [[ "--build-type" == "$1" ]]; then
     shift
 fi
 
-rm ./support/.cache-build
+rm -f ./support/.cache-build
 if [[ "--cache" == "$1" ]]; then
     shift
     touch ./support/.cache-build
