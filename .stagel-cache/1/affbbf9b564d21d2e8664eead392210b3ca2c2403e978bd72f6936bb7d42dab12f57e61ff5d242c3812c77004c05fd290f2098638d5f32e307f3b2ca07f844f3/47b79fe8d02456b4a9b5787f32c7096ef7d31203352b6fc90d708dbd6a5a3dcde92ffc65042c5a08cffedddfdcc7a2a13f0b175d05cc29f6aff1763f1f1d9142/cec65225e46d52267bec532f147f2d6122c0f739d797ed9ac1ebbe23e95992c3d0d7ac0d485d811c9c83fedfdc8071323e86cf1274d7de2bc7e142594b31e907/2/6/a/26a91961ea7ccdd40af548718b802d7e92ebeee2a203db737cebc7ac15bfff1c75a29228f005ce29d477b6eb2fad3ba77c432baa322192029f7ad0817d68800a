@@ -1,0 +1,9 @@
+runTestsWasm() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsWasm:wasm-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'wasm'
+    StageL_runTest "$boolV" "$(StageL_eq '42' "$(StageL_wasmCall 'fortytwo' '0')")"
+    #runTest b/v eq 4 wasmCallArrIn 'add' ( 2 2 )
+
+    StageL_internalDebugStackExit;
+}

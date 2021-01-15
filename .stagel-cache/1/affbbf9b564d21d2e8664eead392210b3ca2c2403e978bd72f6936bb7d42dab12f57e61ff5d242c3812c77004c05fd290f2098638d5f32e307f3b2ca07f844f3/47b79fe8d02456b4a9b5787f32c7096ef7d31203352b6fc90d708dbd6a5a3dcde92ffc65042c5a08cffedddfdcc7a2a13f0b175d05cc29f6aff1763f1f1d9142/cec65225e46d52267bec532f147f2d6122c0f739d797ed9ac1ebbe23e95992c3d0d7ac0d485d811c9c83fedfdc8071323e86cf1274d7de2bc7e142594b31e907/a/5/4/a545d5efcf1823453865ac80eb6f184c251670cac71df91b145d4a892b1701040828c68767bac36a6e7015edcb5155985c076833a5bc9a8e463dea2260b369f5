@@ -1,0 +1,237 @@
+warnOrDie() {
+    boolStrict="$1"; shift; strMsg="$1"; shift; StageL_internalDebugCollect "bool Strict = $boolStrict; "; StageL_internalDebugCollect "str Msg = $strMsg; "; StageL_internalDebugStackEnter 'warnOrDie:assertions'; StageL_assertIsBool "$boolStrict"; StageL_assertIsStr "$strMsg"
+
+    if [[ "true" == "$boolStrict" ]]; then
+        StageL_die "$strMsg"
+    fi
+    StageL_warn "$strMsg"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsTrue() {
+    boolIn="$1"; shift; StageL_internalDebugCollect "bool In = $boolIn; "; StageL_internalDebugStackEnter 'assertIsTrue:assertions'; StageL_assertIsBool "$boolIn"
+
+    if [[ "true" == "$(StageL_isFalse "$boolIn")" ]]; then
+        StageL_assertionFailed "$(StageL_cat "$(StageL_bool ' is not true.')")"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsFalse() {
+    boolIn="$1"; shift; StageL_internalDebugCollect "bool In = $boolIn; "; StageL_internalDebugStackEnter 'assertIsFalse:assertions'; StageL_assertIsBool "$boolIn"
+
+    if [[ "true" == "$(StageL_isTrue "$boolIn")" ]]; then
+        StageL_assertionFailed "$(StageL_cat "$(StageL_bool ' is true, but should be false.')")"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+assertContains() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; genericValue="$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugCollect "generic Value = $genericValue; "; StageL_internalDebugStackEnter 'assertContains:assertions'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"; StageL_assertIsGeneric "$genericValue"
+
+    StageL_assertIsTrue "$(StageL_contains "$(join_by $'\037' "${genericArrayIn[@]}")" "$genericValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsByte() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsByte:assertions'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isByte "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsChar() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'assertIsChar:assertions'; StageL_assertIsGeneric "$genericIn"
+
+    StageL_assertIsTrue "$(StageL_isChar "$genericIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsCharByte() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsCharByte:assertions'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isCharByte "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsDc() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'assertIsDc:assertions'; StageL_assertIsGeneric "$genericIn"
+
+    StageL_assertIsTrue "$(StageL_isDc "$genericIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertStrContainsOnlyInt() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertStrContainsOnlyInt:assertions'; StageL_assertIsStr "$strIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_strContainsOnlyInt "$strIn")")" ]]; then
+        StageL_assertionFailed "$(StageL_cat "$strIn" ' does not only contain an integer.')"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsNonnegative() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsNonnegative:assertions'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isNonnegative "$intIn")")" ]]; then
+        strTemp=''
+        strTemp="$(StageL_strFrom "$intIn")"
+        StageL_assertionFailed "$(StageL_cat "$strTemp" ' is negative.')"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsSupportedBase() {
+    intB="$1"; shift; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'assertIsSupportedBase:assertions'; StageL_assertIsInt "$intB"
+
+    StageL_assertIsTrue "$(StageL_isSupportedBase "$intB")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsBaseDigit() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'assertIsBaseDigit:assertions'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    StageL_assertIsTrue "$(StageL_isBaseDigit "$strIn" "$intB")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsBaseStr() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'assertIsBaseStr:assertions'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    StageL_assertIsTrue "$(StageL_isBaseStr "$strIn" "$intB")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsIntArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsIntArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isIntArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsBoolArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsBoolArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isBoolArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsStrArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsStrArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isStrArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsCharArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsCharArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isCharArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsIntBitArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsIntBitArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isIntBitArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsByteArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsByteArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isByteArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsDcArray() {
+    IFS=$'\037' read -r -a genericItemIn <<< "$1"; shift; StageL_internalDebugCollect "genericItem In = $genericItemIn; "; StageL_internalDebugStackEnter 'assertIsDcArray:assertions'; StageL_assertIsGenericItem "$(join_by $'\037' "${genericItemIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isDcArray "$(join_by $'\037' "${genericItemIn[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsDcDataset() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsDcDataset:assertions'; StageL_assertIsStr "$strIn"
+
+    StageL_assertIsTrue "$(StageL_isDcDataset "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsFormat:assertions'; StageL_assertIsStr "$strIn"
+
+    StageL_assertIsTrue "$(StageL_isFormat "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsSupportedInputFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsSupportedInputFormat:assertions'; StageL_assertIsStr "$strIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isSupportedInputFormat "$strIn")")" ]]; then
+        StageL_die "$(StageL_cat "$strIn" ' is not a supported input format.')"
+    fi
+    StageL_assertIsTrue "$(StageL_isSupportedInputFormat "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsSupportedOutputFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsSupportedOutputFormat:assertions'; StageL_assertIsStr "$strIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isSupportedOutputFormat "$strIn")")" ]]; then
+        StageL_die "$(StageL_cat "$strIn" ' is not a supported output format.')"
+    fi
+    StageL_assertIsTrue "$(StageL_isSupportedOutputFormat "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsSupportedEnvironmentCharEncoding() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsSupportedEnvironmentCharEncoding:assertions'; StageL_assertIsStr "$strIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isSupportedEnvironmentCharEncoding "$strIn")")" ]]; then
+        StageL_die "$(StageL_cat "$strIn" ' is not a supported environment character encoding.')"
+    fi
+    StageL_assertIsTrue "$(StageL_isSupportedEnvironmentCharEncoding "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsExecId() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsExecId:assertions'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isExecId "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
