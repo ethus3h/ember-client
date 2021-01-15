@@ -10,6 +10,7 @@ Please report any issues you find with this repository to the Ember project's is
 
 - Build and install dependencies: see the packaging for what's needed: https://github.com/ethus3h/ember-shared/blob/master/data/packages/ddc-in.scm
 - Bootstrap and later are actively getting changed in ways that will make them probably not build sometimes or all the time.
+- If you don't want to have transpiler output saved for quicker rebuilds (and any already in the repository used), remove `--cache` from the below
 - then the distfiles:
 ```
 ./configure -- --build-type dist; make; sudo make install
