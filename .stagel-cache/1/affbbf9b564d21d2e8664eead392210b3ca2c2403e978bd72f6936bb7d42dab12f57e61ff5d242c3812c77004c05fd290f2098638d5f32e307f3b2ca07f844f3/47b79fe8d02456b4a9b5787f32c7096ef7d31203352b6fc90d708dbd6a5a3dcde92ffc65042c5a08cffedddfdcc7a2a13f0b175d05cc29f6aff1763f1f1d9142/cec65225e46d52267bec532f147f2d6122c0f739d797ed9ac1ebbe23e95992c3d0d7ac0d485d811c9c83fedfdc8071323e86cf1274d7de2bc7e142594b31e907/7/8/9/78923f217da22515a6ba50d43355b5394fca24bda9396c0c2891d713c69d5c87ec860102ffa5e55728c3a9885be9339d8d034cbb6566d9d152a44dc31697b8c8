@@ -1,0 +1,12 @@
+runTestsPack32() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsPack32:pack32-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'pack32'
+    StageL_runTest "$boolV" "$(StageL_eq '0' "$(StageL_unpack32 "$(StageL_pack32 '0')")")"
+    StageL_runTest "$boolV" "$(StageL_eq '10' "$(StageL_unpack32 "$(StageL_pack32 '10')")")"
+    StageL_runTest "$boolV" "$(StageL_eq '100' "$(StageL_unpack32 "$(StageL_pack32 '100')")")"
+    StageL_runTest "$boolV" "$(StageL_eq '1000' "$(StageL_unpack32 "$(StageL_pack32 '1000')")")"
+    StageL_runTest "$boolV" "$(StageL_eq '10000' "$(StageL_unpack32 "$(StageL_pack32 '10000')")")"
+
+    StageL_internalDebugStackExit;
+}

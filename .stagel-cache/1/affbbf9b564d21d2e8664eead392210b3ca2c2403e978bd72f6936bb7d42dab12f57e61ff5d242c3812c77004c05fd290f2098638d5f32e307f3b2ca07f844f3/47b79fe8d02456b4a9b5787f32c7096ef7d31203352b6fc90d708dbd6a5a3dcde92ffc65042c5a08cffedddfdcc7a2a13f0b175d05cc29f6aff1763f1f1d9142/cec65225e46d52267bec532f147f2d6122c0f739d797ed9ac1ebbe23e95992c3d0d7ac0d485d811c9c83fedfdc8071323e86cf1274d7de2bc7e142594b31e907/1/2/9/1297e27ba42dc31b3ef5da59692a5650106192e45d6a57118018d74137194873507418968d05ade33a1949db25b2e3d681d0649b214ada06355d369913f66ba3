@@ -1,0 +1,11 @@
+runTestsMath() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsMath:math-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'math'
+    StageL_runTest "$boolV" "$(StageL_eq '4' "$(StageL_add '2' '2')")"
+    StageL_runTest "$boolV" "$(StageL_ne '4' "$(StageL_add '2' '3')")"
+    StageL_runTest "$boolV" "$(StageL_eq '26BD' "$(StageL_decToHex '9917')")"
+    StageL_runTest "$boolV" "$(StageL_eq '9917' "$(StageL_hexToDec '26BD')")"
+
+    StageL_internalDebugStackExit;
+}

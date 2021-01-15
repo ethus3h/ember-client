@@ -1,0 +1,343 @@
+listFormats() {
+    StageL_internalDebugStackEnter 'listFormats:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcGetColumn 'formats' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isFormat() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'isFormat:formats-data'; StageL_assertIsStr "$strFormat"
+
+    boolRes='false'
+    boolRes="$(StageL_in "$strFormat" "$(StageL_listFormats )")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listInputFormats() {
+    StageL_internalDebugStackEnter 'listInputFormats:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValueGreater 'formats' '3' '0' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isSupportedInputFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isSupportedInputFormat:formats-data'; StageL_assertIsStr "$strIn"
+
+    boolRes='false'
+    boolRes="$(StageL_contains "$(StageL_listInputFormats )" "$strIn")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listInternalFormats() {
+    StageL_internalDebugStackEnter 'listInternalFormats:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValue 'formats' '6' 'internal' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isSupportedInternalFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isSupportedInternalFormat:formats-data'; StageL_assertIsStr "$strIn"
+
+    boolRes='false'
+    boolRes="$(StageL_or "$(StageL_contains "$(StageL_listInputFormats )" "$strIn")" "$(StageL_contains "$(StageL_listInternalFormats )" "$strIn")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listOutputFormats() {
+    StageL_internalDebugStackEnter 'listOutputFormats:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValueGreater 'formats' '4' '0' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isSupportedOutputFormat() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isSupportedOutputFormat:formats-data'; StageL_assertIsStr "$strIn"
+
+    boolRes='false'
+    boolRes="$(StageL_contains "$(StageL_listOutputFormats )" "$strIn")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listCharEncodings() {
+    StageL_internalDebugStackEnter 'listCharEncodings:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValue 'formats' '6' 'encoding' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isSupportedCharEncoding() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isSupportedCharEncoding:formats-data'; StageL_assertIsStr "$strIn"
+
+    # Specifically, is it a supported character encoding for the output environment.
+    boolRes='false'
+    boolRes="$(StageL_and "$(StageL_contains "$(StageL_listCharEncodings )" "$strIn")" "$(StageL_isSupportedOutputFormat "$strIn")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listTerminalTypes() {
+    StageL_internalDebugStackEnter 'listTerminalTypes:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValue 'formats' '6' 'terminal' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+isSupportedTerminalType() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'isSupportedTerminalType:formats-data'; StageL_assertIsStr "$strIn"
+
+    # Specifically, is it a supported terminal type for the output environment.
+    boolRes='false'
+    boolRes="$(StageL_and "$(StageL_contains "$(StageL_listTerminalTypes )" "$strIn")" "$(StageL_isSupportedOutputFormat "$strIn")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+listDocumentTransformations() {
+    StageL_internalDebugStackEnter 'listDocumentTransformations:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValue 'formats' '6' 'transformation' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+listDataTypes() {
+    StageL_internalDebugStackEnter 'listDataTypes:formats-data'; 
+
+    strArrayRes=()
+    strArrayRes="$(StageL_dcDataFilterByValue 'formats' '6' 'data' '1')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+listVariantsForFormat() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'listVariantsForFormat:formats-data'; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsFormat "$strFormat"
+    strNormalizedFmt=''
+    strNormalizedFmt="$(StageL_normalizeFormat "$strFormat")"
+    strArrayFormats=()
+    strArrayFormats="$(StageL_listFormats )"
+    intCount='0'
+    intI='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${strArrayFormats[@]}")")"
+    intI='0'
+    strCandidateFmt=''
+    strNormalizedVar=''
+    strArrayRes=()
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strCandidateFmtType="$(StageL_dcDataLookupById 'formats' "$intI" '6')"
+        if [[ "true" == "$(StageL_eq 'v:' "$(StageL_substr "$strCandidateFmtType" '0' '2')")" ]]; then
+            strCandidateFmtType="$(StageL_substr "$strCandidateFmtType" '3' '-1')"
+            if [[ "true" == "$(StageL_in "$strCandidateFmtType" "$(join_by $'\037' 'unicodePua')")" ]]; then
+                strCandidateFmtType='unicode'
+            fi
+            if [[ "true" == "$(StageL_eq "$strNormalizedFmt" "$strCandidateFmtType")" ]]; then
+                strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_dcDataLookupById 'formats' "$intI" '1')")"
+            fi
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getFormatId() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatId:formats-data'; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsFormat "$strFormat"
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_dcDataLookupByValue 'formats' '1' "$strFormat" '0')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+normalizeFormat() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'normalizeFormat:formats-data'; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsFormat "$strFormat"
+    if [[ "true" == "$(StageL_eq "$strFormat" 'utf8')" ]]; then
+
+        strReturn='unicode'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+    fi
+
+    strReturn="$strFormat"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatName() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatName:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strRes=''
+    strRes="$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '1')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatExtension() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatExtension:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strRes=''
+    strRes="$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '2')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatImportSupport() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatImportSupport:formats-data'; StageL_assertIsStr "$strFormat"
+
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '3')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+getFormatExportSupport() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatExportSupport:formats-data'; StageL_assertIsStr "$strFormat"
+
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '4')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+getFormatTestsStatus() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatTestsStatus:formats-data'; StageL_assertIsStr "$strFormat"
+
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '5')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+getFormatType() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatType:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strRes=''
+    strRes="$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '6')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatLabel() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatLabel:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strRes=''
+    strRes="$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '7')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatVariantTypes() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatVariantTypes:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strArrayRes=()
+    strArrayRes="$(StageL_strSplit "$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '8')" ',')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getFormatComments() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatComments:formats-data'; StageL_assertIsStr "$strFormat"
+
+    strRes=''
+    strRes="$(StageL_dcDataLookupById 'formats' "$(StageL_getFormatId "$strFormat")" '9')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+formatIsVariant() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'formatIsVariant:formats-data'; StageL_assertIsStr "$strFormat"
+
+    # Return true if the format is a variant of another format, rather than its own format.
+    StageL_assertIsFormat "$strFormat"
+    boolRes='false'
+    boolRes="$(StageL_eq 'v:' "$(StageL_substr "$(StageL_getFormatType "$strFormat")" '0' '2')")"
+
+    boolReturn="$strRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isVariantType() {
+    strVariantType="$1"; shift; StageL_internalDebugCollect "str VariantType = $strVariantType; "; StageL_internalDebugStackEnter 'isVariantType:formats-data'; StageL_assertIsStr "$strVariantType"
+
+    boolRes='false'
+    boolRes="$(StageL_in "$strVariantType" "$(join_by $'\037' 'encoding' 'unicodePua')")"
+
+    strReturn="$boolRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+formatGetVariantType() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'formatGetVariantType:formats-data'; StageL_assertIsStr "$strFormat"
+
+    # Return the string indicating the type of format variant this is.
+    StageL_assertIsTrue "$(StageL_formatIsVariant "$strFormat")"
+    strRes=''
+    strRes="$(StageL_substr "$(StageL_getFormatType "$strFormat")" '2' '-1')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+formatSupportsVariantType() {
+    strFormat="$1"; shift; strVariantType="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str VariantType = $strVariantType; "; StageL_internalDebugStackEnter 'formatSupportsVariantType:formats-data'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strVariantType"
+
+    StageL_assertIsFormat "$strFormat"
+    boolRes='false'
+    boolRes="$(StageL_in "$strVariantType" "$(StageL_getFormatVariantTypes "$strFormat")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+formatSupportsVariant() {
+    strFormat="$1"; shift; strVariant="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Variant = $strVariant; "; StageL_internalDebugStackEnter 'formatSupportsVariant:formats-data'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strVariant"
+
+    StageL_assertIsFormat "$strFormat"
+    boolRes='false'
+    boolRes="$(StageL_formatSupportsVariantType "$strFormat" "$(StageL_formatGetVariantType "$strVariant")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+getFormatMetricsType() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getFormatMetricsType:formats-data'; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsFormat "$strFormat"
+    strRes=''
+    strType=''
+    strType="$(StageL_getFormatType "$strFormat")"
+    strRes="$(StageL_cat 'complex-' "$strFormat")"
+    if [[ "true" == "$(StageL_or "$(StageL_eq 'text' "$strType")" "$(StageL_in "$strType" "$(join_by $'\037' 'encoding' 'terminal')")")" ]]; then
+        strRes='character'
+        elif [[ "true" == "$(StageL_in "$strType" "$(join_by $'\037' )")" ]]; then
+        strRes='pixel'
+        elif [[ "true" == "$(StageL_in "$strType" "$(join_by $'\037' 'internal')")" ]]; then
+        strRes="$(StageL_cat 'internal-' "$strFormat")"
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+dcGetMappingToFormat() {
+    intDc="$1"; shift; strFormat="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'dcGetMappingToFormat:formats-data'; StageL_assertIsInt "$intDc"; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsDc "$intDc"
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    strRes=''
+    strRes="$(StageL_dcDataLookupById "$(StageL_cat 'mappings/to/' "$strFormat")" "$intDc" '1')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}

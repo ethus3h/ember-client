@@ -1,0 +1,107 @@
+isDc() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isDc:format-dc'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intNum='0'
+    intNum="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_isNonnegative "$intNum")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isKnownDc() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isKnownDc:format-dc'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isDc "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    if [[ "true" == "$(StageL_gt "$genericIn" "$(StageL_maximumKnownDc )")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+maximumKnownDc() {
+    StageL_internalDebugStackEnter 'maximumKnownDc:format-dc'; 
+
+    strRes=''
+    strRes="$(StageL_dcDatasetLength 'DcData')"
+
+    intReturn="$strRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+dcIsNewline() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsNewline:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    # This function returns whether a character should be treated as a newline, in general. Individual characters may have more complex or ambiguous meanings (see details in DcData.csv), but this is useful as a general guide.
+    # We can't just use:
+    #if eq 'B' dcGetBidiClass n/dc
+    #    return true
+    # because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator).
+    if [[ "true" == "$(StageL_contains "$(join_by $'\037' '119' '120' '121' '240' '294' '295')" "$intDc")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsSpace() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsSpace:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    if [[ "true" == "$(StageL_eq 'Zs' "$(StageL_dcGetType "$intDc")")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsPrintable() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsPrintable:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strType=''
+    strType="$(StageL_dcGetType "$intDc")"
+    strGeneralType=''
+    strGeneralType="$(StageL_strChar "$strType" '0')"
+    if [[ "true" == "$(StageL_or "$(StageL_eq 'Zl' "$strType")" "$(StageL_eq 'Zp' "$strType")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    if [[ "true" == "$(StageL_or "$(StageL_eq '!' "$strGeneralType")" "$(StageL_eq 'C' "$strGeneralType")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsELCode() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsELCode:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    boolRes='false'
+    boolRes="$(StageL_eq 'EL ' "$(StageL_substr "$(StageL_dcGetScript "$intDc")" '0' '3')")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcGetELClass() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcGetELClass:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strRes=''
+    strRes="$(StageL_substr "$(StageL_dcGetScript "$intDc")" '3' '-1')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}

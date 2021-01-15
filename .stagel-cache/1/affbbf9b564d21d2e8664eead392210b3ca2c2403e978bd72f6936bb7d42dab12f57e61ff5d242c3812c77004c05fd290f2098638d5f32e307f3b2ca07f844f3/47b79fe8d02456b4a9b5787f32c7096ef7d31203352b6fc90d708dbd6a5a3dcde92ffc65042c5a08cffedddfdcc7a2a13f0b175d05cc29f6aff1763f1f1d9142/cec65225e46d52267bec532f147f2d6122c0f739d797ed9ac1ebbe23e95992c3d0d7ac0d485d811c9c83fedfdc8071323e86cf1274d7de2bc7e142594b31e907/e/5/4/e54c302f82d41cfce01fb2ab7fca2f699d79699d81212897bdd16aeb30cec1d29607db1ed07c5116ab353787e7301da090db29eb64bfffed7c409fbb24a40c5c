@@ -1,0 +1,28 @@
+# This is an attempt at packing arbitrary 32-bit unsigned? ints losslessly in a manner similar to UTF-8. For now, it is simply a wrapper around WTF-8 (UTF-8 but allowing unpaired surrogates). Consequently, it only supports a chunk of the 32 bit numbers. Later it can be extended to support all. Note that these functions take *signed* ints as input at least for the moment.
+
+pack32() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'pack32:pack32'; StageL_assertIsInt "$intIn"
+
+    intArrayRes=()
+    intArrayRes="$(StageL_intArrayPackWtf8 "$intIn")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+unpack32() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'unpack32:pack32'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intRes='0'
+    intRes="$(StageL_intUnpackWtf8 "$(join_by $'\037' "${intArrayIn[@]}")")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+isPack32Char() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'isPack32Char:pack32'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    boolRes='false'
+    boolRes="$(StageL_boolIsUnpackableWtf8 "$(join_by $'\037' "${intArrayIn[@]}")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}

@@ -1,0 +1,25 @@
+runTestsDocumentExec() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsDocumentExec:document-exec-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'documentExec'
+    StageL_runExecTest "$boolV" 'at-comment-no-space' '10'
+    StageL_runExecTest "$boolV" 'at-comment' '10'
+    StageL_runExecTest "$boolV" 'at-nl' '10'
+    StageL_runExecTest "$boolV" 'at-space-nl' '10'
+    StageL_runExecTest "$boolV" 'hello-world' '100'
+
+    StageL_internalDebugStackExit;
+}
+
+runExecTest() {
+    boolV="$1"; shift; strTestName="$1"; shift; intTicksNeeded="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestName = $strTestName; "; StageL_internalDebugCollect "int TicksNeeded = $intTicksNeeded; "; StageL_internalDebugStackEnter 'runExecTest:document-exec-tests'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestName"; StageL_assertIsInt "$intTicksNeeded"
+
+    intExecId='0'
+    intExecId="$(StageL_runDocumentPrepare "$(StageL_loadStoredDocument 'sems' "$(StageL_cat 'exec-tests/' "$(StageL_cat "$strTestName" '.sems')")")")"
+    StageL_setExecOption "$intExecId" 'stopExecAtTick' "$(StageL_strFrom "$intTicksNeeded")"
+    StageL_setExecOption "$intExecId" 'runHeadless' 'true'
+    StageL_runDocumentGo "$intExecId"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_getCurrentExecFrame "$intExecId")" "$(StageL_loadStoredDocument 'sems' "$(StageL_cat 'exec-tests/' "$(StageL_cat "$strTestName" '.out.sems')")")")"
+
+    StageL_internalDebugStackExit;
+}

@@ -1,0 +1,60 @@
+isByte() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isByte:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '0' '255')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isIntBit() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isIntBit:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '0' '1')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isChar() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isChar:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isStr "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    strVal=''
+    strVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_isCharByte "$(StageL_byteFromChar "$strVal")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isCharByte() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isCharByte:type-tools'; StageL_assertIsGeneric "$genericIn"
+
+    # Bear in mind that StageL doesn't attempt to support Unicode.
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intVal='0'
+    intVal="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intVal" '32' '126')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}

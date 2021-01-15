@@ -1,0 +1,221 @@
+getSettingForFormat() {
+    strFormat="$1"; shift; strDirection="$1"; shift; strSettingKey="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugCollect "str SettingKey = $strSettingKey; "; StageL_internalDebugStackEnter 'getSettingForFormat:formats-settings'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"; StageL_assertIsStr "$strSettingKey"
+
+    # s/direction can be "in" for import settings or "out" for export settings.
+    strArrayTemp=()
+    strArrayTemp="$(StageL_getSettingsForFormat "$strFormat" "$strDirection")"
+    strRes=''
+    if [[ "true" == "$(StageL_contains "$(join_by $'\037' "${strArrayTemp[@]}")" "$strSettingKey")" ]]; then
+        strRes="$(StageL_getNext "$(join_by $'\037' "${strArrayTemp[@]}")" "$(StageL_indexOf "$(join_by $'\037' "${strArrayTemp[@]}")" "$strSettingKey")")"
+        else
+        strRes=''
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getSettingsForFormat() {
+    strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'getSettingsForFormat:formats-settings'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    # Returns an array of setting key/value pairs. A format setting string looks like, which should be fairly parseable (keys and vals follow StageL ident naming rules): key1:val1,key2:val2,
+    intFormatId='0'
+    intFormatId="$(StageL_getFormatId "$strFormat")"
+    strArrayRes=()
+    if [[ "true" == "$(StageL_eq "$strDirection" 'in')" ]]; then
+        strArrayRes="$(StageL_settingStringToArray "$(StageL_getImportSettings "$intFormatId")")"
+        else
+        strArrayRes="$(StageL_settingStringToArray "$(StageL_getExportSettings "$intFormatId")")"
+    fi
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getEnabledVariantsForFormat() {
+    strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'getEnabledVariantsForFormat:formats-settings'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    strArrayRes=()
+    strArrayRes="$(StageL_strSplit "$(StageL_getSettingForFormat "$strFormat" "$strDirection" 'variants')" ' ')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+getPreferredLanguageForFormat() {
+    strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'getPreferredLanguageForFormat:formats-settings'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    strRes=''
+    strRes="$(StageL_getEnvLanguage )"
+    strArrayTemp=()
+    strArrayTemp="$(StageL_getEnabledVariantsForFormat "$strFormat" "$strDirection")"
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayTemp[@]}")")"
+    boolContinue='false'
+    boolContinue='true'
+    intItem='0'
+    while [[ "true" == "$boolContinue" ]]; do
+        if [[ "true" == "$(StageL_not "$(StageL_lt "$intC" "$(StageL_add '-1' "$intL")")")" ]]; then
+            boolContinue='false'
+        fi
+        strItem="$(StageL_get "$(join_by $'\037' "${strArrayTemp[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_eq 'lang_' "$(StageL_substr "$strItem" '0' '5')")" ]]; then
+            strRes="$strItem"
+            boolContinue='false'
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getPreferredCodeLanguageForFormat() {
+    strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'getPreferredCodeLanguageForFormat:formats-settings'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    strRes=''
+    strRes="$(StageL_getEnvCodeLanguage )"
+    strArrayTemp=()
+    strArrayTemp="$(StageL_getEnabledVariantsForFormat "$strFormat" "$strDirection")"
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayTemp[@]}")")"
+    boolContinue='false'
+    boolContinue='true'
+    intItem='0'
+    while [[ "true" == "$boolContinue" ]]; do
+        if [[ "true" == "$(StageL_not "$(StageL_lt "$intC" "$(StageL_add '-1' "$intL")")")" ]]; then
+            boolContinue='false'
+        fi
+        strItem="$(StageL_get "$(join_by $'\037' "${strArrayTemp[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_eq 'pl_' "$(StageL_substr "$strItem" '0' '3')")" ]]; then
+            strRes="$(StageL_substr "$strItem" '3' '-1')"
+            boolContinue='false'
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+# setImportSettings/setExportSettings are platform implementation in environment
+
+getImportSettings() {
+    intFormatId="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugStackEnter 'getImportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"
+
+    strRes=''
+    if [[ "true" == "$(StageL_lt "$intFormatId" "$(StageL_count "$(StageL_getImportSettingsArr )")")" ]]; then
+        strRes="$(StageL_get "$(StageL_getImportSettingsArr )" "$intFormatId")"
+        else
+        strRes=''
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getExportSettings() {
+    intFormatId="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugStackEnter 'getExportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"
+
+    strRes=''
+    if [[ "true" == "$(StageL_lt "$intFormatId" "$(StageL_count "$(StageL_getExportSettingsArr )")")" ]]; then
+        strRes="$(StageL_get "$(StageL_getExportSettingsArr )" "$intFormatId")"
+        else
+        strRes=''
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+pushImportSettings() {
+    intFormatId="$1"; shift; strNewSettingString="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugCollect "str NewSettingString = $strNewSettingString; "; StageL_internalDebugStackEnter 'pushImportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"; StageL_assertIsStr "$strNewSettingString"
+
+    # Note that all import settings must be popped in the reverse of the order they were pushed (all formats' import settings share the same stack).
+    StageL_setSharedState 'strArrayImportDeferredSettingsStack' "$(StageL_push "$(StageL_getSharedState 'strArrayImportDeferredSettingsStack')" "$(StageL_getImportSettings "$intFormatId")")"
+    StageL_setImportSettings "$intFormatId" "$strNewSettingString"
+
+    StageL_internalDebugStackExit;
+}
+
+pushExportSettings() {
+    intFormatId="$1"; shift; strNewSettingString="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugCollect "str NewSettingString = $strNewSettingString; "; StageL_internalDebugStackEnter 'pushExportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"; StageL_assertIsStr "$strNewSettingString"
+
+    # Note that all export settings must be popped in the reverse of the order they were pushed (all formats' export settings share the same stack).
+    StageL_setSharedState 'strArrayExportDeferredSettingsStack' "$(StageL_push "$(StageL_getSharedState 'strArrayExportDeferredSettingsStack')" "$(StageL_getExportSettings "$intFormatId")")"
+    StageL_setExportSettings "$intFormatId" "$strNewSettingString"
+
+    StageL_internalDebugStackExit;
+}
+
+popImportSettings() {
+    intFormatId="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugStackEnter 'popImportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"
+
+    StageL_setImportSettings "$intFormatId" "$(StageL_get "$(StageL_getSharedState 'strArrayImportDeferredSettingsStack')" '-1')"
+    StageL_setSharedState 'strArrayImportDeferredSettingsStack' "$(StageL_asSubset "$(StageL_getSharedState 'strArrayImportDeferredSettingsStack')" '0' '-2')"
+
+    StageL_internalDebugStackExit;
+}
+
+popExportSettings() {
+    intFormatId="$1"; shift; StageL_internalDebugCollect "int FormatId = $intFormatId; "; StageL_internalDebugStackEnter 'popExportSettings:formats-settings'; StageL_assertIsInt "$intFormatId"
+
+    StageL_setExportSettings "$intFormatId" "$(StageL_get "$(StageL_getSharedState 'strArrayExportDeferredSettingsStack')" '-1')"
+    StageL_setSharedState 'strArrayExportDeferredSettingsStack' "$(StageL_asSubset "$(StageL_getSharedState 'strArrayExportDeferredSettingsStack')" '0' '-2')"
+
+    StageL_internalDebugStackExit;
+}
+
+settingStringToArray() {
+    strSettings="$1"; shift; StageL_internalDebugCollect "str Settings = $strSettings; "; StageL_internalDebugStackEnter 'settingStringToArray:formats-settings'; StageL_assertIsStr "$strSettings"
+
+    strArrayRes=()
+    intCount="$(StageL_len "$strSettings")"
+    intCounter='0'
+    intCounter='0'
+    strElem=''
+    strState=''
+    strState='key'
+    strChar=''
+    while [[ "true" == "$(StageL_lt "$intCounter" "$intCount")" ]]; do
+        strChar="$(StageL_charAt "$strSettings" "$intCounter")"
+        if [[ "true" == "$(StageL_eq "$strState" 'key')" ]]; then
+            if [[ "true" == "$(StageL_eq "$strChar" ':')" ]]; then
+                strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strElem")"
+                strElem=''
+                strState='val'
+                        else
+                strElem="$(StageL_cat "$strElem" "$strChar")"
+            fi
+                else
+            if [[ "true" == "$(StageL_eq "$strChar" ',')" ]]; then
+                strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strElem")"
+                strElem=''
+                strState='key'
+                        else
+                strElem="$(StageL_cat "$strElem" "$strChar")"
+            fi
+        fi
+        intCounter="$(StageL_add "$intCounter" '1')"
+    done
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+settingArrayToString() {
+    IFS=$'\037' read -r -a strArraySettings <<< "$1"; shift; StageL_internalDebugCollect "strArray Settings = $strArraySettings; "; StageL_internalDebugStackEnter 'settingArrayToString:formats-settings'; StageL_assertIsStrArray "$(join_by $'\037' "${strArraySettings[@]}")"
+
+    strRes=''
+    intCount="$(StageL_count "$(join_by $'\037' "${strArraySettings[@]}")")"
+    intCounter='0'
+    intCounter='0'
+    strElem=''
+    while [[ "true" == "$(StageL_lt "$intCounter" "$intCount")" ]]; do
+        strElem="$(StageL_get "$(join_by $'\037' "${strArraySettings[@]}")" "$intCounter")"
+        StageL_assertIsTrue "$(StageL_isValidIdent "$strElem")"
+        if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intCounter" '2')")" ]]; then
+            strRes="$(StageL_cat "$strRes" "$(StageL_cat "$strElem" ',')")"
+                else
+            strRes="$(StageL_cat "$strRes" "$(StageL_cat "$strElem" ':')")"
+        fi
+        intCounter="$(StageL_add "$intCounter" '1')"
+    done
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}

@@ -1,0 +1,302 @@
+isNonnegative() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNonnegative:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_lt "$intIn" '0')" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isNegative() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNegative:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_lt "$intIn" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isPositive() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isPositive:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_le "$intIn" '0')" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isNonpositive() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isNonpositive:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_le "$intIn" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isEven() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isEven:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intIn" '2')")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isOdd() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'isOdd:math'; StageL_assertIsInt "$intIn"
+
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_mod "$intIn" '2')")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+assertIsEven() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsEven:math'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isEven "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsOdd() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsOdd:math'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isOdd "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+intIsBetween() {
+    intN="$1"; shift; intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intIsBetween:math'; StageL_assertIsInt "$intN"; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    # Checks whether N is within the range A and B, including endpoints
+    # Can't do it this way since it can use ints intermediately that are outside of 32 bit
+    #new n/t1
+    #set n/t1 sub n/n n/a
+    #new n/t2
+    #set n/t2 sub n/n n/b
+    #new n/t3
+    #set n/t3 mul n/t1 n/t2
+    #new b/temp
+    #set b/temp le n/t3 0
+    # So instead implement using gt/lt
+    boolTemp="$(StageL_and "$(StageL_ge "$intN" "$intA")" "$(StageL_le "$intN" "$intB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+intToBase36Char() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'intToBase36Char:math'; StageL_assertIsInt "$intN"
+
+    # Returns the nth digit in base 36 or less (using capitalized digits).
+    if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intN" '0' '36')")" ]]; then
+        strTemp=''
+        strTemp="$(StageL_strFrom "$intN")"
+        StageL_die "$(StageL_cat "$(StageL_strFrom "$strTemp" ' is not within the supported range of numbers between 0 and 36 (Z).')")"
+    fi
+    strRes=''
+    if [[ "true" == "$(StageL_le "$intN" '9')" ]]; then
+        strRes="$(StageL_charFromByte "$(StageL_add "$intN" '48')")"
+        else
+        strRes="$(StageL_charFromByte "$(StageL_add "$intN" '55')")"
+    fi
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+intFromBase36Char() {
+    strN="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugStackEnter 'intFromBase36Char:math'; StageL_assertIsStr "$strN"
+
+    # Returns an int given the nth digit in base 36 or less (using capitalized digits).
+    StageL_assertIsChar "$strN"
+    strUc=''
+    strUc="$(StageL_strToUpper "$strN")"
+    intRes='0'
+    intRes="$(StageL_byteFromChar "$strUc")"
+    if [[ "true" == "$(StageL_ge "$intRes" '65')" ]]; then
+        if [[ "true" == "$(StageL_gt "$intRes" '90')" ]]; then
+            StageL_die "$(StageL_cat "$strUc" ' is not within the supported range of digits between 0 and Z (36).')"
+        fi
+        intRes="$(StageL_sub "$intRes" '55')"
+        else
+        if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intRes" '48' '57')")" ]]; then
+            StageL_die "$(StageL_cat "$strN" ' is not within the supported range of digits between 0 and Z (36).')"
+        fi
+        intRes="$(StageL_sub "$intRes" '48')"
+    fi
+    if [[ "true" == "$(StageL_not "$(StageL_intIsBetween "$intRes" '0' '36')")" ]]; then
+        StageL_die "$(StageL_cat 'Internal error in intFromBase36Char called with n=' "$(StageL_cat "$strN" '.')")"
+    fi
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+intFromBaseStr() {
+    strN="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intFromBaseStr:math'; StageL_assertIsStr "$strN"; StageL_assertIsInt "$intB"
+
+    # Returns the integer represented by n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    StageL_assertIsBaseStr "$strN" "$intB"
+    strUc=''
+    strUc="$(StageL_strToUpper "$strN")"
+    intRes='0'
+    intRes='0'
+    intLen='0'
+    intLen="$(StageL_len "$strUc")"
+    intInt='0'
+    intInt='0'
+    intPow='0'
+    intPow='1'
+    while [[ "true" == "$(StageL_gt "$intLen" '0')" ]]; do
+        intLen="$(StageL_sub "$intLen" '1')"
+        intInt="$(StageL_intFromBase36Char "$(StageL_strCharAtPos "$strUc" "$intLen")")"
+        StageL_assertIsTrue "$(StageL_lt "$intInt" "$intB")"
+        intRes="$(StageL_add "$intRes" "$(StageL_mul "$intInt" "$intPow")")"
+        intPow="$(StageL_mul "$intPow" "$intB")"
+    done
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+hexToDec() {
+    strN="$1"; shift; StageL_internalDebugCollect "str N = $strN; "; StageL_internalDebugStackEnter 'hexToDec:math'; StageL_assertIsStr "$strN"
+
+    intRes='0'
+    intRes="$(StageL_intFromBaseStr "$strN" '16')"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+decToHex() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'decToHex:math'; StageL_assertIsInt "$intN"
+
+    strRes=''
+    strRes="$(StageL_intToBaseStr "$intN" '16')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+intToBaseStr() {
+    intN="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'intToBaseStr:math'; StageL_assertIsInt "$intN"; StageL_assertIsInt "$intB"
+
+    # Returns a string representing n in the requested base. Strategy based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
+    strRes=''
+    if [[ "true" == "$(StageL_eq '0' "$intN")" ]]; then
+        strRes='0'
+        else
+        while [[ "true" == "$(StageL_gt "$intN" '0')" ]]; do
+            strRes="$(StageL_cat "$strRes" "$(StageL_intToBase36Char "$(StageL_mod "$intN" "$intB")")")"
+            intN="$(StageL_div "$intN" "$intB")"
+        done
+        strRes="$(StageL_reverseStr "$strRes")"
+    fi
+    StageL_assertIsBaseStr "$strRes" "$intB"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+isSupportedBase() {
+    intB="$1"; shift; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isSupportedBase:math'; StageL_assertIsInt "$intB"
+
+    # StageL base conversion routines support base 1 to base 36.
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intB" '1' '36')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseDigit() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseDigit:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    StageL_assertIsChar "$strIn"
+    StageL_assertIsSupportedBase "$intB"
+    if [[ "true" == "$(StageL_not "$(StageL_asciiIsAlphanum "$(StageL_byteFromChar "$strIn")")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intDigitVal='0'
+    intDigitVal="$(StageL_intFromBase36Char "$strIn")"
+    boolRes='false'
+    boolRes="$(StageL_lt "$intDigitVal" "$intB")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBaseStr() {
+    strIn="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'isBaseStr:math'; StageL_assertIsStr "$strIn"; StageL_assertIsInt "$intB"
+
+    intLen='0'
+    intLen="$(StageL_len "$strIn")"
+    intLen="$(StageL_sub "$intLen" '1')"
+    StageL_assertIsNonnegative "$intLen"
+    strChr=''
+    boolRes='false'
+    boolRes='true'
+    while [[ "true" == "$(StageL_ge "$intLen" '0')" ]]; do
+        strChr="$(StageL_strCharAtPos "$strIn" "$intLen")"
+        boolRes="$(StageL_and "$boolRes" "$(StageL_isBaseDigit "$strChr" "$intB")")"
+        intLen="$(StageL_sub "$intLen" '1')"
+    done
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+formatPercentage() {
+    intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'formatPercentage:math'; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    if [[ "true" == "$(StageL_eq '0' "$intA")" ]]; then
+
+        strReturn='0.000'; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+    fi
+    intPercentageN='0'
+    intPercentageN="$(StageL_mul '100' "$(StageL_div "$(StageL_mul "$intA" '100000')" "$intB")")"
+    strPercentageTemp=''
+    strPercentageTemp="$(StageL_strFrom "$intPercentageN")"
+    intCount='0'
+    intCount="$(StageL_sub "$(StageL_len "$strPercentageTemp")" '2')"
+    intCounter='0'
+    intCounter="$intCount"
+    strPercentage=''
+    intDecimLoc='0'
+    intDecimLoc="$(StageL_sub "$intCount" '3')"
+    while [[ "true" == "$(StageL_gt "$intCounter" '0')" ]]; do
+        if [[ "true" == "$(StageL_eq "$intCounter" "$(StageL_sub "$intCount" "$intDecimLoc")")" ]]; then
+            strPercentage="$(StageL_cat "$strPercentage" '.')"
+        fi
+        strPercentage="$(StageL_cat "$strPercentage" "$(StageL_strChar "$strPercentageTemp" "$(StageL_sub "$intCount" "$intCounter")")")"
+        intCounter="$(StageL_sub "$intCounter" '1')"
+    done
+
+    strReturn="$strPercentage"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+inc() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'inc:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+dec() {
+    intN="$1"; shift; StageL_internalDebugCollect "int N = $intN; "; StageL_internalDebugStackEnter 'dec:math'; StageL_assertIsInt "$intN"
+
+    intRes='0'
+    intRes="$(StageL_add '-1' "$intN")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}

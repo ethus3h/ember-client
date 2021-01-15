@@ -1,0 +1,8 @@
+debugRev() {
+    intLevel="$1"; shift; strMessage="$1"; shift; StageL_internalDebugCollect "int Level = $intLevel; "; StageL_internalDebugCollect "str Message = $strMessage; "; StageL_internalDebugStackEnter 'debugRev:logging'; StageL_assertIsInt "$intLevel"; StageL_assertIsStr "$strMessage"
+
+    # Just the debug routine with the arguments reversed to avoid needing to close a bunch of arglists for a dynamically constructed string.
+    StageL_debug "$strMessage" "$intLevel"
+
+    StageL_internalDebugStackExit;
+}

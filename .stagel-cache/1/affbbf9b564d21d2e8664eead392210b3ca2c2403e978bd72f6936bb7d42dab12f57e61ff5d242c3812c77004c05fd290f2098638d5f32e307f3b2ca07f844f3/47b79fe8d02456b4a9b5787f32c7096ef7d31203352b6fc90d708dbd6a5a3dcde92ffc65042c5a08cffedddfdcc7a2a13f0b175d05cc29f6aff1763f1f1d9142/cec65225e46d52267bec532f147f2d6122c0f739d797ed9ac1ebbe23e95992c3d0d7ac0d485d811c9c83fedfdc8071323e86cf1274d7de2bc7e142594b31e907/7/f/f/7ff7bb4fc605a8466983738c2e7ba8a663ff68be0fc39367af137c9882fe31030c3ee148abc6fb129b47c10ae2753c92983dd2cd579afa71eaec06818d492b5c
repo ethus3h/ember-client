@@ -1,0 +1,8 @@
+runTestsDcData() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsDcData:dc-data-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'dcData'
+    StageL_runTest "$boolV" "$(StageL_eq 'B' "$(StageL_dcGetBidiClass '120')")"
+
+    StageL_internalDebugStackExit;
+}
