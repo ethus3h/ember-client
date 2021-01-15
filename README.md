@@ -9,4 +9,7 @@ Please report any issues you find with this repository to the Ember project's is
 Setting up and building
 
 - Build and install dependencies
-- then the
+- then the distfiles:
+```
+./configure -- --build-type dist; make; sudo make install
+```
