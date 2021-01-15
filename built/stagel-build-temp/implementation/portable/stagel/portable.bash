@@ -1725,3 +1725,92 @@ strPrintArr() {
     IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'strPrintArr:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
 
     # The reverse of this for an/ input is intArrFromStrPrintedArr.
+    # Hint: running this on a DcArray produces a sems document that can be turned back into a DcArray with dcarrParseSems strToByteArray s/str :)
+    strOut=''
+    strOut="$(StageL_strJoin "$(join_by $'\037' "${genericArrayIn[@]}")" ' ')"
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+printArray() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'printArray:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strPrintArray() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'strPrintArray:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+printArr() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugStackEnter 'printArr:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"
+
+    # Just a convenience wrapper
+    strRes=''
+    strRes="$(StageL_strPrintArr "$(join_by $'\037' "${genericArrayIn[@]}")")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strSplit() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strSplit:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    strArrayRes=()
+    intSeparLen='0'
+    intSeparLen="$(StageL_len "$strSeparator")"
+    strRemaining=''
+    strRemaining="$strIn"
+    intRemainingLen='0'
+    intRemainingLen="$(StageL_len "$strRemaining")"
+    strCurrentElem=''
+    strCurrentChar=''
+    while [[ "true" == "$(StageL_lt '0' "$intRemainingLen")" ]]; do
+        if [[ "true" == "$(StageL_eq "$strSeparator" "$(StageL_substr "$strRemaining" '0' "$intSeparLen")")" ]]; then
+            strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strCurrentElem")"
+            strCurrentElem=''
+            strRemaining="$(StageL_substr "$strRemaining" "$intSeparLen" '-1')"
+                else
+            strCurrentChar="$(StageL_strChar "$strRemaining" '0')"
+            strCurrentElem="$(StageL_cat "$strCurrentElem" "$strCurrentChar")"
+            if [[ "true" == "$(StageL_lt '1' "$intRemainingLen")" ]]; then
+                strRemaining="$(StageL_substr "$strRemaining" '1' '-1')"
+                        else
+                strRemaining=''
+            fi
+        fi
+        intRemainingLen="$(StageL_len "$strRemaining")"
+    done
+    strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$strCurrentElem")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+strJoin() {
+    IFS=$'\037' read -r -a genericArrayIn <<< "$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "genericArray In = $genericArrayIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strJoin:type-conversion'; StageL_assertIsGenericArray "$(join_by $'\037' "${genericArrayIn[@]}")"; StageL_assertIsStr "$strSeparator"
+
+    # Opposite of strSplit for a given separator
+    intCount='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${genericArrayIn[@]}")")"
+    intI='0'
+    intI='0'
+    strOut=''
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strOut="$(StageL_cat "$strOut" "$(StageL_strFrom "$(StageL_get "$(join_by $'\037' "${genericArrayIn[@]}")" "$intI")")")"
+        if [[ "true" == "$(StageL_ne "$intI" "$(StageL_add '-1' "$intCount")")" ]]; then
+            strOut="$(StageL_cat "$strOut" "$strSeparator")"
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
