@@ -1,3 +1,0 @@
-new an/res
-while lt 8 len an/res
-    set an/res push ( 0 ) an/res

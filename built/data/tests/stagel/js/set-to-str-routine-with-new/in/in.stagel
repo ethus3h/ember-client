@@ -1,2 +1,0 @@
-set s/temp r/s/fbSwitcher n/counter
-new s/tick ''
