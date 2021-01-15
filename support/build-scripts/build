@@ -73,6 +73,9 @@ if [[ -n "$buildType" ]] && [[ "dist" != "$buildType" ]]; then
     emberDataDir="$(getDDCDataDir)"
     # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getDDCDataDir will return all available modules.
 for module in "${modules[@]}"; do
+    if [[ "$module" == "$buildType" ]]; then
+        break
+    done
     cp -r "$(getDDCDataDir)/ddc/"* ./built || die "Could not copy previously installed module $module."
 done
 fi
