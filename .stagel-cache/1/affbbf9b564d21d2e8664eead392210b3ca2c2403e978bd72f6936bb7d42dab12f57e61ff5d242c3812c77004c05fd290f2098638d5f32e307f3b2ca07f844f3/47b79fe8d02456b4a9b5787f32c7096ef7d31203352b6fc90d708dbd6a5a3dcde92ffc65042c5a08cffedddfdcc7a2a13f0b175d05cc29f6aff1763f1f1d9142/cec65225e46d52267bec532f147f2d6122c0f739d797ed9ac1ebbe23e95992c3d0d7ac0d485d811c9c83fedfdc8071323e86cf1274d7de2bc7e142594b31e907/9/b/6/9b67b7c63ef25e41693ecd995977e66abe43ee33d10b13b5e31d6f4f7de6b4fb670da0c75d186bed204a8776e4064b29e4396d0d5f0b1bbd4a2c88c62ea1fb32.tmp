@@ -91,4 +91,79 @@ setExecOption() {
     # Set an execution option for a document.
     StageL_setupIfNeeded 
     StageL_assertIsExecId "$intExecId"
-    StageL_setExecSettings "$intExecId" "$(StageL_kvSetValue "$(StageL_getExecSettings 
+    StageL_setExecSettings "$intExecId" "$(StageL_kvSetValue "$(StageL_getExecSettings "$intExecId")" "$strKey" "$strValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+exportDocument() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'exportDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    # Convert a document stored as an array of dcs to the specified format, and return it as an array of bytes.
+    StageL_setupIfNeeded 
+    intArrayOut=()
+    intArrayOut="$(StageL_dcaToFormat "$strFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+importDocument() {
+    strFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'importDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    # Convert a document stored as an array of bytes in the specified format, and return it as an array of dc.
+    StageL_setupIfNeeded 
+    intArrayOut=()
+    intArrayOut="$(StageL_dcaFromFormat "$strFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+importAndExport() {
+    strInputFormat="$1"; shift; strOutputFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "str InputFormat = $strInputFormat; "; StageL_internalDebugCollect "str OutputFormat = $strOutputFormat; "; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'importAndExport:public-interface'; StageL_assertIsStr "$strInputFormat"; StageL_assertIsStr "$strOutputFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strInputFormat"
+    StageL_assertIsSupportedOutputFormat "$strOutputFormat"
+    # Convert a document stored as an array of bytes in the specified input format, and return it as an array of bytes in the specified output format.
+    intArrayOut=()
+    intArrayOut="$(StageL_convertFormats "$strInputFormat" "$strOutputFormat" "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getFormatImportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getFormatImportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"
+
+    # Return the value of the specified import setting for the specified format.
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getFormatImportSettings "$strFormat")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getFormatExportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getFormatExportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"
+
+    # Return the value of the specified export setting for the specified format.
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getFormatExportSettings "$strFormat")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+setFormatImportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setFormatImportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Set the value of the specified import setting for the specified format.
+    StageL_setFormatImportSettings "$strFormat" "$(StageL_kvSetValue "$(StageL_getFormatImportSettings "$strFormat")" "$strKey" "$strValue")"
+
+    StageL_internalDebugStackExit;
+}
+
+setFormatExportSetting() {
+    strFormat="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setFormatExportSetting:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
