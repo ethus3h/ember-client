@@ -108,7 +108,7 @@ fi
 
 if [[ -z "$buildType" ]] || [[ "bootstrap" == "$buildType" ]]; then
     # Test the bootstrap scripts
-    ./data/tests/stagel-run-bootstrap-tests || die "StageL tests failed!"
+    #./data/tests/stagel-run-bootstrap-tests || die "StageL tests failed!"
     # Then, build the bootstrap StageL in bash
     if [[ "yes" == "$verbose" ]]; then
         "$sicmd" "bash" --bootstrap "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" "$@"
