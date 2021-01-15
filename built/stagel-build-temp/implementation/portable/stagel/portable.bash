@@ -815,4 +815,107 @@ assertIsSupportedOutputFormat() {
     strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsSupportedOutputFormat:assertions'; StageL_assertIsStr "$strIn"
 
     if [[ "true" == "$(StageL_not "$(StageL_isSupportedOutputFormat "$strIn")")" ]]; then
-        StageL_die "$(StageL_cat "$strIn" 
+        StageL_die "$(StageL_cat "$strIn" ' is not a supported output format.')"
+    fi
+    StageL_assertIsTrue "$(StageL_isSupportedOutputFormat "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsSupportedEnvironmentCharEncoding() {
+    strIn="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugStackEnter 'assertIsSupportedEnvironmentCharEncoding:assertions'; StageL_assertIsStr "$strIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isSupportedEnvironmentCharEncoding "$strIn")")" ]]; then
+        StageL_die "$(StageL_cat "$strIn" ' is not a supported environment character encoding.')"
+    fi
+    StageL_assertIsTrue "$(StageL_isSupportedEnvironmentCharEncoding "$strIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+assertIsExecId() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'assertIsExecId:assertions'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsTrue "$(StageL_isExecId "$intIn")"
+
+    StageL_internalDebugStackExit;
+}
+
+or() {
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'or:booleans'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_not "$boolA")"
+    boolTemp="$(StageL_not "$(StageL_and "$boolTemp" "$(StageL_not "$boolB")")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+nor() {
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'nor:booleans'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_not "$(StageL_or "$boolA" "$boolB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+nand() {
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'nand:booleans'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_not "$(StageL_and "$boolA" "$boolB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+xor() {
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'xor:booleans'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_nand "$boolA" "$boolB")"
+    boolTemp="$(StageL_and "$boolTemp" "$(StageL_or "$boolA" "$boolB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+xnor() {
+    boolA="$1"; shift; boolB="$1"; shift; StageL_internalDebugCollect "bool A = $boolA; "; StageL_internalDebugCollect "bool B = $boolB; "; StageL_internalDebugStackEnter 'xnor:booleans'; StageL_assertIsBool "$boolA"; StageL_assertIsBool "$boolB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_not "$(StageL_xor "$boolA" "$boolB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isTrue() {
+    boolIn="$1"; shift; StageL_internalDebugCollect "bool In = $boolIn; "; StageL_internalDebugStackEnter 'isTrue:booleans'; StageL_assertIsBool "$boolIn"
+
+
+    boolReturn="$boolIn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isFalse() {
+    boolIn="$1"; shift; StageL_internalDebugCollect "bool In = $boolIn; "; StageL_internalDebugStackEnter 'isFalse:booleans'; StageL_assertIsBool "$boolIn"
+
+    boolRes='false'
+    boolRes="$(StageL_not "$boolIn")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+# Calling a comparison with different types is an error. All types must be same type.
+
+ne() {
+    genericA="$1"; shift; genericB="$1"; shift; StageL_internalDebugCollect "generic A = $genericA; "; StageL_internalDebugCollect "generic B = $genericB; "; StageL_internalDebugStackEnter 'ne:comparison'; StageL_assertIsGeneric "$genericA"; StageL_assertIsGeneric "$genericB"
+
+    boolTemp='false'
+    boolTemp="$(StageL_not "$(StageL_eq "$genericA" "$genericB")")"
+
+    boolReturn="$boolTemp"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+ge() {
+    intA="$1"; shift; intB="$1"; shift; StageL_internalDebugCollect "int A = $intA; "; StageL_internalDebugCollect "int B = $intB; "; StageL_internalDebugStackEnter 'ge:comparison'; StageL_assertIsInt "$intA"; StageL_assertIsInt "$intB"
+
+    boolTemp
