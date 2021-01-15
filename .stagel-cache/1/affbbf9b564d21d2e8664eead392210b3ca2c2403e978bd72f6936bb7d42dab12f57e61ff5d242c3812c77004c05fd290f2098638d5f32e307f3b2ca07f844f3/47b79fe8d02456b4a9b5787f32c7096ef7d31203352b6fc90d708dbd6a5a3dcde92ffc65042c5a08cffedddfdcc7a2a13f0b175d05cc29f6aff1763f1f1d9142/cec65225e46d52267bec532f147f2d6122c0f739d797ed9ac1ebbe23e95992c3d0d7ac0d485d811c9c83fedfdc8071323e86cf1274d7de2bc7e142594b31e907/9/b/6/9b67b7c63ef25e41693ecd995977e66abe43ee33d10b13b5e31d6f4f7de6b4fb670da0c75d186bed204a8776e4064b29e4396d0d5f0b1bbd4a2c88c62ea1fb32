@@ -244,3 +244,74 @@ setFormatExportSettings() {
 transformDocument() {
     IFS=$'\037' read -r -a intArrayInputDocument <<< "$1"; shift; strTransformation="$1"; shift; StageL_internalDebugCollect "intArray InputDocument = $intArrayInputDocument; "; StageL_internalDebugCollect "str Transformation = $strTransformation; "; StageL_internalDebugStackEnter 'transformDocument:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayInputDocument[@]}")"; StageL_assertIsStr "$strTransformation"
 
+    # Apply one of the supported document transformations to the provided document, and return the result.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedDocumentTransformation "$strTransformation"
+    intArrayResult=()
+    intArrayResult="$(StageL_applyDocumentTransformation "$strTransformation" "$(join_by $'\037' "${intArrayInputDocument[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayResult[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+# If you want more control over the document loading and execution, you can use these lower-level functions.
+
+loadStoredDocument() {
+    strFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadStoredDocument:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strPath"
+
+    # Load and return the specified document as a Dc array.
+    StageL_setupIfNeeded 
+    StageL_assertIsSupportedInputFormat "$strFormat"
+    intArrayRes=()
+    intArrayRes="$(StageL_dcaFromFormat "$strFormat" "$(StageL_getFileFromPath "$strPath")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getDesiredEventNotifications() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getDesiredEventNotifications:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Return list of event types (e.g. keystrokes, mouse movement, elapsed time) that the document wants to be notified of.
+    strArrayRes=()
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+sendEvent() {
+    intExecId="$1"; shift; IFS=$'\037' read -r -a intArrayEventData <<< "$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "intArray EventData = $intArrayEventData; "; StageL_internalDebugStackEnter 'sendEvent:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayEventData[@]}")"
+
+    # Send the provided event or events data to the specified document.
+}
+
+getDocumentFrame() {
+    intExecId="$1"; shift; strFormat="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getDocumentFrame:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strFormat"
+
+    StageL_assertIsSupportedOutputFormat "$strFormat"
+    # Return the most recently available output for the given document in the requested format.
+}
+# To run the tests, you can use runTests or runPrintTests.
+
+runTests() {
+    StageL_internalDebugStackEnter 'runTests:public-interface'; 
+
+    # Returns true if all tests pass; false otherwise. Displays a report of the tests.
+    StageL_setupIfNeeded 
+    StageL_clearTestStats 
+    StageL_runTestsOnly 'true'
+    StageL_reportTests 
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+quietRunTests() {
+    StageL_internalDebugStackEnter 'quietRunTests:public-interface'; 
+
+    # Returns true if all tests pass; false otherwise.
+    StageL_setupIfNeeded 
+    boolRes='false'
+    boolRes="$(StageL_runTestsOnly 'false')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
