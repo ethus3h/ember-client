@@ -20,7 +20,7 @@ elif [[ "$1" == "--bootstrap-selfhosted" ]]; then
     shift
 fi
 cache="--no-cache"
-cacheDir="."
+cacheDir=".."
 if [[ "$1" == "--cache" ]]; then
     cache="--cache"
     shift
