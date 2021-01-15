@@ -71,7 +71,7 @@ cat ./implementation/templates/license-start/"$target" > ./built/stagel-build-te
 
 find ./implementation/stagel-cores/"$target"/ -name '*.'"$target" -exec "$slcmd" {} "$target" \;
 
-cat ./built/stagel-build-temp/implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/stagel-cores/"$target"/core."$target"
+cat ./implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/stagel-cores/"$target"/core."$target"
 
 # StageR
 
@@ -83,7 +83,7 @@ cat ./implementation/templates/license-start/"$target" > ./built/stagel-build-te
 
 find ./implementation/portable/stagel/ -name '*.stagel' -exec "$srcmd" "$cache" "$cacheDir" "$debugBuild" "$typecheckBuild" {} "$target" \;
 
-cat ./built/stagel-build-temp/implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/portable/stagel/portable."$target"
+cat ./implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/portable/stagel/portable."$target"
 
 # NDW
 
@@ -95,7 +95,7 @@ cat ./implementation/templates/license-start/"$target" > ./built/stagel-build-te
 
 find ./implementation/ndw/"$target"/ -name '*.'"$target" -exec "$slcmd" {} "$target" "ndw" \;
 
-cat ./built/stagel-build-temp/implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target"
+cat ./implementation/templates/license-end/"$target" >> ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target"
 
 # Done StageL and StageR into ./built/stagel-build-temp; now move the build products into place and clean up
 
@@ -107,7 +107,7 @@ mv ./built/stagel-build-temp/implementation/ndw/"$target"/ndw."$target" ./built/
 
 cat ./implementation/templates/license-start/"$target" >> ./built/implementation-parts/"$target"/speedups."$target"
 cat ./implementation/speedups/speedups."$target" >> ./built/implementation-parts/"$target"/speedups."$target"
-cat ./built/stagel-build-temp/implementation/templates/license-end/"$target" >> ./built/implementation-parts/"$target"/speedups."$target"
+cat ./implementation/templates/license-end/"$target" >> ./built/implementation-parts/"$target"/speedups."$target"
 
 cp ./built/implementation-parts/"$target"/core."$target" ./built/implementation-parts/"$target"/ddc."$target"
 echo >> ./built/implementation-parts/"$target"/ddc."$target"
