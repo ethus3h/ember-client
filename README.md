@@ -13,5 +13,5 @@ Setting up and building
 ```
 ./configure -- --build-type dist; make; sudo make install
 ./configure -- --build-type data; make; sudo make install
-
+./configure -- --build-type data; make; sudo make install
 ```
