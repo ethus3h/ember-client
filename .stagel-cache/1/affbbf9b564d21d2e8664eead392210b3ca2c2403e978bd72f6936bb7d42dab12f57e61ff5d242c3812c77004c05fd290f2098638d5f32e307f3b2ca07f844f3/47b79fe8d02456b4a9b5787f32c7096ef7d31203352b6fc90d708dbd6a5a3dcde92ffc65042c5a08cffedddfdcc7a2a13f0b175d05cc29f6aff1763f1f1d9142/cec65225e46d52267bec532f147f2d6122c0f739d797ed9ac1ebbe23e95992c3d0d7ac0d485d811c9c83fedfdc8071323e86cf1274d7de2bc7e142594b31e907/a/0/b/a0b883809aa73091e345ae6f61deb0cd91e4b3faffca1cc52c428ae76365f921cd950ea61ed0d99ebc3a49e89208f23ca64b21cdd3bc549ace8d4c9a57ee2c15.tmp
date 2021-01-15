@@ -1,0 +1,58 @@
+dcaToUtf8() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaToUtf8:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayRes=()
+    intArrayToOutput=()
+    intArrayToOutput="$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayTemp=()
+    intDcAtIndex='0'
+    intArrayUnmappables=()
+    intUnmappablesCount='0'
+    intUnmappablesCounter='0'
+    intArrayUnmappablesIntermediatePacked=()
+    boolFoundAnyUnmappables='false'
+    boolFoundAnyUnmappables='false'
+    strArrayVariantSettings=()
+    strArrayVariantSettings="$(StageL_utf8VariantSettings 'out')"
+    boolDcBasenbEnabled='false'
+    boolDcBasenbEnabled="$(StageL_contains "$(join_by $'\037' "${strArrayVariantSettings[@]}")" 'dcBasenb')"
+    boolDcBasenbFragmentEnabled='false'
+    boolDcBasenbFragmentEnabled="$(StageL_contains "$(join_by $'\037' "${strArrayVariantSettings[@]}")" 'dcBasenbFragment')"
+    intArrayToOutput="$(StageL_dcPreprocessForFormat "$(join_by $'\037' "${intArrayToOutput[@]}")" 'utf8' 'out')"
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayToOutput[@]}")")"
+    intC='0'
+    intC='0'
+    while [[ "true" == "$(StageL_le "$intC" "$intL")" ]]; do
+        # Start by getting the character's UTF8 equivalent and putting it in an/temp. This might be empty, if the character can't be mapped to UTF8.
+        if [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; then
+            intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayToOutput[@]}")" "$intC")"
+            intArrayTemp="$(StageL_dcToFormat 'utf8' "$intDcAtIndex")"
+        fi
+        # Could the character be mapped? If not, stick it in the unmappables array or warn as appropriate.
+        if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayTemp[@]}")")")" ]]; then
+            if [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; then
+                if [[ "true" == "$boolDcBasenbEnabled" ]]; then
+                    intArrayUnmappables="$(StageL_push "$(join_by $'\037' "${intArrayUnmappables[@]}")" "$intDcAtIndex")"
+                                else
+                    StageL_exportWarningUnmappable "$intC" "$intDcAtIndex"
+                fi
+            fi
+        fi
+        # If we've reached the end of the input string or the last character was mappable, convert the an/unmappables array to PUA characters and append that result to the output string
+        if [[ "true" == "$boolDcBasenbEnabled" ]]; then
+            if [[ "true" == "$(StageL_or "$(StageL_eq "$intC" "$intL")" "$(StageL_ne '0' "$(StageL_count "$(join_by $'\037' "${intArrayTemp[@]}")")")")" ]]; then
+                intUnmappablesCount="$(StageL_count "$(join_by $'\037' "${intArrayUnmappables[@]}")")"
+                if [[ "true" == "$(StageL_ne '0' "$intUnmappablesCount")" ]]; then
+                    if [[ "true" == "$(StageL_not "$boolFoundAnyUnmappables")" ]]; then
+                        if [[ "true" == "$(StageL_not "$boolDcBasenbFragmentEnabled")" ]]; then
+                            intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_getArmoredUtf8EmbeddedStartUuid )")"
+                        fi
+                    fi
+                    boolFoundAnyUnmappables='true'
+                    # We've gotten to the end of a string of unmappable characters, so convert them to PUA characters
+                    intUnmappablesCounter='0'
+                    while [[ "true" == "$(StageL_lt "$intUnmappablesCounter" "$intUnmappablesCount")" ]]; do
+                        # The packing method for this works basically like UTF8, where each character is mapped to a series of bytes. So, first get the bytearray for the character we're on. Each character should be packed separately, to make it easy to spot where one character ends and the next begins.
+                        intArrayUnmappablesIntermediatePacked="$(StageL_append 
