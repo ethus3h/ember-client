@@ -1,4 +1,5 @@
 if [[ -e support/.cache-build ]]; then
-support/build-scripts/build --cache --somewhat-verbose || die "Build failed!"
-
-support/build-scripts/build --somewhat-verbose || die "Build failed!"
+    support/build-scripts/build --cache --somewhat-verbose || die "Build failed!"
+else
+    support/build-scripts/build --somewhat-verbose || die "Build failed!"
+fi
