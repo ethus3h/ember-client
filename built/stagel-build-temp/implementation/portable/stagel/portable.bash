@@ -4183,4 +4183,97 @@ dcaToDcbnbUtf8() {
     intArrayRes="$(StageL_dcaToUtf8 "$(join_by $'\037' "${intArrayContent[@]}")")"
     StageL_popExportSettings "$(StageL_getFormatId 'utf8')"
 
-    
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaFromDcbnbUtf8() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromDcbnbUtf8:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    # convenience wrapper
+    intArrayRes=()
+    StageL_pushImportSettings "$(StageL_getFormatId 'utf8')" 'variants:dcBasenb,'
+    intArrayRes="$(StageL_dcaFromUtf8 "$(join_by $'\037' "${intArrayContent[@]}")")"
+    StageL_popImportSettings "$(StageL_getFormatId 'utf8')"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToDcbnbFragmentUtf8() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaToDcbnbFragmentUtf8:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    # convenience wrapper
+    intArrayRes=()
+    StageL_pushExportSettings "$(StageL_getFormatId 'utf8')" 'variants:dcBasenb dcBasenbFragment,skip_prefilter_semantic:,skip_prefilter_code:,'
+    intArrayRes="$(StageL_dcaToUtf8 "$(join_by $'\037' "${intArrayContent[@]}")")"
+    StageL_popExportSettings "$(StageL_getFormatId 'utf8')"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaFromDcbnbFragmentUtf8() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromDcbnbFragmentUtf8:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    # convenience wrapper
+    intArrayRes=()
+    StageL_pushImportSettings "$(StageL_getFormatId 'utf8')" 'variants:dcBasenb dcBasenbFragment,'
+    intArrayRes="$(StageL_dcaFromUtf8 "$(join_by $'\037' "${intArrayContent[@]}")")"
+    StageL_popImportSettings "$(StageL_getFormatId 'utf8')"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+utf8CharArrayFromByteArray() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'utf8CharArrayFromByteArray:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intArrayRemaining=()
+    intArrayRemaining="$(join_by $'\037' "${intArrayIn[@]}")"
+    intTemp='0'
+    while [[ "true" == "$(StageL_lt '0' "$(StageL_count "$(join_by $'\037' "${intArrayRemaining[@]}")")")" ]]; do
+        intTemp="$(StageL_firstCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")"
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$intTemp")"
+        intArrayRemaining="$(StageL_anSubset "$(join_by $'\037' "${intArrayRemaining[@]}")" "$(StageL_count "$(StageL_utf8BytesFromDecimalChar "$intTemp")" )" '-1')"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteArrayFromUtf8CharArray() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayFromUtf8CharArray:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intCount='0'
+    intI='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intI='0'
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_utf8BytesFromDecimalChar "$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intI")")")"
+        intI="$(StageL_add '1' "$intI")"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcbnbGetFirstChar() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dcbnbGetFirstChar:format-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    # Return the first character of a dcbnb string (doesn't do any conversion; returns dcbnb)
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")")" ]]; then
+
+        intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+    fi
+    boolContinue='false'
+    boolContinue='true'
+    intArrayNextUtf8=()
+    intArrayRemaining=()
+    intArrayRemaining="$(join_by $'\037' "${intArrayIn[@]}")"
+    intTempArrayCount='0'
+    while [[ "true" == "$boolContinue" ]]; do
+        intArrayNextUtf8="$(StageL_pack32 "$(StageL_firstCharOfUtf8String "$(join_by $'\037' "${intArrayRemaining[@]}")")")"
+        if [[ "true" == "$(StageL_not "$(StageL_isBasenbChar "$(join_by $'\037' "${intArrayNextUtf8[@]}")")")" ]]; then
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayRes[@]}")")")" ]]; then
+                intArrayRes="$(join_by $'\037' "${intArrayNextUtf8[@]}")"
+            fi
+            boolContinue='false'
+                else
