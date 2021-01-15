@@ -2043,3 +2043,518 @@ strFromByteArray() {
     strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
 }
 
+runTestsOnly() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsOnly:unit-testing'; StageL_assertIsBool "$boolV"
+
+    # Run tests without report. b/v=verbose: true=print test result lines; false=return value only
+    # This runs each component's test suite
+    # General tests
+    #runTestsBits b/v
+    StageL_runTestsMath "$boolV"
+    StageL_runTestsPack32 "$boolV"
+    StageL_runTestsTypeConversion "$boolV"
+    StageL_runTestsWasm "$boolV"
+    # Core tests
+    StageL_runTestsDcData "$boolV"
+    StageL_runTestsFormatDc "$boolV"
+    # Format tests
+    StageL_runTestsFormatAscii "$boolV"
+    StageL_runTestsFormatAsciiSafeSubset "$boolV"
+    StageL_runTestsFormatHtml "$boolV"
+    StageL_runTestsFormatHtmlFragment "$boolV"
+    StageL_runTestsFormatIntegerList "$boolV"
+    StageL_runTestsFormatSems "$boolV"
+    StageL_runTestsFormatUtf8 "$boolV"
+    # Document exec tests
+    StageL_runTestsDocumentExec "$boolV"
+    # Did anything fail?
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+testing() {
+    boolV="$1"; shift; strTestSuite="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestSuite = $strTestSuite; "; StageL_internalDebugStackEnter 'testing:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestSuite"
+
+    if [[ "true" == "$boolV" ]]; then
+        intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Started running test suite: ' "$strTestSuite")")")"
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+runTest() {
+    boolV="$1"; shift; boolTestReturn="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "bool TestReturn = $boolTestReturn; "; StageL_internalDebugStackEnter 'runTest:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsBool "$boolTestReturn"
+
+    intTotalTests="$(StageL_add "$intTotalTests" '1')"
+    if [[ "true" == "$boolTestReturn" ]]; then
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" ' passed.')")")")"
+        fi
+        intPassedTests="$(StageL_add "$intPassedTests" '1')"
+        else
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" ' failed.')")")")"
+        fi
+        intFailedTests="$(StageL_add "$intFailedTests" '1')"
+    fi
+    if [[ "true" == "$boolV" ]]; then
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    boolReturn="$boolTestReturn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+runTestNamed() {
+    boolV="$1"; shift; strTestName="$1"; shift; boolTestReturn="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestName = $strTestName; "; StageL_internalDebugCollect "bool TestReturn = $boolTestReturn; "; StageL_internalDebugStackEnter 'runTestNamed:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestName"; StageL_assertIsBool "$boolTestReturn"
+
+    intTotalTests="$(StageL_add "$intTotalTests" '1')"
+    if [[ "true" == "$boolTestReturn" ]]; then
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat "$strTestName" ' passed.')")")")")"
+        fi
+        intPassedTests="$(StageL_add "$intPassedTests" '1')"
+        else
+        if [[ "true" == "$boolV" ]]; then
+            intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Test #' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat "$strTestName" ' failed.')")")")")"
+        fi
+        intFailedTests="$(StageL_add "$intFailedTests" '1')"
+    fi
+    if [[ "true" == "$boolV" ]]; then
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    boolReturn="$boolTestReturn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+clearTestStats() {
+    StageL_internalDebugStackEnter 'clearTestStats:unit-testing';
+
+    intTotalTests='0'
+    intPassedTests='0'
+    intFailedTests='0'
+
+    StageL_internalDebugStackExit;
+}
+
+reportTests() {
+    StageL_internalDebugStackEnter 'reportTests:unit-testing'; 
+
+    strPassedWord=''
+    strPassedWord='tests'
+    if [[ "true" == "$(StageL_eq "$intPassedTests" '1')" ]]; then
+        strPassedWord='test'
+    fi
+    strFailedWord=''
+    strFailedWord='tests'
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '1')" ]]; then
+        strFailedWord='test'
+    fi
+    strTotalWord=''
+    strTotalWord='tests'
+    if [[ "true" == "$(StageL_eq "$intTotalTests" '1')" ]]; then
+        strTotalWord='test'
+    fi
+    strPassedPercentage=''
+    strPassedPercentage="$(StageL_formatPercentage "$intPassedTests" "$intTotalTests")"
+    strFailedPercentage=''
+    strFailedPercentage="$(StageL_formatPercentage "$intFailedTests" "$intTotalTests")"
+    intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat "$(StageL_strFrom "$intPassedTests")" "$(StageL_cat ' ' "$(StageL_cat "$strPassedWord" "$(StageL_cat ' (' "$(StageL_cat "$strPassedPercentage" "$(StageL_cat '%) passed and ' "$(StageL_cat "$(StageL_strFrom "$intFailedTests")" "$(StageL_cat ' ' "$(StageL_cat "$strFailedWord" "$(StageL_cat ' (' "$(StageL_cat "$strFailedPercentage" "$(StageL_cat '%) failed out of a total of ' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" "$(StageL_cat ' ' "$(StageL_cat "$strTotalWord" '.')")")")")")")")")")")")")")")")")"
+    strTemp=''
+    if [[ "true" == "$(StageL_ne "$intFailedTests" '0')" ]]; then
+        strTotalWord='Some tests'
+        if [[ "true" == "$(StageL_eq "$intTotalTests" '1')" ]]; then
+            strTotalWord='A test'
+        fi
+        strTemp="$(StageL_cat "$strTotalWord" "$(StageL_cat ' (' "$(StageL_cat "$strFailedPercentage" "$(StageL_cat '%: ' "$(StageL_cat "$(StageL_strFrom "$intFailedTests")" "$(StageL_cat ' out of ' "$(StageL_cat "$(StageL_strFrom "$intTotalTests")" ') failed!')")")")")")")"
+        intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$strTemp")")"
+        #error s/temp
+    fi
+    if [[ "true" == "$(StageL_ne "$intPassedTests" "$(StageL_sub "$intTotalTests" "$intFailedTests")")" ]]; then
+        StageL_die 'There is a problem in the testing framework.'
+    fi
+    StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    intArrayTestFrameBuffer=(  )
+    boolTestReturn='false'
+    boolTestReturn='true'
+    if [[ "true" == "$(StageL_ne "$intFailedTests" '0')" ]]; then
+        boolTestReturn='false'
+        #die s/temp
+    fi
+
+    boolReturn="$boolTestReturn"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+debugRev() {
+    intLevel="$1"; shift; strMessage="$1"; shift; StageL_internalDebugCollect "int Level = $intLevel; "; StageL_internalDebugCollect "str Message = $strMessage; "; StageL_internalDebugStackEnter 'debugRev:logging'; StageL_assertIsInt "$intLevel"; StageL_assertIsStr "$strMessage"
+
+    # Just the debug routine with the arguments reversed to avoid needing to close a bunch of arglists for a dynamically constructed string.
+    StageL_debug "$strMessage" "$intLevel"
+
+    StageL_internalDebugStackExit;
+}
+
+prepareDocumentExec() {
+    IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'prepareDocumentExec:document-exec'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    intExecId='0'
+    intExecId='-1'
+    # documentExecData is a global, created during initialization. It holds the current document state for any documents being executed.
+    intExecId="$(StageL_count "$(join_by $'\037' "${strArrayDocumentExecPtrs[@]}")")"
+    strArrayDocumentExecData="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecData[@]}")" "$(StageL_strPrintArr "$(join_by $'\037' "${intArrayContents[@]}")")")"
+    # documentExecPtrs is also a global created during init; it holds the current execution state of each document as an array of strings of of comma-terminated ints with the last indicating the position in the document where execution is (the earlier ints represent where execution should return to upon exiting the current scope, so it acts as a stack).
+    strArrayDocumentExecSymbolIndex="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecSymbolIndex[@]}")" '')"
+    strArrayDocumentExecPtrs="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecPtrs[@]}")" '0,')"
+    strArrayDocumentExecFrames="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecFrames[@]}")" '')"
+    strArrayDocumentExecEvents="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecEvents[@]}")" '')"
+    strArrayDocumentExecLogs="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecLogs[@]}")" '')"
+    strArrayDocumentExecSettings="$(StageL_push "$(join_by $'\037' "${strArrayDocumentExecSettings[@]}")" ',')"
+    StageL_assertIsExecId "$intExecId"
+
+    intReturn="$intExecId"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+isExecId() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'isExecId:document-exec'; StageL_assertIsInt "$intExecId"
+
+    if [[ "true" == "$(StageL_lt "$intExecId" "$(StageL_count "$(join_by $'\037' "${strArrayDocumentExecPtrs[@]}")")")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+getExecSettings() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getExecSettings:document-exec'; StageL_assertIsInt "$intExecId"
+
+    strArrayRes=()
+    strArrayRes="$(StageL_kvSplit "$(StageL_get "$(join_by $'\037' "${strArrayDocumentExecSettings[@]}")" "$intExecId")")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+setExecSettings() {
+    intExecId="$1"; shift; IFS=$'\037' read -r -a strArrayVal <<< "$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "strArray Val = $strArrayVal; "; StageL_internalDebugStackEnter 'setExecSettings:document-exec'; StageL_assertIsInt "$intExecId"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayVal[@]}")"
+
+    # Replace the entire exec settings array for this exec.
+    strArrayDocumentExecSettings="$(StageL_setElem "$(join_by $'\037' "${strArrayDocumentExecSettings[@]}")" "$intExecId" "$(StageL_kvJoin "$(join_by $'\037' "${strArrayVal[@]}")")")"
+
+    StageL_internalDebugStackExit;
+}
+
+getExecPtrs() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getExecPtrs:document-exec'; StageL_assertIsInt "$intExecId"
+
+    strArrayRes=()
+    strArrayRes="$(StageL_strSplitEsc "$(StageL_get "$(join_by $'\037' "${strArrayDocumentExecPtrs[@]}")" "$intExecId")" ',')"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+setExecPtrs() {
+    intExecId="$1"; shift; IFS=$'\037' read -r -a strArrayVal <<< "$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "strArray Val = $strArrayVal; "; StageL_internalDebugStackEnter 'setExecPtrs:document-exec'; StageL_assertIsInt "$intExecId"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayVal[@]}")"
+
+    # Replace the entire exec pointer array for this exec.
+    strArrayDocumentExecPtrs="$(StageL_setElem "$(join_by $'\037' "${strArrayDocumentExecPtrs[@]}")" "$intExecId" "$(StageL_strJoinEsc "$(join_by $'\037' "${strArrayVal[@]}")" ',')")"
+
+    StageL_internalDebugStackExit;
+}
+
+getCurrentExecPtrPos() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getCurrentExecPtrPos:document-exec'; StageL_assertIsInt "$intExecId"
+
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_get "$(StageL_getExecPtrs "$intExecId")" '-1')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+setExecPtrPos() {
+    intExecId="$1"; shift; intNewPos="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "int NewPos = $intNewPos; "; StageL_internalDebugStackEnter 'setExecPtrPos:document-exec'; StageL_assertIsInt "$intExecId"; StageL_assertIsInt "$intNewPos"
+
+    StageL_setExecPtrs "$intExecId" "$(StageL_setElem "$(StageL_getExecPtrs "$intExecId")" '-1' "$(StageL_strFrom "$intNewPos")")"
+
+    StageL_internalDebugStackExit;
+}
+
+incrExecPtrPos() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'incrExecPtrPos:document-exec'; StageL_assertIsInt "$intExecId"
+
+    StageL_setExecPtrPos "$intExecId" "$(StageL_add '1' "$(StageL_getCurrentExecPtrPos "$intExecId")")"
+
+    StageL_internalDebugStackExit;
+}
+
+getNextLevelExecPtrPos() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getNextLevelExecPtrPos:document-exec'; StageL_assertIsInt "$intExecId"
+
+    intRes='0'
+    intRes="$(StageL_intFromIntStr "$(StageL_get "$(StageL_getExecPtrs "$intExecId")" '-2')")"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+getCurrentExecData() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getCurrentExecData:document-exec'; StageL_assertIsInt "$intExecId"
+
+    intArrayRes=()
+    intArrayRes="$(StageL_intArrFromStrPrintedArr "$(StageL_get "$(join_by $'\037' "${strArrayDocumentExecData[@]}")" "$intExecId")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getCurrentExecFrame() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getCurrentExecFrame:document-exec'; StageL_assertIsInt "$intExecId"
+
+    intArrayRes=()
+    intArrayRes="$(StageL_intArrFromStrPrintedArr "$(StageL_get "$(join_by $'\037' "${strArrayDocumentExecFrames[@]}")" "$intExecId")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+startDocumentExec() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'startDocumentExec:document-exec'; StageL_assertIsInt "$intExecId"
+
+    StageL_assertIsExecId "$intExecId"
+    boolContinue='false'
+    boolContinue='true'
+    intCurrentPtrPos='0'
+    intArrayWipFrame=()
+    intDc='0'
+    intArrayDocumentWorkingCopyData=()
+    intArrayDocumentWorkingCopyData="$(StageL_intArrFromStrPrintedArr "$(StageL_get "$(join_by $'\037' "${strArrayDocumentExecData[@]}")" "$intExecId")")"
+    strArrayState=()
+    strArrayState=( 'normal' )
+    boolLastCharacterWasEscape='false'
+    boolLastCharacterWasEscape='false'
+    intStopExecAtTick='0'
+    intStopExecAtTick="$(StageL_positiveIntFromIntStr "$(StageL_getExecOption "$intExecId" 'stopExecAtTick')")"
+    boolRunHeadless='false'
+    boolRunHeadless="$(StageL_eq 'true' "$(StageL_getExecOption "$intExecId" 'runHeadless')")"
+    intCurrentTick='0'
+    intCurrentTick='0'
+    if [[ "true" == "$(StageL_isNonnegative "$intStopExecAtTick")" ]]; then
+        if [[ "true" == "$(StageL_ge "$intCurrentTick" "$(StageL_add '-1' "$intStopExecAtTick")")" ]]; then
+            boolContinue='false'
+        fi
+    fi
+    while [[ "true" == "$boolContinue" ]]; do
+        if [[ "true" == "$(StageL_isNonnegative "$intStopExecAtTick")" ]]; then
+            if [[ "true" == "$(StageL_ge "$intCurrentTick" "$(StageL_add '-1' "$intStopExecAtTick")")" ]]; then
+                boolContinue='false'
+            fi
+        fi
+        intCurrentTick="$(StageL_inc "$intCurrentTick")"
+        # This loop goes through each Dc in the document, running it.
+        # Where are we in the document? Store it in n/currentPtrPos.
+        # n/currentPtrPos is a read-only copy! For changing it, call setExecPtrPos or incrExecPtrPos
+        intCurrentPtrPos="$(StageL_getCurrentExecPtrPos "$intExecId")"
+        # The execution process basically is a big state machine.
+        if [[ "true" == "$(StageL_ge "$intCurrentPtrPos" "$(StageL_count "$(join_by $'\037' "${intArrayDocumentWorkingCopyData[@]}")")")" ]]; then
+            # We're done with the document
+            boolContinue='false'
+                else
+            intDc="$(StageL_get "$(join_by $'\037' "${intArrayDocumentWorkingCopyData[@]}")" "$intCurrentPtrPos")"
+            StageL_debugRev '1' "$(StageL_cat 'Starting exec loop with data ' "$(StageL_cat "$(StageL_strPrintArr "$(join_by $'\037' "${intArrayDocumentWorkingCopyData[@]}")")" "$(StageL_cat ' and at position ' "$(StageL_cat "$(StageL_strFrom "$intCurrentPtrPos")" "$(StageL_cat ' with current Dc ' "$(StageL_cat "$(StageL_strFrom "$intDc")" "$(StageL_cat '; in state ' "$(StageL_cat "$(StageL_strPrintArr "$(join_by $'\037' "${strArrayState[@]}")")" "$(StageL_cat ' at tick ' "$(StageL_cat "$(StageL_strFrom "$intCurrentTick")" '.')")")")")")")")")")"
+            if [[ "true" == "$boolLastCharacterWasEscape" ]]; then
+                boolLastCharacterWasEscape='false'
+                StageL_incrExecPtrPos "$intExecId"
+                        else
+                # Char isn't escaped, so process it normally
+                if [[ "true" == "$(StageL_eq "$intDc" '255')" ]]; then
+                    boolLastCharacterWasEscape='true'
+                                else
+                    if [[ "true" == "$(StageL_eq 'normal' "$(StageL_last "$(join_by $'\037' "${strArrayState[@]}")")")" ]]; then
+                        if [[ "true" == "$(StageL_in "$intDc" "$(join_by $'\037' '246' '247')")" ]]; then
+                            strArrayState="$(StageL_push "$(join_by $'\037' "${strArrayState[@]}")" 'single-line source comment')"
+                                                elif [[ "true" == "$(StageL_in "$intDc" "$(join_by $'\037' '249' '250')")" ]]; then
+                            strArrayState="$(StageL_push "$(join_by $'\037' "${strArrayState[@]}")" 'block source comment')"
+                        fi
+                        if [[ "true" == "$(StageL_dcIsELCode "$intDc")" ]]; then
+                            # FIXME unimplemented
+                                                else
+                            # Normal Dc, or at least we don't know what it is
+                            intArrayWipFrame="$(StageL_push "$(join_by $'\037' "${intArrayWipFrame[@]}")" "$intDc")"
+                        fi
+                                        elif [[ "true" == "$(StageL_eq 'single-line source comment' "$(StageL_last "$(join_by $'\037' "${strArrayState[@]}")")")" ]]; then
+                        if [[ "true" == "$(StageL_eq "$intDc" '248')" ]]; then
+                            strArrayState="$(StageL_pop "$(join_by $'\037' "${strArrayState[@]}")")"
+                        fi
+                                        elif [[ "true" == "$(StageL_eq 'block source comment' "$(StageL_last "$(join_by $'\037' "${strArrayState[@]}")")")" ]]; then
+                        if [[ "true" == "$(StageL_eq "$intDc" '251')" ]]; then
+                            strArrayState="$(StageL_pop "$(join_by $'\037' "${strArrayState[@]}")")"
+                        fi
+                    fi
+                fi
+                StageL_incrExecPtrPos "$intExecId"
+            fi
+        fi
+        if [[ "true" == "$(StageL_and "$(StageL_not "$boolRunHeadless")" "$(StageL_eq '0' "$(StageL_mod "$intCurrentTick" '100')")")" ]]; then
+            # Convert the frame data to the environment-appropriate format and output it. Ideally this would happen at more sensible intervals, but this is easy to implement...
+            StageL_setElement "$(join_by $'\037' "${strArrayDocumentExecFrames[@]}")" "$intExecId" "$(StageL_printArr "$(join_by $'\037' "${intArrayWipFrame[@]}")")"
+            StageL_renderDrawContents "$(StageL_dcaToFormat "$(StageL_getEnvPreferredFormat )" "$(StageL_getCurrentExecFrame "$intExecId")")"
+        fi
+    done
+    StageL_setElement "$(join_by $'\037' "${strArrayDocumentExecFrames[@]}")" "$intExecId" "$(StageL_printArr "$(join_by $'\037' "${intArrayWipFrame[@]}")")"
+    StageL_renderDrawContents "$(StageL_dcaToFormat "$(StageL_getEnvPreferredFormat )" "$(StageL_getCurrentExecFrame "$intExecId")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runTestsDocumentExec() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsDocumentExec:document-exec-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'documentExec'
+    StageL_runExecTest "$boolV" 'at-comment-no-space' '10'
+    StageL_runExecTest "$boolV" 'at-comment' '10'
+    StageL_runExecTest "$boolV" 'at-nl' '10'
+    StageL_runExecTest "$boolV" 'at-space-nl' '10'
+    StageL_runExecTest "$boolV" 'hello-world' '100'
+
+    StageL_internalDebugStackExit;
+}
+
+runExecTest() {
+    boolV="$1"; shift; strTestName="$1"; shift; intTicksNeeded="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestName = $strTestName; "; StageL_internalDebugCollect "int TicksNeeded = $intTicksNeeded; "; StageL_internalDebugStackEnter 'runExecTest:document-exec-tests'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestName"; StageL_assertIsInt "$intTicksNeeded"
+
+    intExecId='0'
+    intExecId="$(StageL_runDocumentPrepare "$(StageL_loadStoredDocument 'sems' "$(StageL_cat 'exec-tests/' "$(StageL_cat "$strTestName" '.sems')")")")"
+    StageL_setExecOption "$intExecId" 'stopExecAtTick' "$(StageL_strFrom "$intTicksNeeded")"
+    StageL_setExecOption "$intExecId" 'runHeadless' 'true'
+    StageL_runDocumentGo "$intExecId"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_getCurrentExecFrame "$intExecId")" "$(StageL_loadStoredDocument 'sems' "$(StageL_cat 'exec-tests/' "$(StageL_cat "$strTestName" '.out.sems')")")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runTestsDcData() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsDcData:dc-data-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'dcData'
+    StageL_runTest "$boolV" "$(StageL_eq 'B' "$(StageL_dcGetBidiClass '120')")"
+
+    StageL_internalDebugStackExit;
+}
+
+isDc() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isDc:format-dc'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isInt "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intNum='0'
+    intNum="$genericIn"
+    boolRes='false'
+    boolRes="$(StageL_isNonnegative "$intNum")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isKnownDc() {
+    genericIn="$1"; shift; StageL_internalDebugCollect "generic In = $genericIn; "; StageL_internalDebugStackEnter 'isKnownDc:format-dc'; StageL_assertIsGeneric "$genericIn"
+
+    if [[ "true" == "$(StageL_not "$(StageL_isDc "$genericIn")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    if [[ "true" == "$(StageL_gt "$genericIn" "$(StageL_maximumKnownDc )")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+maximumKnownDc() {
+    StageL_internalDebugStackEnter 'maximumKnownDc:format-dc'; 
+
+    strRes=''
+    strRes="$(StageL_dcDatasetLength 'DcData')"
+
+    intReturn="$strRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+dcIsNewline() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsNewline:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    # This function returns whether a character should be treated as a newline, in general. Individual characters may have more complex or ambiguous meanings (see details in DcData.csv), but this is useful as a general guide.
+    # We can't just use:
+    #if eq 'B' dcGetBidiClass n/dc
+    #    return true
+    # because that means "Paragraph_Separator" bidi class, and includes some things that really shouldn't be considered newlines from what I can tell (information separator two through four), and does not include some things that are (U+2028 Line Separator).
+    if [[ "true" == "$(StageL_contains "$(join_by $'\037' '119' '120' '121' '240' '294' '295')" "$intDc")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsSpace() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsSpace:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    if [[ "true" == "$(StageL_eq 'Zs' "$(StageL_dcGetType "$intDc")")" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsPrintable() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsPrintable:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strType=''
+    strType="$(StageL_dcGetType "$intDc")"
+    strGeneralType=''
+    strGeneralType="$(StageL_strChar "$strType" '0')"
+    if [[ "true" == "$(StageL_or "$(StageL_eq 'Zl' "$strType")" "$(StageL_eq 'Zp' "$strType")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    if [[ "true" == "$(StageL_or "$(StageL_eq '!' "$strGeneralType")" "$(StageL_eq 'C' "$strGeneralType")")" ]]; then
+
+        boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcIsELCode() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcIsELCode:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    boolRes='false'
+    boolRes="$(StageL_eq 'EL ' "$(StageL_substr "$(StageL_dcGetScript "$intDc")" '0' '3')")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+dcGetELClass() {
+    intDc="$1"; shift; StageL_internalDebugCollect "int Dc = $intDc; "; StageL_internalDebugStackEnter 'dcGetELClass:format-dc'; StageL_assertIsInt "$intDc"
+
+    StageL_assertIsDc "$intDc"
+    strRes=''
+    strRes="$(StageL_substr "$(StageL_dcGetScript "$intDc")" '3' '-1')"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+dcaFromFormat() {
+    strInFormat="$1"; shift; IFS=$'\037' read -r -a intArrayContentBytes <<< "$1"; shift; StageL_internalDebugCollect "str InFormat = $strInFormat; "; StageL_internalDebugCollect "intArray ContentBytes = $intArrayContentBytes; "; StageL_internalDebugStackEnter 'dcaFromFormat:formats'; StageL_assertIsStr "$strInFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContentBytes[@]}")"
+
+    StageL_assertIsSupportedInputFormat "$strInFormat"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayContentBytes[@]}")"
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq "$strInFormat" 'sems')" ]]; then
+        intArrayRes="$(StageL_dcaFromSems "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
+        elif [[ "true" == "$(StageL_eq 

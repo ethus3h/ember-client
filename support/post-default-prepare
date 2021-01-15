@@ -1,1 +1,3 @@
+if [[ -e support/.cache-build ]]; then
+
 support/build-scripts/build --somewhat-verbose || die "Build failed!"
