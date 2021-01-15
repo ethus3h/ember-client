@@ -1,4 +1,6 @@
- 
+#!/usr/bin/env bash
+
+# @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 #!/usr/bin/env bash
 
 set() {
@@ -8,7 +10,9 @@ set() {
 
 # @license-end
 
- 
+#!/usr/bin/env bash
+
+# @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 runTestsTypeConversion() {
     boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsTypeConversion:type-conversion-tests'; StageL_assertIsBool "$boolV"
 
@@ -5475,9 +5479,13 @@ quietRunTests() {
 
 # @license-end
 
- 
+#!/usr/bin/env bash
+
+# @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
 # @license-end
- 
+#!/usr/bin/env bash
+
+# @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 
 # @license-end
