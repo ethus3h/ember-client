@@ -2557,4 +2557,73 @@ dcaFromFormat() {
     intArrayRes=()
     if [[ "true" == "$(StageL_eq "$strInFormat" 'sems')" ]]; then
         intArrayRes="$(StageL_dcaFromSems "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
-        elif [[ "true" == "$(StageL_eq 
+        elif [[ "true" == "$(StageL_eq "$strInFormat" 'integerList')" ]]; then
+        intArrayRes="$(StageL_dcaFromIntegerList "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strInFormat" 'ascii')" ]]; then
+        intArrayRes="$(StageL_dcaFromAscii "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strInFormat" 'asciiSafeSubset')" ]]; then
+        intArrayRes="$(StageL_dcaFromAsciiSafeSubset "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strInFormat" 'utf8')" ]]; then
+        intArrayRes="$(StageL_dcaFromUtf8 "$(join_by $'\037' "${intArrayContentBytes[@]}")")"
+        else
+        StageL_error "$(StageL_cat 'Unimplemented document parsing format: ' "$strInFormat")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToFormat() {
+    strOutFormat="$1"; shift; IFS=$'\037' read -r -a intArrayDcArrayIn <<< "$1"; shift; StageL_internalDebugCollect "str OutFormat = $strOutFormat; "; StageL_internalDebugCollect "intArray DcArrayIn = $intArrayDcArrayIn; "; StageL_internalDebugStackEnter 'dcaToFormat:formats'; StageL_assertIsStr "$strOutFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+
+    StageL_assertIsSupportedOutputFormat "$strOutFormat"
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq "$strOutFormat" 'integerList')" ]]; then
+        intArrayRes="$(StageL_dcaToIntegerList "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'ascii')" ]]; then
+        intArrayRes="$(StageL_dcaToAscii "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'asciiSafeSubset')" ]]; then
+        intArrayRes="$(StageL_dcaToAsciiSafeSubset "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'colorcoded')" ]]; then
+        intArrayRes="$(StageL_dcaToColorcoded "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'utf8')" ]]; then
+        intArrayRes="$(StageL_dcaToUtf8 "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'html')" ]]; then
+        intArrayRes="$(StageL_dcaToHtml "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strOutFormat" 'htmlFragment')" ]]; then
+        intArrayRes="$(StageL_dcaToHtmlFragment "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        else
+        StageL_die "$(StageL_cat 'Unimplemented document render output format: ' "$strOutFormat")"
+    fi
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+convertFormats() {
+    strInFormat="$1"; shift; strOutFormat="$1"; shift; IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "str InFormat = $strInFormat; "; StageL_internalDebugCollect "str OutFormat = $strOutFormat; "; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'convertFormats:formats'; StageL_assertIsStr "$strInFormat"; StageL_assertIsStr "$strOutFormat"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsSupportedInputFormat "$strInFormat"
+    StageL_assertIsSupportedOutputFormat "$strOutFormat"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_dcaToFormat "$strOutFormat" "$(StageL_dcaFromFormat "$strInFormat" "$(join_by $'\037' "${intArrayIn[@]}")")")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getExportExtension() {
+    strFormat="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugStackEnter 'getExportExtension:formats'; StageL_assertIsStr "$strFormat"
+
+    # Produces the actual file extension to be used for a file exported in the given format, with the current configured format options.
+    strRes=''
+    if [[ "true" == "$(StageL_isSupportedCharEncoding "$strFormat")" ]]; then
+        strRes="$(StageL_cat "$(StageL_getFormatExtension "$strFormat")" '.txt')"
+
+        strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+    fi
+    strRes="$(StageL_getFormatExtension "$strFormat")"
+
+    
