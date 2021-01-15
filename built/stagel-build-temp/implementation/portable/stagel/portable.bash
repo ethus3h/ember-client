@@ -1998,3 +1998,48 @@ posIntFromIntStr() {
 
     intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
 }
+
+charFromHexByte() {
+    strHexByte="$1"; shift; StageL_internalDebugCollect "str HexByte = $strHexByte; "; StageL_internalDebugStackEnter 'charFromHexByte:type-conversion'; StageL_assertIsStr "$strHexByte"
+
+    # Bear in mind that StageL doesn't attempt to support Unicode.
+    StageL_assertIsBaseStr "$strHexByte" '16'
+    strRes=''
+    strRes="$(StageL_charFromByte "$(StageL_intFromBaseStr "$strHexByte" '16')")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+strToByteArray() {
+    strInput="$1"; shift; StageL_internalDebugCollect "str Input = $strInput; "; StageL_internalDebugStackEnter 'strToByteArray:type-conversion'; StageL_assertIsStr "$strInput"
+
+    intCount='0'
+    intCount="$(StageL_len "$strInput")"
+    intI='0'
+    intI='0'
+    intArrayOut=()
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_byteFromChar "$(StageL_strChar "$strInput" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+strFromByteArray() {
+    IFS=$'\037' read -r -a intArrayInput <<< "$1"; shift; StageL_internalDebugCollect "intArray Input = $intArrayInput; "; StageL_internalDebugStackEnter 'strFromByteArray:type-conversion'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayInput[@]}")"
+
+    # Remember this will break if there are non-string bytes in it.
+    intCount='0'
+    intCount="$(StageL_count "$(join_by $'\037' "${intArrayInput[@]}")")"
+    intI='0'
+    intI='0'
+    strOut=''
+    while [[ "true" == "$(StageL_lt "$intI" "$intCount")" ]]; do
+        strOut="$(StageL_cat "$strOut" "$(StageL_charFromByte "$(StageL_get "$(join_by $'\037' "${intArrayInput[@]}")" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+
+    strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
