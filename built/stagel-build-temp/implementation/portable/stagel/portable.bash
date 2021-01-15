@@ -1814,3 +1814,78 @@ strJoin() {
 
     strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
 }
+
+strSplitEscaped() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strSplitEscaped:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    strArrayRes=()
+    strArrayExploded=()
+    strArrayExploded="$(StageL_strSplit "$strIn" "$strSeparator")"
+    strArrayRes=(  )
+    intK='0'
+    intL='0'
+    intK='0'
+    intL="$(StageL_count "$(join_by $'\037' "${strArrayExploded[@]}")")"
+    boolContinue='false'
+    boolContinue='true'
+    strTemp=''
+    strArrayTempSubset=()
+    while [[ "true" == "$(StageL_and "$boolContinue" "$(StageL_lt "$intK" "$intL")")" ]]; do
+        if [[ "true" == "$(StageL_eq '\\' "$(StageL_charAt "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" "$(StageL_add '-1' "$(StageL_len "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")")")")" ]]; then
+            if [[ "true" == "$(StageL_ge "$(StageL_add '1' "$intK")" "$intL")" ]]; then
+                strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")"
+                boolContinue='false'
+            fi
+            strTemp="$(StageL_setCharAt "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" "$(StageL_dec "$(StageL_len "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")" )" )" "$strSeparator")"
+            StageL_setElem "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK" "$strTemp"
+            #array_splice($exploded, $k + 1, 1); // https://www.php.net/manual/en/function.array-splice.php
+            strArrayTempSubset="$(StageL_subset "$(join_by $'\037' "${strArrayExploded[@]}")" "$(StageL_add '1' "$intK")" "$(StageL_add '2' "$intK")")"
+            strArrayExploded="$(StageL_append "$(join_by $'\037' "${strArrayTempSubset[@]}")" "$(StageL_subset "$(join_by $'\037' "${strArrayExploded[@]}")" "$(StageL_add '2' "$intK")" '-1')")"
+            intL="$(StageL_dec "$intL")"
+            intK="$(StageL_dec "$intK")"
+                else
+            strArrayRes="$(StageL_push "$(join_by $'\037' "${strArrayRes[@]}")" "$(StageL_get "$(join_by $'\037' "${strArrayExploded[@]}")" "$intK")")"
+        fi
+        intK="$(StageL_add '1' "$intK")"
+    done
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+    # Based on the explode_esc PHP function:
+    #//explode_escaped (not written by me)
+    #function explode_esc($delimiter, $string)
+    #{
+    #    $exploded = explode($delimiter, $string);
+    #    $fixed    = array();
+    #    for ($k = 0, $l = count($exploded); $k < $l; ++$k) {
+    #        if ($exploded[$k][strlen($exploded[$k]) - 1] == '\\') {
+    #            if ($k + 1 >= $l) {
+    #                $fixed[] = trim($exploded[$k]);
+    #                break;
+    #            }
+    #            $exploded[$k][strlen($exploded[$k]) - 1] = $delimiter;
+    #            $exploded[$k] .= $exploded[$k + 1];
+    #            array_splice($exploded, $k + 1, 1);
+    #            --$l;
+    #            --$k;
+    #        } else
+    #            $fixed[] = trim($exploded[$k]);
+    #    }
+    #    return $fixed;
+    #}
+}
+
+strSplitEsc() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'strSplitEsc:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    # Convenience wrapper
+    strArrayRes=()
+    strArrayRes="$(StageL_strSplitEscaped "$strIn" "$strSeparator")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+explodeEsc() {
+    strIn="$1"; shift; strSeparator="$1"; shift; StageL_internalDebugCollect "str In = $strIn; "; StageL_internalDebugCollect "str Separator = $strSeparator; "; StageL_internalDebugStackEnter 'explodeEsc:type-conversion'; StageL_assertIsStr "$strIn"; StageL_assertIsStr "$strSeparator"
+
+    strArrayRes=()
+    strArrayRes="$(StageL_strSplitEscaped 
