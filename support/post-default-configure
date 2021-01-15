@@ -10,5 +10,8 @@ if [[ "--cache" == "$1" ]]; then
     touch ./support/.cache-build
 fi
 
+rm -rf ./scripts
+cp -ra ./scripts.in ./scripts
+
 rm -rf ./built
 mkdir ./built
