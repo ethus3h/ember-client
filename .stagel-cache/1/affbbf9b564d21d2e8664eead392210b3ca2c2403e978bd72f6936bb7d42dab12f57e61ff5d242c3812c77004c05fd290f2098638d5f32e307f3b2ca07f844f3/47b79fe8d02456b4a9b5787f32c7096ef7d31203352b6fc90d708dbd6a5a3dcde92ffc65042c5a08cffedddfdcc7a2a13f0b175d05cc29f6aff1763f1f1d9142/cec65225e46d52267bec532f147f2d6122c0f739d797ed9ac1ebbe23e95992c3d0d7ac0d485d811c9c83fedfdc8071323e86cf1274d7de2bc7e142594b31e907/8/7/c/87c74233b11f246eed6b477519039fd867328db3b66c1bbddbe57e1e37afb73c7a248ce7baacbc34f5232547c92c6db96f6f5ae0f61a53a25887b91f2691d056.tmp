@@ -1,0 +1,226 @@
+# Note that the Basenb formats provided here are different from the Base16b formats in the specification, due to what appears to be a bug in the specification (requiring the remainder length to be stored to decode the remainder correctly when it starts with a 0 bit and is not 16 bits long).
+
+byteToIntBitArray() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'byteToIntBitArray:basenb-utf8'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsByte "$intIn"
+    intArrayRes=()
+    strTemp=''
+    strTemp="$(StageL_intToBaseStr "$intIn" '2')"
+    intLen='0'
+    intI='0'
+    intLen="$(StageL_len "$strTemp")"
+    intArrayZero=()
+    intArrayZero=( '0' )
+    while [[ "true" == "$(StageL_lt "$intI" "$intLen")" ]]; do
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$(StageL_strChar "$strTemp" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+    while [[ "true" == "$(StageL_gt '8' "$(StageL_count "$(join_by $'\037' "${intArrayRes[@]}")")")" ]]; do
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayZero[@]}")" "$(join_by $'\037' "${intArrayRes[@]}")")"
+    done
+    StageL_assertIsIntBitArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteFromIntBitArray() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteFromIntBitArray:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsIntBitArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intRes='0'
+    strTemp=''
+    intLen='0'
+    intI='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    while [[ "true" == "$(StageL_lt "$intI" "$intLen")" ]]; do
+        strTemp="$(StageL_cat "$strTemp" "$(StageL_strFrom "$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+    intRes="$(StageL_intFromBaseStr "$strTemp" '2')"
+    StageL_assertIsByte "$intRes"
+
+    intReturn="$intRes"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+byteArrayToIntBitArray() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayToIntBitArray:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayRes=()
+    intLen='0'
+    intI='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    while [[ "true" == "$(StageL_lt "$intI" "$intLen")" ]]; do
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_byteToIntBitArray "$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intI")")")"
+        intI="$(StageL_add "$intI" '1')"
+    done
+    StageL_assertIsIntBitArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteArrayFromIntBitArray() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayFromIntBitArray:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsIntBitArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayRes=()
+    intLen='0'
+    intI='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intArrayTemp=()
+    while [[ "true" == "$(StageL_le "$intI" "$intLen")" ]]; do
+        if [[ "true" == "$(StageL_and "$(StageL_eq '0' "$(StageL_mod "$intI" '8')" )" "$(StageL_not "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayTemp[@]}")")")")")" ]]; then
+            intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_byteFromIntBitArray "$(join_by $'\037' "${intArrayTemp[@]}")")")"
+            intArrayTemp=(  )
+        fi
+        if [[ "true" == "$(StageL_lt "$intI" "$intLen")" ]]; then
+            intArrayTemp="$(StageL_push "$(join_by $'\037' "${intArrayTemp[@]}")" "$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intI")")"
+        fi
+        intI="$(StageL_add "$intI" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isBasenbBase() {
+    intBase="$1"; shift; StageL_internalDebugCollect "int Base = $intBase; "; StageL_internalDebugStackEnter 'isBasenbBase:basenb-utf8'; StageL_assertIsInt "$intBase"
+
+    boolRes='false'
+    boolRes="$(StageL_intIsBetween "$intBase" '7' '17')"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBasenbChar() {
+    IFS=$'\037' read -r -a intArrayUtf8Char <<< "$1"; shift; StageL_internalDebugCollect "intArray Utf8Char = $intArrayUtf8Char; "; StageL_internalDebugStackEnter 'isBasenbChar:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayUtf8Char[@]}")"
+
+    boolRes='false'
+    boolRes='false'
+    if [[ "true" == "$(StageL_not "$(StageL_isPack32Char "$(join_by $'\037' "${intArrayUtf8Char[@]}")")")" ]]; then
+
+        boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intCodepoint='0'
+    intCodepoint="$(StageL_unpack32 "$(join_by $'\037' "${intArrayUtf8Char[@]}")")"
+    if [[ "true" == "$(StageL_intIsBetween "$intCodepoint" '983040' '1048573')" ]]; then
+        boolRes='true'
+        elif [[ "true" == "$(StageL_intIsBetween "$intCodepoint" '1048576' '1114109')" ]]; then
+        boolRes='true'
+        elif [[ "true" == "$(StageL_intIsBetween "$intCodepoint" '63481' '63501')" ]]; then
+        boolRes='true'
+    fi
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+isBasenbDistinctRemainderChar() {
+    IFS=$'\037' read -r -a intArrayUtf8Char <<< "$1"; shift; StageL_internalDebugCollect "intArray Utf8Char = $intArrayUtf8Char; "; StageL_internalDebugStackEnter 'isBasenbDistinctRemainderChar:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayUtf8Char[@]}")"
+
+    boolRes='false'
+    boolRes='false'
+    if [[ "true" == "$(StageL_not "$(StageL_isPack32Char "$(join_by $'\037' "${intArrayUtf8Char[@]}")")")" ]]; then
+
+        boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+    intCodepoint='0'
+    intCodepoint="$(StageL_unpack32 "$(join_by $'\037' "${intArrayUtf8Char[@]}")")"
+    if [[ "true" == "$(StageL_intIsBetween "$intCodepoint" '63481' '63497')" ]]; then
+        boolRes='true'
+    fi
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+byteArrayToBasenbUtf8() {
+    intBase="$1"; shift; IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "int Base = $intBase; "; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayToBasenbUtf8:basenb-utf8'; StageL_assertIsInt "$intBase"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsTrue "$(StageL_isBasenbBase "$intBase")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayInputIntBitArray=()
+    intArrayInputIntBitArray="$(StageL_byteArrayToIntBitArray "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intArrayRes=()
+    intArrayRes="$(StageL_internalIntBitArrayToBasenbString "$intBase" "$(join_by $'\037' "${intArrayInputIntBitArray[@]}")")"
+    # The remainder length also needs to be stored, to be able to decode successfully. We'll calculate, encode, and append it. It's always 4 bytes, 1 UTF-8 character, and 2 UTF-16 characters long, after encoding (it has 2 added to it to make it always be the same byte length and UTF-16 length; this must be subtracted before passing it to the Base16b.decode function).
+    # Previous version, which doesn't provide clear end-of-character markers:
+    # new an/remainder
+    # set an/remainder push an/remainder add 2 mod count an/inputIntBitArray } 17
+    # set an/res push an/res internalIntBitArrayToBasenbString 17 byteArrayToIntBitArray an/remainder
+    intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_pack32 "$(StageL_sub '63497' "$(StageL_mod "$(StageL_count "$(join_by $'\037' "${intArrayInputIntBitArray[@]}")")" '17')")")")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteArrayFromBasenbUtf8() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayFromBasenbUtf8:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayRes=()
+    # Extract remainder length
+    intRemainder='0'
+    intArrayRemainderArr=()
+    # last 3 bytes (1 character), which represent the remainder
+    intArrayRemainderArr="$(StageL_anSubset "$(join_by $'\037' "${intArrayIn[@]}")" '-3' '-1')"
+    if [[ "true" == "$(StageL_not "$(StageL_isBasenbDistinctRemainderChar "$(join_by $'\037' "${intArrayRemainderArr[@]}")")")" ]]; then
+        # last 4 bytes (1 character), which represent the remainder
+        intArrayRemainderArr="$(StageL_anSubset "$(join_by $'\037' "${intArrayIn[@]}")" '-4' '-1')"
+        intArrayRemainderDecodedArr=()
+        intArrayRemainderDecodedArr="$(StageL_byteArrayFromIntBitArray "$(StageL_internalIntBitArrayFromBasenbString "$(join_by $'\037' "${intArrayRemainderArr[@]}")" '8')")"
+        intRemainder="$(StageL_add '-2' "$(StageL_get "$(join_by $'\037' "${intArrayRemainderDecodedArr[@]}")" '0')")"
+        else
+        intRemainder="$(StageL_sub '63497' "$(StageL_unpack32 "$(join_by $'\037' "${intArrayRemainderArr[@]}")")")"
+    fi
+    if [[ "true" == "$(StageL_ngt "$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")" "$(StageL_count "$(join_by $'\037' "${intArrayRemainderArr[@]}")")")" ]]; then
+        # All we have is a remainder, or a chunk of a character without a remainder, so return an exception UUID to represent the error (3362daa3-1705-40ec-9a97-59d052fd4037)
+        intArrayRes=( '51' '98' '218' '163' '23' '5' '64' '236' '154' '151' '89' '208' '82' '253' '64' '55' )
+
+        intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+    fi
+    intArrayRes="$(StageL_byteArrayFromIntBitArray "$(StageL_internalIntBitArrayFromBasenbString "$(StageL_anSubset "$(join_by $'\037' "${intArrayIn[@]}")" '0' "$(StageL_add '-1' "$(StageL_mul '-1' "$(StageL_count "$(join_by $'\037' "${intArrayRemainderArr[@]}")")" )" )" )" "$intRemainder")")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteArrayToBase17bUtf8() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayToBase17bUtf8:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    # Convenience wrapper
+    intArrayRes=()
+    intArrayRes="$(StageL_byteArrayToBasenbUtf8 '17' "$(join_by $'\037' "${intArrayIn[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+byteArrayFromBase17bUtf8() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'byteArrayFromBase17bUtf8:basenb-utf8'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    # Convenience wrapper
+    intArrayRes=()
+    intArrayRes="$(StageL_byteArrayFromBasenbUtf8 "$(join_by $'\037' "${intArrayIn[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getArmoredUtf8EmbeddedStartUuid() {
+    StageL_internalDebugStackEnter 'getArmoredUtf8EmbeddedStartUuid:basenb-utf8'; 
+
+    # start UUID=e82eef60-19bc-4a00-a44a-763a3445c16f
+    #new an/startUuid
+    #set an/startUuid ( 232 46 239 96 25 188 74 0 164 74 118 58 52 69 193 111 )
+    # byteArrayToIntBitArray([ 232, 46, 239, 96, 25, 188, 74, 0, 164, 74, 118, 58, 52, 69, 193, 111 ]).then(function(v){return new TextEncoder().encode(Base16b.encode(v, 17));}).then(function(v){console.log(v.toString());})
+    # UTF8 in binary: 1,1,1,1,0,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,1,1,0,0,1,1,1,0,1,1,1,1,1,0,1,0,0,1,0,0,0,1,0,1,1,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,0,1,1,1,1,0,0,1,0,1,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,1,0,0,0,1,0,1,0,0,1,0,1,1,0,0,0,1,1,1,0,1,1,1,1,0,1,0,0,1,0,0,0,1,0,0,0,1,0,1,1,1,0,1,0,1,0,0,0,1,1,0,1,1,1,1,1,0,0,1,1,1,0,1,1,0,0,1,0,1,0,0,0,1,0,1,1,1,0,1,0,0,0,0,0,1,1,1,1,0,1,0,0,1,0,0,0,1,1,1,1,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,0
+    # Note that the remainder length for the encoded UUID is 9.
+    intArrayStartUuidUtf8=()
+    intArrayStartUuidUtf8=( '244' '141' '129' '157' '244' '139' '182' '128' '243' '188' '183' '162' '243' '186' '128' '138' '243' '184' '165' '142' '244' '136' '186' '141' '243' '178' '139' '160' '244' '143' '186' '144' )
+
+    intArrayReturn="$(join_by $'\037' "${intArrayStartUuidUtf8[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+getArmoredUtf8EmbeddedEndUuid() {
+    StageL_internalDebugStackEnter 'getArmoredUtf8EmbeddedEndUuid:basenb-utf8'; 
+
+    # end UUID=60bc936b-f10f-4f50-ab65-3778084060e2
+    #new an/endUuid
