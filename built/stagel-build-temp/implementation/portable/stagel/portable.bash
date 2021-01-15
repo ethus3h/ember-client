@@ -2043,3 +2043,51 @@ strFromByteArray() {
     strReturn="$strOut"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
 }
 
+runTestsOnly() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsOnly:unit-testing'; StageL_assertIsBool "$boolV"
+
+    # Run tests without report. b/v=verbose: true=print test result lines; false=return value only
+    # This runs each component's test suite
+    # General tests
+    #runTestsBits b/v
+    StageL_runTestsMath "$boolV"
+    StageL_runTestsPack32 "$boolV"
+    StageL_runTestsTypeConversion "$boolV"
+    StageL_runTestsWasm "$boolV"
+    # Core tests
+    StageL_runTestsDcData "$boolV"
+    StageL_runTestsFormatDc "$boolV"
+    # Format tests
+    StageL_runTestsFormatAscii "$boolV"
+    StageL_runTestsFormatAsciiSafeSubset "$boolV"
+    StageL_runTestsFormatHtml "$boolV"
+    StageL_runTestsFormatHtmlFragment "$boolV"
+    StageL_runTestsFormatIntegerList "$boolV"
+    StageL_runTestsFormatSems "$boolV"
+    StageL_runTestsFormatUtf8 "$boolV"
+    # Document exec tests
+    StageL_runTestsDocumentExec "$boolV"
+    # Did anything fail?
+    if [[ "true" == "$(StageL_eq "$intFailedTests" '0')" ]]; then
+
+        boolReturn='true'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+    fi
+
+    boolReturn='false'; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+testing() {
+    boolV="$1"; shift; strTestSuite="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "str TestSuite = $strTestSuite; "; StageL_internalDebugStackEnter 'testing:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsStr "$strTestSuite"
+
+    if [[ "true" == "$boolV" ]]; then
+        intArrayTestFrameBuffer="$(StageL_append "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")" "$(StageL_prepareStrForEcho "$(StageL_cat 'Started running test suite: ' "$strTestSuite")")")"
+        StageL_renderDrawContents "$(join_by $'\037' "${intArrayTestFrameBuffer[@]}")"
+    fi
+
+    StageL_internalDebugStackExit;
+}
+
+runTest() {
+    boolV="$1"; shift; boolTestReturn="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugCollect "bool TestReturn = $boolTestReturn; "; StageL_internalDebugStackEnter 'runTest:unit-testing'; StageL_assertIsBool "$boolV"; StageL_assertIsBool "$boolTestReturn"
+
+    intTotalTests="$(StageL_add 
