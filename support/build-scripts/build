@@ -69,6 +69,9 @@ mkdir -p ./built
 mkdir -p ./build-temp
 
 modules=( dist data bootstrap implementation-parts main web edit-webextension meta )
+for module in "${modules[@]}"; do
+
+done
 if [[ -n "$buildType" ]] && [[ "dist" != "$buildType" ]]; then
     emberDataDir="$(getDDCDataDir)"
     # Blech! Ensures that all the (non-script parts of) the modules built so far are included in this module, so getDDCDataDir will return all available modules.
