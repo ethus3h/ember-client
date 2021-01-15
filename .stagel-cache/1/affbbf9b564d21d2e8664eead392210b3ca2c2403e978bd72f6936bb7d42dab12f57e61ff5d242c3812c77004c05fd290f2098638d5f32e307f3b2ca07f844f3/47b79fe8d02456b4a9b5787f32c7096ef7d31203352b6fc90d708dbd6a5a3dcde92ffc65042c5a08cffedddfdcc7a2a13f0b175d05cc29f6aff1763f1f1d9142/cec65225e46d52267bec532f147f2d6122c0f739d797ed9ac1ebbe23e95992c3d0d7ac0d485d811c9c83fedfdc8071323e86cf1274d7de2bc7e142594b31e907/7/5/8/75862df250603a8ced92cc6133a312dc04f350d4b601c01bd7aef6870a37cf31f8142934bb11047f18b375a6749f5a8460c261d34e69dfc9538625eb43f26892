@@ -1,0 +1,8 @@
+runTestsFormatHtmlFragment() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatHtmlFragment:format-htmlFragment-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatHtmlFragment'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(StageL_strToByteArray '<div style="white-space:pre-wrap">5&lt;6</div>')" "$(StageL_dcaToHtmlFragment "$(join_by $'\037' '39' '46' '40')")")"
+
+    StageL_internalDebugStackExit;
+}

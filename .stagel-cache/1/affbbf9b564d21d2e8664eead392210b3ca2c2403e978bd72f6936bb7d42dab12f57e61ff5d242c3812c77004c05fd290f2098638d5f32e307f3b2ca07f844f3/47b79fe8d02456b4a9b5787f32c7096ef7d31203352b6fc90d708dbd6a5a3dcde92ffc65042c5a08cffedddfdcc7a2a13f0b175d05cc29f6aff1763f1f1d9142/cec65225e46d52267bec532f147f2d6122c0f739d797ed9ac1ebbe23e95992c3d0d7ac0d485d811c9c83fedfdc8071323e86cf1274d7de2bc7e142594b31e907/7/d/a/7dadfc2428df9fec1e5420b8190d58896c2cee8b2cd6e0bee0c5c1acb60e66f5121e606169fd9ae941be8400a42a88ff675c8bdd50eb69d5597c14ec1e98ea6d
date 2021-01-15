@@ -1,0 +1,115 @@
+dcaFromAsciiSafeSubset() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromAsciiSafeSubset:format-asciiSafeSubset'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intCounter='0'
+    intCounter='0'
+    strState=''
+    strState='normal'
+    intArrayPrefilter=()
+    intCurrentChar='0'
+    boolStrict='false'
+    boolStrict='false'
+    if [[ "true" == "$(StageL_eq 'true' "$(StageL_getSettingForFormat 'asciiSafeSubset' 'in' 'strict')")" ]]; then
+        boolStrict='true'
+    fi
+    while [[ "true" == "$(StageL_lt "$intCounter" "$intLen")" ]]; do
+        intCurrentChar="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intCounter")"
+        StageL_assertIsTrue "$(StageL_isAsciiSafeSubsetChar "$intCurrentChar")"
+        if [[ "true" == "$(StageL_and "$boolStrict" "$(StageL_and "$(StageL_eq "$strState" 'normal')" "$(StageL_eq "$intCurrentChar" '10')")")" ]]; then
+            StageL_die 'LF without preceding CR not allowed in asciiSafeSubset strict mode.'
+        fi
+        if [[ "true" == "$(StageL_and "$(StageL_eq "$strState" 'normal')" "$(StageL_eq "$intCurrentChar" '13')")" ]]; then
+            # Wait to see if there's a lf after this cr. If so, treat them as a unit.
+            strState='crlf'
+                elif [[ "true" == "$(StageL_eq "$strState" 'crlf')" ]]; then
+            strState='normal'
+            intArrayPrefilter="$(StageL_append "$(join_by $'\037' "${intArrayPrefilter[@]}")" "$(StageL_crlf )")"
+            if [[ "true" == "$(StageL_ne "$intCurrentChar" '10')" ]]; then
+                if [[ "true" == "$boolStrict" ]]; then
+                    StageL_die 'CR followed by non-LF byte not allowed in asciiSafeSubset strict mode.'
+                fi
+                # Reparse the current character
+                intCounter="$(StageL_sub "$intCounter" '1')"
+            fi
+                else
+            intArrayPrefilter="$(StageL_push "$(join_by $'\037' "${intArrayPrefilter[@]}")" "$intCurrentChar")"
+        fi
+        intCounter="$(StageL_add "$intCounter" '1')"
+    done
+    intArrayPrefilter="$(StageL_dcaFromAscii "$(join_by $'\037' "${intArrayPrefilter[@]}")")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayPrefilter[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToAsciiSafeSubset() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToAsciiSafeSubset:format-asciiSafeSubset'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayTemp=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intDcAtIndex='0'
+    strState=''
+    strState='normal'
+    intArrayMapTemp=()
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intArrayMapTemp="$(StageL_dcToFormat 'utf8' "$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")")"
+        if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayMapTemp[@]}")")")" ]]; then
+            intArrayTemp="$(StageL_setElement "$(join_by $'\037' "${intArrayTemp[@]}")" "$intInputIndex" '-1')"
+                else
+            intArrayTemp="$(StageL_setElement "$(join_by $'\037' "${intArrayTemp[@]}")" "$intInputIndex" "$(StageL_get "$(join_by $'\037' "${intArrayMapTemp[@]}")" '0')")"
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    intInputIndex='0'
+    intArrayTempChar=()
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        if [[ "true" == "$(StageL_eq "$intDcAtIndex" '121')" ]]; then
+            strState='crlf'
+            intInputIndex="$(StageL_add "$intInputIndex" '1')"
+            intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        fi
+        if [[ "true" == "$(StageL_eq "$strState" 'normal')" ]]; then
+            intArrayTempChar="$(StageL_dcToFormat 'utf8' "$intDcAtIndex")"
+            if [[ "true" == "$(StageL_eq '0' "$(StageL_count "$(join_by $'\037' "${intArrayTempChar[@]}")")")" ]]; then
+                StageL_exportWarningUnmappable "$intInputIndex" "$intDcAtIndex"
+                        else
+                if [[ "true" == "$(StageL_dcIsNewline "$intDcAtIndex")" ]]; then
+                    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                                elif [[ "true" == "$(StageL_isAsciiSafeSubsetChar "$(StageL_get "$(join_by $'\037' "${intArrayTempChar[@]}")" '0')")" ]]; then
+                    intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(join_by $'\037' "${intArrayTempChar[@]}")")"
+                                else
+                    StageL_exportWarningUnmappable "$intInputIndex" "$intDcAtIndex"
+                fi
+            fi
+                elif [[ "true" == "$(StageL_eq "$strState" 'crlf')" ]]; then
+            strState='normal'
+            if [[ "true" == "$(StageL_eq "$intDcAtIndex" '120')" ]]; then
+                # Found ambiguous cr, lf in a row, so only output one crlf
+                intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                        else
+                # Reprocess the current character with 'normal' state
+                intInputIndex="$(StageL_sub "$intInputIndex" '1')"
+            fi
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+isAsciiSafeSubsetChar() {
+    intChar="$1"; shift; StageL_internalDebugCollect "int Char = $intChar; "; StageL_internalDebugStackEnter 'isAsciiSafeSubsetChar:format-asciiSafeSubset'; StageL_assertIsInt "$intChar"
+
+    boolRes='false'
+    boolRes="$(StageL_or "$(StageL_asciiIsPrintable "$intChar")" "$(StageL_asciiIsNewline "$intChar")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}

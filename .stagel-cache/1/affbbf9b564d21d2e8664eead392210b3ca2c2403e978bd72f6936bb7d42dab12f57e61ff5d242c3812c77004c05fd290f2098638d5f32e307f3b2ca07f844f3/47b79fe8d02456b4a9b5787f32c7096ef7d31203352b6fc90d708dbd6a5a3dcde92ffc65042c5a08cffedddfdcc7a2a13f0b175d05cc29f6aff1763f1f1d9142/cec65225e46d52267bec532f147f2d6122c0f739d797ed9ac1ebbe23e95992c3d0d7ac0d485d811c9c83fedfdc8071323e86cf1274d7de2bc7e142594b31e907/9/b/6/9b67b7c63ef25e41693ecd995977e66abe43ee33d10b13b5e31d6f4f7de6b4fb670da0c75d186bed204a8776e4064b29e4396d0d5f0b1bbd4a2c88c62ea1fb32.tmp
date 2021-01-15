@@ -1,0 +1,94 @@
+# This file contains the public interface for EITE StageR.
+# If you just want to run EITE, use the following routine.
+
+startEite() {
+    StageL_internalDebugStackEnter 'startEite:public-interface';
+
+    # Start EITE, using the default startup document. Does not return while EITE is still running.
+    StageL_loadAndRun 'sems' 'eite.sems'
+
+    StageL_internalDebugStackExit;
+}
+# If you want to run a different document, you can call loadAndRun with the format of the document to open and its location.
+
+loadAndRun() {
+    strFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadAndRun:public-interface'; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strPath"
+
+    # Load and run the specified document. Does not return while the document is still running.
+    StageL_runDocument "$(StageL_loadStoredDocument "$strFormat" "$strPath")"
+
+    StageL_internalDebugStackExit;
+}
+# If you want to convert a document to another format, you can call loadAndConvert with the format of the document, its location, and the format you want the results in.
+
+loadAndConvert() {
+    strInputFormat="$1"; shift; strOutputFormat="$1"; shift; strPath="$1"; shift; StageL_internalDebugCollect "str InputFormat = $strInputFormat; "; StageL_internalDebugCollect "str OutputFormat = $strOutputFormat; "; StageL_internalDebugCollect "str Path = $strPath; "; StageL_internalDebugStackEnter 'loadAndConvert:public-interface'; StageL_assertIsStr "$strInputFormat"; StageL_assertIsStr "$strOutputFormat"; StageL_assertIsStr "$strPath"
+
+    # Load the specified document, and return it converted to the specified outputFormat as an array of bytes.
+    intArrayOut=()
+    intArrayOut="$(StageL_exportDocument "$strOutputFormat" "$(StageL_loadStoredDocument "$strInputFormat" "$strPath")" )"
+}
+# To operate on a document you already have as a Dc array, you can call runDocument or convertDocument directly on it. Or, if you already have it as a byte array, you can call importDocument or importAndExport on it.
+
+runDocument() {
+    IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'runDocument:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    # Run the provided document. Does not return while the document is still running. Takes care of events and I/O automatically.
+    StageL_runDocumentGo "$(StageL_runDocumentPrepare "$(join_by $'\037' "${intArrayContents[@]}")")"
+
+    StageL_internalDebugStackExit;
+}
+
+runDocumentPrepare() {
+    IFS=$'\037' read -r -a intArrayContents <<< "$1"; shift; StageL_internalDebugCollect "intArray Contents = $intArrayContents; "; StageL_internalDebugStackEnter 'runDocumentPrepare:public-interface'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContents[@]}")"
+
+    # Prepare to run the provided document. Use this followed by runDocumentGo if you want to configure execution settings before starting the document.
+    StageL_setupIfNeeded 
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayContents[@]}")"
+    intExecId='0'
+    intExecId="$(StageL_prepareDocumentExec "$(join_by $'\037' "${intArrayContents[@]}")")"
+    StageL_assertIsExecId "$intExecId"
+
+    intReturn="$intExecId"; StageL_assertIsInt "$intReturn"; StageL_internalDebugStackExit; print "$intReturn"
+}
+
+runDocumentGo() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'runDocumentGo:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Run a document, once it's been prepared to run by calling runDocumentPrepare.
+    StageL_internalRunDocument "$intExecId"
+
+    StageL_internalDebugStackExit;
+}
+
+getExecOption() {
+    intExecId="$1"; shift; strKey="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugStackEnter 'getExecOption:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strKey"
+
+    # Get the value of an execution option for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    strRes=''
+    strRes="$(StageL_kvGetValue "$(StageL_getExecSettings "$intExecId")" "$strKey")"
+
+    strReturn="$strRes"; StageL_assertIsStr "$strReturn"; StageL_internalDebugStackExit; print "$strReturn"
+}
+
+getExecOptions() {
+    intExecId="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugStackEnter 'getExecOptions:public-interface'; StageL_assertIsInt "$intExecId"
+
+    # Get the execution options set for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    strArrayRes=()
+    strArrayRes="$(StageL_getExecSettings "$intExecId")"
+
+    strArrayReturn="$(join_by $'\037' "${strArrayRes[@]}")"; StageL_assertIsStrArray "$(join_by $'\037' "${strArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${strArrayReturn[@]}")"
+}
+
+setExecOption() {
+    intExecId="$1"; shift; strKey="$1"; shift; strValue="$1"; shift; StageL_internalDebugCollect "int ExecId = $intExecId; "; StageL_internalDebugCollect "str Key = $strKey; "; StageL_internalDebugCollect "str Value = $strValue; "; StageL_internalDebugStackEnter 'setExecOption:public-interface'; StageL_assertIsInt "$intExecId"; StageL_assertIsStr "$strKey"; StageL_assertIsStr "$strValue"
+
+    # Set an execution option for a document.
+    StageL_setupIfNeeded 
+    StageL_assertIsExecId "$intExecId"
+    StageL_setExecSettings "$intExecId" "$(StageL_kvSetValue "$(StageL_getExecSettings 

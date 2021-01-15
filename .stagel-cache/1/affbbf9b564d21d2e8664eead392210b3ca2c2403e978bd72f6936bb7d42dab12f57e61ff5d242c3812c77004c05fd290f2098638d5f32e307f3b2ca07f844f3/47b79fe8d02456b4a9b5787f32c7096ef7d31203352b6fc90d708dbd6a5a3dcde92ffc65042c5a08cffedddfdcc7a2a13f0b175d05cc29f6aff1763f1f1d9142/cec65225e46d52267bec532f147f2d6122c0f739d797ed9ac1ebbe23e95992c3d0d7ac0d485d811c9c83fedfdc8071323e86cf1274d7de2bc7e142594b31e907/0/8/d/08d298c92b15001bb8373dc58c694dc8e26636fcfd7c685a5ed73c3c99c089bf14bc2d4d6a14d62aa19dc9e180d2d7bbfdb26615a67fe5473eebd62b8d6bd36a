@@ -1,0 +1,9 @@
+runTestsFormatAsciiSafeSubset() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatAsciiSafeSubset:format-asciiSafeSubset-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatAsciiSafeSubset'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '121' '120' '21' '26')" "$(StageL_dcaFromAsciiSafeSubset "$(join_by $'\037' '13' '10' '35' '40')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '13' '10' '35' '13' '10' '40')" "$(StageL_dcaToAsciiSafeSubset "$(join_by $'\037' '0' '212' '120' '216' '291' '221' '226' '231' '21' '121' '120' '26')")")"
+
+    StageL_internalDebugStackExit;
+}

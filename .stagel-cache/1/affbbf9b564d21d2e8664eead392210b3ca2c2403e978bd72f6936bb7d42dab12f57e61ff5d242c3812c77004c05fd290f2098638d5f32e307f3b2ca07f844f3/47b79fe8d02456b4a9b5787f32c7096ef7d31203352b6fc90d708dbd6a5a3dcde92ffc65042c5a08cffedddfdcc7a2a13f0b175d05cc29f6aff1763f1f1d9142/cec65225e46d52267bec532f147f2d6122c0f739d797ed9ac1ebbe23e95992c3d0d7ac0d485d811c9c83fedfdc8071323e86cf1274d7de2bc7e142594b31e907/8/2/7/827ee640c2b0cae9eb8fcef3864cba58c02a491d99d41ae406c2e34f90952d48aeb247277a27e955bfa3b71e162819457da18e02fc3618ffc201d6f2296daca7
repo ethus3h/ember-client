@@ -1,0 +1,34 @@
+isSupportedDocumentTransformation() {
+    strTransform="$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugStackEnter 'isSupportedDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"
+
+    boolRes='false'
+    boolRes="$(StageL_in "$strTransform" "$(join_by $'\037' "${strArrayListDocumentTransformations[@]}")")"
+
+    boolReturn="$boolRes"; StageL_assertIsBool "$boolReturn"; StageL_internalDebugStackExit; print "$boolReturn"
+}
+
+assertIsSupportedDocumentTransformation() {
+    strTransform="$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugStackEnter 'assertIsSupportedDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"
+
+    StageL_assertIsTrue "$(StageL_isSupportedDocumentTransformation "$strTransform")"
+
+    StageL_internalDebugStackExit;
+}
+
+applyDocumentTransformation() {
+    strTransform="$1"; shift; IFS=$'\037' read -r -a intArrayDcArrayIn <<< "$1"; shift; StageL_internalDebugCollect "str Transform = $strTransform; "; StageL_internalDebugCollect "intArray DcArrayIn = $intArrayDcArrayIn; "; StageL_internalDebugStackEnter 'applyDocumentTransformation:document-transformations'; StageL_assertIsStr "$strTransform"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+
+    StageL_assertIsSupportedDocumentTransformation "$strTransform"
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcArrayIn[@]}")"
+    intArrayRes=()
+    if [[ "true" == "$(StageL_eq "$strTransform" 'semanticToText')" ]]; then
+        intArrayRes="$(StageL_dctSemanticToText "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        elif [[ "true" == "$(StageL_eq "$strTransform" 'codeToText')" ]]; then
+        intArrayRes="$(StageL_dctCodeToText "$(join_by $'\037' "${intArrayDcArrayIn[@]}")")"
+        else
+        StageL_die "$(StageL_cat 'Unimplemented document transformation: ' "$strTransform")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

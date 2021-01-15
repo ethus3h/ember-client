@@ -1,0 +1,9 @@
+runTestsFormatAscii() {
+    boolV="$1"; shift; StageL_internalDebugCollect "bool V = $boolV; "; StageL_internalDebugStackEnter 'runTestsFormatAscii:format-ascii-tests'; StageL_assertIsBool "$boolV"
+
+    StageL_testing "$boolV" 'formatAscii'
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '0' '212' '120' '216' '221' '226' '231' '21' '26')" "$(StageL_dcaFromAscii "$(join_by $'\037' '0' '5' '10' '15' '20' '25' '30' '35' '40')")")"
+    StageL_runTest "$boolV" "$(StageL_arrEq "$(join_by $'\037' '0' '5' '10' '15' '20' '25' '30' '35' '40')" "$(StageL_dcaToAscii "$(join_by $'\037' '0' '212' '120' '216' '291' '221' '226' '231' '21' '26')")")"
+
+    StageL_internalDebugStackExit;
+}

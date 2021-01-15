@@ -1,0 +1,30 @@
+dctSemanticToText() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dctSemanticToText:semantic-to-text'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intCurrentDc='0'
+    strTargetLanguage=''
+    strTargetLanguage="$(StageL_cat 'lang_' "$(StageL_getFormatImportSetting 'semanticToText' 'language')")"
+    if [[ "true" == "$(StageL_eq 'lang_' "$strTargetLanguage")" ]]; then
+        strTargetLanguage="$(StageL_cat 'lang_' "$(StageL_getEnvLanguage )")"
+    fi
+    strTemp=''
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_eq 'Semantic' "$(StageL_dcGetScript "$intCurrentDc")")" ]]; then
+            strTemp="$(StageL_dcGetMappingToFormat "$intCurrentDc" "$strTargetLanguage")"
+            if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strTemp")")" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromElad "$strTemp")")"
+                        else
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$intCurrentDc")"
+            fi
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

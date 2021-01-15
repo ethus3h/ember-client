@@ -1,0 +1,115 @@
+dcaFromSems() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dcaFromSems:format-sems'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayIn[@]}")"
+    intArrayRes=()
+    # Accepts an array of bytes of a SEMS format document. Returns an array of Dcs.
+    intArrayContent=()
+    intArrayContent="$(StageL_utf8CharArrayFromByteArray "$(join_by $'\037' "${intArrayIn[@]}")")"
+    strParserState=''
+    strParserState='dc'
+    strCurrentDc=''
+    strCurrentDc=''
+    intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intCharOffset='0'
+    intCurrentChar='0'
+    boolStrict='false'
+    boolStrict="$(StageL_eq 'true' "$(StageL_getSettingForFormat 'sems' 'in' 'strict')")"
+    while [[ "true" == "$(StageL_lt "$intCharOffset" "$intContentLength")" ]]; do
+        # do something with each char in the array. an/content[n/byteOffset], which is copied to n/currentChar, holds the decimal value of the given char. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        intCurrentChar="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intCharOffset")"
+        if [[ "true" == "$(StageL_eq "$strParserState" 'dc')" ]]; then
+            if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentChar")" ]]; then
+                strCurrentDc="$(StageL_cat "$strCurrentDc" "$(StageL_charFromByte "$intCurrentChar")")"
+                        elif [[ "true" == "$(StageL_in "$intCurrentChar" "$(join_by $'\037' '10' '13' '32')")" ]]; then
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+                strCurrentDc=''
+                        elif [[ "true" == "$(StageL_eq '35' "$intCurrentChar")" ]]; then
+                # pound sign: start comment
+                if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+                    # Comment was not preceded by a space
+                    StageL_warnOrDie "$boolStrict" 'No trailing space before comment present in sems format while importing. This is not allowed in strict mode.'
+                    intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+                    strCurrentDc=''
+                fi
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '246')"
+                strParserState='comment'
+                        else
+                StageL_die 'Unexpected parser state in SEMS document.'
+            fi
+                elif [[ "true" == "$(StageL_eq "$strParserState" 'comment')" ]]; then
+            if [[ "true" == "$(StageL_asciiIsNewline "$intCurrentChar")" ]]; then
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '248')"
+                strParserState='dc'
+                        else
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromUnicodeChar "$intCurrentChar")")"
+            fi
+                else
+            StageL_die 'Internal error: unexpected parser state while parsing SEMS document'
+        fi
+        intCharOffset="$(StageL_add "$intCharOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_eq "$strParserState" 'comment')" ]]; then
+        # Document ended with a comment and no newline at the end
+        if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+            StageL_die "$(StageL_cat 'Internal error while parsing sems document: Unconsumed characters were left over when the end of the document was found: ' "$(StageL_cat "$strCurrentDc" '.')")"
+        fi
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" '248')"
+        elif [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+        StageL_warnOrDie "$boolStrict" 'No trailing space present in sems format while importing. This is not allowed in strict mode.'
+        # Ended without a trailing space
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToSems() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToSems:format-sems'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    # TODO: Support SEMS comment roundtripping
+    intArrayOut=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intCurrentDc='0'
+    boolInComment='false'
+    boolInComment='false'
+    intArrayCurrentComment=()
+    intArrayCurrentComment=(  )
+    boolAtCommentEnd='false'
+    boolAtCommentEnd='false'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        if [[ "true" == "$boolAtCommentEnd" ]]; then
+            boolAtCommentEnd='false'
+        fi
+        if [[ "true" == "$(StageL_eq '246' "$intCurrentDc")" ]]; then
+            boolInComment='true'
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '#')")"
+                elif [[ "true" == "$(StageL_eq '248' "$intCurrentDc")" ]]; then
+            boolInComment='false'
+            boolAtCommentEnd='true'
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcaToDcbnbUtf8 "$(join_by $'\037' "${intArrayCurrentComment[@]}")")")"
+            intArrayCurrentComment=(  )
+            intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+                else
+            if [[ "true" == "$boolInComment" ]]; then
+                intArrayCurrentComment="$(StageL_push "$(join_by $'\037' "${intArrayCurrentComment[@]}")" "$intCurrentDc")"
+                        else
+                intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_cat "$(StageL_strFrom "$intCurrentDc")" ' ')")")"
+            fi
+        fi
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    if [[ "true" == "$(StageL_not "$boolAtCommentEnd")" ]]; then
+        intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_crlf )")"
+    fi
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

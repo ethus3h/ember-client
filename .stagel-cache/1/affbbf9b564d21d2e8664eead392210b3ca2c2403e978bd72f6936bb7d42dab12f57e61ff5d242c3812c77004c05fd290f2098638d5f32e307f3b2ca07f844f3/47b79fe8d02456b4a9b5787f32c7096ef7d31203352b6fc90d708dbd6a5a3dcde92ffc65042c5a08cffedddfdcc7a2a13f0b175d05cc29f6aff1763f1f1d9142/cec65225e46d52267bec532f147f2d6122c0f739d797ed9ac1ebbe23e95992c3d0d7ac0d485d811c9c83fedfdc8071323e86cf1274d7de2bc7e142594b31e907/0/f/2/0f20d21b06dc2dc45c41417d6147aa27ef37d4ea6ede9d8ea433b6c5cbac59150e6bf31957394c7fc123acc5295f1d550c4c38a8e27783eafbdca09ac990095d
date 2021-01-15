@@ -1,0 +1,87 @@
+dcaToColorcoded() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToColorcoded:format-colorcoded'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_strToByteArray '<!DOCTYPE html><html><head><title></title></head><body><p>Key: <span style="color:black">Letter</span> <span style="color:gray">Control</span> <span style="color:blue">Semantic</span> <span style="color:salmon">Mathematics</span> <span style="color:rebeccapurple">Symbols</span> <span style="color:red">Programming</span> <span style="color:green">Financial</span> <span style="color:orange">Punctuation</span> <span style="color:purple">Emoji</span> <span style="color:maroon">Styling</span> <span style="color:brown">Other</span></p>')"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcaToColorcodedFragment "$(join_by $'\037' "${intArrayDcIn[@]}")")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</body></html>')")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToColorcodedFragment() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToColorcodedFragment:format-colorcoded'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '<div style="white-space:pre-wrap">')")"
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    intDcAtIndex='0'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intDcAtIndex="$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")"
+        intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_dcToFormat 'colorcoded' "$intDcAtIndex")")"
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</div>')")"
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcToColorcoded() {
+    intIn="$1"; shift; StageL_internalDebugCollect "int In = $intIn; "; StageL_internalDebugStackEnter 'dcToColorcoded:format-colorcoded'; StageL_assertIsInt "$intIn"
+
+    StageL_assertIsDc "$intIn"
+    intArrayOut=()
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '<span style="color:')")"
+    strType=''
+    strType="$(StageL_dcGetType "$intIn")"
+    strScript=''
+    strScript="$(StageL_dcGetScript "$intIn")"
+    strColor=''
+    if [[ "true" == "$(StageL_eq 'L' "$(StageL_strChar "$strType" '0')")" ]]; then
+        # Letter
+        strColor='black'
+        elif [[ "true" == "$(StageL_eq 'Controls' "$strScript")" ]]; then
+        # Control
+        strColor='gray'
+        elif [[ "true" == "$(StageL_eq 'Semantic' "$strScript")" ]]; then
+        # Semantic
+        strColor='blue'
+        elif [[ "true" == "$(StageL_eq 'Mathematics' "$strScript")" ]]; then
+        # Mathematics
+        strColor='salmon'
+        elif [[ "true" == "$(StageL_eq 'Symbols' "$strScript")" ]]; then
+        # Symbols
+        strColor='rebeccapurple'
+        elif [[ "true" == "$(StageL_eq 'EL ' "$(StageL_substr "$strScript" '0' '3')")" ]]; then
+        # Programming
+        strColor='red'
+        elif [[ "true" == "$(StageL_eq 'Financial' "$strScript")" ]]; then
+        # Financial
+        strColor='green'
+        elif [[ "true" == "$(StageL_eq 'Punctuation' "$strScript")" ]]; then
+        # Punctuation
+        strColor='orange'
+        elif [[ "true" == "$(StageL_eq 'Emoji' "$strScript")" ]]; then
+        # Emoji
+        strColor='purple'
+        elif [[ "true" == "$(StageL_eq 'Colors' "$strScript")" ]]; then
+        # Styling
+        strColor='maroon'
+        else
+        # Other
+        strColor='brown'
+    fi
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$strColor")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '">')")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_strFrom "$intIn")")")"
+    intArrayOut="$(StageL_append "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray '</span> ')")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

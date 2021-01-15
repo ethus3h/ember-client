@@ -1,0 +1,23 @@
+dcPreprocessForFormat() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; strFormat="$1"; shift; strDirection="$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugCollect "str Format = $strFormat; "; StageL_internalDebugCollect "str Direction = $strDirection; "; StageL_internalDebugStackEnter 'dcPreprocessForFormat:dc-preprocess-for-format'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"; StageL_assertIsStr "$strFormat"; StageL_assertIsStr "$strDirection"
+
+    intArrayRes=()
+    intArrayRes="$(join_by $'\037' "${intArrayIn[@]}")"
+    strPreferredLang=''
+    strPreferredLang="$(StageL_getPreferredLanguageForFormat "$strFormat" "$strDirection")"
+    strPreferredCodeLang=''
+    strPreferredCodeLang="$(StageL_getPreferredCodeLanguageForFormat "$strFormat" "$strDirection")"
+    strTemp=''
+    if [[ "true" == "$(StageL_in 'prefilter_semantic' "$(StageL_getSettingsForFormat "$strFormat" "$strDirection")")" ]]; then
+        strTemp="$(StageL_pushFormatImportSetting 'semanticToText' 'language' "$strPreferredLang")"
+        intArrayRes="$(StageL_dctSemanticToText "$(join_by $'\037' "${intArrayRes[@]}")")"
+        StageL_setFormatImportSetting 'semanticToText' 'language' "$strTemp"
+    fi
+    if [[ "true" == "$(StageL_in 'prefilter_code' "$(StageL_getSettingsForFormat "$strFormat" "$strDirection")")" ]]; then
+        strTemp="$(StageL_pushFormatImportSetting 'codeToText' 'language' "$strPreferredCodeLang")"
+        intArrayRes="$(StageL_dctCodeToText "$(join_by $'\037' "${intArrayRes[@]}")")"
+        StageL_setFormatImportSetting 'codeToText' 'language' "$strTemp"
+    fi
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

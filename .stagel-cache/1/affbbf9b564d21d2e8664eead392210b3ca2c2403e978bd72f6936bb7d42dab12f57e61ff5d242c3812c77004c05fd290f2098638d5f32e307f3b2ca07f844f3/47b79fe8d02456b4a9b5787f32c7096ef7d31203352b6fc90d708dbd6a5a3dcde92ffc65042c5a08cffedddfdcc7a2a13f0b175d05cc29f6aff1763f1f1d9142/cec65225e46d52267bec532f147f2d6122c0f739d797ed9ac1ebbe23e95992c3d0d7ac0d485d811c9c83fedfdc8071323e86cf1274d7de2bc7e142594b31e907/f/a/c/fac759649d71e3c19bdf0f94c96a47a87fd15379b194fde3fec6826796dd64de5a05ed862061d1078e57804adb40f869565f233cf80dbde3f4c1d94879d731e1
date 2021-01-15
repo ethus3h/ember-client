@@ -1,0 +1,30 @@
+dctCodeToText() {
+    IFS=$'\037' read -r -a intArrayIn <<< "$1"; shift; StageL_internalDebugCollect "intArray In = $intArrayIn; "; StageL_internalDebugStackEnter 'dctCodeToText:code-to-text'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayIn[@]}")"
+
+    intArrayRes=()
+    intC='0'
+    intC='0'
+    intL='0'
+    intL="$(StageL_count "$(join_by $'\037' "${intArrayIn[@]}")")"
+    intCurrentDc='0'
+    strTargetLanguage=''
+    strTargetLanguage="$(StageL_getFormatImportSetting 'codeToText' 'language')"
+    if [[ "true" == "$(StageL_eq '0' "$(StageL_len "$strTargetLanguage")")" ]]; then
+        strTargetLanguage="$(StageL_getEnvCodeLanguage )"
+    fi
+    strTemp=''
+    while [[ "true" == "$(StageL_lt "$intC" "$intL")" ]]; do
+        intCurrentDc="$(StageL_get "$(join_by $'\037' "${intArrayIn[@]}")" "$intC")"
+        if [[ "true" == "$(StageL_dcIsELCode "$intCurrentDc")" ]]; then
+            strTemp="$(StageL_dcGetMappingToFormat "$intCurrentDc" "$strTargetLanguage")"
+            if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strTemp")")" ]]; then
+                intArrayRes="$(StageL_append "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_dcaFromElad "$strTemp")")"
+                        else
+                intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$intCurrentDc")"
+            fi
+        fi
+        intC="$(StageL_inc "$intC")"
+    done
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}

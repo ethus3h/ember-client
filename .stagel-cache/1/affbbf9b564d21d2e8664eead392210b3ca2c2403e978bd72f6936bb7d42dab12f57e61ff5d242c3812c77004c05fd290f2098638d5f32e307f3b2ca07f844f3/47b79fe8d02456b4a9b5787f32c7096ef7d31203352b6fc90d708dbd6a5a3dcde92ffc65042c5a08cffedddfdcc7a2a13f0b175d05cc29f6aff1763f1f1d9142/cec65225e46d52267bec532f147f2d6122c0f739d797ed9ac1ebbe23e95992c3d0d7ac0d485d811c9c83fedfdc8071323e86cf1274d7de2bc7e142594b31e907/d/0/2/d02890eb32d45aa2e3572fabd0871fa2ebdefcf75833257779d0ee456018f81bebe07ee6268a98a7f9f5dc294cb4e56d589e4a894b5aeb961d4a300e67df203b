@@ -1,0 +1,54 @@
+dcaFromIntegerList() {
+    IFS=$'\037' read -r -a intArrayContent <<< "$1"; shift; StageL_internalDebugCollect "intArray Content = $intArrayContent; "; StageL_internalDebugStackEnter 'dcaFromIntegerList:format-integerList'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayContent[@]}")"
+
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayContent[@]}")"
+    intArrayRes=()
+    # Accepts an array of bytes representing an ASCII list of integers representing Dcs. Returns an array of Dcs. This format is the same as sems but without supporting comments.
+    strCurrentDc=''
+    strCurrentDc=''
+    intContentLength='0'
+    intContentLength="$(StageL_count "$(join_by $'\037' "${intArrayContent[@]}")")"
+    intByteOffset='0'
+    intCurrentByte='0'
+    while [[ "true" == "$(StageL_lt "$intByteOffset" "$intContentLength")" ]]; do
+        # do something with each byte in the array. an/content[n/byteOffset] holds the decimal value of the given byte. These are Dcs encoded as ASCII text bytes, rather than an array of Dcs.
+        intCurrentByte="$(StageL_get "$(join_by $'\037' "${intArrayContent[@]}")" "$intByteOffset")"
+        if [[ "true" == "$(StageL_asciiIsDigit "$intCurrentByte")" ]]; then
+            strCurrentDc="$(StageL_cat "$strCurrentDc" "$(StageL_charFromByte "$intCurrentByte")")"
+                elif [[ "true" == "$(StageL_asciiIsSpace "$intCurrentByte")" ]]; then
+            intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+            strCurrentDc=''
+                else
+            StageL_die 'Unexpected parser state in integerList document.'
+        fi
+        intByteOffset="$(StageL_add "$intByteOffset" '1')"
+    done
+    if [[ "true" == "$(StageL_ne '0' "$(StageL_len "$strCurrentDc")")" ]]; then
+        # Ended without a trailing space
+        if [[ "true" == "$(StageL_eq 'true' "$(StageL_getSettingForFormat 'integerList' 'in' 'strict')")" ]]; then
+            StageL_die 'No trailing space present in integerList format while importing. This is not allowed in strict mode.'
+        fi
+        intArrayRes="$(StageL_push "$(join_by $'\037' "${intArrayRes[@]}")" "$(StageL_intFromIntStr "$strCurrentDc")")"
+    fi
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayRes[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayRes[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
+
+dcaToIntegerList() {
+    IFS=$'\037' read -r -a intArrayDcIn <<< "$1"; shift; StageL_internalDebugCollect "intArray DcIn = $intArrayDcIn; "; StageL_internalDebugStackEnter 'dcaToIntegerList:format-integerList'; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+
+    StageL_assertIsDcArray "$(join_by $'\037' "${intArrayDcIn[@]}")"
+    intArrayOut=()
+    intLen='0'
+    intLen="$(StageL_count "$(join_by $'\037' "${intArrayDcIn[@]}")")"
+    intInputIndex='0'
+    intInputIndex='0'
+    while [[ "true" == "$(StageL_lt "$intInputIndex" "$intLen")" ]]; do
+        intArrayOut="$(StageL_push "$(join_by $'\037' "${intArrayOut[@]}")" "$(StageL_strToByteArray "$(StageL_cat "$(StageL_strFrom "$(StageL_get "$(join_by $'\037' "${intArrayDcIn[@]}")" "$intInputIndex")" )" ' ')")")"
+        intInputIndex="$(StageL_add "$intInputIndex" '1')"
+    done
+    StageL_assertIsByteArray "$(join_by $'\037' "${intArrayOut[@]}")"
+
+    intArrayReturn="$(join_by $'\037' "${intArrayOut[@]}")"; StageL_assertIsIntArray "$(join_by $'\037' "${intArrayReturn[@]}")"; StageL_internalDebugStackExit; print "$(join_by $'\037' "${intArrayReturn[@]}")"
+}
