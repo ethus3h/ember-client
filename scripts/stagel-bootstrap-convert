@@ -72,6 +72,9 @@ if [[ "--cache" == "$cache" ]]; then
     configHash="$(sha512sum <<< "$debugBuild:$typecheckBuild:$targetLang" | awk '{print $1;}')"
     parseHash="$(sha512sum < "$parsePath" | awk '{print $1;}')"
     codegenHash="$(sha512sum < "$codegenPath" | awk '{print $1;}')"
+    if [[ -z "$configHash" ]]; then
+        die "configHash was empty. Apparently a bug."
+    fi
     hashA="${inputHash:0:1}"
     hashB="${inputHash:1:1}"
     hashC="${inputHash:2:1}"
